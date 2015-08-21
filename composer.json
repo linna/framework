@@ -1,0 +1,21 @@
+{
+    "name": "s3b4stian/Leviu",
+    "type": "library",
+    "description": "Leviu Framework",
+    "keywords": ["framework"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sebastian Rapetti",
+            "email": "sebastian.rapetti@alice.it"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Leviu\\": "src/Leviu/"
+        }
+    }
+}
