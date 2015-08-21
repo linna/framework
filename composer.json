@@ -1,6 +1,6 @@
 {
-    "name": "s3b4stian/Leviu",
-    "type": "library",
+    "name": "s3b4stian/leviu",
+    "type": "framework",
     "description": "Leviu Framework",
     "keywords": ["framework"],
     "license": "MIT",
