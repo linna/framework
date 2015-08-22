@@ -17,5 +17,6 @@
         "psr-4": {
             "Leviu\\": "src/Leviu/"
         }
-    }
+    },
+    "license": "MIT"
 }
