@@ -57,7 +57,7 @@ class UserMapper extends MapperAbstract
         $pdos->bindParam(':id', $id, \PDO::PARAM_INT);
         $pdos->execute();
         
-        return $pdos->fetchObject('\App_mk0\User');//$this->create($pdos->fetch());
+        return $pdos->fetchObject('\Leviu\Auth\User');//$this->create($pdos->fetch());
     }
 
     /**
