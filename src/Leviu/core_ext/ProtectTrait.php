@@ -11,7 +11,7 @@
  * @version 0.1.0
  */
 
-namespace Leviu\core_ext;
+namespace Leviu\Core_ext;
 
 trait ProtectTrait
 {
