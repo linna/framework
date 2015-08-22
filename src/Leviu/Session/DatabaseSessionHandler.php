@@ -20,7 +20,7 @@
  * ) ENGINE=MEMORY DEFAULT CHARSET=utf8;
  */
 
-namespace Leviu\Core_ext;
+namespace Leviu\Session;
 
 /**
  * Database Session Handler
