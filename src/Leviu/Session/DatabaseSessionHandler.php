@@ -22,6 +22,7 @@
 
 namespace Leviu\Session;
 
+use Leviu\Database\Database;
 /**
  * Database Session Handler
  * - Class for store sessions in Database
