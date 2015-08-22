@@ -13,6 +13,8 @@
 
 namespace Leviu\Routing;
 
+use Leviu\Html\View;
+
 /**
  * BaseController
  * - This is the parent class for every controller in the app, permit access

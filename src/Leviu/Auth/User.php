@@ -13,6 +13,9 @@
 
 namespace Leviu\Auth;
 
+use Leviu\Database\DomainObjectAbstract;
+use Leviu\Auth\Password;
+
 /**
  * User
  * - Class for manage users

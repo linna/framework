@@ -13,6 +13,11 @@
 
 namespace Leviu\Auth;
 
+use Leviu\Database\DomainObjectAbstract;
+use Leviu\Database\MapperAbstract;
+use Leviu\Database\Database;
+
+use Leviu\Auth\User;
 /**
  * UserMapper
  * 
@@ -73,7 +78,7 @@ class UserMapper extends MapperAbstract
         $pdos->bindParam(':name', $hashedUserName, \PDO::PARAM_STR);
         $pdos->execute();
         
-        return $pdos->fetchObject('\App_mk0\User');//$this->create($pdos->fetch());
+        return $pdos->fetchObject('\Leviu\Auth\User');//$this->create($pdos->fetch());
     }
 
     
@@ -83,7 +88,7 @@ class UserMapper extends MapperAbstract
         
         $pdos->execute();
         
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\App_mk0\User');
+        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Leviu\Auth\User');
     }
     
     /**
