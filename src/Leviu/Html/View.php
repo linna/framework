@@ -11,7 +11,7 @@
  * @version 0.1.0
  */
 
-namespace Leviu\Html; 
+namespace Leviu\Html;
 
 /**
  * View
@@ -128,13 +128,13 @@ class View
         ob_start();
 
         try {
-            if (!file_exists(APP . "views/{$view}.php")) {
+            if (!file_exists(APP . "Views/{$view}.php")) {
                 throw new \Exception("The required View ({$view}) not exist.");
             }
 
-            require APP . "views/_templates/header.php";
-            require APP . "views/{$view}.php";
-            require APP . "views/_templates/footer.php";
+            require APP . "Views/_templates/header.php";
+            require APP . "Views/{$view}.php";
+            require APP . "Views/_templates/footer.php";
         } catch (\Exception $e) {
             echo 'View exception: ', $e->getMessage(), "\n";
         }

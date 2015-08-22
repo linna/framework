@@ -11,7 +11,7 @@
  * @version 0.1.0
  */
 
-namespace Leviu\Auth; 
+namespace Leviu\Auth;
 
 /**
  * Password
