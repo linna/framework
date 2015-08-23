@@ -83,6 +83,7 @@ abstract class MapperAbstract
      * @param array $data
      * @return DomainObjectAbstract
      * @since 0.1.0
+     * @deprecated since version 0.1.0 Replaced with \PDO::FETCH_CLASS fetch option
      */
     abstract public function populate(DomainObjectAbstract $obj, $data);
 
