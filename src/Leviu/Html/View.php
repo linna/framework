@@ -55,14 +55,14 @@ class View
 
         //standard js file
         //$this->js[] = URL . 'js/jquery-2.1.4.min.js';
-        $this->js[] = URL . 'js/main.js';
-        $this->js[] = URL . 'js/ajax.js';
+        //$this->js[] = URL . 'js/main.js';
+        //$this->js[] = URL . 'js/ajax.js';
         //$this->js[] = URL . 'js/application.js';
 
         //standard css file
-        $this->css[] = URL . 'css/style.css';
+        //$this->css[] = URL . 'css/style.css';
         
-        $this->title = 'App_Mk0';
+        $this->title = 'App';
     }
 
     /**
