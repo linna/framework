@@ -22,6 +22,9 @@ namespace Leviu\Routing;
  */
 class Dispatcher
 {
+    public static $appNamespace = '';
+    public static $controller404 = '';
+    
     /**
      * @var object Valid Route instance
      */
@@ -52,15 +55,21 @@ class Dispatcher
         //get passed route
         $this->route = $route;
 
+        //get app namespace for find controller and methods
+        $appNamespace = self::$appNamespace;
+        
         //get controller
-        $controller = 'App\Controllers\\'.$route->getController();
-
+        $controller = $appNamespace.$route->getController();
+        
+        //get 404 controller
+        $controller404 = $appNamespace.self::$controller404; 
+        
         //create istance of controller if valid else create 404 controller :)
-        $this->url_controller = (class_exists($controller)) ? new $controller() : new \App\Controllers\Error404();
+        $this->url_controller = (class_exists($controller)) ? new $controller() : new $controller404();
 
         //get method
         /**
-         * @todo Check if method is not valid and trow Exception
+         * @todo Check if method is not valid and go to 404 controller
          */
         $this->url_action = $route->getAction();
 
