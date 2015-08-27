@@ -112,8 +112,8 @@ class Login
                         'time' => time()
                     ];
                 
-                session_regenerate_id(true);
-                session_write_close();
+                //session_regenerate_id(true);
+                //session_write_close();
                 
                 return true;
             }
@@ -134,8 +134,8 @@ class Login
     {
         unset($_SESSION['login']);
         
-        session_regenerate_id(true);
-        session_write_close();
+        //session_regenerate_id(true);
+        //session_write_close();
         
         return true;
     }
