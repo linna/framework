@@ -1,11 +1,9 @@
 <?php
 
 /**
- * App_mk0
+ * Leviu
  *
  * This work would be a little PHP framework, a learn exercice. 
- * Work started from php MINI https://github.com/panique/mini good for understand how a MVC framework run :) 
- * I rewrote Router, Dispatcher, Controller and I added some new class like Model, View... etc for more flexibility  
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2015, Sebastian Rapetti
