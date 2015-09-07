@@ -23,6 +23,8 @@
 namespace Leviu\Session;
 
 use Leviu\Database\Database;
+use SessionHandler;
+use SessionHandlerInterface;
 
 /**
  * Database Session Handler
@@ -40,7 +42,7 @@ use Leviu\Database\Database;
  * ) ENGINE=MEMORY DEFAULT CHARSET=utf8;
  * 
  */
-class DatabaseSessionHandler extends \SessionHandler
+class DatabaseSessionHandler extends SessionHandler implements SessionHandlerInterface
 {
     /**
      * @var object Database Connection

@@ -13,6 +13,10 @@
 
 namespace Leviu\Session;
 
+use SessionHandler;
+use SessionHandlerInterface;
+
+
 /**
  * Session
  * - Class for manage session lifetime
@@ -21,6 +25,8 @@ namespace Leviu\Session;
  */
 class Session
 {
+    
+    
     /**
      * @var int $expire Expiration time for session
      */
@@ -30,6 +36,12 @@ class Session
      * @var string $name  Session name
      */
     public static $name = 'PHPSESSID';
+    
+    /**
+     * @var object $handler  Instance of SessionHandlerInterface
+     */
+    public static $handler = null;
+    
     
     /**
      * @var object $instance
@@ -93,8 +105,14 @@ class Session
      * @return object
      * @since 0.1.0
      */
-    public static function start()
+    public static function getInstance()
     {
+        
+        if (self::$handler !== null && self::$handler !== '' && self::$handler instanceof SessionHandlerInterface)
+        {
+            session_set_save_handler(self::$handler, true);
+        }
+        
         if (self::$instance === null) {
             session_name(self::$name);
             
@@ -102,7 +120,7 @@ class Session
             
             session_start();
             
-            setcookie(session_name(), session_id(), time() + self::$expire);
+            setcookie(session_name(), session_id(), time() + self::$expire, 0, 1);
             
             self::$instance = new Session();
         }
@@ -110,5 +128,14 @@ class Session
         self::$instance->isExpired();
                 
         return self::$instance;
+    }
+    
+    public function regenerate()
+    {
+        setcookie(session_name(), '', time() - 86400);
+        
+        session_regenerate_id(true);
+        
+        setcookie(session_name(), session_id(), time() + self::$expire, 0, 1);
     }
 }

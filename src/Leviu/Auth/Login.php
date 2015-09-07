@@ -13,6 +13,7 @@
 
 namespace Leviu\Auth;
 
+use Leviu\Session\Session;
 //use App_mk0\DatabasePasswordHandler;
 
 /**
@@ -63,6 +64,8 @@ class Login
     public $isLogged = false;
     
     
+    private $session = null;
+    
     
     /**
      * @var int Numeber of seconds before login will considered invalid
@@ -77,6 +80,8 @@ class Login
      */
     public function __construct()
     {
+        $this->session = Session::getInstance();
+        
         $this->isLogged = $this->check();
     }
     
@@ -112,6 +117,7 @@ class Login
                         'time' => time()
                     ];
                 
+                $this->session->regenerate();
                 //session_regenerate_id(true);
                 //session_write_close();
                 
@@ -134,6 +140,7 @@ class Login
     {
         unset($_SESSION['login']);
         
+        $this->session->regenerate();
         //session_regenerate_id(true);
         //session_write_close();
         
@@ -150,6 +157,7 @@ class Login
      */
     private function check()
     {
+        
         if (isset($_SESSION['login'])) {
             $loginData = $_SESSION['login'];
             
