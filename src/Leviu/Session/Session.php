@@ -25,8 +25,6 @@ use SessionHandlerInterface;
  */
 class Session
 {
-    
-    
     /**
      * @var int $expire Expiration time for session
      */
@@ -62,7 +60,7 @@ class Session
     }
     
     /**
-     * isValid
+     * isExpired
      * 
      * check if session is expired
      * 
