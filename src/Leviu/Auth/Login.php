@@ -14,6 +14,7 @@
 namespace Leviu\Auth;
 
 use Leviu\Session\Session;
+
 //use App_mk0\DatabasePasswordHandler;
 
 /**
@@ -120,7 +121,7 @@ class Login
                 $this->session->regenerate();
                 //session_regenerate_id(true);
                 //session_write_close();
-                
+
                 return true;
             }
         }
@@ -143,7 +144,7 @@ class Login
         $this->session->regenerate();
         //session_regenerate_id(true);
         //session_write_close();
-        
+
         return true;
     }
 
@@ -157,7 +158,6 @@ class Login
      */
     private function check()
     {
-        
         if (isset($_SESSION['login'])) {
             $loginData = $_SESSION['login'];
             

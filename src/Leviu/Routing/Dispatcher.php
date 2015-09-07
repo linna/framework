@@ -62,7 +62,7 @@ class Dispatcher
         $controller = $appNamespace.$route->getController();
         
         //get 404 controller
-        $controller404 = $appNamespace.self::$controller404; 
+        $controller404 = $appNamespace.self::$controller404;
         
         //create istance of controller if valid else create 404 controller :)
         $this->url_controller = (class_exists($controller)) ? new $controller() : new $controller404();

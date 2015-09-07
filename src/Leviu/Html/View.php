@@ -61,7 +61,7 @@ class View
 
         //standard css file
         //$this->css[] = URL . 'css/style.css';
-        
+
         $this->title = 'App';
     }
 

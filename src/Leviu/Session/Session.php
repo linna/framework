@@ -16,7 +16,6 @@ namespace Leviu\Session;
 use SessionHandler;
 use SessionHandlerInterface;
 
-
 /**
  * Session
  * - Class for manage session lifetime
@@ -105,9 +104,7 @@ class Session
      */
     public static function getInstance()
     {
-        
-        if (self::$handler !== null && self::$handler !== '' && self::$handler instanceof SessionHandlerInterface)
-        {
+        if (self::$handler !== null && self::$handler !== '' && self::$handler instanceof SessionHandlerInterface) {
             session_set_save_handler(self::$handler, true);
         }
         

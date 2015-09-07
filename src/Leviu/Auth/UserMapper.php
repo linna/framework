@@ -16,7 +16,6 @@ namespace Leviu\Auth;
 use Leviu\Database\DomainObjectAbstract;
 use Leviu\Database\MapperAbstract;
 use Leviu\Database\Database;
-
 use Leviu\Auth\User;
 
 /**
