@@ -72,7 +72,8 @@ class Session
 
         if ($_SESSION['time'] < ($time - self::$expire)) {
             setcookie(session_name(), '', time() - 86400);
-            session_destroy();
+            
+            $this->regenerate();
             
             return null;
         }
@@ -125,6 +126,14 @@ class Session
         return self::$instance;
     }
     
+    /**
+     * regenerate
+     * 
+     * regenerate session_id without double cookie problem
+     * 
+     * @return object
+     * @since 0.1.0
+     */
     public function regenerate()
     {
         setcookie(session_name(), '', time() - 86400);
