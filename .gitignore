@@ -1,2 +1,5 @@
+composer.phar
+composer.lock
+vendor/
 nbproject/
 nbproject/private/
