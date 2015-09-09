@@ -71,7 +71,7 @@ class Session
         //$sessionTime = $_SESSION['time'];
 
         if ($_SESSION['time'] < ($time - self::$expire)) {
-            setcookie(session_name(), '', time() - 86400);
+            //setcookie(session_name(), '', time() - 86400);
             
             $this->regenerate();
             
