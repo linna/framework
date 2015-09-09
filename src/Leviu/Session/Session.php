@@ -13,7 +13,7 @@
 
 namespace Leviu\Session;
 
-use SessionHandler;
+//use SessionHandler;
 use SessionHandlerInterface;
 
 /**
@@ -39,6 +39,19 @@ class Session
      */
     public static $handler = null;
     
+    /**
+     * http://php.net/manual/en/function.setcookie.php
+     * 
+     * @var string $cookieDomain
+     */
+    public static $cookieDomain = null;
+    
+    /**
+     * http://php.net/manual/en/function.setcookie.php
+     * 
+     * @var string $cookiePath
+     */
+    public static $cookiePath = null;
     
     /**
      * @var object $instance
@@ -68,10 +81,9 @@ class Session
     private function isExpired()
     {
         $time = time();
-        //$sessionTime = $_SESSION['time'];
-
+        
         if ($_SESSION['time'] < ($time - self::$expire)) {
-            //setcookie(session_name(), '', time() - 86400);
+
             
             $this->regenerate();
             
@@ -105,25 +117,35 @@ class Session
      */
     public static function getInstance()
     {
-        if (self::$handler !== null && self::$handler !== '' && self::$handler instanceof SessionHandlerInterface) {
-            session_set_save_handler(self::$handler, true);
+        $h = &self::$handler;
+        $i = &self::$instance;
+        
+        //setting a different save handler if passed
+        if ($h !== null && $h !== '' && $h instanceof SessionHandlerInterface) {
+            session_set_save_handler($h, true);
         }
         
-        if (self::$instance === null) {
+        if ($i === null) {
+            
+            //setting session name
             session_name(self::$name);
             
-            session_set_cookie_params(self::$expire, URL_SUB_FOLDER, URL_DOMAIN, 0, 1);
+            //standard cookie param
+            session_set_cookie_params(self::$expire, self::$cookiePath, self::$cookieDomain, 0, 1);
             
+            //start session
             session_start();
             
+            //set cookies
             setcookie(session_name(), session_id(), time() + self::$expire, 0, 1);
             
-            self::$instance = new Session();
+            //create new Session :)
+            $i = new Session();
         }
         
-        self::$instance->isExpired();
+        $i->isExpired();
                 
-        return self::$instance;
+        return $i;
     }
     
     /**
@@ -132,14 +154,16 @@ class Session
      * regenerate session_id without double cookie problem
      * 
      * @return object
-     * @since 0.1.0
+     * @since 0.1.1
      */
     public function regenerate()
     {
-        setcookie(session_name(), '', time() - 86400);
+        $time = time();
+        
+        setcookie(session_name(), '', $time - 86400);
         
         session_regenerate_id(true);
         
-        setcookie(session_name(), session_id(), time() + self::$expire, 0, 1);
+        setcookie(session_name(), session_id(), $time + self::$expire, 0, 1);
     }
 }

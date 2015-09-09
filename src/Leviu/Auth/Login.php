@@ -27,7 +27,7 @@ use Leviu\Session\Session;
  *      $username = 'foo';
  *      $password = 'an hashed passowrd';
  * 
- *      $login = new \App_mk0\Login();
+ *      $login = new Login();
  *      $login->login($username, $password);
  *      
  *      //do actions
@@ -37,7 +37,7 @@ use Leviu\Session\Session;
  * Utilize for check login
  * 
  *      <?php
- *      $login = new \App_mk0\Login();
+ *      $login = new Login();
  * 
  *      if ($login->isLogged === true)
  *      {
@@ -64,10 +64,6 @@ class Login
      */
     public $isLogged = false;
     
-    
-    private $session = null;
-    
-    
     /**
      * @var int Numeber of seconds before login will considered invalid
      */
@@ -81,8 +77,6 @@ class Login
      */
     public function __construct()
     {
-        $this->session = Session::getInstance();
-        
         $this->isLogged = $this->check();
     }
     
@@ -118,10 +112,8 @@ class Login
                         'time' => time()
                     ];
                 
-                $this->session->regenerate();
-                //session_regenerate_id(true);
-                //session_write_close();
-
+                Session::getInstance()->regenerate();
+                
                 return true;
             }
         }
@@ -141,10 +133,8 @@ class Login
     {
         unset($_SESSION['login']);
         
-        $this->session->regenerate();
-        //session_regenerate_id(true);
-        //session_write_close();
-
+        Session::getInstance()->regenerate();
+        
         return true;
     }
 
