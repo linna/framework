@@ -13,11 +13,29 @@
 
 namespace Leviu\Auth;
 
+/**
+ * Protect trait
+ * - Methods for help to protect a controller under login
+ * 
+ * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
+ */
 trait ProtectTrait
 {
+    /**
+     * @var object Login instance
+     */
     protected $login;
+    
+    /**
+     * @var boolean Login status 
+     */
     protected $isLogged;
     
+    /**
+     * protectController
+     * 
+     * @param \Leviu\Auth\Login $loginIstance
+     */
     protected function protectController(Login $loginIstance)
     {
         if ($loginIstance->isLogged === false) {
@@ -28,7 +46,11 @@ trait ProtectTrait
         $this->login = $loginIstance;
         $this->isLogged = $loginIstance->isLogged;
     }
-    
+    /**
+     * protectMethod
+     * 
+     * @param \Leviu\Auth\Login $loginIstance
+     */
     protected function protectMethod(Login $loginIstance)
     {
         $this->login = $loginIstance;

@@ -83,8 +83,6 @@ class Session
         $time = time();
         
         if ($_SESSION['time'] < ($time - self::$expire)) {
-
-            
             $this->regenerate();
             
             return null;

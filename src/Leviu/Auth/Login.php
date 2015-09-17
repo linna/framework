@@ -15,8 +15,6 @@ namespace Leviu\Auth;
 
 use Leviu\Session\Session;
 
-//use App_mk0\DatabasePasswordHandler;
-
 /**
  * Login
  * - Class a for autenticate users :)
@@ -24,17 +22,21 @@ use Leviu\Session\Session;
  * Utilize for do login
  * 
  *      <?php
- *      $username = 'foo';
- *      $password = 'an hashed passowrd';
+ *      $user = ''; //user from login page form
+ *      $password = ''; //password from login page form
+ * 
+ *      $storedUser = ''; //user from stored user informations
+ *      $storedPassword = ''; //password from stored user informations
+ *      $storedId = ''; //user id from stored user informations
+ * 
  * 
  *      $login = new Login();
- *      $login->login($username, $password);
+ *      $login->login($user, $password, $storedUser, $storedPassword, $storedId);
  *      
- *      //do actions
+ *      //redirect
  * 
- *      $login->logout;
  * 
- * Utilize for check login
+ * Utilize for under login actions
  * 
  *      <?php
  *      $login = new Login();
@@ -44,6 +46,11 @@ use Leviu\Session\Session;
  *              //do actions
  *      }
  * 
+ * Utilize for logout
+ * 
+ *      $login = new Login();
+ *      $login->logout();
+ *      
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  */
 class Login
@@ -85,41 +92,38 @@ class Login
      * 
      * Try to log user passed by param, return true if ok else false
      * 
-     * @param string $userName
+     * @param string $user
      * @param string $password
+     * @param string $storedUser
+     * @param string $storedPassword
+     * @param string $storedId
      * @return boolean
      * @since 0.1.0
      */
-    public function login($userName, $password)// passare un oggetto utente ed un oggetto password
-    {
-        $userMapper = new UserMapper();
-
-        $user = $userMapper->findByName($userName);
-        
-        if ($user !== false) {
-            if (password_verify($password, $user->password) && $user->active === 1) {
-                $id = $user->getId();
-
-                $this->userId = $id;
-                $this->userName = $user->name;
+   public function login($user, $password, $storedUser = '', $storedPassword = '', $storedId = 0)
+   {
+       if ($user === $storedUser) {
+           if (password_verify($password, $storedPassword)) {
+               $this->userId = $storedId;
+               $this->userName = $storedUser;
                 
-                $this->isLogged = true;
+               $this->isLogged = true;
                         
-                $_SESSION['login']=
+               $_SESSION['login']=
                     [
-                        'user_id' => $id,
-                        'user_name' => $user->name,
+                        'user_id' => $storedId,
+                        'user_name' => $storedUser,
                         'time' => time()
                     ];
                 
-                Session::getInstance()->regenerate();
+               Session::getInstance()->regenerate();
                 
-                return true;
-            }
-        }
+               return true;
+           }
+       }
 
-        return false;
-    }
+       return false;
+   }
 
     /**
      * Logout

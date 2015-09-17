@@ -29,6 +29,7 @@ use SessionHandlerInterface;
 /**
  * Database Session Handler
  * - Class for store sessions in Database
+ * 
  * Check below link for PHP session Handler
  * http://php.net/manual/en/class.sessionhandler.php
  * 
