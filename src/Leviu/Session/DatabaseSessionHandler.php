@@ -106,7 +106,7 @@ class DatabaseSessionHandler extends SessionHandler implements SessionHandlerInt
         $pdos->bindParam(':session_id', $session_id, \PDO::PARAM_STR);
         $pdos->execute();
 
-        return $pdos->fetchColumn();
+        return (string) $pdos->fetchColumn();
     }
     
     /**
