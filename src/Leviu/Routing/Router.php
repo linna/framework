@@ -22,6 +22,7 @@ namespace Leviu\Routing;
  */
 class Router
 {
+
     /**
      * @var object Utilized for return the most recently parsed route
      */
@@ -41,15 +42,15 @@ class Router
      * @var array List of regex for find parameter inside passed routes
      */
     protected $matchTypes = array(
-        '`\[int:[0-9A-Za-z]+\]`',
-        '`\[string:[0-9A-Za-z]+\]`'
+        '`\[[0-9A-Za-z]+\]`'//,
+            // '`\[string:[0-9A-Za-z]+\]`'
     );
 
     /**
      * @var array List of regex for find type of parameter inside passed routes
      */
     protected $types = array(
-        '[0-9]++',
+        // '[0-9]++',
         '[0-9A-Za-z]++'
     );
 
@@ -65,8 +66,7 @@ class Router
      * @param string $basePath Directory of app from config.php
      * @since 0.1.0
      */
-    public function __construct($routes, $basePath = '')
-    {
+    public function __construct($routes, $basePath = '') {
         //set basePath
         $this->basePath = $basePath;
 
@@ -89,8 +89,7 @@ class Router
      * @return \App_mk0\BadRoute|\App_mk0\Route
      * @since 0.1.0
      */
-    public function getRoute()
-    {
+    public function getRoute() {
 
         //check if current route is valide
         switch ($this->route) {
@@ -102,11 +101,7 @@ class Router
                 $param = $this->buildParam($this->route);
                 //return new route object
                 return new Route(
-                        $this->route['name'],
-                        $this->route['method'],
-                        $this->route['controller'],
-                        $this->route['action'],
-                        $param
+                        $this->route['name'], $this->route['method'], $this->route['controller'], $this->route['action'], $param
                 );
         }
     }
@@ -128,8 +123,7 @@ class Router
      * @return array|null Array contains properties of route
      * @since 0.1.0
      */
-    protected function match()
-    {
+    protected function match() {
 
         //declare var
         $validRoute = null;
@@ -140,29 +134,57 @@ class Router
             $c = preg_replace($this->matchTypes, $this->types, $value['url']);
             // set regex delimiter
             $c = "`^{$c}$`";
-            
+
+            //debug
+            //var_dump($c);
+
             //check if route from browser match with registered routes
             $m = preg_match($c, $this->currentUri, $matches);
 
-            //if match
-            if ($m === 1) {
-                
+            //debug
+            //var_dump($matches);
+            
+            //debug
+            //var_dump(sizeof($matches));
+
+            //if match and there is a subpattern for a route with multiple actions
+            if ($m === 1 && sizeof($matches) > 1) {
+
                 //set $validRoute
                 $validRoute = $value;
-                
+
                 //add to route array the passed uri for param check when call
-                //$this->buildParam($this->route);
-                $validRoute['matches'] = $matches[0];
+                $validRoute['matches'] = $matches;
+
+                //assume that subpattern rapresent action
+                $validRoute['action'] = $matches[1];
+
+                //url clean
+                $validRoute['url'] = preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $validRoute['url']);
+
+                break;
+            }
+
+            //if match
+            if ($m === 1) {
+                //set $validRoute
+                $validRoute = $value;
+
+                //add to route array the passed uri for param check when call
+                $validRoute['matches'] = $matches;
                 break;
             }
         }
 
+        //debug
+        //var_dump($validRoute);
+        
         //return route
         return $validRoute;
     }
 
     /**
-     * buildPAram
+     * buildParam
      * 
      * Try to find param in a valid route
      * 
@@ -170,33 +192,55 @@ class Router
      * @return array Array with param passed from uri
      * @since 0.1.0
      */
-    protected function buildParam($validRoute)
-    {
-        $url = explode('/', $validRoute['url']);
-        $matches = explode('/', $validRoute['matches']);
+    protected function buildParam($validRoute) {
+        // var_dump($validRoute);
+        // if (isset($validRoute['matches'][1]))
+        // {
+        //    $validRoute['url'] = preg_replace('`\([0-9A-Za-z\|]++\)`', $validRoute['matches'][1], $validRoute['url']);
+        //  $matches = explode('/', $validRoute['matches'][1]);
+        // }
+        
+        //debug
+        //var_dump($validRoute['url']);
 
+        $url = explode('/', $validRoute['url']);
+        $matches = explode('/', $validRoute['matches'][0]);
+        
+        //debug
         //var_dump($url);
         //var_dump($matches);
-
-        $c = 1;
-        $j = sizeof($url);
+        
+        //old code
+        //$c = 1;
+        //$j = sizeof($url);
+        
+        
         $param = array();
+        $rawParam = array_diff($matches, $url);
+        
+        //debug
+        //var_dump(array_diff($matches,$url));
 
+        foreach ($rawParam as $key => $value) {
+            $paramName = preg_replace('`^(\[)|(\])$`', '', $url[$key]);
+
+            $param[$paramName] = $value;
+        }
+        
+        //previsous code :)
+        /*
         while ($c < $j) {
             if ($url[$c] !== $matches[$c]) {
-                $keyType = preg_replace('`^(\[)|(\])$`', '', $url[$c]);
+                $key = preg_replace('`^(\[)|(\])$`', '', $url[$c]);
                 $keyType = explode(':', $keyType);
 
                 $type = $keyType[0];
-                $key = $keyType[1];
+                $key = $keyType;
                 $value = $matches[$c];
 
-                /**
-                 * @todo capire se il controllo dei tipi lo facciamo qui o lo facciamo altrove
-                 */
                 switch ($type) {
                     case 'int':
-                        $param[$key] = (int) $value;
+                        $param[$key] = $value;
                         break;
                     case 'string':
                         $param[$key] = (string) $value;
@@ -206,7 +250,11 @@ class Router
 
             $c++;
         }
+         */
         
+        //debug   
+        //var_dump($param);
+
         return $param;
     }
 
@@ -218,11 +266,11 @@ class Router
      * @return string Uri from browser
      * @since 0.1.0
      */
-    protected function getCurrentUri()
-    {
+    protected function getCurrentUri() {
         $url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
         $url = filter_var($url, FILTER_SANITIZE_URL);
 
         return '/' . substr($url, strlen($this->basePath));
     }
+
 }
