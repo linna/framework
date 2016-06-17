@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Leviu
+ * Leviu.
  *
  * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2015, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
+ *
  * @version 0.1.0
  */
-
 namespace Leviu;
 
 /**
- * PSR-4 Autoloader
+ * PSR-4 Autoloader.
  * 
  * An example of a general-purpose implementation that includes the optional
  * functionality of allowing multiple base directories for a single namespace
@@ -89,8 +89,6 @@ class Autoloader
 
     /**
      * Register loader with SPL autoloader stack.
-     * 
-     * @return void
      */
     public function register()
     {
@@ -101,21 +99,20 @@ class Autoloader
     /**
      * Adds a base directory for a namespace prefix.
      *
-     * @param string $prefix The namespace prefix.
+     * @param string $prefix   The namespace prefix.
      * @param string $base_dir A base directory for class files in the
-     * namespace.
-     * @param bool $prepend If true, prepend the base directory to the stack
-     * instead of appending it; this causes it to be searched first rather
-     * than last.
-     * @return void
+     *                         namespace.
+     * @param bool   $prepend  If true, prepend the base directory to the stack
+     *                         instead of appending it; this causes it to be searched first rather
+     *                         than last.
      */
     public function addNamespace($prefix, $base_dir, $prepend = false)
     {
         // normalize namespace prefix
-        $prefix = trim($prefix, '\\') . '\\';
+        $prefix = trim($prefix, '\\').'\\';
 
         // normalize the base directory with a trailing separator
-        $base_dir = rtrim($base_dir, DIRECTORY_SEPARATOR) . '/';
+        $base_dir = rtrim($base_dir, DIRECTORY_SEPARATOR).'/';
 
         // initialize the namespace prefix array
         if (isset($this->prefixes[$prefix]) === false) {
@@ -132,23 +129,22 @@ class Autoloader
 
     /**
      * Adds a base directory for a namespace prefix, accept an array of namespaces
-     * Utilize this for prevente multiple addNamespace() calls
+     * Utilize this for prevente multiple addNamespace() calls.
      * 
      * @param array $namespaces The namespace prefix array.
-     * @return void
      */
     public function addNamespaces($namespaces)
     {
         foreach ($namespaces as $nm) {
             $prefix = (string) $nm[0];
             $base_dir = (string) $nm[1];
-            $prepend = (bool)  (isset($nm[2])) ? $nm[2] : false;
-            
+            $prepend = (bool) (isset($nm[2])) ? $nm[2] : false;
+
             // normalize namespace prefix
-            $prefix = trim($prefix, '\\') . '\\';
+            $prefix = trim($prefix, '\\').'\\';
 
             // normalize the base directory with a trailing separator
-            $base_dir = rtrim($base_dir, DIRECTORY_SEPARATOR) . '/';
+            $base_dir = rtrim($base_dir, DIRECTORY_SEPARATOR).'/';
 
             // initialize the namespace prefix array
             if (isset($this->prefixes[$prefix]) === false) {
@@ -168,8 +164,9 @@ class Autoloader
      * Loads the class file for a given class name.
      *
      * @param string $class The fully-qualified class name.
+     *
      * @return mixed The mapped file name on success, or boolean false on
-     * failure.
+     *               failure.
      */
     public function loadClass($class)
     {
@@ -207,10 +204,11 @@ class Autoloader
     /**
      * Load the mapped file for a namespace prefix and relative class.
      * 
-     * @param string $prefix The namespace prefix.
+     * @param string $prefix         The namespace prefix.
      * @param string $relative_class The relative class name.
+     *
      * @return mixed Boolean false if no mapped file can be loaded, or the
-     * name of the mapped file that was loaded.
+     *               name of the mapped file that was loaded.
      */
     protected function loadMappedFile($prefix, $relative_class)
     {
@@ -226,10 +224,8 @@ class Autoloader
             // replace namespace separators with directory separators
             // in the relative class name, append with .php
             $file = $base_dir
-                    . str_replace('\\', '/', $relative_class)
-                    . '.php';
-
-
+                    .str_replace('\\', '/', $relative_class)
+                    .'.php';
 
             // if the mapped file exists, require it
             if ($this->requireFile($file)) {
@@ -248,6 +244,7 @@ class Autoloader
      * If a file exists, require it from the file system.
      * 
      * @param string $file The file to require.
+     *
      * @return bool True if the file exists, false if not.
      */
     protected function requireFile($file)
@@ -256,8 +253,10 @@ class Autoloader
 
         if (file_exists($file)) {
             require $file;
+
             return true;
         }
+
         return false;
     }
 }

@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Leviu
+ * Leviu.
  *
  * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2015, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
+ *
  * @version 0.1.0
  */
-
 namespace Leviu\Routing;
 
 use Leviu\Html\View;
@@ -18,7 +18,7 @@ use Leviu\Html\View;
 /**
  * BaseController
  * - This is the parent class for every controller in the app, permit access
- * to view and models for every instance of a child
+ * to view and models for every instance of a child.
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  */
@@ -45,9 +45,10 @@ class Controller
     protected $currentController = null;
 
     /**
-     * Controller constructor
+     * Controller constructor.
      * 
      * @param string $controller Passed for child __contruct is __CLASS__
+     *
      * @since 0.1.0
      */
     public function __construct($controller)
@@ -66,13 +67,15 @@ class Controller
     }
 
     /**
-     * loadModel
+     * loadModel.
      * 
      * Load proper model for current controller or trow exception
      * Called into __construct()
      * 
      * @return \App_mk0\model Proper medel for loaded controller
+     *
      * @throws \Exception if model not exist
+     *
      * @since 0.1.0
      */
     protected function loadModel()
@@ -83,12 +86,13 @@ class Controller
             if (!class_exists($model)) {
                 throw new \Exception("The required Model ({$model}) not exist.");
             }
+
             return new $model();
         } catch (\Exception $e) {
             echo 'Model exception: ', $e->getMessage(), "\n";
             die();
         }
-        
+
         //$this->
     }
 }

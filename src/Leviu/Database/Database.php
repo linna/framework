@@ -1,33 +1,33 @@
 <?php
 
 /**
- * Leviu
+ * Leviu.
  *
  * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2015, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
+ *
  * @version 0.1.0
  */
-
 namespace Leviu\Database;
 
 /**
  * Databese
  * - Singleton Pattern for Database connection
- * https://it.wikipedia.org/wiki/Singleton
+ * https://it.wikipedia.org/wiki/Singleton.
  */
 class Database extends \PDO
 {
     /**
-     * @var object $instance
+     * @var object
      * @static object $instance The DB istance
      */
     private static $instance;
 
     /**
-     * Database constructor
+     * Database constructor.
      * 
      * @since 0.1.0
      */
@@ -42,15 +42,15 @@ class Database extends \PDO
         // generate a database connection, using the PDO connector
         // @see http://net.tutsplus.com/tutorials/php/why-you-should-be-using-phps-pdo-for-database-access/
         try {
-            parent::__construct(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=' . DB_CHARSET, DB_USER, DB_PASS, $options);
+            parent::__construct(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME.';charset='.DB_CHARSET, DB_USER, DB_PASS, $options);
         } catch (\PDOException $e) {
-            echo "Error!: " . $e->getMessage();
+            echo 'Error!: '.$e->getMessage();
             die();
         }
     }
 
     /**
-     * __clone
+     * __clone.
      * 
      * Forbids the object clone
      * 
@@ -62,17 +62,18 @@ class Database extends \PDO
     }
 
     /**
-     * connect
+     * connect.
      * 
      * Return te instance of database connection
      * 
      * @return object
+     *
      * @since 0.1.0
      */
     public static function connect()
     {
         if (self::$instance === null) {
-            self::$instance = new Database();
+            self::$instance = new self();
         }
 
         return self::$instance;

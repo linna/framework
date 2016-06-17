@@ -1,22 +1,22 @@
 <?php
 
 /**
- * Leviu
+ * Leviu.
  *
  * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2015, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
+ *
  * @version 0.1.0
  */
-
 namespace Leviu\Html;
 
 /**
  * View
  * - This class manage rendering of html page
- * Css, javascript and data
+ * Css, javascript and data.
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  */
@@ -34,6 +34,7 @@ class View
 
     /**
      * @var string Page title
+     *
      * @todo Implements the property in header template
      */
     protected $title = null;
@@ -44,7 +45,7 @@ class View
     public $data = null;
 
     /**
-     * View constructor
+     * View constructor.
      * 
      * @since 0.1.0
      */
@@ -66,40 +67,43 @@ class View
     }
 
     /**
-     * addCss
+     * addCss.
      * 
      * Called from controller
      * Utilize this for add a file css to view from crontroller
      * 
      * @param string $file Path for css file
+     *
      * @since 0.1.0
      */
     public function addCss($file)
     {
-        $this->css[] = URL . $file;
+        $this->css[] = URL.$file;
     }
 
     /**
-     * addJs
+     * addJs.
      * 
      * Called from controller
      * Utilize this for add a file js to view from crontroller
      * 
      * @param string $file Path for js file
+     *
      * @since 0.1.0
      */
     public function addJs($file)
     {
-        $this->js[] = URL . $file;
+        $this->js[] = URL.$file;
     }
 
     /**
-     * addJs
+     * addJs.
      * 
      * Called from controller
      * Utilize this for bring title to html page generate from View
      * 
      * @param string $title Path for css file
+     *
      * @since 0.1.0 
      */
     public function setTitle($title)
@@ -108,13 +112,15 @@ class View
     }
 
     /**
-     * render
+     * render.
      * 
      * Called from controller
      * Send view to browser
      * 
      * @param string $view The view called from controller
+     *
      * @throws \Exception if view path is incorrect
+     *
      * @since 0.1.0
      */
     public function render($view)
@@ -124,17 +130,17 @@ class View
         $js = $this->js;
 
         $title = $this->title;
-        
+
         ob_start();
 
         try {
-            if (!file_exists(APP . "Views/{$view}.php")) {
+            if (!file_exists(APP."Views/{$view}.php")) {
                 throw new \Exception("The required View ({$view}) not exist.");
             }
 
-            require APP . "Views/_templates/header.php";
-            require APP . "Views/{$view}.php";
-            require APP . "Views/_templates/footer.php";
+            require APP.'Views/_templates/header.php';
+            require APP."Views/{$view}.php";
+            require APP.'Views/_templates/footer.php';
         } catch (\Exception $e) {
             echo 'View exception: ', $e->getMessage(), "\n";
         }

@@ -1,33 +1,35 @@
 <?php
 
 /**
- * Leviu
+ * Leviu.
  *
  * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2015, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
+ *
  * @version 0.1.0
  */
-
 namespace Leviu\Database;
 
 /**
  * MapperAbstract
- * - Abstract Class for ObjectMapper
+ * - Abstract Class for ObjectMapper.
  */
 abstract class MapperAbstract
 {
     /**
-     * create
+     * create.
      * 
      * Create a new instance of the DomainObject that this
      * mapper is responsible for. Optionally populating it
      * from a data array.
      *
      * @param array $data
+     *
      * @return DomainObjectAbstract
+     *
      * @since 0.1.0
      */
     public function create()//$data = null)
@@ -40,12 +42,13 @@ abstract class MapperAbstract
     }
 
     /**
-     * save
+     * save.
      * 
      * Store the DomainObject in persistent storage. Either insert
      * or update the store as required.
      *
      * @param DomainObjectAbstract $obj
+     *
      * @since 0.1.0
      */
     public function save(DomainObjectAbstract $obj)
@@ -59,11 +62,12 @@ abstract class MapperAbstract
     }
 
     /**
-     * delete
+     * delete.
      * 
      * Delete the DomainObject from persistent storage.
      *
      * @param DomainObjectAbstract $obj
+     *
      * @since 0.1.0
      */
     public function delete(DomainObjectAbstract $obj)
@@ -72,7 +76,7 @@ abstract class MapperAbstract
     }
 
     /**
-     * populate
+     * populate.
      * 
      * Populate the DomainObject with the values
      * from the data array.
@@ -80,49 +84,55 @@ abstract class MapperAbstract
      * To be implemented by the concrete mapper class
      *
      * @param DomainObjectAbstract $obj
-     * @param array $data
+     * @param array                $data
+     *
      * @return DomainObjectAbstract
+     *
      * @since 0.1.0
      * @deprecated since version 0.1.0 Replaced with \PDO::FETCH_CLASS fetch option
      */
     abstract public function populate(DomainObjectAbstract $obj, $data);
 
     /**
-     * _create
+     * _create.
      * 
      * Create a new instance of a DomainObject
      * 
      * @return DomainObjectAbstract
+     *
      * @since 0.1.0
      */
     abstract protected function _create();
 
     /**
-     * _insert
+     * _insert.
      * 
      * Insert the DomainObject to persistent storage 
      *
      * @param DomainObjectAbstract $obj
+     *
      * @since 0.1.0
      */
     abstract protected function _insert(DomainObjectAbstract $obj);
 
     /**
-     * _update
+     * _update.
      * 
      * Update the DomainObject in persistent storage 
      *
      * @param DomainObjectAbstract $obj
+     *
      * @since 0.1.0
      */
     abstract protected function _update(DomainObjectAbstract $obj);
 
     /**
-     * _delete
+     * _delete.
      * 
      * Delete the DomainObject from peristent Storage
      *
      * @param DomainObjectAbstract $obj
+     *
      * @since 0.1.0
      */
     abstract protected function _delete(DomainObjectAbstract $obj);
