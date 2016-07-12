@@ -137,7 +137,7 @@ class Router
             // replace declared parameter in registered routes with regex
             $c = preg_replace($this->matchTypes, $this->types, $value['url']);
             // set regex delimiter
-            $c = "`^{$c}$`";
+            $c = "`^{$c}/?$`";
 
             //debug
             //var_dump($c);
