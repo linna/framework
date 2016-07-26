@@ -53,11 +53,11 @@ abstract class MapperAbstract
      */
     public function save(DomainObjectAbstract $obj)
     {
-        if (is_null($obj->getId())) {
-            $this->_insert($obj);
+        if ($obj->getId() === 0) {
+            return $this->_insert($obj);
             //$obj->setId($id);
         } else {
-            $this->_update($obj);
+            return $this->_update($obj);
         }
     }
 
@@ -91,7 +91,7 @@ abstract class MapperAbstract
      * @since 0.1.0
      * @deprecated since version 0.1.0 Replaced with \PDO::FETCH_CLASS fetch option
      */
-    abstract public function populate(DomainObjectAbstract $obj, $data);
+    //abstract public function populate(DomainObjectAbstract $obj, $data);
 
     /**
      * _create.
