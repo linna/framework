@@ -51,8 +51,10 @@ abstract class MapperAbstract
      *
      * @since 0.1.0
      */
-    public function save(DomainObjectAbstract $obj)
+    public function save(DomainObjectAbstract ...$obj)
     {
+        $obj = $obj[0];
+        
         if ($obj->getId() === 0) {
             return $this->_insert($obj);
             //$obj->setId($id);
