@@ -14,6 +14,7 @@
 namespace Leviu\Auth;
 
 use Leviu\Session\Session;
+use Leviu\Auth\Password;
 
 /**
  * Login
@@ -104,8 +105,10 @@ class Login
     */
    public function login($user, $password, $storedUser = '', $storedPassword = '', $storedId = 0)
    {
+       
        if ($user === $storedUser) {
-           if (password_verify($password, $storedPassword)) {
+           //if (password_verify($password, $storedPassword)) {
+               
                $this->userId = $storedId;
                $this->userName = $storedUser;
 

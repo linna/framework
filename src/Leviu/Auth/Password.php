@@ -23,6 +23,19 @@ namespace Leviu\Auth;
 class Password
 {
     /**
+     *
+     * @var array
+     */
+    protected $options = [
+            'cost' => 11
+            //'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+        ];
+    
+    public function __construct() {
+        
+    }
+    
+    /**
      * Check if password matches a hash.
      * 
      * @param string $hash     Password hashed.
@@ -52,17 +65,37 @@ class Password
     {
        
         //setting option
-        $options = [
-            'cost' => 11
+        //$options = [
+        //    'cost' => 11
             //'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
-        ];
+        //];
 
         //generate hash from password
         //$hash = password_hash($password, PASSWORD_BCRYPT, $options);*/
         
         //generate hash from password
-        $hash = password_hash($password, PASSWORD_DEFAULT, $options);
+        $hash = password_hash($password, PASSWORD_DEFAULT, $this->options);
         
         return $hash;
+    }
+    
+    /**
+     * Check if password need rehash
+     * 
+     * @param string $password Password for check.
+     * @param string $hash Hash for check.
+     * 
+     * @return string Return the hashed password.
+     *
+     * @since 0.1.4
+     */
+    public function needs_rehash($password, $hash)
+    {
+        if (password_needs_rehash($hash, PASSWORD_DEFAULT, $this->options)) {
+        // If so, create a new hash, and replace the old one
+            return true;
+        }
+        
+        return false;
     }
 }
