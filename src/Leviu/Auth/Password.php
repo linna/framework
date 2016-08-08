@@ -50,15 +50,19 @@ class Password
      */
     public function hash($password)
     {
-        //setting optiona
+       
+        //setting option
         $options = [
-            'cost' => 11,
-            'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+            'cost' => 11
+            //'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
         ];
 
-        // generate hash from password
-        $hash = password_hash($password, PASSWORD_BCRYPT, $options);
-
+        //generate hash from password
+        //$hash = password_hash($password, PASSWORD_BCRYPT, $options);*/
+        
+        //generate hash from password
+        $hash = password_hash($password, PASSWORD_DEFAULT, $options);
+        
         return $hash;
     }
 }
