@@ -110,7 +110,6 @@ class Login
        if ($user === $storedUser) {
            //if (password_verify($password, $storedPassword)) {
            if ($p->verify($password, $storedPassword)) {
-               
                $this->userId = $storedId;
                $this->userName = $storedUser;
 

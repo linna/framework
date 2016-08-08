@@ -31,8 +31,8 @@ class Password
             //'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
         ];
     
-    public function __construct() {
-        
+    public function __construct()
+    {
     }
     
     /**
@@ -72,7 +72,7 @@ class Password
 
         //generate hash from password
         //$hash = password_hash($password, PASSWORD_BCRYPT, $options);*/
-        
+
         //generate hash from password
         $hash = password_hash($password, PASSWORD_DEFAULT, $this->options);
         
@@ -92,7 +92,7 @@ class Password
     public function needs_rehash($password, $hash)
     {
         if (password_needs_rehash($hash, PASSWORD_DEFAULT, $this->options)) {
-        // If so, create a new hash, and replace the old one
+            // If so, create a new hash, and replace the old one
             return true;
         }
         
