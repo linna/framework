@@ -105,9 +105,11 @@ class Login
     */
    public function login($user, $password, $storedUser = '', $storedPassword = '', $storedId = 0)
    {
+       $p = new Password;
        
        if ($user === $storedUser) {
            //if (password_verify($password, $storedPassword)) {
+           if ($p->verify($password, $storedPassword)) {
                
                $this->userId = $storedId;
                $this->userName = $storedUser;
