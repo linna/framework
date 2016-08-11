@@ -2,4 +2,8 @@ composer.phar
 composer.lock
 vendor/
 nbproject/
-nbproject/private/
+nbproject/private
+*.buildpath
+*.project
+.settings/org.eclipse.php.core.prefs
+.settings/org.eclipse.wst.common.project.facet.core.xml

@@ -89,7 +89,7 @@ class Password
      *
      * @since 0.1.4
      */
-    public function needs_rehash($password, $hash)
+    public function needs_rehash($hash)
     {
         if (password_needs_rehash($hash, PASSWORD_DEFAULT, $this->options)) {
             // If so, create a new hash, and replace the old one
