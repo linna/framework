@@ -134,13 +134,13 @@ class View
         ob_start();
 
         try {
-            if (!file_exists(APP."Views/{$view}.php")) {
+            if (!file_exists(APP."Views/{$view}.html")) {
                 throw new \Exception("The required View ({$view}) not exist.");
             }
 
-            require APP.'Views/_templates/header.php';
-            require APP."Views/{$view}.php";
-            require APP.'Views/_templates/footer.php';
+            require APP.'Views/_templates/header.html';
+            require APP."Views/{$view}.html";
+            require APP.'Views/_templates/footer.html';
         } catch (\Exception $e) {
             echo 'View exception: ', $e->getMessage(), "\n";
         }
