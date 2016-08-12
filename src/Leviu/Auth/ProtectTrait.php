@@ -35,11 +35,12 @@ trait ProtectTrait
      * protectController.
      * 
      * @param \Leviu\Auth\Login $loginIstance
+     * @param string $redirect
      */
-    protected function protectController(Login $loginIstance)
+    protected function protectController(Login $loginIstance, $redirect)
     {
         if ($loginIstance->isLogged === false) {
-            header('location: '.URL.'unauthorized');
+            header('location: '.$redirect);
             die();
         }
 
