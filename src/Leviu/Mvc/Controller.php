@@ -92,6 +92,5 @@ class Controller
             echo 'Model exception: ', $e->getMessage(), "\n";
             die();
         }
-
     }
 }
