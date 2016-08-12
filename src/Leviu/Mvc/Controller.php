@@ -11,9 +11,9 @@
  *
  * @version 0.1.0
  */
-namespace Leviu\Routing;
+namespace Leviu\Mvc;
 
-use Leviu\Html\View;
+use Leviu\Mvc\View;
 
 /**
  * BaseController
@@ -27,7 +27,7 @@ class Controller
     /**
      * @var object Database Connection
      */
-    protected $db = null;
+    //protected $db = null;
 
     /**
      * @var object The model object for current controller
@@ -93,6 +93,5 @@ class Controller
             die();
         }
 
-        //$this->
     }
 }
