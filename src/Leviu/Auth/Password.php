@@ -15,7 +15,7 @@ namespace Leviu\Auth;
 
 /**
  * Password
- * - Class for manage password, using PHP 5.5.0 password  see php documentation for more information
+ * - Class for manage password, using PHP 5.5.0 password see php documentation for more information
  * http://php.net/manual/en/ref.password.php.
  * 
  * @todo Implement password Rehashing
