@@ -11,58 +11,72 @@
  */
 namespace Leviu\Mvc;
 
-use Leviu\Mvc\View;
+//use Leviu\Mvc\View;
 
 /**
- * This is the parent class for every controller in the app, permit access
- * to view and models.
+ * BaseController
+ * - This is the parent class for every controller in the app, permit access
+ * to view and models for every instance of a child.
+ * 
+ * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  */
 class Controller
 {
     /**
-     * @var object $model The model object for current controller
+     * @var object Database Connection
+     */
+    //protected $db = null;
+
+    /**
+     * @var object The model object for current controller
      */
     protected $model = null;
 
     /**
-     * @var object $view The view objer for current controller
+     * @var object The view objer for current controller
      */
-    protected $view = null;
+    //protected $view = null;
 
     /**
-     * @var string $currentController Controller name for load correct model
+     * @var string Controller name for load correct model
      */
-    protected $currentController = null;
+    //protected $currentController = null;
 
     /**
-     * Constructor.
+     * Controller constructor.
      * 
      * @param string $controller Passed for child __contruct is __CLASS__
      *
      * @since 0.1.0
      */
-    public function __construct($controller)
+    public function __construct()//$controller)
     {
+        //connect to DB
+        //$this->db = Database::connect();
+
         //store current controller
-        $this->currentController = $controller;
+        //$this->currentController = $controller;
 
         //get an instance of View object
-        $this->view = new View();
+        //$this->view = new View();
 
         //get an instace of the proper model for current controller
         //$this->model = $this->loadModel();
     }
 
     /**
-     * Load proper model for current controller or trow exception
+     * loadModel.
      * 
-     * @return \Model 
+     * Load proper model for current controller or trow exception
+     * Called into __construct()
+     * 
+     * @return \App_mk0\model Proper medel for loaded controller
      *
      * @throws \Exception if model not exist
      *
      * @since 0.1.0
      */
-    protected function loadModel()
+    /*protected function loadModel()
     {
         $model = str_replace('Controllers', 'Models', $this->currentController);
 
@@ -76,5 +90,5 @@ class Controller
             echo 'Model exception: ', $e->getMessage(), "\n";
             die();
         }
-    }
+    }*/
 }
