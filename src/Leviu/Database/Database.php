@@ -3,33 +3,29 @@
 /**
  * Leviu.
  *
- * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2015, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
- * @version 0.1.0
  */
 namespace Leviu\Database;
 
 /**
- * Databese
- * - Singleton Pattern for Database connection
+ * Singleton Pattern for PDO Database connection
  * https://it.wikipedia.org/wiki/Singleton.
+ * http://php.net/manual/en/class.pdo.php
  */
 class Database extends \PDO
 {
     /**
-     * @var object
      * @static object $instance The DB istance
      */
     private static $instance;
 
     /**
-     * Database constructor.
+     * Constructor
      * 
-     * @since 0.1.0
      */
     public function __construct()
     {
@@ -50,8 +46,6 @@ class Database extends \PDO
     }
 
     /**
-     * __clone.
-     * 
      * Forbids the object clone
      * 
      * @since 0.1.0
@@ -62,8 +56,6 @@ class Database extends \PDO
     }
 
     /**
-     * connect.
-     * 
      * Return te instance of database connection
      * 
      * @return object

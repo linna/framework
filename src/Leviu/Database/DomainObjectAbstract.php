@@ -3,26 +3,22 @@
 /**
  * Leviu.
  *
- * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2015, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
- * @version 0.1.0
  */
 namespace Leviu\Database;
 
 /**
- * DomainObjectAbstract
- * - Abstract Class for Domain Object.
+ * Abstract Class for Domain Object
  */
 abstract class DomainObjectAbstract
 {
     /**
-     * Id of the Object, same of db record.
      *
-     * @var int
+     * @var int $_id Id of the Object, same of db record.
      */
     protected $_id = null;
 

@@ -3,19 +3,16 @@
 /**
  * Leviu.
  *
- * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2015, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
- * @version 0.1.0
  */
 namespace Leviu\Mvc;
 
 /**
- * View
- * - This class manage rendering of html page
+ * Manage rendering of html page
  * Css, javascript and data.
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
@@ -23,17 +20,17 @@ namespace Leviu\Mvc;
 class View
 {
     /**
-     * @var array Contain path to css file
+     * @var array $css Contain path to css file
      */
     protected $css = array();
 
     /**
-     * @var array Contain path to js file
+     * @var array $js Contain path to js file
      */
     protected $js = array();
 
     /**
-     * @var string Page title
+     * @var string $title Page title
      *
      * @todo Implements the property in header template
      */
@@ -61,7 +58,7 @@ class View
      * addCss.
      * 
      * Called from controller
-     * Utilize this for add a file css to view from crontroller
+     * Utilize this for load a file css to view from crontroller
      * 
      * @param string $file Path for css file
      *
@@ -103,10 +100,7 @@ class View
     }
 
     /**
-     * render.
-     * 
-     * Called from controller
-     * Send view to browser
+     * Send output to browser
      * 
      * @param string $view The view called from controller
      *
@@ -116,6 +110,8 @@ class View
      */
     public function render($view)
     {
+        // da riscrivere perchè per come è stata fatta è il framework a dipendere dalla applicazione.
+        
         $data = $this->data;
         $css = $this->css;
         $js = $this->js;

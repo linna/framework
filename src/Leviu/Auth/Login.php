@@ -1,15 +1,13 @@
 <?php
 
 /**
- * Leviu.
+ * Leviu
  *
- * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2015, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
- * @version 0.1.0
  */
 namespace Leviu\Auth;
 
@@ -17,10 +15,9 @@ use Leviu\Session\Session;
 use Leviu\Auth\Password;
 
 /**
- * Login
- * - Class a for autenticate users :).
+ *Class a for autenticate users :).
  *
- * Utilize for do login
+ * Utilize for login
  * 
  *      <?php
  *      $user = ''; //user from login page form
@@ -37,7 +34,7 @@ use Leviu\Auth\Password;
  *      //redirect
  * 
  * 
- * Utilize for under login actions
+ * Utilize for check login
  * 
  *      <?php
  *      $login = new Login();
@@ -57,29 +54,29 @@ use Leviu\Auth\Password;
 class Login
 {
     /**
-     * @var int Current user id
+     * @var int $userId Current user id
      */
     public $userId = 0;
 
     /**
-     * @var string Current user name
+     * @var string $userName Current user name
      */
     public $userName = '';
 
     /**
-     * $login->isLogged can be check if user is logged.
+     * $login->isLogged can be read for check if user is logged.
      *
-     * @var bool User login status
+     * @var bool $isLogged User login status
      */
     public $isLogged = false;
 
     /**
-     * @var int Numeber of seconds before login will considered invalid
+     * @var int $loginExpire Numeber of seconds before login will considered invalid
      */
     private $loginExpire = 1800;
 
     /**
-     * Login constructor.
+     * Constructor.
      * 
      * @since 0.1.0
      */
@@ -89,8 +86,6 @@ class Login
     }
 
    /**
-    * Login.
-    * 
     * Try to log user passed by param, return true if ok else false
     * 
     * @param string $user
@@ -108,7 +103,6 @@ class Login
        $p = new Password;
        
        if ($user === $storedUser) {
-           //if (password_verify($password, $storedPassword)) {
            if ($p->verify($password, $storedPassword)) {
                $this->userId = $storedId;
                $this->userName = $storedUser;
@@ -132,8 +126,6 @@ class Login
    }
 
     /**
-     * Logout.
-     * 
      * For do logout, delete login information from session
      * 
      * @return bool
@@ -150,9 +142,7 @@ class Login
     }
 
     /**
-     * Check.
-     * 
-     * For check if user is logged, get login data from session and update it
+     * Check if user is logged, get login data from session and update it
      * 
      * @return bool
      *

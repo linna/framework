@@ -1,38 +1,34 @@
 <?php
 
 /**
- * Leviu.
+ * Leviu
  *
- * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2015, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
- * @version 0.1.0
  */
 namespace Leviu\Auth;
 
 /**
- * Protect trait
- * - Methods for help to protect a controller under login.
+ * Methods for help to protect a controller with login.
  * 
- * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  */
 trait ProtectTrait
 {
     /**
-     * @var object Login instance
+     * @var object $login Login instance
      */
     protected $login;
 
     /**
-     * @var bool Login status 
+     * @var bool $isLogged Login status 
      */
     protected $isLogged;
 
     /**
-     * protectController.
+     * Allow access to controller only if logged
      * 
      * @param \Leviu\Auth\Login $loginIstance
      * @param string $redirect
@@ -48,7 +44,7 @@ trait ProtectTrait
         $this->isLogged = $loginIstance->isLogged;
     }
     /**
-     * protectMethod.
+     * Allow access to controller method only if logged
      * 
      * @param \Leviu\Auth\Login $loginIstance
      */

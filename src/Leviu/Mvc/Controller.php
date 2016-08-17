@@ -3,49 +3,39 @@
 /**
  * Leviu.
  *
- * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2015, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
- * @version 0.1.0
  */
 namespace Leviu\Mvc;
 
 use Leviu\Mvc\View;
 
 /**
- * BaseController
- * - This is the parent class for every controller in the app, permit access
- * to view and models for every instance of a child.
- * 
- * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
+ * This is the parent class for every controller in the app, permit access
+ * to view and models.
  */
 class Controller
 {
     /**
-     * @var object Database Connection
-     */
-    //protected $db = null;
-
-    /**
-     * @var object The model object for current controller
+     * @var object $model The model object for current controller
      */
     protected $model = null;
 
     /**
-     * @var object The view objer for current controller
+     * @var object $view The view objer for current controller
      */
     protected $view = null;
 
     /**
-     * @var string Controller name for load correct model
+     * @var string $currentController Controller name for load correct model
      */
     protected $currentController = null;
 
     /**
-     * Controller constructor.
+     * Constructor.
      * 
      * @param string $controller Passed for child __contruct is __CLASS__
      *
@@ -53,9 +43,6 @@ class Controller
      */
     public function __construct($controller)
     {
-        //connect to DB
-        //$this->db = Database::connect();
-
         //store current controller
         $this->currentController = $controller;
 
@@ -67,12 +54,9 @@ class Controller
     }
 
     /**
-     * loadModel.
-     * 
      * Load proper model for current controller or trow exception
-     * Called into __construct()
      * 
-     * @return \App_mk0\model Proper medel for loaded controller
+     * @return \Model 
      *
      * @throws \Exception if model not exist
      *

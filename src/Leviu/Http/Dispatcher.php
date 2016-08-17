@@ -1,21 +1,18 @@
 <?php
 
 /**
- * Leviu.
+ * Leviu
  *
- * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2015, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
- * @version 0.1.0
  */
 namespace Leviu\Http;
 
 /**
- * Dispatcher 
- * - Class for dispatch routes, accept a route object and call proper
+ * Dispatch routes, accept a route object and call proper
  * method after check route type.
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
