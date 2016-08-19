@@ -36,7 +36,7 @@ interface RouteInterface
      *
      * @since 0.1.0
      */
-    public function __construct($name, $method, $controller, $action, $param);
+    public function __construct($name, $method, $model, $view, $controller, $action, $param);
 
     /**
      * getType.

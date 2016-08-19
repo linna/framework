@@ -97,13 +97,13 @@ class Router
         switch ($this->route) {
             case null:
                 //return new bad route object
-                return new Route(null, null, null, null, null);
+                return new Route(null, null, null, null, null, null, null);
             default:
                 //try to find param from route
                 $param = $this->buildParam($this->route);
                 //return new route object
                 return new Route(
-                        $this->route['name'], $this->route['method'], $this->route['controller'], $this->route['action'], $param
+                        $this->route['name'], $this->route['method'], $this->route['model'], $this->route['view'], $this->route['controller'], $this->route['action'], $param
                 );
         }
     }

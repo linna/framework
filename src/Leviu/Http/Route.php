@@ -14,10 +14,8 @@
 namespace Leviu\Http;
 
 /**
- * Route 
- * - Class for describe valid routes.
+ * Describe valid routes.
  * 
- * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  */
 class Route implements RouteInterface
 {
@@ -26,41 +24,26 @@ class Route implements RouteInterface
      */
     protected $typeOfRoute = null;
 
-    /**
-     * @var string Name of route
-     *
-     * @todo implement reverse routing for utilize this properties
-     */
+    
     protected $name = '';
 
-    /**
-     * @var string Http method of route
-     *
-     * @todo implement method control for utilize this properties
-     */
+   
     protected $method;
 
-    /**
-     * @var string Controller must be loaded
-     *
-     * @since 0.1.0
-     */
+    protected $view = null;
+            
+    protected $model = null;
+    
     protected $controller = null;
 
-    /**
-     * @var string Method must be loaded
-     *
-     * @since 0.1.0
-     */
+   
     protected $action = null;
 
-    /**
-     * @var string Params must be passed to method
-     *
-     * @since 0.1.0
-     */
+    
     protected $param = array();
 
+    
+        
     /**
      * Route contructor.
      * 
@@ -70,12 +53,13 @@ class Route implements RouteInterface
      * @param string $action
      * @param array  $param
      *
-     * @since 0.1.0
      */
-    public function __construct($name, $method, $controller, $action, $param)
+    public function __construct($name, $method, $model, $view, $controller, $action, $param)
     {
         $this->name = $name;
         $this->method = $method;
+        $this->model = $model;
+        $this->view = $view;
         $this->controller = $controller;
         $this->action = $action;
         $this->param = $param;
@@ -83,8 +67,6 @@ class Route implements RouteInterface
     }
 
     /**
-     * type.
-     * 
      * Type of route identifiend by a number
      * 1 for controller default method
      * 2 for controller with custom method
@@ -92,7 +74,6 @@ class Route implements RouteInterface
      * 
      * @return int Type of route
      *
-     * @since 0.1.0
      */
     protected function type()
     {
@@ -159,5 +140,15 @@ class Route implements RouteInterface
     public function getParam()
     {
         return $this->param;
+    }
+    
+    public function getModel()
+    {
+        return $this->model;
+    }
+    
+    public function getView()
+    {
+        return $this->view;
     }
 }

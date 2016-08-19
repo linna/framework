@@ -24,13 +24,17 @@ abstract class AbstractView
      */
     protected $data;
 
+    protected $template;
+    
+    protected $model;
     /**
      * Constructor.
      * 
      */
-    public function __construct()
+    public function __construct($model)
     {
-
+        //$this->data = (object) null;
+        $this->model = $model;
     }
     
     /**
@@ -38,11 +42,9 @@ abstract class AbstractView
      * 
      * @param \Leviu\Mvc\TemplateInterface $template
      */
-    public function render(TemplateInterface $template)
+    public function render()
     {
-        
-        $template->data = $this->data;
-        $template->output();
- 
+        $this->template->data = $this->data;
+        $this->template->output();
     }
 }

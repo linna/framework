@@ -49,8 +49,9 @@ class Controller
      *
      * @since 0.1.0
      */
-    public function __construct()//$controller)
+    public function __construct($model)//$controller)
     {
+        $this->model = $model;
         //connect to DB
         //$this->db = Database::connect();
 
