@@ -15,7 +15,7 @@ namespace Leviu\Mvc;
  * Abstract class for views
  * 
  */
-abstract class AbstractView
+class View implements \SplObserver
 {
     
     /**
@@ -27,6 +27,8 @@ abstract class AbstractView
     protected $template;
     
     protected $model;
+    
+    //protected $notifiedData;
     /**
      * Constructor.
      * 
@@ -46,5 +48,11 @@ abstract class AbstractView
     {
         $this->template->data = $this->data;
         $this->template->output();
+    }
+    
+    public function update(\SplSubject $subject)
+    {
+        $this->data = $subject->getUpdate;
+        //return $this;
     }
 }

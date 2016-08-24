@@ -18,8 +18,8 @@ use Leviu\Http\RouteInterface;
 class FrontController
 {
     private $view;
-    private $controller;
-       
+    //private $controller;
+
     
     public function __construct(RouteInterface $route, $appNamespace)
     {
@@ -33,9 +33,16 @@ class FrontController
         
         
         $model = new $route_model();
-        $this->view = new $route_view($model);
-        $this->controller = new $route_controller($model);
-                
+        $view = new $route_view($model);
+        $controller = new $route_controller($model);
+        
+        //var_dump($this->view);
+
+        $model->attach($view);
+        
+        
+        //$this->view = $view;
+
         //che type of route anche cal proper func
         //http://php.net/manual/en/ref.funchand.php
         //http://php.net/manual/en/function.call-user-func.php
@@ -43,25 +50,29 @@ class FrontController
         switch ($route_type) {
             case 3:
                 //call class, method and pass parameter
-                call_user_func_array(array($this->controller, $route_action), $route_param);
-                call_user_func(array($this->view, $route_action));
+                call_user_func_array(array($controller, $route_action), $route_param);
+                var_dump($view);
+                
+                call_user_func(array($view, $route_action));
                 break;
             case 2:
                 //call class, method without parameter
-                call_user_func(array($this->controller, $route_action));
-                call_user_func(array($this->view, $route_action));
+                call_user_func(array($controller, $route_action));
+                call_user_func(array($view, $route_action));
                 break;
             case 1:
                 //call class with index, no method passed
                 //call_user_func(array($this->controller, 'index'));
-                call_user_func(array($this->view, 'index'));
+                call_user_func(array($view, 'index'));
                 break;
             default:
                 //call default 404 controller
                 //call_user_func(array($this->controller, 'index'));
-                call_user_func(array($this->view, 'index'));
+                call_user_func(array($view, 'index'));
                 break;
         }
+        
+        $this->view = $view;
     }
     
     public function response()
