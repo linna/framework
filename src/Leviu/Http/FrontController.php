@@ -51,8 +51,6 @@ class FrontController
             case 3:
                 //call class, method and pass parameter
                 call_user_func_array(array($controller, $route_action), $route_param);
-                var_dump($view);
-                
                 call_user_func(array($view, $route_action));
                 break;
             case 2:
