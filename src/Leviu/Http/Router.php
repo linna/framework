@@ -3,13 +3,11 @@
 /**
  * Leviu.
  *
- * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2015, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
- * @version 0.1.0
  */
 namespace Leviu\Http;
 
@@ -58,18 +56,28 @@ class Router
     protected $currentUri = '';
 
     /**
-     * Router constructor.
+     *
+     * @var string Route for error page :) 
+     */
+    protected $badRoute = '';
+    
+    
+    /**
+     * Constructor.
      * 
      * @param array  $routes   list of registerd routes for the app in routes.php
-     * @param string $basePath Directory of app from config.php
+     * @param object $options  mixed options for router
      *
      * @since 0.1.0
      */
-    public function __construct($routes, $basePath = '')
+    public function __construct($routes, $options)//$basePath = '')
     {
         //set basePath
-        $this->basePath = $basePath;
-
+        $this->basePath = $options->base_path;
+        
+        //set badRoute
+        $this->badRoute = $options->bad_route;
+        
         //set routes
         $this->routes = $routes;
 
@@ -92,12 +100,23 @@ class Router
      */
     public function getRoute()
     {
-
+        
         //check if current route is valide
         switch ($this->route) {
             case null:
                 //return new bad route object
-                return new Route(null, null, null, null, null, null, null);
+                
+                //find declared error route
+                $bad_route = $this->routes[array_search($this->badRoute, array_column($this->routes, 'name'))];
+                
+                //build param, no param, sure
+                $param = $this->buildParam($this->route);
+                
+                //return page for bad route
+                return new Route(
+                        $bad_route['name'], $bad_route['method'], $bad_route['model'], $bad_route['view'], $bad_route['controller'], $bad_route['action'], $param
+                );
+                
             default:
                 //try to find param from route
                 $param = $this->buildParam($this->route);

@@ -18,16 +18,14 @@ use Leviu\Http\RouteInterface;
 class FrontController
 {
     private $view;
-    //private $controller;
-
-    
+        
     public function __construct(RouteInterface $route, $appNamespace)
     {
         $route_type = $route->getType();
         
-        $route_model = '\App\Models\\'.$route->getModel();
-        $route_view = '\App\Views\\'.$route->getView();
-        $route_controller = '\App\Controllers\\'.$route->getController();
+        $route_model = $appNamespace->model.$route->getModel();
+        $route_view = $appNamespace->view.$route->getView();
+        $route_controller = $appNamespace->controller.$route->getController();
         $route_action = $route->getAction();
         $route_param = $route->getParam();
         

@@ -53,6 +53,5 @@ class View implements \SplObserver
     public function update(\SplSubject $subject)
     {
         $this->data = $subject->getUpdate;
-        //return $this;
     }
 }
