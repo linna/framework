@@ -92,29 +92,27 @@ class Autoloader
      */
     public function register()
     {
-        //$this->prefixes = array();
         spl_autoload_register(array($this, 'loadClass'));
-        
-        
+       
     }
 
     /**
      * Adds a base directory for a namespace prefix.
      *
      * @param string $prefix   The namespace prefix.
-     * @param string $base_dir A base directory for class files in the
+     * @param string $baseDir A base directory for class files in the
      *                         namespace.
      * @param bool   $prepend  If true, prepend the base directory to the stack
      *                         instead of appending it; this causes it to be searched first rather
      *                         than last.
      */
-    public function addNamespace($prefix, $base_dir, $prepend = false)
+    public function addNamespace($prefix, $baseDir, $prepend = false)
     {
         // normalize namespace prefix
         $prefix = trim($prefix, '\\').'\\';
 
         // normalize the base directory with a trailing separator
-        $base_dir = rtrim($base_dir, DIRECTORY_SEPARATOR).'/';
+        $baseDir = rtrim($baseDir, DIRECTORY_SEPARATOR).'/';
 
         // initialize the namespace prefix array
         if (isset($this->prefixes[$prefix]) === false) {
@@ -123,11 +121,13 @@ class Autoloader
 
         // retain the base directory for the namespace prefix
         if ($prepend === true) {
-            array_unshift($this->prefixes[$prefix], $base_dir);
+            //add namespace at begin
+            array_unshift($this->prefixes[$prefix], $baseDir);
             return;
         }
         
-        array_push($this->prefixes[$prefix], $base_dir);
+        //add namespace at end
+        array_push($this->prefixes[$prefix], $baseDir);
         
     }
 
@@ -139,30 +139,20 @@ class Autoloader
      */
     public function addNamespaces($namespaces)
     {
+        //loop for add single namespace
         foreach ($namespaces as $nsp) {
+            
+            //namespace prefix
             $prefix = (string) $nsp[0];
+            
+            //namespace basedir
             $baseDir = (string) $nsp[1];
+            
+            //prepend
             $prepend = (bool) (isset($nsp[2])) ? $nsp[2] : false;
             
+            //add namespace
             $this->addNamespace($prefix, $baseDir, $prepend);
-            /*
-            // normalize namespace prefix
-            $prefix = trim($prefix, '\\').'\\';
-
-            // normalize the base directory with a trailing separator
-            $base_dir = rtrim($base_dir, DIRECTORY_SEPARATOR).'/';
-
-            // initialize the namespace prefix array
-            if (isset($this->prefixes[$prefix]) === false) {
-                $this->prefixes[$prefix] = array();
-            }
-
-            // retain the base directory for the namespace prefix
-            if ($prepend) {
-                array_unshift($this->prefixes[$prefix], $base_dir);
-            } else {
-                array_push($this->prefixes[$prefix], $base_dir);
-            }*/
         }
     }
 
@@ -192,9 +182,7 @@ class Autoloader
             // try to load a mapped file for the prefix and relative class
             $mappedFile = $this->loadMappedFile($prefix, $relativeClass);
 
-            //echo $mapped_file.'<br/>';
-
-            if ($mappedFile) {
+            if ($mappedFile !== false) {
                 return $mappedFile;
             }
 
