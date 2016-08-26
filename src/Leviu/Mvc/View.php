@@ -24,25 +24,30 @@ class View implements \SplObserver
      */
     protected $data;
 
+    /**
+     *
+     * @var object Template utilized for data
+     */
     protected $template;
     
+    /**
+     *
+     * @var object Model for access data
+     */
     protected $model;
     
-    //protected $notifiedData;
+
     /**
      * Constructor.
      * 
      */
     public function __construct($model)
     {
-        //$this->data = (object) null;
         $this->model = $model;
     }
     
     /**
-     * Render template
-     * 
-     * @param \Leviu\Mvc\TemplateInterface $template
+     * Render a template
      */
     public function render()
     {

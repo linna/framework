@@ -64,12 +64,10 @@ class FrontController
                 break;
             case 1:
                 //call class with index, no method passed
-                //call_user_func(array($this->controller, 'index'));
                 call_user_func(array($view, 'index'));
                 break;
             default:
                 //call default 404 controller
-                //call_user_func(array($this->controller, 'index'));
                 call_user_func(array($view, 'index'));
                 break;
         }

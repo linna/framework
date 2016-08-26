@@ -45,9 +45,9 @@ abstract class MapperAbstract
         
         if ($obj->getId() === 0) {
             return $this->_insert($obj);
-        } else {
-            return $this->_update($obj);
         }
+        
+        return $this->_update($obj);
     }
 
     /**
