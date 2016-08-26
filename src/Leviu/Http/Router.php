@@ -21,7 +21,7 @@ namespace Leviu\Http;
 class Router
 {
     /**
-     * @var object Utilized for return the most recently parsed route
+     * @var array Utilized for return the most recently parsed route
      */
     protected $route = null;
 
@@ -70,7 +70,7 @@ class Router
      *
      * @since 0.1.0
      */
-    public function __construct($routes, $options)//$basePath = '')
+    public function __construct($routes, $options)
     {
         //set basePath
         $this->basePath = $options->base_path;
@@ -107,14 +107,14 @@ class Router
                 //return new bad route object
                 
                 //find declared error route
-                $bad_route = $this->routes[array_search($this->badRoute, array_column($this->routes, 'name'))];
+                $badRoute = $this->routes[array_search($this->badRoute, array_column($this->routes, 'name'))];
                 
                 //build param, no param, sure
                 $param = $this->buildParam($this->route);
                 
                 //return page for bad route
                 return new Route(
-                        $bad_route['name'], $bad_route['method'], $bad_route['model'], $bad_route['view'], $bad_route['controller'], $bad_route['action'], $param
+                        $badRoute['name'], $badRoute['method'], $badRoute['model'], $badRoute['view'], $badRoute['controller'], $badRoute['action'], $param
                 );
                 
             default:
@@ -158,17 +158,8 @@ class Router
             // set regex delimiter
             $c = "`^{$c}/?$`";
 
-            //debug
-            //var_dump($c);
-
             //check if route from browser match with registered routes
             $m = preg_match($c, $this->currentUri, $matches);
-
-            //debug
-            //var_dump($matches);
-
-            //debug
-            //var_dump(sizeof($matches));
 
             //if match and there is a subpattern for a route with multiple actions
             if ($m === 1 && sizeof($matches) > 1) {
@@ -199,9 +190,6 @@ class Router
             }
         }
 
-        //debug
-        //var_dump($validRoute);
-
         //return route
         return $validRoute;
     }
@@ -219,66 +207,17 @@ class Router
      */
     protected function buildParam($validRoute)
     {
-        // var_dump($validRoute);
-        // if (isset($validRoute['matches'][1]))
-        // {
-        //    $validRoute['url'] = preg_replace('`\([0-9A-Za-z\|]++\)`', $validRoute['matches'][1], $validRoute['url']);
-        //  $matches = explode('/', $validRoute['matches'][1]);
-        // }
-
-        //debug
-        //var_dump($validRoute['url']);
-
         $url = explode('/', $validRoute['url']);
         $matches = explode('/', $validRoute['matches'][0]);
 
-        //debug
-        //var_dump($url);
-        //var_dump($matches);
-
-        //old code
-        //$c = 1;
-        //$j = sizeof($url);
-
         $param = array();
         $rawParam = array_diff($matches, $url);
-
-        //debug
-        //var_dump(array_diff($matches,$url));
 
         foreach ($rawParam as $key => $value) {
             $paramName = preg_replace('`^(\[)|(\])$`', '', $url[$key]);
 
             $param[$paramName] = $value;
         }
-
-        //previsous code :)
-        /*
-        while ($c < $j) {
-            if ($url[$c] !== $matches[$c]) {
-                $key = preg_replace('`^(\[)|(\])$`', '', $url[$c]);
-                $keyType = explode(':', $keyType);
-
-                $type = $keyType[0];
-                $key = $keyType;
-                $value = $matches[$c];
-
-                switch ($type) {
-                    case 'int':
-                        $param[$key] = $value;
-                        break;
-                    case 'string':
-                        $param[$key] = (string) $value;
-                        break;
-                }
-            }
-
-            $c++;
-        }
-         */
-
-        //debug   
-        //var_dump($param);
 
         return $param;
     }

@@ -17,44 +17,50 @@ use Leviu\Http\RouteInterface;
  */
 class FrontController
 {
+    /**
+     *
+     * @var Object Contain view object for render 
+     */
     private $view;
-        
+    
+    /**
+     * constructor
+     * 
+     * @param RouteInterface $route
+     * @param type $appNamespace
+     */
     public function __construct(RouteInterface $route, $appNamespace)
     {
-        $route_type = $route->getType();
+        $routeType = $route->getType();
         
-        $route_model = $appNamespace->model.$route->getModel();
-        $route_view = $appNamespace->view.$route->getView();
-        $route_controller = $appNamespace->controller.$route->getController();
-        $route_action = $route->getAction();
-        $route_param = $route->getParam();
+        $routeModel = $appNamespace->model.$route->getModel();
+        $routeView = $appNamespace->view.$route->getView();
+        $routeController = $appNamespace->controller.$route->getController();
+        $routeAction = $route->getAction();
+        $routeParam = $route->getParam();
         
         
-        $model = new $route_model();
-        $view = new $route_view($model);
-        $controller = new $route_controller($model);
+        $model = new $routeModel();
+        $view = new $routeView($model);
+        $controller = new $routeController($model);
         
-        //var_dump($this->view);
-
         $model->attach($view);
         
         
-        //$this->view = $view;
-
         //che type of route anche cal proper func
         //http://php.net/manual/en/ref.funchand.php
         //http://php.net/manual/en/function.call-user-func.php
         //http://php.net/manual/en/function.call-user-func-array.php
-        switch ($route_type) {
+        switch ($routeType) {
             case 3:
                 //call class, method and pass parameter
-                call_user_func_array(array($controller, $route_action), $route_param);
-                call_user_func(array($view, $route_action));
+                call_user_func_array(array($controller, $routeAction), $routeParam);
+                call_user_func(array($view, $routeAction));
                 break;
             case 2:
                 //call class, method without parameter
-                call_user_func(array($controller, $route_action));
-                call_user_func(array($view, $route_action));
+                call_user_func(array($controller, $routeAction));
+                call_user_func(array($view, $routeAction));
                 break;
             case 1:
                 //call class with index, no method passed
