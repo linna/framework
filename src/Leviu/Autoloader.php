@@ -35,20 +35,7 @@ namespace Leviu;
  * 
  * ... add the path to the class files for the \Foo\Bar\ namespace prefix
  * as follows:
- * 
- *      <?php
- *      // instantiate the loader
- *      $loader = new \Example\Psr4AutoloaderClass;
- *      
- *      // register the autoloader
- *      $loader->register();
- *      
- *      // register the base directories for the namespace prefix
- *      $loader->addNamespace('Foo\Bar', '/path/to/packages/foo-bar/src');
- *      $loader->addNamespace('Foo\Bar', '/path/to/packages/foo-bar/tests');
- * 
- * or using addNamespaces() method
- * 
+ *
  *      <?php
  *      // instantiate the loader
  *      $loader = new \Example\Psr4AutoloaderClass;
@@ -97,41 +84,6 @@ class Autoloader
     }
 
     /**
-     * Adds a base directory for a namespace prefix.
-     *
-     * @param string $prefix   The namespace prefix.
-     * @param string $baseDir A base directory for class files in the
-     *                         namespace.
-     * @param bool   $prepend  If true, prepend the base directory to the stack
-     *                         instead of appending it; this causes it to be searched first rather
-     *                         than last.
-     */
-    public function addNamespace($prefix, $baseDir, $prepend = false)
-    {
-        // normalize namespace prefix
-        $prefix = trim($prefix, '\\').'\\';
-
-        // normalize the base directory with a trailing separator
-        $baseDir = rtrim($baseDir, DIRECTORY_SEPARATOR).'/';
-
-        // initialize the namespace prefix array
-        if (isset($this->prefixes[$prefix]) === false) {
-            $this->prefixes[$prefix] = array();
-        }
-
-        // retain the base directory for the namespace prefix
-        if ($prepend === true) {
-            //add namespace at begin
-            array_unshift($this->prefixes[$prefix], $baseDir);
-            return;
-        }
-        
-        //add namespace at end
-        array_push($this->prefixes[$prefix], $baseDir);
-        
-    }
-
-    /**
      * Adds a base directory for a namespace prefix, accept an array of namespaces
      * Utilize this for prevente multiple addNamespace() calls.
      * 
@@ -142,18 +94,17 @@ class Autoloader
         //loop for add single namespace
         foreach ($namespaces as $nsp) {
             
-            //namespace prefix
-            $prefix = (string) $nsp[0];
-            
-            //namespace basedir
-            $baseDir = (string) $nsp[1];
-            
-            //prepend
-            $prepend = (bool) (isset($nsp[2])) ? $nsp[2] : false;
-            
+            // normalize namespace prefix
+            $prefix = trim($nsp[0], '\\').'\\';
+
+            // normalize the base directory with a trailing separator
+            $baseDir = rtrim($nsp[1], DIRECTORY_SEPARATOR).'/';
+
             //add namespace
-            $this->addNamespace($prefix, $baseDir, $prepend);
+            $this->prefixes[$prefix][] = $baseDir;
         }
+        
+        var_dump($this->prefixes);
     }
 
     /**
@@ -243,8 +194,6 @@ class Autoloader
      */
     protected function requireFile($file)
     {
-        //var_dump($file);
-
         if (file_exists($file)) {
             require $file;
 
