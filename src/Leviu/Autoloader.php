@@ -104,7 +104,6 @@ class Autoloader
             $this->prefixes[$prefix][] = $baseDir;
         }
         
-        var_dump($this->prefixes);
     }
 
     /**
