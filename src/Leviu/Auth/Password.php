@@ -77,7 +77,7 @@ class Password
      *
      * @since 0.1.4
      */
-    public function needs_rehash($hash)
+    public function needsRehash($hash)
     {
         if (password_needs_rehash($hash, PASSWORD_DEFAULT, $this->options)) {
             return true;
