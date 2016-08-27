@@ -23,7 +23,7 @@ class Router
     /**
      * @var array Utilized for return the most recently parsed route
      */
-    protected $route = null;
+    protected $route = array();
 
     /**
      * @var array Passed from constructor, is the list of registerd routes for the app
@@ -65,12 +65,15 @@ class Router
     /**
      * Constructor.
      * 
-     * @param array  $routes   list of registerd routes for the app in routes.php
-     * @param object $options  mixed options for router
+     * 
+     * @param array $routes List of registerd routes for the app in routes.php
+     * @param object $options Options for router config
+     * @param string $request Request uri
      *
-     * @since 0.1.0
+     * @todo Make router compatible with PSR7 REQUEST,instead of request uri pass a PSR7 request object
+     * 
      */
-    public function __construct($routes, $options)
+    public function __construct($requestUri, $routes, $options)
     {
         //set basePath
         $this->basePath = $options->base_path;
@@ -82,7 +85,7 @@ class Router
         $this->routes = $routes;
 
         //get the current uri
-        $this->currentUri = $this->getCurrentUri();
+        $this->currentUri = $this->getCurrentUri($requestUri);
 
         //try to get a route
         $this->route = $this->match();
@@ -181,7 +184,7 @@ class Router
 
             //if match
             if ($m === 1) {
-                //set $validRoute
+                //set valid route
                 $validRoute = $value;
 
                 //add to route array the passed uri for param check when call
@@ -231,9 +234,9 @@ class Router
      *
      * @since 0.1.0
      */
-    protected function getCurrentUri()
+    protected function getCurrentUri($passedUri)
     {
-        $url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
+        $url = isset($passedUri) ? $passedUri : '/';
         $url = filter_var($url, FILTER_SANITIZE_URL);
 
         return '/'.substr($url, strlen($this->basePath));
