@@ -41,11 +41,10 @@ class DatabaseSessionHandler implements SessionHandlerInterface
     /**
      * Class constructor.
      * 
-     * @param string $name Specify sesson name
      */
     public function __construct()
     {
-
+        
     }
 
     /**

@@ -61,7 +61,7 @@ class Session
      *
      * @var type $data Session stored data
      */
-    private static $data;
+    private static $data = array();
 
     /**
      * Session constructor
