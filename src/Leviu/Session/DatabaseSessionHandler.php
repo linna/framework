@@ -42,7 +42,6 @@ class DatabaseSessionHandler extends SessionHandler implements SessionHandlerInt
     /**
      * Class constructor.
      * 
-     * @param string $name Specify sesson name
      */
     public function __construct()
     {
@@ -89,7 +88,7 @@ class DatabaseSessionHandler extends SessionHandler implements SessionHandlerInt
      * 
      * @param string $session_id
      *
-     * @return mixed :)
+     * @return string :)
      */
     public function read($session_id)
     {

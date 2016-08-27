@@ -30,7 +30,6 @@ class Controller
     /**
      * Controller constructor.
      * 
-     * @param string $controller Passed for child __contruct is __CLASS__
      *
      * @since 0.1.0
      */

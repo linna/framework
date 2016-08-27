@@ -70,10 +70,9 @@ class Password
     /**
      * Check if password need rehash
      * 
-     * @param string $password Password for check.
      * @param string $hash Hash for check.
      * 
-     * @return string Return the hashed password.
+     * @return boolean Return the hashed password.
      *
      * @since 0.1.4
      */
