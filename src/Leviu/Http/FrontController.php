@@ -1,9 +1,13 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Leviu
+ *
+ * 
+ * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
+ * @copyright (c) 2016, Sebastian Rapetti
+ * @license http://opensource.org/licenses/MIT MIT License
+ *
  */
 
 namespace Leviu\Http;

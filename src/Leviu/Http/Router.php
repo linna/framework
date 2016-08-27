@@ -1,14 +1,15 @@
 <?php
 
 /**
- * Leviu.
+ * Leviu
  *
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
- * @copyright (c) 2015, Sebastian Rapetti
+ * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
+
 namespace Leviu\Http;
 
 /**
@@ -68,7 +69,7 @@ class Router
      * 
      * @param array $routes List of registerd routes for the app in routes.php
      * @param object $options Options for router config
-     * @param string $request Request uri
+     * @param string $requestUri Request uri
      *
      * @todo Make router compatible with PSR7 REQUEST,instead of request uri pass a PSR7 request object
      * 
@@ -103,31 +104,12 @@ class Router
      */
     public function getRoute()
     {
-        
-        //check if current route is valide
-        switch ($this->route) {
-            case null:
-                //return new bad route object
-                
-                //find declared error route
-                $badRoute = $this->routes[array_search($this->badRoute, array_column($this->routes, 'name'))];
-                
-                //build param, no param, sure
-                $param = $this->buildParam($this->route);
-                
-                //return page for bad route
-                return new Route(
-                        $badRoute['name'], $badRoute['method'], $badRoute['model'], $badRoute['view'], $badRoute['controller'], $badRoute['action'], $param
-                );
-                
-            default:
-                //try to find param from route
-                $param = $this->buildParam($this->route);
-                //return new route object
-                return new Route(
-                        $this->route['name'], $this->route['method'], $this->route['model'], $this->route['view'], $this->route['controller'], $this->route['action'], $param
-                );
-        }
+        //try to find param from route if route is not bad route
+        $param = ($this->route['name'] !== $this->badRoute)? $this->buildParam($this->route) : array();
+        //return new route object
+        return new Route(
+                $this->route['name'], $this->route['method'], $this->route['model'], $this->route['view'], $this->route['controller'], $this->route['action'], $param
+        );
     }
 
     /**
@@ -150,9 +132,8 @@ class Router
      */
     protected function match()
     {
-
-        //declare var
-        $validRoute = null;
+        //declare var with bad route data
+        $validRoute = $this->routes[array_search($this->badRoute, array_column($this->routes, 'name'))];
 
         foreach ($this->routes as $value) {
 
@@ -164,7 +145,7 @@ class Router
             //check if route from browser match with registered routes
             $m = preg_match($c, $this->currentUri, $matches);
 
-            //if match and there is a subpattern for a route with multiple actions
+            //match and there is a subpattern for a route with multiple actions
             if ($m === 1 && sizeof($matches) > 1) {
 
                 //set $validRoute
@@ -182,7 +163,7 @@ class Router
                 break;
             }
 
-            //if match
+            //match
             if ($m === 1) {
                 //set valid route
                 $validRoute = $value;
@@ -193,7 +174,6 @@ class Router
             }
         }
 
-        //return route
         return $validRoute;
     }
 

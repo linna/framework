@@ -1,24 +1,15 @@
 <?php
 
 /**
- * Leviu.
+ * Leviu
  *
- * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
- * @copyright (c) 2015, Sebastian Rapetti
+ * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
- * @version 0.1.0
  */
-/**
- * CREATE TABLE `session` (
- *  `session_id` char(128) NOT NULL,
- *  `session_data` varchar(8191) NOT NULL,
- *  `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- *  PRIMARY KEY (`session_id`)
- * ) ENGINE=MEMORY DEFAULT CHARSET=utf8;.
- */
+
 namespace Leviu\Session;
 
 use Leviu\Database\Database;
@@ -53,9 +44,9 @@ class DatabaseSessionHandler extends SessionHandler implements SessionHandlerInt
      * 
      * @param string $name Specify sesson name
      */
-    public function __construct(/*$name = 'PHPSESSID'*/)
+    public function __construct()
     {
-        //  session_name($name);
+
     }
 
     /**

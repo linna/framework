@@ -1,20 +1,19 @@
 <?php
 
 /**
- * Leviu.
+ * Leviu
  *
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
- * @copyright (c) 2015, Sebastian Rapetti
+ * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
+
 namespace Leviu\Mvc;
 
-//use Leviu\Mvc\View;
-
 /**
- * BaseController
+ * Controller
  * - This is the parent class for every controller in the app, permit access
  * to view and models for every instance of a child.
  * 

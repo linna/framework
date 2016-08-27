@@ -1,16 +1,15 @@
 <?php
 
 /**
- * Leviu.
+ * Leviu
  *
- * This work would be a little PHP framework, a learn exercice. 
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
- * @copyright (c) 2015, Sebastian Rapetti
+ * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
- * @version 0.1.0
  */
+
 namespace Leviu;
 
 /**

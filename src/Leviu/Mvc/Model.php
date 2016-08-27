@@ -1,14 +1,15 @@
 <?php
 
 /**
- * Leviu.
+ * Leviu
  *
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
- * @copyright (c) 2015, Sebastian Rapetti
+ * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
+
 namespace Leviu\Mvc;
 
 /**
@@ -21,13 +22,8 @@ class Model implements \SplSubject
     public $getUpdate;
     
     /**
-     * @var object Database Connection
-     */
-
-    /**
      * Constructor
      *
-     * @since 0.1.0
      */
     public function __construct()
     {
@@ -50,9 +46,4 @@ class Model implements \SplSubject
             $value->update($this);
         }
     }
-    
-    //public function test($test)
-    //{
-    //    $this->data =
-    //}
 }
