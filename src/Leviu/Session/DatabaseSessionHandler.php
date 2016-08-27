@@ -41,6 +41,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface
     /**
      * Class constructor.
      * 
+     * @param string $name Specify sesson name
      */
     public function __construct()
     {
@@ -87,11 +88,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface
      * 
      * @param string $sessionId
      *
-<<<<<<< HEAD
      * @return string
-=======
-     * @return string :)
->>>>>>> origin/master
      */
     public function read($sessionId)
     {
