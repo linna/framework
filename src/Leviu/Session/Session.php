@@ -59,7 +59,7 @@ class Session
     
     /**
      *
-     * @var type $data Session stored data
+     * @var array $data Session stored data
      */
     private static $data = array();
 
@@ -147,7 +147,7 @@ class Session
         //set cookies
         setcookie(session_name(), session_id(), time() + self::$expire, 0, 1);
 
-        //create new Session :)
+        //create session instance
         return new self($_SESSION);
     }
     
