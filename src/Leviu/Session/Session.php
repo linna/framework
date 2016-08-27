@@ -22,79 +22,86 @@ use SessionHandlerInterface;
  */
 class Session
 {
-    /**
-     * @var int Expiration time for session
-     */
-    public static $expire = 1800;
 
     /**
-     * @var string Session name
+     * @var int $expire Expiration time for session
      */
-    public static $name = 'PHPSESSID';
+    private static $expire = 1800;
 
     /**
-     * @var object Instance of SessionHandlerInterface
+     * @var string $name Session name
      */
-    public static $handler = null;
+    private static $name = 'PHPSESSID';
 
     /**
-     * http://php.net/manual/en/function.setcookie.php.
-     * 
-     * @var string
+     * @var object $handler Instance of SessionHandlerInterface
      */
-    public static $cookieDomain = null;
+    private static $handler = null;
 
     /**
      * http://php.net/manual/en/function.setcookie.php.
      * 
-     * @var string
+     * @var string $cookieDomain
      */
-    public static $cookiePath = null;
+    private static $cookieDomain = null;
 
     /**
-     * @var object
-     * @static object $instance The Session instance
+     * http://php.net/manual/en/function.setcookie.php.
+     * 
+     * @var string $cookiePath
+     */
+    private static $cookiePath = null;
+
+    /**
+     * @var object $instance
      */
     private static $instance;
+    
+    /**
+     *
+     * @var type $data Session stored data
+     */
+    private static $data;
 
     /**
-     * Session constructor.
+     * Session constructor
      * 
-     * @since 0.1.0
      */
-    private function __construct()
-    {
-        if (!isset($_SESSION['time'])) {
-            $_SESSION['time'] = time();
+    private function __construct(&$sessionData)
+    {   
+        if (!isset($sessionData['time'])) {
+            $sessionData['time'] = time();
         }
+        
+        self::$data = &$sessionData;
+        
     }
 
     /**
-     * isExpired.
+     * Check if session is expired
      * 
-     * check if session is expired
-     * 
-     * @since 0.1.0
      */
     private function isExpired()
     {
         $time = time();
-
-        if ($_SESSION['time'] < ($time - self::$expire)) {
+        
+        if (self::$data['time'] < ($time - self::$expire)) {
+            
+            //delete session data
+            self::$data = [];
+            
+            //regenerate session
             $this->regenerate();
-
+            
             return;
         }
 
-        $_SESSION['time'] = $time;
+        self::$data['time'] = $time;
     }
 
     /**
-     * __clone.
-     * 
      * Forbids the object clone
      * 
-     * @since 0.1.0
      */
     private function __clone()
     {
@@ -102,55 +109,81 @@ class Session
     }
 
     /**
-     * start.
-     * 
-     * return te instance of session
+     * Return singleton instance
      * 
      * @return object
-     *
-     * @since 0.1.0
      */
     public static function getInstance()
     {
-        $h = &self::$handler;
-        $i = &self::$instance;
+        $instance = &self::$instance;
 
-        //setting a different save handler if passed
-        if ($h !== null && $h !== '' && $h instanceof SessionHandlerInterface) {
-            session_set_save_handler($h, true);
+        if ($instance === null) {
+
+            //create new instance
+            $instance = self::createInstance();
         }
 
-        if ($i === null) {
+        $instance->isExpired();
 
-            //setting session name
-            session_name(self::$name);
-
-            //standard cookie param
-            session_set_cookie_params(self::$expire, self::$cookiePath, self::$cookieDomain, 0, 1);
-
-            //start session
-            session_start();
-
-            //set cookies
-            setcookie(session_name(), session_id(), time() + self::$expire, 0, 1);
-
-            //create new Session :)
-            $i = new self();
-        }
-
-        $i->isExpired();
-
-        return $i;
+        return $instance;
     }
 
     /**
-     * regenerate.
+     * Create session instance
      * 
-     * regenerate session_id without double cookie problem
+     * @return \self
+     */
+    private function createInstance()
+    {
+        //setting session name
+        session_name(self::$name);
+
+        //standard cookie param
+        session_set_cookie_params(self::$expire, self::$cookiePath, self::$cookieDomain, 0, 1);
+
+        //start session
+        session_start();
+
+        //set cookies
+        setcookie(session_name(), session_id(), time() + self::$expire, 0, 1);
+
+        //create new Session :)
+        return new self($_SESSION);
+    }
+    
+    /**
+     * Set session options
+     * 
+     * @param object $options
+     */
+    public static function setOptions($options)
+    {
+        self::$expire = $options->expire;
+        self::$name = $options->name;
+        self::$cookieDomain = $options->cookieDomain;
+        self::$cookiePath = $options->cookiePath;
+    }
+    
+    /**
+     * Set session handler for different storage
+     * 
+     * @param SessionHandlerInterface $handler
+     */
+    public static function setSessionHandler(SessionHandlerInterface $handler)
+    {
+        //setting a different save handler if passed
+        if ($handler instanceof SessionHandlerInterface) {
+
+            self::$handler = $handler;
+            session_set_save_handler($handler, true);
+        }
+    }
+
+    /**
+     * Regenerate session_id without double cookie problem
      * 
      * @return object
      *
-     * @since 0.1.1
      */
     public function regenerate()
     {
@@ -161,5 +194,8 @@ class Session
         session_regenerate_id(true);
 
         setcookie(session_name(), session_id(), $time + self::$expire, 0, 1);
+        
+        self::$data['time'] = $time;
     }
+
 }

@@ -13,8 +13,7 @@
 namespace Leviu\Session;
 
 use Leviu\Database\Database;
-use SessionHandler;
-use SessionHandlerInterface;
+use \SessionHandlerInterface;
 
 /**
  * Database Session Handler
@@ -32,7 +31,7 @@ use SessionHandlerInterface;
  *  PRIMARY KEY (`session_id`)
  * ) ENGINE=MEMORY DEFAULT CHARSET=utf8;
  */
-class DatabaseSessionHandler extends SessionHandler implements SessionHandlerInterface
+class DatabaseSessionHandler implements SessionHandlerInterface
 {
     /**
      * @var object Database Connection
@@ -53,12 +52,12 @@ class DatabaseSessionHandler extends SessionHandler implements SessionHandlerInt
      * open
      * http://php.net/manual/en/sessionhandler.open.php.
      * 
-     * @param string $save_path
-     * @param string $session_name
+     * @param string $savePath
+     * @param string $sessionName
      *
      * @return bool
      */
-    public function open($save_path, $session_name)
+    public function open($savePath, $sessionName)
     {
         $this->db = Database::connect();
 
@@ -69,15 +68,15 @@ class DatabaseSessionHandler extends SessionHandler implements SessionHandlerInt
      * gc
      * http://php.net/manual/en/sessionhandler.gc.php.
      * 
-     * @param string $maxlifetime
+     * @param string $maxLifetime
      *
      * @return bool
      */
-    public function gc($maxlifetime)
+    public function gc($maxLifetime)
     {
         $pdos = $this->db->prepare('DELETE FROM session WHERE last_update < DATE_SUB(NOW(), INTERVAL :maxlifetime SECOND)');
 
-        $pdos->bindParam(':maxlifetime', $maxlifetime, \PDO::PARAM_INT);
+        $pdos->bindParam(':maxlifetime', $maxLifetime, \PDO::PARAM_INT);
         $pdos->execute();
 
         return true;
@@ -87,17 +86,18 @@ class DatabaseSessionHandler extends SessionHandler implements SessionHandlerInt
      * read
      * http://php.net/manual/en/sessionhandler.read.php.
      * 
-     * @param string $session_id
+     * @param string $sessionId
      *
-     * @return mixed :)
+     * @return string
      */
-    public function read($session_id)
+    public function read($sessionId)
     {
         $pdos = $this->db->prepare('SELECT session_data FROM session WHERE session_id = :session_id');
 
-        $pdos->bindParam(':session_id', $session_id, \PDO::PARAM_STR);
+        $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
         $pdos->execute();
 
+        //fix for php7
         return (string) $pdos->fetchColumn();
     }
 
@@ -105,16 +105,16 @@ class DatabaseSessionHandler extends SessionHandler implements SessionHandlerInt
      * write
      * http://php.net/manual/en/sessionhandler.write.php.
      * 
-     * @param string $session_id
+     * @param string $sessionId
      * @param array  $data
      *
      * @return bool
      */
-    public function write($session_id, $data)
+    public function write($sessionId, $data)
     {
         $pdos = $this->db->prepare('INSERT INTO session SET session_id = :session_id, session_data = :session_data ON DUPLICATE KEY UPDATE session_data = :session_data');
 
-        $pdos->bindParam(':session_id', $session_id, \PDO::PARAM_STR);
+        $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
         $pdos->bindParam(':session_data', $data, \PDO::PARAM_STR);
         $pdos->execute();
 
@@ -136,14 +136,14 @@ class DatabaseSessionHandler extends SessionHandler implements SessionHandlerInt
      * destroy
      * http://php.net/manual/en/sessionhandler.destroy.php.
      * 
-     * @param string $session_id
+     * @param string $sessionId
      *
      * @return bool
      */
-    public function destroy($session_id)
+    public function destroy($sessionId)
     {
         $pdos = $this->db->prepare('DELETE FROM session WHERE session_id = :session_id');
-        $pdos->bindParam(':session_id', $session_id, \PDO::PARAM_STR);
+        $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
         $pdos->execute();
 
         return true;
