@@ -98,14 +98,14 @@ class Router
      * This method check if a route is valid and 
      * return the route object else return a bad route object
      * 
-     * @return \App_mk0\BadRoute|\App_mk0\Route
+     * @return Route
      *
      * @since 0.1.0
      */
     public function getRoute()
     {
         //try to find param from route if route is not bad route
-        $param = ($this->route['name'] !== $this->badRoute)? $this->buildParam($this->route) : array();
+        $param = ($this->route['name'] !== $this->badRoute) ? $this->buildParam($this->route) : array();
         //return new route object
         return new Route(
                 $this->route['name'], $this->route['method'], $this->route['model'], $this->route['view'], $this->route['controller'], $this->route['action'], $param
@@ -210,6 +210,7 @@ class Router
      * 
      * Analize $_SERVER['REQUEST_URI'] for current uri, sanitize and return it
      * 
+     * @param string $passedUri
      * @return string Uri from browser
      *
      * @since 0.1.0
