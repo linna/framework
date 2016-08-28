@@ -24,7 +24,7 @@ class Router
     /**
      * @var array Utilized for return the most recently parsed route
      */
-    protected $route = array();
+    protected $route;
 
     /**
      * @var array Passed from constructor, is the list of registerd routes for the app
