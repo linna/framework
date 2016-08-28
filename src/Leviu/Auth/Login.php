@@ -16,7 +16,7 @@ use Leviu\Session\Session;
 use Leviu\Auth\Password;
 
 /**
- *Class a for autenticate users :).
+ * Class a for autenticate users :).
  *
  * Utilize for login
  * 
@@ -54,6 +54,7 @@ use Leviu\Auth\Password;
  */
 class Login
 {
+
     /**
      * @var int $userId Current user id
      */
@@ -75,6 +76,8 @@ class Login
      * @var int $loginExpire Numeber of seconds before login will considered invalid
      */
     private $loginExpire = 1800;
+    
+    private $sessionInstance;
 
     /**
      * Constructor.
@@ -83,6 +86,7 @@ class Login
      */
     public function __construct()
     {
+        $this->sessionInstance = Session::getInstance();
         $this->isLogged = $this->check();
     }
 
@@ -102,28 +106,29 @@ class Login
     public function login($user, $password, $storedUser = '', $storedPassword = '', $storedId = 0)
     {
         $pass = new Password;
-       
-        if ($user === $storedUser) {
-            if ($pass->verify($password, $storedPassword)) {
-                $this->userId = $storedId;
-                $this->userName = $storedUser;
 
-                $this->isLogged = true;
-
-                $_SESSION['login'] =
-                    [
-                        'user_id' => $storedId,
-                        'user_name' => $storedUser,
-                        'time' => time(),
-                    ];
-
-                Session::getInstance()->regenerate();
-
-                return true;
-            }
+        if ($user !== $storedUser) {
+            return false;
         }
 
-        return false;
+        if (!$pass->verify($password, $storedPassword)) {
+            return false;
+        }
+
+        $this->userId = $storedId;
+        $this->userName = $storedUser;
+
+        $this->isLogged = true;
+
+        $this->sessionInstance->login = [
+            'user_id' => $storedId,
+            'user_name' => $storedUser,
+            'time' => time(),
+        ];
+
+        $this->sessionInstance->regenerate();
+
+        return true;
     }
 
     /**
@@ -135,9 +140,9 @@ class Login
      */
     public function logout()
     {
-        unset($_SESSION['login']);
+        unset($this->sessionInstance->login);
 
-        Session::getInstance()->regenerate();
+        $this->sessionInstance->regenerate();
 
         return true;
     }
@@ -151,23 +156,26 @@ class Login
      */
     private function check()
     {
-        if (isset($_SESSION['login'])) {
-            $loginData = $_SESSION['login'];
-
-            $time = time();
-
-            if ($loginData['time'] > ($time - $this->loginExpire)) {
-                $loginData['time'] = $time;
-
-                $this->userId = $loginData['user_id'];
-                $this->userName = $loginData['user_name'];
-
-                $_SESSION['login'] = $loginData;
-
-                return true;
-            }
+        if (isset($this->sessionInstance->login)) {
+            return false;
         }
 
-        return false;
+        $loginData = $this->sessionInstance->login;
+
+        $time = time();
+
+        if ($loginData['time'] < ($time - $this->loginExpire)) {
+            return false;
+        }
+
+        $loginData['time'] = $time;
+
+        $this->userId = $loginData['user_id'];
+        $this->userName = $loginData['user_name'];
+
+        $this->sessionInstance->login = $loginData;
+
+        return true;
     }
+
 }

@@ -15,79 +15,172 @@ namespace Leviu\Session;
 use SessionHandlerInterface;
 
 /**
- * Session
- * - Class for manage session lifetime
+ * Manage session lifetime and session data
  * In this class sigleton patter was correct because constructor is private
- * https://it.wikipedia.org/wiki/Singleton.
+ * https://en.wikipedia.org/wiki/Singleton_pattern
  */
 class Session
 {
-
+    use \Leviu\classOptionsTrait;
+    
     /**
-     * @var int $expire Expiration time for session
+     * Utilized with classOptionsTrait
+     * @var array Config options for class
      */
-    private static $expire = 1800;
-
-    /**
-     * @var string $name Session name
-     */
-    private static $name = 'PHPSESSID';
-
-    /**
-     * @var object $handler Instance of SessionHandlerInterface
-     */
-    private static $handler = null;
-
-    /**
-     * http://php.net/manual/en/function.setcookie.php.
-     * 
-     * @var string $cookieDomain
-     */
-    private static $cookieDomain = null;
-
-    /**
-     * http://php.net/manual/en/function.setcookie.php.
-     * 
-     * @var string $cookiePath
-     */
-    private static $cookiePath = null;
-
-    /**
-     * @var object $instance
+    protected $options = array(
+        'expire' => 1800,
+        'name' => 'APP_SESSION',
+        'cookieDomain' => '',
+        'cookiePath' => '',
+        'cookieSecure' => false,
+        'cookieHttpOnly' => true
+    );
+    
+     /**
+     * @var object $instance Store only one instance of session
      */
     private static $instance;
     
     /**
      *
-     * @var array $data Session stored data
+     * @var array $opt Cache variable for pass option to constructor
      */
-    private static $data = array();
-
+    private static $opt;
+    
     /**
-     * Session constructor
+     * 
+     * @param array $options Options for configure session
+     */
+    private function __construct($options)
+    {
+        //set options
+        $this->overrideOptions($options);
+        
+        //start session
+        $this->start();
+    }
+    
+    
+    /**
+     * Magic metod
+     * http://php.net/manual/en/language.oop5.overloading.php
+     * 
+     * @param string $name
+     * @param mixed $value
+     */
+    public function __set($name, $value)
+    {
+        $_SESSION[$name] = $value;
+    }
+    
+    /**
+     * Magic metod
+     * http://php.net/manual/en/language.oop5.overloading.php
+     * 
+     * @param string $name
+     */
+    public function __get($name)
+    {
+        if (array_key_exists($name, $_SESSION)) {
+            return $_SESSION[$name];
+        }
+    }
+    
+    /**
+     * Magic metod
+     * http://php.net/manual/en/language.oop5.overloading.php
+     * 
+     * @param string $name
+     */
+    public function __unset($name)
+    {
+        unset($_SESSION[$name]);
+    }
+    
+    /**
+     * Magic metod
+     * http://php.net/manual/en/language.oop5.overloading.php
+     * 
+     * @param string $name
+     */
+    public function __isset($name)
+    {
+        return isset($_SESSION[$name]);
+    }
+    
+    /**
+     * Regenerate session_id without double cookie problem
      * 
      */
-    private function __construct(&$sessionData)
+    public function regenerate()
     {
-        if (!isset($sessionData['time'])) {
-            $sessionData['time'] = time();
+        //take time
+        $time = time();
+        //invalidate cookie
+        setcookie(session_name(), '', $time - 86400);
+        //regenerate session id
+        session_regenerate_id(true);
+        //set new cookie
+        setcookie(
+                session_name(), 
+                session_id(), 
+                time() + $this->options['expire'], 
+                $this->options['cookieSecure'], 
+                $this->options['cookieHttpOnly']
+        );
+        
+        //store new time for expire
+        $this->time = $time;
+    }
+    
+    /**
+     * Start session
+     * 
+     */
+    private function start()
+    {
+        if (!isset($this->time)) {
+           $this->time = time();
         }
         
-        self::$data = &$sessionData;
-    }
+        //setting session name
+        session_name($this->options['name']);
 
+        //standard cookie param
+        session_set_cookie_params(
+                $this->options['expire'], 
+                $this->options['cookiePath'], 
+                $this->options['cookieDomain'],
+                $this->options['cookieSecure'],
+                $this->options['cookieHttpOnly']
+        );
+
+        //start session
+        session_start();
+
+        //set cookies
+        setcookie(
+                session_name(), 
+                session_id(), 
+                time() + $this->options['expire'], 
+                $this->options['cookieSecure'], 
+                $this->options['cookieHttpOnly']
+        );
+    }
+    
     /**
-     * Check if session is expired
+     * Refresh session
      * 
+     * @return null
      */
-    private function isExpired()
+    public function refresh()
     {
         $time = time();
         
-        if (self::$data['time'] < ($time - self::$expire)) {
+        if ($this->time < ($time - $this->options['expire'])) {
             
             //delete session data
-            self::$data = [];
+            $_SESSION = [];
             
             //regenerate session
             $this->regenerate();
@@ -95,22 +188,14 @@ class Session
             return;
         }
 
-        self::$data['time'] = $time;
+        $this->time = $time;
     }
-
+    
     /**
-     * Forbids the object clone
+     * Singleton
+     * Get always the same instance
      * 
-     */
-    private function __clone()
-    {
-        //It forbids the object clone
-    }
-
-    /**
-     * Return singleton instance
-     * 
-     * @return object
+     * @return \self $instance
      */
     public static function getInstance()
     {
@@ -119,80 +204,35 @@ class Session
         if ($instance === null) {
 
             //create new instance
-            $instance = self::createInstance();
+            $instance = new self(self::$opt);
         }
 
-        $instance->isExpired();
+        $instance->refresh();
 
         return $instance;
     }
-
-    /**
-     * Create session instance
-     * 
-     * @return \self
-     */
-    private function createInstance()
-    {
-        //setting session name
-        session_name(self::$name);
-
-        //standard cookie param
-        session_set_cookie_params(self::$expire, self::$cookiePath, self::$cookieDomain, 0, 1);
-
-        //start session
-        session_start();
-
-        //set cookies
-        setcookie(session_name(), session_id(), time() + self::$expire, 0, 1);
-
-        //create session instance
-        return new self($_SESSION);
-    }
     
     /**
-     * Set session options
+     * Singleton
+     * Set options for session instance
      * 
-     * @param object $options
      */
-    public static function setOptions($options)
+    public static function withOptions($options)
     {
-        self::$expire = $options->expire;
-        self::$name = $options->name;
-        self::$cookieDomain = $options->cookieDomain;
-        self::$cookiePath = $options->cookiePath;
+        self::$opt = $options;
     }
     
-    /**
-     * Set session handler for different storage
+     /**
+     * Singleton
+     * Set session handler for new instance
      * 
-     * @param SessionHandlerInterface $handler
      */
     public static function setSessionHandler(SessionHandlerInterface $handler)
     {
         //setting a different save handler if passed
         if ($handler instanceof SessionHandlerInterface) {
-            self::$handler = $handler;
+            
             session_set_save_handler($handler, true);
         }
-    }
-
-    /**
-     * Regenerate session_id without double cookie problem
-     * 
-     * @return object
-     *
-     */
-    public function regenerate()
-    {
-        $time = time();
-
-        setcookie(session_name(), '', $time - 86400);
-
-        session_regenerate_id(true);
-
-        setcookie(session_name(), session_id(), $time + self::$expire, 0, 1);
-        
-        self::$data['time'] = $time;
     }
 }
