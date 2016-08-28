@@ -25,11 +25,9 @@ trait classOptionsTrait
      */
     protected function overrideOptions($options)
     {
-        foreach($options as $key => $value)
-        {
-            if (isset($this->options[$key]))
-            {
-               $this->options[$key] = $value; 
+        foreach ($options as $key => $value) {
+            if (isset($this->options[$key])) {
+                $this->options[$key] = $value;
             }
         }
     }

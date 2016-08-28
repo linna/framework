@@ -68,13 +68,12 @@ class Session
      * 
      */
     private function __construct(&$sessionData)
-    {   
+    {
         if (!isset($sessionData['time'])) {
             $sessionData['time'] = time();
         }
         
         self::$data = &$sessionData;
-        
     }
 
     /**
@@ -173,7 +172,6 @@ class Session
     {
         //setting a different save handler if passed
         if ($handler instanceof SessionHandlerInterface) {
-
             self::$handler = $handler;
             session_set_save_handler($handler, true);
         }
@@ -197,5 +195,4 @@ class Session
         
         self::$data['time'] = $time;
     }
-
 }

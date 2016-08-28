@@ -32,17 +32,15 @@ class Model implements \SplSubject
     }
     
     public function attach(\SplObserver $observer)
-    {   
-        if ($observer instanceof View)
-        {
+    {
+        if ($observer instanceof View) {
             $this->observers->attach($observer);
         }
     }
     
     public function detach(\SplObserver $observer)
     {
-        if ($observer instanceof View)
-        {
+        if ($observer instanceof View) {
             $this->observers->detach($observer);
         }
     }

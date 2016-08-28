@@ -79,7 +79,6 @@ class Autoloader
     public function register()
     {
         spl_autoload_register(array($this, 'loadClass'));
-       
     }
 
     /**
@@ -102,7 +101,6 @@ class Autoloader
             //add namespace
             $this->prefixes[$prefix][] = $baseDir;
         }
-        
     }
 
     /**

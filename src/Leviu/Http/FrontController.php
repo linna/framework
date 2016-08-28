@@ -56,7 +56,7 @@ class FrontController
      * constructor
      * 
      * @param RouteInterface $route
-     * @param type $appNamespace
+     * @param array $options
      */
     public function __construct(RouteInterface $route, $options)
     {
@@ -112,5 +112,4 @@ class FrontController
     {
         $this->view->render();
     }
-
 }
