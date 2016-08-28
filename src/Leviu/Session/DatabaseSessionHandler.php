@@ -12,7 +12,6 @@
 
 namespace Leviu\Session;
 
-use Leviu\Database\Database;
 use \SessionHandlerInterface;
 
 /**
@@ -36,15 +35,15 @@ class DatabaseSessionHandler implements SessionHandlerInterface
     /**
      * @var object Database Connection
      */
-    private $db;
+    private $dBase;
 
     /**
      * Class constructor.
      * 
      */
-    public function __construct()
+    public function __construct($storage)
     {
-        
+        $this->dBase = $storage;
     }
 
     /**
@@ -58,8 +57,8 @@ class DatabaseSessionHandler implements SessionHandlerInterface
      */
     public function open($savePath, $sessionName)
     {
-        $this->db = Database::connect();
-
+        unset($savePath, $sessionName);
+        
         return true;
     }
 
@@ -73,7 +72,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface
      */
     public function gc($maxLifetime)
     {
-        $pdos = $this->db->prepare('DELETE FROM session WHERE last_update < DATE_SUB(NOW(), INTERVAL :maxlifetime SECOND)');
+        $pdos = $this->dBase->prepare('DELETE FROM session WHERE last_update < DATE_SUB(NOW(), INTERVAL :maxlifetime SECOND)');
 
         $pdos->bindParam(':maxlifetime', $maxLifetime, \PDO::PARAM_INT);
         $pdos->execute();
@@ -91,7 +90,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface
      */
     public function read($sessionId)
     {
-        $pdos = $this->db->prepare('SELECT session_data FROM session WHERE session_id = :session_id');
+        $pdos = $this->dBase->prepare('SELECT session_data FROM session WHERE session_id = :session_id');
 
         $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
         $pdos->execute();
@@ -111,7 +110,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface
      */
     public function write($sessionId, $data)
     {
-        $pdos = $this->db->prepare('INSERT INTO session SET session_id = :session_id, session_data = :session_data ON DUPLICATE KEY UPDATE session_data = :session_data');
+        $pdos = $this->dBase->prepare('INSERT INTO session SET session_id = :session_id, session_data = :session_data ON DUPLICATE KEY UPDATE session_data = :session_data');
 
         $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
         $pdos->bindParam(':session_data', $data, \PDO::PARAM_STR);
@@ -141,7 +140,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface
      */
     public function destroy($sessionId)
     {
-        $pdos = $this->db->prepare('DELETE FROM session WHERE session_id = :session_id');
+        $pdos = $this->dBase->prepare('DELETE FROM session WHERE session_id = :session_id');
         $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
         $pdos->execute();
 

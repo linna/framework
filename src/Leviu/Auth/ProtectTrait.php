@@ -38,7 +38,6 @@ trait ProtectTrait
     {
         if ($loginIstance->isLogged === false) {
             header('location: '.$redirect);
-            die();
         }
 
         $this->login = $loginIstance;

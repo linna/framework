@@ -21,36 +21,67 @@ use Leviu\Http\RouteInterface;
  */
 class FrontController
 {
+
+    use \Leviu\classOptionsTrait;
+
     /**
      *
      * @var Object Contain view object for render 
      */
     private $view;
-    
+
+    /**
+     *
+     * @var Object Contain model object 
+     */
+    private $model;
+
+    /**
+     *
+     * @var Object Contain controller object
+     */
+    private $controller;
+
+    /**
+     * Utilized with classOptionsTrait
+     * @var array Config options for class
+     */
+    protected $options = array(
+        'modelNamespace' => '',
+        'viewNamespace' => '',
+        'controllerNamespace' => '',
+    );
+
     /**
      * constructor
      * 
      * @param RouteInterface $route
      * @param type $appNamespace
      */
-    public function __construct(RouteInterface $route, $appNamespace)
+    public function __construct(RouteInterface $route, $options)
     {
-        $routeType = $route->getType();
+        $this->overrideOptions($options);
         
-        $routeModel = $appNamespace->model.$route->getModel();
-        $routeView = $appNamespace->view.$route->getView();
-        $routeController = $appNamespace->controller.$route->getController();
+        $routeType = $route->getType();
+
+        $routeModel = $options['modelNamespace'] . $route->getModel();
+        $routeView = $options['viewNamespace'] . $route->getView();
+        $routeController = $options['controllerNamespace'] . $route->getController();
+        
         $routeAction = $route->getAction();
         $routeParam = $route->getParam();
-        
-        
-        $model = new $routeModel();
-        $view = new $routeView($model);
-        $controller = new $routeController($model);
-        
-        $model->attach($view);
-        
-        
+
+        $this->model = new $routeModel();
+        $this->view = new $routeView($this->model);
+        $this->controller = new $routeController($this->model);
+
+        $this->model->attach($this->view);
+
+        $this->call($routeType, $routeAction, $routeParam);
+    }
+
+    private function call($routeType, $routeAction, $routeParam)
+    {
         //che type of route anche cal proper func
         //http://php.net/manual/en/ref.funchand.php
         //http://php.net/manual/en/function.call-user-func.php
@@ -58,29 +89,28 @@ class FrontController
         switch ($routeType) {
             case 3:
                 //call class, method and pass parameter
-                call_user_func_array(array($controller, $routeAction), $routeParam);
-                call_user_func(array($view, $routeAction));
+                call_user_func_array(array($this->controller, $routeAction), $routeParam);
+                call_user_func(array($this->view, $routeAction));
                 break;
             case 2:
                 //call class, method without parameter
-                call_user_func(array($controller, $routeAction));
-                call_user_func(array($view, $routeAction));
+                call_user_func(array($this->controller, $routeAction));
+                call_user_func(array($this->view, $routeAction));
                 break;
             case 1:
                 //call class with index, no method passed
-                call_user_func(array($view, 'index'));
+                call_user_func(array($this->view, 'index'));
                 break;
             default:
                 //call default 404 controller
-                call_user_func(array($view, 'index'));
+                call_user_func(array($this->view, 'index'));
                 break;
         }
-        
-        $this->view = $view;
     }
-    
+
     public function response()
     {
         $this->view->render();
     }
+
 }

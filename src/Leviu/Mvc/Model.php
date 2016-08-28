@@ -19,6 +19,7 @@ namespace Leviu\Mvc;
 class Model implements \SplSubject
 {
     private $observers;
+    
     public $getUpdate;
     
     /**
@@ -31,13 +32,19 @@ class Model implements \SplSubject
     }
     
     public function attach(\SplObserver $observer)
-    {
-        $this->observers->attach($observer);
+    {   
+        if ($observer instanceof View)
+        {
+            $this->observers->attach($observer);
+        }
     }
     
     public function detach(\SplObserver $observer)
     {
-        $this->observers->detach($observer);
+        if ($observer instanceof View)
+        {
+            $this->observers->detach($observer);
+        }
     }
     
     public function notify()

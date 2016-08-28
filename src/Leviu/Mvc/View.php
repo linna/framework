@@ -63,6 +63,9 @@ class View implements \SplObserver
      */
     public function update(\SplSubject $subject)
     {
-        $this->data = $subject->getUpdate;
+        if ($subject instanceof Model)
+        {
+            $this->data = $subject->getUpdate;
+        }
     }
 }
