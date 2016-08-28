@@ -18,6 +18,8 @@ use SessionHandlerInterface;
  * Manage session lifetime and session data
  * In this class sigleton patter was correct because constructor is private
  * https://en.wikipedia.org/wiki/Singleton_pattern
+ * 
+ * @property int $time Time of session
  */
 class Session
 {
@@ -35,6 +37,12 @@ class Session
         'cookieSecure' => false,
         'cookieHttpOnly' => true
     );
+    
+    /**
+     *
+     * @var array $data Session data reference property
+     */
+    private $data = array();
     
      /**
      * @var object $instance Store only one instance of session
@@ -58,6 +66,8 @@ class Session
         
         //start session
         $this->start();
+        
+        $this->data = &$_SESSION;
     }
     
     
@@ -70,7 +80,7 @@ class Session
      */
     public function __set($name, $value)
     {
-        $_SESSION[$name] = $value;
+        $this->data[$name] = $value;
     }
     
     /**
@@ -82,7 +92,7 @@ class Session
     public function __get($name)
     {
         if (array_key_exists($name, $_SESSION)) {
-            return $_SESSION[$name];
+            return $this->data[$name];
         }
     }
     
@@ -94,7 +104,7 @@ class Session
      */
     public function __unset($name)
     {
-        unset($_SESSION[$name]);
+        unset($this->data[$name]);
     }
     
     /**
@@ -105,7 +115,7 @@ class Session
      */
     public function __isset($name)
     {
-        return isset($_SESSION[$name]);
+        return isset($this->data[$name]);
     }
     
     /**
@@ -180,7 +190,7 @@ class Session
         if ($this->time < ($time - $this->options['expire'])) {
             
             //delete session data
-            $_SESSION = [];
+            $this->data = [];
             
             //regenerate session
             $this->regenerate();
