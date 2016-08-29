@@ -13,8 +13,7 @@
 namespace Leviu\Http;
 
 /**
- * Router
- * - Class for manage routes, verify every resource requested by browser and return
+ * Manage routes, verify every resource requested by browser and return
  * a RouteInterface Object.
  * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
@@ -66,7 +65,6 @@ class Router
     /**
      * Constructor.
      * 
-     * 
      * @param array $routes List of registerd routes for the app in routes.php
      * @param object $options Options for router config
      * @param string $requestUri Request uri
@@ -93,14 +91,11 @@ class Router
     }
 
     /**
-     * getRoute.
-     * 
-     * This method check if a route is valid and 
+     * Check if a route is valid and 
      * return the route object else return a bad route object
      * 
      * @return Route
      *
-     * @since 0.1.0
      */
     public function getRoute()
     {
@@ -113,11 +108,9 @@ class Router
     }
 
     /**
-     * match.
-     * 
-     * This method check if the requested uri is a valid route
+     * Check if the requested uri is a valid route
      *
-     * if valid return an array like this
+     * if valid return an array like this with route, if no return route for error page
      * array (size=6)
      * 'name' => null
      * 'method' => string 'GET' (length=3)
@@ -126,9 +119,8 @@ class Router
      * 'action' => null
      * 'matches' => string '/' (length=1)
      * 
-     * @return array|null Array contains properties of route
+     * @return array Contains properties of route
      *
-     * @since 0.1.0
      */
     protected function match()
     {
@@ -170,23 +162,21 @@ class Router
 
                 //add to route array the passed uri for param check when call
                 $validRoute['matches'] = $matches;
+                
                 break;
             }
         }
 
-        return $validRoute;
+        return (array) $validRoute;
     }
 
     /**
-     * buildParam.
-     * 
      * Try to find param in a valid route
      * 
      * @param array $validRoute Array with route caracteristics
      *
      * @return array Array with param passed from uri
      *
-     * @since 0.1.0
      */
     protected function buildParam($validRoute)
     {
@@ -206,14 +196,11 @@ class Router
     }
 
     /**
-     * getCurrentUri.
-     * 
      * Analize $_SERVER['REQUEST_URI'] for current uri, sanitize and return it
      * 
      * @param string $passedUri
      * @return string Uri from browser
      *
-     * @since 0.1.0
      */
     protected function getCurrentUri($passedUri)
     {
