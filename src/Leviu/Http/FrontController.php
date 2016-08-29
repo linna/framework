@@ -60,7 +60,7 @@ class FrontController
      */
     public function __construct(RouteInterface $route, $options)
     {
-        $this->overrideOptions($options);
+        $this->options = $this->overrideOptions($this->options, $options);
         
         $routeType = $route->getType();
 

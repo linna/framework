@@ -16,10 +16,20 @@ namespace Leviu\Http;
  * Manage routes, verify every resource requested by browser and return
  * a RouteInterface Object.
  * 
- * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  */
 class Router
 {
+    use \Leviu\classOptionsTrait;
+    
+    /**
+     * Utilized with classOptionsTrait
+     * @var array Config options for class
+     */
+    protected $options = array(
+        'basePath' => '/',
+        'badRoute' => ''
+    );
+    
     /**
      * @var array Utilized for return the most recently parsed route
      */
@@ -29,11 +39,6 @@ class Router
      * @var array Passed from constructor, is the list of registerd routes for the app
      */
     protected $routes = null;
-
-    /**
-     * @var string Passed from constructor, indicates directory of app, check config.php
-     */
-    protected $basePath = '';
 
     /**
      * @var array List of regex for find parameter inside passed routes
@@ -54,12 +59,6 @@ class Router
      * @var string Request uri from browser (start from['REQUEST_URI'])
      */
     protected $currentUri = '';
-
-    /**
-     *
-     * @var string Route for error page :) 
-     */
-    protected $badRoute = '';
     
     
     /**
@@ -74,11 +73,8 @@ class Router
      */
     public function __construct($requestUri, $routes, $options)
     {
-        //set basePath
-        $this->basePath = $options->base_path;
-        
-        //set badRoute
-        $this->badRoute = $options->bad_route;
+        //set options
+        $this->options = $this->overrideOptions($this->options, $options);
         
         //set routes
         $this->routes = $routes;
@@ -100,7 +96,7 @@ class Router
     public function getRoute()
     {
         //try to find param from route if route is not bad route
-        $param = ($this->route['name'] !== $this->badRoute) ? $this->buildParam($this->route) : array();
+        $param = ($this->route['name'] !== $this->options['badRoute']) ? $this->buildParam($this->route) : array();
         //return new route object
         return new Route(
                 $this->route['name'], $this->route['method'], $this->route['model'], $this->route['view'], $this->route['controller'], $this->route['action'], $param
@@ -125,7 +121,7 @@ class Router
     protected function match()
     {
         //declare var with bad route data
-        $validRoute = $this->routes[array_search($this->badRoute, array_column($this->routes, 'name'))];
+        $validRoute = $this->routes[array_search($this->options['badRoute'], array_column($this->routes, 'name'))];
 
         foreach ($this->routes as $value) {
 
@@ -207,6 +203,6 @@ class Router
         $url = isset($passedUri) ? $passedUri : '/';
         $url = filter_var($url, FILTER_SANITIZE_URL);
 
-        return '/'.substr($url, strlen($this->basePath));
+        return '/'.substr($url, strlen($this->options['basePath']));
     }
 }
