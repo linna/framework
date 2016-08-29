@@ -62,7 +62,7 @@ class Session
     private function __construct($options)
     {
         //set options
-        $this->overrideOptions($options);
+        $this->options = $this->overrideOptions($this->options, $options);
         
         //start session
         $this->start();
@@ -91,7 +91,7 @@ class Session
      */
     public function __get($name)
     {
-        if (array_key_exists($name, $_SESSION)) {
+        if (array_key_exists($name, $this->data)) {
             return $this->data[$name];
         }
     }

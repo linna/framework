@@ -21,14 +21,19 @@ trait classOptionsTrait
     /**
      * Override default options
      * 
+     * @param array $classOptions
      * @param array $options
+     * 
+     * @return array Updated options
      */
-    protected function overrideOptions($options)
+    protected function overrideOptions($classOptions, $options)
     {
         foreach ($options as $key => $value) {
-            if (isset($this->options[$key])) {
-                $this->options[$key] = $value;
+            if (isset($classOptions[$key])) {
+                $classOptions[$key] = $value;
             }
         }
+        
+        return (array) $classOptions;
     }
 }
