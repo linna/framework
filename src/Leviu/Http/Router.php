@@ -64,9 +64,9 @@ class Router
     /**
      * Constructor.
      * 
-     * @param array $routes List of registerd routes for the app in routes.php
-     * @param object $options Options for router config
      * @param string $requestUri Request uri
+     * @param array $routes List of registerd routes for the app in routes.php
+     * @param array $options Options for router config
      *
      * @todo Make router compatible with PSR7 REQUEST,instead of request uri pass a PSR7 request object
      * 
