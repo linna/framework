@@ -177,5 +177,4 @@ class Login
 
         return true;
     }
-
 }

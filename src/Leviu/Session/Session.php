@@ -132,10 +132,10 @@ class Session
         session_regenerate_id(true);
         //set new cookie
         setcookie(
-                session_name(), 
-                session_id(), 
-                time() + $this->options['expire'], 
-                $this->options['cookieSecure'], 
+                session_name(),
+                session_id(),
+                time() + $this->options['expire'],
+                $this->options['cookieSecure'],
                 $this->options['cookieHttpOnly']
         );
         
@@ -150,7 +150,7 @@ class Session
     private function start()
     {
         if (!isset($this->time)) {
-           $this->time = time();
+            $this->time = time();
         }
         
         //setting session name
@@ -158,8 +158,8 @@ class Session
 
         //standard cookie param
         session_set_cookie_params(
-                $this->options['expire'], 
-                $this->options['cookiePath'], 
+                $this->options['expire'],
+                $this->options['cookiePath'],
                 $this->options['cookieDomain'],
                 $this->options['cookieSecure'],
                 $this->options['cookieHttpOnly']
@@ -170,10 +170,10 @@ class Session
 
         //set cookies
         setcookie(
-                session_name(), 
-                session_id(), 
-                time() + $this->options['expire'], 
-                $this->options['cookieSecure'], 
+                session_name(),
+                session_id(),
+                time() + $this->options['expire'],
+                $this->options['cookieSecure'],
                 $this->options['cookieHttpOnly']
         );
     }
@@ -241,7 +241,6 @@ class Session
     {
         //setting a different save handler if passed
         if ($handler instanceof SessionHandlerInterface) {
-            
             session_set_save_handler($handler, true);
         }
     }
