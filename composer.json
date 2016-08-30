@@ -2,7 +2,7 @@
     "name": "s3b4stian/leviu",
     "type": "library",
     "description": "Leviu Framework",
-    "keywords": ["framework, mvc, PHP, learn"],
+    "keywords": ["framework", "mvc", "PHP", "learn"],
     "license": "MIT",
     "authors": [
         {
