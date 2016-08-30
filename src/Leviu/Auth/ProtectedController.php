@@ -26,7 +26,7 @@ trait ProtectedController
      */
     protected function protect(Login $loginIstance, $redirect)
     {
-        if ($loginIstance->isLogged === false) {
+        if ($loginIstance->logged === false) {
             header('location: '.$redirect);
         }
     }

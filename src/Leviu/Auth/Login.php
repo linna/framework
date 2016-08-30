@@ -56,27 +56,26 @@ class Login
 {
 
     /**
-     * @var int $userId Current user id
-     */
-    public $userId = 0;
-
-    /**
-     * @var string $userName Current user name
-     */
-    public $userName = '';
-
-    /**
-     * $login->isLogged can be read for check if user is logged.
      *
-     * @var bool $isLogged User login status
+     * @var array $data Login status
      */
-    public $isLogged = false;
+    public $data = array('user_name'=>'');
 
     /**
-     * @var int $loginExpire Numeber of seconds before login will considered invalid
+     *
+     * @var bool $logged Indicate login status, true or false 
      */
-    private $loginExpire = 1800;
+    public $logged = false;
     
+    /**
+     * @var int $expire Numeber of seconds before login will considered invalid
+     */
+    private $expire = 1800;
+    
+    /**
+     *
+     * @var object $sessionInstance 
+     */
     private $sessionInstance;
 
     /**
@@ -87,7 +86,7 @@ class Login
     public function __construct()
     {
         $this->sessionInstance = Session::getInstance();
-        $this->isLogged = $this->check();
+        $this->logged = $this->refresh();
     }
 
     /**
@@ -115,17 +114,14 @@ class Login
             return false;
         }
 
-        $this->userId = $storedId;
-        $this->userName = $storedUser;
-
-        $this->isLogged = true;
-
+        $this->sessionInstance->loginTime = time();
         $this->sessionInstance->login = [
+            'login' => true,
             'user_id' => $storedId,
-            'user_name' => $storedUser,
-            'time' => time(),
+            'user_name' => $storedUser
         ];
 
+        
         $this->sessionInstance->regenerate();
 
         return true;
@@ -140,8 +136,8 @@ class Login
      */
     public function logout()
     {
-        unset($this->sessionInstance->login);
-
+        unset($this->sessionInstance->login, $this->sessionInstance->loginTime);
+        
         $this->sessionInstance->regenerate();
 
         return true;
@@ -154,28 +150,19 @@ class Login
      *
      * @since 0.1.0
      */
-    private function check()
+    private function refresh()
     {   
         if (!isset($this->sessionInstance->login)) {
             return false;
         }
 
-        $loginData = $this->sessionInstance->login;
-
         $time = time();
 
-        if ($loginData['time'] < ($time - $this->loginExpire)) {
+        if ($this->sessionInstance->loginTime < ($time - $this->expire)) {
             return false;
         }
-
-        $loginData['time'] = $time;
-
-        $this->userId = $loginData['user_id'];
-        $this->userName = $loginData['user_name'];
-        //$this->isLogged = true;
         
-        
-        $this->sessionInstance->login = $loginData;
+        $this->sessionInstance->loginTime = $time;
 
         return true;
     }
