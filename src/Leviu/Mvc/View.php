@@ -13,7 +13,7 @@
 namespace Leviu\Mvc;
 
 /**
- * views
+ * view
  * 
  */
 class View implements \SplObserver
@@ -21,9 +21,9 @@ class View implements \SplObserver
     
     /**
      * 
-     * @var objec Data for the dynamic view
+     * @var array $data Data for the dynamic view
      */
-    protected $data;
+    protected $data = array();
 
     /**
      *
@@ -52,7 +52,7 @@ class View implements \SplObserver
      */
     public function render()
     {
-        $this->template->data = $this->data;
+        $this->template->data = (object) $this->data;
         $this->template->output();
     }
     
@@ -64,7 +64,7 @@ class View implements \SplObserver
     public function update(\SplSubject $subject)
     {
         if ($subject instanceof Model) {
-            $this->data = $subject->getUpdate;
+            $this->data = array_merge($this->data, $subject->getUpdate);
         }
-    }
+    }   
 }

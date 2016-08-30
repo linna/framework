@@ -155,8 +155,8 @@ class Login
      * @since 0.1.0
      */
     private function check()
-    {
-        if (isset($this->sessionInstance->login)) {
+    {   
+        if (!isset($this->sessionInstance->login)) {
             return false;
         }
 
@@ -172,7 +172,9 @@ class Login
 
         $this->userId = $loginData['user_id'];
         $this->userName = $loginData['user_name'];
-
+        //$this->isLogged = true;
+        
+        
         $this->sessionInstance->login = $loginData;
 
         return true;
