@@ -1,39 +1,38 @@
 <?php
 
 /**
- * Leviu
+ * Linna Framework
  *
- * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
 
-namespace Leviu\Mvc;
+namespace Linna\Mvc;
 
 /**
- * view
+ * Parent class for view classes.
  * 
+ * This class was implemented like part of Observer pattern
+ * https://en.wikipedia.org/wiki/Observer_pattern
+ * http://php.net/manual/en/class.splobserver.php
  */
 class View implements \SplObserver
 {
     
     /**
-     * 
      * @var array $data Data for the dynamic view
      */
     protected $data = array();
 
     /**
-     *
-     * @var object Template utilized for data
+     * @var object $template Template utilized for data
      */
     protected $template;
     
     /**
-     *
-     * @var object Model for access data
+     * @var object $model  Model for access data
      */
     protected $model;
     
@@ -49,6 +48,7 @@ class View implements \SplObserver
     
     /**
      * Render a template
+     * 
      */
     public function render()
     {
@@ -57,7 +57,7 @@ class View implements \SplObserver
     }
     
     /**
-     * Update observer data  
+     * Update Observer data  
      * 
      * @param \SplSubject $subject
      */

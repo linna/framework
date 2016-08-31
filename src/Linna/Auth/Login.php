@@ -1,22 +1,21 @@
 <?php
 
 /**
- * Leviu
+ * Linna Framework
  *
- * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
 
-namespace Leviu\Auth;
+namespace Linna\Auth;
 
-use Leviu\Session\Session;
-use Leviu\Auth\Password;
+use Linna\Session\Session;
+use Linna\Auth\Password;
 
 /**
- * Class a for autenticate users :).
+ * Class a for autenticate users
  *
  * Utilize for login
  * 
@@ -40,7 +39,7 @@ use Leviu\Auth\Password;
  *      <?php
  *      $login = new Login();
  * 
- *      if ($login->isLogged === true)
+ *      if ($login->logged === true)
  *      {
  *              //do actions
  *      }
@@ -50,19 +49,16 @@ use Leviu\Auth\Password;
  *      $login = new Login();
  *      $login->logout();
  *      
- * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  */
 class Login
 {
 
     /**
-     *
      * @var array $data Login status
      */
     public $data = array('user_name'=>'');
 
     /**
-     *
      * @var bool $logged Indicate login status, true or false 
      */
     public $logged = false;
@@ -73,7 +69,6 @@ class Login
     private $expire = 1800;
     
     /**
-     *
      * @var object $sessionInstance 
      */
     private $sessionInstance;
@@ -81,7 +76,6 @@ class Login
     /**
      * Constructor.
      * 
-     * @since 0.1.0
      */
     public function __construct()
     {
@@ -99,8 +93,6 @@ class Login
      * @param string $storedId
      *
      * @return bool
-     *
-     * @since 0.1.0
      */
     public function login($user, $password, $storedUser = '', $storedPassword = '', $storedId = 0)
     {
@@ -131,8 +123,6 @@ class Login
      * For do logout, delete login information from session
      * 
      * @return bool
-     *
-     * @since 0.1.0
      */
     public function logout()
     {
@@ -147,8 +137,6 @@ class Login
      * Check if user is logged, get login data from session and update it
      * 
      * @return bool
-     *
-     * @since 0.1.0
      */
     private function refresh()
     {   

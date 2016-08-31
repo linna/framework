@@ -1,67 +1,66 @@
 <?php
 
 /**
- * Leviu
+ * Linna Framework
  *
- * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
 
-namespace Leviu\Http;
+namespace Linna\Http;
 
 /**
- * RouteInterface 
- * - Interface for routes.
+ * Interface for routes.
  * 
- * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
- *
- * @since 0.1.0
- *
- * @version 0.1.0
  */
 interface RouteInterface
 {
     /**
-     * Route contructor.
+     * Contructor
      * 
      * @param string $name
      * @param string $method
      * @param string $controller
      * @param string $action
      * @param array  $param
-     *
-     * @since 0.1.0
      */
     public function __construct($name, $method, $model, $view, $controller, $action, $param);
 
     /**
-     * getType.
+     * Return type of route
      * 
-     * @since 0.1.0
      */
     public function getType();
 
     /**
-     * getController.
+     * Return controller
      * 
-     * @since 0.1.0
      */
     public function getController();
 
     /**
-     * getAction.
+     * Return action name
      * 
-     * @since 0.1.0
      */
     public function getAction();
 
     /**
-     * getParam.
+     * Return parameters
      * 
-     * @since 0.1.0
      */
     public function getParam();
+    
+    /**
+     * Return model name
+     * 
+     */
+    public function getModel();
+    
+    /**
+     * Return view name
+     * 
+     */
+    public function getView();
 }

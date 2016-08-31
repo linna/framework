@@ -1,7 +1,7 @@
 {
-    "name": "s3b4stian/leviu",
+    "name": "s3b4stian/linna-framework",
     "type": "library",
-    "description": "Leviu Framework",
+    "description": "Linna Framework",
     "keywords": ["framework", "mvc", "PHP", "learn"],
     "license": "MIT",
     "authors": [
@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Leviu\\": "src/Leviu/"
+            "Linna\\": "src/Linna/"
         }
     }
 }

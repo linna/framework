@@ -1,49 +1,45 @@
 <?php
 
 /**
- * Leviu
+ * Linna Framework
  *
- * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
 
-namespace Leviu\Http;
+namespace Linna\Http;
 
-use Leviu\Http\RouteInterface;
+use Linna\Http\RouteInterface;
 
 /**
- * Description of FrontController
- *
- * @author Sebastian
+ * FrontController
+ * 
  */
 class FrontController
 {
 
-    use \Leviu\classOptionsTrait;
+    use \Linna\classOptionsTrait;
 
     /**
-     *
      * @var Object Contain view object for render 
      */
     private $view;
 
     /**
-     *
      * @var Object Contain model object 
      */
     private $model;
 
     /**
-     *
      * @var Object Contain controller object
      */
     private $controller;
 
     /**
      * Utilized with classOptionsTrait
+     * 
      * @var array Config options for class
      */
     protected $options = array(
@@ -53,7 +49,7 @@ class FrontController
     );
 
     /**
-     * constructor
+     * Constructor
      * 
      * @param RouteInterface $route
      * @param array $options
@@ -80,6 +76,13 @@ class FrontController
         $this->call($routeType, $routeAction, $routeParam);
     }
 
+    /**
+     * Call all mvc components
+     * 
+     * @param int $routeType
+     * @param string $routeAction
+     * @param array $routeParam
+     */
     private function call($routeType, $routeAction, $routeParam)
     {
         //che type of route anche cal proper func
@@ -108,6 +111,10 @@ class FrontController
         }
     }
 
+    /**
+     * Return view data
+     * 
+     */
     public function response()
     {
         $this->view->render();

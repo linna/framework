@@ -1,16 +1,15 @@
 <?php
 
 /**
- * Leviu
+ * Linna Framework
  *
- * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
 
-namespace Leviu\Session;
+namespace Linna\Session;
 
 use SessionHandlerInterface;
 
@@ -23,11 +22,11 @@ use SessionHandlerInterface;
  */
 class Session
 {
-    use \Leviu\classOptionsTrait;
+    use \Linna\classOptionsTrait;
     
     /**
      * Utilized with classOptionsTrait
-     * @var array Config options for class
+     * @var array $options Config options for class
      */
     protected $options = array(
         'expire' => 1800,
@@ -39,7 +38,6 @@ class Session
     );
     
     /**
-     *
      * @var array $data Session data reference property
      */
     private $data = array();
@@ -50,12 +48,12 @@ class Session
     private static $instance;
     
     /**
-     *
      * @var array $opt Cache variable for pass option to constructor
      */
     private static $opt;
     
     /**
+     * Contructor
      * 
      * @param array $options Options for configure session
      */

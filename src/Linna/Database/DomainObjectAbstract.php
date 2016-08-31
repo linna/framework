@@ -1,16 +1,15 @@
 <?php
 
 /**
- * Leviu
+ * Linna Framework
  *
- * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
 
-namespace Leviu\Database;
+namespace Linna\Database;
 
 /**
  * Abstract Class for Domain Object
@@ -18,39 +17,36 @@ namespace Leviu\Database;
 abstract class DomainObjectAbstract implements DomainObjectInterface
 {
     /**
-     *
-     * @var int $_id Id of the Object, same of db record.
+     * @var int $_id Id of the Object, same of db record
      */
-    protected $_id = null;
+    protected $_Id = null;
 
     /**
      * Get the ID of this object (unique to the
      * object type).
      *
      * @return int
-     *
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->_Id;
     }
 
     /**
-     * Set the id for this object.
+     * Set the id for this object
      *
-     * @param int $id
+     * @param int $objectId
      *
      * @return int
      *
      * @throws Exception If the id on the object is already set
-     *
      */
-    public function setId($id)
+    public function setId($objectId)
     {
-        if (!is_null($this->_id)) {
+        if (!is_null($this->_Id)) {
             throw new Exception('ID is immutable');
         }
 
-        return $this->_id = (int) $id;
+        return $this->_Id = (int) $objectId;
     }
 }

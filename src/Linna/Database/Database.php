@@ -1,16 +1,15 @@
 <?php
 
 /**
- * Leviu
+ * Linna Framework
  *
- * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
 
-namespace Leviu\Database;
+namespace Linna\Database;
 
 /**
  * Singleton Pattern for PDO Database connection
@@ -48,7 +47,6 @@ class Database extends \PDO
     /**
      * Forbids the object clone
      * 
-     * @since 0.1.0
      */
     private function __clone()
     {
@@ -59,8 +57,6 @@ class Database extends \PDO
      * Return te instance of database connection
      * 
      * @return object
-     *
-     * @since 0.1.0
      */
     public static function connect()
     {

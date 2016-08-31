@@ -1,22 +1,20 @@
 <?php
 
 /**
- * Leviu
+ * Linna Framework
  *
- * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
 
-namespace Leviu\Session;
+namespace Linna\Session;
 
 use \SessionHandlerInterface;
 
 /**
- * Database Session Handler
- * - Class for store sessions in Database.
+ * Store sessions in Database.
  * 
  * Check below link for PHP session Handler
  * http://php.net/manual/en/class.sessionhandler.php
@@ -33,12 +31,12 @@ use \SessionHandlerInterface;
 class DatabaseSessionHandler implements SessionHandlerInterface
 {
     /**
-     * @var object Database Connection
+     * @var object $dBase Database Connection
      */
     private $dBase;
 
     /**
-     * Class constructor.
+     * Constructor
      * 
      */
     public function __construct($storage)
@@ -47,7 +45,8 @@ class DatabaseSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * open
+     * Open session storage
+     * 
      * http://php.net/manual/en/sessionhandler.open.php.
      * 
      * @param string $savePath
@@ -63,7 +62,8 @@ class DatabaseSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * gc
+     * Delete old sessions from storage
+     * 
      * http://php.net/manual/en/sessionhandler.gc.php.
      * 
      * @param string $maxLifetime
@@ -81,7 +81,8 @@ class DatabaseSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * read
+     * Read sessio data from storage
+     * 
      * http://php.net/manual/en/sessionhandler.read.php.
      * 
      * @param string $sessionId
@@ -100,7 +101,8 @@ class DatabaseSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * write
+     * Write session data to storage
+     * 
      * http://php.net/manual/en/sessionhandler.write.php.
      * 
      * @param string $sessionId
@@ -120,7 +122,8 @@ class DatabaseSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * close
+     * Close session
+     * 
      * http://php.net/manual/en/sessionhandler.close.php.
      * 
      * @return bool
@@ -131,7 +134,8 @@ class DatabaseSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * destroy
+     * Destroy session data
+     * 
      * http://php.net/manual/en/sessionhandler.destroy.php.
      * 
      * @param string $sessionId

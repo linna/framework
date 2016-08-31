@@ -1,16 +1,15 @@
 <?php
 
 /**
- * Leviu
+ * Linna Framework
  *
- * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
 
-namespace Leviu\Http;
+namespace Linna\Http;
 
 /**
  * Manage routes, verify every resource requested by browser and return
@@ -19,10 +18,11 @@ namespace Leviu\Http;
  */
 class Router
 {
-    use \Leviu\classOptionsTrait;
+    use \Linna\classOptionsTrait;
     
     /**
      * Utilized with classOptionsTrait
+     * 
      * @var array Config options for class
      */
     protected $options = array(
@@ -31,24 +31,24 @@ class Router
     );
     
     /**
-     * @var array Utilized for return the most recently parsed route
+     * @var array $route Utilized for return the most recently parsed route
      */
     protected $route;
 
     /**
-     * @var array Passed from constructor, is the list of registerd routes for the app
+     * @var array $routes Passed from constructor, is the list of registerd routes for the app
      */
     protected $routes = null;
 
     /**
-     * @var array List of regex for find parameter inside passed routes
+     * @var array $matchTypes List of regex for find parameter inside passed routes
      */
     protected $matchTypes = array(
         '`\[[0-9A-Za-z]+\]`',
     );
 
     /**
-     * @var array List of regex for find type of parameter inside passed routes
+     * @var array $types List of regex for find type of parameter inside passed routes
      */
     protected $types = array(
 
@@ -56,20 +56,19 @@ class Router
     );
 
     /**
-     * @var string Request uri from browser (start from['REQUEST_URI'])
+     * @var string $currentUri Request uri from browser (start from['REQUEST_URI'])
      */
     protected $currentUri = '';
     
     
     /**
-     * Constructor.
+     * Constructor
      * 
      * @param string $requestUri Request uri
      * @param array $routes List of registerd routes for the app in routes.php
      * @param array $options Options for router config
      *
      * @todo Make router compatible with PSR7 REQUEST,instead of request uri pass a PSR7 request object
-     * 
      */
     public function __construct($requestUri, $routes, $options)
     {
@@ -91,7 +90,6 @@ class Router
      * return the route object else return a bad route object
      * 
      * @return Route
-     *
      */
     public function getRoute()
     {
@@ -107,16 +105,17 @@ class Router
      * Check if the requested uri is a valid route
      *
      * if valid return an array like this with route, if no return route for error page
-     * array (size=6)
-     * 'name' => null
-     * 'method' => string 'GET' (length=3)
-     * 'url' => string '/' (length=1)
-     * 'controller' => string 'Home' (length=4)
-     * 'action' => null
-     * 'matches' => string '/' (length=1)
+     *  [
+     *      'name' => 'Home',
+     *      'method' => 'GET',
+     *      'url' => '/',
+     *      'model' => 'HomeModel',
+     *      'view' => 'HomeView',
+     *      'controller' => 'HomeController',
+     *      'action' => null,
+     *  ];
      * 
      * @return array Contains properties of route
-     *
      */
     protected function match()
     {
@@ -172,7 +171,6 @@ class Router
      * @param array $validRoute Array with route caracteristics
      *
      * @return array Array with param passed from uri
-     *
      */
     protected function buildParam($validRoute)
     {
@@ -195,8 +193,8 @@ class Router
      * Analize $_SERVER['REQUEST_URI'] for current uri, sanitize and return it
      * 
      * @param string $passedUri
+     * 
      * @return string Uri from browser
-     *
      */
     protected function getCurrentUri($passedUri)
     {

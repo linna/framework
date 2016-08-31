@@ -1,20 +1,22 @@
 <?php
 
 /**
- * Leviu
+ * Linna Framework
  *
- * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
 
-namespace Leviu\Mvc;
+namespace Linna\Mvc;
 
 /**
  * Parent class for model classes.
  * 
+ * This class was implemented like part of Observer pattern
+ * https://en.wikipedia.org/wiki/Observer_pattern
+ * http://php.net/manual/en/class.splsubject.php
  */
 class Model implements \SplSubject
 {
@@ -31,6 +33,12 @@ class Model implements \SplSubject
         $this->observers = new \SplObjectStorage();
     }
     
+    /**
+     * Attach an Observer class to this Subject for updates
+     * when occour a subject state change
+     * 
+     * @param \SplObserver $observer
+     */
     public function attach(\SplObserver $observer)
     {
         if ($observer instanceof View) {
@@ -38,6 +46,11 @@ class Model implements \SplSubject
         }
     }
     
+    /**
+     * Detach an Observer class from this Subject
+     * 
+     * @param \SplObserver $observer
+     */
     public function detach(\SplObserver $observer)
     {
         if ($observer instanceof View) {
@@ -45,6 +58,9 @@ class Model implements \SplSubject
         }
     }
     
+    /**
+     * Notify a state change of Subject to all registered Observeres
+     */
     public function notify()
     {
         foreach ($this->observers as $value) {

@@ -1,16 +1,15 @@
 <?php
 
 /**
- * Leviu
+ * Linna Framework
  *
- * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
 
-namespace Leviu\Http;
+namespace Linna\Http;
 
 /**
  * Describe valid routes.
@@ -19,39 +18,55 @@ namespace Leviu\Http;
 class Route implements RouteInterface
 {
     /**
-     * @var int Indicates that route point at controller, method etc...
+     * @var int $typeOfRoute Indicates that route point at controller, method etc...
      */
     protected $typeOfRoute = null;
 
-    
+    /**
+     * @var string $name Route name 
+     */
     protected $name = '';
 
-   
+    /**
+     * @var string $method Indicates request method 
+     */
     protected $method;
-
-    protected $view = null;
-            
-    protected $model = null;
     
-    protected $controller = null;
-
-   
-    protected $action = null;
-
+    /**
+     * @var string $view View to call 
+     */
+    protected $view = '';
     
+    /**
+     * @var string $view View to call 
+     */
+    protected $model = '';
+    
+    /**
+     * @var string $controller Controller to call 
+     */
+    protected $controller = '';
+    
+    /**
+     * @var string $action Action to call 
+     */
+    protected $action = '';
+
+    /**
+     * @var array $param Parameter passed to controller 
+     */
     protected $param = array();
 
     
         
     /**
-     * Route contructor.
+     * Contructor
      * 
      * @param string $name
      * @param string $method
      * @param string $controller
      * @param string $action
      * @param array  $param
-     *
      */
     public function __construct($name, $method, $model, $view, $controller, $action, $param)
     {
@@ -72,7 +87,6 @@ class Route implements RouteInterface
      * 3 for controller with custom method passing parameter
      * 
      * @return int Type of route
-     *
      */
     protected function type()
     {
@@ -94,11 +108,9 @@ class Route implements RouteInterface
     }
 
     /**
-     * getType.
+     * Return type of route
      * 
      * @return int Type of route
-     *
-     * @since 0.1.0
      */
     public function getType()
     {
@@ -106,11 +118,9 @@ class Route implements RouteInterface
     }
 
     /**
-     * getController.
+     * Return controller
      * 
-     * @return string Controller for call Controller->default_action()
-     *
-     * @since 0.1.0
+     * @return string Controller for call $controller->default_action()
      */
     public function getController()
     {
@@ -118,11 +128,9 @@ class Route implements RouteInterface
     }
 
     /**
-     * getAction.
+     * Return action name
      * 
-     * @return string Action for call Controller->action()
-     *
-     * @since 0.1.0
+     * @return string Action for call $controller->action()
      */
     public function getAction()
     {
@@ -130,22 +138,30 @@ class Route implements RouteInterface
     }
 
     /**
-     * getParam.
+     * Return parameters
      * 
-     * @return array Action for call Controller->Action(Param)
-     *
-     * @since 0.1.0
+     * @return array Parameter for call $controller->action(Param)
      */
     public function getParam()
     {
         return $this->param;
     }
     
+    /**
+     * Return model name
+     * 
+     * @return string Model for call new $Model()
+     */
     public function getModel()
     {
         return $this->model;
     }
     
+    /**
+     * Return view name
+     * 
+     * @return string View for call new $View()
+     */
     public function getView()
     {
         return $this->view;

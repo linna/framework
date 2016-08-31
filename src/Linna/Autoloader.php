@@ -1,16 +1,15 @@
 <?php
 
 /**
- * Leviu
+ * Linna Framework
  *
- * 
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2016, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
 
-namespace Leviu;
+namespace Linna;
 
 /**
  * PSR-4 Autoloader.
@@ -145,7 +144,7 @@ class Autoloader
     /**
      * Load the mapped file for a namespace prefix and relative class.
      * 
-     * @param string $prefix         The namespace prefix.
+     * @param string $prefix The namespace prefix.
      * @param string $relativeClass The relative class name.
      *
      * @return mixed Boolean false if no mapped file can be loaded, or the
