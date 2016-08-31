@@ -40,7 +40,7 @@ abstract class MapperAbstract
      *
      * @since 0.1.0
      */
-    public function save(DomainObjectAbstract ...$obj)
+    public function save(DomainObjectInterface ...$obj)
     {
         $obj = $obj[0];
         
@@ -58,7 +58,7 @@ abstract class MapperAbstract
      *
      * @since 0.1.0
      */
-    public function delete(DomainObjectAbstract $obj)
+    public function delete(DomainObjectInterface $obj)
     {
         $this->_delete($obj);
     }
@@ -80,7 +80,7 @@ abstract class MapperAbstract
      *
      * @since 0.1.0
      */
-    abstract protected function _insert(DomainObjectAbstract $obj);
+    abstract protected function _insert(DomainObjectInterface $obj);
 
     /**
      * Update the DomainObject in persistent storage 
@@ -89,7 +89,7 @@ abstract class MapperAbstract
      *
      * @since 0.1.0
      */
-    abstract protected function _update(DomainObjectAbstract $obj);
+    abstract protected function _update(DomainObjectInterface $obj);
 
     /**
      * Delete the DomainObject from peristent Storage
@@ -98,5 +98,5 @@ abstract class MapperAbstract
      *
      * @since 0.1.0
      */
-    abstract protected function _delete(DomainObjectAbstract $obj);
+    abstract protected function _delete(DomainObjectInterface $obj);
 }

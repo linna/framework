@@ -15,7 +15,7 @@ namespace Leviu\Database;
 /**
  * Abstract Class for Domain Object
  */
-abstract class DomainObjectAbstract
+abstract class DomainObjectAbstract implements DomainObjectInterface
 {
     /**
      *
@@ -29,7 +29,6 @@ abstract class DomainObjectAbstract
      *
      * @return int
      *
-     * @since 0.1.0
      */
     public function getId()
     {
@@ -45,7 +44,6 @@ abstract class DomainObjectAbstract
      *
      * @throws Exception If the id on the object is already set
      *
-     * @since 0.1.0
      */
     public function setId($id)
     {
