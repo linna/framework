@@ -66,5 +66,5 @@ class View implements \SplObserver
         if ($subject instanceof Model) {
             $this->data = array_merge($this->data, $subject->getUpdate);
         }
-    }   
+    }
 }

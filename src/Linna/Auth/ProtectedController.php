@@ -29,5 +29,4 @@ trait ProtectedController
             header('location: '.$redirect);
         }
     }
-
 }

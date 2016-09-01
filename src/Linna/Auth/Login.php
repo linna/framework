@@ -139,7 +139,7 @@ class Login
      * @return bool
      */
     private function refresh()
-    {   
+    {
         if (!isset($this->sessionInstance->login)) {
             return false;
         }
