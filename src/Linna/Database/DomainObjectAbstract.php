@@ -17,7 +17,7 @@ namespace Linna\Database;
 abstract class DomainObjectAbstract implements DomainObjectInterface
 {
     /**
-     * @var int $_id Id of the Object, same of db record
+     * @var int $_Id Object id, same of db record
      */
     protected $_Id = null;
 
