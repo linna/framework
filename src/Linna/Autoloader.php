@@ -168,9 +168,10 @@ class Autoloader
                     .'.php';
 
             // if the mapped file exists, require it
-            if ($this->requireFile($file)) {
+            if (file_exists($file)) {
 
-                //var_dump($file);
+                require $file;
+                
                 // yes, we're done
                 return $file;
             }
@@ -187,7 +188,7 @@ class Autoloader
      *
      * @return bool True if the file exists, false if not.
      */
-    protected function requireFile($file)
+    /*protected function requireFile($file)
     {
         if (file_exists($file)) {
             require $file;
@@ -196,5 +197,5 @@ class Autoloader
         }
 
         return false;
-    }
+    }*/
 }
