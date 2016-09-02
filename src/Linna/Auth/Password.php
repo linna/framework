@@ -13,14 +13,14 @@ namespace Linna\Auth;
 
 /**
  * Class for manage password, using PHP 5.5.0 password see php documentation for more information
- * 
+ *
  * http://php.net/manual/en/ref.password.php.
  */
 class Password
 {
     /**
      * @var array $options An associative array containing options
-     * 
+     *
      * http://php.net/manual/en/password.constants.php
      */
     protected $options = [
@@ -29,7 +29,7 @@ class Password
     
     /**
      * Constructor
-     * 
+     *
      */
     public function __construct()
     {
@@ -37,10 +37,10 @@ class Password
     
     /**
      * Check if password matches a hash.
-     * 
+     *
      * @param string $hash
      * @param string $password
-     * 
+     *
      * @return bool Result of password_verify PHP function.
      */
     public function verify($password, $hash)
@@ -50,9 +50,9 @@ class Password
 
     /**
      * Create a password hash.
-     * 
+     *
      * @param string $password Password to be hashed.
-     * 
+     *
      * @return string Return the hashed password.
      */
     public function hash($password)
@@ -65,9 +65,9 @@ class Password
     
     /**
      * Check if password need rehash
-     * 
+     *
      * @param string $hash Hash for check.
-     * 
+     *
      * @return boolean Return the hashed password.
      */
     public function needsRehash($hash)

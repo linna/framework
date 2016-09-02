@@ -13,7 +13,7 @@ namespace Linna\Mvc;
 
 /**
  * Parent class for view classes.
- * 
+ *
  * This class was implemented like part of Observer pattern
  * https://en.wikipedia.org/wiki/Observer_pattern
  * http://php.net/manual/en/class.splobserver.php
@@ -32,14 +32,14 @@ class View implements \SplObserver
     protected $template;
     
     /**
-     * @var object $model  Model for access data
+     * @var object $model Model for access data
      */
     protected $model;
     
 
     /**
      * Constructor.
-     * 
+     *
      */
     public function __construct($model)
     {
@@ -48,7 +48,7 @@ class View implements \SplObserver
     
     /**
      * Render a template
-     * 
+     *
      */
     public function render()
     {
@@ -57,8 +57,8 @@ class View implements \SplObserver
     }
     
     /**
-     * Update Observer data  
-     * 
+     * Update Observer data
+     *
      * @param \SplSubject $subject
      */
     public function update(\SplSubject $subject)

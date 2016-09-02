@@ -57,20 +57,20 @@ abstract class MapperAbstract
    
     /**
      * Create a new instance of a DomainObject
-     * 
+     *
      * @return DomainObjectAbstract
      */
     abstract protected function _create();
 
     /**
-     * Insert the DomainObject to persistent storage 
+     * Insert the DomainObject to persistent storage
      *
      * @param DomainObjectAbstract $domainObject
      */
     abstract protected function _insert(DomainObjectInterface $domainObject);
 
     /**
-     * Update the DomainObject in persistent storage 
+     * Update the DomainObject in persistent storage
      *
      * @param DomainObjectAbstract $domainObject
      */

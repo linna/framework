@@ -14,7 +14,7 @@ namespace Linna\Mvc;
 /**
  * This is the parent class for every controller in the app, permit access
  * to view and models for every instance of a child.
- * 
+ *
  */
 class Controller
 {
@@ -25,7 +25,7 @@ class Controller
 
     /**
      * Controller constructor.
-     * 
+     *
      */
     public function __construct($model)
     {

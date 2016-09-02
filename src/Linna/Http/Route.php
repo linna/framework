@@ -13,7 +13,7 @@ namespace Linna\Http;
 
 /**
  * Describe valid routes.
- * 
+ *
  */
 class Route implements RouteInterface
 {
@@ -23,37 +23,37 @@ class Route implements RouteInterface
     protected $typeOfRoute = null;
 
     /**
-     * @var string $name Route name 
+     * @var string $name Route name
      */
     protected $name = '';
 
     /**
-     * @var string $method Indicates request method 
+     * @var string $method Indicates request method
      */
     protected $method;
     
     /**
-     * @var string $view View to call 
+     * @var string $view View to call
      */
     protected $view = '';
     
     /**
-     * @var string $view View to call 
+     * @var string $view View to call
      */
     protected $model = '';
     
     /**
-     * @var string $controller Controller to call 
+     * @var string $controller Controller to call
      */
     protected $controller = '';
     
     /**
-     * @var string $action Action to call 
+     * @var string $action Action to call
      */
     protected $action = '';
 
     /**
-     * @var array $param Parameter passed to controller 
+     * @var array $param Parameter passed to controller
      */
     protected $param = array();
 
@@ -61,7 +61,7 @@ class Route implements RouteInterface
         
     /**
      * Contructor
-     * 
+     *
      * @param string $name
      * @param string $method
      * @param string $controller
@@ -85,7 +85,7 @@ class Route implements RouteInterface
      * 1 for controller default method
      * 2 for controller with custom method
      * 3 for controller with custom method passing parameter
-     * 
+     *
      * @return int Type of route
      */
     protected function type()
@@ -109,7 +109,7 @@ class Route implements RouteInterface
 
     /**
      * Return type of route
-     * 
+     *
      * @return int Type of route
      */
     public function getType()
@@ -119,7 +119,7 @@ class Route implements RouteInterface
 
     /**
      * Return controller
-     * 
+     *
      * @return string Controller for call $controller->default_action()
      */
     public function getController()
@@ -129,7 +129,7 @@ class Route implements RouteInterface
 
     /**
      * Return action name
-     * 
+     *
      * @return string Action for call $controller->action()
      */
     public function getAction()
@@ -139,7 +139,7 @@ class Route implements RouteInterface
 
     /**
      * Return parameters
-     * 
+     *
      * @return array Parameter for call $controller->action(Param)
      */
     public function getParam()
@@ -149,7 +149,7 @@ class Route implements RouteInterface
     
     /**
      * Return model name
-     * 
+     *
      * @return string Model for call new $Model()
      */
     public function getModel()
@@ -159,7 +159,7 @@ class Route implements RouteInterface
     
     /**
      * Return view name
-     * 
+     *
      * @return string View for call new $View()
      */
     public function getView()

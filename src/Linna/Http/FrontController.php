@@ -15,31 +15,35 @@ use Linna\Http\RouteInterface;
 
 /**
  * FrontController
- * 
+ *
  */
 class FrontController
 {
-
     use \Linna\classOptionsTrait;
 
     /**
-     * @var Object Contain view object for render 
+     * @var Object $view Contain view object for render
      */
     private $view;
 
     /**
-     * @var Object Contain model object 
+     * @var Object $model Contain model object
      */
     private $model;
 
     /**
-     * @var Object Contain controller object
+     * @var Object $controller Contain controller object
      */
     private $controller;
+    
+    /**
+     * @var Object $route Contain controller object
+     */
+    private $route;
 
     /**
      * Utilized with classOptionsTrait
-     * 
+     *
      * @var array Config options for class
      */
     protected $options = array(
@@ -50,7 +54,7 @@ class FrontController
 
     /**
      * Constructor
-     * 
+     *
      * @param RouteInterface $route
      * @param array $options
      */
@@ -58,62 +62,61 @@ class FrontController
     {
         $this->options = $this->overrideOptions($this->options, $options);
         
-        $routeType = $route->getType();
-
-        $routeModel = $options['modelNamespace'] . $route->getModel();
-        $routeView = $options['viewNamespace'] . $route->getView();
-        $routeController = $options['controllerNamespace'] . $route->getController();
+        $routeModel = $options['modelNamespace'].$route->getModel();
+        $routeView = $options['viewNamespace'].$route->getView();
+        $routeController = $options['controllerNamespace'].$route->getController();
         
-        $routeAction = $route->getAction();
-        $routeParam = $route->getParam();
-
+        $this->route = $route;
         $this->model = new $routeModel();
         $this->view = new $routeView($this->model);
         $this->controller = new $routeController($this->model);
-
-        $this->model->attach($this->view);
-
-        $this->call($routeType, $routeAction, $routeParam);
     }
-
+    
     /**
-     * Call all mvc components
-     * 
-     * @param int $routeType
-     * @param string $routeAction
-     * @param array $routeParam
+     * Run mvc pattern
+     *
      */
-    private function call($routeType, $routeAction, $routeParam)
+    public function run()
     {
-        //che type of route anche cal proper func
-        //http://php.net/manual/en/ref.funchand.php
-        //http://php.net/manual/en/function.call-user-func.php
-        //http://php.net/manual/en/function.call-user-func-array.php
-        switch ($routeType) {
-            case 3:
-                //call class, method and pass parameter
-                call_user_func_array(array($this->controller, $routeAction), $routeParam);
-                call_user_func(array($this->view, $routeAction));
-                break;
-            case 2:
-                //call class, method without parameter
-                call_user_func(array($this->controller, $routeAction));
-                call_user_func(array($this->view, $routeAction));
-                break;
-            case 1:
-                //call class with index, no method passed
-                call_user_func(array($this->view, 'index'));
-                break;
-            default:
-                //call default 404 controller
-                call_user_func(array($this->view, 'index'));
-                break;
+        //attach Oserver to Subjetc
+        $this->model->attach($this->view);
+        
+        //run controller
+        $this->runController();
+        
+        //notify model changes to view
+        $this->model->notify();
+        
+        //run view
+        $this->runView();
+    }
+    
+    private function runController()
+    {
+        $routeAction = $this->route->getAction();
+        $routeParam =  $this->route->getParam();
+        
+        if (sizeof($routeParam) > 0 && $routeAction !== null) {
+            call_user_func_array(array($this->controller, $routeAction), $routeParam);
+            return;
+        }
+        
+        if ($routeAction !== null) {
+            call_user_func(array($this->controller, $routeAction));
         }
     }
-
+    
+    private function runView()
+    {
+        $routeAction = $this->route->getAction();
+        $routeAction = ($routeAction !== null) ? $routeAction : 'index';
+        
+        call_user_func(array($this->view, $routeAction));
+    }
+    
     /**
      * Return view data
-     * 
+     *
      */
     public function response()
     {

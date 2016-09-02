@@ -13,14 +13,14 @@ namespace Linna;
 
 /**
  * PSR-4 Autoloader.
- * 
+ *
  * An example of a general-purpose implementation that includes the optional
  * functionality of allowing multiple base directories for a single namespace
  * prefix.
- * 
+ *
  * Given a foo-bar package of classes in the file system at the following
  * paths ...
- * 
+ *
  *     /path/to/packages/foo-bar/
  *         src/
  *             Baz.php             # Foo\Bar\Baz
@@ -30,35 +30,35 @@ namespace Linna;
  *             BazTest.php         # Foo\Bar\BazTest
  *             Qux/
  *                 QuuxTest.php    # Foo\Bar\Qux\QuuxTest
- * 
+ *
  * ... add the path to the class files for the \Foo\Bar\ namespace prefix
  * as follows:
  *
  *      <?php
  *      // instantiate the loader
  *      $loader = new \Example\Psr4AutoloaderClass;
- *      
+ *
  *      // register the autoloader
  *      $loader->register();
- *      
+ *
  *      $nm = [
  *          ['Foo\Bar', '/path/to/packages/foo-bar/src'],
  *          ['Foo\Bar', '/path/to/packages/foo-bar/tests']
  *      ];
- * 
+ *
  *      // register the base directories for the namespace prefix
  *      $loader->addNamespaces($nm);
- * 
- * 
+ *
+ *
  * The following line would cause the autoloader to attempt to load the
  * \Foo\Bar\Qux\Quux class from /path/to/packages/foo-bar/src/Qux/Quux.php:
- * 
+ *
  *      <?php
  *      new \Foo\Bar\Qux\Quux;
- * 
- * The following line would cause the autoloader to attempt to load the 
+ *
+ * The following line would cause the autoloader to attempt to load the
  * \Foo\Bar\Qux\QuuxTest class from /path/to/packages/foo-bar/tests/Qux/QuuxTest.php:
- * 
+ *
  *      <?php
  *      new \Foo\Bar\Qux\QuuxTest;
  */
@@ -83,7 +83,7 @@ class Autoloader
     /**
      * Adds a base directory for a namespace prefix, accept an array of namespaces
      * Utilize this for prevente multiple addNamespace() calls.
-     * 
+     *
      * @param array $namespaces The namespace prefix array.
      */
     public function addNamespaces($namespaces)
@@ -143,7 +143,7 @@ class Autoloader
 
     /**
      * Load the mapped file for a namespace prefix and relative class.
-     * 
+     *
      * @param string $prefix The namespace prefix.
      * @param string $relativeClass The relative class name.
      *
@@ -182,7 +182,7 @@ class Autoloader
 
     /**
      * If a file exists, require it from the file system.
-     * 
+     *
      * @param string $file The file to require.
      *
      * @return bool True if the file exists, false if not.

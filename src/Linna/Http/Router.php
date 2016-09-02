@@ -14,7 +14,7 @@ namespace Linna\Http;
 /**
  * Manage routes, verify every resource requested by browser and return
  * a RouteInterface Object.
- * 
+ *
  */
 class Router
 {
@@ -22,7 +22,7 @@ class Router
     
     /**
      * Utilized with classOptionsTrait
-     * 
+     *
      * @var array Config options for class
      */
     protected $options = array(
@@ -63,7 +63,7 @@ class Router
     
     /**
      * Constructor
-     * 
+     *
      * @param string $requestUri Request uri
      * @param array $routes List of registerd routes for the app in routes.php
      * @param array $options Options for router config
@@ -86,9 +86,9 @@ class Router
     }
 
     /**
-     * Check if a route is valid and 
+     * Check if a route is valid and
      * return the route object else return a bad route object
-     * 
+     *
      * @return Route
      */
     public function getRoute()
@@ -114,7 +114,7 @@ class Router
      *      'controller' => 'HomeController',
      *      'action' => null,
      *  ];
-     * 
+     *
      * @return array Contains properties of route
      */
     protected function match()
@@ -167,7 +167,7 @@ class Router
 
     /**
      * Try to find param in a valid route
-     * 
+     *
      * @param array $validRoute Array with route caracteristics
      *
      * @return array Array with param passed from uri
@@ -191,9 +191,9 @@ class Router
 
     /**
      * Analize $_SERVER['REQUEST_URI'] for current uri, sanitize and return it
-     * 
+     *
      * @param string $passedUri
-     * 
+     *
      * @return string Uri from browser
      */
     protected function getCurrentUri($passedUri)

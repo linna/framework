@@ -13,16 +13,22 @@ namespace Linna\Mvc;
 
 /**
  * Parent class for model classes.
- * 
+ *
  * This class was implemented like part of Observer pattern
  * https://en.wikipedia.org/wiki/Observer_pattern
  * http://php.net/manual/en/class.splsubject.php
  */
 class Model implements \SplSubject
 {
+    /**
+     * @var object $observers List of attached observerer
+     */
     private $observers;
     
-    public $getUpdate;
+    /**
+     * @var array $getUpdate Data for notify to observerer
+     */
+    public $getUpdate = array();
     
     /**
      * Constructor
@@ -36,7 +42,7 @@ class Model implements \SplSubject
     /**
      * Attach an Observer class to this Subject for updates
      * when occour a subject state change
-     * 
+     *
      * @param \SplObserver $observer
      */
     public function attach(\SplObserver $observer)
@@ -48,7 +54,7 @@ class Model implements \SplSubject
     
     /**
      * Detach an Observer class from this Subject
-     * 
+     *
      * @param \SplObserver $observer
      */
     public function detach(\SplObserver $observer)

@@ -13,16 +13,16 @@ namespace Linna;
 
 /**
  * Methods for help to protect a controller with login.
- * 
+ *
  */
 trait classOptionsTrait
 {
     /**
      * Override default options
-     * 
+     *
      * @param array $classOptions
      * @param array $options
-     * 
+     *
      * @return array Updated options
      */
     protected function overrideOptions($classOptions, $options)

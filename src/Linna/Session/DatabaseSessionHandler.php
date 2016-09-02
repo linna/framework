@@ -15,12 +15,12 @@ use \SessionHandlerInterface;
 
 /**
  * Store sessions in Database.
- * 
+ *
  * Check below link for PHP session Handler
  * http://php.net/manual/en/class.sessionhandler.php
- * 
+ *
  * Before use create table session on DB, I prefered memory engine for speed
- * 
+ *
  * CREATE TABLE `session` (
  *  `session_id` char(128) NOT NULL,
  *  `session_data` varchar(8191) NOT NULL,
@@ -37,7 +37,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface
 
     /**
      * Constructor
-     * 
+     *
      */
     public function __construct($storage)
     {
@@ -46,9 +46,9 @@ class DatabaseSessionHandler implements SessionHandlerInterface
 
     /**
      * Open session storage
-     * 
+     *
      * http://php.net/manual/en/sessionhandler.open.php.
-     * 
+     *
      * @param string $savePath
      * @param string $sessionName
      *
@@ -63,9 +63,9 @@ class DatabaseSessionHandler implements SessionHandlerInterface
 
     /**
      * Delete old sessions from storage
-     * 
+     *
      * http://php.net/manual/en/sessionhandler.gc.php.
-     * 
+     *
      * @param string $maxLifetime
      *
      * @return bool
@@ -82,9 +82,9 @@ class DatabaseSessionHandler implements SessionHandlerInterface
 
     /**
      * Read sessio data from storage
-     * 
+     *
      * http://php.net/manual/en/sessionhandler.read.php.
-     * 
+     *
      * @param string $sessionId
      *
      * @return string
@@ -102,9 +102,9 @@ class DatabaseSessionHandler implements SessionHandlerInterface
 
     /**
      * Write session data to storage
-     * 
+     *
      * http://php.net/manual/en/sessionhandler.write.php.
-     * 
+     *
      * @param string $sessionId
      * @param array  $data
      *
@@ -123,9 +123,9 @@ class DatabaseSessionHandler implements SessionHandlerInterface
 
     /**
      * Close session
-     * 
+     *
      * http://php.net/manual/en/sessionhandler.close.php.
-     * 
+     *
      * @return bool
      */
     public function close()
@@ -135,9 +135,9 @@ class DatabaseSessionHandler implements SessionHandlerInterface
 
     /**
      * Destroy session data
-     * 
+     *
      * http://php.net/manual/en/sessionhandler.destroy.php.
-     * 
+     *
      * @param string $sessionId
      *
      * @return bool

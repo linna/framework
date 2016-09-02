@@ -17,7 +17,7 @@ use SessionHandlerInterface;
  * Manage session lifetime and session data
  * In this class sigleton patter was correct because constructor is private
  * https://en.wikipedia.org/wiki/Singleton_pattern
- * 
+ *
  * @property int $time Time of session
  */
 class Session
@@ -54,7 +54,7 @@ class Session
     
     /**
      * Contructor
-     * 
+     *
      * @param array $options Options for configure session
      */
     private function __construct($options)
@@ -72,7 +72,7 @@ class Session
     /**
      * Magic metod
      * http://php.net/manual/en/language.oop5.overloading.php
-     * 
+     *
      * @param string $name
      * @param mixed $value
      */
@@ -84,7 +84,7 @@ class Session
     /**
      * Magic metod
      * http://php.net/manual/en/language.oop5.overloading.php
-     * 
+     *
      * @param string $name
      */
     public function __get($name)
@@ -97,7 +97,7 @@ class Session
     /**
      * Magic metod
      * http://php.net/manual/en/language.oop5.overloading.php
-     * 
+     *
      * @param string $name
      */
     public function __unset($name)
@@ -108,7 +108,7 @@ class Session
     /**
      * Magic metod
      * http://php.net/manual/en/language.oop5.overloading.php
-     * 
+     *
      * @param string $name
      */
     public function __isset($name)
@@ -118,7 +118,7 @@ class Session
     
     /**
      * Regenerate session_id without double cookie problem
-     * 
+     *
      */
     public function regenerate()
     {
@@ -143,7 +143,7 @@ class Session
     
     /**
      * Start session
-     * 
+     *
      */
     private function start()
     {
@@ -178,7 +178,7 @@ class Session
     
     /**
      * Refresh session
-     * 
+     *
      * @return null
      */
     public function refresh()
@@ -202,7 +202,7 @@ class Session
     /**
      * Singleton
      * Get always the same instance
-     * 
+     *
      * @return \self $instance
      */
     public static function getInstance()
@@ -223,7 +223,7 @@ class Session
     /**
      * Singleton
      * Set options for session instance
-     * 
+     *
      */
     public static function withOptions($options)
     {
@@ -233,7 +233,7 @@ class Session
      /**
      * Singleton
      * Set session handler for new instance
-     * 
+     *
      */
     public static function setSessionHandler(SessionHandlerInterface $handler)
     {

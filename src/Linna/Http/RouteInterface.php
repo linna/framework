@@ -13,13 +13,13 @@ namespace Linna\Http;
 
 /**
  * Interface for routes.
- * 
+ *
  */
 interface RouteInterface
 {
     /**
      * Contructor
-     * 
+     *
      * @param string $name
      * @param string $method
      * @param string $controller
@@ -30,37 +30,37 @@ interface RouteInterface
 
     /**
      * Return type of route
-     * 
+     *
      */
     public function getType();
 
     /**
      * Return controller
-     * 
+     *
      */
     public function getController();
 
     /**
      * Return action name
-     * 
+     *
      */
     public function getAction();
 
     /**
      * Return parameters
-     * 
+     *
      */
     public function getParam();
     
     /**
      * Return model name
-     * 
+     *
      */
     public function getModel();
     
     /**
      * Return view name
-     * 
+     *
      */
     public function getView();
 }

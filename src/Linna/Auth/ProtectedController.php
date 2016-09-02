@@ -13,13 +13,13 @@ namespace Linna\Auth;
 
 /**
  * Help protect a controller with login.
- * 
+ *
  */
 trait ProtectedController
 {
     /**
      * Allow access to controller only if logged
-     * 
+     *
      * @param \Linna\Auth\Login $loginIstance
      * @param string $redirect
      */

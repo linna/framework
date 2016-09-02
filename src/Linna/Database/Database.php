@@ -25,7 +25,7 @@ class Database extends \PDO
 
     /**
      * Constructor
-     * 
+     *
      */
     public function __construct()
     {
@@ -46,7 +46,7 @@ class Database extends \PDO
 
     /**
      * Forbids the object clone
-     * 
+     *
      */
     private function __clone()
     {
@@ -55,7 +55,7 @@ class Database extends \PDO
 
     /**
      * Return te instance of database connection
-     * 
+     *
      * @return object
      */
     public static function connect()
