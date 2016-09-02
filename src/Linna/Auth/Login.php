@@ -151,6 +151,7 @@ class Login
         }
         
         $this->sessionInstance->loginTime = $time;
+        $this->data = $this->sessionInstance->login;
 
         return true;
     }
