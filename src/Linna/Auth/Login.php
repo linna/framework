@@ -76,10 +76,11 @@ class Login
     /**
      * Constructor.
      *
+     * @param Session $session Instance of session object
      */
-    public function __construct()
+    public function __construct(Session $session)
     {
-        $this->sessionInstance = Session::getInstance();
+        $this->sessionInstance = $session;
         $this->logged = $this->refresh();
     }
 
