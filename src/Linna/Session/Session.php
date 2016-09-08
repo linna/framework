@@ -11,6 +11,7 @@
 
 namespace Linna\Session;
 
+use Linna\classOptionsTrait;
 use SessionHandlerInterface;
 
 /**
@@ -22,7 +23,7 @@ use SessionHandlerInterface;
  */
 class Session
 {
-    use \Linna\classOptionsTrait;
+    use classOptionsTrait;
     
     /**
      * Utilized with classOptionsTrait

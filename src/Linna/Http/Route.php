@@ -19,6 +19,8 @@ class Route implements RouteInterface
 {
     /**
      * @var int $typeOfRoute Indicates that route point at controller, method etc...
+     *
+     * @deprecated since 0.3.1 After front controller refactor this method become unnecessary
      */
     protected $typeOfRoute = null;
 
@@ -64,6 +66,8 @@ class Route implements RouteInterface
      *
      * @param string $name
      * @param string $method
+     * @param string $model
+     * @param string $view
      * @param string $controller
      * @param string $action
      * @param array  $param
@@ -77,7 +81,7 @@ class Route implements RouteInterface
         $this->controller = $controller;
         $this->action = $action;
         $this->param = $param;
-        $this->typeOfRoute = $this->type();
+        //$this->typeOfRoute = $this->type();
     }
 
     /**
@@ -86,6 +90,7 @@ class Route implements RouteInterface
      * 2 for controller with custom method
      * 3 for controller with custom method passing parameter
      *
+     * @deprecated since 0.3.1 After front controller refactor this method become unnecessary
      * @return int Type of route
      */
     protected function type()

@@ -19,8 +19,6 @@ use Linna\Http\RouteInterface;
  */
 class FrontController
 {
-    use \Linna\classOptionsTrait;
-
     /**
      * @var Object $view Contain view object for render
      */
@@ -42,34 +40,20 @@ class FrontController
     private $route;
 
     /**
-     * Utilized with classOptionsTrait
-     *
-     * @var array Config options for class
-     */
-    protected $options = array(
-        'modelNamespace' => '',
-        'viewNamespace' => '',
-        'controllerNamespace' => '',
-    );
-
-    /**
      * Constructor
      *
-     * @param RouteInterface $route
-     * @param array $options
+     * @param RouteInterface $route Resolved route from router
+     * @param object $model Model object already instantiated
+     * @param object $view View object already instantiated
+     * @param object $controller Controller object already instantiated
      */
-    public function __construct(RouteInterface $route, $options)
+    public function __construct(RouteInterface $route, $model, $view, $controller)
     {
-        $this->options = $this->overrideOptions($this->options, $options);
-        
-        $routeModel = $options['modelNamespace'].$route->getModel();
-        $routeView = $options['viewNamespace'].$route->getView();
-        $routeController = $options['controllerNamespace'].$route->getController();
-        
         $this->route = $route;
-        $this->model = new $routeModel();
-        $this->view = new $routeView($this->model);
-        $this->controller = new $routeController($this->model);
+        
+        $this->model = $model;
+        $this->view = $view;
+        $this->controller = $controller;
     }
     
     /**
