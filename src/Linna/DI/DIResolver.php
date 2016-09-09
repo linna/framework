@@ -65,7 +65,6 @@ class DIResolver
             
             //class
             foreach ($value as $class => $dependency) {
-                
                 $args = [];
                 $object = $this->getCache($class);
 
