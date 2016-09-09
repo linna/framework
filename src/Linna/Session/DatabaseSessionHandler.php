@@ -12,6 +12,7 @@
 namespace Linna\Session;
 
 use \SessionHandlerInterface;
+use \Linna\Database\Database;
 
 /**
  * Store sessions in Database.
@@ -39,7 +40,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface
      * Constructor
      *
      */
-    public function __construct($storage)
+    public function __construct(Database $storage)
     {
         $this->dBase = $storage;
     }
@@ -95,7 +96,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface
 
         $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
         $pdos->execute();
-
+        
         //fix for php7
         return (string) $pdos->fetchColumn();
     }

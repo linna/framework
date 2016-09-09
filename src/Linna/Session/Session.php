@@ -215,7 +215,7 @@ class Session
             //create new instance
             $instance = new self(self::$opt);
         }
-
+        
         $instance->refresh();
 
         return $instance;

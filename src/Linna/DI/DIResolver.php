@@ -27,12 +27,12 @@ class DIResolver
 
         $this->buildDependencyTree(0, $class);
 
-        $this->buidObjects();
+        $this->buildObjects();
         
         return $this->getCache($this->class);
     }
 
-    public function addUnResolvable($name, $object)
+    public function cacheUnResolvable($name, $object)
     {
         $this->cache[$name] = $object;
     }
@@ -56,8 +56,9 @@ class DIResolver
         }
     }
 
-    private function buidObjects()
+    private function buildObjects()
     {
+        //reverse array for build first required classes
         $array = array_reverse($this->dependencyTree);
 
         //deep dependency level
@@ -65,36 +66,59 @@ class DIResolver
             
             //class
             foreach ($value as $class => $dependency) {
-                $args = [];
+                
+                //try to find object in class
                 $object = $this->getCache($class);
-
+                
+                //reflection class
+                $objectReflection = new \ReflectionClass($class);
+                
+                //if object is not in cache and need arguments try to build
                 if ($object === null && sizeof($dependency) > 0) {
-                    
-                    //argument required from class
-                    foreach ($dependency as $argKey => $argValue) {
-                        if ($this->getCache($argValue) === null) {
-                            $temp = new $argValue();
-                            $this->setCache($argValue, $temp);
-                            $args[] = $temp;
-                        } else {
-                            $args[] = $this->getCache($argValue);
-                        }
-                    }
-
-                    $objectReflection = new \ReflectionClass($class);
+                    //build arguments
+                    $args = $this->buildObjectDependency($dependency);
+                    //set object with instance class with arguments
                     $object = $objectReflection->newInstanceArgs($args);
+                    //store it from cache
                     $this->setCache($class, $object);
                 }
                 
                 if ($object === null) {
-                    $objectReflection = new \ReflectionClass($class);
+                    //set object with instance class without arguments
                     $object = $objectReflection->newInstance();
+                    //store it from cache
                     $this->setCache($class, $object);
                 }
             }
         }
     }
+    
+    private function buildObjectDependency($dependency)
+    {
+        $args = [];
+        //argument required from class
+        foreach ($dependency as $argKey => $argValue) {
 
+            //try to find argument in class
+            $cachedArg = $this->getCache($argValue);
+
+            //if not in cache
+            if ($cachedArg === null) {
+                //create instance of arguments
+                $temp = new $argValue();
+                //store in cache
+                $this->setCache($argValue,  $temp);
+                //add to array of arguments
+                $args[] = $temp;
+            } else {
+                //add to array of arguments cached parameter class
+                $args[] = $cachedArg;
+            }
+        }
+        
+        return $args;
+    }
+    
     private function setCache($name, $object)
     {
         $this->cache[$name] = $object;
