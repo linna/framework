@@ -27,7 +27,7 @@ class DIResolver
 
         $this->buildDependencyTree(0, $class);
 
-        $this->callDependency();
+        $this->buidObjects();
         
         return $this->getCache($this->class);
     }
@@ -43,8 +43,8 @@ class DIResolver
 
         $this->dependencyTree[$level][$class] = [];
 
-        $ReflectionClass = new \ReflectionClass($class);
-        $constructor = $ReflectionClass->getConstructor();
+        $reflectionClass = new \ReflectionClass($class);
+        $constructor = $reflectionClass->getConstructor();
         $param = $constructor->getParameters();
 
         foreach ($param as $key => $value) {
@@ -56,7 +56,7 @@ class DIResolver
         }
     }
 
-    private function callDependency()
+    private function buidObjects()
     {
         $array = array_reverse($this->dependencyTree);
 
@@ -65,6 +65,7 @@ class DIResolver
             
             //class
             foreach ($value as $class => $dependency) {
+                
                 $args = [];
                 $object = $this->getCache($class);
 

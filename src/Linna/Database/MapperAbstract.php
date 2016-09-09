@@ -24,7 +24,7 @@ abstract class MapperAbstract
      */
     public function create()
     {
-        return $this->_create();
+        return $this->_Create();
     }
 
     /**
@@ -38,10 +38,10 @@ abstract class MapperAbstract
         $domainObject = $domainObject[0];
         
         if ($domainObject->getId() === 0) {
-            return $this->_insert($domainObject);
+            return $this->_Insert($domainObject);
         }
         
-        return $this->_update($domainObject);
+        return $this->_Update($domainObject);
     }
 
     /**
@@ -51,7 +51,7 @@ abstract class MapperAbstract
      */
     public function delete(DomainObjectInterface $domainObject)
     {
-        $this->_delete($domainObject);
+        $this->_Delete($domainObject);
     }
 
    
@@ -60,26 +60,26 @@ abstract class MapperAbstract
      *
      * @return DomainObjectAbstract
      */
-    abstract protected function _create();
+    abstract protected function _Create();
 
     /**
      * Insert the DomainObject to persistent storage
      *
      * @param DomainObjectAbstract $domainObject
      */
-    abstract protected function _insert(DomainObjectInterface $domainObject);
+    abstract protected function _Insert(DomainObjectInterface $domainObject);
 
     /**
      * Update the DomainObject in persistent storage
      *
      * @param DomainObjectAbstract $domainObject
      */
-    abstract protected function _update(DomainObjectInterface $domainObject);
+    abstract protected function _Update(DomainObjectInterface $domainObject);
 
     /**
      * Delete the DomainObject from peristent Storage
      *
      * @param DomainObjectAbstract $domainObject
      */
-    abstract protected function _delete(DomainObjectInterface $domainObject);
+    abstract protected function _Delete(DomainObjectInterface $domainObject);
 }
