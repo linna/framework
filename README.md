@@ -6,4 +6,19 @@
 
 A little MVC framework for undersand and learn PHP programming
 
-Soon docs
+Features:
+ 
+   * Model View Controller
+   * Session Managment and Login
+   * Router
+   * Dependency Injections
+   * Storage Manager for data base and cache
+   * PSR4 Autoloader
+
+To Do:
+   
+   * Documentation
+   * Unit Testing
+   * Session and Storage Manager refactoring
+   * Router refactoring
+   * PSR7 support

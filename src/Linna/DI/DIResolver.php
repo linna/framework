@@ -13,23 +13,26 @@ namespace Linna\DI;
 
 class DIResolver
 {
-    private $class;
+    //private $class;
+    
     private $cache = array();
+    
     private $dependencyTree = array();
 
     public function __construct()
     {
     }
 
-    public function resolve($class)
+    public function resolve($resolveClass)
     {
-        $this->class = $class;
+        //$this->class = $class;
 
-        $this->buildDependencyTree(0, $class);
+        $this->buildDependencyTree(0, $resolveClass);
 
         $this->buildObjects();
         
-        return $this->getCache($this->class);
+        //return $this->getCache($this->class);
+        return $this->getCache($resolveClass);
     }
 
     public function cacheUnResolvable($name, $object)
