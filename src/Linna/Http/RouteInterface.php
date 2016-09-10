@@ -29,12 +29,6 @@ interface RouteInterface
     public function __construct($name, $method, $model, $view, $controller, $action, $param);
 
     /**
-     * Return type of route
-     *
-     */
-    public function getType();
-
-    /**
      * Return controller
      *
      */

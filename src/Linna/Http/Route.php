@@ -18,13 +18,6 @@ namespace Linna\Http;
 class Route implements RouteInterface
 {
     /**
-     * @var int $typeOfRoute Indicates that route point at controller, method etc...
-     *
-     * @deprecated since 0.3.1 After front controller refactor this method become unnecessary
-     */
-    protected $typeOfRoute = null;
-
-    /**
      * @var string $name Route name
      */
     protected $name = '';
@@ -59,8 +52,6 @@ class Route implements RouteInterface
      */
     protected $param = array();
 
-    
-        
     /**
      * Contructor
      *
@@ -81,45 +72,6 @@ class Route implements RouteInterface
         $this->controller = $controller;
         $this->action = $action;
         $this->param = $param;
-        //$this->typeOfRoute = $this->type();
-    }
-
-    /**
-     * Type of route identifiend by a number
-     * 1 for controller default method
-     * 2 for controller with custom method
-     * 3 for controller with custom method passing parameter
-     *
-     * @deprecated since 0.3.1 After front controller refactor this method become unnecessary
-     * @return int Type of route
-     */
-    protected function type()
-    {
-        $type = null;
-
-        if ($this->controller !== null) {
-            $type = 1;
-        }
-
-        if ($this->action !== null) {
-            $type = 2;
-        }
-
-        if (sizeof($this->param) > 0) {
-            $type = 3;
-        }
-
-        return $type;
-    }
-
-    /**
-     * Return type of route
-     *
-     * @return int Type of route
-     */
-    public function getType()
-    {
-        return $this->typeOfRoute;
     }
 
     /**

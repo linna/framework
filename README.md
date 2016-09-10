@@ -10,7 +10,7 @@ Features:
  
    * Model View Controller
    * Session Managment and Login
-   * Router
+   * Routing
    * Dependency Injections
    * Storage Manager for data base and cache
    * PSR4 Autoloader

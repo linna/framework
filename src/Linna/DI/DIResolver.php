@@ -13,8 +13,6 @@ namespace Linna\DI;
 
 class DIResolver
 {
-    //private $class;
-    
     private $cache = array();
     
     private $dependencyTree = array();
@@ -25,13 +23,10 @@ class DIResolver
 
     public function resolve($resolveClass)
     {
-        //$this->class = $class;
-
         $this->buildDependencyTree(0, $resolveClass);
 
         $this->buildObjects();
         
-        //return $this->getCache($this->class);
         return $this->getCache($resolveClass);
     }
 
@@ -63,7 +58,7 @@ class DIResolver
     {
         //reverse array for build first required classes
         $array = array_reverse($this->dependencyTree);
-
+        
         //deep dependency level
         foreach ($array as $key => $value) {
             

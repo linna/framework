@@ -27,7 +27,8 @@ class Router
      */
     protected $options = array(
         'basePath' => '/',
-        'badRoute' => ''
+        'badRoute' => '',
+        'rewriteMode' => false
     );
     
     /**
@@ -198,6 +199,10 @@ class Router
      */
     protected function getCurrentUri($passedUri)
     {
+        if ($this->options['rewriteMode'] === false) {
+            $passedUri = str_replace('/index.php?/', '', $passedUri);
+        }
+            
         $url = isset($passedUri) ? $passedUri : '/';
         $url = filter_var($url, FILTER_SANITIZE_URL);
 
