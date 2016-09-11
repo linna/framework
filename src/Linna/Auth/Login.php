@@ -72,14 +72,21 @@ class Login
      * @var object $sessionInstance
      */
     private $sessionInstance;
+    
+    /**
+     * @var object $password
+     */
+    private $password;
 
     /**
      * Constructor.
      *
      * @param Session $session Instance of session object
+     * @param Password $password Instance of password object
      */
-    public function __construct(Session $session)
+    public function __construct(Session $session, Password $password)
     {
+        $this->password = $password;
         $this->sessionInstance = $session;
         $this->logged = $this->refresh();
     }
@@ -97,13 +104,13 @@ class Login
      */
     public function login($user, $password, $storedUser = '', $storedPassword = '', $storedId = 0)
     {
-        $pass = new Password;
+        //$pass = new Password;
 
         if ($user !== $storedUser) {
             return false;
         }
 
-        if (!$pass->verify($password, $storedPassword)) {
+        if (!$this->password->verify($password, $storedPassword)) {
             return false;
         }
 

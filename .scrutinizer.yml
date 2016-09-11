@@ -15,3 +15,10 @@ tools:
 build:
     environment:
        php: 7.0.8
+    tests:
+            override:
+                -
+                    command: 'phpunit --coverage-clover=linna.xml --bootstrap src/bootstrap_test.php tests/'
+                    coverage:
+                        file: 'linna.xml'
+                        format: 'clover'
