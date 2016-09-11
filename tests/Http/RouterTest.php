@@ -9,7 +9,7 @@
  *
  */
 
-use PHPUnit\Framework\TestCase;
+use \PHPUnit\Framework\TestCase;
 use Linna\Http\Router;
 use Linna\Http\Route;
 

@@ -1,10 +1,12 @@
-<phpunit bootstrap="tests/bootstrap.php">
-  <testsuites>
-    <testsuite name="Linna Test Suite">
-      <directory>tests</directory>
-    </testsuite>
-  </testsuites>
-  <logging>
+<phpunit  colors="true" 
+          bootstrap="tests/bootstrap.php"
+>
+    <testsuites>
+        <testsuite name="Linna Test Suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+    <logging>
         <log type="coverage-clover" target="coverage.xml"/>
     </logging>
 </phpunit>
