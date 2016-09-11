@@ -104,8 +104,6 @@ class Login
      */
     public function login($user, $password, $storedUser = '', $storedPassword = '', $storedId = 0)
     {
-        //$pass = new Password;
-
         if ($user !== $storedUser) {
             return false;
         }

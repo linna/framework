@@ -42,7 +42,21 @@ class LoginTest extends PHPUnit_Framework_TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testValidLogin()
+    public function testLogin()
+    {
+        $this->initialize();
+        
+        $storedPassword = $this->password->hash('password');
+        
+        $loginResult = $this->login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
+         
+        $this->assertEquals(true, $loginResult);
+    }
+    
+     /**
+     * @runInSeparateProcess
+     */
+    public function testLogout()
     {
         $this->initialize();
         
@@ -51,6 +65,8 @@ class LoginTest extends PHPUnit_Framework_TestCase
         $loginResult = $this->login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
         
         $this->assertEquals(true, $loginResult);
+        
+        $this->login->logout();
     }
     
     /**
@@ -65,5 +81,11 @@ class LoginTest extends PHPUnit_Framework_TestCase
         $loginResult = $this->login->login('root', 'badPassword', $storedUser = 'root', $storedPassword, 1);
         
         $this->assertEquals(false, $loginResult);
+        
+        $loginResult = $this->login->login('root', 'password', $storedUser = null, $storedPassword, 1);
+        
+        $this->assertEquals(false, $loginResult);
     }
+    
+   
 }
