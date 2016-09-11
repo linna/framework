@@ -9,19 +9,21 @@
  *
  */
 
-//use PHPUnit\Framework\TestCase;
 use Linna\Session\Session;
 use Linna\Auth\Password;
 use Linna\Auth\Login;
 
 class LoginTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
-    public function testLogin()
+    protected $session;
+            
+    protected $password;
+            
+    protected $login;
+    
+    protected function initialize()
     {
-        //se session options
+         //se session options
         Session::withOptions(array(
             'expire' => 1800,
             'cookieDomain' => '/',
@@ -30,15 +32,38 @@ class LoginTest extends PHPUnit_Framework_TestCase
             'cookieHttpOnly' => true
         ));
         
-        $session = Session::getInstance();
-        $password = new Password();
+        $this->session = Session::getInstance();
         
-        $storedPassword = $password->hash('password');
+        $this->password = new Password();
         
-        $login = new Login($session, $password);
+        $this->login = new Login($this->session, $this->password);
+    }
+    
+    /**
+     * @runInSeparateProcess
+     */
+    public function testValidLogin()
+    {
+        $this->initialize();
         
-        $loginResult = $login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
+        $storedPassword = $this->password->hash('password');
+        
+        $loginResult = $this->login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
         
         $this->assertEquals(true, $loginResult);
-    }    
+    }
+    
+    /**
+     * @runInSeparateProcess
+     */
+    public function testIncorrectLogin()
+    {
+        $this->initialize();
+        
+        $storedPassword = $this->password->hash('password');
+        
+        $loginResult = $this->login->login('root', 'badPassword', $storedUser = 'root', $storedPassword, 1);
+        
+        $this->assertEquals(false, $loginResult);
+    }
 }
