@@ -9,12 +9,12 @@
  *
  */
 
-use PHPUnit\Framework\TestCase;
+//use PHPUnit\Framework\TestCase;
 use Linna\Session\Session;
 use Linna\Auth\Password;
 use Linna\Auth\Login;
 
-class LoginTest extends TestCase
+class LoginTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @runInSeparateProcess

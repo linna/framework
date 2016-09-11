@@ -9,11 +9,11 @@
  *
  */
 
-use PHPUnit\Framework\TestCase;
+//use PHPUnit\Framework\TestCase;
 use Linna\Http\Router;
 use Linna\Http\Route;
 
-class RouterTest extends TestCase
+class RouterTest extends PHPUnit_Framework_TestCase
 {
     public function testRouter()
     {
