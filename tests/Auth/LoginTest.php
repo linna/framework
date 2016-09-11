@@ -51,6 +51,11 @@ class LoginTest extends PHPUnit_Framework_TestCase
         $loginResult = $this->login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
          
         $this->assertEquals(true, $loginResult);
+        
+        $newLogin = new Login($this->session, $this->password);
+        $logged = $newLogin->logged;
+        
+        $this->assertEquals(true, $logged);
     }
     
      /**
