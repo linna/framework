@@ -3,9 +3,14 @@
 >
     <testsuites>
         <testsuite name="Linna Test Suite">
-            <directory>tests</directory>
+            <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/</directory>
+        </whitelist>
+    </filter>
     <logging>
         <log type="coverage-clover" target="coverage.xml"/>
     </logging>
