@@ -18,7 +18,7 @@ build:
     tests:
             override:
                 -
-                    command: 'phpunit --coverage-clover=linna.xml --bootstrap src/bootstrap_test.php tests/'
+                    command: 'phpunit --coverage-clover=coverage.xml'
                     coverage:
-                        file: 'linna.xml'
+                        file: 'coverage.xml'
                         format: 'clover'
