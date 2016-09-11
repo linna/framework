@@ -119,4 +119,24 @@ class RouterTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('enable', $route->getAction());
         $this->assertEquals(array('id'=>'5'), $route->getParam());
     }
+    
+    public function testRewriteModeOff()
+    {
+        //start router
+        $router = new Router('/index.php?//user/5/enable', $this->routes, array(
+            'basePath' => '/',
+            'badRoute' => 'E404',
+            'rewriteMode' => false
+                ));
+
+        //get route
+        $route = $router->getRoute();
+        
+        $this->assertInstanceOf(Route::class, $route);
+        $this->assertEquals('UserModel', $route->getModel());
+        $this->assertEquals('UserView', $route->getView());
+        $this->assertEquals('UserController', $route->getController());
+        $this->assertEquals('enable', $route->getAction());
+        $this->assertEquals(array('id'=>'5'), $route->getParam());
+    }
 }
