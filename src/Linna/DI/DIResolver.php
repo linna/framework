@@ -30,11 +30,6 @@ class DIResolver
         return $this->getCache($resolveClass);
     }
 
-    public function cacheUnResolvable($name, $object)
-    {
-        $this->cache[$name] = $object;
-    }
-
     private function buildDependencyTree($level, $class)
     {
         $class = (strpos($class, '\\') > 0) ? '\\' . $class : $class;
@@ -42,11 +37,12 @@ class DIResolver
         $this->dependencyTree[$level][$class] = [];
 
         $reflectionClass = new \ReflectionClass($class);
-        $constructor = $reflectionClass->getConstructor();
-        $param = $constructor->getParameters();
+        
+        $param = $reflectionClass->getConstructor()->getParameters();
 
         foreach ($param as $key => $value) {
             if ($value->hasType() === true && class_exists($value->getType())) {
+                
                 $this->dependencyTree[$level][$class][] = '\\' . $value->getClass()->name;
 
                 $this->buildDependencyTree($level + 1, $value->getClass()->name);
@@ -119,6 +115,11 @@ class DIResolver
         }
         
         return $args;
+    }
+    
+    public function cacheUnResolvable($name, $object)
+    {
+        $this->cache[$name] = $object;
     }
     
     private function setCache($name, $object)
