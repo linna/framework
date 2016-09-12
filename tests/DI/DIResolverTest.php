@@ -11,7 +11,6 @@
 
 use Linna\DI\DIResolver;
 use Linna\Session\Session;
-use Linna\Auth\Password;
 use Linna\Auth\Login;
 
 

@@ -96,10 +96,14 @@ class DIResolver
         $args = [];
         //argument required from class
         foreach ($dependency as $argKey => $argValue) {
-
-            //try to find argument in class
+            
+            //find argument in cache
+            $args[] = $this->getCache($argValue);
+            /*
+            //try to find argument in cache
             $cachedArg = $this->getCache($argValue);
 
+            
             //if not in cache
             if ($cachedArg === null) {
                 //create instance of arguments
@@ -111,7 +115,7 @@ class DIResolver
             } else {
                 //add to array of arguments cached parameter class
                 $args[] = $cachedArg;
-            }
+            }*/
         }
         
         return $args;
