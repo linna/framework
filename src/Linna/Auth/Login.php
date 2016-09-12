@@ -152,7 +152,7 @@ class Login
 
         $time = time();
 
-        if ($this->sessionInstance->loginTime < ($time - $this->expire)) {
+        if (($this->sessionInstance->loginTime + $this->expire) < $time) {
             return false;
         }
         

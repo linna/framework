@@ -53,9 +53,18 @@ class LoginTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(true, $loginResult);
         
         $newLogin = new Login($this->session, $this->password);
+        
         $logged = $newLogin->logged;
         
         $this->assertEquals(true, $logged);
+        
+        $_SESSION['loginTime'] = time() - 3600;
+        
+        $newLogin = new Login($this->session, $this->password);
+        
+        $logged = $newLogin->logged;
+        
+        $this->assertEquals(false, $logged);
     }
     
      /**
