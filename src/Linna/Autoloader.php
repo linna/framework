@@ -74,10 +74,12 @@ class Autoloader
 
     /**
      * Register loader with SPL autoloader stack.
+     * 
+     * @return bool
      */
     public function register()
     {
-        spl_autoload_register(array($this, 'loadClass'));
+        return spl_autoload_register(array($this, 'loadClass'));
     }
 
     /**

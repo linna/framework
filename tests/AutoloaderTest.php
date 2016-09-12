@@ -22,6 +22,17 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase
         $this->autoloader->register();
     }
     
+    public function testRegister()
+    {
+        $this->autoloader = new Autoloader();
+        $result = $this->autoloader->register();
+        
+        $this->assertEquals(true, $result);
+    }
+    
+    /**
+     * @depends testRegister
+     */
     public function testNamespaces()
     {
         $this->autoloader->addNamespaces([
