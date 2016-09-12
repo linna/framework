@@ -23,7 +23,7 @@ class LoginTest extends PHPUnit_Framework_TestCase
     
     protected function initialize()
     {
-         //se session options
+        //se session options
         Session::withOptions(array(
             'expire' => 1800,
             'cookieDomain' => '/',
@@ -100,6 +100,4 @@ class LoginTest extends PHPUnit_Framework_TestCase
         
         $this->assertEquals(false, $loginResult);
     }
-    
-   
 }

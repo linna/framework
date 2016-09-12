@@ -13,14 +13,13 @@ use Linna\DI\DIResolver;
 use Linna\Session\Session;
 use Linna\Auth\Login;
 
-
 class DIResolverTest extends PHPUnit_Framework_TestCase
 {
     protected $session;
     
     protected function initialize()
     {
-         //se session options
+        //se session options
         Session::withOptions(array(
             'expire' => 1800,
             'cookieDomain' => '/',
