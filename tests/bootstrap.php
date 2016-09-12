@@ -2,8 +2,6 @@
 
 include dirname(__DIR__).'/src/Linna/Autoloader.php';
 
-//var_dump(dirname(__DIR__).'/src/Linna/Autoloader.php');
-
 $loader = new \Linna\Autoloader();
 $loader->register();
 
