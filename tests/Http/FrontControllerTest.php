@@ -26,9 +26,7 @@ class FrontControllerTest extends PHPUnit_Framework_TestCase
 {
     protected $autoloader;
     
-    protected $FrontController;
-    
-    protected $router;
+    protected $routes;
     
     public function __construct()
     {
@@ -38,9 +36,9 @@ class FrontControllerTest extends PHPUnit_Framework_TestCase
            ['Linna\FOO', dirname(__DIR__).'/FOO']
         ]);
         
-        $routes = array();
+        $this->routes = array();
 
-        $routes[] = [
+        $this->routes[] = [
             'name' => 'Foo',
             'method' => 'GET',
             'url' => '/Foo/(modifyData)',
@@ -50,12 +48,15 @@ class FrontControllerTest extends PHPUnit_Framework_TestCase
             'action' => null,
         ];
         
-        //start router
-        $this->router = new Router('/Foo/modifyData', $routes, array(
-            'basePath' => '/',
-            'badRoute' => 'E404',
-            'rewriteMode' => true
-                ));
+        $this->routes[] = [
+            'name' => 'Foo',
+            'method' => 'GET',
+            'url' => '/Foo/[passedData]/(modifyDataFromParam)',
+            'model' => 'FOOModel',
+            'view' => 'FOOView',
+            'controller' => 'FOOController',
+            'action' => null,
+        ];
     }
     
     /**
@@ -63,25 +64,49 @@ class FrontControllerTest extends PHPUnit_Framework_TestCase
      */
     public function testNewFrontController()
     {
-        $route = $this->router->getRoute();
+        //start router
+        $router = new Router('/Foo/modifyData', $this->routes, array(
+            'basePath' => '/',
+            'badRoute' => 'E404',
+            'rewriteMode' => true
+                ));
         
-                
         $model = new FOOModel;
         //get view linked to route
         $view = new FOOView($model, new FOOTemplate);
         //get controller linked to route
         $controller = new FOOController($model);
          
-        $this->FrontController = new FrontController($this->router->getRoute(), $model, $view, $controller);
+        $FrontController = new FrontController($router->getRoute(), $model, $view, $controller);
         
-        $this->assertInstanceOf(FrontController::class, $this->FrontController);
+        $this->assertInstanceOf(FrontController::class, $FrontController);     
+    }
+    
+    /**
+     * @depends testNewFrontController
+     */
+    public function testRunFrontController()
+    {
+        //start router
+        $router = new Router('/Foo/modifyData', $this->routes, array(
+            'basePath' => '/',
+            'badRoute' => 'E404',
+            'rewriteMode' => true
+                ));
         
+        $model = new FOOModel;
+        //get view linked to route
+        $view = new FOOView($model, new FOOTemplate);
+        //get controller linked to route
+        $controller = new FOOController($model);
+         
+        $FrontController = new FrontController($router->getRoute(), $model, $view, $controller);
         
-        $this->FrontController->run();
+        $FrontController->run();
         
         ob_start();
         
-        $this->FrontController->response();
+        $FrontController->response();
         
         $test = json_decode(ob_get_contents());
         
@@ -89,18 +114,39 @@ class FrontControllerTest extends PHPUnit_Framework_TestCase
         
         $this->assertInstanceOf(stdClass::class, $test);
         $this->assertEquals('modified data',$test->data);
-      
     }
     
-    public function testRunFrontController()
+    /**
+     * @depends testNewFrontController
+     */
+    public function testRunFrontControllerParam()
     {
-        //$this->assertInstanceOf(FrontController::class, $this->FrontController);
-        //$this->FrontController->run();
-    }
-    
-    public function testResponceFrontController()
-    {
-        //$this->assertInstanceOf(FrontController::class, $this->FrontController);
-        //$this->FrontController->response();
+        //start router
+        $router = new Router('/Foo/data500/modifyDataFromParam', $this->routes, array(
+            'basePath' => '/',
+            'badRoute' => 'E404',
+            'rewriteMode' => true
+                ));
+        
+        $model = new FOOModel;
+        //get view linked to route
+        $view = new FOOView($model, new FOOTemplate);
+        //get controller linked to route
+        $controller = new FOOController($model);
+         
+        $FrontController = new FrontController($router->getRoute(), $model, $view, $controller);
+        
+        $FrontController->run();
+        
+        ob_start();
+        
+        $FrontController->response();
+        
+        $test = json_decode(ob_get_contents());
+        
+        ob_end_clean();
+        
+        $this->assertInstanceOf(stdClass::class, $test);
+        $this->assertEquals('data500',$test->data);
     }
 }

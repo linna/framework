@@ -37,4 +37,9 @@ class FOOView extends View
     {
         $this->template = $this->htmlTemplate;
     }
+    
+    public function modifyDataFromParam()
+    {
+        $this->template = $this->htmlTemplate;
+    }
 }

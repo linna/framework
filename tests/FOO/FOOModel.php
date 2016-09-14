@@ -25,4 +25,9 @@ class FOOModel extends Model
     {
         $this->getUpdate = ['data' => 'modified data'];
     }
+    
+    public function modifyDataFromParam($param)
+    {
+        $this->getUpdate = ['data' => $param];
+    }
 }

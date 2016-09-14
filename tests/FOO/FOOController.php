@@ -26,4 +26,9 @@ class FOOController extends Controller
     {
         $this->model->modifyData();
     }
+    
+    public function modifyDataFromParam($passedData)
+    {
+        $this->model->modifyDataFromParam($passedData);
+    }
 }
