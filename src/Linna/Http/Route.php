@@ -25,7 +25,7 @@ class Route implements RouteInterface
     /**
      * @var string $method Indicates request method
      */
-    protected $method;
+    protected $method = '';
     
     /**
      * @var string $view View to call
@@ -60,7 +60,7 @@ class Route implements RouteInterface
      * @param string $model
      * @param string $view
      * @param string $controller
-     * @param string $action
+     * @param mixed $action
      * @param array  $param
      */
     public function __construct($name, $method, $model, $view, $controller, $action, $param)
@@ -74,36 +74,6 @@ class Route implements RouteInterface
         $this->param = $param;
     }
 
-    /**
-     * Return controller
-     *
-     * @return string Controller for call $controller->default_action()
-     */
-    public function getController()
-    {
-        return $this->controller;
-    }
-
-    /**
-     * Return action name
-     *
-     * @return string Action for call $controller->action()
-     */
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    /**
-     * Return parameters
-     *
-     * @return array Parameter for call $controller->action(Param)
-     */
-    public function getParam()
-    {
-        return $this->param;
-    }
-    
     /**
      * Return model name
      *
@@ -122,5 +92,35 @@ class Route implements RouteInterface
     public function getView()
     {
         return $this->view;
+    }
+    
+    /**
+     * Return controller
+     *
+     * @return string Controller for call $controller->default_action()
+     */
+    public function getController()
+    {
+        return $this->controller;
+    }
+    
+    /**
+     * Return action name
+     *
+     * @return string Action for call $controller->action()
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+
+    /**
+     * Return parameters
+     *
+     * @return array Parameter for call $controller->action(Param)
+     */
+    public function getParam()
+    {
+        return $this->param;
     }
 }

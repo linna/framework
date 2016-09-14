@@ -19,7 +19,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     /**
      * @var int $_Id Object id, same of db record
      */
-    protected $_Id = null;
+    protected $objectId = null;
 
     /**
      * Get the ID of this object (unique to the
@@ -29,7 +29,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      */
     public function getId()
     {
-        return $this->_Id;
+        return $this->objectId;
     }
 
     /**
@@ -43,10 +43,10 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      */
     public function setId($objectId)
     {
-        if (!is_null($this->_Id)) {
+        if (!is_null($this->objectId)) {
             throw new Exception('ID is immutable');
         }
 
-        return $this->_Id = (int) $objectId;
+        return $this->objectId = (int) $objectId;
     }
 }

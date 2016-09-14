@@ -81,9 +81,9 @@ class Router
 
         //get the current uri
         $this->currentUri = $this->getCurrentUri($requestUri);
-
+              
         //try to get a route
-        $this->route = $this->match();
+        $this->route = $this->match($this->routes[array_search($this->options['badRoute'], array_column($this->routes, 'name'))]);
     }
 
     /**
@@ -116,12 +116,13 @@ class Router
      *      'action' => null,
      *  ];
      *
+     * @param array $validRoute Start with default route, bad route
      * @return array Contains properties of route
      */
-    protected function match()
+    protected function match($validRoute)
     {
         //declare var with bad route data
-        $validRoute = $this->routes[array_search($this->options['badRoute'], array_column($this->routes, 'name'))];
+        //$validRoute = $this->routes[array_search($this->options['badRoute'], array_column($this->routes, 'name'))];
 
         foreach ($this->routes as $value) {
 
@@ -165,7 +166,7 @@ class Router
 
         return (array) $validRoute;
     }
-
+    
     /**
      * Try to find param in a valid route
      *

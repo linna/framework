@@ -22,7 +22,7 @@ class FOOClassA
     
     public function __construct()
     {
-       $this->hello = 'hello';
+        $this->hello = 'hello';
     }
     
     public function getHello()

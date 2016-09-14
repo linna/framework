@@ -74,7 +74,7 @@ class Autoloader
 
     /**
      * Register loader with SPL autoloader stack.
-     * 
+     *
      * @return bool
      */
     public function register()

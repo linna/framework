@@ -79,7 +79,7 @@ class FrontControllerTest extends PHPUnit_Framework_TestCase
          
         $FrontController = new FrontController($router->getRoute(), $model, $view, $controller);
         
-        $this->assertInstanceOf(FrontController::class, $FrontController);     
+        $this->assertInstanceOf(FrontController::class, $FrontController);
     }
     
     /**
@@ -113,7 +113,7 @@ class FrontControllerTest extends PHPUnit_Framework_TestCase
         ob_end_clean();
         
         $this->assertInstanceOf(stdClass::class, $test);
-        $this->assertEquals('modified data',$test->data);
+        $this->assertEquals('modified data', $test->data);
     }
     
     /**
@@ -147,6 +147,6 @@ class FrontControllerTest extends PHPUnit_Framework_TestCase
         ob_end_clean();
         
         $this->assertInstanceOf(stdClass::class, $test);
-        $this->assertEquals('data500',$test->data);
+        $this->assertEquals('data500', $test->data);
     }
 }
