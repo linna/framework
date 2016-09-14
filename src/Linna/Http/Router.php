@@ -121,9 +121,6 @@ class Router
      */
     protected function match($validRoute)
     {
-        //declare var with bad route data
-        //$validRoute = $this->routes[array_search($this->options['badRoute'], array_column($this->routes, 'name'))];
-
         foreach ($this->routes as $value) {
 
             // replace declared parameter in registered routes with regex
@@ -180,6 +177,7 @@ class Router
         $matches = explode('/', $validRoute['matches'][0]);
 
         $param = array();
+        
         $rawParam = array_diff($matches, $url);
 
         foreach ($rawParam as $key => $value) {
