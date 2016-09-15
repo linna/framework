@@ -1,6 +1,6 @@
 composer.phar
 composer.lock
-build/
+clover.xml
 vendor/
 nbproject/
 nbproject/private
