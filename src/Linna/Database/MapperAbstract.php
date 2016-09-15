@@ -51,7 +51,7 @@ abstract class MapperAbstract
      */
     public function delete(DomainObjectInterface $domainObject)
     {
-        $this->oDelete($domainObject);
+        return $this->oDelete($domainObject);
     }
 
    

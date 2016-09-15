@@ -149,4 +149,48 @@ class FrontControllerTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(stdClass::class, $test);
         $this->assertEquals('data500', $test->data);
     }
+    
+    public function testModelDetach()
+    {
+        
+        $router = new Router('/Foo/data500/modifyDataFromParam', $this->routes, array(
+            'basePath' => '/',
+            'badRoute' => 'E404',
+            'rewriteMode' => true
+                ));
+        
+        $route = $router->getRoute();
+        
+        $routeAction = $route->getAction();
+        $routeParam =  $route->getParam();
+        
+        $model = new FOOModel;
+        
+        $view = new FOOView($model, new FOOTemplate);
+        
+        $controller = new FOOController($model);
+        
+        $model->attach($view);
+        $model->detach($view);
+        
+        call_user_func_array(array($controller, $routeAction), $routeParam);
+        
+        $model->notify();
+        
+        $routeAction = ($routeAction !== null) ? $routeAction : 'index';
+        
+        call_user_func(array($view, $routeAction));
+        
+        ob_start();
+        
+        $view->render();
+        
+        $test = json_decode(ob_get_contents());
+        
+        ob_end_clean();
+                
+        $this->assertInstanceOf(stdClass::class, $test);
+        
+        $this->assertEquals(false, isset($test->data));
+    }
 }

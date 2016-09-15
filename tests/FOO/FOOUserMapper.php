@@ -48,45 +48,13 @@ class FOOUserMapper extends MapperAbstract
      */
     public function findById($userId)
     {
-        /*$pdos = $this->dBase->prepare('SELECT user_id AS objectId, name, description, password, active, created, last_update AS lastUpdate FROM user WHERE user_id = :id');
-
-        $pdos->bindParam(':id', $userId, \PDO::PARAM_INT);
-        $pdos->execute();
-
-        return $pdos->fetchObject('\App\DomainObjects\User', array($this->password));*/
-    }
-
-    /**
-     * Fetch a user object by name
-     *
-     * @param string $userName
-     *
-     * @return User
-     */
-    public function findByName($userName)
-    {
-        /*$pdos = $this->dBase->prepare('SELECT user_id AS objectId, name, description, password, active, created, last_update AS lastUpdate FROM user WHERE md5(name) = :name');
-
-        $hashedUserName = md5($userName);
-
-        $pdos->bindParam(':name', $hashedUserName, \PDO::PARAM_STR);
-        $pdos->execute();
-
-        return $pdos->fetchObject('\App\DomainObjects\User', array($this->password));*/
-    }
-
-    /**
-     * Fetch all users stored in data base
-     *
-     * @return array All users stored
-     */
-    public function getAllUsers()
-    {
-        /*$pdos = $this->dBase->prepare('SELECT user_id AS objectId, name, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC');
-
-        $pdos->execute();
-
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\App\DomainObjects\User', array($this->password));*/
+        $user = $this->create();
+        
+        $user->setId($userId);
+        
+        $user->name = 'user_'.$userId;
+        
+        return $user;
     }
 
     /**
@@ -111,14 +79,7 @@ class FOOUserMapper extends MapperAbstract
         }
 
         try {
-            /*$pdos = $this->dBase->prepare('INSERT INTO user (name, description, password, created) VALUES (:name, :description, :password, NOW())');
-
-            $pdos->bindParam(':name', $user->name, \PDO::PARAM_STR);
-            $pdos->bindParam(':description', $user->description, \PDO::PARAM_STR);
-            $pdos->bindParam(':password', $user->password, \PDO::PARAM_STR);
-            $pdos->execute();
-
-            return $this->dBase->lastInsertId();*/
+            return 'insert';
         } catch (\Exception $e) {
             echo 'Mapper exception: ', $e->getMessage(), "\n";
         }
@@ -136,18 +97,7 @@ class FOOUserMapper extends MapperAbstract
         }
 
         try {
-            /*$pdos = $this->dBase->prepare('UPDATE user SET name = :name, description = :description,  password = :password, active = :active WHERE user_id = :user_id');
-
-            $objId = $user->getId();
-
-            $pdos->bindParam(':user_id', $objId, \PDO::PARAM_INT);
-
-            $pdos->bindParam(':name', $user->name, \PDO::PARAM_STR);
-            $pdos->bindParam(':password', $user->password, \PDO::PARAM_STR);
-            $pdos->bindParam(':description', $user->description, \PDO::PARAM_STR);
-            $pdos->bindParam(':active', $user->active, \PDO::PARAM_INT);
-
-            $pdos->execute();*/
+            return 'update';
         } catch (\Exception $e) {
             echo 'Mapper exception: ', $e->getMessage(), "\n";
         }
@@ -165,9 +115,7 @@ class FOOUserMapper extends MapperAbstract
         }
 
         try {
-            /*$pdos = $this->dBase->prepare('DELETE FROM user WHERE user_id = :user_id');
-            $pdos->bindParam(':user_id', $user->getId(), \PDO::PARAM_INT);
-            $pdos->execute();*/
+            return 'delete';
         } catch (\Exception $e) {
             echo 'Mapper exception: ', $e->getMessage(), "\n";
         }
