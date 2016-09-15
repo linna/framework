@@ -13,28 +13,18 @@ define('DB_TYPE', 'mysql');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'test');
 define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_PASS', 'badpass');
 define('DB_CHARSET', 'utf8mb4');
 
 use Linna\Database\Database;
 
 class DatabaseTest extends PHPUnit_Framework_TestCase
 {
-    public function testConnection()
+    /**
+     * @expectedExceptionMessageRegExp #SQLSTATE[HY000].*#
+     */
+    public function testFailConnection()
     {
         $dbase = Database::connect();
-        
-        $this->assertInstanceOf(PDO::class, $dbase);
-    }
-    
-    public function testCloneConnection()
-    {
-        $dbase = Database::connect();
-        
-        $this->assertInstanceOf(PDO::class, $dbase);
-        
-        $otherdb = clone $dbase;
-        
-        $this->assertInstanceOf(PDO::class, $otherdb);
     }
 }

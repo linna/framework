@@ -48,9 +48,9 @@ class Database extends \PDO
      * Forbids the object clone
      *
      */
-    private function __clone()
+    public function __clone()
     {
-        //It forbids the object clone
+        return self::$instance;
     }
 
     /**
