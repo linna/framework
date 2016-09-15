@@ -40,14 +40,12 @@ class DomainObjectTest extends PHPUnit_Framework_TestCase
         $password = new Password();
         $user = new FOOUser($password);
         
-        
         $user->setId(1);
         
         $this->assertEquals(1, $user->getId());
     }
     
     /**
-     * @expectedException UnexpectedValueException
      * @expectedExceptionMessage objectId is immutable
      */
     public function testUserOverrideId()

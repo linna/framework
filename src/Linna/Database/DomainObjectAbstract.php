@@ -11,6 +11,8 @@
 
 namespace Linna\Database;
 
+use UnexpectedValueException;
+
 /**
  * Abstract Class for Domain Object
  */
@@ -46,10 +48,10 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     {
         try {
             if ($this->objectId !== 0) {
-                throw new \UnexpectedValueException('objectId is immutable');
+                throw new UnexpectedValueException('objectId is immutable');
             }
-        } catch (\LogicException $e) {
-            echo $e->getMessage();
+        } catch (UnexpectedValueException $e) {
+            echo 'UnexpectedValueException: ',$e->getMessage();
         }
         
         return $this->objectId = (int) $objectId;
