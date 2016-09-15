@@ -15,8 +15,6 @@ tools:
 build:
     environment:
        php: 7.0.8
-       php: hhvm
-       mysql: 5.7
     tests:
             override:
                 -
