@@ -65,5 +65,8 @@ class DIContainerTest extends PHPUnit_Framework_TestCase
         unset($container->login);
         
         $this->assertEquals(false, isset($container->login));
+        
+        //test unset container
+        $this->assertEquals(false, $container->login);
     }
 }

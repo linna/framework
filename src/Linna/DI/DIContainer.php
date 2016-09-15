@@ -16,12 +16,12 @@ class DIContainer
     private $container = array();
     
     /**
-     * Forbids the object instance
+     * Constructor
      *
      */
     public function __construct()
     {
-        //private for access to class only via static
+        
     }
     
     /**
@@ -41,12 +41,15 @@ class DIContainer
      * http://php.net/manual/en/language.oop5.overloading.php
      *
      * @param string $name
+     * @return mixed Element stored in container or false
      */
     public function __get($name)
     {
         if (array_key_exists($name, $this->container)) {
             return $this->container[$name];
         }
+        
+        return false;
     }
     
     /**
