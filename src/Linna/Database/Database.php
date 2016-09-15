@@ -40,7 +40,7 @@ class Database extends \PDO
         try {
             parent::__construct(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME.';charset='.DB_CHARSET, DB_USER, DB_PASS, $options);
         } catch (\PDOException $e) {
-            echo 'Error!: '.$e->getMessage();
+            echo 'PDO: '.$e->getMessage();
         }
     }
 
