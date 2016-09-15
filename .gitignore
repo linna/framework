@@ -1,6 +1,6 @@
 composer.phar
 composer.lock
-coverage.xml
+build/
 vendor/
 nbproject/
 nbproject/private
