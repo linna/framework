@@ -16,10 +16,11 @@ namespace Linna\Database;
  */
 abstract class DomainObjectAbstract implements DomainObjectInterface
 {
+
     /**
-     * @var int $_Id Object id, same of db record
+     * @var int $objectId Object id, same of db record
      */
-    protected $objectId = null;
+    protected $objectId = 0;
 
     /**
      * Get the ID of this object (unique to the
@@ -39,14 +40,18 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      *
      * @return int
      *
-     * @throws Exception If the id on the object is already set
+     * @throws UnexpectedValueException If the id on the object is already set
      */
     public function setId($objectId)
     {
-        if (!is_null($this->objectId)) {
-            throw new Exception('ID is immutable');
+        try {
+            if ($this->objectId !== 0) {
+                throw new \UnexpectedValueException('objectId is immutable');
+            }
+        } catch (\LogicException $e) {
+            echo $e->getMessage();
         }
-
+        
         return $this->objectId = (int) $objectId;
     }
 }
