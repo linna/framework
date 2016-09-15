@@ -3,6 +3,10 @@ php:
   - 7.0
   - 7.1
 
+services:
+  - mysql
+  - mysql -e 'create database test;'
+
 before_script: 
 - "composer require codeclimate/php-test-reporter --dev"
 - "composer install"

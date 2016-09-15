@@ -15,6 +15,7 @@ tools:
 build:
     environment:
        php: 7.0.8
+       mysql: 5.7
     tests:
             override:
                 -
@@ -22,3 +23,8 @@ build:
                     coverage:
                         file: 'clover.xml'
                         format: 'clover'
+
+project_setup:
+        before:
+            - sudo service start mysql || true
+            - mysql -e "CREATE DATABASE test"
