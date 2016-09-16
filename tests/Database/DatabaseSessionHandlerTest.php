@@ -55,5 +55,7 @@ class DatabaseSessionHandlerTest extends PHPUnit_Framework_TestCase
         unset($this->session->testdata);
         
         $this->assertEquals(false, $this->session->testdata);
+        
+        session_write_close();
     }
 }
