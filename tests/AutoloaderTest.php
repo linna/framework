@@ -11,8 +11,9 @@
 
 use Linna\Autoloader;
 use Linna\FOO\FOOClassA;
+use PHPUnit\Framework\TestCase;
 
-class AutoloaderTest extends PHPUnit_Framework_TestCase
+class AutoloaderTest extends TestCase
 {
     protected $autoloader;
     

@@ -12,8 +12,9 @@
 use Linna\DI\DIResolver;
 use Linna\Session\Session;
 use Linna\Auth\Login;
+use PHPUnit\Framework\TestCase;
 
-class DIResolverTest extends PHPUnit_Framework_TestCase
+class DIResolverTest extends TestCase
 {
     protected $session;
     

@@ -12,17 +12,13 @@
 use Linna\Autoloader;
 use Linna\Http\FrontController;
 use Linna\Http\Router;
-//use Linna\Http\Route;
-//use Linna\Mvc\Model;
-//use Linna\Mvc\View;
-//use Linna\Mvc\Controller;
-
 use Linna\FOO\FOOModel;
 use Linna\FOO\FOOView;
 use Linna\FOO\FOOController;
 use Linna\FOO\FOOTemplate;
+use PHPUnit\Framework\TestCase;
 
-class FrontControllerTest extends PHPUnit_Framework_TestCase
+class FrontControllerTest extends TestCase
 {
     protected $autoloader;
     

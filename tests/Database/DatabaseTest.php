@@ -17,8 +17,9 @@ define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
 use Linna\Database\Database;
+use PHPUnit\Framework\TestCase;
 
-class DatabaseTest extends PHPUnit_Framework_TestCase
+class DatabaseTest extends TestCase
 {
     public function testConnection()
     {

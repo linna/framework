@@ -11,11 +11,11 @@
 
 use Linna\Autoloader;
 use Linna\Auth\Password;
-
 use Linna\FOO\FOOUser;
 use Linna\FOO\FOOUserMapper;
+use PHPUnit\Framework\TestCase;
 
-class MapperAbstractTest extends PHPUnit_Framework_TestCase
+class MapperAbstractTest extends TestCase
 {
     protected $autoloader;
     

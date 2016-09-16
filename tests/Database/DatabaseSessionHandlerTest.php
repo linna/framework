@@ -12,8 +12,9 @@
 use Linna\Database\Database;
 use Linna\Session\DatabaseSessionHandler;
 use Linna\Session\Session;
+use PHPUnit\Framework\TestCase;
 
-class DatabaseSessionHandlerTest extends PHPUnit_Framework_TestCase
+class DatabaseSessionHandlerTest extends TestCase
 {
     protected $session;
     

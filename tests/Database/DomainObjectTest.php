@@ -11,10 +11,10 @@
 
 use Linna\Autoloader;
 use Linna\Auth\Password;
-
 use Linna\FOO\FOOUser;
+use PHPUnit\Framework\TestCase;
 
-class DomainObjectTest extends PHPUnit_Framework_TestCase
+class DomainObjectTest extends TestCase
 {
     protected $autoloader;
     

@@ -13,8 +13,9 @@ use Linna\DI\DIContainer;
 use Linna\Session\Session;
 use Linna\Auth\Password;
 use Linna\Auth\Login;
+use PHPUnit\Framework\TestCase;
 
-class DIContainerTest extends PHPUnit_Framework_TestCase
+class DIContainerTest extends TestCase
 {
     protected $session;
     

@@ -11,8 +11,9 @@
 
 use Linna\Http\Router;
 use Linna\Http\Route;
+use PHPUnit\Framework\TestCase;
 
-class RouterTest extends PHPUnit_Framework_TestCase
+class RouterTest extends TestCase
 {
     protected $routes;
     

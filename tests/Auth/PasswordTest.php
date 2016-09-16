@@ -10,8 +10,9 @@
  */
 
 use Linna\Auth\Password;
+use PHPUnit\Framework\TestCase;
 
-class PasswordTest extends PHPUnit_Framework_TestCase
+class PasswordTest extends TestCase
 {
     public function testHash()
     {
