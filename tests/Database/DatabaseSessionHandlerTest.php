@@ -56,7 +56,7 @@ class DatabaseSessionHandlerTest extends TestCase
 
         $this->assertEquals(false, $session->testdata);
 
-        Session::destroyInstance();
+        session_write_close();
     }
 
     /**
