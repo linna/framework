@@ -19,7 +19,6 @@ class PasswordTest extends TestCase
         $password = new Password();
         
         $hash = $password->hash('password');
-        
         $result = $password->verify('password', $hash);
         
         $this->assertEquals(true, $result);
@@ -30,7 +29,6 @@ class PasswordTest extends TestCase
         $password = new Password();
         
         $hash = $password->hash('password');
-        
         $result = $password->verify('otherpassword', $hash);
         
         $this->assertEquals(false, $result);
@@ -56,7 +54,6 @@ class PasswordTest extends TestCase
         $password = new Password();
         
         $hash = $password->hash('password');
-        
         $result = $password->needsRehash($hash);
         
         $this->assertEquals(false, $result);

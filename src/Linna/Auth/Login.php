@@ -121,7 +121,8 @@ class Login
 
         
         $this->sessionInstance->regenerate();
-
+        $this->logged = true;
+        
         return true;
     }
 
@@ -135,7 +136,8 @@ class Login
         unset($this->sessionInstance->login, $this->sessionInstance->loginTime);
         
         $this->sessionInstance->regenerate();
-
+        $this->logged = false;
+        
         return true;
     }
 

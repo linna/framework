@@ -16,28 +16,18 @@ use PHPUnit\Framework\TestCase;
 
 class DIResolverTest extends TestCase
 {
-    protected $session;
-    
-    protected function initialize()
-    {
-        //se session options
-        Session::withOptions(array(
-            'expire' => 1800,
-            'cookieDomain' => '/',
-            'cookiePath' => '/',
-            'cookieSecure' => false,
-            'cookieHttpOnly' => true
-        ));
-        
-        $this->session = Session::getInstance();
-    }
-    
     /**
      * @runInSeparateProcess
      */
     public function testResolve()
     {
-        $this->initialize();
+        Session::withOptions(array(
+            'expire' => 3,
+            'cookieDomain' => '/',
+            'cookiePath' => '/',
+            'cookieSecure' => false,
+            'cookieHttpOnly' => true
+        ));
         
         $DIResolver = new DIResolver();
         
@@ -46,5 +36,7 @@ class DIResolverTest extends TestCase
         $login = $DIResolver->resolve('\Linna\Auth\Login');
         
         $this->assertInstanceOf(Login::class, $login);
+        
+        Session::destroyInstance();
     }
 }

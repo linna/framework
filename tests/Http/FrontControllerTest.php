@@ -148,7 +148,6 @@ class FrontControllerTest extends TestCase
     
     public function testModelDetach()
     {
-        
         $router = new Router('/Foo/data500/modifyDataFromParam', $this->routes, array(
             'basePath' => '/',
             'badRoute' => 'E404',

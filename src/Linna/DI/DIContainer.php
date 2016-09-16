@@ -21,7 +21,6 @@ class DIContainer
      */
     public function __construct()
     {
-        
     }
     
     /**

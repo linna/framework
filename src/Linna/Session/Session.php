@@ -189,7 +189,7 @@ class Session
         $time = time();
         
         if ($this->time < ($time - $this->options['expire'])) {
-            
+        
             //delete session data
             $this->data = [];
             
@@ -223,6 +223,21 @@ class Session
         return $instance;
     }
     
+    /**
+     * Destroy session instance
+     *
+     */
+    public static function destroyInstance()
+    {
+        $instance = &self::$instance;
+        
+        if ($instance !== null) {
+            session_destroy();
+            //create new instance
+            $instance = null;
+        }
+    }
+           
     /**
      * Singleton
      * Set options for session instance

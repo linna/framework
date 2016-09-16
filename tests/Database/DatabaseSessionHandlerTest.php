@@ -8,7 +8,6 @@
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
-
 use Linna\Database\Database;
 use Linna\Database\MysqlPDOAdapter;
 use Linna\Session\DatabaseSessionHandler;
@@ -17,54 +16,88 @@ use PHPUnit\Framework\TestCase;
 
 class DatabaseSessionHandlerTest extends TestCase
 {
-    protected $session;
-    
-    protected function initialize()
+    /**
+     * @runInSeparateProcess
+     */
+    public function testSession()
     {
         $MysqlAdapter = new MysqlPDOAdapter(
-        'mysql:host=localhost;dbname=test;charset=utf8mb4', 
-        'root', 
-        '', 
-        array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
+                'mysql:host=localhost;dbname=test;charset=utf8mb4',
+                'root',
+                PASS,
+                array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
         );
 
         $dbase = new Database($MysqlAdapter);
-        
+
         $sessionHandler = new DatabaseSessionHandler($dbase);
-        
+
         Session::setSessionHandler($sessionHandler);
         //se session options
         Session::withOptions(array(
-            'expire' => 1800,
+            'expire' => 8,
             'cookieDomain' => '/',
             'cookiePath' => '/',
             'cookieSecure' => false,
             'cookieHttpOnly' => true
         ));
         
-        $this->session = Session::getInstance();
-        
+        $session = Session::getInstance();
+
+        $session->testdata = 'test';
+
+        $this->assertEquals('test', $session->testdata);
+
+        $session->testdata = 'new test';
+
+        $this->assertEquals('new test', $session->testdata);
+
+        unset($session->testdata);
+
+        $this->assertEquals(false, $session->testdata);
+
+        Session::destroyInstance();
     }
-    
+
     /**
      * @runInSeparateProcess
      */
-    public function testSession()
+    public function testGc()
     {
-        $this->initialize();
+        $MysqlAdapter = new MysqlPDOAdapter(
+                'mysql:host=localhost;dbname=test;charset=utf8mb4',
+                'root',
+                PASS,
+                array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
+        );
+
+        $dbase = new Database($MysqlAdapter);
+
+        $sessionHandler = new DatabaseSessionHandler($dbase);
+
+        $sessionHandler->gc(0);
         
-        $this->session->testdata = 'test';
+        $conn = $dbase->connect();
         
-        $this->assertEquals('test', $this->session->testdata);
+        for ($i = 0;$i<10;$i++) {
+            $sessionId = md5($i);
+            $time = time()-$i;
+            $data = 'time|i:'.$time.';';
+            
+            $pdos = $conn->prepare('INSERT INTO session (session_id, session_data) VALUES (:session_id, :session_data)');
+
+            $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
+            $pdos->bindParam(':session_data', $data, \PDO::PARAM_STR);
+            $pdos->execute();
+            
+            sleep(1);
+        }
         
-        $this->session->testdata = 'new test';
+        $sessionHandler->gc(5);
         
-        $this->assertEquals('new test', $this->session->testdata);
+        $pdos = $conn->prepare('SELECT * FROM session');
+        $pdos->execute();
         
-        unset($this->session->testdata);
-        
-        $this->assertEquals(false, $this->session->testdata);
-        
-        session_write_close();
+        $this->assertEquals(5, $pdos->rowCount());
     }
 }

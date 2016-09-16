@@ -32,13 +32,13 @@ class MysqlPDOAdapter implements AdapterInterface
         
         $this->options = $options;
     }
-    
+        
     public function getResource()
     {
         try {
             return new \PDO($this->dsn, $this->user, $this->password, $this->options);
         } catch (\PDOException $exception) {
-            echo 'PDOException: '.$exception->getMessage();
+            echo 'Connection Fail: '.$exception->getMessage();
         }
     }
 }

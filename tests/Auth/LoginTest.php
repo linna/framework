@@ -16,56 +16,41 @@ use PHPUnit\Framework\TestCase;
 
 class LoginTest extends TestCase
 {
-    protected $session;
-            
-    protected $password;
-            
-    protected $login;
-    
-    protected function initialize()
+    /**
+     * @runInSeparateProcess
+     */
+    public function testLogin()
     {
-        //se session options
+        //config options
         Session::withOptions(array(
-            'expire' => 1800,
+            'expire' => 5,
             'cookieDomain' => '/',
             'cookiePath' => '/',
             'cookieSecure' => false,
             'cookieHttpOnly' => true
         ));
         
-        $this->session = Session::getInstance();
+        $password = new Password();
+        $storedPassword = $password->hash('password');
         
-        $this->password = new Password();
+        //attemp first login
+        $login = new Login(Session::getInstance(), $password);
+        $loginResult = $login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
         
-        $this->login = new Login($this->session, $this->password);
-    }
-    
-    /**
-     * @runInSeparateProcess
-     */
-    public function testLogin()
-    {
-        $this->initialize();
-        
-        $storedPassword = $this->password->hash('password');
-        
-        $loginResult = $this->login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
-         
-        $this->assertEquals(true, $loginResult);
-        
-        $newLogin = new Login($this->session, $this->password);
-        
+        //attemp check if logged
+        $newLogin = new Login(Session::getInstance(), $password);
         $logged = $newLogin->logged;
         
-        $this->assertEquals(true, $logged);
-        
+        //simulate expired login
         $_SESSION['loginTime'] = time() - 3600;
+        $secondLogin = new Login(Session::getInstance(), $password);
+        $notLogged = $secondLogin->logged;
         
-        $newLogin = new Login($this->session, $this->password);
+        $this->assertEquals(true, $loginResult);
+        $this->assertEquals(true, $logged);
+        $this->assertEquals(false, $notLogged);
         
-        $logged = $newLogin->logged;
-        
-        $this->assertEquals(false, $logged);
+        Session::destroyInstance();
     }
     
      /**
@@ -73,15 +58,35 @@ class LoginTest extends TestCase
      */
     public function testLogout()
     {
-        $this->initialize();
+        //config options
+        Session::withOptions(array(
+            'expire' => 5,
+            'cookieDomain' => '/',
+            'cookiePath' => '/',
+            'cookieSecure' => false,
+            'cookieHttpOnly' => true
+        ));
         
-        $storedPassword = $this->password->hash('password');
+        $password = new Password();
+        $storedPassword = $password->hash('password');
         
-        $loginResult = $this->login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
+        //do valid login
+        $login = new Login(Session::getInstance(), $password);
+        $login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
+        $loginResult = $login->logged;
+        
+        //do logout
+        $login->logout();
+        
+        //create new login instance
+        $login = new Login(Session::getInstance(), $password);
+        $noLoginResult = $login->logged;
         
         $this->assertEquals(true, $loginResult);
+        $this->assertEquals(false, $noLoginResult);
         
-        $this->login->logout();
+        
+        Session::destroyInstance();
     }
     
     /**
@@ -89,16 +94,26 @@ class LoginTest extends TestCase
      */
     public function testIncorrectLogin()
     {
-        $this->initialize();
+        //config options
+        Session::withOptions(array(
+            'expire' => 5,
+            'cookieDomain' => '/',
+            'cookiePath' => '/',
+            'cookieSecure' => false,
+            'cookieHttpOnly' => true
+        ));
         
-        $storedPassword = $this->password->hash('password');
+        $password = new Password();
+        $storedPassword = $password->hash('password');
         
-        $loginResult = $this->login->login('root', 'badPassword', $storedUser = 'root', $storedPassword, 1);
+        //try login with bad credentials
+        $login = new Login(Session::getInstance(), $password);
+        $loginResult = $login->login('root', 'badPassword', $storedUser = 'root', $storedPassword, 1);
+        $loginResult2 = $login->login('root', 'password', $storedUser = null, $storedPassword, 1);
         
         $this->assertEquals(false, $loginResult);
+        $this->assertEquals(false, $loginResult2);
         
-        $loginResult = $this->login->login('root', 'password', $storedUser = null, $storedPassword, 1);
-        
-        $this->assertEquals(false, $loginResult);
+        Session::destroyInstance();
     }
 }

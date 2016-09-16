@@ -9,13 +9,10 @@
  *
  */
 
-define('PASS', '');
-
-use Linna\Database\Database;
 use Linna\Database\MysqlPDOAdapter;
 use PHPUnit\Framework\TestCase;
 
-class DatabaseTest extends TestCase
+class MysqlPDOAdapterTest extends TestCase
 {
     public function testConnection()
     {
@@ -26,8 +23,18 @@ class DatabaseTest extends TestCase
         array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
         );
 
-        $dbase = new Database($MysqlAdapter);
+        $this->assertInstanceOf(PDO::class, $MysqlAdapter->getResource());
+    }
+    
+    public function testFailConnection()
+    {
+        $MysqlAdapter1 = new MysqlPDOAdapter(
+        '',
+        'root',
+        PASS,
+        array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
+        );
         
-        $this->assertInstanceOf(PDO::class, $dbase->connect());
+        $this->assertEquals(null, $MysqlAdapter1->getResource());
     }
 }

@@ -17,35 +17,25 @@ use PHPUnit\Framework\TestCase;
 
 class DIContainerTest extends TestCase
 {
-    protected $session;
-    
-    protected function initialize()
-    {
-        //se session options
-        Session::withOptions(array(
-            'expire' => 1800,
-            'cookieDomain' => '/',
-            'cookiePath' => '/',
-            'cookieSecure' => false,
-            'cookieHttpOnly' => true
-        ));
-        
-        $this->session = Session::getInstance();
-    }
-    
     /**
      * @runInSeparateProcess
      */
     public function testContainer()
     {
-        $this->initialize();
-        
+        //se session options
+        Session::withOptions(array(
+            'expire' => 4,
+            'cookieDomain' => '/',
+            'cookiePath' => '/',
+            'cookieSecure' => false,
+            'cookieHttpOnly' => true
+        ));
+                
         $container = new DIContainer();
         
-        $container->login = function()
-        {
+        $container->login = function () {
             $password = new Password();
-            $session = $this->session;
+            $session = Session::getInstance();
             
             return new Login($session, $password);
         };
@@ -54,20 +44,10 @@ class DIContainerTest extends TestCase
         
         $this->assertInstanceOf(Login::class, $login());
         
-        //test isset
-        if (isset($container->login))
-        {
-            $login2 = $container->login;
-        }
+        $this->assertEquals(true, isset($container->login));
+        $this->assertEquals(false, isset($container->login2));
+        $this->assertEquals(false, $container->login2);
         
-        $this->assertInstanceOf(Login::class, $login2());
-        
-        //test unset
-        unset($container->login);
-        
-        $this->assertEquals(false, isset($container->login));
-        
-        //test unset container
-        $this->assertEquals(false, $container->login);
+        Session::destroyInstance();
     }
 }
