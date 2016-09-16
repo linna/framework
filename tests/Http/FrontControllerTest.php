@@ -20,15 +20,13 @@ use PHPUnit\Framework\TestCase;
 
 class FrontControllerTest extends TestCase
 {
-    protected $autoloader;
-    
     protected $routes;
     
     public function __construct()
     {
-        $this->autoloader = new Autoloader();
-        $this->autoloader->register();
-        $this->autoloader->addNamespaces([
+        $autoloader = new Autoloader();
+        $autoloader->register();
+        $autoloader->addNamespaces([
            ['Linna\FOO', dirname(__DIR__).'/FOO']
         ]);
         
