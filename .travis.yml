@@ -10,6 +10,7 @@ services:
 before_script: 
 - mysql -e 'create database test;'
 - mysql -u root test < tests/database.sql
+- phpunit --self-update
 - "composer require codeclimate/php-test-reporter --dev"
 - "composer install"
 
