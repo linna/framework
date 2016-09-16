@@ -26,6 +26,6 @@ build:
 
     project_setup:
             before:
-                - sudo service start mysql || true
+                - phpunit --self-update
                 - mysql -e "CREATE DATABASE test"
                 - mysql -u root test < tests/database.sql
