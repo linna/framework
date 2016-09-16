@@ -26,6 +26,5 @@ build:
 
     project_setup:
             before:
-                - phpunit --self-update
                 - mysql -e "CREATE DATABASE test"
                 - mysql -u root test < tests/database.sql
