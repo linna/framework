@@ -42,7 +42,7 @@ class DatabaseSessionHandler implements SessionHandlerInterface
      */
     public function __construct(Database $storage)
     {
-        $this->dBase = $storage;
+        $this->dBase = $storage->connect();
     }
 
     /**

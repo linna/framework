@@ -10,6 +10,7 @@
  */
 
 use Linna\Database\Database;
+use Linna\Database\MysqlPDOAdapter;
 use Linna\Session\DatabaseSessionHandler;
 use Linna\Session\Session;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +21,14 @@ class DatabaseSessionHandlerTest extends TestCase
     
     protected function initialize()
     {
-        $dbase = Database::connect();
+        $MysqlAdapter = new MysqlPDOAdapter(
+        'mysql:host=localhost;dbname=test;charset=utf8mb4', 
+        'root', 
+        '', 
+        array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
+        );
+
+        $dbase = new Database($MysqlAdapter);
         
         $sessionHandler = new DatabaseSessionHandler($dbase);
         

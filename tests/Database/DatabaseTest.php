@@ -9,33 +9,23 @@
  *
  */
 
-define('DB_TYPE', 'mysql');
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'test');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_CHARSET', 'utf8mb4');
-
 use Linna\Database\Database;
+use Linna\Database\MysqlPDOAdapter;
 use PHPUnit\Framework\TestCase;
 
 class DatabaseTest extends TestCase
 {
     public function testConnection()
     {
-        $dbase = Database::connect();
+        $MysqlAdapter = new MysqlPDOAdapter(
+        'mysql:host=localhost;dbname=test;charset=utf8mb4', 
+        'root', 
+        '',
+        array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
+        );
+
+        $dbase = new Database($MysqlAdapter);
         
-        $this->assertInstanceOf(PDO::class, $dbase);
-    }
-    
-    public function testCloneConnection()
-    {
-        $dbase = Database::connect();
-        
-        $this->assertInstanceOf(PDO::class, $dbase);
-        
-        $otherdb = clone $dbase;
-        
-        $this->assertInstanceOf(PDO::class, $otherdb);
+        $this->assertInstanceOf(PDO::class, $dbase->connect());
     }
 }
