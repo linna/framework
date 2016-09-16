@@ -93,6 +93,8 @@ class Session
         if (array_key_exists($name, $this->data)) {
             return $this->data[$name];
         }
+        
+        return false;
     }
     
     /**

@@ -44,11 +44,16 @@ class DatabaseSessionHandlerTest extends PHPUnit_Framework_TestCase
     {
         $this->initialize();
         
-        $this->session->testdata = 'pippo';
-        //$dbase = Database::connect();
+        $this->session->testdata = 'test';
         
+        $this->assertEquals('test', $this->session->testdata);
         
+        $this->session->testdata = 'new test';
         
-        //$this->assertInstanceOf(PDO::class, $dbase);
+        $this->assertEquals('new test', $this->session->testdata);
+        
+        unset($this->session->testdata);
+        
+        $this->assertEquals(false, $this->session->testdata);
     }
 }
