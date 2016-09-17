@@ -21,7 +21,7 @@ Features:
 To Do:
    
    * Documentation
-   * Unit Testing
-   * Session and Storage Manager refactoring
+   * Session refactoring
    * Router refactoring
+   * Dependency Injection container refactoring
    * PSR7 support
