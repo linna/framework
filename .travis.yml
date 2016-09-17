@@ -1,15 +1,10 @@
 language: php
 php:
 - 7.0
-- 7.1
-- nightly
-
-before_install: echo "extension = xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 services:
 - mysql
   
-
 before_script: 
 - mysql -e 'create database test;'
 - mysql -u root test < tests/database.sql
