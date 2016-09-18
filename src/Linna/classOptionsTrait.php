@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Linna;
 
 /**
@@ -25,7 +27,7 @@ trait classOptionsTrait
      *
      * @return array Updated options
      */
-    protected function overrideOptions($classOptions, $options)
+    protected function overrideOptions(array $classOptions, array $options)
     {
         foreach ($options as $key => $value) {
             if (isset($classOptions[$key])) {
