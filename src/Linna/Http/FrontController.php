@@ -89,12 +89,12 @@ class FrontController
         $routeAction = $this->route->getAction();
         $routeParam =  $this->route->getParam();
         
-        if (sizeof($routeParam) > 0 && $routeAction !== null) {
+        if (sizeof($routeParam) > 0 && $routeAction !== '') {
             call_user_func_array(array($this->controller, $routeAction), $routeParam);
             return;
         }
         
-        if ($routeAction !== null) {
+        if ($routeAction !== '') {
             call_user_func(array($this->controller, $routeAction));
         }
     }
@@ -105,7 +105,7 @@ class FrontController
      */
     private function runView()
     {
-        $routeAction = (($routeAction = $this->route->getAction())  !== null) ? $routeAction : 'index';
+        $routeAction = (($routeAction = $this->route->getAction())  !== '') ? $routeAction : 'index';
         
         call_user_func(array($this->view, $routeAction));
     }
