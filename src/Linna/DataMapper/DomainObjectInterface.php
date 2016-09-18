@@ -9,7 +9,9 @@
  *
  */
 
-namespace Linna\Database;
+declare(strict_types=1);
+
+namespace Linna\DataMapper;
 
 /**
  * Interface for Domain Object

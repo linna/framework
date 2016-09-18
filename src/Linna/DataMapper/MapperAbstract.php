@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Linna\Database;
+namespace Linna\DataMapper;
 
 /**
  * Abstract Class for ObjectMapper

@@ -12,8 +12,8 @@
 
 namespace Linna\FOO;
 
-use Linna\Database\DomainObjectInterface;
-use Linna\Database\MapperAbstract;
+use Linna\DataMapper\DomainObjectInterface;
+use Linna\DataMapper\MapperAbstract;
 //use Linna\Database\Database;
 use Linna\Auth\Password;
 
