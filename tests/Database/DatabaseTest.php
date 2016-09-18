@@ -9,8 +9,6 @@
  *
  */
 
-define('PASS', '');
-
 use Linna\Database\Database;
 use Linna\Database\MysqlPDOAdapter;
 use PHPUnit\Framework\TestCase;

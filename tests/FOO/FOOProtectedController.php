@@ -27,10 +27,8 @@ class FOOProtectedController extends Controller
     {
         parent::__construct($model);
         
-        $this->test = false;
-        
         $this->protect($login, 'http://localhost');
         
-        $this->test = true;  
+        $this->test = true;
     }
 }

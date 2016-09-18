@@ -36,7 +36,6 @@ class View implements \SplObserver
      */
     protected $model;
     
-
     /**
      * Constructor.
      *

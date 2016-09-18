@@ -75,6 +75,10 @@ class FrontController
         $this->runView();
     }
     
+    /**
+     * Run controller
+     *
+     */
     private function runController()
     {
         $routeAction = $this->route->getAction();
@@ -90,10 +94,13 @@ class FrontController
         }
     }
     
+    /**
+     * Run view
+     *
+     */
     private function runView()
     {
-        $routeAction = $this->route->getAction();
-        $routeAction = ($routeAction !== null) ? $routeAction : 'index';
+        $routeAction = (($routeAction = $this->route->getAction())  !== null) ? $routeAction : 'index';
         
         call_user_func(array($this->view, $routeAction));
     }

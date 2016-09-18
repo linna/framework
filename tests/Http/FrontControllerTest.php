@@ -59,11 +59,14 @@ class FrontControllerTest extends TestCase
     public function testNewFrontController()
     {
         //start router
-        $router = new Router('/Foo/modifyData', $this->routes, array(
+        $router = new Router($this->routes, array(
             'basePath' => '/',
             'badRoute' => 'E404',
             'rewriteMode' => true
                 ));
+        
+        //evaluate request uri
+        $router->validate('/Foo/modifyData');
         
         $model = new FOOModel;
         //get view linked to route
@@ -82,11 +85,13 @@ class FrontControllerTest extends TestCase
     public function testRunFrontController()
     {
         //start router
-        $router = new Router('/Foo/modifyData', $this->routes, array(
+        $router = new Router($this->routes, array(
             'basePath' => '/',
             'badRoute' => 'E404',
             'rewriteMode' => true
                 ));
+        //evaluate request uri
+        $router->validate('/Foo/modifyData');
         
         $model = new FOOModel;
         //get view linked to route
@@ -116,11 +121,13 @@ class FrontControllerTest extends TestCase
     public function testRunFrontControllerParam()
     {
         //start router
-        $router = new Router('/Foo/data500/modifyDataFromParam', $this->routes, array(
+        $router = new Router($this->routes, array(
             'basePath' => '/',
             'badRoute' => 'E404',
             'rewriteMode' => true
                 ));
+        //evaluate request uri
+        $router->validate('/Foo/data500/modifyDataFromParam');
         
         $model = new FOOModel;
         //get view linked to route
@@ -146,11 +153,13 @@ class FrontControllerTest extends TestCase
     
     public function testModelDetach()
     {
-        $router = new Router('/Foo/data500/modifyDataFromParam', $this->routes, array(
+        $router = new Router($this->routes, array(
             'basePath' => '/',
             'badRoute' => 'E404',
             'rewriteMode' => true
                 ));
+        //evaluate request uri
+        $router->validate('/Foo/data500/modifyDataFromParam');
         
         $route = $router->getRoute();
         

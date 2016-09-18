@@ -9,7 +9,11 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Linna\Http;
+
+use \Linna\classOptionsTrait;
 
 /**
  * Manage routes, verify every resource requested by browser and return
@@ -18,40 +22,40 @@ namespace Linna\Http;
  */
 class Router
 {
-    use \Linna\classOptionsTrait;
+    use classOptionsTrait;
     
     /**
      * Utilized with classOptionsTrait
      *
      * @var array Config options for class
      */
-    protected $options = array(
+    private $options = array(
         'basePath' => '/',
         'badRoute' => '',
         'rewriteMode' => false
     );
     
     /**
-     * @var array $route Utilized for return the most recently parsed route
+     * @var object $route Utilized for return the most recently parsed route
      */
-    protected $route;
+    private $route;
 
     /**
      * @var array $routes Passed from constructor, is the list of registerd routes for the app
      */
-    protected $routes = null;
+    private $routes = null;
 
     /**
      * @var array $matchTypes List of regex for find parameter inside passed routes
      */
-    protected $matchTypes = array(
+    private $matchTypes = array(
         '`\[[0-9A-Za-z]+\]`',
     );
 
     /**
      * @var array $types List of regex for find type of parameter inside passed routes
      */
-    protected $types = array(
+    private $types = array(
 
         '[0-9A-Za-z]++',
     );
@@ -59,7 +63,7 @@ class Router
     /**
      * @var string $currentUri Request uri from browser (start from['REQUEST_URI'])
      */
-    protected $currentUri = '';
+    private $currentUri = '';
     
     
     /**
@@ -71,21 +75,29 @@ class Router
      *
      * @todo Make router compatible with PSR7 REQUEST,instead of request uri pass a PSR7 request object
      */
-    public function __construct($requestUri, $routes, $options)
+    public function __construct(array $routes, array $options)
     {
         //set options
         $this->options = $this->overrideOptions($this->options, $options);
         
         //set routes
         $this->routes = $routes;
-
+    }
+    
+    /**
+     * Evaluate request uri
+     *
+     * @param string $requestUri
+     */
+    public function validate(string $requestUri)
+    {
         //get the current uri
         $this->currentUri = $this->getCurrentUri($requestUri);
-              
+        
         //try to get a route
         $this->route = $this->match($this->routes[array_search($this->options['badRoute'], array_column($this->routes, 'name'))]);
     }
-
+    
     /**
      * Check if a route is valid and
      * return the route object else return a bad route object
@@ -94,57 +106,55 @@ class Router
      */
     public function getRoute()
     {
+        return $this->route;
+    }
+    
+    /**
+     * Build Route class
+     *
+     * @param array $route
+     * @return \Linna\Http\Route
+     */
+    private function buildRoute(array $route)
+    {
         //try to find param from route if route is not bad route
-        $param = ($this->route['name'] !== $this->options['badRoute']) ? $this->buildParam($this->route) : array();
+        $param = ($route['name'] !== $this->options['badRoute']) ? $this->buildParam($route) : array();
+        
         //return new route object
         return new Route(
-                $this->route['name'], $this->route['method'], $this->route['model'], $this->route['view'], $this->route['controller'], $this->route['action'], $param
+                $route['name'], $route['method'], $route['model'], $route['view'], $route['controller'], $route['action'], $param
         );
     }
-
+    
     /**
      * Check if the requested uri is a valid route
      *
-     * if valid return an array like this with route, if no return route for error page
-     *  [
-     *      'name' => 'Home',
-     *      'method' => 'GET',
-     *      'url' => '/',
-     *      'model' => 'HomeModel',
-     *      'view' => 'HomeView',
-     *      'controller' => 'HomeController',
-     *      'action' => null,
-     *  ];
+     * @param object $route Start with default route, bad route
      *
-     * @param array $validRoute Start with default route, bad route
      * @return array Contains properties of route
      */
-    protected function match($validRoute)
+    private function match(array $route)
     {
         foreach ($this->routes as $value) {
-
-            // replace declared parameter in registered routes with regex
-            $c = preg_replace($this->matchTypes, $this->types, $value['url']);
-            // set regex delimiter
-            $c = "`^{$c}/?$`";
+            $regex = '`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`';
 
             //check if route from browser match with registered routes
-            $m = preg_match($c, $this->currentUri, $matches);
+            $m = preg_match($regex, $this->currentUri, $matches);
 
             //match and there is a subpattern for a route with multiple actions
             if ($m === 1 && sizeof($matches) > 1) {
 
                 //set $validRoute
-                $validRoute = $value;
+                $route = $value;
 
                 //add to route array the passed uri for param check when call
-                $validRoute['matches'] = $matches;
+                $route['matches'] = $matches;
 
                 //assume that subpattern rapresent action
-                $validRoute['action'] = $matches[1];
+                $route['action'] = $matches[1];
 
                 //url clean
-                $validRoute['url'] = preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $validRoute['url']);
+                $route['url'] = preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $route['url']);
 
                 break;
             }
@@ -152,31 +162,31 @@ class Router
             //match
             if ($m === 1) {
                 //set valid route
-                $validRoute = $value;
+                $route = $value;
 
                 //add to route array the passed uri for param check when call
-                $validRoute['matches'] = $matches;
+                $route['matches'] = $matches;
                 
                 break;
             }
         }
-
-        return (array) $validRoute;
+        
+        return $this->buildRoute($route);
     }
     
     /**
      * Try to find param in a valid route
      *
-     * @param array $validRoute Array with route caracteristics
+     * @param array $route Array with route caracteristics
      *
      * @return array Array with param passed from uri
      */
-    protected function buildParam($validRoute)
+    private function buildParam(array $route)
     {
-        $url = explode('/', $validRoute['url']);
-        $matches = explode('/', $validRoute['matches'][0]);
-
         $param = array();
+        
+        $url = explode('/', $route['url']);
+        $matches = explode('/', $route['matches'][0]);
         
         $rawParam = array_diff($matches, $url);
 
@@ -196,7 +206,7 @@ class Router
      *
      * @return string Uri from browser
      */
-    protected function getCurrentUri($passedUri)
+    private function getCurrentUri(string $passedUri)
     {
         if ($this->options['rewriteMode'] === false) {
             $passedUri = str_replace('/index.php?/', '', $passedUri);

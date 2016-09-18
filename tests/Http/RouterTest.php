@@ -60,17 +60,29 @@ class RouterTest extends TestCase
             'controller' => 'UserController',
             'action' => null,
         ];
+        
+        $this->routes[] = [
+            'name' => null,
+            'method' => 'GET',
+            'url' => '/userOther/(disable|enable|delete|changePassword|modify)/[id]',
+            'model' => 'UserModel',
+            'view' => 'UserView',
+            'controller' => 'UserController',
+            'action' => null,
+        ];
     }
     
     public function testRoute()
     {
         //start router
-        $router = new Router('/user', $this->routes, array(
+        $router = new Router($this->routes, array(
             'basePath' => '/',
             'badRoute' => 'E404',
             'rewriteMode' => true
                 ));
-
+        //evaluate request uri
+        $router->validate('/user');
+        
         //get route
         $route = $router->getRoute();
         
@@ -84,12 +96,16 @@ class RouterTest extends TestCase
     
     public function testBadRoute()
     {
-        $router = new Router('/badroute', $this->routes, array(
+        //start router
+        $router = new Router($this->routes, array(
             'basePath' => '/',
             'badRoute' => 'E404',
             'rewriteMode' => true
                 ));
-
+        
+        //evaluate request uri
+        $router->validate('/badroute');
+        
         //get route
         $route = $router->getRoute();
         
@@ -104,12 +120,38 @@ class RouterTest extends TestCase
     public function testParamRoute()
     {
         //start router
-        $router = new Router('/user/5/enable', $this->routes, array(
+        $router = new Router($this->routes, array(
             'basePath' => '/',
             'badRoute' => 'E404',
             'rewriteMode' => true
                 ));
-
+        
+        //evaluate request uri
+        $router->validate('/user/5/enable');
+        
+        //get route
+        $route = $router->getRoute();
+        
+        $this->assertInstanceOf(Route::class, $route);
+        $this->assertEquals('UserModel', $route->getModel());
+        $this->assertEquals('UserView', $route->getView());
+        $this->assertEquals('UserController', $route->getController());
+        $this->assertEquals('enable', $route->getAction());
+        $this->assertEquals(array('id'=>'5'), $route->getParam());
+    }
+    
+    public function testInverseParamRoute()
+    {
+        //start router
+        $router = new Router($this->routes, array(
+            'basePath' => '/',
+            'badRoute' => 'E404',
+            'rewriteMode' => true
+                ));
+        
+        //evaluate request uri
+        $router->validate('/userOther/enable/5');
+        
         //get route
         $route = $router->getRoute();
         
@@ -124,12 +166,15 @@ class RouterTest extends TestCase
     public function testRewriteModeOff()
     {
         //start router
-        $router = new Router('/index.php?//user/5/enable', $this->routes, array(
+        $router = new Router($this->routes, array(
             'basePath' => '/',
             'badRoute' => 'E404',
             'rewriteMode' => false
                 ));
-
+        
+        //evaluate request uri
+        $router->validate('/index.php?//user/5/enable');
+        
         //get route
         $route = $router->getRoute();
         
