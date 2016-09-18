@@ -9,11 +9,20 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Linna\DI;
 
+/**
+ * Dependency Injection Container
+ *
+ */
 class DIContainer
 {
-    private $container = array();
+    /**
+     * @var array $container Callback storage
+     */
+    private $container;
     
     /**
      * Constructor
@@ -21,6 +30,7 @@ class DIContainer
      */
     public function __construct()
     {
+        $this->container = array();
     }
     
     /**
@@ -30,7 +40,7 @@ class DIContainer
      * @param string $name
      * @param mixed $resolver
      */
-    public function __set($name, $resolver)
+    public function __set(string $name, callable $resolver)
     {
         $this->container[$name] = $resolver;
     }
@@ -42,7 +52,7 @@ class DIContainer
      * @param string $name
      * @return mixed Element stored in container or false
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         if (array_key_exists($name, $this->container)) {
             return $this->container[$name];
@@ -57,7 +67,7 @@ class DIContainer
      *
      * @param string $name
      */
-    public function __unset($name)
+    public function __unset(string $name)
     {
         unset($this->container[$name]);
     }
@@ -68,7 +78,7 @@ class DIContainer
      *
      * @param string $name
      */
-    public function __isset($name)
+    public function __isset(string $name)
     {
         return isset($this->container[$name]);
     }

@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Linna;
 
 /**
@@ -88,7 +90,7 @@ class Autoloader
      *
      * @param array $namespaces The namespace prefix array.
      */
-    public function addNamespaces($namespaces)
+    public function addNamespaces(array $namespaces)
     {
         //loop for add single namespace
         foreach ($namespaces as $nsp) {
@@ -112,7 +114,7 @@ class Autoloader
      * @return mixed The mapped file name on success, or boolean false on
      *               failure.
      */
-    public function loadClass($class)
+    public function loadClass(string $class)
     {
         // the current namespace prefix
         $prefix = $class;
@@ -152,7 +154,7 @@ class Autoloader
      * @return mixed Boolean false if no mapped file can be loaded, or the
      *               name of the mapped file that was loaded.
      */
-    protected function loadMappedFile($prefix, $relativeClass)
+    protected function loadMappedFile(string $prefix, string $relativeClass)
     {
         // are there any base directories for this namespace prefix?
         if (isset($this->prefixes[$prefix]) === false) {

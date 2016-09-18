@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Linna\Mvc;
 
 /**
@@ -28,7 +30,7 @@ class Controller
      *
      * @param object $model The model object for current controller
      */
-    public function __construct($model)
+    public function __construct(Model $model)
     {
         $this->model = $model;
     }

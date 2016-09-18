@@ -20,37 +20,37 @@ class Route implements RouteInterface
     /**
      * @var string $name Route name
      */
-    protected $name = '';
+    protected $name;
 
     /**
      * @var string $method Indicates request method
      */
-    protected $method = '';
+    protected $method;
     
     /**
      * @var string $view View to call
      */
-    protected $view = '';
+    protected $view;
     
     /**
      * @var string $view View to call
      */
-    protected $model = '';
+    protected $model;
     
     /**
      * @var string $controller Controller to call
      */
-    protected $controller = '';
+    protected $controller;
     
     /**
      * @var string $action Action to call
      */
-    protected $action = '';
+    protected $action;
 
     /**
      * @var array $param Parameter passed to controller
      */
-    protected $param = array();
+    protected $param;
 
     /**
      * Contructor
@@ -63,7 +63,7 @@ class Route implements RouteInterface
      * @param mixed $action
      * @param array  $param
      */
-    public function __construct($name, $method, $model, $view, $controller, $action, $param)
+    public function __construct(string $name, string $method, string $model, string $view, string $controller, string $action, array $param)
     {
         $this->name = $name;
         $this->method = $method;

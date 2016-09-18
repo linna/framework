@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Linna\Database;
 
 use UnexpectedValueException;
@@ -44,7 +46,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      *
      * @throws UnexpectedValueException If the id on the object is already set
      */
-    public function setId($objectId)
+    public function setId(int $objectId)
     {
         try {
             if ($this->objectId !== 0) {

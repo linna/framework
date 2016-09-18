@@ -39,7 +39,7 @@ class FrontControllerTest extends TestCase
             'model' => 'FOOModel',
             'view' => 'FOOView',
             'controller' => 'FOOController',
-            'action' => null,
+            'action' => '',
         ];
         
         $this->routes[] = [
@@ -49,7 +49,7 @@ class FrontControllerTest extends TestCase
             'model' => 'FOOModel',
             'view' => 'FOOView',
             'controller' => 'FOOController',
-            'action' => null,
+            'action' => '',
         ];
     }
     

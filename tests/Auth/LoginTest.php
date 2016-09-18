@@ -109,7 +109,7 @@ class LoginTest extends TestCase
         //try login with bad credentials
         $login = new Login(Session::getInstance(), $password);
         $loginResult = $login->login('root', 'badPassword', $storedUser = 'root', $storedPassword, 1);
-        $loginResult2 = $login->login('root', 'password', $storedUser = null, $storedPassword, 1);
+        $loginResult2 = $login->login('badUser', 'password', $storedUser = 'root', $storedPassword, 1);
         
         $this->assertEquals(false, $loginResult);
         $this->assertEquals(false, $loginResult2);

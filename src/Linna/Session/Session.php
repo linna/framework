@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Linna\Session;
 
 use Linna\classOptionsTrait;
@@ -41,7 +43,7 @@ class Session
     /**
      * @var array $data Session data reference property
      */
-    private $data = array();
+    private $data;
     
      /**
      * @var object $instance Store only one instance of session
@@ -58,7 +60,7 @@ class Session
      *
      * @param array $options Options for configure session
      */
-    private function __construct($options)
+    private function __construct(array $options)
     {
         //set options
         $this->options = $this->overrideOptions($this->options, $options);
@@ -77,7 +79,7 @@ class Session
      * @param string $name
      * @param mixed $value
      */
-    public function __set($name, $value)
+    public function __set(string $name, $value)
     {
         $this->data[$name] = $value;
     }
@@ -88,7 +90,7 @@ class Session
      *
      * @param string $name
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         if (array_key_exists($name, $this->data)) {
             return $this->data[$name];
@@ -103,7 +105,7 @@ class Session
      *
      * @param string $name
      */
-    public function __unset($name)
+    public function __unset(string $name)
     {
         unset($this->data[$name]);
     }
@@ -114,7 +116,7 @@ class Session
      *
      * @param string $name
      */
-    public function __isset($name)
+    public function __isset(string $name)
     {
         return isset($this->data[$name]);
     }
@@ -131,17 +133,23 @@ class Session
         setcookie(session_name(), '', $time - 86400);
         //regenerate session id
         session_regenerate_id(true);
+        
         //set new cookie
+        $this->setCookie();
+        
+        //store new time for expire
+        $this->time = $time;
+    }
+    
+    private function setCookie()
+    {
         setcookie(
                 session_name(),
                 session_id(),
                 time() + $this->options['expire'],
-                $this->options['cookieSecure'],
-                $this->options['cookieHttpOnly']
+                (string) $this->options['cookieSecure'],
+                (string) $this->options['cookieHttpOnly']
         );
-        
-        //store new time for expire
-        $this->time = $time;
     }
     
     /**
@@ -169,14 +177,8 @@ class Session
         //start session
         session_start();
 
-        //set cookies
-        setcookie(
-                session_name(),
-                session_id(),
-                time() + $this->options['expire'],
-                $this->options['cookieSecure'],
-                $this->options['cookieHttpOnly']
-        );
+        //set new cookie
+        $this->setCookie();
     }
     
     /**
@@ -242,8 +244,9 @@ class Session
      * Singleton
      * Set options for session instance
      *
+     * @param array $options Session options
      */
-    public static function withOptions($options)
+    public static function withOptions(array $options)
     {
         self::$opt = $options;
     }
@@ -252,6 +255,7 @@ class Session
      * Singleton
      * Set session handler for new instance
      *
+     * @param SessionHandlerInterface $handler Session handler
      */
     public static function setSessionHandler(SessionHandlerInterface $handler)
     {

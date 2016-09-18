@@ -43,7 +43,7 @@ class Router
     /**
      * @var array $routes Passed from constructor, is the list of registerd routes for the app
      */
-    private $routes = null;
+    private $routes;
 
     /**
      * @var array $matchTypes List of regex for find parameter inside passed routes
@@ -69,7 +69,6 @@ class Router
     /**
      * Constructor
      *
-     * @param string $requestUri Request uri
      * @param array $routes List of registerd routes for the app in routes.php
      * @param array $options Options for router config
      *
@@ -87,7 +86,7 @@ class Router
     /**
      * Evaluate request uri
      *
-     * @param string $requestUri
+     * @param string $requestUri Request uri
      */
     public function validate(string $requestUri)
     {

@@ -8,6 +8,7 @@
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
+
 declare(strict_types=1);
 
 namespace Linna\Database;

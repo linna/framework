@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Linna\Auth;
 
 use Linna\Session\Session;
@@ -98,11 +100,11 @@ class Login
      * @param string $password
      * @param string $storedUser
      * @param string $storedPassword
-     * @param string $storedId
+     * @param int $storedId
      *
      * @return bool
      */
-    public function login($user, $password, $storedUser = '', $storedPassword = '', $storedId = 0)
+    public function login(string $user, string $password, string $storedUser = '', string $storedPassword = '', int $storedId = 0)
     {
         if ($user !== $storedUser) {
             return false;

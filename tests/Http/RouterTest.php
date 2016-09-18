@@ -28,7 +28,7 @@ class RouterTest extends TestCase
             'model' => 'HomeModel',
             'view' => 'HomeView',
             'controller' => 'HomeController',
-            'action' => null,
+            'action' => '',
         ];
 
         $this->routes[] = [
@@ -38,7 +38,7 @@ class RouterTest extends TestCase
             'model' => 'E404Model',
             'view' => 'E404View',
             'controller' => 'E404Controller',
-            'action' => null,
+            'action' => '',
         ];
 
         $this->routes[] = [
@@ -48,27 +48,27 @@ class RouterTest extends TestCase
             'model' => 'UserModel',
             'view' => 'UserView',
             'controller' => 'UserController',
-            'action' => null,
+            'action' => '',
         ];
         
         $this->routes[] = [
-            'name' => null,
+            'name' => '',
             'method' => 'GET',
             'url' => '/user/[id]/(disable|enable|delete|changePassword|modify)',
             'model' => 'UserModel',
             'view' => 'UserView',
             'controller' => 'UserController',
-            'action' => null,
+            'action' => '',
         ];
         
         $this->routes[] = [
-            'name' => null,
+            'name' => '',
             'method' => 'GET',
             'url' => '/userOther/(disable|enable|delete|changePassword|modify)/[id]',
             'model' => 'UserModel',
             'view' => 'UserView',
             'controller' => 'UserController',
-            'action' => null,
+            'action' => '',
         ];
     }
     

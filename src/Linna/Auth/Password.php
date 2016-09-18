@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Linna\Auth;
 
 /**
@@ -43,7 +45,7 @@ class Password
      *
      * @return bool Result of password_verify PHP function.
      */
-    public function verify($password, $hash)
+    public function verify(string $password, string $hash)
     {
         return password_verify($password, $hash);
     }
@@ -55,7 +57,7 @@ class Password
      *
      * @return string Return the hashed password.
      */
-    public function hash($password)
+    public function hash(string $password)
     {
         //generate hash from password
         $hash = password_hash($password, PASSWORD_DEFAULT, $this->options);
@@ -70,7 +72,7 @@ class Password
      *
      * @return boolean Return the hashed password.
      */
-    public function needsRehash($hash)
+    public function needsRehash(string $hash)
     {
         if (password_needs_rehash($hash, PASSWORD_DEFAULT, $this->options)) {
             return true;

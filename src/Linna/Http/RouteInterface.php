@@ -26,9 +26,9 @@ interface RouteInterface
      * @param string $view
      * @param string $controller
      * @param mixed $action
-     * @param array  $param
+     * @param array $param
      */
-    public function __construct($name, $method, $model, $view, $controller, $action, $param);
+    public function __construct(string $name, string $method, string $model, string $view, string $controller, string $action, array $param);
 
     /**
      * Return model name

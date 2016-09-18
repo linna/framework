@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Linna\Auth;
 
 /**
@@ -23,7 +25,7 @@ trait ProtectedController
      * @param \Linna\Auth\Login $loginIstance
      * @param string $redirect
      */
-    protected function protect(Login $loginIstance, $redirect)
+    protected function protect(Login $loginIstance, string $redirect)
     {
         //var_dump($loginIstance->logged);
         if ($loginIstance->logged === false) {

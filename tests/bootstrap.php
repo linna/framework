@@ -2,7 +2,7 @@
 
 include dirname(__DIR__).'/src/Linna/Autoloader.php';
 
-define('PASS', '');
+define('PASS', 'cagiva');
 
 $loader = new \Linna\Autoloader();
 $loader->register();

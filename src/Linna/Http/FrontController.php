@@ -9,9 +9,14 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Linna\Http;
 
 use Linna\Http\RouteInterface;
+use Linna\Mvc\Model;
+use Linna\Mvc\View;
+use Linna\Mvc\Controller;
 
 /**
  * FrontController
@@ -47,7 +52,7 @@ class FrontController
      * @param object $view View object already instantiated
      * @param object $controller Controller object already instantiated
      */
-    public function __construct(RouteInterface $route, $model, $view, $controller)
+    public function __construct(RouteInterface $route, Model $model, View $view, Controller $controller)
     {
         $this->route = $route;
         

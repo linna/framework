@@ -11,7 +11,13 @@
 
 namespace Linna\Database;
 
+/**
+ * Adapter Interface
+ */
 interface AdapterInterface
 {
+    /**
+     * Return resource to Database class
+     */
     public function getResource();
 }

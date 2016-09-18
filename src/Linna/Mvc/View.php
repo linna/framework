@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Linna\Mvc;
 
 /**
@@ -24,7 +26,7 @@ class View implements \SplObserver
     /**
      * @var array $data Data for the dynamic view
      */
-    protected $data = array();
+    protected $data;
 
     /**
      * @var object $template Template utilized for data
@@ -40,8 +42,9 @@ class View implements \SplObserver
      * Constructor.
      *
      */
-    public function __construct($model)
+    public function __construct(Model $model)
     {
+        $this->data = array();
         $this->model = $model;
     }
     

@@ -74,10 +74,11 @@ class DatabaseSessionHandlerTest extends TestCase
         $dbase = new Database($MysqlAdapter);
 
         $sessionHandler = new DatabaseSessionHandler($dbase);
-
-        $sessionHandler->gc(0);
         
         $conn = $dbase->connect();
+        
+        $pdos = $conn->prepare('DELETE FROM session');
+        $pdos->execute();
         
         for ($i = 0;$i<10;$i++) {
             $sessionId = md5($i);
@@ -89,15 +90,13 @@ class DatabaseSessionHandlerTest extends TestCase
             $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
             $pdos->bindParam(':session_data', $data, \PDO::PARAM_STR);
             $pdos->execute();
-            
-            sleep(1);
         }
         
-        $sessionHandler->gc(5);
+        $sessionHandler->gc(-1);
         
         $pdos = $conn->prepare('SELECT * FROM session');
         $pdos->execute();
         
-        $this->assertEquals(5, $pdos->rowCount());
+        $this->assertEquals(0, $pdos->rowCount());
     }
 }
