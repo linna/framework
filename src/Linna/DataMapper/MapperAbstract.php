@@ -35,10 +35,8 @@ abstract class MapperAbstract
      *
      * @param DomainObjectAbstract $domainObject
      */
-    public function save(DomainObjectInterface ...$domainObject)
+    public function save(DomainObjectInterface $domainObject)
     {
-        $domainObject = $domainObject[0];
-        
         if ($domainObject->getId() === 0) {
             return $this->oInsert($domainObject);
         }

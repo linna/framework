@@ -40,6 +40,7 @@ class MysqlPDOAdapter implements AdapterInterface
             return new \PDO($this->dsn, $this->user, $this->password, $this->options);
         } catch (\PDOException $exception) {
             echo 'Connection Fail: '.$exception->getMessage();
+            return null;
         }
     }
 }

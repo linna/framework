@@ -32,7 +32,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->objectId;
     }
@@ -46,7 +46,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      *
      * @throws UnexpectedValueException If the id on the object is already set
      */
-    public function setId(int $objectId)
+    public function setId(int $objectId): int
     {
         try {
             if ($this->objectId !== 0) {

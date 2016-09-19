@@ -78,7 +78,7 @@ class DIContainer
      *
      * @param string $name
      */
-    public function __isset(string $name)
+    public function __isset(string $name): bool
     {
         return isset($this->container[$name]);
     }

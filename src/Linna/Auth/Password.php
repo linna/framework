@@ -38,26 +38,26 @@ class Password
     }
     
     /**
-     * Check if password matches a hash.
+     * Check if password matches a hash
      *
-     * @param string $hash
-     * @param string $password
+     * @param string $hash Password to be verified
+     * @param string $password Hash for password
      *
      * @return bool Result of password_verify PHP function.
      */
-    public function verify(string $password, string $hash)
+    public function verify(string $password, string $hash): bool
     {
         return password_verify($password, $hash);
     }
 
     /**
-     * Create a password hash.
+     * Create a password hash
      *
-     * @param string $password Password to be hashed.
+     * @param string $password Password to be hashed
      *
-     * @return string Return the hashed password.
+     * @return string Return the hashed password
      */
-    public function hash(string $password)
+    public function hash(string $password): string
     {
         //generate hash from password
         $hash = password_hash($password, PASSWORD_DEFAULT, $this->options);
@@ -68,11 +68,11 @@ class Password
     /**
      * Check if password need rehash
      *
-     * @param string $hash Hash for check.
+     * @param string $hash Hash for check
      *
-     * @return boolean Return the hashed password.
+     * @return bool Return the hashed password
      */
-    public function needsRehash(string $hash)
+    public function needsRehash(string $hash): bool
     {
         if (password_needs_rehash($hash, PASSWORD_DEFAULT, $this->options)) {
             return true;

@@ -210,7 +210,7 @@ class Session
      *
      * @return \self $instance
      */
-    public static function getInstance()
+    public static function getInstance(): Session
     {
         $instance = &self::$instance;
 

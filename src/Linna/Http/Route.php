@@ -79,7 +79,7 @@ class Route implements RouteInterface
      *
      * @return string Model for call new $Model()
      */
-    public function getModel()
+    public function getModel(): string
     {
         return $this->model;
     }
@@ -89,7 +89,7 @@ class Route implements RouteInterface
      *
      * @return string View for call new $View()
      */
-    public function getView()
+    public function getView(): string
     {
         return $this->view;
     }
@@ -99,7 +99,7 @@ class Route implements RouteInterface
      *
      * @return string Controller for call $controller->default_action()
      */
-    public function getController()
+    public function getController(): string
     {
         return $this->controller;
     }
@@ -109,7 +109,7 @@ class Route implements RouteInterface
      *
      * @return string Action for call $controller->action()
      */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->action;
     }
@@ -119,7 +119,7 @@ class Route implements RouteInterface
      *
      * @return array Parameter for call $controller->action(Param)
      */
-    public function getParam()
+    public function getParam(): array
     {
         return $this->param;
     }

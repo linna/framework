@@ -104,7 +104,7 @@ class Login
      *
      * @return bool
      */
-    public function login(string $user, string $password, string $storedUser = '', string $storedPassword = '', int $storedId = 0)
+    public function login(string $user, string $password, string $storedUser = '', string $storedPassword = '', int $storedId = 0): bool
     {
         if ($user !== $storedUser) {
             return false;
@@ -133,7 +133,7 @@ class Login
      *
      * @return bool
      */
-    public function logout()
+    public function logout(): bool
     {
         unset($this->sessionInstance->login, $this->sessionInstance->loginTime);
         
@@ -148,7 +148,7 @@ class Login
      *
      * @return bool
      */
-    private function refresh()
+    private function refresh(): bool
     {
         if (!isset($this->sessionInstance->login)) {
             return false;

@@ -34,29 +34,29 @@ interface RouteInterface
      * Return model name
      *
      */
-    public function getModel();
+    public function getModel(): string;
     
     /**
      * Return view name
      *
      */
-    public function getView();
+    public function getView(): string;
     
     /**
      * Return controller
      *
      */
-    public function getController();
+    public function getController(): string;
 
     /**
      * Return action name
      *
      */
-    public function getAction();
+    public function getAction(): string;
 
     /**
      * Return parameters
      *
      */
-    public function getParam();
+    public function getParam(): array;
 }

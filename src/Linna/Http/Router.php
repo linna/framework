@@ -103,7 +103,7 @@ class Router
      *
      * @return Route
      */
-    public function getRoute()
+    public function getRoute(): Route
     {
         return $this->route;
     }
@@ -114,7 +114,7 @@ class Router
      * @param array $route
      * @return \Linna\Http\Route
      */
-    private function buildRoute(array $route)
+    private function buildRoute(array $route): Route
     {
         //try to find param from route if route is not bad route
         $param = ($route['name'] !== $this->options['badRoute']) ? $this->buildParam($route) : array();
@@ -130,9 +130,9 @@ class Router
      *
      * @param object $route Start with default route, bad route
      *
-     * @return array Contains properties of route
+     * @return Route
      */
-    private function match(array $route)
+    private function match(array $route): Route
     {
         foreach ($this->routes as $value) {
             $regex = '`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`';
@@ -180,7 +180,7 @@ class Router
      *
      * @return array Array with param passed from uri
      */
-    private function buildParam(array $route)
+    private function buildParam(array $route): array
     {
         $param = array();
         
@@ -205,7 +205,7 @@ class Router
      *
      * @return string Uri from browser
      */
-    private function getCurrentUri(string $passedUri)
+    private function getCurrentUri(string $passedUri): string
     {
         if ($this->options['rewriteMode'] === false) {
             $passedUri = str_replace('/index.php?/', '', $passedUri);
