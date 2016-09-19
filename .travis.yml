@@ -6,7 +6,7 @@ php:
 
 matrix:
   allow_failures:
-  - hhvm
+  - env: hhvm
 
 services:
 - mysql
