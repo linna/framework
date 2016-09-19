@@ -6,7 +6,8 @@ services:
 - mysql
 - memcached  
 
-before_script: 
+before_script:
+- echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - mysql -e 'create database test;'
 - mysql -u root test < tests/database.sql
 - phpunit --self-update
