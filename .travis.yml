@@ -16,11 +16,11 @@ before_script:
 - mysql -e 'create database test;'
 - mysql -u root test < tests/database.sql
 - phpunit --self-update
-- if [[ $TRAVIS_PHP_VERSION = 7.0 ]]; then "composer require codeclimate/php-test-reporter --dev"; fi
-- if [[ $TRAVIS_PHP_VERSION = 7.0 ]]; then "composer install"; fi
+- if [[ $TRAVIS_PHP_VERSION = '7.0' ]]; then composer require codeclimate/php-test-reporter --dev; fi
+- if [[ $TRAVIS_PHP_VERSION = '7.0' ]]; then composer install; fi
 
 script: 
-- if [[ $TRAVIS_PHP_VERSION = 7.0 ]]; then "phpunit --coverage-clover build/logs/clover.xml"; fi
+- "phpunit --coverage-clover build/logs/clover.xml"
 
 after_script:
-- if [[ $TRAVIS_PHP_VERSION = 7.0 ]]; then CODECLIMATE_REPO_TOKEN="73843c11688645a6d15a453cc9259f18c0717933b7e12081a6e849e5eaad46d9" vendor/bin/test-reporter; fi
+- if [[ $TRAVIS_PHP_VERSION = '7.0' ]]; then CODECLIMATE_REPO_TOKEN="73843c11688645a6d15a453cc9259f18c0717933b7e12081a6e849e5eaad46d9" vendor/bin/test-reporter; fi
