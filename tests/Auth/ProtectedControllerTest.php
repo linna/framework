@@ -75,7 +75,7 @@ class ProtectedControllerTest extends TestCase
         $this->assertEquals(true, $loginLogged);
         $this->assertEquals(false, $loginNoLogged);
         $this->assertEquals(true, $controllerTest1);
-        //$this->assertEquals(true, in_array('Location: http://localhost', $headers_list));
+        $this->assertEquals(true, in_array('Location: http://localhost', $headers_list));
         
         Session::destroyInstance();
     }
