@@ -1,5 +1,6 @@
 <phpunit  colors="true" 
           bootstrap="tests/bootstrap.php"
+          verbose="true"
 >
     <testsuites>
         <testsuite name="Linna Test Suite">
