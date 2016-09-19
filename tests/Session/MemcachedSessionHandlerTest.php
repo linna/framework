@@ -20,6 +20,10 @@ class MemcachedSessionHandlerTest extends TestCase
      */
     public function testSession()
     {
+        if (! class_exists('Memcached')) {
+            $this->markTestSkipped('Memcached module not installed');
+        }
+        
         //create memcached instance
         $memcached = new Memcached();
         //connect to memcached server
@@ -59,6 +63,10 @@ class MemcachedSessionHandlerTest extends TestCase
      */
     public function testGc()
     {
+        if (! class_exists('Memcached')) {
+            $this->markTestSkipped('Memcached module not installed');
+        }
+        
         //create memcached instance
         $memcached = new Memcached();
         //connect to memcached server

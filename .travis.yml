@@ -1,6 +1,11 @@
 language: php
 php:
 - 7.0
+- 7.1
+
+matrix:
+  allow_failures:
+  - php: 7.1
 
 services:
 - mysql
@@ -11,11 +16,11 @@ before_script:
 - mysql -e 'create database test;'
 - mysql -u root test < tests/database.sql
 - phpunit --self-update
-- "composer require codeclimate/php-test-reporter --dev"
-- "composer install"
+- if [[ $TRAVIS_PHP_VERSION = 7.0 ]]; then "composer require codeclimate/php-test-reporter --dev"; fi
+- if [[ $TRAVIS_PHP_VERSION = 7.0 ]]; then "composer install"; fi
 
 script: 
-- "phpunit --coverage-clover build/logs/clover.xml"
+- if [[ $TRAVIS_PHP_VERSION = 7.0 ]]; then "phpunit --coverage-clover build/logs/clover.xml"; fi
 
 after_script:
-- CODECLIMATE_REPO_TOKEN="73843c11688645a6d15a453cc9259f18c0717933b7e12081a6e849e5eaad46d9" vendor/bin/test-reporter
+- if [[ $TRAVIS_PHP_VERSION = 7.0 ]]; then CODECLIMATE_REPO_TOKEN="73843c11688645a6d15a453cc9259f18c0717933b7e12081a6e849e5eaad46d9" vendor/bin/test-reporter; fi
