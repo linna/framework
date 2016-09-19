@@ -22,9 +22,9 @@ class DatabaseSessionHandlerTest extends TestCase
     public function testSession()
     {
         $MysqlAdapter = new MysqlPDOAdapter(
-                'mysql:host=localhost;dbname=test;charset=utf8mb4',
-                'root',
-                PASS,
+                $GLOBALS['db_type'].':host='.$GLOBALS['db_host'].';dbname='.$GLOBALS['db_name'].';charset=utf8mb4',
+                $GLOBALS['db_username'],
+                $GLOBALS['db_password'],
                 array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
         );
 
@@ -65,9 +65,9 @@ class DatabaseSessionHandlerTest extends TestCase
     public function testGc()
     {
         $MysqlAdapter = new MysqlPDOAdapter(
-                'mysql:host=localhost;dbname=test;charset=utf8mb4',
-                'root',
-                PASS,
+                $GLOBALS['db_type'].':host='.$GLOBALS['db_host'].';dbname='.$GLOBALS['db_name'].';charset=utf8mb4',
+                $GLOBALS['db_username'],
+                $GLOBALS['db_password'],
                 array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
         );
 

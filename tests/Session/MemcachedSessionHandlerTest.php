@@ -27,7 +27,7 @@ class MemcachedSessionHandlerTest extends TestCase
         //create memcached instance
         $memcached = new Memcached();
         //connect to memcached server
-        $memcached->addServer('localhost', 11211);
+        $memcached->addServer($GLOBALS['mem_host'], $GLOBALS['mem_port']);
         
         $sessionHandler = new MemcachedSessionHandler($memcached);
 

@@ -22,7 +22,6 @@
         <var name="db_password" value="" />
         <var name="db_name" value="test" />
         <var name="db_port" value="3306"/>
-        
         <var name="mem_host" value="localhost" />
         <var name="mem_port" value="11211"/>
     </php>

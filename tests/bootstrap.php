@@ -2,8 +2,6 @@
 
 include dirname(__DIR__).'/src/Linna/Autoloader.php';
 
-define('PASS', '');
-
 function call_autoloader() {
     $loader = new \Linna\Autoloader();
     $loader->register();
