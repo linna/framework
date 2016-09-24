@@ -135,7 +135,7 @@ class DIResolver
      * Build dependency for a object
      *
      * @param array $dependency Arguments required from object
-     * @return array 
+     * @return array
      */
     private function buildObjectDependency(array $dependency): array
     {
