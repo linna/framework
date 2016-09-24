@@ -11,11 +11,15 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0"
+        "php": ">=7.0.0",
+        "s3b4stian/linna-psr7": "dev-master"
     },
     "autoload": {
         "psr-4": {
             "Linna\\": "src/Linna/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": { "Linna\\FOO\\": "tests/FOO/" }
     }
 }
