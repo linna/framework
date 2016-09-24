@@ -1,10 +1,6 @@
 <?php
 
-include dirname(__DIR__).'/vendor/autoload.php';
-
-/*include dirname(__DIR__).'/src/Linna/Autoloader.php';
-
-
+include dirname(__DIR__).'/src/Linna/Autoloader.php';
 
 function call_autoloader() {
     $loader = new \Linna\Autoloader();
@@ -22,4 +18,4 @@ function call_autoloader() {
     ]);
 }
 
-call_autoloader();*/
+call_autoloader();
