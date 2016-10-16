@@ -58,35 +58,92 @@ class DIResolver
     /**
      * Create a map of dependencies for a class
      *
+     * Previsus version of function, recursive mode
+     *
+     *   //initial back slash
+     *   $class = (strpos($class, '\\') !== 0) ? '\\' . $class : $class;
+     *
+     *   //initialize array
+     *   $this->dependencyTree[$level][$class] = [];
+     *
+     *   //create reflection class
+     *   $reflectionClass = new \ReflectionClass($class);
+     *
+     *   //get parameter from constructor
+     *   $param = $reflectionClass->getConstructor()->getParameters();
+     *
+     *   //loop parameter
+     *   foreach ($param as $key => $value) {
+     *
+     *      //if there is parameter with callable type
+     *      if ($value->hasType() === true && class_exists((string) $value->getType())) {
+     *
+     *           //store dependency
+     *           $this->dependencyTree[$level][$class][] = '\\' . $value->getClass()->name;
+     *
+     *           //call recursive
+     *           $this->buildDependencyTree($level + 1, $value->getClass()->name);
+     *      }
+     *   }
+     *
+     *
      * @param int $level Level for dependency
      * @param string $class Class wich tree will build
      */
     private function buildDependencyTree(int $level, string $class)
     {
-        //initial back slash
-        $class = (strpos($class, '\\') !== 0) ? '\\' . $class : $class;
+        //create stack
+        $stack = new \SplStack;
+        
+        while (true) {
+            
+            //initial back slash
+            $class = (strpos($class, '\\') !== 0) ? '\\' . $class : $class;
 
-        //initialize array
-        $this->dependencyTree[$level][$class] = [];
-
-        //create reflection class
-        $reflectionClass = new \ReflectionClass($class);
-
-        //get parameter from constructor
-        $param = $reflectionClass->getConstructor()->getParameters();
-
-        //loop parameter
-        foreach ($param as $key => $value) {
-
-            //if there is parameter with callable type
-            if ($value->hasType() === true && class_exists((string) $value->getType())) {
-
-                //store dependency
-                $this->dependencyTree[$level][$class][] = '\\' . $value->getClass()->name;
-                
-                //call recursive
-                $this->buildDependencyTree($level + 1, $value->getClass()->name);
+            //initialize array if not already initialized
+            if (!isset($this->dependencyTree[$level][$class])) {
+                $this->dependencyTree[$level][$class] = [];
             }
+
+            //create reflection class
+            $reflectionClass = new \ReflectionClass($class);
+
+            //get parameter from constructor
+            $param = $reflectionClass->getConstructor()->getParameters();
+
+            //loop parameter
+            foreach ($param as $key => $value) {
+
+                //if there is parameter with callable type
+                if ($value->hasType() === true && class_exists((string) $value->getType())) {
+                    
+                    //if class are not already resolved
+                    if (!in_array('\\' . $value->getClass()->name, $this->dependencyTree[$level][$class])) {
+                        
+                        //push values in stack for simulate later recursive function
+                        //$this->stack->push([$level, $class]);
+                        $stack->push([$level, $class]);
+
+                        //store dependency
+                        $this->dependencyTree[$level][$class][] = '\\' . $value->getClass()->name;
+
+                        //update values for simulate recursive function
+                        $level = $level + 1;
+                        $class = $value->getClass()->name;
+                        
+                        //return to main while
+                        continue 2;
+                    }
+                }
+            }
+            
+            //if stack is empty break while end exit from function
+            if ($stack->count() === 0) {
+                return;
+            }
+            
+            //get last value pushed into stack;
+            list($level, $class) = $stack->pop();
         }
     }
 
