@@ -121,7 +121,6 @@ class DIResolver
                     if (!in_array('\\' . $value->getClass()->name, $this->dependencyTree[$level][$class])) {
                         
                         //push values in stack for simulate later recursive function
-                        //$this->stack->push([$level, $class]);
                         $stack->push([$level, $class]);
 
                         //store dependency
