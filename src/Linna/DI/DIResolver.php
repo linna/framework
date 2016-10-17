@@ -23,7 +23,7 @@ class DIResolver
      * @var array $cache Contains object already resolved
      */
     private $cache;
-
+    
     /**
      * @var array $dependencyTree A map for relove dependencies
      */
@@ -49,43 +49,14 @@ class DIResolver
     public function resolve(string $resolveClass)
     {
         $this->buildDependencyTree(0, $resolveClass);
-
+        
         $this->buildObjects(array_reverse($this->dependencyTree));
-
-        return $this->getCache($resolveClass);
+        
+        return $this->cache[$resolveClass] ?? null;
     }
 
     /**
      * Create a map of dependencies for a class
-     *
-     * Previsus version of function, recursive mode
-     *
-     *   //initial back slash
-     *   $class = (strpos($class, '\\') !== 0) ? '\\' . $class : $class;
-     *
-     *   //initialize array
-     *   $this->dependencyTree[$level][$class] = [];
-     *
-     *   //create reflection class
-     *   $reflectionClass = new \ReflectionClass($class);
-     *
-     *   //get parameter from constructor
-     *   $param = $reflectionClass->getConstructor()->getParameters();
-     *
-     *   //loop parameter
-     *   foreach ($param as $key => $value) {
-     *
-     *      //if there is parameter with callable type
-     *      if ($value->hasType() === true && class_exists((string) $value->getType())) {
-     *
-     *           //store dependency
-     *           $this->dependencyTree[$level][$class][] = '\\' . $value->getClass()->name;
-     *
-     *           //call recursive
-     *           $this->buildDependencyTree($level + 1, $value->getClass()->name);
-     *      }
-     *   }
-     *
      *
      * @param int $level Level for dependency
      * @param string $class Class wich tree will build
@@ -159,7 +130,7 @@ class DIResolver
             foreach ($value as $class => $dependency) {
 
                 //try to find object in class
-                $object = $this->getCache($class);
+                $object = $this->cache[$class] ?? null;
 
                 $objectReflection = new \ReflectionClass($class);
 
@@ -170,15 +141,15 @@ class DIResolver
                     $args = $this->buildObjectDependency($dependency);
 
                     //store object with dependencies in cache
-                    $this->setCache($class, $objectReflection->newInstanceArgs($args));
-
+                    $this->cache[$class] = $objectReflection->newInstanceArgs($args);
+                    
                     continue;
                 }
 
                 if ($object === null) {
 
                     //store object in cache
-                    $this->setCache($class, $objectReflection->newInstance());
+                    $this->cache[$class] = $objectReflection->newInstanceArgs();
                 }
             }
         }
@@ -199,7 +170,7 @@ class DIResolver
         foreach ($dependency as $argKey => $argValue) {
 
             //add to array of arguments
-            $args[] = $this->getCache($argValue);
+            $args[] = $this->cache[$argValue] ?? null;
         }
 
         return $args;
@@ -214,31 +185,5 @@ class DIResolver
     public function cacheUnResolvable(string $name, $object)
     {
         $this->cache[$name] = $object;
-    }
-
-    /**
-     * Internal function for store objects in cache
-     *
-     * @param string $name Object name
-     * @param object $object Object to store
-     */
-    private function setCache(string $name, $object)
-    {
-        $this->cache[$name] = $object;
-    }
-
-    /**
-     * Internal function for retrive objects from cache
-     *
-     * @param string $name Object to search
-     * @return object|null
-     */
-    private function getCache(string $name)
-    {
-        if (array_key_exists($name, $this->cache)) {
-            return $this->cache[$name];
-        }
-
-        return null;
     }
 }
