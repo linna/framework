@@ -22,8 +22,8 @@ trait classOptionsTrait
     /**
      * Override default options
      *
-     * @param array $classOptions
-     * @param array $options
+     * @param array $classOptions Options inside class
+     * @param array $options Passed Options
      *
      * @return array Updated options
      */
