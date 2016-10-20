@@ -29,12 +29,6 @@ trait classOptionsTrait
      */
     protected function overrideOptions(array $classOptions, array $options)
     {
-        foreach ($options as $key => $value) {
-            if (isset($classOptions[$key])) {
-                $classOptions[$key] = $value;
-            }
-        }
-        
-        return (array) $classOptions;
+        return (array) array_replace_recursive($classOptions, $options);
     }
 }

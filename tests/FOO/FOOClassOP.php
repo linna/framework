@@ -24,7 +24,11 @@ class FOOClassOP
     
     private $options = [
         'option1' => true,
-        'option2' => true
+        'option2' => true,
+        'treeOption' => [
+            0 => 0,
+            1 => 1
+        ]
     ];
     
     public function __construct(array $options)

@@ -16,11 +16,22 @@ class classOptionsTraitTest extends TestCase
 {
     public function testOverriddenOptions()
     {
-        $class = new FOOClassOP(['option1' => false,'option2' => false]);
+        $opt = [
+            'option1' => false,
+            'option2' => false,
+            'treeOption' => [
+                0 => 1,
+                1 => 2
+                ]
+            ];
+        
+        $class = new FOOClassOP($opt);
         
         $options = $class->getCurrentOptions();
         
         $this->assertEquals(false, $options['option1']);
         $this->assertEquals(false, $options['option2']);
+        $this->assertEquals(1, $options['treeOption'][0]);
+        $this->assertEquals(2, $options['treeOption'][1]);
     }
 }

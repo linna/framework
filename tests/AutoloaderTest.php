@@ -37,8 +37,10 @@ class AutoloaderTest extends TestCase
     public function testNamespaces()
     {
         $this->autoloader->addNamespaces([
+            ['Linna\FOOBar', __DIR__.'/FOOBar'],
             ['Linna\FOO', __DIR__.'/FOO'],
             ['Linna', dirname(__DIR__) . '/src/Linna'],
+            ['Linna', dirname(__DIR__) . '/src/Linna/Shared'],
             ['Linna\Auth', dirname(__DIR__) . '/src/Linna/Auth'],
             ['Linna\DI', dirname(__DIR__) . '/src/Linna/DI'],
             ['Linna\Database', dirname(__DIR__) . '/src/Linna/Database'],

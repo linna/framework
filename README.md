@@ -18,10 +18,14 @@ Features:
    * Storage Manager for data base and cache
    * PSR4 Autoloader
 
+Require:
+
+   * PHP 7 or higher
+
 To Do:
    
    * Documentation
    * Session refactoring
    * Router refactoring
-   * Dependency Injection container refactoring
-   * PSR7 support
+   * Dependency Injection container refining
+   * PSR7 support through linna-PSR7 package
