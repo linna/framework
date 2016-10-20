@@ -27,8 +27,8 @@ trait classOptionsTrait
      *
      * @return array Updated options
      */
-    protected function overrideOptions(array $classOptions, array $options)
+    protected function overrideOptions(array $classOptions, array $options) : array
     {
-        return (array) array_replace_recursive($classOptions, $options);
+        return array_replace_recursive($classOptions, $options);
     }
 }
