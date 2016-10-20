@@ -66,7 +66,7 @@ class FrontControllerTest extends TestCase
                 ));
         
         //evaluate request uri
-        $router->validate('/Foo/modifyData');
+        $router->validate('/Foo/modifyData', 'GET');
         
         $model = new FOOModel;
         //get view linked to route
@@ -91,7 +91,7 @@ class FrontControllerTest extends TestCase
             'rewriteMode' => true
                 ));
         //evaluate request uri
-        $router->validate('/Foo/modifyData');
+        $router->validate('/Foo/modifyData', 'GET');
         
         $model = new FOOModel;
         //get view linked to route
@@ -127,7 +127,7 @@ class FrontControllerTest extends TestCase
             'rewriteMode' => true
                 ));
         //evaluate request uri
-        $router->validate('/Foo/data500/modifyDataFromParam');
+        $router->validate('/Foo/data500/modifyDataFromParam', 'GET');
         
         $model = new FOOModel;
         //get view linked to route
@@ -159,7 +159,7 @@ class FrontControllerTest extends TestCase
             'rewriteMode' => true
                 ));
         //evaluate request uri
-        $router->validate('/Foo/data500/modifyDataFromParam');
+        $router->validate('/Foo/data500/modifyDataFromParam', 'GET');
         
         $route = $router->getRoute();
         

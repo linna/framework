@@ -88,13 +88,13 @@ class Router
      *
      * @param string $requestUri Request uri
      */
-    public function validate(string $requestUri)
+    public function validate(string $requestUri, string $requestMethod)
     {
         //get the current uri
         $this->currentUri = $this->getCurrentUri($requestUri);
         
         //try to get a route
-        $this->route = $this->match($this->routes[array_search($this->options['badRoute'], array_column($this->routes, 'name'))]);
+        $this->route = $this->match($this->routes[array_search($this->options['badRoute'], array_column($this->routes, 'name'))], $requestMethod);
     }
     
     /**
@@ -132,9 +132,15 @@ class Router
      *
      * @return Route
      */
-    private function match(array $route): Route
+    private function match(array $route, string $method): Route
     {
         foreach ($this->routes as $value) {
+            
+            if (strpos($value['method'], $method) === false)
+            {
+                break;
+            }
+            
             $regex = '`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`';
 
             //check if route from browser match with registered routes

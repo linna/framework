@@ -81,7 +81,7 @@ class RouterTest extends TestCase
             'rewriteMode' => true
                 ));
         //evaluate request uri
-        $router->validate('/user');
+        $router->validate('/user', 'GET');
         
         //get route
         $route = $router->getRoute();
@@ -104,7 +104,30 @@ class RouterTest extends TestCase
                 ));
         
         //evaluate request uri
-        $router->validate('/badroute');
+        $router->validate('/user', 'POST');
+        
+        //get route
+        $route = $router->getRoute();
+        
+        $this->assertInstanceOf(Route::class, $route);
+        $this->assertEquals('E404Model', $route->getModel());
+        $this->assertEquals('E404View', $route->getView());
+        $this->assertEquals('E404Controller', $route->getController());
+        $this->assertEquals(null, $route->getAction());
+        $this->assertEquals(array(), $route->getParam());
+    }
+    
+    public function testBadMethod()
+    {
+        //start router
+        $router = new Router($this->routes, array(
+            'basePath' => '/',
+            'badRoute' => 'E404',
+            'rewriteMode' => true
+                ));
+        
+        //evaluate request uri
+        $router->validate('/badroute', 'GET');
         
         //get route
         $route = $router->getRoute();
@@ -127,7 +150,7 @@ class RouterTest extends TestCase
                 ));
         
         //evaluate request uri
-        $router->validate('/user/5/enable');
+        $router->validate('/user/5/enable', 'GET');
         
         //get route
         $route = $router->getRoute();
@@ -150,7 +173,7 @@ class RouterTest extends TestCase
                 ));
         
         //evaluate request uri
-        $router->validate('/userOther/enable/5');
+        $router->validate('/userOther/enable/5', 'GET');
         
         //get route
         $route = $router->getRoute();
@@ -173,7 +196,7 @@ class RouterTest extends TestCase
                 ));
         
         //evaluate request uri
-        $router->validate('/index.php?//user/5/enable');
+        $router->validate('/index.php?//user/5/enable', 'GET');
         
         //get route
         $route = $router->getRoute();
