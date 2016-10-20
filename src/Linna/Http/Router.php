@@ -136,10 +136,7 @@ class Router
     {
         foreach ($this->routes as $value) {
             
-            if (strpos($value['method'], $method) === false)
-            {
-                break;
-            }
+            $correctMethod = strpos($value['method'], $method);
             
             $regex = '`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`';
 
@@ -147,7 +144,8 @@ class Router
             $m = preg_match($regex, $this->currentUri, $matches);
 
             //match and there is a subpattern for a route with multiple actions
-            if ($m === 1 && sizeof($matches) > 1) {
+            //added method control
+            if ($m === 1 && sizeof($matches) > 1 && $correctMethod !== false) {
 
                 //set $validRoute
                 $route = $value;
@@ -165,7 +163,8 @@ class Router
             }
 
             //match
-            if ($m === 1) {
+            //added method control
+            if ($m === 1 && $correctMethod !== false) {
                 //set valid route
                 $route = $value;
 
