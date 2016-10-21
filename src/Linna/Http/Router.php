@@ -113,12 +113,14 @@ class Router
         if (!$validRoute) {
             //assign error route
             $this->route = $this->buildRoute($route);
+            return;
         }
         
         //non allowed method
         if (strpos($validRoute['method'], $requestMethod) === false) {
             //assign error route
             $this->route = $this->buildRoute($route);
+            return;
         }
         
         //route match and there is a subpattern with action
@@ -134,6 +136,7 @@ class Router
             
             //assign valid route
             $this->route = $this->buildRoute($validRoute);
+            return;
         }
         
         if (sizeof($matches) === 1) {
