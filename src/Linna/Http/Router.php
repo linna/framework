@@ -93,8 +93,56 @@ class Router
         //get the current uri
         $this->currentUri = $this->getCurrentUri($requestUri);
         
-        //try to get a route
-        $this->route = $this->match($this->routes[array_search($this->options['badRoute'], array_column($this->routes, 'name'))], $requestMethod);
+        //find bad route
+        $route = $this->routes[array_search($this->options['badRoute'], array_column($this->routes, 'name'))];
+        
+        //reset
+        $matches = [];
+        $validRoute = 0;
+        
+        //filter registered routes for find route that match with current uri
+        foreach ($this->routes as $value) {
+            if (preg_match('`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`', $this->currentUri, $tempMatches)) {
+                $matches = $tempMatches;
+                $validRoute = $value;
+                break;
+            }
+        }
+        
+        //route daesn't macth
+        if (!$validRoute) {
+            //assign error route
+            $this->route = $this->buildRoute($route);
+        }
+        
+        //non allowed method
+        if (strpos($validRoute['method'], $requestMethod) === false) {
+            //assign error route
+            $this->route = $this->buildRoute($route);
+        }
+        
+        //route match and there is a subpattern with action
+        if (sizeof($matches) > 1) {
+            //add to route array the passed uri for param check when call
+            $validRoute['matches'] = $matches;
+            
+            //assume that subpattern rapresent action
+            $validRoute['action'] = $matches[1];
+
+            //url clean
+            $validRoute['url'] = preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $validRoute['url']);
+            
+            //assign valid route
+            $this->route = $this->buildRoute($validRoute);
+        }
+        
+        if (sizeof($matches) === 1) {
+            //add to route array the passed uri for param check when call
+            $validRoute['matches'] = $matches;
+            
+            //assign valid route
+            $this->route = $this->buildRoute($validRoute);
+        }
     }
     
     /**
@@ -126,59 +174,6 @@ class Router
     }
     
     /**
-     * Check if the requested uri is a valid route
-     *
-     * @param object $route Start with default route, bad route
-     *
-     * @return Route
-     */
-    private function match(array $route, string $method): Route
-    {
-        foreach ($this->routes as $value) {
-            
-            $correctMethod = strpos($value['method'], $method);
-            
-            $regex = '`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`';
-
-            //check if route from browser match with registered routes
-            $m = preg_match($regex, $this->currentUri, $matches);
-
-            //match and there is a subpattern for a route with multiple actions
-            //added method control
-            if ($m === 1 && sizeof($matches) > 1 && $correctMethod !== false) {
-
-                //set $validRoute
-                $route = $value;
-
-                //add to route array the passed uri for param check when call
-                $route['matches'] = $matches;
-
-                //assume that subpattern rapresent action
-                $route['action'] = $matches[1];
-
-                //url clean
-                $route['url'] = preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $route['url']);
-
-                break;
-            }
-
-            //match
-            //added method control
-            if ($m === 1 && $correctMethod !== false) {
-                //set valid route
-                $route = $value;
-
-                //add to route array the passed uri for param check when call
-                $route['matches'] = $matches;
-                
-                break;
-            }
-        }
-        
-        return $this->buildRoute($route);
-    }
-    
-    /**
      * Try to find param in a valid route
      *
      * @param array $route Array with route caracteristics
@@ -195,8 +190,7 @@ class Router
         $rawParam = array_diff($matches, $url);
 
         foreach ($rawParam as $key => $value) {
-            $paramName = preg_replace('`^(\[)|(\])$`', '', $url[$key]);
-
+            $paramName = strtr($url[$key], ['[' => '', ']' => '']);
             $param[$paramName] = $value;
         }
 
@@ -216,7 +210,7 @@ class Router
             $passedUri = str_replace('/index.php?/', '', $passedUri);
         }
             
-        $url = isset($passedUri) ? $passedUri : '/';
+        $url = $passedUri ?? '/';
         $url = filter_var($url, FILTER_SANITIZE_URL);
 
         return '/'.substr($url, strlen($this->options['basePath']));
