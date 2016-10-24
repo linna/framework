@@ -61,6 +61,45 @@ class MemcachedSessionHandlerTest extends TestCase
     /**
      * @runInSeparateProcess
      */
+    public function testExpiredSession()
+    {
+        if (! class_exists('Memcached')) {
+            $this->markTestSkipped('Memcached module not installed');
+        }
+        
+        //create memcached instance
+        $memcached = new Memcached();
+        //connect to memcached server
+        $memcached->addServer($GLOBALS['mem_host'], $GLOBALS['mem_port']);
+        
+        $sessionHandler = new MemcachedSessionHandler($memcached);
+
+        Session::setSessionHandler($sessionHandler);
+        //se session options
+        Session::withOptions(array(
+            'expire' => 8,
+            'cookieDomain' => '/',
+            'cookiePath' => '/',
+            'cookieSecure' => false,
+            'cookieHttpOnly' => true
+        ));
+        
+        $session = Session::getInstance();
+        $session_id = session_id();
+        
+        $session->time = $session->time - 1800;
+        
+        $session = Session::getInstance();
+        $session_id2 = session_id();
+        
+        $test = ($session_id === $session_id2) ? 1 : 0;
+
+        $this->assertEquals(0, $test);
+    }
+    
+    /**
+     * @runInSeparateProcess
+     */
     public function testGc()
     {
         if (! class_exists('Memcached')) {

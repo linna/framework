@@ -58,7 +58,46 @@ class DatabaseSessionHandlerTest extends TestCase
 
         session_write_close();
     }
+    
+    /**
+     * @runInSeparateProcess
+     */
+    public function testExpiredSession()
+    {
+        $MysqlAdapter = new MysqlPDOAdapter(
+                $GLOBALS['db_type'].':host='.$GLOBALS['db_host'].';dbname='.$GLOBALS['db_name'].';charset=utf8mb4',
+                $GLOBALS['db_username'],
+                $GLOBALS['db_password'],
+                array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
+        );
 
+        $dbase = new Database($MysqlAdapter);
+
+        $sessionHandler = new DatabaseSessionHandler($dbase);
+
+        Session::setSessionHandler($sessionHandler);
+        //se session options
+        Session::withOptions(array(
+            'expire' => 8,
+            'cookieDomain' => '/',
+            'cookiePath' => '/',
+            'cookieSecure' => false,
+            'cookieHttpOnly' => true
+        ));
+        
+        $session = Session::getInstance();
+        $session_id = session_id();
+        
+        $session->time = $session->time - 1800;
+        
+        $session = Session::getInstance();
+        $session_id2 = session_id();
+        
+        $test = ($session_id === $session_id2) ? 1 : 0;
+
+        $this->assertEquals(0, $test);
+    }
+    
     /**
      * @runInSeparateProcess
      */
