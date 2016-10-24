@@ -138,7 +138,8 @@ class Session
         $this->setCookie();
         
         //store new time for expire
-        $this->time = $time;
+        $this->data['time'] = $time;
+        $this->data['expire'] = $this->options['expire'];
     }
     
     private function setCookie()
@@ -158,10 +159,6 @@ class Session
      */
     private function start()
     {
-        if (!isset($this->time)) {
-            $this->time = time();
-        }
-        
         //setting session name
         session_name($this->options['name']);
 
@@ -190,7 +187,7 @@ class Session
     {
         $time = time();
         
-        if ($this->time < ($time - $this->options['expire'])) {
+        if (isset($this->data['time']) && $this->data['time']  < ($time - $this->options['expire'])) {
         
             //delete session data
             $this->data = [];
@@ -201,7 +198,8 @@ class Session
             return;
         }
 
-        $this->time = $time;
+        $this->data['time'] = $time;
+        $this->data['expire'] = $this->options['expire'];
     }
     
     /**

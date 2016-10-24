@@ -67,6 +67,7 @@ class Login
     
     /**
      * @var int $expire Numeber of seconds before login will considered invalid
+     * @deprecated since version v0.7.0
      */
     private $expire = 1800;
     
@@ -156,7 +157,7 @@ class Login
 
         $time = time();
 
-        if (($this->sessionInstance->loginTime + $this->expire) < $time) {
+        if (($this->sessionInstance->loginTime + $this->sessionInstance->expire) < $time) {
             return false;
         }
         
