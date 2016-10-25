@@ -13,7 +13,8 @@ declare(strict_types=1);
 
 namespace Linna\DataMapper;
 
-use UnexpectedValueException;
+use Linna\DataMapper\DomainObjectInterface;
+use \UnexpectedValueException;
 
 /**
  * Abstract Class for Domain Object

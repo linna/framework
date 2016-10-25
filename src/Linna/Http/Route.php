@@ -11,6 +11,8 @@
 
 namespace Linna\Http;
 
+use Linna\Http\RouteInterface;
+
 /**
  * Describe valid routes.
  *
