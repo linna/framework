@@ -13,8 +13,7 @@ declare(strict_types=1);
 
 namespace Linna\Session;
 
-use Linna\classOptionsTrait;
-use SessionHandlerInterface;
+use \SessionHandlerInterface;
 
 /**
  * Manage session lifetime and session data
@@ -25,8 +24,6 @@ use SessionHandlerInterface;
  */
 class Session
 {
-    use classOptionsTrait;
-    
     /**
      * Utilized with classOptionsTrait
      * @var array $options Config options for class
@@ -63,7 +60,7 @@ class Session
     private function __construct(array $options)
     {
         //set options
-        $this->options = $this->overrideOptions($this->options, $options);
+        $this->options = array_replace_recursive($this->options, $options);
         
         //start session
         $this->start();

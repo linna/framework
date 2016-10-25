@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Linna\Http;
 
-use \Linna\classOptionsTrait;
-
 /**
  * Manage routes, verify every resource requested by browser and return
  * a RouteInterface Object.
@@ -22,8 +20,6 @@ use \Linna\classOptionsTrait;
  */
 class Router
 {
-    use classOptionsTrait;
-    
     /**
      * Utilized with classOptionsTrait
      *
@@ -77,7 +73,7 @@ class Router
     public function __construct(array $routes, array $options)
     {
         //set options
-        $this->options = $this->overrideOptions($this->options, $options);
+        $this->options = array_replace_recursive($this->options, $options);
         
         //set routes
         $this->routes = $routes;
