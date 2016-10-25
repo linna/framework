@@ -132,14 +132,15 @@ class DIResolver
                 //try to find object in class
                 $object = $this->cache[$class] ?? null;
 
-                $objectReflection = new \ReflectionClass($class);
-
                 //if object is not in cache and need arguments try to build
                 if ($object === null && sizeof($dependency) > 0) {
 
                     //build arguments
                     $args = $this->buildObjectDependency($dependency);
-
+                    
+                    //create reflection class
+                    $objectReflection = new \ReflectionClass($class);
+                    
                     //store object with dependencies in cache
                     $this->cache[$class] = $objectReflection->newInstanceArgs($args);
                     
@@ -147,7 +148,10 @@ class DIResolver
                 }
 
                 if ($object === null) {
-
+                    
+                    //create reflection class
+                    $objectReflection = new \ReflectionClass($class);
+                    
                     //store object in cache
                     $this->cache[$class] = $objectReflection->newInstanceArgs();
                 }
