@@ -1,3 +1,8 @@
+---
+title: Documentation index
+layout: default
+---
+
 # API Documentation
 
 ### Auth
