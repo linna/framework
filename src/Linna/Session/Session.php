@@ -139,6 +139,10 @@ class Session
         $this->data['expire'] = $this->options['expire'];
     }
     
+    /**
+     * Set cookie
+     * 
+     */
     private function setCookie()
     {
         setcookie(

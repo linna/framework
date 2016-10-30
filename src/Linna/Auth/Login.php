@@ -72,12 +72,12 @@ class Login
     private $expire = 1800;
     
     /**
-     * @var object $sessionInstance
+     * @var Session $sessionInstance Session class
      */
     private $sessionInstance;
     
     /**
-     * @var object $password
+     * @var Password $password Password class
      */
     private $password;
 
@@ -95,7 +95,7 @@ class Login
     }
 
     /**
-     * Try to log user passed by param, return true if ok else false
+     * Try to log the user passed by param, return true if ok else false
      *
      * @param string $user
      * @param string $password

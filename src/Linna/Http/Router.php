@@ -83,6 +83,7 @@ class Router
      * Evaluate request uri
      *
      * @param string $requestUri Request uri
+     * @param string $requestMethod Request method
      */
     public function validate(string $requestUri, string $requestMethod)
     {

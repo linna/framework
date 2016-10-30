@@ -40,7 +40,8 @@ class DatabaseSessionHandler implements SessionHandlerInterface
 
     /**
      * Constructor
-     *
+     * 
+     * @param Database $storage Database object
      */
     public function __construct(Database $storage)
     {

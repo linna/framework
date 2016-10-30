@@ -25,7 +25,7 @@ class DIResolver
     private $cache;
     
     /**
-     * @var array $dependencyTree A map for relove dependencies
+     * @var array $dependencyTree A map for resolve dependencies
      */
     private $dependencyTree;
 
@@ -56,7 +56,7 @@ class DIResolver
     }
 
     /**
-     * Create a map of dependencies for a class
+     * Create a dependencies map for a class
      *
      * @param int $level Level for dependency
      * @param string $class Class wich tree will build
@@ -118,10 +118,11 @@ class DIResolver
     }
 
     /**
-     * Build objects start from dependencyTree
-     *
+     * Build objects from dependencyTree
+     * 
+     * @param array $array Dependency Tree
      */
-    private function buildObjects($array)
+    private function buildObjects(array $array)
     {
         //deep dependency level
         foreach ($array as $key => $value) {

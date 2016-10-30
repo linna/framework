@@ -39,8 +39,9 @@ class View implements \SplObserver
     protected $model;
     
     /**
-     * Constructor.
-     *
+     * Constructor
+     * 
+     * @param \Linna\Mvc\Model $model Data Model
      */
     public function __construct(Model $model)
     {

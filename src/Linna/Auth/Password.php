@@ -40,8 +40,8 @@ class Password
     /**
      * Check if password matches a hash
      *
-     * @param string $hash Password to be verified
-     * @param string $password Hash for password
+     * @param string $password Password to be verified
+     * @param string $hash Hash for password
      *
      * @return bool Result of password_verify PHP function.
      */
