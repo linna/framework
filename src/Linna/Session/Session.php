@@ -21,6 +21,9 @@ use \SessionHandlerInterface;
  * https://en.wikipedia.org/wiki/Singleton_pattern
  *
  * @property int $time Time of session
+ * @property int $login Login information set by Login class
+ * @property int $loginTime Login time set by Login class
+ * @property int $expire Login time set for Login class
  */
 class Session
 {
