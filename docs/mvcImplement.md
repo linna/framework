@@ -10,6 +10,9 @@ In Linna Framework every Mvc component is implemented as isolated, interaction b
 [Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection) or 
 through [Observer Pattern](https://en.wikipedia.org/wiki/Observer_pattern).
 
+## Why
+
+
 ## Component interaction
 
 Model is passed to View and Controller by class constructor (constructor injection).<br />
