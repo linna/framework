@@ -28,7 +28,6 @@ This implementation require declare for all routes which is the Model, Controlle
 
 ![Mvc Diagram](img/mvc_diagram.png)
 
-### What happens when is needed to manipulate data?
 1. User see View output
 2. User through View interacts with controller that filter passed data
 3. Controller call Model for an action with User passed data (update, delete, create, etc.)
