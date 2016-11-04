@@ -10,10 +10,12 @@ In Linna Framework every Mvc component is implemented as isolated, interaction b
 [Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection) or 
 through [Observer Pattern](https://en.wikipedia.org/wiki/Observer_pattern).
 
-A Model is passed to View and Controller by class constructor (constructor injection).<br />
+## Component iteraction
+
+Model is passed to View and Controller by class constructor (constructor injection).<br />
 Model and View works as Observer Pattern.<br />
 Controllers and Views are at same level, a Controller doesn't call a View and does not pass to it, data for render.<br />
-A Controller works only when is needed manipulate data and filter user input <br />
+Controller works only when is needed filter user input and manipulate data through Model<br />
 View ask Model for obtain data for rendering.
 
 This implementation require declare for all routes which is the Model, Controller and View. 
@@ -28,6 +30,4 @@ This implementation require declare for all routes which is the Model, Controlle
 3. Controller call Model for an action with User passed data (update, delete, create, etc.)
 4. Model notify to View changes for output
 
-
-### When is needed to only show data?
-Procedure are same except for the point two, is no needed Controller job.
+When we must show only default data is no needed Controller job.
