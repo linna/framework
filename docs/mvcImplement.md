@@ -12,6 +12,7 @@ through [Observer Pattern](https://en.wikipedia.org/wiki/Observer_pattern).
 
 ## Why
 
+Because every piece of Mvc pattern should do only one thing. Model manipulate data, View render it and Controller filter user input.
 
 ## Component interaction
 
