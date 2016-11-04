@@ -13,17 +13,21 @@ through [Observer Pattern](https://en.wikipedia.org/wiki/Observer_pattern).
 A Model is passed to View and Controller by class constructor (constructor injection).<br />
 Model and View works as Observer Pattern.<br />
 Controllers and Views are at same level, a Controller doesn't call a View and does not pass to it, data for render.<br />
+A Controller works only when is needed manipulate data and filter user input <br />
 View ask Model for obtain data for rendering.
+
+This implementation require declare for all routes which is the Model, Controller and View. 
 
 ## Work Flow
 
-[![Mvc Diagram](img/mvc_diagram.png)]
+![Mvc Diagram](img/mvc_diagram.png)
+
+### What happens when is needed to manipulate data?
+1. User see View output
+2. User through View interacts with controller that filter passed data
+3. Controller call Model for an action with User passed data (update, delete, create, etc.)
+4. Model notify to View changes for output
 
 
-### 1
-
-### 2
-
-### 3
-
-### 4
+### When is needed to only show data?
+Procedure are same except for the point two, is no needed Controller job.
