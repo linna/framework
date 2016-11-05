@@ -3,38 +3,36 @@ layout: default
 title: Documentation
 ---
 
-# Introduction
-
 # API Documentation
 
 ### Http
-* [Router](router.md)
-* [Front Controller](frontController.md)
+* (To do) [Router](router.md)
+* (To do) [Front Controller](frontController.md)
 
 ### Session
-* [Session](session.md)
-* [Session Handler](sessionHandler.md)
+* (To do) [Session](session.md)
+* (To do) [Session Handler](sessionHandler.md)
 
 ### Auth
-* [Login](login.md)
-* [Password](password.md)
-* [Protected Controller](protectedController.md)
+* (To do) [Login](login.md)
+* (To do) [Password](password.md)
+* (To do) [Protected Controller](protectedController.md)
 
 ### Model View Controller
 * [How pattern is implemented?](mvcImplement.md)
-* [Model](model.md)
-* [View](view.md)
-* [Controller](controller.md)
+* (Incomplete) [Model](model.md)
+* (To do) [View](view.md)
+* (To do) [Controller](controller.md)
 
 ### Dependency Injection
-* [DI Container](diContainer.md)
-* [DI Resolver](diResolver.md)
+* (To do) [DI Container](diContainer.md)
+* (To do) [DI Resolver](diResolver.md)
 
 ### Database
-* [Data Base](dataBase.md)
-* [Adapter](adapter.md)
+* (To do) [Data Base](dataBase.md)
+* (To do) [Adapter](adapter.md)
 
 ### Data Mapper
-* [Domain Object Abstract](domainObjectAbstract.md)
-* [Domain Object Interface](domainObjectInterface.md)
-* [Mapper Abstract](mapperAbstract.md)
+* (To do) [Domain Object Abstract](domainObjectAbstract.md)
+* (To do) [Domain Object Interface](domainObjectInterface.md)
+* (To do) [Mapper Abstract](mapperAbstract.md)
