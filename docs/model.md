@@ -118,4 +118,3 @@ $controller->delete(5);
 
 $model->notify;
 ```
-Now Model(Subject) notify to View(Observer) changes.
