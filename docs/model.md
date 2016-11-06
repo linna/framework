@@ -94,15 +94,15 @@ Now when a change occurs, the Model may notify to the View.
 
 ### detach()
 visibility: *public*<br/>
-param:*\SplObjectStorage*<br/><br/>
+param: *\SplObjectStorage*<br/><br/>
 Like attach(), this method is used for exclude an object from notifies.
 ```php
 $model->attach($view);
 $model->detach($view);
 ```
 ### notify()
-*public*<br/>
-After data change call this method for do notifies to Model Oservers
+visibility: *public*<br/><br>
+After data manipulation call this method for notify changes to Observers
 ```php
 $model = new ProductModel;
         
