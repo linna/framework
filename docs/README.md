@@ -25,7 +25,7 @@ If you wish start to utilize the Framework for build an app, look [Linna App](ht
 
 ### Model View Controller
 * [How pattern is implemented?](mvcImplement.md)
-* (Incomplete) [Model](model.md)
+* [Model](model.md)
 * (To do) [View](view.md)
 * (To do) [Controller](controller.md)
 
