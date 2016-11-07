@@ -216,7 +216,7 @@ class Session
     
     public function destroy()
     {
-        $this->data = null;
+        $this->data = [];
         session_destroy();
     }
 }
