@@ -25,7 +25,7 @@ Started as project for learn and master PHP, Linna framework turned into a simpl
 ### To Do
    
    * Complete the documentation
-   * Session refactoring
+   * Session tuning
    * Router tuning
    * PSR7 support through linna-PSR7 package
 
