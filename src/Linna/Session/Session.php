@@ -17,8 +17,6 @@ use \SessionHandlerInterface;
 
 /**
  * Manage session lifetime and session data
- * In this class sigleton patter was correct because constructor is private
- * https://en.wikipedia.org/wiki/Singleton_pattern
  *
  * @property int $time Time of session
  * @property array $login Login information set by Login class
@@ -28,14 +26,13 @@ use \SessionHandlerInterface;
 class Session
 {
     /**
-     * Utilized with classOptionsTrait
      * @var array $options Config options for class
      */
     protected $options = array(
         'expire' => 1800,
         'name' => 'APP_SESSION',
-        'cookieDomain' => '',
-        'cookiePath' => '',
+        'cookieDomain' => '/',
+        'cookiePath' => '/',
         'cookieSecure' => false,
         'cookieHttpOnly' => true
     );
@@ -56,19 +53,20 @@ class Session
     private static $opt;
     
     /**
+     * @var string $id Session id
+     */
+    public $id;
+    
+    /**
      * Contructor
      *
      * @param array $options Options for configure session
      */
-    private function __construct(array $options)
+    public function __construct(array $options)
     {
         //set options
         $this->options = array_replace_recursive($this->options, $options);
         
-        //start session
-        $this->start();
-        
-        $this->data = &$_SESSION;
     }
     
     
@@ -137,7 +135,8 @@ class Session
         //set new cookie
         $this->setCookie();
         
-        //store new time for expire
+        //store id and new time for expire
+        $this->id = session_id();
         $this->data['time'] = $time;
         $this->data['expire'] = $this->options['expire'];
     }
@@ -161,7 +160,7 @@ class Session
      * Start session
      *
      */
-    private function start()
+    public function start()
     {
         //setting session name
         session_name($this->options['name']);
@@ -180,6 +179,12 @@ class Session
 
         //set new cookie
         $this->setCookie();
+        
+        //link session super global to $data property
+        $this->data = &$_SESSION;
+        
+        //refresh session
+        $this->refresh();
     }
     
     /**
@@ -187,7 +192,7 @@ class Session
      *
      * @return null
      */
-    public function refresh()
+    private function refresh()
     {
         $time = time();
         
@@ -201,65 +206,18 @@ class Session
             
             return;
         }
-
+        
+        $this->id = session_id();
         $this->data['time'] = $time;
         $this->data['expire'] = $this->options['expire'];
     }
     
     /**
-     * Singleton
-     * Get always the same instance
-     *
-     * @return \self $instance
-     */
-    public static function getInstance(): Session
-    {
-        $instance = &self::$instance;
-
-        if ($instance === null) {
-
-            //create new instance
-            $instance = new self(self::$opt);
-        }
-        
-        $instance->refresh();
-
-        return $instance;
-    }
-    
-    /**
-     * Destroy session instance
-     *
-     */
-    public static function destroyInstance()
-    {
-        $instance = &self::$instance;
-        
-        if ($instance !== null) {
-            session_destroy();
-            //create new instance
-            $instance = null;
-        }
-    }
-           
-    /**
-     * Singleton
-     * Set options for session instance
-     *
-     * @param array $options Session options
-     */
-    public static function withOptions(array $options)
-    {
-        self::$opt = $options;
-    }
-    
-     /**
-     * Singleton
      * Set session handler for new instance
      *
      * @param SessionHandlerInterface $handler Session handler
      */
-    public static function setSessionHandler(SessionHandlerInterface $handler)
+    public function setSessionHandler(SessionHandlerInterface $handler)
     {
         //setting a different save handler if passed
         if ($handler instanceof SessionHandlerInterface) {
