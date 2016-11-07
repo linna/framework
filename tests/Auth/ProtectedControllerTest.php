@@ -39,19 +39,15 @@ class ProtectedControllerTest extends TestCase
         ]);
         
         //config options
-        Session::withOptions(array(
-            'expire' => 5,
-            'cookieDomain' => '/',
-            'cookiePath' => '/',
-            'cookieSecure' => false,
-            'cookieHttpOnly' => true
-        ));
+        $session = new Session();
+        
+        $session->start();
         
         $password = new Password();
         $storedPassword = $password->hash('password');
         
         //attemp first login
-        $login = new Login(Session::getInstance(), $password);
+        $login = new Login($session, $password);
         $login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
         $loginLogged = $login->logged;
         
@@ -77,6 +73,6 @@ class ProtectedControllerTest extends TestCase
         $this->assertEquals(true, $controllerTest1);
         $this->assertEquals(true, in_array('Location: http://localhost', $headers_list));
         
-        Session::destroyInstance();
+        $session->destroy();
     }
 }

@@ -22,20 +22,11 @@ class DIContainerTest extends TestCase
      */
     public function testContainer()
     {
-        //se session options
-        Session::withOptions(array(
-            'expire' => 4,
-            'cookieDomain' => '/',
-            'cookiePath' => '/',
-            'cookieSecure' => false,
-            'cookieHttpOnly' => true
-        ));
-                
         $container = new DIContainer();
         
         $container->login = function () {
             $password = new Password();
-            $session = Session::getInstance();
+            $session = new Session();
             
             return new Login($session, $password);
         };
@@ -48,6 +39,5 @@ class DIContainerTest extends TestCase
         $this->assertEquals(false, isset($container->login2));
         $this->assertEquals(false, $container->login2);
         
-        Session::destroyInstance();
     }
 }

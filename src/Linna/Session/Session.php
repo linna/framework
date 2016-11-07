@@ -42,16 +42,6 @@ class Session
      */
     private $data;
     
-     /**
-     * @var object $instance Store only one instance of session
-     */
-    private static $instance;
-    
-    /**
-     * @var array $opt Cache variable for pass option to constructor
-     */
-    private static $opt;
-    
     /**
      * @var string $id Session id
      */
@@ -62,11 +52,10 @@ class Session
      *
      * @param array $options Options for configure session
      */
-    public function __construct(array $options)
+    public function __construct(array $options = array())
     {
         //set options
         $this->options = array_replace_recursive($this->options, $options);
-        
     }
     
     
@@ -223,5 +212,11 @@ class Session
         if ($handler instanceof SessionHandlerInterface) {
             session_set_save_handler($handler, true);
         }
+    }
+    
+    public function destroy()
+    {
+        $this->data = null;
+        session_destroy();
     }
 }

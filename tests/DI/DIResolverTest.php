@@ -21,22 +21,17 @@ class DIResolverTest extends TestCase
      */
     public function testResolve()
     {
-        Session::withOptions(array(
-            'expire' => 3,
-            'cookieDomain' => '/',
-            'cookiePath' => '/',
-            'cookieSecure' => false,
-            'cookieHttpOnly' => true
-        ));
+        $session = new Session();
+        $session->start();
         
         $DIResolver = new DIResolver();
         
-        $DIResolver->cacheUnResolvable('\Linna\Session\Session', Session::getInstance());
+        $DIResolver->cacheUnResolvable('\Linna\Session\Session', $session);
         
         $login = $DIResolver->resolve('\Linna\Auth\Login');
         
         $this->assertInstanceOf(Login::class, $login);
         
-        Session::destroyInstance();
+        $session->destroy();
     }
 }

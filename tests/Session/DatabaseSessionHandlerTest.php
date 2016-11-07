@@ -32,17 +32,11 @@ class DatabaseSessionHandlerTest extends TestCase
 
         $sessionHandler = new DatabaseSessionHandler($dbase);
 
-        Session::setSessionHandler($sessionHandler);
-        //se session options
-        Session::withOptions(array(
-            'expire' => 8,
-            'cookieDomain' => '/',
-            'cookiePath' => '/',
-            'cookieSecure' => false,
-            'cookieHttpOnly' => true
-        ));
+        $session = new Session(['expire' => 8]);
         
-        $session = Session::getInstance();
+        $session->setSessionHandler($sessionHandler);
+        
+        $session->start();
 
         $session->testdata = 'test';
 
@@ -75,27 +69,24 @@ class DatabaseSessionHandlerTest extends TestCase
 
         $sessionHandler = new DatabaseSessionHandler($dbase);
 
-        Session::setSessionHandler($sessionHandler);
-        //se session options
-        Session::withOptions(array(
-            'expire' => 8,
-            'cookieDomain' => '/',
-            'cookiePath' => '/',
-            'cookieSecure' => false,
-            'cookieHttpOnly' => true
-        ));
+        $session = new Session(['expire' => 8]);
         
-        $session = Session::getInstance();
-        $session_id = session_id();
+        $session->setSessionHandler($sessionHandler);
+        $session->start();
+        $session_id = $session->id;
         
         $session->time = $session->time - 1800;
         
-        $session = Session::getInstance();
-        $session_id2 = session_id();
+        session_write_close();
+        
+        $session->setSessionHandler($sessionHandler);
+        $session->start();
+        $session_id2 = $session->id;
         
         $test = ($session_id === $session_id2) ? 1 : 0;
 
         $this->assertEquals(0, $test);
+        
     }
     
     /**
