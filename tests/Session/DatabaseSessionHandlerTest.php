@@ -50,7 +50,7 @@ class DatabaseSessionHandlerTest extends TestCase
 
         $this->assertEquals(false, $session->testdata);
 
-        session_write_close();
+        $session->commit();
     }
     
     /**
@@ -77,7 +77,7 @@ class DatabaseSessionHandlerTest extends TestCase
         
         $session->time = $session->time - 1800;
         
-        session_write_close();
+        $session->commit();
         
         $session->setSessionHandler($sessionHandler);
         $session->start();
@@ -87,6 +87,7 @@ class DatabaseSessionHandlerTest extends TestCase
 
         $this->assertEquals(0, $test);
         
+        $session->destroy();
     }
     
     /**
