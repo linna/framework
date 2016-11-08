@@ -151,17 +151,8 @@ class Session
      */
     public function start()
     {
-        //setting session name
-        session_name($this->options['name']);
-
-        //standard cookie param
-        session_set_cookie_params(
-                $this->options['expire'],
-                $this->options['cookiePath'],
-                $this->options['cookieDomain'],
-                $this->options['cookieSecure'],
-                $this->options['cookieHttpOnly']
-        );
+        //prepare session start
+        $this->prepare();
 
         //start session
         session_start();
@@ -174,6 +165,25 @@ class Session
         
         //refresh session
         $this->refresh();
+    }
+    
+    /**
+     * Set session options before start
+     * 
+     */
+    private function prepare()
+    {
+        //setting session name
+        session_name($this->options['name']);
+
+        //standard cookie param
+        session_set_cookie_params(
+                $this->options['expire'],
+                $this->options['cookiePath'],
+                $this->options['cookieDomain'],
+                $this->options['cookieSecure'],
+                $this->options['cookieHttpOnly']
+        );
     }
     
     /**
@@ -214,9 +224,25 @@ class Session
         }
     }
     
+    /**
+     * Destroy session
+     * 
+     */
     public function destroy()
     {
+        //delete session data
         $this->data = [];
+        
+        //call session destroy
         session_destroy();
+    }
+    
+    /**
+     * Write session data and end session
+     * 
+     */
+    public function commit()
+    {
+        session_write_close();
     }
 }
