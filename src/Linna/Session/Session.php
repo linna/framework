@@ -151,17 +151,20 @@ class Session
      */
     public function start()
     {
-        //prepare session start
-        $this->prepare();
+        if (session_status() !== 2)
+        {
+            //prepare session start
+            $this->prepare();
 
-        //start session
-        session_start();
-
-        //set new cookie
-        $this->setCookie();
+            //start session
+            session_start();
         
-        //link session super global to $data property
-        $this->data = &$_SESSION;
+            //set new cookie
+            $this->setCookie();
+
+            //link session super global to $data property
+            $this->data = &$_SESSION;
+        }
         
         //refresh session
         $this->refresh();
