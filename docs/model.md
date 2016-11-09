@@ -6,7 +6,7 @@ current_menu: model
 
 # Model
 
-Model class is the father class for every concrete Model in application. He work with View as Observer pattern where Model is the Subject and View is the Observer.
+Model class is the parent class for every concrete Model in application. It works with View as Observer pattern where Model is the Subject and View is the Observer.
 
 ```php
 use Linna\Mvc\Model;
@@ -41,7 +41,7 @@ Methods
 ### getUpdate
 visibility: *public*<br/>
 type: *array*<br/>
-Utilize it for store data that will pass to a View
+Utilize it to store data that will pass to a View
 ```php
 use Linna\Mvc\Model;
 
@@ -80,7 +80,7 @@ parent::__construct();
 ### attach()
 visibility: *public*<br/>
 param: *\SplObjectStorage*<br/><br/>
-Attach an Observer class to this Subject for updates when occour a subject state change
+Attach an Observer class to this Subject for updates when a subject state change occours
 ```php
 $model = new ProductModel;
         
@@ -90,12 +90,12 @@ $controller = new ProductController($model);
         
 $model->attach($view);
 ```
-Now when a change occurs, the Model may notify to the View.
+Now when a change occours, the Model may notify to the View.
 
 ### detach()
 visibility: *public*<br/>
 param: *\SplObjectStorage*<br/><br/>
-Like attach(), this method is used for exclude an object from notifies.
+Like attach(), this method is used to exclude an object from notifies.
 ```php
 $model->attach($view);
 $model->detach($view);
