@@ -48,7 +48,7 @@ session_start();
 $_SESSION['fooData'] = 'bar_baz';
 ```
 ## Options
-Options could passed to class constructor as key=>value array
+Passed to class constructor as key=>value array
 ```php
 $session = new Session([
     'expire' => 1800,
