@@ -8,6 +8,8 @@ current_menu: model
 
 Model class is the parent class for every concrete Model in application. It works with View as Observer pattern where Model is the Subject and View is the Observer.
 
+## Basic usage
+Extend Model: 
 ```php
 use Linna\Mvc\Model;
 
@@ -30,7 +32,6 @@ class ProductModel extends Model
 
 Properties
 - getUpdate
-- observers
 
 Methods
 - __construct()
@@ -64,11 +65,6 @@ class ProductModel extends Model
 }
 ```
 The above example will pass to View updated data for output
-
-### observers
-visibility: *private*<br/>
-type: *\SplObjectStorage*<br/><br/>
-This property contain the list of Observer objects that will receive notifications
 
 ### __construct()
 visibility: *public*<br/><br/>
