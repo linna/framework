@@ -15,7 +15,7 @@ If you wish start to utilize the Framework for build an app, look [Linna App](ht
 * (To do) [Front Controller](frontController.md)
 
 ### Session
-* (To do) [Session](session.md)
+* (Incomplete) [Session](session.md)
 * (To do) [Session Handler](sessionHandler.md)
 
 ### Auth
