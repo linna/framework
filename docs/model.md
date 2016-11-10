@@ -40,9 +40,12 @@ Methods
 - notify()
 
 ### getUpdate
-visibility: *public*<br/>
 type: *array*<br/>
+
+#### Description
 Utilize it to store data that will pass to a View
+
+#### Usage
 ```php
 use Linna\Mvc\Model;
 
@@ -67,16 +70,22 @@ class ProductModel extends Model
 The above example will pass to View updated data for output
 
 ### __construct()
-visibility: *public*<br/><br/>
 Call it from constructor when extend Model
 ```php
 parent::__construct();
 ```
 
 ### attach()
-visibility: *public*<br/>
-param: *\SplObjectStorage*<br/><br/>
+
+#### Description
 Attach an Observer class to this Subject for updates when a subject state change occours
+```php
+$model->attach(\SplObjectStorage $observer);
+```
+#### Parameters
+*\SplObjectStorage* **$observer**<br/>
+
+#### Usage
 ```php
 $model = new ProductModel;
         
@@ -89,16 +98,26 @@ $model->attach($view);
 Now when a change occours, the Model may notify to the View.
 
 ### detach()
-visibility: *public*<br/>
-param: *\SplObjectStorage*<br/><br/>
+
+#### Description
 Like attach(), this method is used to exclude an object from notifies.
+```php
+$model->detach(\SplObjectStorage $observer);
+```
+#### Parameters
+- *\SplObjectStorage* **$observer**<br/><br/>
+
+#### Usage
 ```php
 $model->attach($view);
 $model->detach($view);
 ```
 ### notify()
-visibility: *public*<br/><br>
+
+#### Description
 After data manipulation call this method for notify changes to Observers
+
+#### Usage
 ```php
 $model = new ProductModel;
         
