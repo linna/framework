@@ -75,10 +75,13 @@ Properties
 
 Methods
 - __contruct()
+- setSessionHandler()
 - regenerate()
 - start()
 - destroy()
 - commit()
+
+## Properties
 
 ### id
 type: *string*<br/>
@@ -94,6 +97,8 @@ $session->start();
 echo $session->id;
 ```
 
+## Methods
+
 ### __contruct()
 Class constructor
 ```php
@@ -108,7 +113,56 @@ $session = new Session([
 ```
 
 #### Parameters
-*array* **$options**<br/>
+*array* **$options**
+
+### setSessionHandler()
+This method permits to choose where session store the data, Linna Framework has two builtin handlers: "memcached handler" and "pdo mysql handler".
+
+#### Parameters
+*\SessionHandlerInterface* **$handler**
+
+#### Usage
+Prepare and use "memcached handler":
+```php
+//create memcached object
+$memcached = new Memcached();
+
+$memcached->addServer('localhost', 11211);
+
+//create memcached session handler object
+$sessionHandler = new MemcachedSessionHandler($memcached);
+```
+
+Prepare and use "mysql pdo session handler":
+```php
+use Linna\Database\MysqlPDOAdapter;
+use Linna\Database\Database;
+
+//create mysql adpter, it use pdo
+$MysqlAdapter = new MysqlPDOAdapter(
+    'mysql:host=localhost;dbname=test;charset=utf8',
+    'user',
+    'password',
+    array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
+);
+
+//create data base object
+$dataBase = new Database($MysqlAdapter);
+
+//create database session handler object
+$sessionHandler = new DatabaseSessionHandler($dataBase);
+```
+
+After
+```php
+//create session object
+$session = new Session();
+//set session handler
+$session->setSessionHandler($sessionHandler);
+
+//start the session
+$session->start();
+```
 
 ### start()
 Start session
