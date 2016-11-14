@@ -25,7 +25,7 @@ class Router
      *
      * @var array Config options for class
      */
-    private $options = array(
+    protected $options = array(
         'basePath' => '/',
         'badRoute' => '',
         'rewriteMode' => false
@@ -34,7 +34,7 @@ class Router
     /**
      * @var object $route Utilized for return the most recently parsed route
      */
-    private $route;
+    protected $route;
 
     /**
      * @var array $routes Passed from constructor, is the list of registerd routes for the app
@@ -59,7 +59,7 @@ class Router
     /**
      * @var string $currentUri Request uri from browser (start from['REQUEST_URI'])
      */
-    private $currentUri = '';
+    protected $currentUri = '';
     
     
     /**
