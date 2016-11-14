@@ -39,10 +39,11 @@ Methods
 - detach()
 - notify()
 
+## Properties
+
 ### getUpdate
 type: *array*<br/>
 
-#### Description
 Utilize it to store data that will pass to a View
 
 #### Usage
@@ -69,6 +70,8 @@ class ProductModel extends Model
 ```
 The above example will pass to View updated data for output
 
+## Methods
+
 ### __construct()
 Call it from constructor when extend Model
 ```php
@@ -76,8 +79,6 @@ parent::__construct();
 ```
 
 ### attach()
-
-#### Description
 Attach an Observer class to this Subject for updates when a subject state change occours
 ```php
 $model->attach(\SplObjectStorage $observer);
@@ -98,8 +99,6 @@ $model->attach($view);
 Now when a change occours, the Model may notify to the View.
 
 ### detach()
-
-#### Description
 Like attach(), this method is used to exclude an object from notifies.
 ```php
 $model->detach(\SplObjectStorage $observer);
@@ -113,8 +112,6 @@ $model->attach($view);
 $model->detach($view);
 ```
 ### notify()
-
-#### Description
 After data manipulation call this method for notify changes to Observers
 
 #### Usage
