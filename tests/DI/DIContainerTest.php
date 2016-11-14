@@ -38,6 +38,5 @@ class DIContainerTest extends TestCase
         $this->assertEquals(true, isset($container->login));
         $this->assertEquals(false, isset($container->login2));
         $this->assertEquals(false, $container->login2);
-        
     }
 }

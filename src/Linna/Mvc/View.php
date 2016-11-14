@@ -40,7 +40,7 @@ class View implements \SplObserver
     
     /**
      * Constructor
-     * 
+     *
      * @param \Linna\Mvc\Model $model Data Model
      */
     public function __construct(Model $model)

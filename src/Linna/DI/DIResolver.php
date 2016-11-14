@@ -119,7 +119,7 @@ class DIResolver
 
     /**
      * Build objects from dependencyTree
-     * 
+     *
      * @param array $array Dependency Tree
      */
     private function buildObjects(array $array)

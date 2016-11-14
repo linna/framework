@@ -32,7 +32,7 @@ class MemcachedSessionHandler implements SessionHandlerInterface
 
     /**
      * Constructor
-     * 
+     *
      * @param Memcached $memcached Memcached resource
      */
     public function __construct(Memcached $memcached)

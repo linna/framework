@@ -15,12 +15,12 @@ namespace Linna\Database;
 
 /**
  * Mysql PDO Adapter
- * 
+ *
  */
 class MysqlPDOAdapter implements AdapterInterface
 {
     /**
-     * @var string $dns Dsn string for mysql 
+     * @var string $dns Dsn string for mysql
      */
     protected $dsn;
     
@@ -36,13 +36,13 @@ class MysqlPDOAdapter implements AdapterInterface
     
     /**
      *
-     * @var array $options PDO options  
+     * @var array $options PDO options
      */
     protected $options;
     
     /**
      * Constructor
-     * 
+     *
      * @param string $dsn
      * @param string $user
      * @param string $password
@@ -61,7 +61,7 @@ class MysqlPDOAdapter implements AdapterInterface
     
     /**
      * Get Resource
-     * 
+     *
      * @return \PDO
      */
     public function getResource()

@@ -132,7 +132,7 @@ class Session
     
     /**
      * Set cookie
-     * 
+     *
      */
     private function setCookie()
     {
@@ -151,8 +151,7 @@ class Session
      */
     public function start()
     {
-        if (session_status() !== 2)
-        {
+        if (session_status() !== 2) {
             //prepare session start
             $this->prepare();
 
@@ -172,7 +171,7 @@ class Session
     
     /**
      * Set session options before start
-     * 
+     *
      */
     private function prepare()
     {
@@ -229,7 +228,7 @@ class Session
     
     /**
      * Destroy session
-     * 
+     *
      */
     public function destroy()
     {
@@ -242,7 +241,7 @@ class Session
     
     /**
      * Write session data and end session
-     * 
+     *
      */
     public function commit()
     {

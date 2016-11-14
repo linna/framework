@@ -54,8 +54,7 @@ class RouterCached extends Router
     public function validate(string $requestUri, string $requestMethod)
     {
         //check if route is already cached
-        if (($cachedRoute = $this->cache->get($requestUri)) !== false)
-        {
+        if (($cachedRoute = $this->cache->get($requestUri)) !== false) {
             //get cached route
             $this->route = $cachedRoute;
             //ecit
