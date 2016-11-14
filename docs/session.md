@@ -81,26 +81,83 @@ Methods
 - commit()
 
 ### id
-#### Description
+type: *string*<br/>
+
+Contain session id after session start, is equal to call php session_id() function. Try to set this property don't overwrite session id.
+
 #### Usage
+```php
+//other code
+$session->start();
+
+//show current session id
+echo $session->id;
+```
 
 ### __contruct()
-#### Description
+Class constructor
+```php
+$session = new Session([
+    'expire' => 1800,
+    'name' => 'APP_SESSION',
+    'cookieDomain' => '/',
+    'cookiePath' => '/',
+    'cookieSecure' => false,
+    'cookieHttpOnly' => true
+]);
+```
+
 #### Parameters
-#### Usage
+*array* **$options**<br/>
 
 ### start()
-#### Description
+Start session
+
 #### Usage
+```php
+$session = new Session();
+//start the session
+$session->start();
+```
 
 ### regenerate()
-#### Description
+Regenerate session after an event (like a user login/logout or a time interval) occours. Learn more on [session_regenerate_id](http://php.net/manual/en/function.session-regenerate-id.php) reference
+
 #### Usage
+```php
+$session = new Session();
+//start the session
+$session->start();
+
+//do some actions
+
+$session->regenerate();
+```
 
 ### destroy()
-#### Description
+Destroy session, clear all session data. Learn more on [session_destroy](http://php.net/manual/en/function.session-destroy.php) reference
+
 #### Usage
+```php
+$session = new Session();
+//start the session
+$session->start();
+
+//do some actions
+
+$session->destroy();
+```
 
 ### commit()
-#### Description
+Write session data and end session. Learn more on [session_write_close](http://php.net/manual/en/function.session-write-close.php) reference
+
 #### Usage
+```php
+$session = new Session();
+//start the session
+$session->start();
+
+//do some actions
+
+$session->commit();
+```
