@@ -16,9 +16,16 @@ namespace Linna\Http;
 use Linna\Http\Router;
 
 /**
+ * ***IMPORTANT***
+ * After some tests, this class has proved more slow than Router class because
+ * get a value from memcached are expensive, more expensive than only check a route with
+ * validate function.
+ * This class remains a programming excercice :'(
+ * 
  * Extension of Router with caching system
  * Require memcached for run
  *
+ * @deprecated since version v0.10.0
  */
 class RouterCached extends Router
 {
@@ -57,7 +64,7 @@ class RouterCached extends Router
         if (($cachedRoute = $this->cache->get($requestUri)) !== false) {
             //get cached route
             $this->route = $cachedRoute;
-            //ecit
+            //exit
             return;
         }
         
