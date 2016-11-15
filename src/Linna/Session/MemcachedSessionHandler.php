@@ -29,15 +29,23 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      * @var object $memcached Memcached resource
      */
     private $memcached;
-
+    
+    /**
+     *
+     * @var int $expire Expire time in seconds for stored sessions
+     */
+    private $expire;
+    
     /**
      * Constructor
      *
      * @param Memcached $memcached Memcached resource
+     * @param int $expire Expire time in seconds for stored sessions
      */
-    public function __construct(Memcached $memcached)
+    public function __construct(Memcached $memcached, int $expire)
     {
         $this->memcached = $memcached;
+        $this->expire = $expire;
     }
 
     /**
@@ -68,7 +76,7 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      */
     public function gc($maxLifetime)
     {
-        //too do
+        //this method is no needed because all object stored expire without external operation
         return true;
     }
 
@@ -99,7 +107,7 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      */
     public function write($sessionId, $data)
     {
-        $this->memcached->set($sessionId, $data);
+        $this->memcached->set($sessionId, $data, $this->expire);
         
         return true;
     }
