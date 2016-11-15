@@ -29,7 +29,7 @@ class MemcachedSessionHandlerTest extends TestCase
         //connect to memcached server
         $memcached->addServer($GLOBALS['mem_host'], $GLOBALS['mem_port']);
         
-        $sessionHandler = new MemcachedSessionHandler($memcached);
+        $sessionHandler = new MemcachedSessionHandler($memcached, 1800);
 
         $session = new Session();
         
@@ -66,7 +66,7 @@ class MemcachedSessionHandlerTest extends TestCase
         //connect to memcached server
         $memcached->addServer($GLOBALS['mem_host'], $GLOBALS['mem_port']);
         
-        $sessionHandler = new MemcachedSessionHandler($memcached);
+        $sessionHandler = new MemcachedSessionHandler($memcached, 8);
 
         $session = new Session(['expire' => 8]);
         
@@ -103,7 +103,7 @@ class MemcachedSessionHandlerTest extends TestCase
         //connect to memcached server
         $memcached->addServer('localhost', 11211);
         
-        $sessionHandler = new MemcachedSessionHandler($memcached);
+        $sessionHandler = new MemcachedSessionHandler($memcached, 8);
 
         $test = $sessionHandler->gc(0);
         
