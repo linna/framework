@@ -16,7 +16,7 @@ If you wish start to utilize the Framework for build an app, look [Linna App](ht
 
 ### Session
 * [Session](session.md)
-* (To do) [Session Handler](sessionHandler.md)
+* [Session Handler](sessionHandler.md)
 
 ### Auth
 * (To do) [Login](login.md)
