@@ -122,7 +122,7 @@ This method permits to choose where session store the data, Linna Framework has 
 *\SessionHandlerInterface* **$handler**
 
 #### Usage
-For how to use this class please refer to [sessionHandler](sessionHandler.md)page
+Please refer to [sessionHandler](sessionHandler.md) page
 
 ### start()
 Start session
