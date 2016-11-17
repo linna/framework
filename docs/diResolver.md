@@ -65,4 +65,4 @@ $DIResolver = new DIResolver();
 $a = $DIResolver->resolve('\A');
 ```
 In above example **$a** contain class **A** instance.<br />
-*Important: must pass to resolve '\A' instead of 'A', if 'A' is passed DI Resolver build dependencies but return null*
+*Important: for resolve, must pass as argument, '\ A' instead of 'A', if 'A' is passed DI Resolver build dependencies but return null*
