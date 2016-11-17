@@ -19,13 +19,13 @@ Properties
 - *no public properties*
 
 Methods
-- __contruct()
+- __construct()
 - cacheUnResolvable()
 - resolve()
 
 ## Methods
 
-### __contruct()
+### __construct()
 Class constructor
 ```php
 $DIResolver = new DIResolver();
