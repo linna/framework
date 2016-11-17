@@ -62,7 +62,7 @@ class Session
         //set options
         $this->options = array_replace_recursive($this->options, $options);
         
-        $this->name = $options['name'];
+        $this->name = isset($options['name']) ? $options['name'] : $this->options['name'];
     }
     
     

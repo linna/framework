@@ -82,7 +82,7 @@ class RouterCachedTest extends TestCase
         $memcached = new Memcached();
         //connect to memcached server
         $memcached->addServer($GLOBALS['mem_host'], $GLOBALS['mem_port']);
-        
+        $memcached->flush();
         //start router
         $router = new RouterCached($this->routes, array(
             'basePath' => '/',
