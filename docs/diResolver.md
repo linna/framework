@@ -16,7 +16,7 @@ DI Resolver use for recognize constructor arguments [PHP reflection](http://php.
 ## Class Structure
 
 Properties
-*no public properties*
+- *no public properties*
 
 Methods
 - __contruct()
