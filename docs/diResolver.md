@@ -64,5 +64,5 @@ class D { public function __construct() {echo 'D';} }
 $DIResolver = new DIResolver();
 $a = $DIResolver->resolve('\A');
 ```
-In above example **$a** contain class **A** instance.
+In above example **$a** contain class **A** instance.<br />
 *Important: must pass to resolve '\A' instead of 'A', if 'A' is passed DI Resolver build dependencies but return null*
