@@ -21,6 +21,9 @@ Started as project for learn and master PHP, Linna framework turned into a simpl
 ### Require
 
    * PHP 7 or higher
+   * PHP PDO extension (optional)
+   * PHP Memcached extension (optional)
+
 
 ### To Do
    

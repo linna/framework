@@ -72,6 +72,7 @@ $session = new Session([
 
 Properties
 - id
+- name
 
 Methods
 - __contruct()
@@ -90,11 +91,49 @@ Contain session id after session start, is equal to call php session_id() functi
 
 #### Usage
 ```php
-//other code
+//start session
 $session->start();
 
 //show current session id
 echo $session->id;
+```
+
+### name
+type: *string*<br/>
+
+Session name for current session
+
+#### Usage
+```php
+//create session object with custom name
+$session = new Session(['name' => 'FOOSession']) 
+
+//start session
+$session->start();
+
+//show current session name "FOOSession"
+echo $session->name;
+```
+
+Set the name from class property does not affect effective session name:
+```php
+//create session object with custom name
+$session = new Session(['name' => 'FOOSession']);
+
+//start session
+$session->start();
+
+//overwrite session name
+echo $session->name = 'BARSession';
+
+//end session
+$session->commit();
+
+//restart session
+$session->start();
+
+//show "FOOSession";
+echo $session->name;
 ```
 
 ## Methods

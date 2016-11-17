@@ -30,7 +30,7 @@ class Session
      */
     protected $options = array(
         'expire' => 1800,
-        'name' => 'APP_SESSION',
+        'name' => 'LINNA_SESSION',
         'cookieDomain' => '/',
         'cookiePath' => '/',
         'cookieSecure' => false,
@@ -48,6 +48,11 @@ class Session
     public $id;
     
     /**
+     * @var string $name Session name
+     */
+    public $name;
+    
+    /**
      * Contructor
      *
      * @param array $options Options for configure session
@@ -56,6 +61,8 @@ class Session
     {
         //set options
         $this->options = array_replace_recursive($this->options, $options);
+        
+        $this->name = $options['name'];
     }
     
     
@@ -177,7 +184,10 @@ class Session
     {
         //setting session name
         session_name($this->options['name']);
-
+        
+        //overwrite session name
+        $this->name = $this->options['name'];
+        
         //standard cookie param
         session_set_cookie_params(
                 $this->options['expire'],
