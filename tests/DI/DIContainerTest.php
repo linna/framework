@@ -33,7 +33,7 @@ class DIContainerTest extends TestCase
         
         $login = $container->login;
         
-        $this->assertInstanceOf(Login::class, $login());
+        $this->assertInstanceOf(Login::class, $login);
         
         $this->assertEquals(true, isset($container->login));
         $this->assertEquals(false, isset($container->login2));
