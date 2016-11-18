@@ -6,11 +6,10 @@ current_menu: diResolver
 
 # DI Resolver
 DI Resolver is one of the [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) tool of Linna framework, 
-it automatically inject dependencies into a class constructor. Unfortunately at moment there are some limitation for constructor injection.<br />
-It work only with object, is not possible inject primitive types like *int, string, float, array*. For overcome is possile to store in DI Resolver, 
-the objects that require non supported types arguments.
+it automatically inject dependencies into a class constructor. Unfortunately, at moment there are some limitation for constructor injection.<br />
+It works only with objects, is not possible to inject primitive types like *int, string, float, array*. To solve this problem is possile to store in DI Resolver objects that require non-supported types arguments.
 
-## How it work?
+## How it works?
 DI Resolver use for recognize constructor arguments [PHP reflection](http://php.net/manual/en/book.reflection.php)
 
 ## Class Structure
@@ -64,5 +63,5 @@ class D { public function __construct() {echo 'D';} }
 $DIResolver = new DIResolver();
 $a = $DIResolver->resolve('\A');
 ```
-In above example **$a** contain class **A** instance.<br />
-*Important: for resolve, must pass as argument, '\ A' instead of 'A', if 'A' is passed DI Resolver build dependencies but return null*
+In the above example **$a** contain class **A** instance.<br />
+*Important: to resolve, must pass as argument, '\ A' instead of 'A', if 'A' is passed DI Resolver will build dependencies returning a null value*
