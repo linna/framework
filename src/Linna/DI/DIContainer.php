@@ -50,12 +50,17 @@ class DIContainer
      * http://php.net/manual/en/language.oop5.overloading.php
      *
      * @param string $name
-     * @return mixed Element stored in container or false
+     * @return object|bool Element stored in container or false
      */
     public function __get(string $name)
     {
         if (array_key_exists($name, $this->container)) {
-            return $this->container[$name];
+            
+            //move to temp for call function
+            $tmp = $this->container[$name];
+            
+            //return function result
+            return $tmp();
         }
         
         return false;
