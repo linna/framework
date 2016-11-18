@@ -30,6 +30,7 @@ Started as project for learn and master PHP, Linna framework turned into a simpl
    * Complete the documentation
    * Session tuning
    * Router tuning
+   * DIResolver, add trick for resolve scalar arguments types
    * PSR7 support through linna-PSR7 package
 
 For more details please see [documentation](https://github.com/s3b4stian/linna-framework/tree/master/docs) and read our [licence](https://github.com/s3b4stian/linna-framework/blob/master/LICENSE)
