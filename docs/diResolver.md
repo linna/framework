@@ -5,7 +5,7 @@ current_menu: diResolver
 ---
 
 # DI Resolver
-DI Resolver is one the [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) tool of Linna framework, 
+DI Resolver is one of the [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) tool of Linna framework, 
 it automatically inject dependencies into a class constructor. Unfortunately at moment there are some limitation for constructor injection.<br />
 It work only with object, is not possible inject primitive types like *int, string, float, array*. For overcome is possile to store in DI Resolver, 
 the objects that require non supported types arguments.
