@@ -5,7 +5,7 @@ current_menu: diContainer
 ---
 
 # DI Container
-DI Container is a small class that would help you to manage object dependecies. Compared to DI Resolever, it does not resolve dependencies for a class, but store a function that create object instance on the fly. Choose of not add container functionality to DI Resolver, it was determined by preserve DI Resolver class lighter possible.
+DI Container is a small class that will help you to manage object dependecies. Compared to DI Resolever, it does not resolve dependencies for a class, but store a function that create object instances on the fly. It was decided not to add container functionality to DI Resolver, to preserve DI Resolver class lightness.
 
 ## How it works?
 Class, use php [magic methods](http://php.net/manual/en/language.oop5.magic.php) for create a container that accept only callable type:
