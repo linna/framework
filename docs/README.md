@@ -30,7 +30,7 @@ If you wish start to utilize the Framework for build an app, look [Linna App](ht
 * (To do) [Controller](controller.md)
 
 ### Dependency Injection
-* (Incomplete) [DI Container](diContainer.md)
+* [DI Container](diContainer.md)
 * [DI Resolver](diResolver.md)
 
 ### Database
