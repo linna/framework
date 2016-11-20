@@ -5,8 +5,9 @@ current_menu: login
 ---
 
 # Login
-This class help you to manage a login system. Login class checks if user passed data matchs with persistent storage 
-data and if true register in to Session the login status. Logout part of Class, delete login status from Session.
+This class helps you to manage a login system and can be considered an extention of Linna Session. 
+Login class, checks if provided user data matches with user's persistent storage data. 
+If true, Login registers into Session the login status. Logout part of the Class, deletes login status from Session.
 
 ## How it works?
 Login:
@@ -63,7 +64,6 @@ Login class store in session more than $login->data content, the login time with
 ]
 ```
 
-
 ## Class Structure
 
 Properties
@@ -94,6 +94,8 @@ Data has this format:
 
 ### logged
 type: *bool*<br/>
+
+Return login status.
 
 ## Methods
 
