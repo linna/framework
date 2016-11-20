@@ -8,7 +8,7 @@ current_menu: session
 
 Session class help to utilize the php session, it is a low level session abstraction, various class methods are the direct counterpart of php session functions
 
-## Basic usage
+## How it works?
 *Note: Class accept as argument an array for options, it will be [explaned below](https://github.com/s3b4stian/linna-framework/blob/master/docs/session.md#options)*<br/>
 Basic usage of Session class:
 ```php

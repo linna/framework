@@ -8,7 +8,7 @@ current_menu: model
 
 Model class is the parent class for every concrete Model in application. It works with View as Observer pattern where Model is the Subject and View is the Observer.
 
-## Basic usage
+## How it works?
 Extend Model: 
 ```php
 use Linna\Mvc\Model;
