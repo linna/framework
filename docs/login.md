@@ -5,8 +5,50 @@ current_menu: login
 ---
 
 # Login
+This class help you to manage a login system. Login class checks if user passed data matchs with persistent storage 
+data and if true register in to Session the login status. Logout part of Class, delete login status from Session.
 
 ## Basic usage
+Login:
+```php
+use Linna\Auth\Login;
+
+$user = ''; //user from login page form
+$password = ''; //password from login page form
+
+$storedUser = ''; //user from stored user informations
+$storedPassword = ''; //password from stored user informations
+$storedId = ''; //user id from stored user informations
+
+$login = new Login();
+$login->login($user, $password, $storedUser, $storedPassword, $storedId);
+```
+
+Logout:
+```php
+$login = new Login();
+$login->logout();
+```
+
+Login Check:
+```php
+$login = new Login();
+
+if ($login->logged === true)
+{
+    //do actions
+}
+
+// or
+
+if ($login->logged !== true)
+{
+    //redirect
+}
+
+//do actions
+```
+
 
 ## Class Structure
 
