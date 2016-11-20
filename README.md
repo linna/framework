@@ -11,7 +11,7 @@ Started as project for learn and master PHP, Linna framework turned into a simpl
 
 ## About this framework 
 The development of Framework is done trying to get PHP best pratices always in mind. 
-Code was fully commented and is ready for [phpDocumentor](https://www.phpdoc.org/) and 
+Code was fully commented, ready for [phpDocumentor](https://www.phpdoc.org/) and 
 is written applying the five [SOLID](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)) principles.<br/></br>
 If you wish deepen PHP best pratices you can start from [phptherightway](http://www.phptherightway.com/).
 
