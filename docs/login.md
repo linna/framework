@@ -8,7 +8,7 @@ current_menu: login
 This class help you to manage a login system. Login class checks if user passed data matchs with persistent storage 
 data and if true register in to Session the login status. Logout part of Class, delete login status from Session.
 
-## Basic usage
+## How it works?
 Login:
 ```php
 use Linna\Auth\Login;
@@ -48,6 +48,20 @@ if ($login->logged !== true)
 
 //do actions
 ```
+Login class store in session more than $login->data content, the login time with key 'loginTime':
+```php
+//after session start and login, session data appear like below array:
+[
+    'time' => 1479641396
+    'expire' => 1800
+    'loginTime' => 1479641395
+    'login' => [
+        'login' => true
+        'user_id' => 1
+        'user_name' => 'root'
+    ]
+]
+```
 
 
 ## Class Structure
@@ -67,11 +81,19 @@ Methods
 type: *array*<br/>
 
 #### Usage
+This property allow access to login data.<br/>
+Data has this format:
+```php
+//login data example
+[
+    'login' => true,
+    'user_id' => 1,
+    'user_name'=> 'root'
+]
+```
 
 ### logged
 type: *bool*<br/>
-
-#### Usage
 
 ## Methods
 
@@ -84,6 +106,7 @@ type: *bool*<br/>
 #### Usage
 
 ### login()
+Do login if passed data match and return true, return false and do nothing if data doesn't match
 
 #### Parameters
 *string* **$user**<br/>
@@ -95,11 +118,8 @@ type: *bool*<br/>
 #### Returns
 *bool*
 
-#### Usage
-
 ### logout()
+Do logout clearing login information from session
 
 #### Returns
 *bool*
-
-#### Usage
