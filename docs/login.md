@@ -5,64 +5,13 @@ current_menu: login
 ---
 
 # Login
-This class helps you to manage a login system and can be considered an extention of Linna Session. 
-Login class, checks if provided user data matches with user's persistent storage data. 
-If true, Login registers into Session the login status. Logout part of the Class, deletes login status from Session.
+This class helps you to manage a login system and can be considered an extension of Linna Session. 
 
 ## How it works?
-Login:
-```php
-use Linna\Auth\Login;
+This class manage the login status for current session. On login action, Login class checks if provided user data matches with 
+user's persistent storage data. If true, Login registers into Session the login status. Logout part of the Class, deletes login status from Session.<br/>
 
-$user = ''; //user from login page form
-$password = ''; //password from login page form
-
-$storedUser = ''; //user from stored user informations
-$storedPassword = ''; //password from stored user informations
-$storedId = ''; //user id from stored user informations
-
-$login = new Login();
-$login->login($user, $password, $storedUser, $storedPassword, $storedId);
-```
-
-Logout:
-```php
-$login = new Login();
-$login->logout();
-```
-
-Login Check:
-```php
-$login = new Login();
-
-if ($login->logged === true)
-{
-    //do actions
-}
-
-// or
-
-if ($login->logged !== true)
-{
-    //redirect
-}
-
-//do actions
-```
-Login class store in session more than $login->data content, the login time with key 'loginTime':
-```php
-//after session start and login, session data appear like below array:
-[
-    'time' => 1479641396
-    'expire' => 1800
-    'loginTime' => 1479641395
-    'login' => [
-        'login' => true
-        'user_id' => 1
-        'user_name' => 'root'
-    ]
-]
-```
+Also this class allow to check if there is a valid login inside session.
 
 ## Class Structure
 
@@ -97,6 +46,39 @@ type: *bool*<br/>
 
 Return login status.
 
+#### Usage
+```php
+$login = new Login();
+
+if ($login->logged === true)
+{
+    //do actions
+}
+
+// or
+
+if ($login->logged !== true)
+{
+    //redirect
+}
+
+//do actions
+```
+Login class store in session more than $login->data content, the login time with key 'loginTime':
+```php
+//after session start and login, session data appear like below array:
+[
+    'time' => 1479641396
+    'expire' => 1800
+    'loginTime' => 1479641395
+    'login' => [
+        'login' => true
+        'user_id' => 1
+        'user_name' => 'root'
+    ]
+]
+```
+
 ## Methods
 
 ### __contruct()
@@ -120,8 +102,29 @@ Do login if passed data match and return true, return false and do nothing if da
 #### Returns
 *bool*
 
+#### Usage
+```php
+use Linna\Auth\Login;
+
+$user = ''; //user from login page form
+$password = ''; //password from login page form
+
+$storedUser = ''; //user from stored user informations
+$storedPassword = ''; //password from stored user informations
+$storedId = ''; //user id from stored user informations
+
+$login = new Login();
+$login->login($user, $password, $storedUser, $storedPassword, $storedId);
+```
+
 ### logout()
 Do logout clearing login information from session
 
 #### Returns
 *bool*
+
+#### Usage
+```php
+$login = new Login();
+$login->logout();
+```
