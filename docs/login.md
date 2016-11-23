@@ -28,6 +28,9 @@ Login data in session look like this array below:
 ]
 ```
 
+## Depends
+Session and Password classes
+
 ## Class Structure
 
 Properties
@@ -63,7 +66,7 @@ Return login status.
 
 #### Usage
 ```php
-$login = new Login();
+$login = new Login($session, $password);
 
 if ($login->logged === true)
 {
@@ -89,7 +92,17 @@ if ($login->logged !== true)
 *Linna\Auth\Password* **$password**<br/>
 
 #### Usage
+```php
+use Linna\Auth\Login;
+use Linna\Auth\Password;
+use Linna\Session\Session;
 
+$password = new Password();
+$session = new Session();
+
+$login = new Login($session, $password);
+
+```
 ### login()
 Do login if passed data match and return true, return false and do nothing if data doesn't match
 
@@ -105,8 +118,6 @@ Do login if passed data match and return true, return false and do nothing if da
 
 #### Usage
 ```php
-use Linna\Auth\Login;
-
 $user = ''; //user from login page form
 $password = ''; //password from login page form
 
@@ -114,7 +125,7 @@ $storedUser = ''; //user from stored user informations
 $storedPassword = ''; //password from stored user informations
 $storedId = ''; //user id from stored user informations
 
-$login = new Login();
+$login = new Login($session, $password);
 $login->login($user, $password, $storedUser, $storedPassword, $storedId);
 ```
 
@@ -126,6 +137,6 @@ Do logout clearing login information from session
 
 #### Usage
 ```php
-$login = new Login();
+$login = new Login($session, $password);
 $login->logout();
 ```
