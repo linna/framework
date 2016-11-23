@@ -28,8 +28,8 @@ Login data in session look like this array below:
 ]
 ```
 
-## Depends
-Session and Password classes
+## Dependency
+[Session](session.md) and [Password](password.md) classes
 
 ## Class Structure
 
