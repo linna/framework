@@ -9,9 +9,24 @@ This class helps you to manage a login system and can be considered an extension
 
 ## How it works?
 This class manage the login status for current session. On login action, Login class checks if provided user data matches with 
-user's persistent storage data. If true, Login registers into Session the login status. Logout part of the Class, deletes login status from Session.<br/>
+user's persistent storage data. If true, Login registers into Session the new login data. Logout part of the Class, deletes login data from Session. At every page refresh Login class update automatically login data in session.<br/>
 
 Also this class allow to check if there is a valid login inside session.
+
+Login data in session look like this array below:
+```php
+//after session start and login, session data appear like below array:
+[
+    'time' => 1479641396
+    'expire' => 1800
+    'loginTime' => 1479641395
+    'login' => [
+        'login' => true
+        'user_id' => 1
+        'user_name' => 'root'
+    ]
+]
+```
 
 ## Class Structure
 
@@ -63,20 +78,6 @@ if ($login->logged !== true)
 }
 
 //do actions
-```
-Login class store in session more than $login->data content, the login time with key 'loginTime':
-```php
-//after session start and login, session data appear like below array:
-[
-    'time' => 1479641396
-    'expire' => 1800
-    'loginTime' => 1479641395
-    'login' => [
-        'login' => true
-        'user_id' => 1
-        'user_name' => 'root'
-    ]
-]
 ```
 
 ## Methods
