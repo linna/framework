@@ -18,7 +18,7 @@ class PasswordTest extends TestCase
 {
     protected $password;
     
-    public function __construct()
+    public function setUp()
     {
         $this->password = new Password();
     }
@@ -26,8 +26,6 @@ class PasswordTest extends TestCase
     
     public function testHash()
     {
-        //$password = new Password();
-        
         $hash = $this->password->hash('password');
         $result = $this->password->verify('password', $hash);
         
@@ -36,8 +34,6 @@ class PasswordTest extends TestCase
     
     public function testHashFail()
     {
-        //$password = new Password();
-        
         $hash = $this->password->hash('password');
         $result = $this->password->verify('otherpassword', $hash);
         
@@ -46,8 +42,6 @@ class PasswordTest extends TestCase
     
     public function testNeedRehash()
     {
-        //$password = new Password();
-        
         $options = [
             'cost' => 9
         ];
@@ -61,8 +55,6 @@ class PasswordTest extends TestCase
     
     public function testNoNeedRehash()
     {
-        //$password = new Password();
-        
         $hash = $this->password->hash('password');
         $result = $this->password->needsRehash($hash);
         
@@ -71,7 +63,6 @@ class PasswordTest extends TestCase
     
     public function testGetInfo()
     {
-        //$password = new Password();
         $hash = '$2y$11$4IAn6SRaB0osPz8afZC5D.CmTrBGxnb5FQEygPjDirK9SWE/u8YuO';
         
         $info = $this->password->getInfo($hash);
@@ -82,7 +73,6 @@ class PasswordTest extends TestCase
     
     public function testNoGetInfo()
     {
-        //$password = new Password();
         $hash = 'badPaswordHash';
         
         $info = $this->password->getInfo($hash);

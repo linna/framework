@@ -9,34 +9,48 @@
  *
  */
 
+declare(strict_types=1);
+
 use Linna\DI\DIContainer;
-use Linna\Session\Session;
-use Linna\Auth\Password;
-use Linna\Auth\Login;
+use Linna\FOO\FOOClassA;
+use Linna\FOO\FOOClassAA;
+use Linna\FOO\FOOClassB;
+use Linna\FOO\FOOClassC;
+use Linna\FOO\FOOClassD;
+use Linna\FOO\FOOClassE;
+use Linna\FOO\FOOClassF;
+use Linna\FOO\FOOClassG;
+use Linna\FOO\FOOClassH;
+use Linna\FOO\FOOClassI;
 use PHPUnit\Framework\TestCase;
 
 class DIContainerTest extends TestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testContainer()
     {
         $container = new DIContainer();
         
-        $container->login = function () {
-            $password = new Password();
-            $session = new Session();
+        $container->FOOClassA = function () {
             
-            return new Login($session, $password);
+            $i = new FOOClassI();
+            $h = new FOOClassH();
+            $g = new FOOClassG($i, $h);
+            $f = new FOOClassF();
+            $e = new FOOClassE();
+            $d = new FOOClassD($e, $f, $g);
+            $c = new FOOClassC($g);
+            $b = new FOOClassB($c, $d);
+            $aa = new FOOClassAA('DIContainer');
+                    
+            return new FOOClassA($b, $aa);
         };
         
-        $login = $container->login;
+        $FOOClassA = $container->FOOClassA;
         
-        $this->assertInstanceOf(Login::class, $login);
+        $this->assertInstanceOf(FOOClassA::class, $FOOClassA);
         
-        $this->assertEquals(true, isset($container->login));
-        $this->assertEquals(false, isset($container->login2));
-        $this->assertEquals(false, $container->login2);
+        $this->assertEquals(true, isset($container->FOOClassA));
+        $this->assertEquals(false, isset($container->FOOClassB));
+        $this->assertEquals(false, $container->FOOClassB);
     }
 }

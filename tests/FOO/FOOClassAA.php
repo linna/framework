@@ -11,10 +11,10 @@
 
 namespace Linna\FOO;
 
-class FOOClassA
+class FOOClassAA
 {
-    public function __construct(FOOClassB $b, FOOClassAA $aa)
+    public function __construct(string $aa)
     {
-        echo 'A';
+        echo $aa;
     }
 }

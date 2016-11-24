@@ -82,7 +82,7 @@ class Login
     private $password;
 
     /**
-     * Constructor.
+     * Constructor
      *
      * @param Session $session Instance of session object
      * @param Password $password Instance of password object

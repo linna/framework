@@ -9,7 +9,6 @@ function call_autoloader()
 
     $loader->addNamespaces([
         ['Linna', dirname(__DIR__) . '/src/Linna'],
-        ['Linna', dirname(__DIR__) . '/src/Linna/Shared'],
         ['Linna\FOO', __DIR__.'/FOO'],
         ['Linna\Auth', dirname(__DIR__) . '/src/Linna/Auth'],
         ['Linna\DI', dirname(__DIR__) . '/src/Linna/DI'],

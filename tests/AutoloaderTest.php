@@ -10,14 +10,14 @@
  */
 
 use Linna\Autoloader;
-use Linna\FOO\FOOClassA;
+use Linna\FOO\FOOClassH;
 use PHPUnit\Framework\TestCase;
 
 class AutoloaderTest extends TestCase
 {
     protected $autoloader;
     
-    public function __construct()
+    public function setUp()
     {
         $this->autoloader = new Autoloader();
         $this->autoloader->register();
@@ -37,7 +37,6 @@ class AutoloaderTest extends TestCase
     public function testNamespaces()
     {
         $this->autoloader->addNamespaces([
-            ['Linna\FOOBar', __DIR__.'/FOOBar'],
             ['Linna\FOO', __DIR__.'/FOO'],
             ['Linna', dirname(__DIR__) . '/src/Linna'],
             ['Linna', dirname(__DIR__) . '/src/Linna/Shared'],
@@ -50,8 +49,8 @@ class AutoloaderTest extends TestCase
             ['Linna\Session', dirname(__DIR__) . '/src/Linna/Session']
         ]);
         
-        $foo = new FOOClassA();
+        $foo = new FOOClassH();
         
-        $this->assertInstanceOf(FOOClassA::class, $foo);
+        $this->assertInstanceOf(FOOClassH::class, $foo);
     }
 }

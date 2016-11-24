@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 use Linna\Session\Session;
 use Linna\Auth\Password;
 use Linna\Auth\Login;
@@ -16,67 +18,75 @@ use PHPUnit\Framework\TestCase;
 
 class LoginTest extends TestCase
 {
+    protected $session;
+    protected $password;
+    protected $login;
+    
+    public function setUp()
+    {
+        $session = new Session();
+        $password = new Password();
+        
+        $this->login = new Login($session, $password);
+        $this->password = $password;
+        $this->session = $session;
+    }
+    
     /**
      * @runInSeparateProcess
      */
     public function testLogin()
     {
-        //config options
-        $session = new Session();
-        $session->start();
+        $this->session->start();
         
-        $password = new Password();
-        $storedPassword = $password->hash('password');
+        //hash password
+        $storedPassword = $this->password->hash('password');
         
         //attemp first login
-        $login = new Login($session, $password);
-        $loginResult = $login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
+        $loginResult = $this->login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
         
         //attemp check if logged
-        $newLogin = new Login($session, $password);
-        $logged = $newLogin->logged;
+        $logged = $this->login->logged;
         
         //simulate expired login
-        $_SESSION['loginTime'] = time() - 3600;
-        $secondLogin = new Login($session, $password);
+        $this->session->loginTime = time() - 3600;
+        
+        //attemp second login
+        $secondLogin = new Login($this->session, $this->password);
         $notLogged = $secondLogin->logged;
         
         $this->assertEquals(true, $loginResult);
         $this->assertEquals(true, $logged);
         $this->assertEquals(false, $notLogged);
         
-        $session->destroy();
+        $this->session->destroy();
     }
     
-     /**
+    /**
      * @runInSeparateProcess
-     */
+     */ 
     public function testLogout()
     {
-        //config options
-        $session = new Session();
-        $session->start();
+        $this->session->start();
         
+        //hash password
+        $storedPassword = $this->password->hash('password');
         
-        $password = new Password();
-        $storedPassword = $password->hash('password');
-        
-        //do valid login
-        $login = new Login($session, $password);
-        $login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
-        $loginResult = $login->logged;
+        //attemp first login
+        $this->login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
+        $loginResult = $this->login->logged;
         
         //do logout
-        $login->logout();
+        $this->login->logout();
         
         //create new login instance
-        $login = new Login($session, $password);
+        $login = new Login($this->session, $this->password);
         $noLoginResult = $login->logged;
         
         $this->assertEquals(true, $loginResult);
         $this->assertEquals(false, $noLoginResult);
         
-        $session->destroy();
+        $this->session->destroy();
     }
     
     /**
@@ -84,22 +94,18 @@ class LoginTest extends TestCase
      */
     public function testIncorrectLogin()
     {
-        //config options
-        $session = new Session();
+        $this->session->start();
         
-        $session->start();
-        
-        $password = new Password();
-        $storedPassword = $password->hash('password');
+         //hash password
+        $storedPassword = $this->password->hash('password');
         
         //try login with bad credentials
-        $login = new Login($session, $password);
-        $loginResult = $login->login('root', 'badPassword', $storedUser = 'root', $storedPassword, 1);
-        $loginResult2 = $login->login('badUser', 'password', $storedUser = 'root', $storedPassword, 1);
+        $loginResult = $this->login->login('root', 'badPassword', $storedUser = 'root', $storedPassword, 1);
+        $loginResult2 = $this->login->login('badUser', 'password', $storedUser = 'root', $storedPassword, 1);
         
         $this->assertEquals(false, $loginResult);
         $this->assertEquals(false, $loginResult2);
         
-        $session->destroy();
+        $this->session->destroy();
     }
 }
