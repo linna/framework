@@ -112,7 +112,7 @@ class LoginTest extends TestCase
     /**
      * @runInSeparateProcess
      */
-    public function testLoginRefreshTrue()
+    public function testLoginRefresh()
     {
         $this->session->start();
         
@@ -121,10 +121,18 @@ class LoginTest extends TestCase
         
         //attemp first login
         $login = new Login($this->session, $this->password);
-        $loginResult = $login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
-        
+        $firstLogin = $login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
         //attemp check if logged
-        $logged = $login->logged;
+        $firstLogged = $login->logged;
+        
+        $this->session->commit();
+        
+        $this->session->start();
+        
+        //create second instance
+        $login = new Login($this->session, $this->password);
+        //attemp check if logged
+        $secondLogged = $login->logged;
         
         //simulate expired login
         $this->session->loginTime = time() - 3600;
@@ -133,8 +141,9 @@ class LoginTest extends TestCase
         $secondLogin = new Login($this->session, $this->password);
         $notLogged = $secondLogin->logged;
         
-        $this->assertEquals(true, $loginResult);
-        $this->assertEquals(true, $logged);
+        $this->assertEquals(true, $firstLogin);
+        $this->assertEquals(true, $firstLogged);
+        $this->assertEquals(true, $secondLogged);
         $this->assertEquals(false, $notLogged);
         
         $this->session->destroy();
