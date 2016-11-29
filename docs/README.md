@@ -8,7 +8,7 @@ title: Documentation
 Hello! This is the Linna Framework API Documentation. Below there is explained how every component of Framework works.<br/>
 If you wish start to utilize the Framework for build an app, look [Linna App](https://github.com/s3b4stian/linna-app).
 
-# API Namespaces and components
+# Namespaces and Components
 
 Linna\Auth\
 - [C] Login
