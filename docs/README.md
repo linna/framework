@@ -8,9 +8,54 @@ title: Documentation
 Hello! This is the Linna Framework API Documentation. Below there is explained how every component of Framework works.<br/>
 If you wish start to utilize the Framework for build an app, look [Linna App](https://github.com/s3b4stian/linna-app).
 
+# API Namespaces and components
+
+Linna\Auth\
+- [C] Login
+- [C] Password
+- [T] ProtectedController
+
+Linna\Database\
+- [I] AdapterInterface
+- [C] Database
+- [C] MysqlPDOAdapter
+
+Linna\DataMapper\
+- [C] DomainObjectInterface
+- [C] DomainObjectAbstract
+- [C] MapperAbstract
+
+Linna\DI\
+- [C] DIContainer
+- [C] DIResolver
+
+Linna\Http\
+- [I] RouteInterface
+- [C] FrontController
+- [C] Route
+- [C] Router
+- [C] RouterCached
+
+Linna\Mvc\
+- [I] TemplateInterface
+- [C] Model
+- [C] View
+- [C] Controller
+
+Linna\Session\
+- [C] DatabaseSessionHandler
+- [C] MemcachedSessionHandler
+- [C] Session
+
+Linna\
+- [C] Autoloader
+
+*[C] Class [I] Interface [T] Trait*
+
 # API Documentation
 
 ### Http
+* (To do) [Route](route.md)
 * (To do) [Router](router.md)
 * (To do) [Front Controller](frontController.md)
 
@@ -20,7 +65,7 @@ If you wish start to utilize the Framework for build an app, look [Linna App](ht
 
 ### Auth
 * [Login](login.md)
-* (To do) [Password](password.md)
+* [Password](password.md)
 * (To do) [Protected Controller](protectedController.md)
 
 ### Model View Controller
