@@ -39,4 +39,5 @@ If you wish deepen PHP best pratices you can start from [phptherightway](http://
    * DIResolver, add trick for resolve scalar arguments types
    * PSR7 support through linna-PSR7 package
 
+## Documentation 
 For more details please see [documentation](https://github.com/s3b4stian/linna-framework/tree/master/docs) and read our [licence](https://github.com/s3b4stian/linna-framework/blob/master/LICENSE)
