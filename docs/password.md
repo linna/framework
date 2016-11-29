@@ -121,5 +121,5 @@ $info = $password->getInfo($hash);
 //      'cost' => int 11
 // ]
 //]
-vardump($info);
+var_dump($info);
 ```
