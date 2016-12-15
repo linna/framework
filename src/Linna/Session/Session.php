@@ -53,7 +53,7 @@ class Session
     public $name;
     
     /**
-     * Contructor
+     * Constructor
      *
      * @param array $options Options for configure session
      */

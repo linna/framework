@@ -18,7 +18,7 @@ namespace Linna\Http;
 interface RouteInterface
 {
     /**
-     * Contructor
+     * Constructor
      *
      * @param string $name
      * @param string $method

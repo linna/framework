@@ -27,7 +27,7 @@ class Database
     private $resource;
     
     /**
-     * Contructor
+     * Constructor
      *
      * @param AdapterInterface $adapter
      */

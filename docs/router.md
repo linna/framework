@@ -17,6 +17,7 @@ $router = new Router($routes, $options);
 Now router is ready for evaluate URLs.
 
 ### Routes example
+Below routes example, is necessary to always declare one valide route and one bad route.
 ```php
 $routes = array();
 
@@ -72,10 +73,51 @@ Properties
 - *no public properties*
 
 Methods
-- getModel()
-- getView()
-- getController()
-- getAction()
-- getParam()
+- __construct()
+- validate()
+- getRoute()
 
 ## Methods
+
+### __construct()
+Class constructor
+```php
+$router = new Router($routes, $options);
+```
+#### Parameters
+*array* **$routes**
+*array* **$options**
+
+### validate()
+Evaluate request uri
+```php
+$router = new Router($routes, $options);
+
+$uri = $_SERVER['REQUEST_URI'];
+$method = $_SERVER['REQUEST_METHOD'];
+
+$router->validate($uri, $method);
+```
+
+#### Parameters
+*string* **$requestUri**
+*string* **$requestMethod**
+
+#### Returns
+*bool*
+
+## getRoute()
+Get [route](route.md) object from router
+```php
+$router = new Router($routes, $options);
+
+$uri = $_SERVER['REQUEST_URI'];
+$method = $_SERVER['REQUEST_METHOD'];
+
+$router->validate($uri, $method);
+
+$route = $router->getRoute();
+```
+
+#### Returns
+*Route object*

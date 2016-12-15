@@ -38,7 +38,7 @@ Properties
 - logged
 
 Methods
-- __contruct()
+- __construct()
 - login()
 - logout()
 
@@ -85,7 +85,7 @@ if ($login->logged !== true)
 
 ## Methods
 
-### __contruct()
+### __construct()
 
 #### Parameters
 *Linna\Session\Session* **$session**<br/>

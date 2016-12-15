@@ -26,7 +26,7 @@ Properties
 - *no public properties*
 
 Methods
-- __contruct()
+- __construct()
 - verify()
 - hash()
 - needsRehash()

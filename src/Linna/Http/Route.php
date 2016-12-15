@@ -55,7 +55,7 @@ class Route implements RouteInterface
     protected $param;
 
     /**
-     * Contructor
+     * Constructor
      *
      * @param string $name
      * @param string $method

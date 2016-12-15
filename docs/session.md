@@ -75,7 +75,7 @@ Properties
 - name
 
 Methods
-- __contruct()
+- __construct()
 - setSessionHandler()
 - regenerate()
 - start()
@@ -138,7 +138,7 @@ echo $session->name;
 
 ## Methods
 
-### __contruct()
+### __construct()
 Class constructor
 ```php
 $session = new Session([
