@@ -21,7 +21,7 @@ use Linna\Http\Router;
  * get a value from memcached are expensive, more expensive than only check a route with
  * validate function.
  * This class remains a programming excercice :'(
- * 
+ *
  * Extension of Router with caching system
  * Require memcached for run
  *
@@ -58,20 +58,25 @@ class RouterCached extends Router
      * @param string $requestUri Request uri
      * @param string $requestMethod Request method
      */
-    public function validate(string $requestUri, string $requestMethod)
+    public function validate(string $requestUri, string $requestMethod) : bool
     {
         //check if route is already cached
         if (($cachedRoute = $this->cache->get($requestUri)) !== false) {
             //get cached route
             $this->route = $cachedRoute;
             //exit
-            return;
+            return true;
         }
         
-        //if route not cached, validate it
-        parent::validate($requestUri, $requestMethod);
-        
-        //cache validated route
-        $this->cache->set($requestUri, $this->route);
+        //if route not cached, validate, if valid cache it
+        if (parent::validate($requestUri, $requestMethod));
+        {
+            //cache validated route
+            $this->cache->set($requestUri, $this->route);
+            //exit
+            return true;
+        }
+        //exit
+        return false;
     }
 }

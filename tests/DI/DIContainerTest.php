@@ -31,7 +31,6 @@ class DIContainerTest extends TestCase
         $container = new DIContainer();
         
         $container->FOOClassA = function () {
-            
             $i = new FOOClassI();
             $h = new FOOClassH();
             $g = new FOOClassG($i, $h);

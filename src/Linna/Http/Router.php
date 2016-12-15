@@ -85,7 +85,7 @@ class Router
      * @param string $requestUri Request uri
      * @param string $requestMethod Request method
      */
-    public function validate(string $requestUri, string $requestMethod)
+    public function validate(string $requestUri, string $requestMethod) : bool
     {
         //get the current uri
         $this->currentUri = $this->getCurrentUri($requestUri);
@@ -110,14 +110,14 @@ class Router
         if (!$validRoute) {
             //assign error route
             $this->route = $this->buildRoute($route);
-            return;
+            return false;
         }
         
         //non allowed method
         if (strpos($validRoute['method'], $requestMethod) === false) {
             //assign error route
             $this->route = $this->buildRoute($route);
-            return;
+            return false;
         }
         
         //route match and there is a subpattern with action
@@ -133,7 +133,7 @@ class Router
             
             //assign valid route
             $this->route = $this->buildRoute($validRoute);
-            return;
+            return false;
         }
         
         if (sizeof($matches) === 1) {
@@ -142,7 +142,11 @@ class Router
             
             //assign valid route
             $this->route = $this->buildRoute($validRoute);
+            
+            return true;
         }
+        
+        return false;
     }
     
     /**

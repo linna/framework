@@ -11,8 +11,9 @@ If you wish start to utilize the Framework for build an app, look [Linna App](ht
 # API Documentation
 
 ### Http
-* (Incomplete) [Route](route.md)
 * (Incomplete) [Router](router.md)
+* (Incomplete) [Route Object](route.md)
+* (To do) [Route Examples](routeEx.md)
 * (To do) [Front Controller](frontController.md)
 
 ### Session

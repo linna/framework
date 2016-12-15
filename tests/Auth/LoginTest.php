@@ -64,7 +64,7 @@ class LoginTest extends TestCase
     
     /**
      * @runInSeparateProcess
-     */ 
+     */
     public function testLogout()
     {
         $this->session->start();

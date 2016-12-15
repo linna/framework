@@ -81,9 +81,9 @@ class Password
     
     /**
      * Returns information about the given hash
-     * 
+     *
      * @param string $hash Hash to get info
-     * 
+     *
      * @return array
      */
     public function getInfo(string $hash) : array

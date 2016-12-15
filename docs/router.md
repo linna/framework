@@ -42,6 +42,15 @@ $routes[] = [
     'action' => '',
 ];
 ```
+| Name           | Description                                                                            |
+|----------------|----------------------------------------------------------------------------------------|
+| name           | route name, for reverse routing (to do)                                                |
+| method         | valid request method for this route                                                    |
+| url            | route url                                                                              |
+| model          | model name                                                                             |
+| view           | view name                                                                              |
+| controller     | controller name                                                                        |
+| action         | specify an action for controller                                                       |
 
 ### Options
 ```php
@@ -58,3 +67,15 @@ $options =  [
 | rewriteMode    | false       | true if you use rewrite engine, false if no                                            |
 
 ## Class Structure
+
+Properties
+- *no public properties*
+
+Methods
+- getModel()
+- getView()
+- getController()
+- getAction()
+- getParam()
+
+## Methods
