@@ -64,7 +64,7 @@ class RouterCached extends Router
         if (($cachedRoute = $this->cache->get($requestUri)) !== false) {
             //get cached route
             $this->route = $cachedRoute;
-            //exit
+            
             return true;
         }
         
@@ -73,10 +73,10 @@ class RouterCached extends Router
         {
             //cache validated route
             $this->cache->set($requestUri, $this->route);
-            //exit
+            
             return true;
         }
-        //exit
+        
         return false;
     }
 }
