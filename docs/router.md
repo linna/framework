@@ -17,7 +17,7 @@ $router = new Router($routes, $options);
 Now router is ready for evaluate URLs.
 
 ### Routes example
-Below routes example, is necessary to always declare one valide route and one bad route.
+Below routes example, is necessary always declare one valide route and one bad route.
 ```php
 $routes = array();
 
@@ -85,7 +85,7 @@ Class constructor
 $router = new Router($routes, $options);
 ```
 #### Parameters
-*array* **$routes**
+*array* **$routes**<br/>
 *array* **$options**
 
 ### validate()
@@ -100,7 +100,7 @@ $router->validate($uri, $method);
 ```
 
 #### Parameters
-*string* **$requestUri**
+*string* **$requestUri**<br/>
 *string* **$requestMethod**
 
 #### Returns
