@@ -93,8 +93,9 @@ class Router
         //find bad route
         $route = $this->routes[array_search($this->options['badRoute'], array_column($this->routes, 'name'))];
         
-        //reset
+        //matches set empty array
         $matches = [];
+        //valid route set to 0
         $validRoute = 0;
         
         //filter registered routes for find route that match with current uri
@@ -136,17 +137,13 @@ class Router
             return false;
         }
         
-        if (sizeof($matches) === 1) {
-            //add to route array the passed uri for param check when call
-            $validRoute['matches'] = $matches;
-            
-            //assign valid route
-            $this->route = $this->buildRoute($validRoute);
-            
-            return true;
-        }
-        
-        return false;
+        //add to route array the passed uri for param check when call
+        $validRoute['matches'] = $matches;
+
+        //assign valid route
+        $this->route = $this->buildRoute($validRoute);
+
+        return true;
     }
     
     /**

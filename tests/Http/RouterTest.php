@@ -9,19 +9,21 @@
  *
  */
 
+declare(strict_types=1);
+
 use Linna\Http\Router;
 use Linna\Http\Route;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase
 {
-    protected $routes;
+    protected $router;
     
-    public function __construct()
+    public function setUp()
     {
-        $this->routes = array();
+        $routes = [];
 
-        $this->routes[] = [
+        $routes[] = [
             'name' => 'Home',
             'method' => 'GET',
             'url' => '/',
@@ -31,7 +33,7 @@ class RouterTest extends TestCase
             'action' => '',
         ];
 
-        $this->routes[] = [
+        $routes[] = [
             'name' => 'E404',
             'method' => 'GET',
             'url' => '/error',
@@ -41,7 +43,7 @@ class RouterTest extends TestCase
             'action' => '',
         ];
 
-        $this->routes[] = [
+        $routes[] = [
             'name' => 'User',
             'method' => 'GET',
             'url' => '/user',
@@ -51,7 +53,7 @@ class RouterTest extends TestCase
             'action' => '',
         ];
         
-        $this->routes[] = [
+        $routes[] = [
             'name' => '',
             'method' => 'GET',
             'url' => '/user/[id]/(disable|enable|delete|changePassword|modify)',
@@ -61,7 +63,7 @@ class RouterTest extends TestCase
             'action' => '',
         ];
         
-        $this->routes[] = [
+        $routes[] = [
             'name' => '',
             'method' => 'GET',
             'url' => '/userOther/(disable|enable|delete|changePassword|modify)/[id]',
@@ -70,21 +72,22 @@ class RouterTest extends TestCase
             'controller' => 'UserController',
             'action' => '',
         ];
-    }
-    
-    public function testRoute()
-    {
+        
         //start router
-        $router = new Router($this->routes, array(
+        $this->router = new Router($routes, array(
             'basePath' => '/',
             'badRoute' => 'E404',
             'rewriteMode' => true
-                ));
+        ));
+    }
+        
+    public function testRoute()
+    {
         //evaluate request uri
-        $router->validate('/user', 'GET');
+        $this->router->validate('/user', 'GET');
         
         //get route
-        $route = $router->getRoute();
+        $route = $this->router->getRoute();
         
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('UserModel', $route->getModel());
@@ -94,20 +97,13 @@ class RouterTest extends TestCase
         $this->assertEquals(array(), $route->getParam());
     }
     
-    public function testBadRoute()
+    public function testBadMethod()
     {
-        //start router
-        $router = new Router($this->routes, array(
-            'basePath' => '/',
-            'badRoute' => 'E404',
-            'rewriteMode' => true
-                ));
-        
         //evaluate request uri
-        $router->validate('/user', 'POST');
+        $this->router->validate('/user', 'POST');
         
         //get route
-        $route = $router->getRoute();
+        $route = $this->router->getRoute();
         
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('E404Model', $route->getModel());
@@ -117,20 +113,13 @@ class RouterTest extends TestCase
         $this->assertEquals(array(), $route->getParam());
     }
     
-    public function testBadMethod()
+    public function testBadRoute()
     {
-        //start router
-        $router = new Router($this->routes, array(
-            'basePath' => '/',
-            'badRoute' => 'E404',
-            'rewriteMode' => true
-                ));
-        
         //evaluate request uri
-        $router->validate('/badroute', 'GET');
+        $this->router->validate('/badroute', 'GET');
         
         //get route
-        $route = $router->getRoute();
+        $route = $this->router->getRoute();
         
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('E404Model', $route->getModel());
@@ -142,18 +131,11 @@ class RouterTest extends TestCase
     
     public function testParamRoute()
     {
-        //start router
-        $router = new Router($this->routes, array(
-            'basePath' => '/',
-            'badRoute' => 'E404',
-            'rewriteMode' => true
-                ));
-        
         //evaluate request uri
-        $router->validate('/user/5/enable', 'GET');
+        $this->router->validate('/user/5/enable', 'GET');
         
         //get route
-        $route = $router->getRoute();
+        $route = $this->router->getRoute();
         
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('UserModel', $route->getModel());
@@ -165,18 +147,11 @@ class RouterTest extends TestCase
     
     public function testInverseParamRoute()
     {
-        //start router
-        $router = new Router($this->routes, array(
-            'basePath' => '/',
-            'badRoute' => 'E404',
-            'rewriteMode' => true
-                ));
-        
         //evaluate request uri
-        $router->validate('/userOther/enable/5', 'GET');
+        $this->router->validate('/userOther/enable/5', 'GET');
         
         //get route
-        $route = $router->getRoute();
+        $route = $this->router->getRoute();
         
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('UserModel', $route->getModel());
@@ -188,12 +163,24 @@ class RouterTest extends TestCase
     
     public function testRewriteModeOff()
     {
+        //routes
+        $routes = [];
+        $routes[] = [
+            'name' => '',
+            'method' => 'GET',
+            'url' => '/user/[id]/(disable|enable|delete|changePassword|modify)',
+            'model' => 'UserModel',
+            'view' => 'UserView',
+            'controller' => 'UserController',
+            'action' => '',
+        ];
+        
         //start router
-        $router = new Router($this->routes, array(
+        $router = new Router($routes, array(
             'basePath' => '/',
             'badRoute' => 'E404',
             'rewriteMode' => false
-                ));
+        ));
         
         //evaluate request uri
         $router->validate('/index.php?//user/5/enable', 'GET');
