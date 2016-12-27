@@ -67,6 +67,10 @@ $options =  [
 | badRoute       | void string | route name for 404 page                                                                |
 | rewriteMode    | false       | true if you use rewrite engine, false if no                                            |
 
+basePath explaination:<br />
+if you have **/var/www/html/** as webserver doc directory and App code is placed under it, set basePath to **/**<br/>
+if you place App code inside a subdirectory as **/var/www/html/app/**, set basePath to **/app/**
+
 ## Class Structure
 
 Properties
