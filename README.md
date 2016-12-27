@@ -1,4 +1,7 @@
 ![Linna Framework](logo.png)
+<br/>
+<br/>
+<br/>
 [![Build Status](https://travis-ci.org/s3b4stian/linna-framework.svg?branch=master)](https://travis-ci.org/s3b4stian/linna-framework)
 [![Build Status](https://scrutinizer-ci.com/g/s3b4stian/linna-framework/badges/build.png?b=master)](https://scrutinizer-ci.com/g/s3b4stian/linna-framework/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/s3b4stian/linna-framework/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/s3b4stian/linna-framework/?branch=master)
