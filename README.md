@@ -1,4 +1,4 @@
-![Linna Framework](logo.png)
+![Linna Framework](logo-framework.png)
 <br/>
 <br/>
 <br/>
