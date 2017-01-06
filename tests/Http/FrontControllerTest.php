@@ -63,7 +63,7 @@ class FrontControllerTest extends TestCase
             'basePath' => '/',
             'badRoute' => 'E404',
             'rewriteMode' => true
-                ));
+        ));
         
         //evaluate request uri
         $router->validate('/Foo/modifyData', 'GET');
@@ -89,7 +89,8 @@ class FrontControllerTest extends TestCase
             'basePath' => '/',
             'badRoute' => 'E404',
             'rewriteMode' => true
-                ));
+        ));
+        
         //evaluate request uri
         $router->validate('/Foo/modifyData', 'GET');
         
@@ -125,7 +126,8 @@ class FrontControllerTest extends TestCase
             'basePath' => '/',
             'badRoute' => 'E404',
             'rewriteMode' => true
-                ));
+        ));
+        
         //evaluate request uri
         $router->validate('/Foo/data500/modifyDataFromParam', 'GET');
         
@@ -157,7 +159,8 @@ class FrontControllerTest extends TestCase
             'basePath' => '/',
             'badRoute' => 'E404',
             'rewriteMode' => true
-                ));
+        ));
+        
         //evaluate request uri
         $router->validate('/Foo/data500/modifyDataFromParam', 'GET');
         
