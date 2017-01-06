@@ -47,7 +47,7 @@ class DIResolver
      * @return object|null Instance of resolved class
      */
     public function resolve(string $resolveClass)
-    {   
+    {
         $resolveClass = (strpos($resolveClass, '\\') !== 0) ? '\\' . $resolveClass : $resolveClass;
         
         $this->buildDependencyTree($resolveClass);
@@ -63,7 +63,7 @@ class DIResolver
      * @param string $class Class wich tree will build
      */
     private function buildDependencyTree(string $class)
-    {   
+    {
         //set start level
         $level = 0;
         
