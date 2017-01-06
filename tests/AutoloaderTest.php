@@ -21,6 +21,7 @@ class AutoloaderTest extends TestCase
     {
         $this->autoloader = new Autoloader();
         $this->autoloader->register();
+        $this->autoloader->addNamespaces([['Linna\FOO', __DIR__.'/FOO']]);
     }
     
     public function testRegister()
@@ -34,23 +35,30 @@ class AutoloaderTest extends TestCase
     /**
      * @depends testRegister
      */
-    public function testNamespaces()
+    public function testNamespace()
     {
-        $this->autoloader->addNamespaces([
-            ['Linna\FOO', __DIR__.'/FOO'],
-            ['Linna', dirname(__DIR__) . '/src/Linna'],
-            ['Linna', dirname(__DIR__) . '/src/Linna/Shared'],
-            ['Linna\Auth', dirname(__DIR__) . '/src/Linna/Auth'],
-            ['Linna\DI', dirname(__DIR__) . '/src/Linna/DI'],
-            ['Linna\Database', dirname(__DIR__) . '/src/Linna/Database'],
-            ['Linna\DataMapper', dirname(__DIR__) . '/src/Linna/DataMapper'],
-            ['Linna\Http', dirname(__DIR__) . '/src/Linna/Http'],
-            ['Linna\Mvc', dirname(__DIR__) . '/src/Linna/Mvc'],
-            ['Linna\Session', dirname(__DIR__) . '/src/Linna/Session']
-        ]);
-        
-        $foo = new FOOClassH();
+        $foo = new \Linna\FOO\FOOClassH();
         
         $this->assertInstanceOf(FOOClassH::class, $foo);
+    }
+    
+    public function testBadNamespace()
+    {
+        $this->expectException(Exception::class);
+        $foo = new \Linna\BAZ\FOOClassH();
+    }
+    
+    public function testBadClass()
+    {
+        $foo = class_exists('\FOOClassNULL', true);
+        
+        $this->assertEquals(false, $foo);
+    }
+    
+    public function testBadPrefix()
+    {
+        $foo = class_exists('BAZ\Foo\FOOClassNULL', true);
+        
+        $this->assertEquals(false, $foo);
     }
 }

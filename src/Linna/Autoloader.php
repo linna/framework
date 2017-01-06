@@ -135,7 +135,7 @@ class Autoloader
             if ($mappedFile !== false) {
                 return $mappedFile;
             }
-
+            
             // remove the trailing namespace separator for the next iteration
             // of strrpos()
             $prefix = rtrim($prefix, '\\');
@@ -151,8 +151,10 @@ class Autoloader
      * @param string $prefix The namespace prefix.
      * @param string $relativeClass The relative class name.
      *
-     * @return mixed Boolean false if no mapped file can be loaded, or the
-     *               name of the mapped file that was loaded.
+     * @return string|bool Boolean false there are any base directories for namespace prefix
+     *                     or the name of the mapped file that was loaded.
+     * 
+     * @throws \Exception If you try to instantiate an inexistent class
      */
     protected function loadMappedFile(string $prefix, string $relativeClass)
     {
@@ -178,7 +180,6 @@ class Autoloader
             }
         }
         
-        // never found it
-        return false;
+        throw new \Exception("Unable to find class {$relativeClass} in {$file}.");
     }
 }
