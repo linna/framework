@@ -44,11 +44,13 @@ class DIResolver
      *
      * @param string $resolveClass Class needed
      *
-     * @return object Instance of resolved class
+     * @return object|null Instance of resolved class
      */
     public function resolve(string $resolveClass)
-    {
-        $this->buildDependencyTree(0, $resolveClass);
+    {   
+        $resolveClass = (strpos($resolveClass, '\\') !== 0) ? '\\' . $resolveClass : $resolveClass;
+        
+        $this->buildDependencyTree($resolveClass);
         
         $this->buildObjects(array_reverse($this->dependencyTree));
         
@@ -58,19 +60,19 @@ class DIResolver
     /**
      * Create a dependencies map for a class
      *
-     * @param int $level Level for dependency
      * @param string $class Class wich tree will build
      */
-    private function buildDependencyTree(int $level, string $class)
-    {
+    private function buildDependencyTree(string $class)
+    {   
+        //set start level
+        $level = 0;
+        
         //create stack
         $stack = new \SplStack;
         
+        //iterate
         while (true) {
             
-            //initial back slash
-            $class = (strpos($class, '\\') !== 0) ? '\\' . $class : $class;
-
             //initialize array if not already initialized
             if (!isset($this->dependencyTree[$level][$class])) {
                 $this->dependencyTree[$level][$class] = [];
@@ -88,18 +90,21 @@ class DIResolver
                 //if there is parameter with callable type
                 if ($value->hasType() === true && class_exists((string) $value->getType())) {
                     
+                    //store parameter class name
+                    $tmpClass = '\\' . $value->getClass()->name;
+                    
                     //if class are not already resolved
-                    if (!in_array('\\' . $value->getClass()->name, $this->dependencyTree[$level][$class])) {
+                    if (!in_array($tmpClass, $this->dependencyTree[$level][$class])) {
                         
                         //push values in stack for simulate later recursive function
                         $stack->push([$level, $class]);
 
                         //store dependency
-                        $this->dependencyTree[$level][$class][] = '\\' . $value->getClass()->name;
+                        $this->dependencyTree[$level][$class][] = $tmpClass;
 
                         //update values for simulate recursive function
                         $level = $level + 1;
-                        $class = $value->getClass()->name;
+                        $class = $tmpClass;
                         
                         //return to main while
                         continue 2;

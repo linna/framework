@@ -53,6 +53,27 @@ Return object instance after injecting dependencies
 
 #### Usage
 ```php
+//example classes, A require B, B require C and D
+class A { public function __construct(B $b) {echo 'A';} }
+class B { public function __construct(C $c, D $d) {echo 'B';} }
+class C { public function __construct() {echo 'C';} }
+class D { public function __construct() {echo 'D';} }
+
+$DIResolver = new DIResolver();
+//work
+$a = $DIResolver->resolve('\A'); 
+//work
+$a = $DIResolver->resolve('A'); 
+```
+
+With namespaces:
+```php
+namespace Linna\Baz;
+
+use \Linna\Foo\A;
+use \Linna\Foo\B;
+use \Linna\Foo\C;
+use \Linna\Foo\D;
 
 //example classes, A require B, B require C and D
 class A { public function __construct(B $b) {echo 'A';} }
@@ -61,7 +82,12 @@ class C { public function __construct() {echo 'C';} }
 class D { public function __construct() {echo 'D';} }
 
 $DIResolver = new DIResolver();
-$a = $DIResolver->resolve('\A');
+//work
+$a = $DIResolver->resolve('\Linna\Foo\A');
+//work
+$a = $DIResolver->resolve('Linna\Foo\A');
+//not work
+$a = $DIResolver->resolve('\A'); 
+//not work
+$a = $DIResolver->resolve('A');
 ```
-In the above example **$a** contain class **A** instance.<br />
-*Important: to resolve, must pass as argument, '\ A' instead of 'A', if 'A' is passed DI Resolver will build dependencies returning a null value*
