@@ -20,6 +20,11 @@ namespace Linna\Auth;
 trait ProtectedController
 {
     /**
+     * @var bool $authentication Contain login status
+     */
+    protected $authentication = false;
+    
+    /**
      * Allow access to controller only if logged
      *
      * @param \Linna\Auth\Login $loginIstance
@@ -27,7 +32,7 @@ trait ProtectedController
      */
     protected function protect(Login $loginIstance, string $redirect)
     {
-        if ($loginIstance->logged === false) {
+        if (($this->authentication = $loginIstance->logged) === false) {
             header('Location: '.$redirect);
         }
     }
