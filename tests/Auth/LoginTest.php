@@ -41,9 +41,10 @@ class LoginTest extends TestCase
         
         //hash password
         $storedPassword = $this->password->hash('password');
+        $storedUser = 'root';
         
         //attemp first login
-        $loginResult = $this->login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
+        $loginResult = $this->login->login('root', 'password', $storedUser, $storedPassword, 1);
         
         //attemp check if logged
         $logged = $this->login->logged;
@@ -71,9 +72,10 @@ class LoginTest extends TestCase
         
         //hash password
         $storedPassword = $this->password->hash('password');
+        $storedUser = 'root';
         
         //attemp first login
-        $this->login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
+        $this->login->login('root', 'password', $storedUser, $storedPassword, 1);
         $loginResult = $this->login->logged;
         
         //do logout
@@ -98,10 +100,11 @@ class LoginTest extends TestCase
         
          //hash password
         $storedPassword = $this->password->hash('password');
+        $storedUser = 'root';
         
         //try login with bad credentials
-        $loginResult = $this->login->login('root', 'badPassword', $storedUser = 'root', $storedPassword, 1);
-        $loginResult2 = $this->login->login('badUser', 'password', $storedUser = 'root', $storedPassword, 1);
+        $loginResult = $this->login->login('root', 'badPassword', $storedUser, $storedPassword, 1);
+        $loginResult2 = $this->login->login('badUser', 'password', $storedUser, $storedPassword, 1);
         
         $this->assertEquals(false, $loginResult);
         $this->assertEquals(false, $loginResult2);
@@ -118,10 +121,11 @@ class LoginTest extends TestCase
         
         //hash password
         $storedPassword = $this->password->hash('password');
+        $storedUser = 'root';
         
         //attemp first login
         $login = new Login($this->session, $this->password);
-        $firstLogin = $login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
+        $firstLogin = $login->login('root', 'password', $storedUser, $storedPassword, 1);
         //attemp check if logged
         $firstLogged = $login->logged;
         
