@@ -45,10 +45,11 @@ class ProtectedControllerTest extends TestCase
         
         $password = new Password();
         $storedPassword = $password->hash('password');
+        $storedUser = 'root';
         
         //attemp first login
         $login = new Login($session, $password);
-        $login->login('root', 'password', $storedUser = 'root', $storedPassword, 1);
+        $login->login('root', 'password', $storedUser, $storedPassword, 1);
         $loginLogged = $login->logged;
         
         $model = new FOOModel();
