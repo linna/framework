@@ -14,7 +14,7 @@ If you wish start to utilize the Framework for build an app, look [Linna App](ht
 * [Router](router.md)
 * [Route Object](route.md)
 * (To do) [Route Examples](routeEx.md)
-* (To do) [Front Controller](frontController.md)
+* [Front Controller](frontController.md)
 
 ### Session
 * [Session](session.md)
