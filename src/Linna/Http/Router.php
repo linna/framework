@@ -208,7 +208,7 @@ class Router
     private function getCurrentUri(string $passedUri): string
     {
         if ($this->options['rewriteMode'] === false) {
-            $passedUri = str_replace('/index.php?/', '', $passedUri);
+            $passedUri = str_replace('index.php?/', '', $passedUri);
         }
             
         $url = $passedUri ?? '/';
