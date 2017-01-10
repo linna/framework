@@ -256,7 +256,7 @@ class RouterCachedTest extends TestCase
                 ), $memcached);
         
         //evaluate request uri
-        $router->validate('/index.php?//user/5/enable', 'GET');
+        $router->validate('/index.php?/user/5/enable', 'GET');
         
         //get route
         $route = $router->getRoute();
