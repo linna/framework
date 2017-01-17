@@ -31,7 +31,7 @@ use Linna\Storage\MysqlPdoAdapter;
  *  PRIMARY KEY (`session_id`)
  * ) ENGINE=MEMORY DEFAULT CHARSET=utf8;
  */
-class MysqlPDOSessionHandler implements SessionHandlerInterface
+class MysqlPdoSessionHandler implements SessionHandlerInterface
 {
     /**
      * @var object $dBase Database Connection
