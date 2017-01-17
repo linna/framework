@@ -23,7 +23,7 @@ use mysqli_sql_exception;
 class MysqliAdapter implements AdapterInterface
 {
     /**
-     * @var string $dns Dsn string for mysql
+     * @var string $host Mysql host es. 127.0.0.1
      */
     protected $host;
     
@@ -39,13 +39,13 @@ class MysqliAdapter implements AdapterInterface
     
     /**
      *
-     * @var array $options PDO options
+     * @var string $database Database name
      */
     protected $database;
     
     /**
      *
-     * @var array $options PDO options
+     * @var int $port Mysql tcp port es. 3306
      */
     protected $port;
     
