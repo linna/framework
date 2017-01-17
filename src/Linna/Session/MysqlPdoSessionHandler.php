@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Linna\Session;
 
-use \SessionHandlerInterface;
-use \Linna\Database\Database;
+use SessionHandlerInterface;
+use Linna\Storage\MysqlPdoAdapter;
 
 /**
  * Store sessions in Database.
@@ -31,7 +31,7 @@ use \Linna\Database\Database;
  *  PRIMARY KEY (`session_id`)
  * ) ENGINE=MEMORY DEFAULT CHARSET=utf8;
  */
-class DatabaseSessionHandler implements SessionHandlerInterface
+class MysqlPDOSessionHandler implements SessionHandlerInterface
 {
     /**
      * @var object $dBase Database Connection
@@ -41,11 +41,11 @@ class DatabaseSessionHandler implements SessionHandlerInterface
     /**
      * Constructor
      *
-     * @param Database $storage Database object
+     * @param MysqlPdoAdapter $storage MysqlPdoResource
      */
-    public function __construct(Database $storage)
+    public function __construct(MysqlPdoAdapter $storage)
     {
-        $this->dBase = $storage->connect();
+        $this->dBase = $storage->getResource();
     }
 
     /**

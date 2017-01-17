@@ -76,6 +76,8 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      */
     public function gc($maxLifetime)
     {
+        unset($maxLifetime);
+        
         //this method is no needed because all object stored expire without external operation
         return true;
     }

@@ -9,14 +9,14 @@
  *
  */
 
-use Linna\Database\MysqlPDOAdapter;
+use Linna\Storage\MysqlPdoAdapter;
 use PHPUnit\Framework\TestCase;
 
-class MysqlPDOAdapterTest extends TestCase
+class MysqlPdoAdapterTest extends TestCase
 {
     public function testConnection()
     {
-        $MysqlAdapter = new MysqlPDOAdapter(
+        $MysqlAdapter = new MysqlPdoAdapter(
         $GLOBALS['db_type'].':host='.$GLOBALS['db_host'].';dbname='.$GLOBALS['db_name'].';charset=utf8mb4',
         $GLOBALS['db_username'],
         $GLOBALS['db_password'],
@@ -33,7 +33,7 @@ class MysqlPDOAdapterTest extends TestCase
     {
         ob_start();
         
-        $MysqlAdapter1 = new MysqlPDOAdapter(
+        $MysqlAdapter1 = new MysqlPdoAdapter(
         '',
         $GLOBALS['db_username'],
         $GLOBALS['db_password'],

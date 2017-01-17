@@ -12,7 +12,7 @@ function call_autoloader()
         ['Linna\FOO', __DIR__.'/FOO'],
         ['Linna\Auth', dirname(__DIR__) . '/src/Linna/Auth'],
         ['Linna\DI', dirname(__DIR__) . '/src/Linna/DI'],
-        ['Linna\Database', dirname(__DIR__) . '/src/Linna/Database'],
+        ['Linna\Storage', dirname(__DIR__) . '/src/Linna/Storage'],
         ['Linna\DataMapper', dirname(__DIR__) . '/src/Linna/DataMapper'],
         ['Linna\Http', dirname(__DIR__) . '/src/Linna/Http'],
         ['Linna\Mvc', dirname(__DIR__) . '/src/Linna/Mvc'],

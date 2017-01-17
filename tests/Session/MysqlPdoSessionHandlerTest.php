@@ -8,29 +8,27 @@
  * @license http://opensource.org/licenses/MIT MIT License
  *
  */
-use Linna\Database\Database;
-use Linna\Database\MysqlPDOAdapter;
-use Linna\Session\DatabaseSessionHandler;
+
+use Linna\Storage\MysqlPdoAdapter;
+use Linna\Session\MysqlPdoSessionHandler;
 use Linna\Session\Session;
 use PHPUnit\Framework\TestCase;
 
-class DatabaseSessionHandlerTest extends TestCase
+class MysqlPdoSessionHandlerTest extends TestCase
 {
     /**
      * @runInSeparateProcess
      */
     public function testSession()
     {
-        $MysqlAdapter = new MysqlPDOAdapter(
+        $MysqlPdoAdapter = new MysqlPdoAdapter(
                 $GLOBALS['db_type'].':host='.$GLOBALS['db_host'].';dbname='.$GLOBALS['db_name'].';charset=utf8mb4',
                 $GLOBALS['db_username'],
                 $GLOBALS['db_password'],
                 array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
         );
 
-        $dbase = new Database($MysqlAdapter);
-
-        $sessionHandler = new DatabaseSessionHandler($dbase);
+        $sessionHandler = new MysqlPdoSessionHandler($MysqlPdoAdapter);
 
         $session = new Session(['expire' => 8]);
         
@@ -58,16 +56,14 @@ class DatabaseSessionHandlerTest extends TestCase
      */
     public function testExpiredSession()
     {
-        $MysqlAdapter = new MysqlPDOAdapter(
+        $MysqlPdoAdapter = new MysqlPdoAdapter(
                 $GLOBALS['db_type'].':host='.$GLOBALS['db_host'].';dbname='.$GLOBALS['db_name'].';charset=utf8mb4',
                 $GLOBALS['db_username'],
                 $GLOBALS['db_password'],
                 array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
         );
 
-        $dbase = new Database($MysqlAdapter);
-
-        $sessionHandler = new DatabaseSessionHandler($dbase);
+        $sessionHandler = new MysqlPdoSessionHandler($MysqlPdoAdapter);
 
         $session = new Session(['expire' => 8]);
         
@@ -95,18 +91,16 @@ class DatabaseSessionHandlerTest extends TestCase
      */
     public function testGc()
     {
-        $MysqlAdapter = new MysqlPDOAdapter(
+        $MysqlPdoAdapter = new MysqlPdoAdapter(
                 $GLOBALS['db_type'].':host='.$GLOBALS['db_host'].';dbname='.$GLOBALS['db_name'].';charset=utf8mb4',
                 $GLOBALS['db_username'],
                 $GLOBALS['db_password'],
                 array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
         );
 
-        $dbase = new Database($MysqlAdapter);
-
-        $sessionHandler = new DatabaseSessionHandler($dbase);
-        
-        $conn = $dbase->connect();
+        $sessionHandler = new MysqlPdoSessionHandler($MysqlPdoAdapter);
+                
+        $conn = $MysqlPdoAdapter->getResource();
         
         $pdos = $conn->prepare('DELETE FROM session');
         $pdos->execute();

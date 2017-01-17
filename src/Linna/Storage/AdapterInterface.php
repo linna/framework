@@ -9,7 +9,7 @@
  *
  */
 
-namespace Linna\Database;
+namespace Linna\Storage;
 
 /**
  * Adapter Interface
