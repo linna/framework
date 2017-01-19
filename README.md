@@ -25,14 +25,15 @@ If you wish deepen PHP best pratices you can start from [phptherightway](http://
    * Session Managment and Login
    * Routing
    * Dependency Injections
-   * Storage Manager for data base and cache
+   * Wrappers for data base
    * PSR4 Autoloader
 
 ### Require
 
    * PHP >= 7.0
-   * PHP PDO extension (optional)
-   * PHP Memcached extension (optional)
+   * PDO extension (optional)
+   * Memcached extension (optional)
+   * Mongodb extension (optional)
 
 
 ### To Do
