@@ -19,6 +19,8 @@
         }
     },
     "autoload-dev": {
-        "psr-4": { "Linna\\FOO\\": "tests/FOO/" }
+        "psr-4": { 
+            "Linna\\FOO\\": "tests/FOO/" 
+        }
     }
 }
