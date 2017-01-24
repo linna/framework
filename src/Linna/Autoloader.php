@@ -153,7 +153,7 @@ class Autoloader
      *
      * @return string|bool Boolean false there are any base directories for namespace prefix
      *                     or the name of the mapped file that was loaded.
-     * 
+     *
      * @throws \Exception If you try to instantiate an inexistent class
      */
     protected function loadMappedFile(string $prefix, string $relativeClass)

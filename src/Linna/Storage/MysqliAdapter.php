@@ -51,14 +51,14 @@ class MysqliAdapter implements AdapterInterface
     
     /**
      * Constructor
-     * 
+     *
      * @param string $host
      * @param string $user
      * @param string $password
      * @param string $database
      * @param int $port
      */
-    public function __construct(string $host, string $user, string $password, string $database,  int $port)
+    public function __construct(string $host, string $user, string $password, string $database, int $port)
     {
         $this->host = $host;
     
