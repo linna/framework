@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 use Linna\Autoloader;
 use Linna\FOO\FOOClassH;
 use PHPUnit\Framework\TestCase;

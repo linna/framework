@@ -16,13 +16,11 @@
         <log type="coverage-clover" target="clover.xml"/>
     </logging>
     <php>
-        <var name="db_type" value="mysql"/>
-        <var name="db_host" value="localhost" />
-        <var name="db_username" value="root" />
-        <var name="db_password" value="" />
-        <var name="db_name" value="test" />
-        <var name="db_port" value="3306"/>
+        <var name="pdo_mysql_dsn" value="mysql:host=localhost;dbname=test;charset=utf8mb4"/> 
+        <var name="pdo_mysql_user" value="root" />
+        <var name="pdo_mysql_password" value="" />
         <var name="mem_host" value="localhost" />
         <var name="mem_port" value="11211"/>
+        <var name="mongodb_server_string" value="mongodb://localhost:27017"/> 
     </php>
 </phpunit>

@@ -9,12 +9,14 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace Linna\FOO;
 
 class FOOClassF
 {
     public function __construct()
     {
-        echo 'F';
+        return 'F';
     }
 }

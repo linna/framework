@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 use Linna\Storage\MysqlPdoAdapter;
 use PHPUnit\Framework\TestCase;
 
@@ -16,14 +18,14 @@ class MysqlPdoAdapterTest extends TestCase
 {
     public function testConnection()
     {
-        $MysqlAdapter = new MysqlPdoAdapter(
-        $GLOBALS['db_type'].':host='.$GLOBALS['db_host'].';dbname='.$GLOBALS['db_name'].';charset=utf8mb4',
-        $GLOBALS['db_username'],
-        $GLOBALS['db_password'],
-        array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
+        $mysqlPdoAdapter = new MysqlPdoAdapter(
+            $GLOBALS['pdo_mysql_dsn'],
+            $GLOBALS['pdo_mysql_user'],
+            $GLOBALS['pdo_mysql_password'],
+            array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING)
         );
-
-        $this->assertInstanceOf(PDO::class, $MysqlAdapter->getResource());
+        
+        $this->assertInstanceOf(PDO::class, $mysqlPdoAdapter->getResource());
     }
     
     /**
@@ -33,14 +35,14 @@ class MysqlPdoAdapterTest extends TestCase
     {
         ob_start();
         
-        $MysqlAdapter1 = new MysqlPdoAdapter(
-        '',
-        $GLOBALS['db_username'],
-        $GLOBALS['db_password'],
-        array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
+        $mysqlPdoAdapter = new MysqlPdoAdapter(
+            '',
+            $GLOBALS['pdo_mysql_user'],
+            $GLOBALS['pdo_mysql_password'],
+            array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING)
         );
         
-        $resource = $MysqlAdapter1->getResource();
+        $resource = $mysqlPdoAdapter->getResource();
         
         $message = ob_get_clean();
         

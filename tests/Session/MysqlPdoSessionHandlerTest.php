@@ -9,6 +9,8 @@
  *
  */
 
+declare(strict_types=1);
+
 use Linna\Storage\MysqlPdoAdapter;
 use Linna\Session\MysqlPdoSessionHandler;
 use Linna\Session\Session;
@@ -21,14 +23,14 @@ class MysqlPdoSessionHandlerTest extends TestCase
      */
     public function testSession()
     {
-        $MysqlPdoAdapter = new MysqlPdoAdapter(
-                $GLOBALS['db_type'].':host='.$GLOBALS['db_host'].';dbname='.$GLOBALS['db_name'].';charset=utf8mb4',
-                $GLOBALS['db_username'],
-                $GLOBALS['db_password'],
-                array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
+        $mysqlPdoAdapter = new MysqlPdoAdapter(
+            $GLOBALS['pdo_mysql_dsn'],
+            $GLOBALS['pdo_mysql_user'],
+            $GLOBALS['pdo_mysql_password'],
+            array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING)
         );
 
-        $sessionHandler = new MysqlPdoSessionHandler($MysqlPdoAdapter);
+        $sessionHandler = new MysqlPdoSessionHandler($mysqlPdoAdapter);
 
         $session = new Session(['expire' => 8]);
         
@@ -56,14 +58,14 @@ class MysqlPdoSessionHandlerTest extends TestCase
      */
     public function testExpiredSession()
     {
-        $MysqlPdoAdapter = new MysqlPdoAdapter(
-                $GLOBALS['db_type'].':host='.$GLOBALS['db_host'].';dbname='.$GLOBALS['db_name'].';charset=utf8mb4',
-                $GLOBALS['db_username'],
-                $GLOBALS['db_password'],
-                array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
+        $mysqlPdoAdapter = new MysqlPdoAdapter(
+            $GLOBALS['pdo_mysql_dsn'],
+            $GLOBALS['pdo_mysql_user'],
+            $GLOBALS['pdo_mysql_password'],
+            array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING)
         );
 
-        $sessionHandler = new MysqlPdoSessionHandler($MysqlPdoAdapter);
+        $sessionHandler = new MysqlPdoSessionHandler($mysqlPdoAdapter);
 
         $session = new Session(['expire' => 8]);
         
@@ -91,29 +93,28 @@ class MysqlPdoSessionHandlerTest extends TestCase
      */
     public function testGc()
     {
-        $MysqlPdoAdapter = new MysqlPdoAdapter(
-                $GLOBALS['db_type'].':host='.$GLOBALS['db_host'].';dbname='.$GLOBALS['db_name'].';charset=utf8mb4',
-                $GLOBALS['db_username'],
-                $GLOBALS['db_password'],
-                array(\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, \PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING)
+        $mysqlPdoAdapter = new MysqlPdoAdapter(
+            $GLOBALS['pdo_mysql_dsn'],
+            $GLOBALS['pdo_mysql_user'],
+            $GLOBALS['pdo_mysql_password'],
+            array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING)
         );
 
-        $sessionHandler = new MysqlPdoSessionHandler($MysqlPdoAdapter);
+        $sessionHandler = new MysqlPdoSessionHandler($mysqlPdoAdapter);
                 
-        $conn = $MysqlPdoAdapter->getResource();
+        $conn = $mysqlPdoAdapter->getResource();
+        $conn->query('DELETE FROM session');
         
-        $pdos = $conn->prepare('DELETE FROM session');
-        $pdos->execute();
-        
-        for ($i = 0;$i<10;$i++) {
-            $sessionId = md5($i);
+                
+        for ($i = 0; $i < 10; $i++) {
+            $sessionId = md5((string) $i);
             $time = time()-$i;
             $data = 'time|i:'.$time.';';
             
             $pdos = $conn->prepare('INSERT INTO session (session_id, session_data) VALUES (:session_id, :session_data)');
 
-            $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
-            $pdos->bindParam(':session_data', $data, \PDO::PARAM_STR);
+            $pdos->bindParam(':session_id', $sessionId, PDO::PARAM_STR);
+            $pdos->bindParam(':session_data', $data, PDO::PARAM_STR);
             $pdos->execute();
         }
         
