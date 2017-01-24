@@ -9,40 +9,32 @@
  *
  */
 
-use Linna\Autoloader;
+declare(strict_types=1);
+
 use Linna\Auth\Password;
 use Linna\FOO\FOOUser;
 use PHPUnit\Framework\TestCase;
 
 class DomainObjectTest extends TestCase
 {
-    protected $autoloader;
+    protected $user;
     
-    public function __construct()
-    {
-        $this->autoloader = new Autoloader();
-        $this->autoloader->register();
-        $this->autoloader->addNamespaces([
-           ['Linna\FOO', dirname(__DIR__).'/FOO']
-        ]);
-    }
-    
-    public function testUser()
+    public function setUp()
     {
         $password = new Password();
-        $user = new FOOUser($password);
-        
-        $this->assertInstanceOf(FOOUser::class, $user);
+        $this->user = new FOOUser($password);
+    }
+    
+    public function testNewUser()
+    {
+        $this->assertInstanceOf(FOOUser::class, $this->user);
     }
     
     public function testUserSetId()
     {
-        $password = new Password();
-        $user = new FOOUser($password);
+        $this->user->setId(1);
         
-        $user->setId(1);
-        
-        $this->assertEquals(1, $user->getId());
+        $this->assertEquals(1, $this->user->getId());
     }
     
     /**
@@ -51,15 +43,12 @@ class DomainObjectTest extends TestCase
      */
     public function testUserOverrideId()
     {
-        $password = new Password();
-        $user = new FOOUser($password);
-        
-        $user->setId(1);
-        $userId = $user->getId();
+        $this->user->setId(1);
+        $userId = $this->user->getId();
         
         ob_start();
         
-        $user->setId(2);
+        $this->user->setId(2);
         
         $message = ob_get_clean();
         

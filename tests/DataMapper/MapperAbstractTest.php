@@ -9,7 +9,8 @@
  *
  */
 
-use Linna\Autoloader;
+declare(strict_types=1);
+
 use Linna\Auth\Password;
 use Linna\FOO\FOOUser;
 use Linna\FOO\FOOUserMapper;
@@ -17,74 +18,56 @@ use PHPUnit\Framework\TestCase;
 
 class MapperAbstractTest extends TestCase
 {
-    protected $autoloader;
+    protected $mapper;
     
-    public function __construct()
-    {
-        $this->autoloader = new Autoloader();
-        $this->autoloader->register();
-        $this->autoloader->addNamespaces([
-           ['Linna\FOO', dirname(__DIR__).'/FOO']
-        ]);
-    }
-    
-    public function testUserMapper()
+    public function setUp()
     {
         $password = new Password();
-        $mapper = new FOOUserMapper($password);
-        
-        $this->assertInstanceOf(FOOUserMapper::class, $mapper);
+        $this->mapper = new FOOUserMapper($password);
     }
     
-    public function testNewUserFromMapper()
+    public function testNewMapper()
     {
-        $password = new Password();
-        $mapper = new FOOUserMapper($password);
-        
-        $user = $mapper->create();
+        $this->assertInstanceOf(FOOUserMapper::class, $this->mapper);
+    }
+    
+    public function testNewObjectFromMapper()
+    {
+        $user = $this->mapper->create();
         
         $this->assertInstanceOf(FOOUser::class, $user);
     }
     
-    public function testSaveNewUserWithMapper()
+    public function testSaveWithMapper()
     {
-        $password = new Password();
-        $mapper = new FOOUserMapper($password);
-
-        $user = $mapper->create();
+        $user = $this->mapper->create();
         $user->name = 'test';
 
-        $result = $mapper->save($user);
+        $result = $this->mapper->save($user);
 
         $this->assertEquals('insert', $result);
     }
     
-    public function testSaveExistUserWithMapper()
+    public function testSaveExistWithMapper()
     {
-        $password = new Password();
-        $mapper = new FOOUserMapper($password);
-
-        $user = $mapper->findById(5);
+        $user = $this->mapper->findById(5);
         
         $this->assertEquals(5, $user->getId());
         $this->assertEquals('user_5', $user->name);
 
-        $result = $mapper->save($user);
+        $result = $this->mapper->save($user);
 
         $this->assertEquals('update', $result);
     }
     
-    public function testDeleteUserWithMapper()
+    public function testDeleteWithMapper()
     {
-        $password = new Password();
-        $mapper = new FOOUserMapper($password);
-
-        $user = $mapper->findById(5);
+        $user = $this->mapper->findById(5);
         
         $this->assertEquals(5, $user->getId());
         $this->assertEquals('user_5', $user->name);
 
-        $result = $mapper->delete($user);
+        $result = $this->mapper->delete($user);
 
         $this->assertEquals('delete', $result);
     }
