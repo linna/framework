@@ -17,6 +17,7 @@ build:
        php: 7.0.8
        mysql: 5.5
        memcached: true
+       mongodb: true
     tests:
             override:
                 -
