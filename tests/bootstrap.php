@@ -8,6 +8,7 @@ function call_autoloader()
     $loader->register();
 
     $loader->addNamespaces([
+        ['MongoDB', dirname(__DIR__) . '/vendor/mongodb/mongodb/src'],
         ['Linna', dirname(__DIR__) . '/src/Linna'],
         ['Linna\FOO', __DIR__.'/FOO'],
         ['Linna\Auth', dirname(__DIR__) . '/src/Linna/Auth'],
