@@ -36,7 +36,7 @@ If you wish deepen PHP best pratices you can start from [phptherightway](http://
    * Mongodb extension (optional)
 
 
-### To Do
+### To do
    
    * Complete the documentation
    * Session tuning
