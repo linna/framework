@@ -13,7 +13,7 @@ If you wish start to utilize the Framework for build an app, look [Linna App](ht
 ### Http
 * [Router](router.md)
 * [Route Object](route.md)
-* (To do) [Route Examples](routeEx.md)
+* (To do) [Route Examples](routeExamples.md)
 * [Front Controller](frontController.md)
 
 ### Session
@@ -30,13 +30,13 @@ If you wish start to utilize the Framework for build an app, look [Linna App](ht
 * [Model](model.md)
 * (To do) [View](view.md)
 * (To do) [Controller](controller.md)
+* (To do) [TemplateInterface](templateInterface.md)
 
 ### Dependency Injection
 * [DI Container](diContainer.md)
 * [DI Resolver](diResolver.md)
 
-### Database
-* (To do) [Data Base](dataBase.md)
+### Storage
 * (To do) [Adapter](adapter.md)
 
 ### Data Mapper
@@ -48,15 +48,13 @@ If you wish start to utilize the Framework for build an app, look [Linna App](ht
 
 *[C] Class [I] Interface [T] Trait*
 
+Linna\
+- [C] Autoloader
+
 Linna\Auth\
 - [C] Login
 - [C] Password
 - [T] ProtectedController
-
-Linna\Database\
-- [I] AdapterInterface
-- [C] Database
-- [C] MysqlPDOAdapter
 
 Linna\DataMapper\
 - [C] DomainObjectInterface
@@ -72,7 +70,6 @@ Linna\Http\
 - [C] FrontController
 - [C] Route
 - [C] Router
-- [C] RouterCached
 
 Linna\Mvc\
 - [I] TemplateInterface
@@ -85,5 +82,7 @@ Linna\Session\
 - [C] MemcachedSessionHandler
 - [C] Session
 
-Linna\
-- [C] Autoloader
+Linna\Storage\
+- [I] AdapterInterface
+- [C] MongoDbAdapter
+- [C] MysqlPdoAdapter
