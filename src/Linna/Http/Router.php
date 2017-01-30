@@ -170,7 +170,13 @@ class Router
         
         //return new route object
         return new Route(
-                $route['name'], $route['method'], $route['model'], $route['view'], $route['controller'], $route['action'], $param
+            $route['name'],
+            $route['method'],
+            $route['model'],
+            $route['view'],
+            $route['controller'],
+            $route['action'],
+            $param
         );
     }
     
