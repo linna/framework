@@ -114,7 +114,7 @@ class DIResolver
             
             //if stack is empty break while end exit from function
             if ($stack->count() === 0) {
-                return;
+                break;
             }
             
             //get last value pushed into stack;
