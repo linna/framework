@@ -144,11 +144,11 @@ class Session
     private function setCookie()
     {
         setcookie(
-                session_name(),
-                session_id(),
-                time() + $this->options['expire'],
-                (string) $this->options['cookieSecure'],
-                (string) $this->options['cookieHttpOnly']
+            session_name(),
+            session_id(),
+            time() + $this->options['expire'],
+            (string) $this->options['cookieSecure'],
+            (string) $this->options['cookieHttpOnly']
         );
     }
     
