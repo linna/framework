@@ -1,6 +1,11 @@
 engines:
   phpcodesniffer:
     enabled: true
+    checks:
+      Generic Files LineLength TooLong:
+        enabled: false
+      Squiz WhiteSpace ControlStructureSpacing SpacingAfterOpen:
+        enabled: false
   phpmd:
     enabled: true
 ratings:
