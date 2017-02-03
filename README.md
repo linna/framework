@@ -41,7 +41,6 @@ If you wish deepen PHP best pratices you can start from [phptherightway](http://
    * Complete the documentation
    * Session tuning
    * Router tuning
-   * DIResolver, add trick for resolve scalar arguments types
    * PSR7 support through linna-PSR7 package
 
 ## Documentation 
