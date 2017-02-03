@@ -20,7 +20,7 @@ class DIResolverTest extends TestCase
     public function testResolve()
     {
         $DIResolver = new DIResolver();
-        $DIResolver->cacheUnResolvable('\Linna\FOO\FOOClassAA', new FOOClassAA('DIResolver'));
+        $DIResolver->cache('\Linna\FOO\FOOClassAA', new FOOClassAA('DIResolver'));
         
         
         $FOOClassA = $DIResolver->resolve('\Linna\FOO\FOOClassA');
@@ -47,7 +47,7 @@ class DIResolverTest extends TestCase
     public function testResolveWithoutBackSlash()
     {
         $DIResolver = new DIResolver();
-        $DIResolver->cacheUnResolvable('\Linna\FOO\FOOClassAA', new FOOClassAA('DIResolver'));
+        $DIResolver->cache('\Linna\FOO\FOOClassAA', new FOOClassAA('DIResolver'));
         
         
         $FOOClassA = $DIResolver->resolve('Linna\FOO\FOOClassA');
