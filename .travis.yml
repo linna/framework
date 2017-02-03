@@ -19,7 +19,6 @@ before_script:
 - mysql -e 'create database test;'
 - mysql -u root test < tests/database.sql
 - phpunit --check-version
-- phpunit --self-upgrade
 - if [[ $TRAVIS_PHP_VERSION != 'hhvm' ]]; then composer require mongodb/mongodb; fi
 - if [[ $TRAVIS_PHP_VERSION = '7.0' ]]; then composer require codeclimate/php-test-reporter --dev; fi
 - composer install
