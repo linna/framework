@@ -6,8 +6,8 @@ current_menu: diResolver
 
 # DI Resolver
 DI Resolver is one of the [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) tool of Linna framework, 
-it automatically inject dependencies into a class constructor. Unfortunately, at moment there are some limitation for constructor injection.<br />
-It works only with objects, is not possible to inject primitive types like *int, string, float, array*. To solve this problem is possile to store in DI Resolver objects that require non-supported types arguments.
+it automatically inject dependencies into a class constructor. Constructor injection works with all type of parameters but for non
+objects parameters is necessary declare a rule through DIresolver->rules() method.
 
 ## How it works?
 DI Resolver use for recognize constructor arguments [PHP reflection](http://php.net/manual/en/book.reflection.php)
@@ -19,8 +19,9 @@ Properties
 
 Methods
 - __construct()
-- cacheUnResolvable()
+- cache()
 - resolve()
+- rules()
 
 ## Methods
 
@@ -30,8 +31,8 @@ Class constructor
 $DIResolver = new DIResolver();
 ```
 
-### cacheUnResolvable()
-Store in DI Resolver object that require primitive types arguments
+### cache()
+Store in DI Resolver, objects that cannot be resolved
 
 #### Parameters
 *string* **$name**<br/>
@@ -42,7 +43,7 @@ Store in DI Resolver object that require primitive types arguments
 $DIResolver = new DIResolver();
 
 //store unresolvable object
-$DIResolver->cacheUnResolvable('\FOOObject', new FOOObject('bar','baz'));
+$DIResolver->cache('\FOOObject', new FOOObject('bar','baz'));
 ```
 
 ### resolve()
@@ -91,3 +92,31 @@ $a = $DIResolver->resolve('\A');
 //not work
 $a = $DIResolver->resolve('A');
 ```
+
+### rules()
+Store in DI Resolver rules for resolve classes that accepts non object parameters
+
+#### Parameters
+*array* **$rules**<br/>
+
+#### Usage
+```php
+namespace Linna\Foo;
+
+class Foo { public function __construct(FooAA $aa) {echo 'Foo';} }
+class FooAA { public function __construct(bool $aaBool, FooB $b, string $aaString, int $aaInt, array $aaArray, $aaNoType) {echo 'FooAA';} }
+class FooB { public function __construct(C $c, D $d){echo 'FooB';} }
+
+$DIResolver = new DIResolver();
+//array with rules for class that require non object arguments
+$DIResolver->rules([
+    '\Linna\Foo\FooAA' => [
+        0 => true,
+        2 => 'baz',
+        3 => 1,
+        4 => ['baz'],
+        5 => 'baz'
+    ]
+]);
+
+$a = $DIResolver->resolve('Linna\Foo\Foo');
