@@ -1,15 +1,14 @@
 <phpunit  colors="true" 
           bootstrap="tests/bootstrap.php"
-          verbose="true"
->
+          verbose="true">
     <testsuites>
         <testsuite name="Linna Test Suite">
-            <directory suffix="Test.php">./tests</directory>
+            <directory suffix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">src/</directory>
+            <directory suffix=".php">src</directory>
         </whitelist>
     </filter>
     <logging>
