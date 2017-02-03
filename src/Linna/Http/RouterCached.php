@@ -61,8 +61,7 @@ class RouterCached extends Router
     public function validate(string $requestUri, string $requestMethod) : bool
     {
         //check if route is already cached
-        if (($cachedRoute = $this->cache->get($requestUri)) !== false)
-        {
+        if (($cachedRoute = $this->cache->get($requestUri)) !== false) {
             //get cached route
             $this->route = $cachedRoute;
             
@@ -70,8 +69,7 @@ class RouterCached extends Router
         }
         
         //if route not cached, validate, if valid cache it
-        if (parent::validate($requestUri, $requestMethod))
-        {
+        if (parent::validate($requestUri, $requestMethod)) {
             //cache validated route
             $this->cache->set($requestUri, $this->route);
             
