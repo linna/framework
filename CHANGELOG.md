@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * `Linna\Storage\MysqlPdoAdapter` now throw `RuntimeException` when connection fail
 * `Linna\Storage\MysqliAdapter` now throw `RuntimeException` when connection fail
+* `Linna\DI\DIResolver` tests updated
+* `Linna\DI\DIContainer` tests updated
 
 ## [v0.10.0](https://github.com/s3b4stian/linna-framework/compare/v0.9.1...v0.10.0) - 2017-03-02
 
