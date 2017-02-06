@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Linna\Storage;
 
 use PDO;
+use RuntimeException;
 use PDOException;
 
 /**
@@ -65,15 +66,18 @@ class MysqlPdoAdapter implements AdapterInterface
     /**
      * Get Resource
      *
-     * @return \PDO
+     * @return PDO
+     * @throws RuntimeException
      */
     public function getResource()
     {
         try {
-            return new PDO($this->dsn, $this->user, $this->password, $this->options);
+            
+           return new PDO($this->dsn, $this->user, $this->password, $this->options);
+            
         } catch (PDOException $exception) {
-            echo 'Connection Fail: '.$exception->getMessage();
-            return null;
+            //retrow exception see: http://php.net/manual/en/class.pdoexception.php
+            throw new RuntimeException('PDO: '.$exception->getMessage().' code '.$exception->getCode());
         }
     }
 }

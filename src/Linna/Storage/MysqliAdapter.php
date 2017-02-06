@@ -15,6 +15,9 @@ namespace Linna\Storage;
 
 use mysqli;
 use mysqli_sql_exception;
+use RuntimeException;
+
+mysqli_report(MYSQLI_REPORT_ALL);
 
 /**
  * Mysql Improved Extension Adapter
@@ -75,14 +78,14 @@ class MysqliAdapter implements AdapterInterface
      * Get Resource
      *
      * @return \mysqli
+     * @throws RuntimeException
      */
     public function getResource()
     {
         try {
             return new mysqli($this->host, $this->user, $this->password, $this->database, $this->port);
         } catch (mysqli_sql_exception $exception) {
-            echo 'Connection Fail: '.$exception->getMessage();
-            return null;
+            throw new RuntimeException('Mysqli: '.$exception->getMessage().' code '.$exception->getCode());
         }
     }
 }
