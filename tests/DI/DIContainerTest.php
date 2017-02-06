@@ -12,8 +12,8 @@
 declare(strict_types=1);
 
 use Linna\DI\DIContainer;
-use Linna\FOO\FOOClassA;
-use Linna\FOO\FOOClassAA;
+use Linna\FOO\FOOClassResCache;
+use Linna\FOO\FOOClassACache;
 use Linna\FOO\FOOClassB;
 use Linna\FOO\FOOClassC;
 use Linna\FOO\FOOClassD;
@@ -30,7 +30,7 @@ class DIContainerTest extends TestCase
     {
         $container = new DIContainer();
         
-        $container->FOOClassA = function () {
+        $container->FOOClassResCache = function () {
             $i = new FOOClassI();
             $h = new FOOClassH();
             $g = new FOOClassG($i, $h);
@@ -39,16 +39,16 @@ class DIContainerTest extends TestCase
             $d = new FOOClassD($e, $f, $g);
             $c = new FOOClassC($g);
             $b = new FOOClassB($c, $d);
-            $aa = new FOOClassAA('DIContainer');
+            $aa = new FOOClassACache('DIContainer');
                     
-            return new FOOClassA($b, $aa);
+            return new FOOClassResCache($b, $aa);
         };
         
-        $FOOClassA = $container->FOOClassA;
+        $FOOClassResCache = $container->FOOClassResCache;
         
-        $this->assertInstanceOf(FOOClassA::class, $FOOClassA);
+        $this->assertInstanceOf(FOOClassResCache::class, $FOOClassResCache);
         
-        $this->assertEquals(true, isset($container->FOOClassA));
+        $this->assertEquals(true, isset($container->FOOClassResCache));
         $this->assertEquals(false, isset($container->FOOClassB));
         $this->assertEquals(false, $container->FOOClassB);
     }

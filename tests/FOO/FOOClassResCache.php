@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Linna\FOO;
 
-class FOOClassAA
+class FOOClassResCache
 {
-    public function __construct(string $aa)
+    public function __construct(FOOClassB $b, FOOClassACache $aCache)
     {
-        return $aa;
+        return 'ResCache';
     }
 }

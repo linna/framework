@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Linna\FOO;
 
-class FOOClassA
+class FOOClassResRules
 {
-    public function __construct(FOOClassB $b, FOOClassAA $aa)
+    public function __construct(FOOClassB $b, FOOClassARules $aRules)
     {
-        return 'A';
+        return 'ResRules';
     }
 }
