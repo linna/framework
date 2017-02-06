@@ -33,7 +33,7 @@ class MysqlPdoAdapterTest extends TestCase
         return [
             ['0', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password']],
             [$GLOBALS['pdo_mysql_dsn'], '', $GLOBALS['pdo_mysql_password']],
-            [$GLOBALS['pdo_mysql_dsn'], $GLOBALS['pdo_mysql_user'], '']
+            [$GLOBALS['pdo_mysql_dsn'], $GLOBALS['pdo_mysql_user'], 'bad_password']
         ];
     }
     

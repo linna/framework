@@ -34,7 +34,7 @@ class MysqliAdapterTest extends TestCase
         return [
             ['..', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password'], 'test', 3306],
             ['127.0.0.1', '', $GLOBALS['pdo_mysql_password'], 'test', 3306],
-            ['127.0.0.1', $GLOBALS['pdo_mysql_user'], '', 'test', 3306],
+            ['127.0.0.1', $GLOBALS['pdo_mysql_user'], 'bad_password', 'test', 3306],
             ['127.0.0.1', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password'], 'otherdb', 3306],
             ['127.0.0.1', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password'], 'test', 3305]
         ];
