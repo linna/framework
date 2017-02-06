@@ -17,8 +17,6 @@ use mysqli;
 use mysqli_sql_exception;
 use RuntimeException;
 
-mysqli_report(MYSQLI_REPORT_ALL);
-
 /**
  * Mysql Improved Extension Adapter
  *
@@ -83,6 +81,7 @@ class MysqliAdapter implements AdapterInterface
     public function getResource()
     {
         try {
+            mysqli_report(MYSQLI_REPORT_ALL);
             return new mysqli($this->host, $this->user, $this->password, $this->database, $this->port);
         } catch (mysqli_sql_exception $exception) {
             throw new RuntimeException('Mysqli: '.$exception->getMessage().' code '.$exception->getCode());
