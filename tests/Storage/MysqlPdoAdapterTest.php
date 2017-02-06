@@ -28,25 +28,24 @@ class MysqlPdoAdapterTest extends TestCase
         $this->assertInstanceOf(PDO::class, $mysqlPdoAdapter->getResource());
     }
     
-    /**
-     * @outputBuffering disabled
-     */
-    public function testFailConnection()
+    public function connectionDataProvider()
     {
-        ob_start();
+        return [
+            ['0', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password']],
+            [$GLOBALS['pdo_mysql_dsn'], '', $GLOBALS['pdo_mysql_password']],
+            [$GLOBALS['pdo_mysql_dsn'], $GLOBALS['pdo_mysql_user'], '']
+        ];
+    }
+    
+    /**
+     * @dataProvider connectionDataProvider
+     */
+    public function testFailConnection($dsn, $user, $password)
+    {
+        $this->expectException(RuntimeException::class);
         
-        $mysqlPdoAdapter = new MysqlPdoAdapter(
-            '',
-            $GLOBALS['pdo_mysql_user'],
-            $GLOBALS['pdo_mysql_password'],
-            array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING)
-        );
+        $mysqlPdoAdapter = new MysqlPdoAdapter($dsn, $user, $password,[]);
         
         $resource = $mysqlPdoAdapter->getResource();
-        
-        $message = ob_get_clean();
-        
-        $this->assertEquals(null, $resource);
-        $this->assertEquals('Connection Fail: invalid data source name', $message);
     }
 }
