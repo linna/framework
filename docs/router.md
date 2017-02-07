@@ -124,4 +124,4 @@ $route = $router->getRoute();
 ```
 
 #### Returns
-*Route object*
+*Linna\Http\Route*

@@ -28,8 +28,8 @@ If you wish start to utilize the Framework for build an app, look [Linna App](ht
 ### Model View Controller
 * [How pattern is implemented?](mvcImplement.md)
 * [Model](model.md)
-* (To do) [View](view.md)
-* (To do) [Controller](controller.md)
+* (Incomplete) [View](view.md)
+* [Controller](controller.md)
 * (To do) [TemplateInterface](templateInterface.md)
 
 ### Dependency Injection

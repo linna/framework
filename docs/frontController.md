@@ -52,10 +52,10 @@ Methods
 Class constructor
 
 #### Parameters
-*RouteInterface* **$route**<br/>
-*Model* **$model**<br/>
-*View* **$view**<br/>
-*Controller* **$controller**<br/>
+*Linna\Http\RouteInterface* **$route**<br/>
+*Linna\Mvc\Model* **$model**<br/>
+*Linna\Mvc\View* **$view**<br/>
+*Linna\Mvc\Controller* **$controller**<br/>
 
 #### Usage
 ```php
