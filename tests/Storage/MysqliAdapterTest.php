@@ -45,7 +45,7 @@ class MysqliAdapterTest extends TestCase
      */
     public function testFailConnection($host, $user, $password, $database, $port)
     {
-        $this->expectException(RuntimeException::class);
+        $this->expectException(\Exception::class);
         
         $mysqliAdapter = new MysqliAdapter($host, $user, $password, $database, $port);
         

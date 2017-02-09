@@ -76,15 +76,10 @@ class MysqliAdapter implements AdapterInterface
      * Get Resource
      *
      * @return \mysqli
-     * @throws RuntimeException
      */
     public function getResource()
     {
-        try {
-            mysqli_report(MYSQLI_REPORT_ALL);
-            return new mysqli($this->host, $this->user, $this->password, $this->database, $this->port);
-        } catch (mysqli_sql_exception $exception) {
-            throw new RuntimeException('Mysqli: '.$exception->getMessage().' code '.$exception->getCode());
-        }
+        mysqli_report(MYSQLI_REPORT_ALL);
+        return new mysqli($this->host, $this->user, $this->password, $this->database, $this->port);
     }
 }

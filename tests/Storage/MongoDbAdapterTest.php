@@ -17,8 +17,18 @@ class MongoDbAdapterTest extends TestCase
 {
     public function testConnection()
     {
-        $mongoDbAdapter = new MongoDbAdapter($GLOBALS['mongodb_server_string']);
+        $mongoDbAdapter = new MongoDbAdapter();
         
         $this->assertInstanceOf(Client::class, $mongoDbAdapter->getResource());
+    }
+    
+    
+    public function testFailConnection()
+    {
+        $this->expectException(\Exception::class);
+        
+        $mongoDbAdapter = new MongoDbAdapter('mongodb:/localhost:27017');
+        
+        $resource = $mongoDbAdapter->getResource();
     }
 }

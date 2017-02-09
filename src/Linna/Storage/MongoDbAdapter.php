@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Linna\Storage;
 
 use MongoDB\Client;
-use MongoDB\Exception\ConnectionException;
 
 /**
  * MongoDB Adapter
@@ -25,16 +24,30 @@ class MongoDbAdapter implements AdapterInterface
     /**
      * @var string $serverString String for MongoDB connection
      */
-    protected $serverString;
+    protected $uri;
+    
+    /**
+     * @var array $uriOptions Specifies additional URI options
+     */
+    protected $uriOptions;
+    
+    /**
+     * @var array $driverOptions Specify driver-specific options
+     */
+    protected $driverOptions;
     
     /**
      * Constructor
      *
-     * @param string $serverString
+     * @param string $uri
+     * @param array $uriOptions
+     * @param array $driverOptions
      */
-    public function __construct(string $serverString)
+    public function __construct(string $uri = 'mongodb://127.0.0.1/', array $uriOptions = [], array $driverOptions = [])
     {
-        $this->serverString = $serverString;
+        $this->uri = $uri;
+        $this->uriOptions = $uriOptions;
+        $this->driverOptions = $driverOptions;
     }
     
     /**
@@ -44,11 +57,6 @@ class MongoDbAdapter implements AdapterInterface
      */
     public function getResource()
     {
-        try {
-            return new Client($this->serverString);
-        } catch (ConnectionException $exception) {
-            echo 'MongoDB Connection Fail: '.$exception->getMessage();
-            return null;
-        }
+        return new Client($this->uri, $this->uriOptions, $this->driverOptions);
     }
 }

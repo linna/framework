@@ -7,11 +7,15 @@
     "authors": [
         {
             "name": "Sebastian Rapetti",
-            "email": "sebastian.rapetti@alice.it"
+            "email": "sebastian.rapetti@alice.it",
+            "homepage": "https://github.com/s3b4stian/linna-framework"
         }
     ],
     "require": {
         "php": ">=7.0.0"
+    },
+    "require-dev": {
+        "mongodb/mongodb": ">=1.0.0"
     },
     "autoload": {
         "psr-4": {

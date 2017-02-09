@@ -17,7 +17,6 @@ use PHPUnit\Framework\TestCase;
 
 class DIResolverTest extends TestCase
 {
-    
     public function testResolve()
     {
         $DIResolver = new DIResolver();
@@ -125,7 +124,7 @@ class DIResolverTest extends TestCase
             ]
         ];
         
-        $FOOClassARules = $DIResolver->resolve('Linna\FOO\FOOClassARules',$rules);
+        $FOOClassARules = $DIResolver->resolve('Linna\FOO\FOOClassARules', $rules);
         
         $this->assertInstanceOf(\Linna\FOO\FOOClassARules::class, $FOOClassARules);
         

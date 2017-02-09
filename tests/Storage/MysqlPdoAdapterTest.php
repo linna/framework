@@ -42,9 +42,9 @@ class MysqlPdoAdapterTest extends TestCase
      */
     public function testFailConnection($dsn, $user, $password)
     {
-        $this->expectException(RuntimeException::class);
+        $this->expectException(\Exception::class);
         
-        $mysqlPdoAdapter = new MysqlPdoAdapter($dsn, $user, $password,[]);
+        $mysqlPdoAdapter = new MysqlPdoAdapter($dsn, $user, $password, []);
         
         $resource = $mysqlPdoAdapter->getResource();
     }

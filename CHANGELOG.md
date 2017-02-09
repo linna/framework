@@ -10,10 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 * Tests for `Linna\Storage\MysqliAdapter`
+* Tests for `Linna\Storage\MongoDbAdapter`
 
 ### Changed
-* `Linna\Storage\MysqlPdoAdapter` now throw `RuntimeException` when connection fail
-* `Linna\Storage\MysqliAdapter` now throw `RuntimeException` when connection fail
 * `Linna\DI\DIResolver` tests updated
 * `Linna\DI\DIContainer` tests updated
 

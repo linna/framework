@@ -67,17 +67,9 @@ class MysqlPdoAdapter implements AdapterInterface
      * Get Resource
      *
      * @return PDO
-     * @throws RuntimeException
      */
     public function getResource()
     {
-        try {
-            
-           return new PDO($this->dsn, $this->user, $this->password, $this->options);
-            
-        } catch (PDOException $exception) {
-            //retrow exception see: http://php.net/manual/en/class.pdoexception.php
-            throw new RuntimeException('PDO: '.$exception->getMessage().' code '.$exception->getCode());
-        }
+        return new PDO($this->dsn, $this->user, $this->password, $this->options);
     }
 }
