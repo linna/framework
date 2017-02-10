@@ -12,44 +12,102 @@
 declare(strict_types=1);
 
 use Linna\DI\DIContainer;
-use Linna\FOO\FOOClassResCache;
-use Linna\FOO\FOOClassACache;
-use Linna\FOO\FOOClassB;
-use Linna\FOO\FOOClassC;
-use Linna\FOO\FOOClassD;
-use Linna\FOO\FOOClassE;
-use Linna\FOO\FOOClassF;
-use Linna\FOO\FOOClassG;
-use Linna\FOO\FOOClassH;
-use Linna\FOO\FOOClassI;
 use PHPUnit\Framework\TestCase;
 
 class DIContainerTest extends TestCase
 {
-    public function testContainer()
+    protected $container;
+
+    public function setUp()
     {
-        $container = new DIContainer();
+        $this->container = new DIContainer();
         
-        $container->FOOClassResCache = function () {
-            $i = new FOOClassI();
-            $h = new FOOClassH();
-            $g = new FOOClassG($i, $h);
-            $f = new FOOClassF();
-            $e = new FOOClassE();
-            $d = new FOOClassD($e, $f, $g);
-            $c = new FOOClassC($g);
-            $b = new FOOClassB($c, $d);
-            $aa = new FOOClassACache('DIContainer');
-                    
-            return new FOOClassResCache($b, $aa);
-        };
+        $this->container->set('FooClass', function () {
+            return new \stdClass();
+        });
+    }
+            
+    public function testContainerGet()
+    {
+        $FooClass = $this->container->get('FooClass');
         
-        $FOOClassResCache = $container->FOOClassResCache;
+        $this->assertInstanceOf(stdClass::class, $FooClass);
+    }
+    
+    public function testContainerNotFoundGet()
+    {
+        $this->expectException(\Exception::class);
+        $BarClass = $this->container->get('BarClass');
+    }
+    
+    public function testContainerHas()
+    {
+        $this->assertEquals(true, $this->container->has('FooClass'));
+        $this->assertEquals(false, $this->container->has('BarClass'));
+    }
+    
+    public function testContainerDelete()
+    {
+        $this->assertEquals(true, $this->container->has('FooClass'));
         
-        $this->assertInstanceOf(FOOClassResCache::class, $FOOClassResCache);
+        $this->container->delete('FooClass');
         
-        $this->assertEquals(true, isset($container->FOOClassResCache));
-        $this->assertEquals(false, isset($container->FOOClassB));
-        $this->assertEquals(false, $container->FOOClassB);
+        $this->assertEquals(false, $this->container->has('FooClass'));
+    }
+    
+    public function testArrayContainerGet()
+    {
+        $FooClass = $this->container['FooClass'];
+        
+        $this->assertInstanceOf(stdClass::class, $FooClass);
+    }
+    
+    public function testArrayContainerNotFoundGet()
+    {
+        $this->expectException(\Exception::class);
+        $BarClass = $this->container['BarClass'];
+    }
+    
+    public function testArrayContainerHas()
+    {
+        $this->assertEquals(true, isset($this->container['FooClass']));
+        $this->assertEquals(false, isset($this->container['BarClass']));
+    }
+    
+    public function testArrayContainerDelete()
+    {
+        $this->assertEquals(true, isset($this->container['FooClass']));
+        
+        unset($this->container['FooClass']);
+        
+        $this->assertEquals(false, isset($this->container['FooClass']));
+    }
+    
+    public function testPropertyContainerGet()
+    {
+        $FooClass = $this->container->FooClass;
+        
+        $this->assertInstanceOf(stdClass::class, $FooClass);
+    }
+    
+    public function testPropertyContainerNotFoundGet()
+    {
+        $this->expectException(\Exception::class);
+        $BarClass = $this->container->BarClass;
+    }
+    
+    public function testPropertyContainerHas()
+    {
+        $this->assertEquals(true, isset($this->container->FooClass));
+        $this->assertEquals(false, isset($this->container->BarClass));
+    }
+    
+    public function testPropertyContainerDelete()
+    {
+        $this->assertEquals(true, isset($this->container->FooClass));
+        
+        unset($this->container->FooClass);
+        
+        $this->assertEquals(false, isset($this->container->FooClass));
     }
 }
