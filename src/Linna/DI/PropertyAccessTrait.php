@@ -21,6 +21,26 @@ namespace Linna\DI;
 trait PropertyAccessTrait
 {
     /**
+     * Express Requirements by Abstract Methods
+     */
+    abstract public function has();
+    
+    /**
+     * Express Requirements by Abstract Methods
+     */
+    abstract public function get();
+    
+    /**
+     * Express Requirements by Abstract Methods
+     */
+    abstract public function set();
+    
+    /**
+     * Express Requirements by Abstract Methods
+     */
+    abstract public function delete();
+    
+    /**
      * Set
      * http://php.net/manual/en/language.oop5.overloading.php
      *
