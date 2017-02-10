@@ -11,18 +11,48 @@ to preserve DI Resolver class lightness.<br />
 DI Container implements ContainerInterface from [Container Interoperability](https://github.com/container-interop/container-interop). Delegate lookup feature not available.
 
 ## How it works?
-Class offer multiple modes for manage data, it's possibole utilize class methods, object or array syntax.
+Class offer multiple modes for manage data, it's possible utilize class methods, object or array syntax.
 ```php
 $container = new DIContainer();
 
-//with method
+//set with method
 $container->set('FooClass',  function () { return new \stdClass(); });
 
-//with array syntax
+//set with array syntax
 $container['FooClass'] = function () { return new \stdClass(); };
 
-//with object syntax
+//set with object syntax
 $container->FooClass = function () { return new \stdClass(); };
+
+
+//get with method
+$foo = $container->get('FooClass');
+
+//get with array syntax
+$foo = $container['FooClass'];
+
+//get with object syntax
+$foo = $container->FooClass;
+
+
+//has with method
+$container->has('FooClass');
+
+//has with array syntax
+isset($container['FooClass']);
+
+//has with object syntax
+isset($container->FooClass);
+
+
+//delete with method
+$container->delete('FooClass');
+
+//delete with array syntax
+unset($container['FooClass']);
+
+//delete with object syntax
+unset($container->FooClass);
 ```
 
 ## Class Structure
