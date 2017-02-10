@@ -76,7 +76,7 @@ class DIContainer implements ContainerInterface, \ArrayAccess
     
     /**
      * Store value inside container
-     * 
+     *
      * @param string $id
      * @param callable $value
      */
@@ -87,7 +87,7 @@ class DIContainer implements ContainerInterface, \ArrayAccess
     
     /**
      * Delete value from container
-     * 
+     *
      * @param string $id
      */
     public function delete(string $id) : bool

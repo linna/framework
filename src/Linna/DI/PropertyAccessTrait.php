@@ -16,7 +16,7 @@ namespace Linna\DI;
 /**
  * Magic Access Trait
  * Provide to DIContainer possibility to retrive values using properties
- * 
+ *
  */
 trait PropertyAccessTrait
 {

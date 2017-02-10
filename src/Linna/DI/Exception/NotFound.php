@@ -17,5 +17,4 @@ use Interop\Container\Exception\NotFoundException;
 
 class NotFound extends \Exception implements NotFoundException
 {
-    
 }
