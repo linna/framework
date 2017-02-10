@@ -25,6 +25,14 @@ class DIContainerTest extends TestCase
         $this->container->set('FooClass', function () {
             return new \stdClass();
         });
+        
+        $this->container['FooClass'] = function () {
+            return new \stdClass();
+        };
+        
+        $this->container->FooClass = function () {
+            return new \stdClass();
+        };
     }
             
     public function testContainerGet()
