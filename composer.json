@@ -12,7 +12,8 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0"
+        "php": ">=7.0.0",
+        "container-interop/container-interop": ">=1.0"
     },
     "require-dev": {
         "mongodb/mongodb": ">=1.0.0"
