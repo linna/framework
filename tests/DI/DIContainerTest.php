@@ -61,6 +61,7 @@ class DIContainerTest extends TestCase
         $this->container->delete('FooClass');
         
         $this->assertEquals(false, $this->container->has('FooClass'));
+        $this->assertEquals(false, $this->container->delete('FooClass'));
     }
     
     public function testArrayContainerGet()
