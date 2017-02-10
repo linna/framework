@@ -13,16 +13,22 @@ declare(strict_types=1);
 
 namespace Linna\DI;
 
+use Interop\Container\ContainerInterface;
+use Linna\DI\Exception\NotFound;
+
 /**
  * Dependency Injection Container
  *
  */
-class DIContainer
+class DIContainer implements ContainerInterface, \ArrayAccess
 {
+    use PropertyAccessTrait;
+    use ArrayAccessTrait;
+    
     /**
-     * @var array $container Callback storage
+     * @var array $cache Callbacks storage
      */
-    private $container;
+    private $cache;
     
     /**
      * Constructor
@@ -30,61 +36,71 @@ class DIContainer
      */
     public function __construct()
     {
-        $this->container = array();
+        $this->cache = array();
     }
     
     /**
-     * Magic metod
-     * http://php.net/manual/en/language.oop5.overloading.php
+     * Get values
      *
-     * @param string $name
-     * @param mixed $resolver
-     */
-    public function __set(string $name, callable $resolver)
-    {
-        $this->container[$name] = $resolver;
-    }
-    
-    /**
-     * Magic metod
-     * http://php.net/manual/en/language.oop5.overloading.php
+     * @param string $id Identifier of the entry to look for.
      *
-     * @param string $name
-     * @return object|bool Element stored in container or false
+     * @throws NotFound No entry was found for this identifier.
+     *
+     * @return mixed Entry.
      */
-    public function __get(string $name)
+    public function get($id)
     {
-        if (array_key_exists($name, $this->container)) {
+        if (array_key_exists($id, $this->cache)) {
             
             //move to temp for call function
-            $tmp = $this->container[$name];
+            $tmp = $this->cache[$id];
             
             //return function result
             return $tmp();
         }
         
+        throw new NotFound('No entry was found for this identifier');
+    }
+    
+    /**
+     * Check if value is stored inside container
+     *
+     * @param string $id Value identifier
+     *
+     * @return boolean
+     */
+    public function has($id)
+    {
+        return isset($this->cache[$id]);
+    }
+    
+    /**
+     * Store value inside container
+     * 
+     * @param string $id
+     * @param callable $value
+     */
+    public function set(string $id, callable $value)
+    {
+        $this->cache[$id] = $value;
+    }
+    
+    /**
+     * Delete value from container
+     * 
+     * @param string $id
+     */
+    public function delete(string $id) : bool
+    {
+        if (array_key_exists($id, $this->cache)) {
+            
+            //delete value
+            unset($this->cache[$id]);
+            
+            //return function result
+            return true;
+        }
+        
         return false;
-    }
-    
-    /**
-     * Magic metod
-     * http://php.net/manual/en/language.oop5.overloading.php
-     *
-     * @param string $name
-     */
-    public function __unset(string $name)
-    {
-        unset($this->container[$name]);
-    }
-    
-    /**
-     * Magic metod
-     * http://php.net/manual/en/language.oop5.overloading.php
-     *
-     * @param string $name
-     */
-    public function __isset(string $name): bool
-    {
-        return isset($this->container[$name]);
     }
 }
