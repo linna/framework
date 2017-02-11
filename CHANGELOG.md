@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\DI\DIResolver` tests updated
 * `Linna\DI\DIContainer` tests updated
 * `Linna\DI\DIResolver` now implements `Interop\Container\ContainerInterface`
-* `Linna\DI\DIResolver` to access data as array and with methods
+* `Linna\DI\DIResolver` now possible access data with array syntax or with methods
 
 ## [v0.10.0](https://github.com/s3b4stian/linna-framework/compare/v0.9.1...v0.10.0) - 2017-03-02
 
