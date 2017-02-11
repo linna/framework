@@ -15,6 +15,10 @@ namespace Linna\DI\Exception;
 
 use Interop\Container\Exception\ContainerException;
 
+/**
+ * Container Exception
+ * 
+ */
 class Container extends \Exception implements ContainerException
 {
 }

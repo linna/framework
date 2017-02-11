@@ -15,6 +15,10 @@ namespace Linna\DI\Exception;
 
 use Interop\Container\Exception\NotFoundException;
 
+/**
+ * Not Found Exception
+ * 
+ */
 class NotFound extends \Exception implements NotFoundException
 {
 }
