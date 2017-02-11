@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v0.11.0](https://github.com/s3b4stian/linna-framework/compare/v0.10.0...v0.11.0) - Unrelased
+## [v0.11.0](https://github.com/s3b4stian/linna-framework/compare/v0.10.0...v0.11.0) - 2017-02-11
 
 ### Added
 * Tests for `Linna\Storage\MysqliAdapter`
@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\DI\DIResolver` now implements `Interop\Container\ContainerInterface`
 * `Linna\DI\DIResolver` now possible access data with array syntax or with methods
 
-## [v0.10.0](https://github.com/s3b4stian/linna-framework/compare/v0.9.1...v0.10.0) - 2017-03-02
+## [v0.10.0](https://github.com/s3b4stian/linna-framework/compare/v0.9.1...v0.10.0) - 2017-02-03
 
 ### Added
 * Added `Linna\Storage\MysqlPdoAdapter` class
