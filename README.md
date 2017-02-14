@@ -8,6 +8,7 @@
 [![Code Climate](https://codeclimate.com/github/s3b4stian/linna-framework/badges/gpa.svg)](https://codeclimate.com/github/s3b4stian/linna-framework)
 [![Test Coverage](https://codeclimate.com/github/s3b4stian/linna-framework/badges/coverage.svg)](https://codeclimate.com/github/s3b4stian/linna-framework/coverage)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4c591995b1e54c3eb9653f7f125ecccf)](https://www.codacy.com/app/s3b4stian/linna-framework?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=s3b4stian/linna-framework&amp;utm_campaign=Badge_Grade)
+[![StyleCI](https://styleci.io/repos/41168432/shield?branch=master&style=flat)](https://styleci.io/repos/41168432)
 
 Started as project for learn and master PHP, Linna framework turned into a simple and elegant toolset for build web application.
 
