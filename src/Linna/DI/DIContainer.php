@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Linna\DI;
 
-use Interop\Container\ContainerInterface;
-use Linna\DI\Exception\NotFound;
+use Psr\Container\ContainerInterface;
+use Linna\DI\Exception\NotFoundException;
 
 /**
  * Dependency Injection Container.
@@ -36,11 +36,12 @@ class DIContainer implements ContainerInterface, \ArrayAccess
     }
 
     /**
-     * Get values.
+     * Finds an entry of the container by its identifier and returns it.
      *
      * @param string $id Identifier of the entry to look for.
      *
-     * @throws NotFound No entry was found for this identifier.
+     * @throws NotFoundExceptionInterface  No entry was found for **this** identifier.
+     * @throws ContainerExceptionInterface Error while retrieving the entry.
      *
      * @return mixed Entry.
      */
@@ -55,13 +56,17 @@ class DIContainer implements ContainerInterface, \ArrayAccess
             return $tmp();
         }
 
-        throw new NotFound('No entry was found for this identifier');
+        throw new NotFoundException('No entry was found for this identifier');
     }
 
     /**
-     * Check if value is stored inside container.
+     * Returns true if the container can return an entry for the given identifier.
+     * Returns false otherwise.
      *
-     * @param string $id Value identifier
+     * `has($id)` returning true does not mean that `get($id)` will not throw an exception.
+     * It does however mean that `get($id)` will not throw a `NotFoundExceptionInterface`.
+     *
+     * @param string $id Identifier of the entry to look for.
      *
      * @return bool
      */
