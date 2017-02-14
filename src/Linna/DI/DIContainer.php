@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Linna\DI;
 
-use Psr\Container\ContainerInterface;
 use Linna\DI\Exception\NotFoundException;
+use Psr\Container\ContainerInterface;
 
 /**
  * Dependency Injection Container.
