@@ -23,7 +23,7 @@ If you wish deepen PHP best pratices you can start from [phptherightway](http://
    * Model View Controller
    * Session Management and Login
    * Routing
-   * Dependency Injections with PSR-11 Container
+   * Dependency Injections and PSR-11 Container
    * Wrappers for data base
    * PSR-4 Autoloader
 
