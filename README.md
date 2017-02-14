@@ -21,11 +21,11 @@ If you wish deepen PHP best pratices you can start from [phptherightway](http://
 ### Features
  
    * Model View Controller
-   * Session Managment and Login
+   * Session Management and Login
    * Routing
-   * Dependency Injections
+   * Dependency Injections with PSR-11 Container
    * Wrappers for data base
-   * PSR4 Autoloader
+   * PSR-4 Autoloader
 
 ### Require
 
