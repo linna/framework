@@ -1,14 +1,12 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
-
 declare(strict_types=1);
 
 use Linna\Auth\Password;
@@ -19,25 +17,25 @@ use PHPUnit\Framework\TestCase;
 class MapperAbstractTest extends TestCase
 {
     protected $mapper;
-    
+
     public function setUp()
     {
         $password = new Password();
         $this->mapper = new FOOUserMapper($password);
     }
-    
+
     public function testNewMapper()
     {
         $this->assertInstanceOf(FOOUserMapper::class, $this->mapper);
     }
-    
+
     public function testNewObjectFromMapper()
     {
         $user = $this->mapper->create();
-        
+
         $this->assertInstanceOf(FOOUser::class, $user);
     }
-    
+
     public function testSaveWithMapper()
     {
         $user = $this->mapper->create();
@@ -47,11 +45,11 @@ class MapperAbstractTest extends TestCase
 
         $this->assertEquals('insert', $result);
     }
-    
+
     public function testSaveExistWithMapper()
     {
         $user = $this->mapper->findById(5);
-        
+
         $this->assertEquals(5, $user->getId());
         $this->assertEquals('user_5', $user->name);
 
@@ -59,11 +57,11 @@ class MapperAbstractTest extends TestCase
 
         $this->assertEquals('update', $result);
     }
-    
+
     public function testDeleteWithMapper()
     {
         $user = $this->mapper->findById(5);
-        
+
         $this->assertEquals(5, $user->getId());
         $this->assertEquals('user_5', $user->name);
 

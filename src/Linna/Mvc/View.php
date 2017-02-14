@@ -1,14 +1,12 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
-
 declare(strict_types=1);
 
 namespace Linna\Mvc;
@@ -22,45 +20,43 @@ namespace Linna\Mvc;
  */
 class View implements \SplObserver
 {
-    
     /**
-     * @var array $data Data for the dynamic view
+     * @var array Data for the dynamic view
      */
     protected $data;
 
     /**
-     * @var object $template Template utilized for data
+     * @var object Template utilized for data
      */
     protected $template;
-    
+
     /**
-     * @var object $model Model for access data
+     * @var object Model for access data
      */
     protected $model;
-    
+
     /**
-     * Constructor
+     * Constructor.
      *
      * @param \Linna\Mvc\Model $model Data Model
      */
     public function __construct(Model $model)
     {
-        $this->data = array();
+        $this->data = [];
         $this->model = $model;
     }
-    
+
     /**
-     * Render a template
-     *
+     * Render a template.
      */
     public function render()
     {
         $this->template->data = (object) $this->data;
         $this->template->output();
     }
-    
+
     /**
-     * Update Observer data
+     * Update Observer data.
      *
      * @param \SplSubject $subject
      */

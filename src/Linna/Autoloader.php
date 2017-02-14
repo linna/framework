@@ -1,14 +1,12 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
-
 declare(strict_types=1);
 
 namespace Linna;
@@ -72,7 +70,7 @@ class Autoloader
      *
      * @var array
      */
-    protected $prefixes = array();
+    protected $prefixes = [];
 
     /**
      * Register loader with SPL autoloader stack.
@@ -81,7 +79,7 @@ class Autoloader
      */
     public function register()
     {
-        return spl_autoload_register(array($this, 'loadClass'));
+        return spl_autoload_register([$this, 'loadClass']);
     }
 
     /**
@@ -94,7 +92,7 @@ class Autoloader
     {
         //loop for add single namespace
         foreach ($namespaces as $namespace) {
-            
+
             // normalize namespace prefix
             $prefix = trim($namespace[0], '\\').'\\';
 
@@ -111,8 +109,8 @@ class Autoloader
      *
      * @param string $class The fully-qualified class name.
      *
-     * @return boolean  True on success, false on
-     *                  failure.
+     * @return bool True on success, false on
+     *              failure.
      */
     public function loadClass(string $class) : bool
     {
@@ -133,7 +131,7 @@ class Autoloader
             if ($this->loadMappedFile($prefix, $relativeClass) !== false) {
                 return true;
             }
-            
+
             // remove the trailing namespace separator for the next iteration
             // of strrpos()
             $prefix = rtrim($prefix, '\\');
@@ -146,12 +144,11 @@ class Autoloader
     /**
      * Load the mapped file for a namespace prefix and relative class.
      *
-     * @param string $prefix The namespace prefix.
+     * @param string $prefix        The namespace prefix.
      * @param string $relativeClass The relative class name.
      *
      * @return bool Boolean false there are any base directories for namespace prefix or file,
      *              true on success.
-     *
      */
     protected function loadMappedFile(string $prefix, string $relativeClass) : bool
     {
@@ -171,12 +168,12 @@ class Autoloader
             // if the mapped file exists, require it
             if (file_exists($file)) {
                 require $file;
-                
+
                 // yes, we're done
                 return true;
             }
         }
-        
+
         //Unable to find class {$relativeClass} in {$file}.
         return false;
     }

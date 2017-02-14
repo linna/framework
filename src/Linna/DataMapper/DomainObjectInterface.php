@@ -1,20 +1,18 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
-
 declare(strict_types=1);
 
 namespace Linna\DataMapper;
 
 /**
- * Interface for Domain Object
+ * Interface for Domain Object.
  */
 interface DomainObjectInterface
 {
@@ -23,9 +21,9 @@ interface DomainObjectInterface
      * object type).
      */
     public function getId();
-    
+
     /**
-     * Set the id for this object
+     * Set the id for this object.
      *
      * @param type $objectId
      */

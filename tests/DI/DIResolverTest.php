@@ -1,14 +1,12 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
-
 declare(strict_types=1);
 
 use Linna\DI\DIResolver;
@@ -20,7 +18,7 @@ class DIResolverTest extends TestCase
     public function testResolve()
     {
         $DIResolver = new DIResolver();
-        
+
         $FOOClassResObject = $DIResolver->resolve('\Linna\FOO\FOOClassResObject');
         $FOOClassB = $DIResolver->resolve('\Linna\FOO\FOOClassB');
         $FOOClassC = $DIResolver->resolve('\Linna\FOO\FOOClassC');
@@ -30,7 +28,7 @@ class DIResolverTest extends TestCase
         $FOOClassG = $DIResolver->resolve('\Linna\FOO\FOOClassG');
         $FOOClassH = $DIResolver->resolve('\Linna\FOO\FOOClassH');
         $FOOClassI = $DIResolver->resolve('\Linna\FOO\FOOClassI');
-        
+
         $this->assertInstanceOf(\Linna\FOO\FOOClassResObject::class, $FOOClassResObject);
         $this->assertInstanceOf(\Linna\FOO\FOOClassB::class, $FOOClassB);
         $this->assertInstanceOf(\Linna\FOO\FOOClassC::class, $FOOClassC);
@@ -41,11 +39,11 @@ class DIResolverTest extends TestCase
         $this->assertInstanceOf(\Linna\FOO\FOOClassH::class, $FOOClassH);
         $this->assertInstanceOf(\Linna\FOO\FOOClassI::class, $FOOClassI);
     }
-    
+
     public function testResolveWithoutBackSlash()
     {
         $DIResolver = new DIResolver();
-                
+
         $FOOClassResObject = $DIResolver->resolve('Linna\FOO\FOOClassResObject');
         $FOOClassB = $DIResolver->resolve('Linna\FOO\FOOClassB');
         $FOOClassC = $DIResolver->resolve('Linna\FOO\FOOClassC');
@@ -55,7 +53,7 @@ class DIResolverTest extends TestCase
         $FOOClassG = $DIResolver->resolve('Linna\FOO\FOOClassG');
         $FOOClassH = $DIResolver->resolve('Linna\FOO\FOOClassH');
         $FOOClassI = $DIResolver->resolve('Linna\FOO\FOOClassI');
-        
+
         $this->assertInstanceOf(\Linna\FOO\FOOClassResObject::class, $FOOClassResObject);
         $this->assertInstanceOf(\Linna\FOO\FOOClassB::class, $FOOClassB);
         $this->assertInstanceOf(\Linna\FOO\FOOClassC::class, $FOOClassC);
@@ -66,12 +64,12 @@ class DIResolverTest extends TestCase
         $this->assertInstanceOf(\Linna\FOO\FOOClassH::class, $FOOClassH);
         $this->assertInstanceOf(\Linna\FOO\FOOClassI::class, $FOOClassI);
     }
-    
+
     public function testResolveWithCache()
     {
         $DIResolver = new DIResolver();
         $DIResolver->cache('\Linna\FOO\FOOClassACache', new FOOClassACache('DIResolver'));
-        
+
         $FOOClassResCache = $DIResolver->resolve('Linna\FOO\FOOClassResCache');
         $FOOClassB = $DIResolver->resolve('Linna\FOO\FOOClassB');
         $FOOClassC = $DIResolver->resolve('Linna\FOO\FOOClassC');
@@ -81,7 +79,7 @@ class DIResolverTest extends TestCase
         $FOOClassG = $DIResolver->resolve('Linna\FOO\FOOClassG');
         $FOOClassH = $DIResolver->resolve('Linna\FOO\FOOClassH');
         $FOOClassI = $DIResolver->resolve('Linna\FOO\FOOClassI');
-        
+
         $this->assertInstanceOf(\Linna\FOO\FOOClassResCache::class, $FOOClassResCache);
         $this->assertInstanceOf(\Linna\FOO\FOOClassB::class, $FOOClassB);
         $this->assertInstanceOf(\Linna\FOO\FOOClassC::class, $FOOClassC);
@@ -92,7 +90,7 @@ class DIResolverTest extends TestCase
         $this->assertInstanceOf(\Linna\FOO\FOOClassH::class, $FOOClassH);
         $this->assertInstanceOf(\Linna\FOO\FOOClassI::class, $FOOClassI);
     }
-    
+
     public function testResolveWithRules()
     {
         $DIResolver = new DIResolver();
@@ -102,15 +100,15 @@ class DIResolverTest extends TestCase
                 2 => 'ciao',
                 3 => 1,
                 4 => ['ciao'],
-                5 => 'prova'
-            ]
+                5 => 'prova',
+            ],
         ]);
-        
+
         $FOOClassResRules = $DIResolver->resolve('Linna\FOO\FOOClassResRules');
-        
+
         $this->assertInstanceOf(\Linna\FOO\FOOClassResRules::class, $FOOClassResRules);
     }
-    
+
     public function testResolveWithConstructorRules()
     {
         $DIResolver = new DIResolver();
@@ -120,16 +118,16 @@ class DIResolverTest extends TestCase
                 2 => 'ciao',
                 3 => 1,
                 4 => ['ciao'],
-                5 => 'prova'
-            ]
+                5 => 'prova',
+            ],
         ];
-        
+
         $FOOClassARules = $DIResolver->resolve('Linna\FOO\FOOClassARules', $rules);
-        
+
         $this->assertInstanceOf(\Linna\FOO\FOOClassARules::class, $FOOClassARules);
-        
+
         $FOOClassResRules = $DIResolver->resolve('Linna\FOO\FOOClassResRules', $rules);
-        
+
         $this->assertInstanceOf(\Linna\FOO\FOOClassResRules::class, $FOOClassResRules);
     }
 }

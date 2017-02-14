@@ -1,49 +1,47 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
-
 declare(strict_types=1);
 
 namespace Linna\DI;
 
 /**
  * Array Access Trait
- * Provide to DIContainer possibility to retrive values using array notation
- * 
+ * Provide to DIContainer possibility to retrive values using array notation.
  */
 trait ArrayAccessTrait
 {
     /**
-     * Express Requirements by Abstract Methods
+     * Express Requirements by Abstract Methods.
      */
     abstract public function has();
-    
+
     /**
-     * Express Requirements by Abstract Methods
+     * Express Requirements by Abstract Methods.
      */
     abstract public function get();
-    
+
     /**
-     * Express Requirements by Abstract Methods
+     * Express Requirements by Abstract Methods.
      */
     abstract public function set();
-    
+
     /**
-     * Express Requirements by Abstract Methods
+     * Express Requirements by Abstract Methods.
      */
     abstract public function delete();
-    
+
     /**
-     * Check
-     * 
+     * Check.
+     *
      * @param type $id
+     *
      * @return type
      */
     public function offsetExists($id)
@@ -52,9 +50,10 @@ trait ArrayAccessTrait
     }
 
     /**
-     * Get
-     * 
+     * Get.
+     *
      * @param type $id
+     *
      * @return type
      */
     public function offsetGet($id)
@@ -63,8 +62,8 @@ trait ArrayAccessTrait
     }
 
     /**
-     * Store
-     * 
+     * Store.
+     *
      * @param type $id
      * @param type $value
      */
@@ -74,9 +73,10 @@ trait ArrayAccessTrait
     }
 
     /**
-     * Delete
-     * 
+     * Delete.
+     *
      * @param type $id
+     *
      * @return type
      */
     public function offsetUnset($id)

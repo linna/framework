@@ -1,13 +1,12 @@
 <?php
 
 /**
- * Linna App
+ * Linna App.
  *
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
 
 namespace Linna\FOO;
@@ -20,12 +19,12 @@ class FOOModel extends Model
     {
         parent::__construct();
     }
-    
+
     public function modifyData()
     {
         $this->getUpdate = ['data' => 'modified data'];
     }
-    
+
     public function modifyDataFromParam($param)
     {
         $this->getUpdate = ['data' => $param];

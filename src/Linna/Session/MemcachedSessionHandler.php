@@ -1,46 +1,42 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
-
 declare(strict_types=1);
 
 namespace Linna\Session;
 
-use \SessionHandlerInterface;
-use \Memcached;
+use Memcached;
+use SessionHandlerInterface;
 
 /**
  * Store sessions in Memcached.
  *
  * Check below link for PHP session Handler
  * http://php.net/manual/en/class.sessionhandler.php
- *
  */
 class MemcachedSessionHandler implements SessionHandlerInterface
 {
     /**
-     * @var object $memcached Memcached resource
+     * @var object Memcached resource
      */
     private $memcached;
-    
+
     /**
-     *
-     * @var int $expire Expire time in seconds for stored sessions
+     * @var int Expire time in seconds for stored sessions
      */
     private $expire;
-    
+
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Memcached $memcached Memcached resource
-     * @param int $expire Expire time in seconds for stored sessions
+     * @param int       $expire    Expire time in seconds for stored sessions
      */
     public function __construct(Memcached $memcached, int $expire)
     {
@@ -49,7 +45,7 @@ class MemcachedSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Open session storage
+     * Open session storage.
      *
      * http://php.net/manual/en/sessionhandler.open.php.
      *
@@ -61,12 +57,12 @@ class MemcachedSessionHandler implements SessionHandlerInterface
     public function open($savePath, $sessionName)
     {
         unset($savePath, $sessionName);
-        
+
         return true;
     }
 
     /**
-     * Delete old sessions from storage
+     * Delete old sessions from storage.
      *
      * http://php.net/manual/en/sessionhandler.gc.php.
      *
@@ -77,13 +73,13 @@ class MemcachedSessionHandler implements SessionHandlerInterface
     public function gc($maxLifetime)
     {
         unset($maxLifetime);
-        
+
         //this method is no needed because all object stored expire without external operation
         return true;
     }
 
     /**
-     * Read sessio data from storage
+     * Read sessio data from storage.
      *
      * http://php.net/manual/en/sessionhandler.read.php.
      *
@@ -98,7 +94,7 @@ class MemcachedSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Write session data to storage
+     * Write session data to storage.
      *
      * http://php.net/manual/en/sessionhandler.write.php.
      *
@@ -110,12 +106,12 @@ class MemcachedSessionHandler implements SessionHandlerInterface
     public function write($sessionId, $data)
     {
         $this->memcached->set($sessionId, $data, $this->expire);
-        
+
         return true;
     }
 
     /**
-     * Close session
+     * Close session.
      *
      * http://php.net/manual/en/sessionhandler.close.php.
      *
@@ -127,7 +123,7 @@ class MemcachedSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Destroy session data
+     * Destroy session data.
      *
      * http://php.net/manual/en/sessionhandler.destroy.php.
      *
@@ -138,7 +134,7 @@ class MemcachedSessionHandler implements SessionHandlerInterface
     public function destroy($sessionId)
     {
         $this->memcached->delete($sessionId);
-        
+
         return true;
     }
 }

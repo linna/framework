@@ -1,37 +1,32 @@
 <?php
 
 /**
- * Linna App
+ * Linna App.
  *
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
 
 namespace Linna\FOO;
 
+use Linna\Auth\Password;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
-use Linna\Auth\Password;
-
-use Linna\FOO\FOOUser;
 
 /**
- * UserMapper
- *
+ * UserMapper.
  */
 class FOOUserMapper extends MapperAbstract
 {
     /**
-     * @var object $password Password util for user object
+     * @var object Password util for user object
      */
     protected $password;
 
     /**
-     * Constructor
-     *
+     * Constructor.
      */
     public function __construct(Password $password)
     {
@@ -39,7 +34,7 @@ class FOOUserMapper extends MapperAbstract
     }
 
     /**
-     * Fetch a user object by id
+     * Fetch a user object by id.
      *
      * @param string $userId
      *
@@ -48,16 +43,16 @@ class FOOUserMapper extends MapperAbstract
     public function findById($userId)
     {
         $user = $this->create();
-        
+
         $user->setId($userId);
-        
+
         $user->name = 'user_'.$userId;
-        
+
         return $user;
     }
 
     /**
-     * Create a new User DomainObject
+     * Create a new User DomainObject.
      *
      * @return User
      */
@@ -67,7 +62,7 @@ class FOOUserMapper extends MapperAbstract
     }
 
     /**
-     * Insert the DomainObject in persistent storage
+     * Insert the DomainObject in persistent storage.
      *
      * @param DomainObjectInterface $user
      */
@@ -85,7 +80,7 @@ class FOOUserMapper extends MapperAbstract
     }
 
     /**
-     * Update the DomainObject in persistent storage
+     * Update the DomainObject in persistent storage.
      *
      * @param DomainObjectInterface $user
      */
@@ -103,7 +98,7 @@ class FOOUserMapper extends MapperAbstract
     }
 
     /**
-     * Delete the DomainObject from persistent storage
+     * Delete the DomainObject from persistent storage.
      *
      * @param DomainObjectAbstract $user
      */
