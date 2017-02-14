@@ -93,13 +93,13 @@ class Autoloader
     public function addNamespaces(array $namespaces)
     {
         //loop for add single namespace
-        foreach ($namespaces as $nsp) {
+        foreach ($namespaces as $namespace) {
             
             // normalize namespace prefix
-            $prefix = trim($nsp[0], '\\').'\\';
+            $prefix = trim($namespace[0], '\\').'\\';
 
             // normalize the base directory with a trailing separator
-            $baseDir = rtrim($nsp[1], DIRECTORY_SEPARATOR).'/';
+            $baseDir = rtrim($namespace[1], DIRECTORY_SEPARATOR).'/';
 
             //add namespace
             $this->prefixes[$prefix][] = $baseDir;
@@ -111,10 +111,10 @@ class Autoloader
      *
      * @param string $class The fully-qualified class name.
      *
-     * @return mixed The mapped file name on success, or boolean false on
-     *               failure.
+     * @return boolean  True on success, false on
+     *                  failure.
      */
-    public function loadClass(string $class)
+    public function loadClass(string $class) : bool
     {
         // the current namespace prefix
         $prefix = $class;
@@ -130,10 +130,8 @@ class Autoloader
             $relativeClass = substr($class, $pos + 1);
 
             // try to load a mapped file for the prefix and relative class
-            $mappedFile = $this->loadMappedFile($prefix, $relativeClass);
-
-            if ($mappedFile !== false) {
-                return $mappedFile;
+            if ($this->loadMappedFile($prefix, $relativeClass) !== false) {
+                return true;
             }
             
             // remove the trailing namespace separator for the next iteration
@@ -151,15 +149,14 @@ class Autoloader
      * @param string $prefix The namespace prefix.
      * @param string $relativeClass The relative class name.
      *
-     * @return string|bool Boolean false there are any base directories for namespace prefix
-     *                     or the name of the mapped file that was loaded.
+     * @return bool Boolean false there are any base directories for namespace prefix or file,
+     *              true on success.
      *
-     * @throws \Exception If you try to instantiate an inexistent class
      */
-    protected function loadMappedFile(string $prefix, string $relativeClass)
+    protected function loadMappedFile(string $prefix, string $relativeClass) : bool
     {
         // are there any base directories for this namespace prefix?
-        if (isset($this->prefixes[$prefix]) === false) {
+        if (!isset($this->prefixes[$prefix])) {
             return false;
         }
 
@@ -176,10 +173,11 @@ class Autoloader
                 require $file;
                 
                 // yes, we're done
-                return $file;
+                return true;
             }
         }
         
-        throw new \Exception("Unable to find class {$relativeClass} in {$file}.");
+        //Unable to find class {$relativeClass} in {$file}.
+        return false;
     }
 }
