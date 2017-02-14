@@ -44,10 +44,18 @@ class AutoloaderTest extends TestCase
         $this->assertInstanceOf(FOOClassH::class, $foo);
     }
     
+    public function testClassExist()
+    {
+        $foo = class_exists('\Linna\FOO\FOOClassH', true);
+        
+        $this->assertEquals(true, $foo);
+    }
+    
     public function testBadNamespace()
     {
-        $this->expectException(Exception::class);
-        $foo = new \Linna\BAZ\FOOClassH();
+        $foo = class_exists('\Linna\BAZ\FOOClassH', true);
+        
+        $this->assertEquals(false, $foo);
     }
     
     public function testBadClass()
