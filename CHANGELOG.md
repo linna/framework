@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v0.12.0](https://github.com/s3b4stian/linna-framework/compare/v0.11.0...v0.12.0) - 2017-XX-XX
+## [v0.12.0](https://github.com/s3b4stian/linna-framework/compare/v0.11.0...v0.12.0) - 2017-02-14
 
 ### Changed
 * `Linna\DI\DIContainer` switched from `Interop\Container\ContainerInterface` to [PSR-11](https://github.com/container-interop/fig-standards/blob/master/proposed/container.md)
