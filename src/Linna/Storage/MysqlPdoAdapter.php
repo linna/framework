@@ -1,70 +1,64 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
-
 declare(strict_types=1);
 
 namespace Linna\Storage;
 
 use PDO;
-use RuntimeException;
-use PDOException;
 
 /**
- * Mysql PDO Adapter
- *
+ * Mysql PDO Adapter.
  */
 class MysqlPdoAdapter implements AdapterInterface
 {
     /**
-     * @var string $dns Dsn string for mysql
+     * @var string Dsn string for mysql
      */
     protected $dsn;
-    
+
     /**
-     * @var string $user Username for data base connection
+     * @var string Username for data base connection
      */
     protected $user;
-    
+
     /**
-     * @var string $password Password for data base connection
+     * @var string Password for data base connection
      */
     protected $password;
-    
+
     /**
-     *
-     * @var array $options PDO options
+     * @var array PDO options
      */
     protected $options;
-    
+
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $dsn
      * @param string $user
      * @param string $password
-     * @param array $options
+     * @param array  $options
      */
     public function __construct(string $dsn, string $user, string $password, array $options)
     {
         $this->dsn = $dsn;
-    
+
         $this->user = $user;
-        
+
         $this->password = $password;
-        
+
         $this->options = $options;
     }
-    
+
     /**
-     * Get Resource
+     * Get Resource.
      *
      * @return PDO
      */

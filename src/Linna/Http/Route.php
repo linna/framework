@@ -1,68 +1,64 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
 
 namespace Linna\Http;
 
-use Linna\Http\RouteInterface;
-
 /**
  * Describe valid routes.
- *
  */
 class Route implements RouteInterface
 {
     /**
-     * @var string $name Route name
+     * @var string Route name
      */
     protected $name;
 
     /**
-     * @var string $method Indicates request method
+     * @var string Indicates request method
      */
     protected $method;
-    
+
     /**
-     * @var string $view View to call
+     * @var string View to call
      */
     protected $view;
-    
+
     /**
-     * @var string $view View to call
+     * @var string View to call
      */
     protected $model;
-    
+
     /**
-     * @var string $controller Controller to call
+     * @var string Controller to call
      */
     protected $controller;
-    
+
     /**
-     * @var string $action Action to call
+     * @var string Action to call
      */
     protected $action;
 
     /**
-     * @var array $param Parameter passed to controller
+     * @var array Parameter passed to controller
      */
     protected $param;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $name
      * @param string $method
      * @param string $model
      * @param string $view
      * @param string $controller
-     * @param mixed $action
+     * @param mixed  $action
      * @param array  $param
      */
     public function __construct(string $name, string $method, string $model, string $view, string $controller, string $action, array $param)
@@ -77,7 +73,7 @@ class Route implements RouteInterface
     }
 
     /**
-     * Return model name
+     * Return model name.
      *
      * @return string Model for call new $Model()
      */
@@ -85,9 +81,9 @@ class Route implements RouteInterface
     {
         return $this->model;
     }
-    
+
     /**
-     * Return view name
+     * Return view name.
      *
      * @return string View for call new $View()
      */
@@ -95,9 +91,9 @@ class Route implements RouteInterface
     {
         return $this->view;
     }
-    
+
     /**
-     * Return controller
+     * Return controller.
      *
      * @return string Controller for call $controller->default_action()
      */
@@ -105,9 +101,9 @@ class Route implements RouteInterface
     {
         return $this->controller;
     }
-    
+
     /**
-     * Return action name
+     * Return action name.
      *
      * @return string Action for call $controller->action()
      */
@@ -117,7 +113,7 @@ class Route implements RouteInterface
     }
 
     /**
-     * Return parameters
+     * Return parameters.
      *
      * @return array Parameter for call $controller->action(Param)
      */

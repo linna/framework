@@ -1,23 +1,20 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
-
 declare(strict_types=1);
 
 namespace Linna\Auth;
 
 use Linna\Session\Session;
-use Linna\Auth\Password;
 
 /**
- * Class a for autenticate users
+ * Class a for autenticate users.
  *
  * Utilize for login
  *
@@ -50,41 +47,40 @@ use Linna\Auth\Password;
  *
  *      $login = new Login();
  *      $login->logout();
- *
  */
 class Login
 {
-
     /**
-     * @var array $data Login status
+     * @var array Login status
      */
-    public $data = array('user_name'=>'');
+    public $data = ['user_name'=>''];
 
     /**
-     * @var bool $logged Indicate login status, true or false
+     * @var bool Indicate login status, true or false
      */
     public $logged = false;
-    
+
     /**
-     * @var int $expire Numeber of seconds before login will considered invalid
+     * @var int Numeber of seconds before login will considered invalid
+     *
      * @deprecated since version v0.7.0
      */
     private $expire = 1800;
-    
+
     /**
-     * @var Session $sessionInstance Session class
+     * @var Session Session class
      */
     private $sessionInstance;
-    
+
     /**
-     * @var Password $password Password class
+     * @var Password Password class
      */
     private $password;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param Session $session Instance of session object
+     * @param Session  $session  Instance of session object
      * @param Password $password Instance of password object
      */
     public function __construct(Session $session, Password $password)
@@ -95,13 +91,13 @@ class Login
     }
 
     /**
-     * Try to log the user passed by param, return true if ok else false
+     * Try to log the user passed by param, return true if ok else false.
      *
      * @param string $user
      * @param string $password
      * @param string $storedUser
      * @param string $storedPassword
-     * @param int $storedId
+     * @param int    $storedId
      *
      * @return bool
      */
@@ -117,35 +113,34 @@ class Login
 
         $this->sessionInstance->loginTime = time();
         $this->sessionInstance->login = [
-            'login' => true,
-            'user_id' => $storedId,
-            'user_name' => $storedUser
+            'login'     => true,
+            'user_id'   => $storedId,
+            'user_name' => $storedUser,
         ];
 
-        
         $this->sessionInstance->regenerate();
         $this->logged = true;
-        
+
         return true;
     }
 
     /**
-     * For do logout, delete login information from session
+     * For do logout, delete login information from session.
      *
      * @return bool
      */
     public function logout(): bool
     {
         unset($this->sessionInstance->login, $this->sessionInstance->loginTime);
-        
+
         $this->sessionInstance->regenerate();
         $this->logged = false;
-        
+
         return true;
     }
 
     /**
-     * Check if user is logged, get login data from session and update it
+     * Check if user is logged, get login data from session and update it.
      *
      * @return bool
      */
@@ -160,7 +155,7 @@ class Login
         if (($this->sessionInstance->loginTime + $this->sessionInstance->expire) < $time) {
             return false;
         }
-        
+
         $this->sessionInstance->loginTime = $time;
         $this->data = $this->sessionInstance->login;
 

@@ -1,14 +1,12 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
-
 declare(strict_types=1);
 
 namespace Linna\Mvc;
@@ -23,27 +21,26 @@ namespace Linna\Mvc;
 class Model implements \SplSubject
 {
     /**
-     * @var object $observers List of attached observerer
+     * @var object List of attached observerer
      */
     private $observers;
-    
+
     /**
-     * @var array $getUpdate Data for notify to observerer
+     * @var array Data for notify to observerer
      */
-    public $getUpdate = array();
-    
+    public $getUpdate = [];
+
     /**
-     * Constructor
-     *
+     * Constructor.
      */
     public function __construct()
     {
         $this->observers = new \SplObjectStorage();
     }
-    
+
     /**
      * Attach an Observer class to this Subject for updates
-     * when occour a subject state change
+     * when occour a subject state change.
      *
      * @param \SplObserver $observer
      */
@@ -53,9 +50,9 @@ class Model implements \SplSubject
             $this->observers->attach($observer);
         }
     }
-    
+
     /**
-     * Detach an Observer class from this Subject
+     * Detach an Observer class from this Subject.
      *
      * @param \SplObserver $observer
      */
@@ -65,9 +62,9 @@ class Model implements \SplSubject
             $this->observers->detach($observer);
         }
     }
-    
+
     /**
-     * Notify a state change of Subject to all registered Observeres
+     * Notify a state change of Subject to all registered Observeres.
      */
     public function notify()
     {

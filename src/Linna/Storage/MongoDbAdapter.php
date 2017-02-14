@@ -1,14 +1,12 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
-
 declare(strict_types=1);
 
 namespace Linna\Storage;
@@ -16,32 +14,31 @@ namespace Linna\Storage;
 use MongoDB\Client;
 
 /**
- * MongoDB Adapter
- *
+ * MongoDB Adapter.
  */
 class MongoDbAdapter implements AdapterInterface
 {
     /**
-     * @var string $serverString String for MongoDB connection
+     * @var string String for MongoDB connection
      */
     protected $uri;
-    
+
     /**
-     * @var array $uriOptions Specifies additional URI options
+     * @var array Specifies additional URI options
      */
     protected $uriOptions;
-    
+
     /**
-     * @var array $driverOptions Specify driver-specific options
+     * @var array Specify driver-specific options
      */
     protected $driverOptions;
-    
+
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $uri
-     * @param array $uriOptions
-     * @param array $driverOptions
+     * @param array  $uriOptions
+     * @param array  $driverOptions
      */
     public function __construct(string $uri = 'mongodb://127.0.0.1/', array $uriOptions = [], array $driverOptions = [])
     {
@@ -49,9 +46,9 @@ class MongoDbAdapter implements AdapterInterface
         $this->uriOptions = $uriOptions;
         $this->driverOptions = $driverOptions;
     }
-    
+
     /**
-     * Get Resource
+     * Get Resource.
      *
      * @return \MongoDB\Client
      */

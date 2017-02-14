@@ -1,22 +1,20 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
-
 declare(strict_types=1);
 
 namespace Linna\Session;
 
-use \SessionHandlerInterface;
+use SessionHandlerInterface;
 
 /**
- * Manage session lifetime and session data
+ * Manage session lifetime and session data.
  *
  * @property int $time Time of session
  * @property array $login Login information set by Login class
@@ -26,61 +24,60 @@ use \SessionHandlerInterface;
 class Session
 {
     /**
-     * @var array $options Config options for class
+     * @var array Config options for class
      */
-    protected $options = array(
-        'expire' => 1800,
-        'name' => 'LINNA_SESSION',
-        'cookieDomain' => '/',
-        'cookiePath' => '/',
-        'cookieSecure' => false,
-        'cookieHttpOnly' => true
-    );
-    
+    protected $options = [
+        'expire'         => 1800,
+        'name'           => 'LINNA_SESSION',
+        'cookieDomain'   => '/',
+        'cookiePath'     => '/',
+        'cookieSecure'   => false,
+        'cookieHttpOnly' => true,
+    ];
+
     /**
-     * @var array $data Session data reference property
+     * @var array Session data reference property
      */
     private $data;
-    
+
     /**
-     * @var string $id Session id
+     * @var string Session id
      */
     public $id;
-    
+
     /**
-     * @var string $name Session name
+     * @var string Session name
      */
     public $name;
-    
+
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array $options Options for configure session
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         //set options
         $this->options = array_replace_recursive($this->options, $options);
-        
+
         $this->name = $options['name'] ?? $this->options['name'];
     }
-    
-    
+
     /**
      * Magic metod
-     * http://php.net/manual/en/language.oop5.overloading.php
+     * http://php.net/manual/en/language.oop5.overloading.php.
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function __set(string $name, $value)
     {
         $this->data[$name] = $value;
     }
-    
+
     /**
      * Magic metod
-     * http://php.net/manual/en/language.oop5.overloading.php
+     * http://php.net/manual/en/language.oop5.overloading.php.
      *
      * @param string $name
      */
@@ -89,13 +86,13 @@ class Session
         if (array_key_exists($name, $this->data)) {
             return $this->data[$name];
         }
-        
+
         return false;
     }
-    
+
     /**
      * Magic metod
-     * http://php.net/manual/en/language.oop5.overloading.php
+     * http://php.net/manual/en/language.oop5.overloading.php.
      *
      * @param string $name
      */
@@ -103,10 +100,10 @@ class Session
     {
         unset($this->data[$name]);
     }
-    
+
     /**
      * Magic metod
-     * http://php.net/manual/en/language.oop5.overloading.php
+     * http://php.net/manual/en/language.oop5.overloading.php.
      *
      * @param string $name
      */
@@ -114,10 +111,9 @@ class Session
     {
         return isset($this->data[$name]);
     }
-    
+
     /**
-     * Regenerate session_id without double cookie problem
-     *
+     * Regenerate session_id without double cookie problem.
      */
     public function regenerate()
     {
@@ -127,19 +123,18 @@ class Session
         setcookie(session_name(), '', $time - 86400);
         //regenerate session id
         session_regenerate_id(true);
-        
+
         //set new cookie
         $this->setCookie();
-        
+
         //store id and new time for expire
         $this->id = session_id();
         $this->data['time'] = $time;
         $this->data['expire'] = $this->options['expire'];
     }
-    
+
     /**
-     * Set cookie
-     *
+     * Set cookie.
      */
     private function setCookie()
     {
@@ -151,10 +146,9 @@ class Session
             (string) $this->options['cookieHttpOnly']
         );
     }
-    
+
     /**
-     * Start session
-     *
+     * Start session.
      */
     public function start()
     {
@@ -164,30 +158,29 @@ class Session
 
             //start session
             session_start();
-        
+
             //set new cookie
             $this->setCookie();
 
             //link session super global to $data property
             $this->data = &$_SESSION;
         }
-        
+
         //refresh session
         $this->refresh();
     }
-    
+
     /**
-     * Set session options before start
-     *
+     * Set session options before start.
      */
     private function prepare()
     {
         //setting session name
         session_name($this->options['name']);
-        
+
         //overwrite session name
         $this->name = $this->options['name'];
-        
+
         //standard cookie param
         session_set_cookie_params(
                 $this->options['expire'],
@@ -197,34 +190,34 @@ class Session
                 $this->options['cookieHttpOnly']
         );
     }
-    
+
     /**
-     * Refresh session
+     * Refresh session.
      *
      * @return null
      */
     private function refresh()
     {
         $time = time();
-        
-        if (isset($this->data['time']) && $this->data['time']  < ($time - $this->options['expire'])) {
-        
+
+        if (isset($this->data['time']) && $this->data['time'] < ($time - $this->options['expire'])) {
+
             //delete session data
             $this->data = [];
-            
+
             //regenerate session
             $this->regenerate();
-            
+
             return;
         }
-        
+
         $this->id = session_id();
         $this->data['time'] = $time;
         $this->data['expire'] = $this->options['expire'];
     }
-    
+
     /**
-     * Set session handler for new instance
+     * Set session handler for new instance.
      *
      * @param SessionHandlerInterface $handler Session handler
      */
@@ -235,23 +228,21 @@ class Session
             session_set_save_handler($handler, true);
         }
     }
-    
+
     /**
-     * Destroy session
-     *
+     * Destroy session.
      */
     public function destroy()
     {
         //delete session data
         $this->data = [];
-        
+
         //call session destroy
         session_destroy();
     }
-    
+
     /**
-     * Write session data and end session
-     *
+     * Write session data and end session.
      */
     public function commit()
     {

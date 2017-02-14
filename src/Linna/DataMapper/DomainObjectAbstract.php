@@ -1,29 +1,25 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
-
 declare(strict_types=1);
 
 namespace Linna\DataMapper;
 
-use Linna\DataMapper\DomainObjectInterface;
-use \UnexpectedValueException;
+use UnexpectedValueException;
 
 /**
- * Abstract Class for Domain Object
+ * Abstract Class for Domain Object.
  */
 abstract class DomainObjectAbstract implements DomainObjectInterface
 {
-
     /**
-     * @var int $objectId Object id, same of db record
+     * @var int Object id, same of db record
      */
     protected $objectId = 0;
 
@@ -39,13 +35,13 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     }
 
     /**
-     * Set the id for this object
+     * Set the id for this object.
      *
      * @param int $objectId
      *
-     * @return int
-     *
      * @throws UnexpectedValueException If the id on the object is already set
+     *
+     * @return int
      */
     public function setId(int $objectId): int
     {
@@ -56,7 +52,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
         } catch (UnexpectedValueException $e) {
             echo 'UnexpectedValueException: ',$e->getMessage();
         }
-        
+
         return $this->objectId = (int) $objectId;
     }
 }

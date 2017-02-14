@@ -1,20 +1,18 @@
 <?php
 
 /**
- * Linna Framework
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- *
  */
-
 declare(strict_types=1);
 
 namespace Linna\Session;
 
-use SessionHandlerInterface;
 use Linna\Storage\MysqlPdoAdapter;
+use SessionHandlerInterface;
 
 /**
  * Store sessions in Database.
@@ -34,12 +32,12 @@ use Linna\Storage\MysqlPdoAdapter;
 class MysqlPdoSessionHandler implements SessionHandlerInterface
 {
     /**
-     * @var object $dBase Database Connection
+     * @var object Database Connection
      */
     private $dBase;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param MysqlPdoAdapter $storage MysqlPdoResource
      */
@@ -49,7 +47,7 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Open session storage
+     * Open session storage.
      *
      * http://php.net/manual/en/sessionhandler.open.php.
      *
@@ -61,12 +59,12 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
     public function open($savePath, $sessionName)
     {
         unset($savePath, $sessionName);
-        
+
         return true;
     }
 
     /**
-     * Delete old sessions from storage
+     * Delete old sessions from storage.
      *
      * http://php.net/manual/en/sessionhandler.gc.php.
      *
@@ -85,7 +83,7 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Read sessio data from storage
+     * Read sessio data from storage.
      *
      * http://php.net/manual/en/sessionhandler.read.php.
      *
@@ -99,13 +97,13 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
 
         $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
         $pdos->execute();
-        
+
         //fix for php7
         return (string) $pdos->fetchColumn();
     }
 
     /**
-     * Write session data to storage
+     * Write session data to storage.
      *
      * http://php.net/manual/en/sessionhandler.write.php.
      *
@@ -126,7 +124,7 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Close session
+     * Close session.
      *
      * http://php.net/manual/en/sessionhandler.close.php.
      *
@@ -138,7 +136,7 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Destroy session data
+     * Destroy session data.
      *
      * http://php.net/manual/en/sessionhandler.destroy.php.
      *
