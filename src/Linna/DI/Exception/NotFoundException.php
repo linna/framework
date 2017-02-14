@@ -11,11 +11,11 @@ declare(strict_types=1);
 
 namespace Linna\DI\Exception;
 
-use Interop\Container\Exception\NotFoundException;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Not Found Exception.
  */
-class NotFound extends \Exception implements NotFoundException
+class NotFoundException extends \Exception implements NotFoundExceptionInterface
 {
 }

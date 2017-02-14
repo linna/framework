@@ -11,11 +11,11 @@ declare(strict_types=1);
 
 namespace Linna\DI\Exception;
 
-use Interop\Container\Exception\ContainerException;
+use Psr\Container\ContainerExceptionInterface;
 
 /**
  * Container Exception.
  */
-class Container extends \Exception implements ContainerException
+class ContainerException extends \Exception implements ContainerExceptionInterface
 {
 }
