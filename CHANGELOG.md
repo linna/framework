@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [v0.12.0](https://github.com/s3b4stian/linna-framework/compare/v0.11.0...v0.12.0) - 2017-XX-XX
 
 ### Changed
+* `Linna\DI\DIContainer` switched from `Interop\Container\ContainerInterface` to [PSR-11](https://github.com/container-interop/fig-standards/blob/master/proposed/container.md)
+* `Linna\DI\Exception\Container` change name to `Linna\DI\Exception\ContainerException`
+* `Linna\DI\Exception\NotFound` change name to `Linna\DI\Exception\NotFoundException`
 * `Linna\Autoloader` now not throw exceptions 
 * `Linna\Autoloader` tests updated
 
