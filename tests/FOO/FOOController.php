@@ -29,12 +29,12 @@ class FOOController extends Controller
     {
         $this->model->modifyDataFromParam($passedData);
     }
-    
+
     public function before()
     {
         //do nothing
     }
-    
+
     public function after()
     {
         //do nothing
