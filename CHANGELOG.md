@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v0.13.0](https://github.com/s3b4stian/linna-framework/compare/v0.12.0...v0.13.0) - 2017-XX-XX
+
+### Added
+* `Linna\Http\FrontController->runController()` now can execute methods before() and after() run a controller
+* When extend `Linna\Mvc\Controller` it's possible declare before() and after() methods
+
 ## [v0.12.0](https://github.com/s3b4stian/linna-framework/compare/v0.11.0...v0.12.0) - 2017-02-14
 
 ### Changed
