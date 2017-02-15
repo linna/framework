@@ -83,18 +83,17 @@ class FrontController
         //get route information
         $routeAction = $this->route->getAction();
         $routeParam = $this->route->getParam();
-        
+
         //get how to call controller
         $path = (count($routeParam) > 0 && $routeAction !== '') ? 2 : (($routeAction !== '') ? 1 : 0);
-        
+
         //check for before action method
         if (method_exists($this->controller, 'before')) {
             $this->controller->before();
         }
-        
+
         //action - call controller
-        switch ($path)
-        {
+        switch ($path) {
             case 1:
                 call_user_func([$this->controller, $routeAction]);
                 break;
@@ -102,7 +101,7 @@ class FrontController
                 call_user_func_array([$this->controller, $routeAction], $routeParam);
                 break;
         }
-        
+
         //check for after action method
         if (method_exists($this->controller, 'after')) {
             $this->controller->after();
