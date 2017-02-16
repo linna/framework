@@ -174,7 +174,7 @@ class Autoloader
             }
         }
 
-        //Unable to find class {$relativeClass} in {$file}.
+        //Unable to find class in file.
         return false;
     }
 }
