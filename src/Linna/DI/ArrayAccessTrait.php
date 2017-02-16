@@ -20,22 +20,22 @@ trait ArrayAccessTrait
     /**
      * Express Requirements by Abstract Methods.
      */
-    abstract public function has();
+    abstract public function has($id);
 
     /**
      * Express Requirements by Abstract Methods.
      */
-    abstract public function get();
+    abstract public function get($id);
 
     /**
      * Express Requirements by Abstract Methods.
      */
-    abstract public function set();
+    abstract public function set($id, $value);
 
     /**
      * Express Requirements by Abstract Methods.
      */
-    abstract public function delete();
+    abstract public function delete($id);
 
     /**
      * Check.
