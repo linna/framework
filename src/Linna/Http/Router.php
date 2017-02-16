@@ -91,6 +91,7 @@ class Router
 
         //matches set empty array
         $matches = [];
+
         //valid route set to 0
         $validRoute = 0;
 
@@ -119,25 +120,17 @@ class Router
             return false;
         }
 
+        //add to route array the passed uri for param check when call
+        $validRoute['matches'] = $matches;
+
         //route match and there is a subpattern with action
         if (count($matches) > 1) {
-            //add to route array the passed uri for param check when call
-            $validRoute['matches'] = $matches;
-
             //assume that subpattern rapresent action
             $validRoute['action'] = $matches[1];
 
             //url clean
             $validRoute['url'] = preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $validRoute['url']);
-
-            //assign valid route
-            $this->route = $this->buildRoute($validRoute);
-
-            return false;
         }
-
-        //add to route array the passed uri for param check when call
-        $validRoute['matches'] = $matches;
 
         //assign valid route
         $this->route = $this->buildRoute($validRoute);
