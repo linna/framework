@@ -7,8 +7,10 @@
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-use Linna\Autoloader;
+declare(strict_types=1);
+
 use Linna\FOO\FOOController;
+use Linna\FOO\FOOControllerBeforeAfter;
 use Linna\FOO\FOOModel;
 use Linna\FOO\FOOTemplate;
 use Linna\FOO\FOOView;
@@ -20,27 +22,23 @@ class FrontControllerTest extends TestCase
 {
     protected $routes;
 
-    public function __construct()
+    protected $router;
+    
+    public function setUp()
     {
-        $autoloader = new Autoloader();
-        $autoloader->register();
-        $autoloader->addNamespaces([
-           ['Linna\FOO', dirname(__DIR__).'/FOO'],
-        ]);
+        $routes = [];
 
-        $this->routes = [];
-
-        $this->routes[] = [
+        $routes[] = [
             'name'       => 'Foo',
             'method'     => 'GET',
-            'url'        => '/Foo/(modifyData)',
+            'url'        => '/Foo',
             'model'      => 'FOOModel',
             'view'       => 'FOOView',
             'controller' => 'FOOController',
             'action'     => '',
         ];
-
-        $this->routes[] = [
+        
+        $routes[] = [
             'name'       => 'Foo',
             'method'     => 'GET',
             'url'        => '/Foo/[passedData]/(modifyDataFromParam)',
@@ -49,6 +47,33 @@ class FrontControllerTest extends TestCase
             'controller' => 'FOOController',
             'action'     => '',
         ];
+        
+        $routes[] = [
+            'name'       => 'Foo',
+            'method'     => 'GET',
+            'url'        => '/Foo/(modifyData)',
+            'model'      => 'FOOModel',
+            'view'       => 'FOOView',
+            'controller' => 'FOOController',
+            'action'     => '',
+        ];
+        
+         $routes[] = [
+            'name'       => 'Foo',
+            'method'     => 'GET',
+            'url'        => '/Foo/(modifyDataTimed)',
+            'model'      => 'FOOModel',
+            'view'       => 'FOOView',
+            'controller' => 'FOOControllerBeforeAfter',
+            'action'     => '',
+        ];
+         
+        //start router
+        $this->router = new Router($routes, [
+            'basePath'    => '/',
+            'badRoute'    => 'E404',
+            'rewriteMode' => true,
+        ]);
     }
 
     /**
@@ -56,15 +81,8 @@ class FrontControllerTest extends TestCase
      */
     public function testNewFrontController()
     {
-        //start router
-        $router = new Router($this->routes, [
-            'basePath'    => '/',
-            'badRoute'    => 'E404',
-            'rewriteMode' => true,
-        ]);
-
         //evaluate request uri
-        $router->validate('/Foo/modifyData', 'GET');
+        $this->router->validate('/Foo', 'GET');
 
         $model = new FOOModel();
         //get view linked to route
@@ -72,7 +90,7 @@ class FrontControllerTest extends TestCase
         //get controller linked to route
         $controller = new FOOController($model);
 
-        $FrontController = new FrontController($router->getRoute(), $model, $view, $controller);
+        $FrontController = new FrontController($this->router->getRoute(), $model, $view, $controller);
 
         $this->assertInstanceOf(FrontController::class, $FrontController);
     }
@@ -82,15 +100,8 @@ class FrontControllerTest extends TestCase
      */
     public function testRunFrontController()
     {
-        //start router
-        $router = new Router($this->routes, [
-            'basePath'    => '/',
-            'badRoute'    => 'E404',
-            'rewriteMode' => true,
-        ]);
-
         //evaluate request uri
-        $router->validate('/Foo/modifyData', 'GET');
+        $this->router->validate('/Foo/modifyData', 'GET');
 
         $model = new FOOModel();
         //get view linked to route
@@ -98,7 +109,7 @@ class FrontControllerTest extends TestCase
         //get controller linked to route
         $controller = new FOOController($model);
 
-        $FrontController = new FrontController($router->getRoute(), $model, $view, $controller);
+        $FrontController = new FrontController($this->router->getRoute(), $model, $view, $controller);
 
         $FrontController->run();
 
@@ -111,7 +122,7 @@ class FrontControllerTest extends TestCase
         ob_end_clean();
 
         $this->assertInstanceOf(stdClass::class, $test);
-        $this->assertEquals('modified data', $test->data);
+        $this->assertEquals(1234, $test->data);
     }
 
     /**
@@ -119,15 +130,8 @@ class FrontControllerTest extends TestCase
      */
     public function testRunFrontControllerParam()
     {
-        //start router
-        $router = new Router($this->routes, [
-            'basePath'    => '/',
-            'badRoute'    => 'E404',
-            'rewriteMode' => true,
-        ]);
-
         //evaluate request uri
-        $router->validate('/Foo/data500/modifyDataFromParam', 'GET');
+        $this->router->validate('/Foo/500/modifyDataFromParam', 'GET');
 
         $model = new FOOModel();
         //get view linked to route
@@ -135,7 +139,7 @@ class FrontControllerTest extends TestCase
         //get controller linked to route
         $controller = new FOOController($model);
 
-        $FrontController = new FrontController($router->getRoute(), $model, $view, $controller);
+        $FrontController = new FrontController($this->router->getRoute(), $model, $view, $controller);
 
         $FrontController->run();
 
@@ -148,21 +152,15 @@ class FrontControllerTest extends TestCase
         ob_end_clean();
 
         $this->assertInstanceOf(stdClass::class, $test);
-        $this->assertEquals('data500', $test->data);
+        $this->assertEquals(500, $test->data);
     }
 
     public function testModelDetach()
     {
-        $router = new Router($this->routes, [
-            'basePath'    => '/',
-            'badRoute'    => 'E404',
-            'rewriteMode' => true,
-        ]);
-
         //evaluate request uri
-        $router->validate('/Foo/data500/modifyDataFromParam', 'GET');
+        $this->router->validate('/Foo/data500/modifyDataFromParam', 'GET');
 
-        $route = $router->getRoute();
+        $route = $this->router->getRoute();
 
         $routeAction = $route->getAction();
         $routeParam = $route->getParam();
@@ -193,7 +191,38 @@ class FrontControllerTest extends TestCase
         ob_end_clean();
 
         $this->assertInstanceOf(stdClass::class, $test);
-
         $this->assertEquals(false, isset($test->data));
+    }
+    
+     /**
+     * @depends testNewFrontController
+     */
+    public function testRunFrontControllerWithActions()
+    {
+        //evaluate request uri
+        $this->router->validate('/Foo/modifyDataTimed', 'GET');
+
+        $model = new FOOModel();
+        //get view linked to route
+        $view = new FOOView($model, new FOOTemplate());
+        //get controller linked to route
+        $controller = new FOOControllerBeforeAfter($model);
+
+        $FrontController = new FrontController($this->router->getRoute(), $model, $view, $controller);
+
+        $FrontController->run();
+
+        ob_start();
+
+        $FrontController->response();
+
+        $test = json_decode(ob_get_contents());
+        
+        var_dump($test);
+        
+        ob_end_clean();
+
+        $this->assertInstanceOf(stdClass::class, $test);
+        $this->assertEquals(123, (int) $test->data);
     }
 }

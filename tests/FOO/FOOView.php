@@ -21,21 +21,26 @@ class FOOView extends View
     {
         parent::__construct($model);
 
-        $this->htmlTemplate = $htmlTemplate;
+        $this->template = $htmlTemplate;
     }
 
     public function index()
     {
-        $this->template = $this->htmlTemplate;
+        //$this->template = $this->htmlTemplate;
     }
 
     public function modifyData()
     {
-        $this->template = $this->htmlTemplate;
+        //$this->template = $this->htmlTemplate;
+    }
+    
+    public function modifyDataTimed()
+    {
+        //$this->template = $this->htmlTemplate;
     }
 
     public function modifyDataFromParam()
     {
-        $this->template = $this->htmlTemplate;
+        //$this->template = $this->htmlTemplate;
     }
 }
