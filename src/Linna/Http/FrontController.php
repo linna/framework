@@ -39,7 +39,17 @@ class FrontController
      * @var object Contain controller object
      */
     private $route;
-
+    
+    /**
+     * @var string Contain Controller and View action name
+     */
+    private $routeAction;
+    
+    /**
+     * @var array Paremeter passed to Controller
+     */
+    private $routeParam;
+    
     /**
      * Constructor.
      *
@@ -51,7 +61,10 @@ class FrontController
     public function __construct(RouteInterface $route, Model $model, View $view, Controller $controller)
     {
         $this->route = $route;
-
+        
+        $this->routeAction = $route->getAction();
+        $this->routeParam = $route->getParam();
+        
         $this->model = $model;
         $this->view = $view;
         $this->controller = $controller;
@@ -65,34 +78,48 @@ class FrontController
         //attach Oserver to Subjetc
         $this->model->attach($this->view);
 
-        //check for before action method
-        if (method_exists($this->controller, 'before')) {
-            $this->controller->before();
-        }
-
+        //run action before controller
+        $this->beforeAfterControllerAction('before');
+        
         //run controller
         $this->runController();
 
-        //check for after action method
-        if (method_exists($this->controller, 'after')) {
-            $this->controller->after();
-        }
-
+        //run action after controller
+        $this->beforeAfterControllerAction('after');
+        
         //notify model changes to view
         $this->model->notify();
 
         //run view
         $this->runView();
     }
-
+    
+    /**
+     * Run action before or after controller execution
+     */
+    private function beforeAfterControllerAction(string $when)
+    {
+        //check for before action method
+        if (method_exists($this->controller, $when)) {
+            $this->controller->before();
+        }
+        
+        $actionMethod = $when.ucfirst($this->routeAction);
+        
+        if (method_exists($this->controller, $actionMethod) && $actionMethod !== $when)
+        {
+            call_user_func([$this->controller, $actionMethod]);
+        }
+    }
+        
     /**
      * Run controller.
      */
     private function runController()
     {
         //get route information
-        $routeAction = $this->route->getAction();
-        $routeParam = $this->route->getParam();
+        $routeAction = $this->routeAction;
+        $routeParam = $this->routeParam;
 
         //action - call controller passing params
         if (count($routeParam) > 0 && $routeAction !== '') {
@@ -111,7 +138,7 @@ class FrontController
      */
     private function runView()
     {
-        $routeAction = (($routeAction = $this->route->getAction()) !== '') ? $routeAction : 'index';
+        $routeAction = (($routeAction = $this->routeAction) !== '') ? $routeAction : 'index';
 
         call_user_func([$this->view, $routeAction]);
     }
