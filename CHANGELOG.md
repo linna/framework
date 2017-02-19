@@ -6,12 +6,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v0.13.0](https://github.com/s3b4stian/linna-framework/compare/v0.12.0...v0.13.0) - 2017-XX-XX
+## [v0.13.0](https://github.com/s3b4stian/linna-framework/compare/v0.12.0...v0.13.0) - 2017-02-19
 
 ### Added
 * `Linna\Http\FrontController` can execute actions before and after main controller action
 * When extend `Linna\Mvc\Controller` it's possible declare global before() and after() valid for all controller actions
 * When extend `Linna\Mvc\Controller` it's possible declare specific before() and after() methods for one controller action
+
+### Changed
+* Optimized `Linna\DI\DIResolver` memory usage
+* Optimized `Linna\Http\Router->validate()`
+* Tests updated
 
 ### Fixed
 * Abstract methods in `Linna\DI\ArrayAccessTrait` and `Linna\DI\PropertyAccessTrait` undeclared arguments
