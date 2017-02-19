@@ -58,17 +58,17 @@ class DIResolver
      *
      * @return object|null Instance of resolved class
      */
-    public function resolve(string $resolveClass, array $rules = [])
+    public function resolve(string $class, array $rules = [])
     {
         $this->rules = array_merge($this->rules, $rules);
-
-        $resolveClass = (strpos($resolveClass, '\\') !== 0) ? '\\'.$resolveClass : $resolveClass;
-
-        $this->buildDependencyTree($resolveClass);
-
-        $this->buildObjects(array_reverse($this->dependencyTree));
-
-        return $this->cache[$resolveClass] ?? null;
+        
+        $class = (strpos($class, '\\') !== 0) ? '\\' . $class : $class;
+        
+        $this->buildTree($class);
+        
+        $this->buildObjects();
+        
+        return $this->cache[$class] ?? null;
     }
 
     /**
@@ -76,7 +76,7 @@ class DIResolver
      *
      * @param string $class Class wich tree will build
      */
-    private function buildDependencyTree(string $class)
+    private function buildTree(string $class)
     {
         //set start level
         $level = 0;
@@ -99,7 +99,6 @@ class DIResolver
             foreach ($parameters as $value) {
 
                 //get argument properties
-                $paramHasType = (bool) $value->hasType();
                 $paramType = (string) $value->getType();
                 $paramPosition = (int) $value->getPosition();
                 $paramName = (string) $value->getName();
@@ -115,7 +114,7 @@ class DIResolver
                 $isPrimitiveType = in_array($paramType, ['bool', 'int', 'string', 'array', '']);
 
                 //if there is parameter with callable type
-                if ($paramHasType && class_exists($paramType) && $notAlreadyStored) {
+                if (class_exists($paramType) && $notAlreadyStored) {
 
                     //push values in stack for simulate later recursive function
                     $stack->push([$level, $class]);
@@ -150,16 +149,14 @@ class DIResolver
 
     /**
      * Build objects from dependencyTree.
-     *
-     * @param array $array Dependency Tree
      */
-    private function buildObjects(array $array)
+    private function buildObjects()
     {
-        //deep dependency level
-        foreach ($array as $value) {
+        //deep dependency level, start to array end for not use array_reverse
+        for($i = count($this->dependencyTree) - 1; $i >= 0; $i--) {
 
             //class
-            foreach ($value as $class => $dependency) {
+            foreach ($this->dependencyTree[$i] as $class => $dependency) {
 
                 //try to find object in class
                 $object = $this->cache[$class] ?? null;
@@ -168,7 +165,7 @@ class DIResolver
                 if ($object === null && count($dependency) > 0) {
 
                     //build arguments
-                    $args = $this->buildObjectDependency($class, $dependency);
+                    $args = $this->buildArguments($class, $dependency);
 
                     //store object with dependencies in cache
                     $this->cache[$class] = (new \ReflectionClass($class))->newInstanceArgs($args);
@@ -179,7 +176,7 @@ class DIResolver
                 if ($object === null) {
 
                     //store object in cache
-                    $this->cache[$class] = (new \ReflectionClass($class))->newInstanceArgs();
+                    $this->cache[$class] = (new \ReflectionClass($class))->newInstance();
                 }
             }
         }
@@ -193,7 +190,7 @@ class DIResolver
      *
      * @return array
      */
-    private function buildObjectDependency(string $class, array $dependency): array
+    private function buildArguments(string $class, array $dependency): array
     {
         //initialize arguments array
         $args = [];
