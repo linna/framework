@@ -53,8 +53,8 @@ class DIResolver
     /**
      * Resolve dependencies for given class.
      *
-     * @param string $resolveClass Class needed
-     * @param array  $rules        Rules for resolving
+     * @param string $class Class needed
+     * @param array  $rules Rules for resolving
      *
      * @return object|null Instance of resolved class
      */
