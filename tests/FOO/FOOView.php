@@ -33,7 +33,7 @@ class FOOView extends View
     {
         //$this->template = $this->htmlTemplate;
     }
-    
+
     public function modifyDataTimed()
     {
         //$this->template = $this->htmlTemplate;

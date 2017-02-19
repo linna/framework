@@ -22,20 +22,20 @@ class FOOModel extends Model
 
     public function addToData(string $when)
     {
-        if (!isset($this->getUpdate['data']))
-        {
+        if (!isset($this->getUpdate['data'])) {
             $this->getUpdate = ['data' => 100];
+
             return;
         }
-        
+
         $this->getUpdate['data'] += 3;
     }
-    
+
     public function modifyDataTimed()
     {
         $this->getUpdate['data'] += 20;
     }
-    
+
     public function modifyData()
     {
         $this->getUpdate = ['data' => 1234];

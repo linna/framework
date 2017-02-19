@@ -24,7 +24,7 @@ class FOOControllerBeforeAfter extends Controller
     {
         $this->model->addToData('before');
     }
-    
+
     public function modifyDataTimed()
     {
         $this->model->modifyDataTimed();
@@ -34,7 +34,7 @@ class FOOControllerBeforeAfter extends Controller
     {
         $this->model->addToData('after');
     }
-    
+
     public function before()
     {
         //do nothing
