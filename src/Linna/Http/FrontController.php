@@ -39,17 +39,17 @@ class FrontController
      * @var object Contain controller object
      */
     private $route;
-    
+
     /**
      * @var string Contain Controller and View action name
      */
     private $routeAction;
-    
+
     /**
      * @var array Paremeter passed to Controller
      */
     private $routeParam;
-    
+
     /**
      * Constructor.
      *
@@ -61,10 +61,10 @@ class FrontController
     public function __construct(RouteInterface $route, Model $model, View $view, Controller $controller)
     {
         $this->route = $route;
-        
+
         $this->routeAction = $route->getAction();
         $this->routeParam = $route->getParam();
-        
+
         $this->model = $model;
         $this->view = $view;
         $this->controller = $controller;
@@ -80,22 +80,22 @@ class FrontController
 
         //run action before controller
         $this->beforeAfterControllerAction('before');
-        
+
         //run controller
         $this->runController();
 
         //run action after controller
         $this->beforeAfterControllerAction('after');
-        
+
         //notify model changes to view
         $this->model->notify();
 
         //run view
         $this->runView();
     }
-    
+
     /**
-     * Run action before or after controller execution
+     * Run action before or after controller execution.
      */
     private function beforeAfterControllerAction(string $when)
     {
@@ -103,15 +103,14 @@ class FrontController
         if (method_exists($this->controller, $when)) {
             $this->controller->before();
         }
-        
+
         $actionMethod = $when.ucfirst($this->routeAction);
-        
-        if (method_exists($this->controller, $actionMethod) && $actionMethod !== $when)
-        {
+
+        if (method_exists($this->controller, $actionMethod) && $actionMethod !== $when) {
             call_user_func([$this->controller, $actionMethod]);
         }
     }
-        
+
     /**
      * Run controller.
      */
@@ -124,6 +123,7 @@ class FrontController
         //action - call controller passing params
         if (count($routeParam) > 0 && $routeAction !== '') {
             call_user_func_array([$this->controller, $routeAction], $routeParam);
+
             return;
         }
 

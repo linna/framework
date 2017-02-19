@@ -61,13 +61,13 @@ class DIResolver
     public function resolve(string $class, array $rules = [])
     {
         $this->rules = array_merge($this->rules, $rules);
-        
-        $class = (strpos($class, '\\') !== 0) ? '\\' . $class : $class;
-        
+
+        $class = (strpos($class, '\\') !== 0) ? '\\'.$class : $class;
+
         $this->buildTree($class);
-        
+
         $this->buildObjects();
-        
+
         return $this->cache[$class] ?? null;
     }
 
@@ -153,7 +153,7 @@ class DIResolver
     private function buildObjects()
     {
         //deep dependency level, start to array end for not use array_reverse
-        for($i = count($this->dependencyTree) - 1; $i >= 0; $i--) {
+        for ($i = count($this->dependencyTree) - 1; $i >= 0; $i--) {
 
             //class
             foreach ($this->dependencyTree[$i] as $class => $dependency) {

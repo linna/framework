@@ -19,12 +19,12 @@ class FOOController extends Controller
     {
         parent::__construct($model);
     }
-    
+
     public function modifyData()
     {
         $this->model->modifyData();
     }
-    
+
     public function modifyDataFromParam($passedData)
     {
         $this->model->modifyDataFromParam($passedData);

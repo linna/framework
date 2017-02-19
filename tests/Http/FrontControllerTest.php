@@ -23,7 +23,7 @@ class FrontControllerTest extends TestCase
     protected $routes;
 
     protected $router;
-    
+
     public function setUp()
     {
         $routes = [];
@@ -37,7 +37,7 @@ class FrontControllerTest extends TestCase
             'controller' => 'FOOController',
             'action'     => '',
         ];
-        
+
         $routes[] = [
             'name'       => 'Foo',
             'method'     => 'GET',
@@ -47,7 +47,7 @@ class FrontControllerTest extends TestCase
             'controller' => 'FOOController',
             'action'     => '',
         ];
-        
+
         $routes[] = [
             'name'       => 'Foo',
             'method'     => 'GET',
@@ -57,8 +57,8 @@ class FrontControllerTest extends TestCase
             'controller' => 'FOOController',
             'action'     => '',
         ];
-        
-         $routes[] = [
+
+        $routes[] = [
             'name'       => 'Foo',
             'method'     => 'GET',
             'url'        => '/Foo/(modifyDataTimed)',
@@ -67,7 +67,7 @@ class FrontControllerTest extends TestCase
             'controller' => 'FOOControllerBeforeAfter',
             'action'     => '',
         ];
-         
+
         //start router
         $this->router = new Router($routes, [
             'basePath'    => '/',
@@ -193,8 +193,8 @@ class FrontControllerTest extends TestCase
         $this->assertInstanceOf(stdClass::class, $test);
         $this->assertEquals(false, isset($test->data));
     }
-    
-     /**
+
+    /**
      * @depends testNewFrontController
      */
     public function testRunFrontControllerWithActions()
@@ -217,9 +217,9 @@ class FrontControllerTest extends TestCase
         $FrontController->response();
 
         $test = json_decode(ob_get_contents());
-        
+
         var_dump($test);
-        
+
         ob_end_clean();
 
         $this->assertInstanceOf(stdClass::class, $test);
