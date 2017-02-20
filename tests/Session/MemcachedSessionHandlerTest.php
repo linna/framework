@@ -7,47 +7,58 @@
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
+declare(strict_types=1);
+
 use Linna\Session\MemcachedSessionHandler;
 use Linna\Session\Session;
 use PHPUnit\Framework\TestCase;
 
 class MemcachedSessionHandlerTest extends TestCase
 {
+    protected $memcached;
+    
+    protected $session;
+    
+    protected $sessionHandler;
+    
+    public function setUp()
+    {
+        if (!class_exists('Memcached')) {
+            return;
+        }
+        
+        //create memcached instance
+        $memcached = new Memcached();
+        //connect to memcached server
+        $memcached->addServer($GLOBALS['mem_host'], (int) $GLOBALS['mem_port']);
+        
+        $this->memcached = $memcached;
+        
+        $this->sessionHandler = new MemcachedSessionHandler($memcached, 5);
+        
+        $this->session = new Session(['expire' => 10]);
+    }
+    
     /**
      * @runInSeparateProcess
      */
-    public function testSession()
+    public function testSessionStart()
     {
         if (!class_exists('Memcached')) {
             $this->markTestSkipped('Memcached module not installed');
         }
 
-        //create memcached instance
-        $memcached = new Memcached();
-        //connect to memcached server
-        $memcached->addServer($GLOBALS['mem_host'], $GLOBALS['mem_port']);
+        $session = $this->session;
 
-        $sessionHandler = new MemcachedSessionHandler($memcached, 1800);
+        $session->setSessionHandler($this->sessionHandler);
 
-        $session = new Session();
-
-        $session->setSessionHandler($sessionHandler);
-
+        $this->assertEquals(1, $session->status);
+        
         $session->start();
 
-        $session->testdata = 'test';
+        $this->assertEquals(2, $session->status);
 
-        $this->assertEquals('test', $session->testdata);
-
-        $session->testdata = 'new test';
-
-        $this->assertEquals('new test', $session->testdata);
-
-        unset($session->testdata);
-
-        $this->assertEquals(false, $session->testdata);
-
-        $session->commit();
+        $session->destroy();
     }
 
     /**
@@ -58,32 +69,29 @@ class MemcachedSessionHandlerTest extends TestCase
         if (!class_exists('Memcached')) {
             $this->markTestSkipped('Memcached module not installed');
         }
-
-        //create memcached instance
-        $memcached = new Memcached();
-        //connect to memcached server
-        $memcached->addServer($GLOBALS['mem_host'], $GLOBALS['mem_port']);
-
-        $sessionHandler = new MemcachedSessionHandler($memcached, 8);
-
-        $session = new Session(['expire' => 8]);
-
-        $session->setSessionHandler($sessionHandler);
+        
+        $session = $this->session;
+        
+        $session->setSessionHandler($this->sessionHandler);
+        
         $session->start();
+        
         $session_id = $session->id;
-
+        
         $session->time = $session->time - 1800;
 
         $session->commit();
 
-        $session->setSessionHandler($sessionHandler);
+        
+        $session->setSessionHandler($this->sessionHandler);
+        
         $session->start();
-        $session_id2 = $session->id;
+        
+        $session2_id = $session->id;
 
-        $test = ($session_id === $session_id2) ? 1 : 0;
-
-        $this->assertEquals(0, $test);
-
+        $this->assertEquals(false, ($session_id === $session2_id));
+        $this->assertEquals(2, $session->status);
+        
         $session->destroy();
     }
 
@@ -96,14 +104,7 @@ class MemcachedSessionHandlerTest extends TestCase
             $this->markTestSkipped('Memcached module not installed');
         }
 
-        //create memcached instance
-        $memcached = new Memcached();
-        //connect to memcached server
-        $memcached->addServer('localhost', 11211);
-
-        $sessionHandler = new MemcachedSessionHandler($memcached, 8);
-
-        $test = $sessionHandler->gc(0);
+        $test = $this->sessionHandler->gc(0);
 
         $this->assertEquals(true, $test);
     }

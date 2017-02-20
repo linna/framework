@@ -16,39 +16,42 @@ use PHPUnit\Framework\TestCase;
 
 class MysqlPdoSessionHandlerTest extends TestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
-    public function testSession()
+    protected $mysqlPdo;
+    
+    protected $session;
+    
+    protected $sessionHandler;
+    
+    public function setUp()
     {
-        $mysqlPdoAdapter = new MysqlPdoAdapter(
+        $this->mysqlPdo = new MysqlPdoAdapter(
             $GLOBALS['pdo_mysql_dsn'],
             $GLOBALS['pdo_mysql_user'],
             $GLOBALS['pdo_mysql_password'],
             [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING]
         );
+        
+        $this->sessionHandler = new MysqlPdoSessionHandler($this->mysqlPdo);
+        
+        $this->session = new Session(['expire' => 10]);
+    }
+    
+    /**
+     * @runInSeparateProcess
+     */
+    public function testSession()
+    {
+        $session = $this->session;
 
-        $sessionHandler = new MysqlPdoSessionHandler($mysqlPdoAdapter);
+        $session->setSessionHandler($this->sessionHandler);
 
-        $session = new Session(['expire' => 8]);
-
-        $session->setSessionHandler($sessionHandler);
-
+        $this->assertEquals(1, $session->status);
+        
         $session->start();
 
-        $session->testdata = 'test';
+        $this->assertEquals(2, $session->status);
 
-        $this->assertEquals('test', $session->testdata);
-
-        $session->testdata = 'new test';
-
-        $this->assertEquals('new test', $session->testdata);
-
-        unset($session->testdata);
-
-        $this->assertEquals(false, $session->testdata);
-
-        $session->commit();
+        $session->destroy();
     }
 
     /**
@@ -56,33 +59,28 @@ class MysqlPdoSessionHandlerTest extends TestCase
      */
     public function testExpiredSession()
     {
-        $mysqlPdoAdapter = new MysqlPdoAdapter(
-            $GLOBALS['pdo_mysql_dsn'],
-            $GLOBALS['pdo_mysql_user'],
-            $GLOBALS['pdo_mysql_password'],
-            [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING]
-        );
-
-        $sessionHandler = new MysqlPdoSessionHandler($mysqlPdoAdapter);
-
-        $session = new Session(['expire' => 8]);
-
-        $session->setSessionHandler($sessionHandler);
+        $session = $this->session;
+        
+        $session->setSessionHandler($this->sessionHandler);
+        
         $session->start();
+        
         $session_id = $session->id;
-
+        
         $session->time = $session->time - 1800;
 
         $session->commit();
 
-        $session->setSessionHandler($sessionHandler);
+        
+        $session->setSessionHandler($this->sessionHandler);
+        
         $session->start();
-        $session_id2 = $session->id;
+        
+        $session2_id = $session->id;
 
-        $test = ($session_id === $session_id2) ? 1 : 0;
-
-        $this->assertEquals(0, $test);
-
+        $this->assertEquals(false, ($session_id === $session2_id));
+        $this->assertEquals(2, $session->status);
+        
         $session->destroy();
     }
 
@@ -91,16 +89,14 @@ class MysqlPdoSessionHandlerTest extends TestCase
      */
     public function testGc()
     {
-        $mysqlPdoAdapter = new MysqlPdoAdapter(
+        $adapter = new MysqlPdoAdapter(
             $GLOBALS['pdo_mysql_dsn'],
             $GLOBALS['pdo_mysql_user'],
             $GLOBALS['pdo_mysql_password'],
             [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING]
         );
-
-        $sessionHandler = new MysqlPdoSessionHandler($mysqlPdoAdapter);
-
-        $conn = $mysqlPdoAdapter->getResource();
+        
+        $conn = $adapter->getResource();
         $conn->query('DELETE FROM session');
 
         for ($i = 0; $i < 10; $i++) {
@@ -115,7 +111,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
             $pdos->execute();
         }
 
-        $sessionHandler->gc(-1);
+        $this->sessionHandler->gc(-1);
 
         $pdos = $conn->prepare('SELECT * FROM session');
         $pdos->execute();
