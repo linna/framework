@@ -6,6 +6,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v0.14.0](https://github.com/s3b4stian/linna-framework/compare/v0.13.0...v0.14.0) - 2017-XX-XX
+
+### Added
+* `Linna\Session\Session` can store value using array or property syntax
+* `Linna\Session\Session->status` property added, ndicate session status
+
+### Changed
+* Session tests updated
+
 ## [v0.13.0](https://github.com/s3b4stian/linna-framework/compare/v0.12.0...v0.13.0) - 2017-02-19
 
 ### Added
