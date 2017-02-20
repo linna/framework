@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Linna\Session;
 
 use SessionHandlerInterface;
+use ArrayAccess;
 
 /**
  * Manage session lifetime and session data.
@@ -21,8 +22,11 @@ use SessionHandlerInterface;
  * @property int $loginTime Login time set by Login class
  * @property int $expire Login time set for Login class
  */
-class Session
+class Session implements ArrayAccess
 {
+    use PropertyAccessTrait;
+    use ArrayAccessTrait;
+    
     /**
      * @var array Config options for class
      */
@@ -49,7 +53,12 @@ class Session
      * @var string Session name
      */
     public $name;
-
+    
+    /**
+     * @var int session_status function result
+     */
+    public $status;
+    
     /**
      * Constructor.
      *
@@ -61,55 +70,8 @@ class Session
         $this->options = array_replace_recursive($this->options, $options);
 
         $this->name = $options['name'] ?? $this->options['name'];
-    }
-
-    /**
-     * Magic metod
-     * http://php.net/manual/en/language.oop5.overloading.php.
-     *
-     * @param string $name
-     * @param mixed  $value
-     */
-    public function __set(string $name, $value)
-    {
-        $this->data[$name] = $value;
-    }
-
-    /**
-     * Magic metod
-     * http://php.net/manual/en/language.oop5.overloading.php.
-     *
-     * @param string $name
-     */
-    public function __get(string $name)
-    {
-        if (array_key_exists($name, $this->data)) {
-            return $this->data[$name];
-        }
-
-        return false;
-    }
-
-    /**
-     * Magic metod
-     * http://php.net/manual/en/language.oop5.overloading.php.
-     *
-     * @param string $name
-     */
-    public function __unset(string $name)
-    {
-        unset($this->data[$name]);
-    }
-
-    /**
-     * Magic metod
-     * http://php.net/manual/en/language.oop5.overloading.php.
-     *
-     * @param string $name
-     */
-    public function __isset(string $name)
-    {
-        return isset($this->data[$name]);
+        
+        $this->status = session_status();
     }
 
     /**
@@ -131,6 +93,7 @@ class Session
         $this->id = session_id();
         $this->data['time'] = $time;
         $this->data['expire'] = $this->options['expire'];
+        $this->status = session_status();
     }
 
     /**
@@ -164,6 +127,9 @@ class Session
 
             //link session super global to $data property
             $this->data = &$_SESSION;
+            
+            //update session status
+            $this->status = session_status();
         }
 
         //refresh session
