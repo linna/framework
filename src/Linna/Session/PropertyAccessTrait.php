@@ -14,6 +14,8 @@ namespace Linna\Session;
 /**
  * Magic Access Trait
  * Provide to Session the possibility to retrive values using properties.
+ * 
+ * @property mixed $data Session Data
  */
 trait PropertyAccessTrait
 {
@@ -37,7 +39,6 @@ trait PropertyAccessTrait
      */
     public function __get(string $name)
     {
-        //if (array_key_exists($name, $this->data)) {
         if (isset($this->data[$name])) {
             return $this->data[$name];
         }

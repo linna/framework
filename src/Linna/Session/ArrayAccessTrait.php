@@ -14,6 +14,8 @@ namespace Linna\Session;
 /**
  * Array Access Trait
  * Provide to Session the possibility to retrive values using array notation.
+ * 
+ * @property mixed $data Session Data
  */
 trait ArrayAccessTrait
 {
@@ -38,7 +40,6 @@ trait ArrayAccessTrait
      */
     public function offsetGet($name)
     {
-        //if (array_key_exists($name, $this->data)) {
         if (isset($this->data[$name])) {
             return $this->data[$name];
         }
