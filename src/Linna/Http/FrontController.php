@@ -96,6 +96,8 @@ class FrontController
 
     /**
      * Run action before or after controller execution.
+     * 
+     * @param string $when
      */
     private function beforeAfterControllerAction(string $when)
     {
