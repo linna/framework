@@ -17,11 +17,11 @@ use PHPUnit\Framework\TestCase;
 class MysqlPdoSessionHandlerTest extends TestCase
 {
     protected $mysqlPdo;
-    
+
     protected $session;
-    
+
     protected $sessionHandler;
-    
+
     public function setUp()
     {
         $this->mysqlPdo = new MysqlPdoAdapter(
@@ -30,12 +30,12 @@ class MysqlPdoSessionHandlerTest extends TestCase
             $GLOBALS['pdo_mysql_password'],
             [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING]
         );
-        
+
         $this->sessionHandler = new MysqlPdoSessionHandler($this->mysqlPdo);
-        
+
         $this->session = new Session(['expire' => 10]);
     }
-    
+
     /**
      * @runInSeparateProcess
      */
@@ -46,7 +46,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
         $session->setSessionHandler($this->sessionHandler);
 
         $this->assertEquals(1, $session->status);
-        
+
         $session->start();
 
         $this->assertEquals(2, $session->status);
@@ -60,27 +60,26 @@ class MysqlPdoSessionHandlerTest extends TestCase
     public function testExpiredSession()
     {
         $session = $this->session;
-        
+
         $session->setSessionHandler($this->sessionHandler);
-        
+
         $session->start();
-        
+
         $session_id = $session->id;
-        
+
         $session->time = $session->time - 1800;
 
         $session->commit();
 
-        
         $session->setSessionHandler($this->sessionHandler);
-        
+
         $session->start();
-        
+
         $session2_id = $session->id;
 
         $this->assertEquals(false, ($session_id === $session2_id));
         $this->assertEquals(2, $session->status);
-        
+
         $session->destroy();
     }
 
@@ -95,7 +94,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
             $GLOBALS['pdo_mysql_password'],
             [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING]
         );
-        
+
         $conn = $adapter->getResource();
         $conn->query('DELETE FROM session');
 

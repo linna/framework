@@ -19,29 +19,29 @@ trait ArrayAccessTrait
 {
     /**
      * Express Requirements by Abstract Methods.
-     * 
+     *
      * @param string $id
      */
     abstract public function has($id);
 
     /**
      * Express Requirements by Abstract Methods.
-     * 
+     *
      * @param string $id
      */
     abstract public function get($id);
 
     /**
      * Express Requirements by Abstract Methods.
-     * 
+     *
      * @param string $id
-     * @param mixed $value
+     * @param mixed  $value
      */
     abstract public function set($id, $value);
 
     /**
      * Express Requirements by Abstract Methods.
-     * 
+     *
      * @param string $id
      */
     abstract public function delete($id);
@@ -74,7 +74,7 @@ trait ArrayAccessTrait
      * Store.
      *
      * @param string $id
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function offsetSet($id, $value)
     {

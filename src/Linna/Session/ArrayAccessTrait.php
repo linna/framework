@@ -14,7 +14,7 @@ namespace Linna\Session;
 /**
  * Array Access Trait
  * Provide to Session the possibility to retrive values using array notation.
- * 
+ *
  * @property mixed $data Session Data
  */
 trait ArrayAccessTrait
@@ -51,7 +51,7 @@ trait ArrayAccessTrait
      * Store.
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function offsetSet($name, $value)
     {
