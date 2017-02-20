@@ -13,36 +13,45 @@ namespace Linna\DI;
 
 /**
  * Array Access Trait
- * Provide to DIContainer possibility to retrive values using array notation.
+ * Provide to DIContainer the possibility to retrive values using array notation.
  */
 trait ArrayAccessTrait
 {
     /**
      * Express Requirements by Abstract Methods.
+     * 
+     * @param string $id
      */
     abstract public function has($id);
 
     /**
      * Express Requirements by Abstract Methods.
+     * 
+     * @param string $id
      */
     abstract public function get($id);
 
     /**
      * Express Requirements by Abstract Methods.
+     * 
+     * @param string $id
+     * @param mixed $value
      */
     abstract public function set($id, $value);
 
     /**
      * Express Requirements by Abstract Methods.
+     * 
+     * @param string $id
      */
     abstract public function delete($id);
 
     /**
      * Check.
      *
-     * @param type $id
+     * @param string $id
      *
-     * @return type
+     * @return bool
      */
     public function offsetExists($id)
     {
@@ -52,9 +61,9 @@ trait ArrayAccessTrait
     /**
      * Get.
      *
-     * @param type $id
+     * @param string $id
      *
-     * @return type
+     * @return mixed
      */
     public function offsetGet($id)
     {
@@ -64,8 +73,8 @@ trait ArrayAccessTrait
     /**
      * Store.
      *
-     * @param type $id
-     * @param type $value
+     * @param string $id
+     * @param mixed $value
      */
     public function offsetSet($id, $value)
     {
@@ -75,9 +84,9 @@ trait ArrayAccessTrait
     /**
      * Delete.
      *
-     * @param type $id
+     * @param string $id
      *
-     * @return type
+     * @return mixed
      */
     public function offsetUnset($id)
     {

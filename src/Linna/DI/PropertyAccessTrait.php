@@ -13,27 +13,36 @@ namespace Linna\DI;
 
 /**
  * Magic Access Trait
- * Provide to DIContainer possibility to retrive values using properties.
+ * Provide to DIContainer the possibility to retrive values using properties.
  */
 trait PropertyAccessTrait
 {
     /**
      * Express Requirements by Abstract Methods.
+     * 
+     * @param string $id
      */
     abstract public function has($id);
 
     /**
      * Express Requirements by Abstract Methods.
+     * 
+     * @param string $id
      */
     abstract public function get($id);
 
     /**
      * Express Requirements by Abstract Methods.
+     * 
+     * @param string $id
+     * @param mixed $value
      */
     abstract public function set($id, $value);
 
     /**
      * Express Requirements by Abstract Methods.
+     * 
+     * @param string $id
      */
     abstract public function delete($id);
 
