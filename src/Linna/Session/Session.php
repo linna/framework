@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Linna\Session;
 
-use SessionHandlerInterface;
 use ArrayAccess;
+use SessionHandlerInterface;
 
 /**
  * Manage session lifetime and session data.
@@ -26,7 +26,7 @@ class Session implements ArrayAccess
 {
     use PropertyAccessTrait;
     use ArrayAccessTrait;
-    
+
     /**
      * @var array Config options for class
      */
@@ -53,12 +53,12 @@ class Session implements ArrayAccess
      * @var string Session name
      */
     public $name;
-    
+
     /**
      * @var int session_status function result
      */
     public $status;
-    
+
     /**
      * Constructor.
      *
@@ -70,7 +70,7 @@ class Session implements ArrayAccess
         $this->options = array_replace_recursive($this->options, $options);
 
         $this->name = $options['name'] ?? $this->options['name'];
-        
+
         $this->status = session_status();
     }
 
@@ -127,7 +127,7 @@ class Session implements ArrayAccess
 
             //link session super global to $data property
             $this->data = &$_SESSION;
-            
+
             //update session status
             $this->status = session_status();
         }

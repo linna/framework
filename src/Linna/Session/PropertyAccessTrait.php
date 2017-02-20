@@ -14,7 +14,7 @@ namespace Linna\Session;
 /**
  * Magic Access Trait
  * Provide to Session the possibility to retrive values using properties.
- * 
+ *
  * @property mixed $data Session Data
  */
 trait PropertyAccessTrait
