@@ -35,6 +35,11 @@ class SessionTest extends TestCase
         $this->assertEquals(false, isset($this->session->testData));
     }        
 
+    public function testPropertyAccessGetUnstored()
+    {
+        $this->assertEquals($this->session->testData, false);
+    }
+    
     public function testArrayAccessCreateAndGet()
     {
         $this->session['testData'] = 'foo';
@@ -47,5 +52,10 @@ class SessionTest extends TestCase
         unset($this->session['testData']);
         
         $this->assertEquals(false, isset($this->session['testData']));
+    }
+    
+    public function testArrayAccessGetUnstored()
+    {
+        $this->assertEquals($this->session['testData'], false);
     }
 }
