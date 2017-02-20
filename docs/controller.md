@@ -11,10 +11,9 @@ In real web application must extend it for use framework Mvc model.
 
 When extends a controller it's possible declare methods for execute code
 before and/or after it execution. If a controller is created for do many jobs, 
-consider that is not possible to call methods before() and after()  for one specific job.
+you can declare methods before() and after() for one specific job.
 
-We will implement this feature soon.
-
+See example below
 ```php
 namespace App\Controllers;
 
@@ -39,14 +38,27 @@ class FooController extends Controller
 
     public function before()
     {
+        //global before
         //put here code to execute before controller action
         //code will be executed independently from requested action,
         //exampleActionOne() or exampleActionTwo()
     }
     
+    public function beforeExampleActionOne()
+    {
+        //action specific before
+        //put here code that will execute before exampleActionOne() action only
+    }
+
     public function exampleActionOne()
     {
         $model->doActionOne();
+    }
+    
+    public function afterExampleActionOne()
+    {
+        //action specific after
+        //put here code that will execute after exampleActionOne() action only
     }
 
     public function exampleActionTwo()
@@ -56,6 +68,7 @@ class FooController extends Controller
     
     public function after()
     {
+        //global after
         //put here code to execute after controller action
         //code will be executed independently from requested action,
         //exampleActionOne() or exampleActionTwo()

@@ -36,17 +36,23 @@ $session->start();
 Session class recognize that php session is already started and do nothing.
 
 ### Storing and retriving values from session
-Session Class using php magic methods and is configured as generic container. All passed data is linked to $_SESSION superglobal variable.
+Session Class provide access to session data through array and property syntax. All passed data is linked to $_SESSION superglobal variable.
 ```php
-//other code
+$session = new Session();
 $session->start();
+
+//property syntax
 $session->fooData = 'bar_baz';
+
+//array syntax
+$session['fooData'] = 'bar_baz';
 ```
 Is equal to raw php code
 ```php
 session_start();
 $_SESSION['fooData'] = 'bar_baz';
 ```
+
 ## Options
 Passed to class constructor as key=>value array
 ```php
@@ -73,6 +79,7 @@ $session = new Session([
 Properties
 - id
 - name
+- status
 
 Methods
 - __construct()
@@ -134,6 +141,26 @@ $session->start();
 
 //show "FOOSession";
 echo $session->name;
+```
+
+### status
+type: *int*<br/>
+
+Contain session status as returned by php session_status() function<br>
+
+| Value  | Description                             |
+|--------|-----------------------------------------|
+| 0      | sessions are disabled                   |
+| 1      | sessions are enabled, but none exists   |
+| 2      | if sessions are enabled, and one exists |
+
+#### Usage
+```php
+//start session
+$session->start();
+
+//show current session status
+echo $session->status;
 ```
 
 ## Methods
