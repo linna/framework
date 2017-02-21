@@ -25,13 +25,18 @@ class Password
      */
     protected $options = [
             'cost' => 11,
+            'algo' => PASSWORD_DEFAULT,
         ];
 
     /**
      * Constructor.
+     * 
+     * @param array $options Options for password hashing
      */
-    public function __construct()
+    public function __construct(array $options = [])
     {
+        //set options
+        $this->options = array_replace_recursive($this->options, $options);
     }
 
     /**
@@ -57,7 +62,7 @@ class Password
     public function hash(string $password): string
     {
         //generate hash from password
-        return password_hash($password, PASSWORD_DEFAULT, $this->options);
+        return password_hash($password, $this->options['algo'], $this->options);
     }
 
     /**
@@ -69,7 +74,7 @@ class Password
      */
     public function needsRehash(string $hash): bool
     {
-        if (password_needs_rehash($hash, PASSWORD_DEFAULT, $this->options)) {
+        if (password_needs_rehash($hash, $this->options['algo'], $this->options)) {
             return true;
         }
 

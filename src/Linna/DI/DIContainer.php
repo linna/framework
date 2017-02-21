@@ -47,7 +47,7 @@ class DIContainer implements ContainerInterface, \ArrayAccess
      */
     public function get($id)
     {
-        if (array_key_exists($id, $this->cache)) {
+        if (isset($this->cache[$id])) {
 
             //move to temp for call function
             $tmp = $this->cache[$id];
