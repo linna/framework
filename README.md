@@ -38,8 +38,6 @@ If you wish deepen PHP best pratices you can start from [phptherightway](http://
 ### To do
    
    * Complete the documentation
-   * Session tuning
-   * Router tuning
    * PSR7 support through linna-PSR7 package
 
 ## Documentation 
