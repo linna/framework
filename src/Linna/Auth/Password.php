@@ -30,7 +30,7 @@ class Password
 
     /**
      * Constructor.
-     * 
+     *
      * @param array $options Options for password hashing
      */
     public function __construct(array $options = [])
