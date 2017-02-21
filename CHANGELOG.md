@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * `Linna\Session\Session` can store value using array or property syntax
 * `Linna\Session\Session->status` property added, ndicate session status
+* `$options` parameter added to `Linna\Auth\Password->__construct()`
 
 ### Changed
 * Session tests updated
