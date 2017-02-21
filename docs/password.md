@@ -9,15 +9,73 @@ This class help you to manage passwords
 
 ## How it works?
 This class is a simple wrapper for PHP [Password Hashing Functions](http://php.net/manual/en/book.password.php).
-At this state of develop Password class has for default options only 'cost' set to value 11.
 
 ```php
 use Linna\Auth\Password;
 
+//use default options
 $password = new Password();
 
 //$hash contain a string like this: $2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6
 $hash = $password->hash('FooPassword');
+```
+
+## Options
+Passed to class constructor as key=>value array
+
+```php
+$password = new Password([
+    'cost' => 11,
+    'algo' => PASSWORD_DEFAULT,
+]);
+```
+| Name           | Default          | Description                                                                            |
+|----------------|------------------|----------------------------------------------------------------------------------------|
+| cost           | 11               | indicating key expansion rounds                                                        |
+| algo           | PASSWORD_DEFAULT | password algorithm denoting the algorithm to use when hashing the password             |
+
+for password algorithm constants see [Password Constants](http://php.net/manual/en/password.constants.php).
+
+## Calculate good cost
+```php
+/**
+ * Get appropriate cost 
+ * 
+ * This code will benchmark your server to determine how high of a cost you can
+ * afford. You want to set the highest cost that you can without slowing down
+ * you server too much.
+ * 
+ * @param int $time_limit Time limit in milliseconds
+ * @param int $algo Algoritm, default PASSWORD_DEFAULT
+ * @return int 
+ */
+function password_get_appropriate_cost(int $time_limit, int $algo = PASSWORD_DEFAULT) : int
+{
+    //set start cost
+    $cost = 3;
+    
+    do {
+        //increase cost
+        $cost++;
+        
+        //check if cost is out of range for bcrypt
+        if ($algo === 1 && ($cost < 4 || $cost > 31)) {
+            break;
+        }
+        
+        //start time
+        $start = microtime(true);
+        
+        //generate password
+        password_hash("test", $algo, ["cost" => $cost]);
+        
+        //stop time
+        $end = microtime(true);
+        
+    } while (($end - $start) < ($time_limit / 100));
+    
+    return $cost;
+}
 ```
 
 ## Class Structure
