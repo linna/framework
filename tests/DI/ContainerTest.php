@@ -9,16 +9,16 @@
  */
 declare(strict_types=1);
 
-use Linna\DI\DIContainer;
+use Linna\DI\Container;
 use PHPUnit\Framework\TestCase;
 
-class DIContainerTest extends TestCase
+class ContainerTest extends TestCase
 {
     protected $container;
 
     public function setUp()
     {
-        $this->container = new DIContainer();
+        $this->container = new Container();
 
         $this->container->set('FooClass', function () {
             return new \stdClass();
