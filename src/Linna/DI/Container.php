@@ -17,7 +17,7 @@ use Psr\Container\ContainerInterface;
 /**
  * Dependency Injection Container.
  */
-class DIContainer implements ContainerInterface, \ArrayAccess
+class Container implements ContainerInterface, \ArrayAccess
 {
     use PropertyAccessTrait;
     use ArrayAccessTrait;

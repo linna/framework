@@ -14,7 +14,7 @@ namespace Linna\DI;
 /**
  * Dependency Injection Resolver.
  */
-class DIResolver
+class Resolver
 {
     /**
      * @var array Contains object already resolved
