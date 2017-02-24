@@ -9,12 +9,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [v0.14.0](https://github.com/s3b4stian/linna-framework/compare/v0.13.0...v0.14.0) - 2017-XX-XX
 
 ### Added
+* `Linna\Cache` namespace
+* `Linna\Cache\MemcachedCache` class, provide [PSR-16](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-16-simple-cache.md) implementation
+* `Linna\Cache\DiskCache` class, provide [PSR-16](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-16-simple-cache.md) implementation
+* `Linna\Cache\Exception\InvalidArgumentException` exception
 * `Linna\Session\Session` can store value using array or property syntax
 * `Linna\Session\Session->status` property added, ndicate session status
 * `$options` parameter added to `Linna\Auth\Password->__construct()`
+* `Linna\Http\Router->validate()` type return bool
 
 ### Changed
 * Session tests updated
+* `Linna\Http\RouterCached` now require `CacheInterface` instead of `Memcached`
 
 ## [v0.13.0](https://github.com/s3b4stian/linna-framework/compare/v0.12.0...v0.13.0) - 2017-02-19
 
@@ -34,7 +40,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [v0.12.0](https://github.com/s3b4stian/linna-framework/compare/v0.11.0...v0.12.0) - 2017-02-14
 
 ### Changed
-* `Linna\DI\DIContainer` switched from `Interop\Container\ContainerInterface` to [PSR-11](https://github.com/container-interop/fig-standards/blob/master/proposed/container.md)
+* `Linna\DI\DIContainer` switched from `Interop\Container\ContainerInterface` to [PSR-11](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-11-container.md)
 * `Linna\DI\Exception\Container` change name to `Linna\DI\Exception\ContainerException`
 * `Linna\DI\Exception\NotFound` change name to `Linna\DI\Exception\NotFoundException`
 * `Linna\Autoloader` now not throw exceptions 
