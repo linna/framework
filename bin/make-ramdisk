@@ -1,0 +1,5 @@
+#!/bin/sh
+
+mkdir /tmp/linna-cache
+mount -t tmpfs -o size=128m tmpfs /tmp/linna-cache
+df -h /tmp/linna-cache
