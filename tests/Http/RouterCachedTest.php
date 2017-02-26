@@ -9,17 +9,18 @@
  */
 use Linna\Http\Route;
 use Linna\Http\RouterCached;
+use Linna\Cache\DiskCache;
 use PHPUnit\Framework\TestCase;
 
 class RouterCachedTest extends TestCase
 {
-    protected $routes;
+    protected $router;
 
-    public function __construct()
+    public function setUp()
     {
-        $this->routes = [];
+        $routes = [];
 
-        $this->routes[] = [
+        $routes[] = [
             'name'       => 'Home',
             'method'     => 'GET',
             'url'        => '/',
@@ -29,7 +30,7 @@ class RouterCachedTest extends TestCase
             'action'     => '',
         ];
 
-        $this->routes[] = [
+        $routes[] = [
             'name'       => 'E404',
             'method'     => 'GET',
             'url'        => '/error',
@@ -39,7 +40,7 @@ class RouterCachedTest extends TestCase
             'action'     => '',
         ];
 
-        $this->routes[] = [
+        $routes[] = [
             'name'       => 'User',
             'method'     => 'GET',
             'url'        => '/user',
@@ -49,7 +50,7 @@ class RouterCachedTest extends TestCase
             'action'     => '',
         ];
 
-        $this->routes[] = [
+        $routes[] = [
             'name'       => '',
             'method'     => 'GET',
             'url'        => '/user/[id]/(disable|enable|delete|changePassword|modify)',
@@ -59,7 +60,7 @@ class RouterCachedTest extends TestCase
             'action'     => '',
         ];
 
-        $this->routes[] = [
+        $routes[] = [
             'name'       => '',
             'method'     => 'GET',
             'url'        => '/userOther/(disable|enable|delete|changePassword|modify)/[id]',
@@ -68,36 +69,24 @@ class RouterCachedTest extends TestCase
             'controller' => 'UserController',
             'action'     => '',
         ];
+
+        //var_Dump($cache instanceof \Psr\SimpleCache\CacheInterface);
+        
+        //start router
+        $this->router = new RouterCached($routes, [
+            'basePath'    => '/',
+            'badRoute'    => 'E404',
+            'rewriteMode' => true,
+        ], new DiskCache(['serialize' => true]));
     }
 
     public function testRoute()
     {
-        if (!class_exists('Memcached')) {
-            $this->markTestSkipped('Memcached module not installed');
-        }
-
-        //create memcached instance
-        $memcached = new Memcached();
-        //connect to memcached server
-        $memcached->addServer($GLOBALS['mem_host'], $GLOBALS['mem_port']);
-        $memcached->flush();
-        //start router
-        $router = new RouterCached($this->routes, [
-            'basePath'    => '/',
-            'badRoute'    => 'E404',
-            'rewriteMode' => true,
-                ], $memcached);
         //evaluate request uri
-        $router->validate('/user', 'GET');
-        $router->validate('/user', 'GET');
-        $router->validate('/user', 'GET');
-        $router->validate('/user', 'GET');
-        $router->validate('/user', 'GET');
-        $router->validate('/user', 'GET');
-        $router->validate('/user', 'GET');
+        $this->router->validate('/user', 'GET');
 
         //get route
-        $route = $router->getRoute();
+        $route = $this->router->getRoute();
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('UserModel', $route->getModel());
@@ -107,29 +96,13 @@ class RouterCachedTest extends TestCase
         $this->assertEquals([], $route->getParam());
     }
 
-    public function testBadRoute()
+    public function testBadMethod()
     {
-        if (!class_exists('Memcached')) {
-            $this->markTestSkipped('Memcached module not installed');
-        }
-        //create memcached instance
-        $memcached = new Memcached();
-        //connect to memcached server
-        $memcached->addServer($GLOBALS['mem_host'], $GLOBALS['mem_port']);
-        $memcached->flush();
-
-        //start router
-        $router = new RouterCached($this->routes, [
-            'basePath'    => '/',
-            'badRoute'    => 'E404',
-            'rewriteMode' => true,
-                ], $memcached);
-
         //evaluate request uri
-        $router->validate('/user', 'POST');
+        $this->router->validate('/user', 'POST');
 
         //get route
-        $route = $router->getRoute();
+        $route = $this->router->getRoute();
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('E404Model', $route->getModel());
@@ -139,29 +112,13 @@ class RouterCachedTest extends TestCase
         $this->assertEquals([], $route->getParam());
     }
 
-    public function testBadMethod()
+    public function testBadRoute()
     {
-        if (!class_exists('Memcached')) {
-            $this->markTestSkipped('Memcached module not installed');
-        }
-
-        //create memcached instance
-        $memcached = new Memcached();
-        //connect to memcached server
-        $memcached->addServer($GLOBALS['mem_host'], $GLOBALS['mem_port']);
-
-        //start router
-        $router = new RouterCached($this->routes, [
-            'basePath'    => '/',
-            'badRoute'    => 'E404',
-            'rewriteMode' => true,
-                ], $memcached);
-
         //evaluate request uri
-        $router->validate('/badroute', 'GET');
+        $this->router->validate('/badroute', 'GET');
 
         //get route
-        $route = $router->getRoute();
+        $route = $this->router->getRoute();
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('E404Model', $route->getModel());
@@ -173,27 +130,11 @@ class RouterCachedTest extends TestCase
 
     public function testParamRoute()
     {
-        if (!class_exists('Memcached')) {
-            $this->markTestSkipped('Memcached module not installed');
-        }
-
-        //create memcached instance
-        $memcached = new Memcached();
-        //connect to memcached server
-        $memcached->addServer($GLOBALS['mem_host'], $GLOBALS['mem_port']);
-
-        //start router
-        $router = new RouterCached($this->routes, [
-            'basePath'    => '/',
-            'badRoute'    => 'E404',
-            'rewriteMode' => true,
-                ], $memcached);
-
         //evaluate request uri
-        $router->validate('/user/5/enable', 'GET');
+        $this->router->validate('/user/5/enable', 'GET');
 
         //get route
-        $route = $router->getRoute();
+        $route = $this->router->getRoute();
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('UserModel', $route->getModel());
@@ -205,27 +146,11 @@ class RouterCachedTest extends TestCase
 
     public function testInverseParamRoute()
     {
-        if (!class_exists('Memcached')) {
-            $this->markTestSkipped('Memcached module not installed');
-        }
-
-        //create memcached instance
-        $memcached = new Memcached();
-        //connect to memcached server
-        $memcached->addServer($GLOBALS['mem_host'], $GLOBALS['mem_port']);
-
-        //start router
-        $router = new RouterCached($this->routes, [
-            'basePath'    => '/',
-            'badRoute'    => 'E404',
-            'rewriteMode' => true,
-                ], $memcached);
-
         //evaluate request uri
-        $router->validate('/userOther/enable/5', 'GET');
+        $this->router->validate('/userOther/enable/5', 'GET');
 
         //get route
-        $route = $router->getRoute();
+        $route = $this->router->getRoute();
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('UserModel', $route->getModel());
@@ -237,21 +162,24 @@ class RouterCachedTest extends TestCase
 
     public function testRewriteModeOff()
     {
-        if (!class_exists('Memcached')) {
-            $this->markTestSkipped('Memcached module not installed');
-        }
-
-        //create memcached instance
-        $memcached = new Memcached();
-        //connect to memcached server
-        $memcached->addServer($GLOBALS['mem_host'], $GLOBALS['mem_port']);
+        //routes
+        $routes = [];
+        $routes[] = [
+            'name'       => '',
+            'method'     => 'GET',
+            'url'        => '/user/[id]/(disable|enable|delete|changePassword|modify)',
+            'model'      => 'UserModel',
+            'view'       => 'UserView',
+            'controller' => 'UserController',
+            'action'     => '',
+        ];
 
         //start router
-        $router = new RouterCached($this->routes, [
+        $router = new RouterCached($routes, [
             'basePath'    => '/',
             'badRoute'    => 'E404',
             'rewriteMode' => false,
-                ], $memcached);
+        ], new DiskCache(['serialize' => true]));
 
         //evaluate request uri
         $router->validate('/index.php?/user/5/enable', 'GET');

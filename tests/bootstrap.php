@@ -2,7 +2,7 @@
 
 //composer autorload
 include dirname(__DIR__).'/vendor/autoload.php';
-
+/*
 //linna autoload
 include dirname(__DIR__).'/src/Linna/Autoloader.php';
 
@@ -15,6 +15,7 @@ function call_autoloader()
         ['Linna', dirname(__DIR__).'/src/Linna'],
         ['Linna\FOO', __DIR__.'/FOO'],
         ['Linna\Auth', dirname(__DIR__).'/src/Linna/Auth'],
+        ['Linna\Cache', dirname(__DIR__).'/src/Linna/Cache'],
         ['Linna\DI', dirname(__DIR__).'/src/Linna/DI'],
         ['Linna\Storage', dirname(__DIR__).'/src/Linna/Storage'],
         ['Linna\DataMapper', dirname(__DIR__).'/src/Linna/DataMapper'],
@@ -25,3 +26,4 @@ function call_autoloader()
 }
 
 call_autoloader();
+*/
