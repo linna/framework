@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Linna\Http;
 
+use Psr\SimpleCache\CacheInterface;
+
 /**
  * 
  * ***IMPORTANT***
@@ -62,7 +64,7 @@ class RouterCached extends Router
     public function validate(string $requestUri, string $requestMethod) : bool
     {
         //check if route is already cached
-        if (($cachedRoute = $this->cache->get($requestUri)) !== null) {
+        if (($cachedRoute = $this->cache->get($requestUri.$requestMethod)) !== null) {
             //get cached route
             $this->route = $cachedRoute;
 
@@ -72,7 +74,7 @@ class RouterCached extends Router
         //if route not cached, validate, if valid cache it
         if (parent::validate($requestUri, $requestMethod)) {
             //cache validated route
-            $this->cache->set($requestUri, $this->route, 3600);
+            $this->cache->set($requestUri.$requestMethod, $this->route, 3600);
             
             return true;
         }
