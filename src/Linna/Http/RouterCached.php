@@ -14,17 +14,16 @@ namespace Linna\Http;
 use Psr\SimpleCache\CacheInterface;
 
 /**
- * 
  * ***IMPORTANT***
  * Using disk cache (best if with ram disk), this class is faster than router :D
- * memcached replaced by PSR-16 simple cache
- * 
+ * memcached replaced by PSR-16 simple cache.
+ *
  * ***OLD***
  * After some tests, this class has proved more slow than Router class because
  * get a value from memcached are expensive, more expensive than only check a route with
  * validate function.
  * This class remains a programming excercice :'(.
- * 
+ *
  * Extension of Router with caching system
  * Require memcached for run
  *
@@ -40,13 +39,13 @@ class RouterCached extends Router
     /**
      * Constructor.
      *
-     * @param array          $routes    List of registerd routes for the app in routes.php
-     * @param array          $options   Options for router config
-     * @param CacheInterface $cache     Memcached resource
+     * @param array          $routes  List of registerd routes for the app in routes.php
+     * @param array          $options Options for router config
+     * @param CacheInterface $cache   Memcached resource
      *
      * @todo Make router compatible with PSR7 REQUEST,instead of request uri pass a PSR7 request object
      */
-    public function __construct(array $routes, array $options, CacheInterface $cache )
+    public function __construct(array $routes, array $options, CacheInterface $cache)
     {
         //call parent constructor
         parent::__construct($routes, $options);
@@ -75,7 +74,7 @@ class RouterCached extends Router
         if (parent::validate($requestUri, $requestMethod)) {
             //cache validated route
             $this->cache->set($requestUri.$requestMethod, $this->route, 3600);
-            
+
             return true;
         }
 
