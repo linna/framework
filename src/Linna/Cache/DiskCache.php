@@ -108,7 +108,7 @@ class DiskCache implements CacheInterface
         //pick time
         $created = time();
         
-        if ($ttl instanceof DateInterval) {
+        if ($ttl instanceof \DateInterval) {
             // Converting to a TTL in seconds
             $ttl = (new DateTime('now'))->add($ttl)->getTimeStamp() - $created;
         }
@@ -199,7 +199,7 @@ class DiskCache implements CacheInterface
      */
     public function getMultiple($keys, $default = null)
     {
-        if (!is_array($keys) && !($keys instanceof Traversable)) {
+        if (!is_array($keys) && !($keys instanceof \Traversable)) {
             throw new InvalidArgumentException();
         }
         
@@ -227,7 +227,7 @@ class DiskCache implements CacheInterface
      */
     public function setMultiple($values, $ttl = null)
     {
-        if (!is_array($keys) && !($keys instanceof Traversable)) {
+        if (!is_array($keys) && !($keys instanceof \Traversable)) {
             throw new InvalidArgumentException();
         }
         
@@ -256,7 +256,7 @@ class DiskCache implements CacheInterface
      */
     public function deleteMultiple($keys)
     {
-        if (!is_array($keys) && !($keys instanceof Traversable)) {
+        if (!is_array($keys) && !($keys instanceof \Traversable)) {
             throw new InvalidArgumentException();
         }
         
