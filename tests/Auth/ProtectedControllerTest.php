@@ -7,7 +7,6 @@
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-
 use Linna\Auth\Login;
 use Linna\Auth\Password;
 use Linna\Autoloader;
