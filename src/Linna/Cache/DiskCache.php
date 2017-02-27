@@ -195,7 +195,7 @@ class DiskCache implements CacheInterface
      */
     public function clear()
     {
-        array_map('unlink', glob($this->options['dir'].'/*.*'));
+        array_map('unlink', glob($this->options['dir'].'/*.php'));
         
         return true;
     }
