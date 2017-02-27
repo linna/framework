@@ -21,7 +21,7 @@ class AutoloaderTest extends TestCase
     {
         $this->autoloader = new Autoloader();
         $this->autoloader->register();
-        $this->autoloader->addNamespaces([['Linna\FOO', __DIR__.'/FOO']]);
+        $this->autoloader->addNamespaces([['Linna\FOO', __DIR__.'/FOO'], ['Linna\FOO_', __DIR__.'/FOO_']]);
     }
 
     public function testRegister()
