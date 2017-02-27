@@ -328,4 +328,11 @@ class DiskCacheTest extends TestCase
         
         $this->cache->clear();
     }
+    
+    public function testHasExpired()
+    {
+        $this->cache->set('foo', [0,1,2,3,4], -10);
+        
+        $this->assertEquals(false, $this->cache->has('foo'));
+    }
 }
