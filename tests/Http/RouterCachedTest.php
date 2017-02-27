@@ -112,7 +112,7 @@ class RouterCachedTest extends TestCase
         $this->router->validate('/user', 'GET');
         $this->assertInstanceOf(Route::class, $this->router->getRoute());
     }
-    
+
     public function testBadMethod()
     {
         //evaluate request uri
