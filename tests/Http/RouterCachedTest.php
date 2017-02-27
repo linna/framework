@@ -7,11 +7,14 @@
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
+<<<<<<< HEAD
 declare(strict_types=1);
 
+=======
+use Linna\Cache\DiskCache;
+>>>>>>> origin/master
 use Linna\Http\Route;
 use Linna\Http\RouterCached;
-use Linna\Cache\DiskCache;
 use PHPUnit\Framework\TestCase;
 
 class RouterCachedTest extends TestCase
@@ -73,7 +76,7 @@ class RouterCachedTest extends TestCase
         ];
 
         //var_Dump($cache instanceof \Psr\SimpleCache\CacheInterface);
-        
+
         //start router
         $this->router = new RouterCached($routes, [
             'basePath'    => '/',
