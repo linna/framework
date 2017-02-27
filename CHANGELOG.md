@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Cache\MemcachedCache` class, provide [PSR-16](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-16-simple-cache.md) implementation
 * `Linna\Cache\DiskCache` class, provide [PSR-16](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-16-simple-cache.md) implementation
 * `Linna\Cache\Exception\InvalidArgumentException` exception
+* Tests for `Linna\Cache`
 * `Linna\Session\Session` can store value using array or property syntax
 * `Linna\Session\Session->status` property added, ndicate session status
 * `$options` parameter added to `Linna\Auth\Password->__construct()`
