@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Linna\Cache;
 
 use DateInterval;
+use DateTime;
 use Linna\Cache\Exception\InvalidArgumentException;
 use Psr\SimpleCache\CacheInterface;
 use Traversable;
@@ -84,11 +85,17 @@ class DiskCache implements CacheInterface
         //check if cache is expired and delete file from storage
         if ($cacheValue['expires'] <= time() && $cacheValue['expires'] !== null) {
             unlink($file);
+            
             return $default;
         }
         
-        //return cache, unserialize if serialize options set to true
-        return isset($cacheValue['value']) ? ($this->options['serialize']) ? unserialize($cacheValue['value']) : $cacheValue['value'] : $default;
+        //check for unserialize
+        if ($this->options['serialize']){
+            return unserialize($cacheValue['value']);
+        }
+        
+        //return cache
+        return $cacheValue['value'];
     }
     
     /**
@@ -107,22 +114,28 @@ class DiskCache implements CacheInterface
      */
     public function set($key, $value, $ttl = null)
     {
+        //check if key is string
+        if (!is_string($key)) {
+            throw new InvalidArgumentException();
+        }
+        
         //pick time
         $created = time();
         
+        // Converting to a TTL in seconds
         if ($ttl instanceof DateInterval) {
-            // Converting to a TTL in seconds
             $ttl = (new DateTime('now'))->add($ttl)->getTimeStamp() - $created;
         }
         
         //check for usage of ttl default class option value
-        $ttl = ($ttl === null) ? $this->options['ttl'] : $ttl;
+        if ($ttl === null) {
+            $ttl = $this->options['ttl'];
+        }
         
-        //create file name
-        $file = $this->options['dir'].'/'. sha1($key) . '.php';
-
         //check for serialize and do if set to true
-        $value = ($this->options['serialize']) ? serialize($value) : $value;
+        if ($this->options['serialize']){
+            $value = serialize($value);
+        }
         
         //create cache array
         $cache = [
@@ -140,7 +153,7 @@ class DiskCache implements CacheInterface
         $content = '<?php return ' . $content . ';';
 
         //write file
-        file_put_contents($file, $content);
+        file_put_contents($this->options['dir'].'/'. sha1($key) . '.php', $content);
 
         return true;   
     }
