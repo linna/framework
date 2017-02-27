@@ -12,7 +12,11 @@ declare(strict_types=1);
 
 namespace Linna\Cache;
 
+use DateInterval;
+use DateTime;
+use Linna\Cache\Exception\InvalidArgumentException;
 use Psr\SimpleCache\CacheInterface;
+use Traversable;
 use Memcached;
 
 /**
@@ -46,8 +50,23 @@ class MemcachedCache implements CacheInterface
      *   MUST be thrown if the $key string is not a legal value.
      */
     public function get($key, $default = null)
-    {}
-
+    {
+        //check if key is string
+        if (!is_string($key)) {
+            throw new InvalidArgumentException();
+        }
+        
+        //get value from memcached
+        $value = $this->memcached->get($key);
+        
+        //check if value was retrived
+        if ($value === false){
+            return $default;
+        }     
+        
+        return $value;
+    }
+    
     /**
      * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
      *
@@ -63,7 +82,19 @@ class MemcachedCache implements CacheInterface
      *   MUST be thrown if the $key string is not a legal value.
      */
     public function set($key, $value, $ttl = null)
-    {}
+    {
+        //check if key is string
+        if (!is_string($key)) {
+            throw new InvalidArgumentException();
+        }
+        
+        // Converting to a TTL in seconds
+        if ($ttl instanceof DateInterval) {
+            $ttl = (new DateTime('now'))->add($ttl)->getTimeStamp() - time();
+        }
+        
+        return $this->memcached->set($key, $value, (int)$ttl); 
+    }
     
     /**
      * Delete an item from the cache by its unique key.
@@ -76,7 +107,14 @@ class MemcachedCache implements CacheInterface
      *   MUST be thrown if the $key string is not a legal value.
      */
     public function delete($key)
-    {}
+    {
+        //check if key is string
+        if (!is_string($key)) {
+            throw new InvalidArgumentException();
+        }
+        
+        return $this->memcached->delete($key); 
+    }
     
     /**
      * Wipes clean the entire cache's keys.
@@ -84,7 +122,9 @@ class MemcachedCache implements CacheInterface
      * @return bool True on success and false on failure.
      */
     public function clear()
-    {}
+    {
+        return $this->memcached->flush();
+    }
     
     /**
      * Obtains multiple cache items by their unique keys.
@@ -99,7 +139,18 @@ class MemcachedCache implements CacheInterface
      *   or if any of the $keys are not a legal value.
      */
     public function getMultiple($keys, $default = null)
-    {}
+    {
+        if (!is_array($keys) && !($keys instanceof Traversable)) {
+            throw new InvalidArgumentException();
+        }
+        
+        $result = array();
+        foreach ((array) $keys as $key) {
+            $result[$key] = $this->has($key) ? $this->get($key) : $default;
+        }
+        
+        return $result;
+    }
     
     /**
      * Persists a set of key => value pairs in the cache, with an optional TTL.
@@ -116,7 +167,22 @@ class MemcachedCache implements CacheInterface
      *   or if any of the $values are not a legal value.
      */
     public function setMultiple($values, $ttl = null)
-    {}
+    {
+        if (!is_array($values) && !($values instanceof Traversable)) {
+            throw new InvalidArgumentException();
+        }
+        
+        if ($ttl instanceof DateInterval) {
+            // Converting to a TTL in seconds
+            $ttl = (new DateTime('now'))->add($ttl)->getTimeStamp() - time();
+        }
+        
+        foreach ((array) $values as $key => $value) {
+            $this->set($key, $value, $ttl);
+        }
+        
+        return true;
+    }
     
     /**
      * Deletes multiple cache items in a single operation.
@@ -130,7 +196,17 @@ class MemcachedCache implements CacheInterface
      *   or if any of the $keys are not a legal value.
      */
     public function deleteMultiple($keys)
-    {}
+    {
+        if (!is_array($keys) && !($keys instanceof Traversable)) {
+            throw new InvalidArgumentException();
+        }
+        
+        foreach ((array) $keys as $key) {
+            $this->delete($key);
+        }
+        
+        return true;
+    }
     
     /**
      * Determines whether an item is present in the cache.
@@ -148,5 +224,12 @@ class MemcachedCache implements CacheInterface
      *   MUST be thrown if the $key string is not a legal value.
      */
     public function has($key)
-    {}
+    {
+        //check if key is string
+        if (!is_string($key)) {
+            throw new InvalidArgumentException();
+        }
+        
+        return ($this->memcached->get($key) !== false) ? true : false;
+    }
 }
