@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Template Interface
-current_menu: templateInterface
+current_menu: template-interface
 ---
 
 # Template Interface

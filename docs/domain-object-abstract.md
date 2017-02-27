@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Domain Object Abstract
-current_menu: domainObjectAbstract
+current_menu: domain-object-abstract
 ---
 
 # Domain Object Abstract

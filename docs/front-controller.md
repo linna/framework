@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Front Controller
-current_menu: frontController
+current_menu: front-controller
 ---
 
 # Front Controller

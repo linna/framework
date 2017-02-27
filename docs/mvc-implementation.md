@@ -1,7 +1,7 @@
 ---
 layout: default
 title: How pattern is implemented?
-current_menu: mvcImplement
+current_menu: mvc-implementation
 ---
 
 # How pattern is implemented?

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Session Handler
-current_menu: sessionHandler
+current_menu: session-handler
 ---
 
 # Session Handler
