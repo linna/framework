@@ -80,7 +80,6 @@ class Router
      *
      * @param string $requestUri    Request uri
      * @param string $requestMethod Request method
-     *
      * @return bool
      */
     public function validate(string $requestUri, string $requestMethod) : bool
