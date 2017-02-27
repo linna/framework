@@ -97,10 +97,10 @@ class ResolverTest extends TestCase
         $resolver->rules([
             '\Linna\FOO\FOOClassARules' => [
                 0 => true,
-                2 => 'ciao',
+                2 => 'foo',
                 3 => 1,
-                4 => ['ciao'],
-                5 => 'prova',
+                4 => ['foo'],
+                5 => 'foo',
             ],
         ]);
 
@@ -115,10 +115,10 @@ class ResolverTest extends TestCase
         $rules = [
             '\Linna\FOO\FOOClassARules' => [
                 0 => true,
-                2 => 'ciao',
+                2 => 'foo',
                 3 => 1,
-                4 => ['ciao'],
-                5 => 'prova',
+                4 => ['foo'],
+                5 => 'foo',
             ],
         ];
 
