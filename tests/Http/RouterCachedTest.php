@@ -7,12 +7,9 @@
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-<<<<<<< HEAD
 declare(strict_types=1);
 
-=======
 use Linna\Cache\DiskCache;
->>>>>>> origin/master
 use Linna\Http\Route;
 use Linna\Http\RouterCached;
 use PHPUnit\Framework\TestCase;
