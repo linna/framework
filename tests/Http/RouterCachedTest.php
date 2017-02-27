@@ -7,6 +7,8 @@
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
+declare(strict_types=1);
+
 use Linna\Http\Route;
 use Linna\Http\RouterCached;
 use Linna\Cache\DiskCache;
@@ -96,6 +98,21 @@ class RouterCachedTest extends TestCase
         $this->assertEquals([], $route->getParam());
     }
 
+    public function testCachedRoute()
+    {
+        //evaluate request uri
+        $this->router->validate('/user', 'GET');
+        $this->assertInstanceOf(Route::class, $this->router->getRoute());
+
+        //evaluate request uri, now from cache
+        $this->router->validate('/user', 'GET');
+        $this->assertInstanceOf(Route::class, $this->router->getRoute());
+
+        //evaluate request uri, now from cache
+        $this->router->validate('/user', 'GET');
+        $this->assertInstanceOf(Route::class, $this->router->getRoute());
+    }
+    
     public function testBadMethod()
     {
         //evaluate request uri
