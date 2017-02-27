@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v0.14.0](https://github.com/s3b4stian/linna-framework/compare/v0.13.0...v0.14.0) - 2017-XX-XX
+## [v0.14.0](https://github.com/s3b4stian/linna-framework/compare/v0.13.0...v0.14.0) - 2017-02-27
 
 ### Added
 * `Linna\Cache` namespace
@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Session tests updated
 * `Linna\Http\RouterCached` now require `CacheInterface` instead of `Memcached`
+* `Linna\DI\DIContainer` changed name to `Linna\DI\Container`
+* `Linna\DI\DIResolver` changed name to `Linna\DI\Resolver`
 
 ## [v0.13.0](https://github.com/s3b4stian/linna-framework/compare/v0.12.0...v0.13.0) - 2017-02-19
 
