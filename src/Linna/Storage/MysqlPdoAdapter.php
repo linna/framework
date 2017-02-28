@@ -16,7 +16,7 @@ use PDO;
 /**
  * Mysql PDO Adapter.
  */
-class MysqlPdoAdapter implements AdapterInterface
+class MysqlPdoAdapter implements StorageInterface
 {
     /**
      * @var string Dsn string for mysql

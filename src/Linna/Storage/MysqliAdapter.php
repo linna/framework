@@ -16,7 +16,7 @@ use mysqli;
 /**
  * Mysql Improved Extension Adapter.
  */
-class MysqliAdapter implements AdapterInterface
+class MysqliAdapter implements StorageInterface
 {
     /**
      * @var string Mysql host es. 127.0.0.1
