@@ -27,7 +27,6 @@ use Psr\SimpleCache\CacheInterface;
  * Extension of Router with caching system
  * Require memcached for run
  *
- * @deprecated since version v0.10.0
  */
 class RouterCached extends Router
 {

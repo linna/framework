@@ -61,13 +61,6 @@ class Login
     public $logged = false;
 
     /**
-     * @var int Numeber of seconds before login will considered invalid
-     *
-     * @deprecated since version v0.7.0
-     */
-    private $expire = 1800;
-
-    /**
      * @var Session Session class
      */
     private $sessionInstance;
