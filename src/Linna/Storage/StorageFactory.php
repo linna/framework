@@ -37,11 +37,7 @@ class StorageFactory
         }
         
         if ($adapter === 'mongodb') {
-            return new MongoDbAdapter(
-                $options['uri'],
-                isset($options['uriOptions']) ? $options['uriOptions'] : [],
-                isset($options['driverOptions']) ? $options['driverOptions'] : []
-            );
+            return new MongoDbAdapter($options['uri'], $options['uriOptions'], $options['driverOptions']);
         }
         
         throw new InvalidArgumentException("[$adapter] not supported.");
