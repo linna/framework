@@ -28,15 +28,22 @@ class StorageFactory
      */
     public function createConnection(string $adapter, array $options) : StorageInterface
     {
-        switch ($adapter) {
-            case 'mysqlpdo':
-                return new MysqlPdoAdapter($options);
-            case 'mysqli':
-                return new MysqliAdapter($options);
-            case 'mongodb':
-                return new MongoDbAdapter($options);
+        if ($adapter === 'mysqlpdo') { 
+            return new MysqlPdoAdapter($options['dsn'], $options['user'], $options['password'], $options['options']);
         }
         
-        throw new InvalidArgumentException("$adapter not supported.");
+        if ($adapter === 'mysqli') { 
+            return new MysqliAdapter($options['host'], $options['user'], $options['password'], $options['database'], $options['port']);
+        }
+        
+        if ($adapter === 'mongodb') {
+            return new MongoDbAdapter(
+                $options['uri'],
+                isset($options['uriOptions']) ? $options['uriOptions'] : [],
+                isset($options['driverOptions']) ? $options['driverOptions'] : []
+            );
+        }
+        
+        throw new InvalidArgumentException("[$adapter] not supported.");
     }
 }
