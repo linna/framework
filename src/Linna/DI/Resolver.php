@@ -65,7 +65,7 @@ class Resolver
 
         //check if before class name there is a \
         $class = (strpos($class, '\\') !== 0) ? '\\'.$class : $class;
-        
+
         //build dependency tree
         $this->buildTree($class);
 
