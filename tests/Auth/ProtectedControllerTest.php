@@ -7,7 +7,7 @@
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-use Linna\Auth\Login;
+use Linna\Auth\Authenticate;
 use Linna\Auth\Password;
 use Linna\Autoloader;
 use Linna\FOO\FOOModel;
@@ -43,7 +43,7 @@ class ProtectedControllerTest extends TestCase
         $storedUser = 'root';
 
         //attemp first login
-        $login = new Login($session, $password);
+        $login = new Authenticate($session, $password);
         $login->login('root', 'password', $storedUser, $storedPassword, 1);
         $loginLogged = $login->logged;
 

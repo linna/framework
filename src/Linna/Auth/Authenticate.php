@@ -16,7 +16,7 @@ use Linna\Session\Session;
 /**
  * Class a for autenticate users.
  *
- * Utilize for login
+ * Utilize
  *
  *      <?php
  *      $user = ''; //user from login page form
@@ -27,8 +27,8 @@ use Linna\Session\Session;
  *      $storedId = ''; //user id from stored user informations
  *
  *
- *      $login = new Login();
- *      $login->login($user, $password, $storedUser, $storedPassword, $storedId);
+ *      $auth = new Authenticate();
+ *      $auth->login($user, $password, $storedUser, $storedPassword, $storedId);
  *
  *      //redirect
  *
@@ -36,19 +36,19 @@ use Linna\Session\Session;
  * Utilize for check login
  *
  *      <?php
- *      $login = new Login();
+ *      $auth = new Authenticate();
  *
- *      if ($login->logged === true)
+ *      if ($auth->logged === true)
  *      {
  *              //do actions
  *      }
  *
  * Utilize for logout
  *
- *      $login = new Login();
- *      $login->logout();
+ *      $auth = new Authenticate();
+ *      $auth->logout();
  */
-class Login
+class Authenticate
 {
     /**
      * @var array Login status
@@ -86,31 +86,35 @@ class Login
     /**
      * Try to log the user passed by param, return true if ok else false.
      *
-     * @param string $user
+     * @param string $userName
      * @param string $password
-     * @param string $storedUser
+     * @param string $storedUserName
      * @param string $storedPassword
      * @param int    $storedId
      *
      * @return bool
      */
-    public function login(string $user, string $password, string $storedUser = '', string $storedPassword = '', int $storedId = 0): bool
+    public function login(string $userName, string $password, string $storedUserName = '', string $storedPassword = '', int $storedId = 0): bool
     {
-        if ($user !== $storedUser) {
+        //check user presence
+        if ($userName !== $storedUserName) {
             return false;
         }
 
+        //if password daesnt' match return false
         if (!$this->password->verify($password, $storedPassword)) {
             return false;
         }
 
+        //write valid login on session
         $this->sessionInstance->loginTime = time();
         $this->sessionInstance->login = [
             'login'     => true,
             'user_id'   => $storedId,
-            'user_name' => $storedUser,
+            'user_name' => $storedUserName,
         ];
 
+        //regenerate session id
         $this->sessionInstance->regenerate();
         $this->logged = true;
 
@@ -124,8 +128,10 @@ class Login
      */
     public function logout(): bool
     {
+        //remove login data from session
         unset($this->sessionInstance->login, $this->sessionInstance->loginTime);
 
+        //regenerate session id
         $this->sessionInstance->regenerate();
         $this->logged = false;
 
@@ -139,16 +145,20 @@ class Login
      */
     private function refresh(): bool
     {
+        //check for login data on in current session
         if (!isset($this->sessionInstance->login)) {
             return false;
         }
-
+        
+        //take time
         $time = time();
-
+        
+        //check if login expired
         if (($this->sessionInstance->loginTime + $this->sessionInstance->expire) < $time) {
             return false;
         }
-
+        
+        //update login data
         $this->sessionInstance->loginTime = $time;
         $this->data = $this->sessionInstance->login;
 

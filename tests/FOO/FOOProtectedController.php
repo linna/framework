@@ -11,7 +11,7 @@
 
 namespace Linna\FOO;
 
-use Linna\Auth\Login;
+use Linna\Auth\Authenticate;
 use Linna\Auth\ProtectedController;
 use Linna\Mvc\Controller;
 
@@ -21,7 +21,7 @@ class FOOProtectedController extends Controller
 
     public $test;
 
-    public function __construct(FOOModel $model, Login $login)
+    public function __construct(FOOModel $model, Authenticate $login)
     {
         parent::__construct($model);
 

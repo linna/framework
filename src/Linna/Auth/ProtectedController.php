@@ -24,12 +24,12 @@ trait ProtectedController
     /**
      * Allow access to controller only if logged.
      *
-     * @param \Linna\Auth\Login $loginIstance
+     * @param \Linna\Auth\Authenticate $authenticate
      * @param string            $redirect
      */
-    protected function protect(Login $loginIstance, string $redirect)
+    protected function protect(Authenticate $authenticate, string $redirect)
     {
-        if (($this->authentication = $loginIstance->logged) === false) {
+        if (($this->authentication = $authenticate->logged) === false) {
             header('Location: '.$redirect);
         }
     }

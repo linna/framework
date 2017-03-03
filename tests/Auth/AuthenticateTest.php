@@ -9,12 +9,12 @@
  */
 declare(strict_types=1);
 
-use Linna\Auth\Login;
+use Linna\Auth\Authenticate;
 use Linna\Auth\Password;
 use Linna\Session\Session;
 use PHPUnit\Framework\TestCase;
 
-class LoginTest extends TestCase
+class AuthenticateTest extends TestCase
 {
     protected $session;
     protected $password;
@@ -25,7 +25,7 @@ class LoginTest extends TestCase
         $session = new Session();
         $password = new Password();
 
-        $this->login = new Login($session, $password);
+        $this->login = new Authenticate($session, $password);
         $this->password = $password;
         $this->session = $session;
     }
@@ -51,7 +51,7 @@ class LoginTest extends TestCase
         $this->session->loginTime = time() - 3600;
 
         //attemp second login
-        $secondLogin = new Login($this->session, $this->password);
+        $secondLogin = new Authenticate($this->session, $this->password);
         $notLogged = $secondLogin->logged;
 
         $this->assertEquals(true, $loginResult);
@@ -80,7 +80,7 @@ class LoginTest extends TestCase
         $this->login->logout();
 
         //create new login instance
-        $login = new Login($this->session, $this->password);
+        $login = new Authenticate($this->session, $this->password);
         $noLoginResult = $login->logged;
 
         $this->assertEquals(true, $loginResult);
@@ -122,7 +122,7 @@ class LoginTest extends TestCase
         $storedUser = 'root';
 
         //attemp first login
-        $login = new Login($this->session, $this->password);
+        $login = new Authenticate($this->session, $this->password);
         $firstLogin = $login->login('root', 'password', $storedUser, $storedPassword, 1);
         //attemp check if logged
         $firstLogged = $login->logged;
@@ -132,7 +132,7 @@ class LoginTest extends TestCase
         $this->session->start();
 
         //create second instance
-        $login = new Login($this->session, $this->password);
+        $login = new Authenticate($this->session, $this->password);
         //attemp check if logged
         $secondLogged = $login->logged;
 
@@ -140,7 +140,7 @@ class LoginTest extends TestCase
         $this->session->loginTime = time() - 3600;
 
         //attemp second login
-        $secondLogin = new Login($this->session, $this->password);
+        $secondLogin = new Authenticate($this->session, $this->password);
         $notLogged = $secondLogin->logged;
 
         $this->assertEquals(true, $firstLogin);
