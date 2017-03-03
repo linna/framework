@@ -22,7 +22,7 @@ class Router
      */
     protected $options = [
         'basePath'    => '/',
-        'badRoute'    => '',
+        'badRoute'    => false,
         'rewriteMode' => false,
     ];
 
@@ -90,7 +90,6 @@ class Router
         //filter registered routes for find route that match with current uri
         foreach ($this->routes as $value) {
             if (preg_match('`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`', $currentUri, $matches)) {
-                //$matches = $tempMatches;
                 $validRoute = $value;
                 break;
             }
@@ -157,7 +156,7 @@ class Router
     private function buildBadRoute() : bool
     {
         //check if there is a declared route for errors, if no exit with false
-        if (($key = array_search($this->options['badRoute'], array_column($this->routes, 'name'))) === false){
+        if (($key = array_search($this->options['badRoute'], array_column($this->routes, 'name'), true)) === false){
             $this->route = false;
             return false;
         }
