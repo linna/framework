@@ -60,14 +60,19 @@ class Resolver
      */
     public function resolve(string $class, array $rules = [])
     {
+        //merge rules passed as parameter with general rules
         $this->rules = array_merge($this->rules, $rules);
 
+        //check if before class name there is a \
         $class = (strpos($class, '\\') !== 0) ? '\\'.$class : $class;
-
+        
+        //build dependency tree
         $this->buildTree($class);
 
+        //build objects
         $this->buildObjects();
 
+        //return required class
         return $this->cache[$class] ?? null;
     }
 
@@ -96,13 +101,13 @@ class Resolver
             $parameters = (new \ReflectionClass($class))->getConstructor()->getParameters();
 
             //loop parameter
-            foreach ($parameters as $value) {
+            foreach ($parameters as $param) {
 
-                //get argument properties
-                $paramType = (string) $value->getType();
-                $paramPosition = (int) $value->getPosition();
-                $paramName = (string) $value->getName();
-                $paramClass = (is_object($value->getClass())) ? '\\'.$value->getClass()->name : null;
+                //get param properties
+                $paramType = (string) $param->getType();
+                $paramPosition = (int) $param->getPosition();
+                $paramName = (string) $param->getName();
+                $paramClass = (is_object($param->getClass())) ? '\\'.$param->getClass()->name : null;
 
                 //make argument description
                 $paramDescription = ['class' => $paramClass, 'type' => $paramType, 'name' => $paramName,  'position' => $paramPosition];
@@ -156,16 +161,16 @@ class Resolver
         for ($i = count($this->dependencyTree) - 1; $i >= 0; $i--) {
 
             //class
-            foreach ($this->dependencyTree[$i] as $class => $dependency) {
+            foreach ($this->dependencyTree[$i] as $class => $arguments) {
 
                 //try to find object in class
                 $object = $this->cache[$class] ?? null;
 
                 //if object is not in cache and need arguments try to build
-                if ($object === null && count($dependency) > 0) {
+                if ($object === null && count($arguments) > 0) {
 
                     //build arguments
-                    $args = $this->buildArguments($class, $dependency);
+                    $args = $this->buildArguments($class, $arguments);
 
                     //store object with dependencies in cache
                     $this->cache[$class] = (new \ReflectionClass($class))->newInstanceArgs($args);
