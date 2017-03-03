@@ -126,6 +126,31 @@ class RouterTest extends TestCase
         $this->assertEquals(null, $route->getAction());
         $this->assertEquals([], $route->getParam());
     }
+    
+    public function testNoBadRouteDeclared()
+    {
+        //routes
+        $routes = [];
+        $routes[] = [
+            'name'       => '',
+            'method'     => 'GET',
+            'url'        => '/user/[id]/(disable|enable|delete|changePassword|modify)',
+            'model'      => 'UserModel',
+            'view'       => 'UserView',
+            'controller' => 'UserController',
+            'action'     => '',
+        ];
+        
+        $router = new Router($routes, [
+            'basePath'    => '/',
+            'rewriteMode' => true,
+        ]);
+        
+        //evaluate request uri
+        $router->validate('/badroute', 'GET');
+
+        $this->assertEquals(false, $this->router->getRoute());
+    }
 
     public function testParamRoute()
     {

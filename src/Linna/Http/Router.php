@@ -18,8 +18,6 @@ namespace Linna\Http;
 class Router
 {
     /**
-     * Utilized with classOptionsTrait.
-     *
      * @var array Config options for class
      */
     protected $options = [
@@ -29,7 +27,7 @@ class Router
     ];
 
     /**
-     * @var object Utilized for return the most recently parsed route
+     * @var object|bool Utilized for return the most recently parsed route
      */
     protected $route;
 
@@ -52,11 +50,6 @@ class Router
 
         '[0-9A-Za-z]++',
     ];
-
-    /**
-     * @var string Request uri from browser (start from['REQUEST_URI'])
-     */
-    protected $currentUri = '';
 
     /**
      * Constructor.
@@ -86,11 +79,8 @@ class Router
     public function validate(string $requestUri, string $requestMethod) : bool
     {
         //get the current uri
-        $this->currentUri = $this->getCurrentUri($requestUri);
-
-        //find bad route
-        $route = $this->routes[array_search($this->options['badRoute'], array_column($this->routes, 'name'))];
-
+        $currentUri = $this->getCurrentUri($requestUri);
+      
         //matches set empty array
         $matches = [];
 
@@ -99,8 +89,8 @@ class Router
 
         //filter registered routes for find route that match with current uri
         foreach ($this->routes as $value) {
-            if (preg_match('`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`', $this->currentUri, $tempMatches)) {
-                $matches = $tempMatches;
+            if (preg_match('`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`', $currentUri, $matches)) {
+                //$matches = $tempMatches;
                 $validRoute = $value;
                 break;
             }
@@ -108,16 +98,16 @@ class Router
 
         //route daesn't macth
         if (!$validRoute) {
-            //assign error route
-            $this->route = $this->buildRoute($route);
+            //check and build for bad route
+            $this->buildBadRoute();
 
             return false;
         }
 
         //non allowed method
         if (strpos($validRoute['method'], $requestMethod) === false) {
-            //assign error route
-            $this->route = $this->buildRoute($route);
+            //check and build for bad route
+            $this->buildBadRoute();
 
             return false;
         }
@@ -135,7 +125,15 @@ class Router
         }
 
         //assign valid route
-        $this->route = $this->buildRoute($validRoute);
+        $this->route = new Route(
+            $validRoute['name'],
+            $validRoute['method'],
+            $validRoute['model'],
+            $validRoute['view'],
+            $validRoute['controller'],
+            $validRoute['action'],
+            $this->buildParam($validRoute)
+        );
 
         return true;
     }
@@ -144,37 +142,43 @@ class Router
      * Check if a route is valid and
      * return the route object else return a bad route object.
      *
-     * @return Route
+     * @return Route|bool
      */
-    public function getRoute(): Route
+    public function getRoute()
     {
         return $this->route;
     }
 
     /**
-     * Build Route class.
-     *
-     * @param array $route
-     *
-     * @return \Linna\Http\Route
+     * Actions for bad route
+     * 
+     * @return bool
      */
-    private function buildRoute(array $route): Route
+    private function buildBadRoute() : bool
     {
-        //try to find param from route if route is not bad route
-        $param = ($route['name'] !== $this->options['badRoute']) ? $this->buildParam($route) : [];
-
-        //return new route object
-        return new Route(
+        //check if there is a declared route for errors, if no exit with false
+        if (($key = array_search($this->options['badRoute'], array_column($this->routes, 'name'))) === false){
+            $this->route = false;
+            return false;
+        }
+        
+        //pick route for errors
+        $route = $this->routes[$key];
+        
+        //build and store route for errors
+        $this->route = new Route(
             $route['name'],
             $route['method'],
             $route['model'],
             $route['view'],
             $route['controller'],
             $route['action'],
-            $param
+            []
         );
+        
+        return true;
     }
-
+    
     /**
      * Try to find param in a valid route.
      *
