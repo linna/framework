@@ -149,15 +149,15 @@ class Authenticate
         if (!isset($this->sessionInstance->login)) {
             return false;
         }
-        
+
         //take time
         $time = time();
-        
+
         //check if login expired
         if (($this->sessionInstance->loginTime + $this->sessionInstance->expire) < $time) {
             return false;
         }
-        
+
         //update login data
         $this->sessionInstance->loginTime = $time;
         $this->data = $this->sessionInstance->login;

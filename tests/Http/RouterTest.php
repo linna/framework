@@ -126,7 +126,7 @@ class RouterTest extends TestCase
         $this->assertEquals(null, $route->getAction());
         $this->assertEquals([], $route->getParam());
     }
-    
+
     public function testNoBadRouteDeclared()
     {
         //routes
@@ -140,12 +140,12 @@ class RouterTest extends TestCase
             'controller' => 'UserController',
             'action'     => '',
         ];
-        
+
         $router = new Router($routes, [
             'basePath'    => '/',
             'rewriteMode' => true,
         ]);
-        
+
         //evaluate request uri
         $router->validate('/badroute', 'GET');
 

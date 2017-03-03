@@ -23,7 +23,7 @@ use Psr\SimpleCache\CacheInterface;
 class MemcachedCache implements CacheInterface
 {
     use ActionMultipleTrait;
-        
+
     /**
      * @var object Memcached resource
      */
@@ -126,7 +126,7 @@ class MemcachedCache implements CacheInterface
     {
         return $this->memcached->flush();
     }
-    
+
     /**
      * Determines whether an item is present in the cache.
      *

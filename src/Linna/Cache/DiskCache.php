@@ -33,7 +33,7 @@ use Psr\SimpleCache\CacheInterface;
 class DiskCache implements CacheInterface
 {
     use ActionMultipleTrait;
-    
+
     /**
      * @var array Config options for class
      */

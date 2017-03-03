@@ -17,7 +17,7 @@ use Linna\Cache\Exception\InvalidArgumentException;
 use Traversable;
 
 /**
- * ActionMultipleTrait
+ * ActionMultipleTrait.
  */
 trait ActionMultipleTrait
 {
@@ -28,7 +28,7 @@ trait ActionMultipleTrait
      * @param mixed  $default Default value to return if the key does not exist.
      */
     abstract public function get($key, $default = null);
-    
+
     /**
      * Express Requirements by Abstract Methods.
      *
@@ -39,22 +39,21 @@ trait ActionMultipleTrait
      *                                     for it or let the driver take care of that.
      */
     abstract public function set($key, $value, $ttl);
-    
+
     /**
      * Express Requirements by Abstract Methods.
      *
      * @param string $key The cache item key.
      */
     abstract public function has($key);
-    
+
     /**
      * Express Requirements by Abstract Methods.
      *
      * @param string $key The unique cache key of the item to delete.
      */
     abstract public function delete($key);
-    
-    
+
     /**
      * Obtains multiple cache items by their unique keys.
      *
@@ -137,4 +136,3 @@ trait ActionMultipleTrait
         return true;
     }
 }
-

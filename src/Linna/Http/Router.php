@@ -80,7 +80,7 @@ class Router
     {
         //get the current uri
         $currentUri = $this->getCurrentUri($requestUri);
-      
+
         //matches set empty array
         $matches = [];
 
@@ -149,21 +149,22 @@ class Router
     }
 
     /**
-     * Actions for bad route
-     * 
+     * Actions for bad route.
+     *
      * @return bool
      */
     private function buildBadRoute() : bool
     {
         //check if there is a declared route for errors, if no exit with false
-        if (($key = array_search($this->options['badRoute'], array_column($this->routes, 'name'), true)) === false){
+        if (($key = array_search($this->options['badRoute'], array_column($this->routes, 'name'), true)) === false) {
             $this->route = false;
+
             return false;
         }
-        
+
         //pick route for errors
         $route = $this->routes[$key];
-        
+
         //build and store route for errors
         $this->route = new Route(
             $route['name'],
@@ -174,10 +175,10 @@ class Router
             $route['action'],
             []
         );
-        
+
         return true;
     }
-    
+
     /**
      * Try to find param in a valid route.
      *

@@ -14,32 +14,34 @@ namespace Linna\Storage;
 use InvalidArgumentException;
 
 /**
- * Storage Factory
+ * Storage Factory.
  */
 class StorageFactory
 {
     /**
      * Create Database Connection.
-     * 
+     *
      * @param string $adapter
-     * @param array $options
-     * @return \Linna\Storage\MysqlPdoAdapter|\Linna\Storage\MysqliAdapter|\Linna\Storage\MongoDbAdapter
+     * @param array  $options
+     *
      * @throws InvalidArgumentException If requred adapter is not supported
+     *
+     * @return \Linna\Storage\MysqlPdoAdapter|\Linna\Storage\MysqliAdapter|\Linna\Storage\MongoDbAdapter
      */
     public function createConnection(string $adapter, array $options) : StorageInterface
     {
-        if ($adapter === 'mysqlpdo') { 
+        if ($adapter === 'mysqlpdo') {
             return new MysqlPdoAdapter($options['dsn'], $options['user'], $options['password'], $options['options']);
         }
-        
-        if ($adapter === 'mysqli') { 
+
+        if ($adapter === 'mysqli') {
             return new MysqliAdapter($options['host'], $options['user'], $options['password'], $options['database'], $options['port']);
         }
-        
+
         if ($adapter === 'mongodb') {
             return new MongoDbAdapter($options['uri'], $options['uriOptions'], $options['driverOptions']);
         }
-        
+
         throw new InvalidArgumentException("[$adapter] not supported.");
     }
 }
