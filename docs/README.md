@@ -21,7 +21,7 @@ If you wish start to utilize the Framework for build an app, look [Linna App](ht
 * [Session Handler](session-handler.md)
 
 ### Auth
-* [Login](login.md)
+* [Authenticate](authenticate.md)
 * [Password](password.md)
 * (To do) [Protected Controller](protected-controller.md)
 

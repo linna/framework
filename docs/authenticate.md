@@ -4,12 +4,12 @@ title: Login
 current_menu: login
 ---
 
-# Login
+# Authenticate
 This class helps you to manage a login system and can be considered an extension of Linna Session. 
 
 ## How it works?
-This class manage the login status for current session. On login action, Login class checks if provided user data matches with 
-user's persistent storage data. If true, Login registers into Session the new login data. Logout part of the Class, deletes login data from Session. At every page refresh Login class update automatically login data in session.<br/>
+This class manage the login status for current session. On login action, Authenticate class checks if provided user data matches with 
+user's persistent storage data. If true, Authenticate registers into Session the new login data. Logout part of the Class, deletes login data from Session. At every page refresh Authenticate class update automatically login data in session.<br/>
 
 Also this class allow to check if there is a valid login inside session.
 
@@ -66,7 +66,7 @@ Return login status.
 
 #### Usage
 ```php
-$login = new Login($session, $password);
+$login = new Authenticate($session, $password);
 
 if ($login->logged === true)
 {
@@ -93,14 +93,14 @@ if ($login->logged !== true)
 
 #### Usage
 ```php
-use Linna\Auth\Login;
+use Linna\Auth\Authenticate;
 use Linna\Auth\Password;
 use Linna\Session\Session;
 
 $password = new Password();
 $session = new Session();
 
-$login = new Login($session, $password);
+$login = new Authenticate($session, $password);
 
 ```
 ### login()
@@ -125,7 +125,7 @@ $storedUser = ''; //user from stored user informations
 $storedPassword = ''; //password from stored user informations
 $storedId = ''; //user id from stored user informations
 
-$login = new Login($session, $password);
+$login = new Authenticate($session, $password);
 $login->login($user, $password, $storedUser, $storedPassword, $storedId);
 ```
 
@@ -137,6 +137,6 @@ Do logout clearing login information from session
 
 #### Usage
 ```php
-$login = new Login($session, $password);
+$login = new Authenticate($session, $password);
 $login->logout();
 ```
