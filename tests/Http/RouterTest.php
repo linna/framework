@@ -127,31 +127,6 @@ class RouterTest extends TestCase
         $this->assertEquals([], $route->getParam());
     }
 
-    public function testNoBadRouteDeclared()
-    {
-        //routes
-        $routes = [];
-        $routes[] = [
-            'name'       => '',
-            'method'     => 'GET',
-            'url'        => '/user/[id]/(disable|enable|delete|changePassword|modify)',
-            'model'      => 'UserModel',
-            'view'       => 'UserView',
-            'controller' => 'UserController',
-            'action'     => '',
-        ];
-
-        $router = new Router($routes, [
-            'basePath'    => '/',
-            'rewriteMode' => true,
-        ]);
-
-        //evaluate request uri
-        $router->validate('/badroute', 'GET');
-
-        $this->assertEquals(false, $this->router->getRoute());
-    }
-
     public function testParamRoute()
     {
         //evaluate request uri
@@ -184,32 +159,33 @@ class RouterTest extends TestCase
         $this->assertEquals(['id'=>'5'], $route->getParam());
     }
 
+    public function testNoBadRouteDeclared()
+    {
+       $this->router->setOptions([
+            'basePath'    => '/',
+            'badRoute'    => 'E40',
+            'rewriteMode' => true,
+        ]);
+        
+        //evaluate request uri
+        $this->router->validate('/badroute', 'GET');
+
+        $this->assertEquals(false, $this->router->getRoute());
+    }
+    
     public function testRewriteModeOff()
     {
-        //routes
-        $routes = [];
-        $routes[] = [
-            'name'       => '',
-            'method'     => 'GET',
-            'url'        => '/user/[id]/(disable|enable|delete|changePassword|modify)',
-            'model'      => 'UserModel',
-            'view'       => 'UserView',
-            'controller' => 'UserController',
-            'action'     => '',
-        ];
-
-        //start router
-        $router = new Router($routes, [
+        $this->router->setOptions([
             'basePath'    => '/',
             'badRoute'    => 'E404',
             'rewriteMode' => false,
         ]);
-
+        
         //evaluate request uri
-        $router->validate('/index.php?/user/5/enable', 'GET');
+        $this->router->validate('/index.php?/user/5/enable', 'GET');
 
         //get route
-        $route = $router->getRoute();
+        $route = $this->router->getRoute();
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('UserModel', $route->getModel());
