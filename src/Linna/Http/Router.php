@@ -20,7 +20,7 @@ use Linna\Shared\ClassOptionsTrait;
 class Router
 {
     use ClassOptionsTrait;
-    
+
     /**
      * @var array Config options for class
      */

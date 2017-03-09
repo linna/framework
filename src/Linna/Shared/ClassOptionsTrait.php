@@ -21,9 +21,10 @@ trait ClassOptionsTrait
 {
     /**
      * Set an Option.
-     * 
+     *
      * @param string $key   Key
      * @param type   $value Value
+     *
      * @throws \InvalidArgumentException
      */
     public function setOption(string $key, $value)
@@ -31,13 +32,13 @@ trait ClassOptionsTrait
         if (!isset($this->options[$key])) {
             throw new \InvalidArgumentException(__CLASS__." class does not support the {$key} option.");
         }
-        
+
         $this->options[$key] = $value;
     }
-    
+
     /**
      * Set multiple Options.
-     * 
+     *
      * @param array $options Options
      */
     public function setOptions(array $options)

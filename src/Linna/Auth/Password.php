@@ -21,7 +21,7 @@ use Linna\Shared\ClassOptionsTrait;
 class Password
 {
     use ClassOptionsTrait;
-    
+
     /**
      * @var array An associative array containing options
      *
