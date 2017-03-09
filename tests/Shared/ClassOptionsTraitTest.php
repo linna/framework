@@ -18,18 +18,18 @@ class ClassOptionsTest extends TestCase
     {
         $router = new Router([]);
         $router->setOption('badRoute', 'foo');
-        
+
         $this->assertEquals(true, true);
     }
-    
+
     public function testSetBadOption()
     {
         $router = new Router([]);
-        
+
         $this->expectException(\InvalidArgumentException::class);
         $router->setOption('badRout', 'foo');
     }
-    
+
     public function testSetOptions()
     {
         $router = new Router([]);
@@ -38,7 +38,7 @@ class ClassOptionsTest extends TestCase
             'badRoute'    => 'E404',
             'rewriteMode' => true,
         ]);
-        
+
         $this->assertEquals(true, true);
     }
 }

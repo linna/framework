@@ -161,18 +161,18 @@ class RouterTest extends TestCase
 
     public function testNoBadRouteDeclared()
     {
-       $this->router->setOptions([
+        $this->router->setOptions([
             'basePath'    => '/',
             'badRoute'    => 'E40',
             'rewriteMode' => true,
         ]);
-        
+
         //evaluate request uri
         $this->router->validate('/badroute', 'GET');
 
         $this->assertEquals(false, $this->router->getRoute());
     }
-    
+
     public function testRewriteModeOff()
     {
         $this->router->setOptions([
@@ -180,7 +180,7 @@ class RouterTest extends TestCase
             'badRoute'    => 'E404',
             'rewriteMode' => false,
         ]);
-        
+
         //evaluate request uri
         $this->router->validate('/index.php?/user/5/enable', 'GET');
 
