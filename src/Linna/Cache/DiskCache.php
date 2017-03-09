@@ -14,6 +14,7 @@ namespace Linna\Cache;
 use DateInterval;
 use DateTime;
 use Linna\Cache\Exception\InvalidArgumentException;
+use Linna\Shared\ClassOptionsTrait;
 use Psr\SimpleCache\CacheInterface;
 
 /**
@@ -33,6 +34,7 @@ use Psr\SimpleCache\CacheInterface;
 class DiskCache implements CacheInterface
 {
     use ActionMultipleTrait;
+    use ClassOptionsTrait;
 
     /**
      * @var array Config options for class

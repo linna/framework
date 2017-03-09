@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Linna\Auth;
 
+use Linna\Shared\ClassOptionsTrait;
+
 /**
  * Class for manage password, using PHP 5.5.0 password, see php documentation for more information.
  *
@@ -18,6 +20,8 @@ namespace Linna\Auth;
  */
 class Password
 {
+    use ClassOptionsTrait;
+    
     /**
      * @var array An associative array containing options
      *

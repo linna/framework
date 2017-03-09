@@ -11,12 +11,16 @@ declare(strict_types=1);
 
 namespace Linna\Http;
 
+use Linna\Shared\ClassOptionsTrait;
+
 /**
  * Manage routes, verify every resource requested by browser and return
  * a RouteInterface Object.
  */
 class Router
 {
+    use ClassOptionsTrait;
+    
     /**
      * @var array Config options for class
      */
@@ -59,7 +63,7 @@ class Router
      *
      * @todo Make router compatible with PSR7 REQUEST, instead of request uri pass a PSR7 request object
      */
-    public function __construct(array $routes, array $options)
+    public function __construct(array $routes, array $options = [])
     {
         //set options
         $this->options = array_replace_recursive($this->options, $options);

@@ -43,7 +43,7 @@ class RouterCached extends Router
      *
      * @todo Make router compatible with PSR7 REQUEST,instead of request uri pass a PSR7 request object
      */
-    public function __construct(array $routes, array $options, CacheInterface $cache)
+    public function __construct(array $routes, array $options = [], CacheInterface $cache)
     {
         //call parent constructor
         parent::__construct($routes, $options);

@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Linna\Session;
 
 use ArrayAccess;
+use Linna\Shared\ClassOptionsTrait;
 use SessionHandlerInterface;
 
 /**
@@ -26,7 +27,8 @@ class Session implements ArrayAccess
 {
     use PropertyAccessTrait;
     use ArrayAccessTrait;
-
+    use ClassOptionsTrait;
+    
     /**
      * @var array Config options for class
      */
