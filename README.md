@@ -10,35 +10,32 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4c591995b1e54c3eb9653f7f125ecccf)](https://www.codacy.com/app/s3b4stian/linna-framework?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=s3b4stian/linna-framework&amp;utm_campaign=Badge_Grade)
 [![StyleCI](https://styleci.io/repos/41168432/shield?branch=master&style=flat)](https://styleci.io/repos/41168432)
 
+## About this framework
 Started as project for learn and master PHP, Linna framework turned into a simple and elegant toolset for build web application.
-
-## About this framework 
+<br/><br/>
+At moment, code, isn't utilized in production environment, I hope in future, to use it for develop a new app as replacement of my actual (and very old) personnel management web application.
+<br/><br/> 
 The development of Framework is done trying to get PHP best pratices always in mind. 
 Code was fully commented, ready for [phpDocumentor](https://www.phpdoc.org/) and 
 is written applying the five [SOLID](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)) principles.<br/></br/>
 If you wish deepen PHP best pratices you can start from [phptherightway](http://www.phptherightway.com/).
 
-### Features
+## Features
  
    * Model View Controller
    * Session Management and Login
    * Routing
    * Dependency Injections and PSR-11 Container
    * Wrappers for data base
+   * PSR-16 Simple Cache
    * PSR-4 Autoloader
 
-### Require
+## Require
 
    * PHP >= 7.0
    * PDO extension (optional)
    * Memcached extension (optional)
    * Mongodb extension (optional)
 
-
-### To do
-   
-   * Complete the documentation
-   * PSR7 support through linna-PSR7 package
-
 ## Documentation 
-For more details please see [documentation](https://github.com/s3b4stian/linna-framework/tree/master/docs) and read our [licence](https://github.com/s3b4stian/linna-framework/blob/master/LICENSE.md)
+For more details please see [documentation (incomplete)](https://github.com/s3b4stian/linna-framework/tree/master/docs) and read our [licence](https://github.com/s3b4stian/linna-framework/blob/master/LICENSE.md)
