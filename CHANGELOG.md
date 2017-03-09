@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * `Linna\Storage\StorageFactory` class added
 * `Linna\Cache\ActionMultipleTrait` added instead duplicate code in `Linna\Cache\MemcachedCache` and `Linna\Cache\DiskCache`
+* `Linna\Shared` namespace
+* `Linna\Shared\ClassOptionsTrait` trait, provide methods for set options
 
 ### Changed
 * `Linna\Storage\AdapterInterface` changed name to `Linna\Storage\StorageInterface`
