@@ -49,6 +49,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Optimized `Linna\DI\DIResolver` memory usage
 * Optimized `Linna\Http\Router->validate()`
+* `Linna\Auth\Login` change name to `Linna\Auth\Authenticate`
 * Tests updated
 
 ### Fixed
