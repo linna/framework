@@ -17,7 +17,9 @@ use Linna\DataMapper\MapperInterface;
  * User Mapper Interface
  * Contain methods required from concrete User Mapper
  */
-interface UserMapperInterface extends MapperInterface
+interface EnhancedUserMapperInterface extends MapperInterface
 {
-
+    public function grant(EnhancedUser &$user, string $permission);
+    
+    public function revoke(EnhancedUser &$user, string $permission);
 }
