@@ -12,9 +12,8 @@ declare(strict_types=1);
 namespace Linna\DataMapper;
 
 /**
- * NullDomainObject
+ * NullDomainObject.
  */
 class NullDomainObject extends DomainObjectAbstract
 {
-
 }

@@ -15,11 +15,11 @@ use Linna\DataMapper\MapperInterface;
 
 /**
  * Permission Mapper Interface
- * Contain methods required from concrete Permission Mapper
+ * Contain methods required from concrete Permission Mapper.
  */
 interface PermissionMapperInterface extends MapperInterface
 {
     public function fetchUserPermission(int $userId) : array;
-    
+
     public function permissionExist(string $permission) : bool;
 }

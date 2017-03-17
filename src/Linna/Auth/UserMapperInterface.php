@@ -15,9 +15,8 @@ use Linna\DataMapper\MapperInterface;
 
 /**
  * User Mapper Interface
- * Contain methods required from concrete User Mapper
+ * Contain methods required from concrete User Mapper.
  */
 interface UserMapperInterface extends MapperInterface
 {
-
 }
