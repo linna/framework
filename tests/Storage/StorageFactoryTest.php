@@ -28,8 +28,8 @@ class StorageFactoryTest extends TestCase
     public function testCreateMysqlPdo()
     {
         $options = [
-            'dsn'      => 'mysql:host=localhost;dbname=test;charset=utf8mb4',
-            'user'     => 'root',
+            'dsn'      => $GLOBALS['pdo_mysql_dsn'],
+            'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
             'options'  => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING],
         ];
@@ -44,9 +44,9 @@ class StorageFactoryTest extends TestCase
     {
         $options = [
             'host'     => '127.0.0.1',
-            'user'     => 'root',
+            'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
-            'database' => 'test',
+            'database' => 'linna_db',
             'port'     => 3306,
         ];
 
