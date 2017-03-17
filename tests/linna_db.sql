@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `linna-db` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `linna-db`;
+CREATE DATABASE  IF NOT EXISTS `linna_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `linna_db`;
 -- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
--- Host: 192.168.43.8    Database: linna-db
+-- Host: 192.168.43.8    Database: linna_db
 -- ------------------------------------------------------
 -- Server version	5.7.17-0ubuntu0.16.04.1
 

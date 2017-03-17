@@ -15,7 +15,7 @@
         <log type="coverage-clover" target="clover.xml"/>
     </logging>
     <php>
-        <var name="pdo_mysql_dsn" value="mysql:host=localhost;dbname=linna-db;charset=utf8mb4"/> 
+        <var name="pdo_mysql_dsn" value="mysql:host=localhost;dbname=linna_db;charset=utf8mb4"/> 
         <var name="pdo_mysql_user" value="root" />
         <var name="pdo_mysql_password" value="" />
         <var name="mem_host" value="localhost" />
