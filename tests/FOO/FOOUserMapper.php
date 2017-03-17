@@ -56,7 +56,7 @@ class FOOUserMapper extends MapperAbstract
      *
      * @return User
      */
-    protected function oCreate()
+    protected function concreteCreate()
     {
         return new FOOUser($this->password);
     }
@@ -66,7 +66,7 @@ class FOOUserMapper extends MapperAbstract
      *
      * @param DomainObjectInterface $user
      */
-    protected function oInsert(DomainObjectInterface $user)
+    protected function concreteInsert(DomainObjectInterface $user)
     {
         if (!($user instanceof FOOUser)) {
             throw new \Exception('$user must be instance of User class');
@@ -84,7 +84,7 @@ class FOOUserMapper extends MapperAbstract
      *
      * @param DomainObjectInterface $user
      */
-    protected function oUpdate(DomainObjectInterface $user)
+    protected function concreteUpdate(DomainObjectInterface $user)
     {
         if (!($user instanceof FOOUser)) {
             throw new \Exception('$user must be instance of User class');
@@ -102,7 +102,7 @@ class FOOUserMapper extends MapperAbstract
      *
      * @param DomainObjectAbstract $user
      */
-    protected function oDelete(DomainObjectInterface $user)
+    protected function concreteDelete(DomainObjectInterface $user)
     {
         if (!($user instanceof FOOUser)) {
             throw new \Exception('$user must be instance of User class');
