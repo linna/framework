@@ -32,7 +32,7 @@ trait UserPermissionTrait
     
     public function can(string $permission) : bool
     {
-        $userPermissions = $this->permission;//$objectId = parent::getId();
+        $userPermissions = $this->permission;
         
         foreach ($userPermissions as $uPermission)
         {
@@ -41,11 +41,6 @@ trait UserPermissionTrait
                 return true;
             }
         }
-        //$permissionHash = sha1($objectId.$permission->code);
-        
-        //if (isset($this->permission[$permission])) {
-        //    return true;
-        //}
         
         return false;
     }
