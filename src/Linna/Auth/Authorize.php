@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Linna\Auth;
 
 /**
- * Class Authorize
+ * Class Authorize.
  */
 class Authorize
 {
@@ -21,6 +21,5 @@ class Authorize
      */
     public function __construct()
     {
-        
     }
 }

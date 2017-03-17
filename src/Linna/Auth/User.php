@@ -18,8 +18,8 @@ use Linna\DataMapper\DomainObjectAbstract;
  */
 class User extends DomainObjectAbstract
 {
-    #use UserPermissionTrait;
-    
+    //use UserPermissionTrait;
+
     /**
      * @var string User name
      */
@@ -29,12 +29,12 @@ class User extends DomainObjectAbstract
      * @var string User description
      */
     public $description;
-    
+
     /**
      * @var string User e-mail
      */
     public $email;
-    
+
     /**
      * @var string User hashed password
      */

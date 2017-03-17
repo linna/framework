@@ -14,16 +14,15 @@ namespace Linna\Auth;
 use Linna\DataMapper\DomainObjectAbstract;
 
 /**
- * Permission
+ * Permission.
  */
 class Permission extends DomainObjectAbstract
 {
     /**
-     *
-     * @var string Permission code 
+     * @var string Permission code
      */
     //public $code;
-    
+
     /**
      * @var string Permission name
      */
@@ -33,12 +32,12 @@ class Permission extends DomainObjectAbstract
      * @var string Permission description
      */
     public $description;
-    
+
     /**
      * @var string Last update
      */
     public $lastUpdate;
-    
+
     /**
      * Constructor.
      */
@@ -47,4 +46,3 @@ class Permission extends DomainObjectAbstract
         settype($this->objectId, 'integer');
     }
 }
-
