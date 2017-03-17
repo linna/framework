@@ -22,6 +22,7 @@ trait UserPermissionTrait
     protected $permission;
     
     /**
+     * Set user permission
      * 
      * @param array $permissions
      */
@@ -30,6 +31,30 @@ trait UserPermissionTrait
         $this->permission = $permissions;
     }
     
+    /**
+     * Show User Permissions
+     * 
+     * @return array
+     */
+    public function showPermissions() : array
+    {
+        $userPermissions = $this->permission;
+        $permissions = [];
+        
+        foreach ($userPermissions as $uPermission)
+        {
+            $permissions[] = $uPermission->name;
+        }      
+                
+        return $permissions;
+    }
+    
+    /**
+     * Check User Permission
+     * 
+     * @param string $permission
+     * @return bool
+     */
     public function can(string $permission) : bool
     {
         $userPermissions = $this->permission;
