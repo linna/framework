@@ -19,11 +19,6 @@ use Linna\DataMapper\DomainObjectAbstract;
 class Permission extends DomainObjectAbstract
 {
     /**
-     * @var string Permission code
-     */
-    //public $code;
-
-    /**
      * @var string Permission name
      */
     public $name;
