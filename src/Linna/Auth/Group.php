@@ -36,7 +36,7 @@ class Group extends DomainObjectAbstract
     /**
      * @var array Contain users in group
      */
-    private $user;
+    private $users;
 
     /**
      * @var array Contain permission of the group
@@ -51,48 +51,89 @@ class Group extends DomainObjectAbstract
     /**
      * Constructor.
      *
-     * @param array $user
+     * @param array $users
      * @param array $permission
      */
-    public function __construct(array $user, array $permission)
+    public function __construct(array $users, array $permission)
     {
-        $this->user = $user;
+        $this->users = $users;
         $this->permission = $permission;
 
         //set required type
         settype($this->objectId, 'integer');
         settype($this->active, 'integer');
     }
-
-    public function addUser(User $user)
+    
+    /**
+     * Show users in group.
+     * 
+     * @return array
+     */
+    public function showUsers() : array
     {
+        $groupUsers = $this->users;
+        $users = [];
+
+        foreach ($groupUsers as $gUser) {
+            $users[] = $gUser->name;
+        }
+
+        return $users;
+    }
+    
+    /**
+     * Check if an user is in group.
+     *  
+     * @param string $user
+     * @return bool
+     */
+    public function isUserInGroup(string $user) : bool
+    {
+        $groupUsers = $this->users;
+
+        foreach ($groupUsers as $gUser) {
+            if ($gUser->name === $user) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+    /**
+     * Show Group Permissions.
+     *
+     * @return array
+     */
+    public function showPermissions() : array
+    {
+        $groupPermissions = $this->permission;
+        $permissions = [];
+
+        foreach ($groupPermissions as $gPermission) {
+            $permissions[] = $gPermission->name;
+        }
+
+        return $permissions;
     }
 
-    public function removeUser(User $user)
+    /**
+     * Check Group Permission.
+     *
+     * @param string $permission
+     *
+     * @return bool
+     */
+    public function can(string $permission) : bool
     {
-    }
+        $groupPermissions = $this->permission;
 
-    public function getUsers()
-    {
-    }
+        foreach ($groupPermissions as $gPermission) {
+            if ($gPermission->name === $permission) {
+                return true;
+            }
+        }
 
-    public function hasUser() : bool
-    {
-    }
-
-    public function getPermissions() : array
-    {
-    }
-
-    public function addPermission(Permission $permission)
-    {
-    }
-
-    public function addMultiplePermission(array $permission)
-    {
-    }
-
-    public function removePermission(Permission $permission)
-    {
+        return false;
     }
 }
