@@ -14,7 +14,7 @@ namespace Linna\Auth;
 /**
  * User PermissionTrait.
  */
-trait UserPermissionTrait
+trait PermissionTrait
 {
     /**
      * @var array User permissions
@@ -22,7 +22,7 @@ trait UserPermissionTrait
     protected $permission;
 
     /**
-     * Set user permission.
+     * Set permission.
      *
      * @param array $permissions
      */
@@ -32,24 +32,24 @@ trait UserPermissionTrait
     }
 
     /**
-     * Show User Permissions.
+     * Show Permissions.
      *
      * @return array
      */
     public function showPermissions() : array
     {
-        $userPermissions = $this->permission;
-        $permissions = [];
+        //$userPermissions = $this->permission;
+        $arrayPermissions = [];
 
-        foreach ($userPermissions as $uPermission) {
-            $permissions[] = $uPermission->name;
+        foreach ($this->permission as $ownPermission) {
+            $arrayPermissions[] = $ownPermission->name;
         }
 
-        return $permissions;
+        return $arrayPermissions;
     }
 
     /**
-     * Check User Permission.
+     * Check Permission.
      *
      * @param string $permission
      *
@@ -57,10 +57,10 @@ trait UserPermissionTrait
      */
     public function can(string $permission) : bool
     {
-        $userPermissions = $this->permission;
+        //$userPermissions = $this->permission;
 
-        foreach ($userPermissions as $uPermission) {
-            if ($uPermission->name === $permission) {
+        foreach ($this->permission as $ownPermission) {
+            if ($ownPermission->name === $permission) {
                 return true;
             }
         }

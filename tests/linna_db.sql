@@ -18,58 +18,58 @@ USE `linna_db`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `group`
+-- Table structure for table `role`
 --
 
-DROP TABLE IF EXISTS `group`;
+DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `group` (
-  `group_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE `role` (
+  `role_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `description` tinytext,
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`group_id`)
+  PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `group`
+-- Dumping data for table `role`
 --
 
-LOCK TABLES `group` WRITE;
-/*!40000 ALTER TABLE `group` DISABLE KEYS */;
-INSERT INTO `group` VALUES (1,'Administrator','System Administrators',1,'2017-03-14 18:21:09'),(2,'Users','System Users',1,'2017-03-14 18:21:09');
-/*!40000 ALTER TABLE `group` ENABLE KEYS */;
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (1,'Administrator','System Administrators',1,'2017-03-14 18:21:09'),(2,'Users','System Users',1,'2017-03-14 18:21:09');
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `group_permission`
+-- Table structure for table `role_permission`
 --
 
-DROP TABLE IF EXISTS `group_permission`;
+DROP TABLE IF EXISTS `role_permission`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `group_permission` (
-  `group_permission_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `group_id` int(10) unsigned DEFAULT NULL,
+CREATE TABLE `role_permission` (
+  `role_permission_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `role_id` int(10) unsigned DEFAULT NULL,
   `permission_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`group_permission_id`),
-  KEY `index_group` (`group_id`),
+  PRIMARY KEY (`role_permission_id`),
+  KEY `index_role` (`role_id`),
   KEY `index_permission` (`permission_id`),
-  CONSTRAINT `fk_group_permission_group` FOREIGN KEY (`group_id`) REFERENCES `group` (`group_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_group_permission_permission` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`permission_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_role_permission_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_role_permission_permission` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`permission_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `group_permission`
+-- Dumping data for table `role_permission`
 --
 
-LOCK TABLES `group_permission` WRITE;
-/*!40000 ALTER TABLE `group_permission` DISABLE KEYS */;
-/*!40000 ALTER TABLE `group_permission` ENABLE KEYS */;
+LOCK TABLES `role_permission` WRITE;
+/*!40000 ALTER TABLE `role_permission` DISABLE KEYS */;
+/*!40000 ALTER TABLE `role_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -153,31 +153,31 @@ INSERT INTO `user` VALUES (1,'root','System User',NULL,'$2y$11$4IAn6SRaB0osPz8af
 UNLOCK TABLES;
 
 --
--- Table structure for table `user_group`
+-- Table structure for table `user_role`
 --
 
-DROP TABLE IF EXISTS `user_group`;
+DROP TABLE IF EXISTS `user_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user_group` (
-  `user_group_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE `user_role` (
+  `user_role_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned DEFAULT NULL,
-  `group_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`user_group_id`),
+  `role_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`user_role_id`),
   KEY `index_user` (`user_id`),
-  KEY `index_group` (`group_id`),
-  CONSTRAINT `fk_user_group_group` FOREIGN KEY (`group_id`) REFERENCES `group` (`group_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_group_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `index_role` (`role_id`),
+  CONSTRAINT `fk_user_role_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_role_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user_group`
+-- Dumping data for table `user_role`
 --
 
-LOCK TABLES `user_group` WRITE;
-/*!40000 ALTER TABLE `user_group` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user_group` ENABLE KEYS */;
+LOCK TABLES `user_role` WRITE;
+/*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

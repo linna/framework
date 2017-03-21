@@ -19,6 +19,10 @@ use Linna\DataMapper\MapperInterface;
  */
 interface EnhancedUserMapperInterface extends MapperInterface
 {
+    public function fetchUserByRole(int $roleId) : array;
+    
+    //public function fetchUserByPermission(int $permissionId) : array;
+    
     public function grant(EnhancedUser &$user, string $permission);
 
     public function revoke(EnhancedUser &$user, string $permission);

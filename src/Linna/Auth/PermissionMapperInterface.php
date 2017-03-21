@@ -19,7 +19,7 @@ use Linna\DataMapper\MapperInterface;
  */
 interface PermissionMapperInterface extends MapperInterface
 {
-    public function fetchPermissionsByGroup(int $groupId) : array;
+    public function fetchPermissionsByRole(int $roleId) : array;
     
     public function fetchPermissionsByUser(int $userId) : array;
 

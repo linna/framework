@@ -16,5 +16,5 @@ namespace Linna\Auth;
  */
 class EnhancedUser extends User
 {
-    use UserPermissionTrait;
+    use PermissionTrait;
 }
