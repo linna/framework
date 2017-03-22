@@ -23,5 +23,7 @@ interface PermissionMapperInterface extends MapperInterface
     
     public function fetchPermissionsByUser(int $userId) : array;
 
+    public function generatePermissionHashTable() : array;
+    
     public function permissionExist(string $permission) : bool;
 }
