@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Linna\Auth;
 
 use Linna\DataMapper\MapperInterface;
+use Linna\DataMapper\DomainObjectInterface;
 
 /**
  * Permission Mapper Interface
@@ -19,6 +20,8 @@ use Linna\DataMapper\MapperInterface;
  */
 interface PermissionMapperInterface extends MapperInterface
 {
+    public function fetchByName(string $permissionName) : DomainObjectInterface;
+    
     public function fetchPermissionsByRole(int $roleId) : array;
     
     public function fetchPermissionsByUser(int $userId) : array;
