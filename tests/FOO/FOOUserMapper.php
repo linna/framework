@@ -56,7 +56,7 @@ class FOOUserMapper extends MapperAbstract
      *
      * @return User
      */
-    protected function concreteCreate()
+    protected function concreteCreate() : DomainObjectInterface
     {
         return new FOOUser($this->password);
     }
