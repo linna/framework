@@ -31,7 +31,7 @@ class View implements \SplObserver
     protected $template;
 
     /**
-     * @var Model $model Model for access data
+     * @var Model Model for access data
      */
     protected $model;
 

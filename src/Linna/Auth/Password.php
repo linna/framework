@@ -46,11 +46,11 @@ class Password
     /**
      * Verifies that a password matches a hash.
      * Return the result of password_verify PHP function.
-     * 
+     *
      * @param string $password
      * @param string $hash
      *
-     * @return bool 
+     * @return bool
      */
     public function verify(string $password, string $hash): bool
     {
@@ -60,10 +60,10 @@ class Password
     /**
      * Create a password hash.
      * Return the hashed password.
-     * 
+     *
      * @param string $password
      *
-     * @return string 
+     * @return string
      */
     public function hash(string $password): string
     {
@@ -73,8 +73,8 @@ class Password
 
     /**
      * Checks if the given hash matches the given options.
-     * Return the hashed password
-     * 
+     * Return the hashed password.
+     *
      * @param string $hash
      *
      * @return bool

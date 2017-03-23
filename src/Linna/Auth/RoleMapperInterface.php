@@ -12,8 +12,6 @@ declare(strict_types=1);
 namespace Linna\Auth;
 
 use Linna\DataMapper\MapperInterface;
-use Linna\Auth\Role;
-use Linna\Auth\User;
 
 /**
  * Group Mapper Interface
@@ -26,24 +24,23 @@ interface RoleMapperInterface extends MapperInterface
      * From Role and User objects instances as arguments, this method must return an array containing
      * a Permission object instance for every permission owned by the
      * given user user and role.
-     * 
+     *
      * @param Role $role
      * @param User $user
-     * 
+     *
      * @return array
      */
     public function fetchUserInheritedPermissions(Role &$role, User $user) : array;
-    
+
     /**
      * Grant a permission at role
      * This method must insert new role-permission coupling in persistent
      * storage and update Role calling Role->setPermissions() method.
      * Remind to pass all role's permission to Role->setPermissions(),
      * when write concrete mapper is well pass PermissionMapper as constructor
-     * dependency
-     * 
-     * @param Role $role
-     * 
+     * dependency.
+     *
+     * @param Role   $role
      * @param string $permission
      */
     public function permissionGrant(Role &$role, string $permission);
@@ -55,21 +52,20 @@ interface RoleMapperInterface extends MapperInterface
      * As previous method remind to pass all role's permission
      * to Role->setPermissions(), when write concrete mapper is well
      * pass PermissionMapper as constructor dependency.
-     * 
-     * @param Role $role
-     * 
+     *
+     * @param Role   $role
      * @param string $permission
      */
     public function permissionRevoke(Role &$role, string $permission);
-    
+
     /**
      * Add role at an user
      * This method must insert new user-role coupling in persistent
      * storage and update Role calling Role->setUsers() method.
      * Remind to pass all role's users to Role->setUsers(),
      * when write concrete mapper is well pass EnhancedUserMapper as constructor
-     * dependency
-     * 
+     * dependency.
+     *
      * @param Role $role
      * @param User $user
      */
@@ -81,8 +77,8 @@ interface RoleMapperInterface extends MapperInterface
      * storage and update Role calling Role->setUsers() method.
      * As previous method remind to pass all role's users to Role->setUsers(),
      * when write concrete mapper is well pass EnhancedUserMapper as constructor
-     * dependency
-     * 
+     * dependency.
+     *
      * @param Role $role
      * @param User $user
      */

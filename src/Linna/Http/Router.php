@@ -57,8 +57,8 @@ class Router
 
     /**
      * Constructor.
-     * Accept as parameter a list routes and options
-     * 
+     * Accept as parameter a list routes and options.
+     *
      * @param array $routes
      * @param array $options
      *
