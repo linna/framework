@@ -66,25 +66,30 @@ class Authorize
      */
     public function can(string $permissionName) : bool
     {
+        //get permission
         $permission = $this->permissionMapper->fetchByName($permissionName);
         
+        //permission not exist
         if ($permission instanceof NullDomainObject) {
             return false;
         }
         
+        //user not authenticated
         if ($this->authenticate->logged === false){
             return false;
         }
         
-        $userId = $this->authenticate->data['user_id'];
-        
-        $hash = hash('sha256', $userId.'.'.$permission->getId());
-        
-        if (isset($this->hashTable[$hash]))
-        {
-            return true;
+        //login without redirect check
+        if (!isset($this->authenticate->data['user_id'])){
+           return false;
         }
         
-        return false;
+        //get user id
+        $userId = $this->authenticate->data['user_id'];
+        
+        //make hash for hash table check
+        $hash = hash('sha256', $userId.'.'.$permission->getId());
+        
+        return isset($this->hashTable[$hash]);
     }
 }
