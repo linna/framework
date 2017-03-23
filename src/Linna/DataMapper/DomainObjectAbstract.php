@@ -24,8 +24,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     protected $objectId = 0;
 
     /**
-     * Get the ID of this object (unique to the
-     * object type).
+     * Get the ID of this object (unique to the object type).
      *
      * @return int
      */

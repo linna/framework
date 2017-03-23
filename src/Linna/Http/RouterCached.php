@@ -55,8 +55,8 @@ class RouterCached extends Router
     /**
      * Evaluate request uri.
      *
-     * @param string $requestUri    Request uri
-     * @param string $requestMethod Request method
+     * @param string $requestUri
+     * @param string $requestMethod
      */
     public function validate(string $requestUri, string $requestMethod) : bool
     {

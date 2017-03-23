@@ -50,7 +50,7 @@ class MongoDbAdapter implements StorageInterface
     /**
      * Get Resource.
      *
-     * @return \MongoDB\Client
+     * @return Client
      */
     public function getResource()
     {

@@ -53,9 +53,6 @@ class Role extends DomainObjectAbstract
      */
     public function __construct()
     {
-        //$this->users = $users;
-        //$this->permission = $permission;
-
         //set required type
         settype($this->objectId, 'integer');
         settype($this->active, 'integer');
@@ -91,12 +88,11 @@ class Role extends DomainObjectAbstract
      * Check if an user is in role.
      *  
      * @param string $user
+     * 
      * @return bool
      */
     public function isUserInRole(string $user) : bool
     {
-        //$roleUsers = $this->users;
-
         foreach ($this->users as $ownUser) {
             if ($ownUser->name === $user) {
                 return true;

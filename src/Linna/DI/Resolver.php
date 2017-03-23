@@ -53,8 +53,8 @@ class Resolver
     /**
      * Resolve dependencies for given class.
      *
-     * @param string $class Class needed
-     * @param array  $rules Rules for resolving
+     * @param string $class
+     * @param array  $rules
      *
      * @return object|null Instance of resolved class
      */
@@ -79,7 +79,7 @@ class Resolver
     /**
      * Create a dependencies map for a class.
      *
-     * @param string $class Class wich tree will build
+     * @param string $class
      */
     private function buildTree(string $class)
     {
@@ -190,8 +190,8 @@ class Resolver
     /**
      * Build dependency for a object.
      *
-     * @param string $class      Class name
-     * @param array  $dependency Arguments required from object
+     * @param string $class
+     * @param array  $dependency
      *
      * @return array
      */
@@ -219,8 +219,8 @@ class Resolver
     /**
      * Store and object that DI connot resolve.
      *
-     * @param string $name   Object name
-     * @param object $object Object to store
+     * @param string $name
+     * @param object $object
      */
     public function cache(string $name, $object)
     {

@@ -24,8 +24,8 @@ trait ProtectedController
     /**
      * Allow access to controller only if logged.
      *
-     * @param \Linna\Auth\Authenticate $authenticate
-     * @param string                   $redirect
+     * @param Authenticate $authenticate
+     * @param string       $redirect
      */
     protected function protect(Authenticate $authenticate, string $redirect)
     {

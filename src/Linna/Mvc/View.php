@@ -26,19 +26,19 @@ class View implements \SplObserver
     protected $data;
 
     /**
-     * @var object Template utilized for data
+     * @var TemplateInterface Template utilized for render data
      */
     protected $template;
 
     /**
-     * @var object Model for access data
+     * @var Model $model Model for access data
      */
     protected $model;
 
     /**
      * Constructor.
      *
-     * @param \Linna\Mvc\Model $model Data Model
+     * @param Model $model
      */
     public function __construct(Model $model)
     {

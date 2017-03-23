@@ -38,6 +38,9 @@ class Authorize
     
     /**
      * Constructor.
+     * 
+     * @param Authenticate $authenticate
+     * @param PermissionMapperInterface $permissionMapper
      */
     public function __construct(Authenticate $authenticate, PermissionMapperInterface $permissionMapper)
     {

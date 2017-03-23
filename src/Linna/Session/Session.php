@@ -64,7 +64,7 @@ class Session implements ArrayAccess
     /**
      * Constructor.
      *
-     * @param array $options Options for configure session
+     * @param array $options
      */
     public function __construct(array $options = [])
     {
@@ -187,7 +187,7 @@ class Session implements ArrayAccess
     /**
      * Set session handler for new instance.
      *
-     * @param SessionHandlerInterface $handler Session handler
+     * @param SessionHandlerInterface $handler
      */
     public function setSessionHandler(SessionHandlerInterface $handler)
     {

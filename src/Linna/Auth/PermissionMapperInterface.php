@@ -25,7 +25,8 @@ interface PermissionMapperInterface extends MapperInterface
      * From permission name as argument, this method must return an instance
      * of Permission class or an instance of NullDomainObject class.
      * 
-     * @param string $permissionName Name of required permission
+     * @param string $permissionName
+     * 
      * @return DomainObjectInterface
      */
     public function fetchByName(string $permissionName) : DomainObjectInterface;
@@ -33,10 +34,11 @@ interface PermissionMapperInterface extends MapperInterface
     /**
      * Fetch permissions for a role
      * From role id as argument, this method must return an array containing
-     * a Permission object instance for every permission of the
+     * a Permission object instance for every permission owned by the
      * given role.
      * 
-     * @param int $roleId Id of role
+     * @param int $roleId
+     * 
      * @return array
      */
     public function fetchPermissionsByRole(int $roleId) : array;
@@ -44,10 +46,11 @@ interface PermissionMapperInterface extends MapperInterface
     /**
      * Fetch permissions for a user
      * From user id as argument, this method must return an array containing
-     * a Permission object instance for every permission of the
+     * a Permission object instance for every permission owned by the
      * given user.
      * 
-     * @param int $userId Id of user
+     * @param int $userId
+     * 
      * @return array
      */
     public function fetchPermissionsByUser(int $userId) : array;
@@ -70,6 +73,7 @@ interface PermissionMapperInterface extends MapperInterface
      * Check if a permission exist.
      * 
      * @param string $permission
+     * 
      * @return bool
      */
     public function permissionExist(string $permission) : bool;

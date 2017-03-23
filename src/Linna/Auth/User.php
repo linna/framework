@@ -18,8 +18,6 @@ use Linna\DataMapper\DomainObjectAbstract;
  */
 class User extends DomainObjectAbstract
 {
-    //use UserPermissionTrait;
-
     /**
      * @var string User name
      */
@@ -89,8 +87,8 @@ class User extends DomainObjectAbstract
     /**
      * Change user password only after check old password.
      *
-     * @param string $newPassword New user password
-     * @param string $oldPassword Old user password
+     * @param string $newPassword
+     * @param string $oldPassword
      *
      * @return bool
      */

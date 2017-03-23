@@ -22,8 +22,8 @@ trait ClassOptionsTrait
     /**
      * Set an Option.
      *
-     * @param string $key   Key
-     * @param type   $value Value
+     * @param string $key
+     * @param type   $value
      *
      * @throws \InvalidArgumentException
      */
@@ -39,7 +39,7 @@ trait ClassOptionsTrait
     /**
      * Set multiple Options.
      *
-     * @param array $options Options
+     * @param array $options
      */
     public function setOptions(array $options)
     {

@@ -57,9 +57,10 @@ class Router
 
     /**
      * Constructor.
-     *
-     * @param array $routes  List of registerd routes for the app in routes.php
-     * @param array $options Options for router config
+     * Accept as parameter a list routes and options
+     * 
+     * @param array $routes
+     * @param array $options
      *
      * @todo Make router compatible with PSR7 REQUEST, instead of request uri pass a PSR7 request object
      */
@@ -75,8 +76,8 @@ class Router
     /**
      * Evaluate request uri.
      *
-     * @param string $requestUri    Request uri
-     * @param string $requestMethod Request method
+     * @param string $requestUri
+     * @param string $requestMethod
      *
      * @return bool
      */
@@ -184,11 +185,11 @@ class Router
     }
 
     /**
-     * Try to find param in a valid route.
+     * Try to find parameters in a valid route and return it.
      *
-     * @param array $route Array with route caracteristics
+     * @param array $route
      *
-     * @return array Array with param passed from uri
+     * @return array
      */
     private function buildParam(array $route): array
     {
@@ -212,7 +213,7 @@ class Router
      *
      * @param string $passedUri
      *
-     * @return string Uri from browser
+     * @return string
      */
     private function getCurrentUri(string $passedUri): string
     {

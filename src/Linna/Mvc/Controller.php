@@ -23,9 +23,9 @@ class Controller
     protected $model = null;
 
     /**
-     * Controller constructor.
+     * Constructor.
      *
-     * @param object $model The model object for current controller
+     * @param object $model
      */
     public function __construct(Model $model)
     {

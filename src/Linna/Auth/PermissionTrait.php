@@ -38,7 +38,6 @@ trait PermissionTrait
      */
     public function showPermissions() : array
     {
-        //$userPermissions = $this->permission;
         $arrayPermissions = [];
 
         foreach ($this->permission as $ownPermission) {
@@ -57,8 +56,6 @@ trait PermissionTrait
      */
     public function can(string $permission) : bool
     {
-        //$userPermissions = $this->permission;
-
         foreach ($this->permission as $ownPermission) {
             if ($ownPermission->name === $permission) {
                 return true;

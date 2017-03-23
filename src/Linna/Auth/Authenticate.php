@@ -73,8 +73,8 @@ class Authenticate
     /**
      * Constructor.
      *
-     * @param Session  $session  Instance of session object
-     * @param Password $password Instance of password object
+     * @param Session  $session
+     * @param Password $password
      */
     public function __construct(Session $session, Password $password)
     {

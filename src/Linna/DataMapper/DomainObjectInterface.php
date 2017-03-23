@@ -17,8 +17,7 @@ namespace Linna\DataMapper;
 interface DomainObjectInterface
 {
     /**
-     * Get the ID of this object (unique to the
-     * object type).
+     * Get the ID of this object (unique to the object type).
      */
     public function getId();
 

@@ -57,7 +57,7 @@ abstract class MapperAbstract
      *
      * @return DomainObjectAbstract
      */
-    abstract protected function concreteCreate();
+    abstract protected function concreteCreate() : DomainObjectAbstract;
 
     /**
      * Insert the DomainObject to persistent storage.

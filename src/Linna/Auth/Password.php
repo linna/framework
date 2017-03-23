@@ -35,7 +35,7 @@ class Password
     /**
      * Constructor.
      *
-     * @param array $options Options for password hashing
+     * @param array $options
      */
     public function __construct(array $options = [])
     {
@@ -45,11 +45,12 @@ class Password
 
     /**
      * Verifies that a password matches a hash.
+     * Return the result of password_verify PHP function.
+     * 
+     * @param string $password
+     * @param string $hash
      *
-     * @param string $password Password to be verified
-     * @param string $hash     Hash for password
-     *
-     * @return bool Result of password_verify PHP function.
+     * @return bool 
      */
     public function verify(string $password, string $hash): bool
     {
@@ -58,10 +59,11 @@ class Password
 
     /**
      * Create a password hash.
+     * Return the hashed password.
+     * 
+     * @param string $password
      *
-     * @param string $password Password to be hashed
-     *
-     * @return string Return the hashed password
+     * @return string 
      */
     public function hash(string $password): string
     {
@@ -71,10 +73,11 @@ class Password
 
     /**
      * Checks if the given hash matches the given options.
+     * Return the hashed password
+     * 
+     * @param string $hash
      *
-     * @param string $hash Hash for check
-     *
-     * @return bool Return the hashed password
+     * @return bool
      */
     public function needsRehash(string $hash): bool
     {
@@ -88,7 +91,7 @@ class Password
     /**
      * Returns information about the given hash.
      *
-     * @param string $hash Hash to get info
+     * @param string $hash
      *
      * @return array
      */
