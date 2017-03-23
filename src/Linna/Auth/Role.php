@@ -19,7 +19,7 @@ use Linna\DataMapper\DomainObjectAbstract;
 class Role extends DomainObjectAbstract
 {
     use PermissionTrait;
-    
+
     /**
      * @var string Group name
      */
@@ -57,20 +57,20 @@ class Role extends DomainObjectAbstract
         settype($this->objectId, 'integer');
         settype($this->active, 'integer');
     }
-    
+
     /**
      * Set users in role.
-     * 
+     *
      * @param array $users
      */
     public function setUsers(array $users)
     {
         $this->users = $users;
     }
-    
+
     /**
      * Show users in group.
-     * 
+     *
      * @return array
      */
     public function showUsers() : array
@@ -83,12 +83,12 @@ class Role extends DomainObjectAbstract
 
         return $users;
     }
-    
+
     /**
      * Check if an user is in role.
-     *  
+     *
      * @param string $user
-     * 
+     *
      * @return bool
      */
     public function isUserInRole(string $user) : bool

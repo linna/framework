@@ -21,7 +21,7 @@ interface MapperInterface
      * Fetch a DomainObject by id.
      * From object id as argument, this method must return an instance
      * of DomainObject instance or an instance of NullDomainObject.
-     * 
+     *
      * @param string $objectId
      *
      * @return DomainObjectInterface
@@ -33,7 +33,7 @@ interface MapperInterface
      * This method must return an array containing
      * a DomainObject object instance for every concrete domain object
      * or a void array.
-     * 
+     *
      * @return array
      */
     public function fetchAll() : array;
@@ -43,8 +43,8 @@ interface MapperInterface
      * This method must return an array containing
      * a DomainObject object filtered with sql limit style
      * or a void array.
-     * 
-     * @param int $offset Offset of the first row to return
+     *
+     * @param int $offset   Offset of the first row to return
      * @param int $rowCount Maximum number of rows to return
      *
      * @return array
