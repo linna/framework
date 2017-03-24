@@ -39,4 +39,4 @@ At moment, code, isn't utilized in production environment, I hope in future, to 
    * Mongodb extension (optional)
 
 ## Documentation 
-For more details please see [documentation (incomplete)](https://github.com/s3b4stian/linna-framework/tree/master/docs) and read our [licence](https://github.com/s3b4stian/linna-framework/blob/master/LICENSE.md)
+For more details please see [documentation (incomplete)](https://github.com/s3b4stian/linna-framework-doc) and read our [licence](https://github.com/s3b4stian/linna-framework/blob/master/LICENSE.md)
