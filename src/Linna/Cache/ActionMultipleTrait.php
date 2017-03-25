@@ -55,16 +55,7 @@ trait ActionMultipleTrait
     abstract public function delete($key);
 
     /**
-     * Obtains multiple cache items by their unique keys.
-     *
-     * @param iterable $keys    A list of keys that can obtained in a single operation.
-     * @param mixed    $default Default value to return for keys that do not exist.
-     *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
-     *                                                   or if any of the $keys are not a legal value.
-     *
-     * @return iterable A list of key => value pairs. Cache keys that do not exist or are stale will have $default as value.
+     * {@inheritDoc}
      */
     public function getMultiple($keys, $default = null)
     {
@@ -81,18 +72,7 @@ trait ActionMultipleTrait
     }
 
     /**
-     * Persists a set of key => value pairs in the cache, with an optional TTL.
-     *
-     * @param iterable              $values A list of key => value pairs for a multiple-set operation.
-     * @param null|int|DateInterval $ttl    Optional. The TTL value of this item. If no value is sent and
-     *                                      the driver supports TTL then the library may set a default value
-     *                                      for it or let the driver take care of that.
-     *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if $values is neither an array nor a Traversable,
-     *                                                   or if any of the $values are not a legal value.
-     *
-     * @return bool True on success and false on failure.
+     * {@inheritDoc}
      */
     public function setMultiple($values, $ttl = null)
     {
@@ -113,15 +93,7 @@ trait ActionMultipleTrait
     }
 
     /**
-     * Deletes multiple cache items in a single operation.
-     *
-     * @param iterable $keys A list of string-based keys to be deleted.
-     *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
-     *                                                   or if any of the $keys are not a legal value.
-     *
-     * @return bool True if the items were successfully removed. False if there was an error.
+     * {@inheritDoc}
      */
     public function deleteMultiple($keys)
     {
