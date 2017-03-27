@@ -63,11 +63,12 @@ interface PermissionMapperInterface extends MapperInterface
      * Example
      * Hash will be match with below code sample
      *      <?php
-     *      $hash = hash('sha256', $userId.'.'.$permission->getId());
-     *
+     *      $hash = hash('sha256', $userId.'.'.$permissionId);
+     * @param int $userId
+     * 
      * @return array
      */
-    public function generatePermissionHashTable() : array;
+    public function fetchUserPermissionHashTable(int $userId) : array;
 
     /**
      * Check if a permission exist.
