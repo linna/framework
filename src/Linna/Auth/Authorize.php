@@ -29,6 +29,11 @@ class Authorize
     protected $authenticate;
 
     /**
+     * @var int User id
+     */
+    protected $userId = 0;
+    
+    /**
      * @var array User/Permission hash table
      */
     protected $hashTable;
@@ -44,17 +49,9 @@ class Authorize
         $this->authenticate = $authenticate;
         $this->permissionMapper = $permissionMapper;
 
-        $this->hashTable = $this->populateHashTable();
-    }
-
-    /**
-     * Populate Hash Table.
-     *
-     * @return array
-     */
-    protected function populateHashTable() : array
-    {
-        return $this->permissionMapper->generatePermissionHashTable();
+        $this->userId = $this->authenticate->data['user_id'] ?? 0;
+        
+        $this->hashTable = $this->permissionMapper->fetchUserPermissionHashTable($this->userId);
     }
 
     /**
@@ -74,21 +71,13 @@ class Authorize
             return false;
         }
 
-        //user not authenticated
-        if ($this->authenticate->logged === false) {
+        //check if there is user logged
+        if (!$this->userId) {
             return false;
         }
-
-        //login without redirect check
-        if (!isset($this->authenticate->data['user_id'])) {
-            return false;
-        }
-
-        //get user id
-        $userId = $this->authenticate->data['user_id'];
 
         //make hash for hash table check
-        $hash = hash('sha256', $userId.'.'.$permission->getId());
+        $hash = hash('sha256', $this->userId.'.'.$permission->getId());
 
         return isset($this->hashTable[$hash]);
     }
