@@ -9,12 +9,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [v0.15.0](https://github.com/s3b4stian/linna-framework/compare/v0.14.0...v0.15.0) - 2017-XX-XX
 
 ### Added
-* `Linna\Storage\StorageFactory` class added
+* `Linna\Auth\Authorize` class
+* `Linna\Auth\EnhancedUser` class
+* `Linna\Auth\EnhancedUserMapperInterface` interface
+* `Linna\Auth\Permission` class
+* `Linna\Auth\PermissionMapperInterface` interface
+* `Linna\Auth\PermissionTrait` trait
+* `Linna\Auth\Role` class
+* `Linna\Auth\RoleMapperInterface` interface
+* `Linna\Auth\UserMapperInterface` interface
+* `Linna\DataMapper\NullDomaninObject` class
+* `Linna\Storage\StorageFactory` class
 * `Linna\Cache\ActionMultipleTrait` added instead duplicate code in `Linna\Cache\MemcachedCache` and `Linna\Cache\DiskCache`
 * `Linna\Shared` namespace
 * `Linna\Shared\ClassOptionsTrait` trait, provide methods for set options
 
 ### Changed
+* Documentation [moved](https://github.com/s3b4stian/linna-framework-doc)
+* `Linna\Http\Router` return `false` when there isn't an error route configured
+* `Linna\Auth\Login` changed name to `Linna\Auth\Authenticate`
 * `Linna\Storage\AdapterInterface` changed name to `Linna\Storage\StorageInterface`
 
 ### Removed
