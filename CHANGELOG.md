@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [v0.15.0](https://github.com/s3b4stian/linna-framework/compare/v0.14.0...v0.15.0) - 2017-XX-XX
 
 ### Added
+* `Linna\Http\FastMapTrait` trait
+* `Linna\Http\Router->map()` method for register routes after router instance creation
 * `Linna\Auth\Authorize` class
 * `Linna\Auth\EnhancedUser` class
 * `Linna\Auth\EnhancedUserMapperInterface` interface

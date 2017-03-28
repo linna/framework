@@ -7,6 +7,7 @@
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
+declare(strict_types=1);
 
 namespace Linna\Http;
 
@@ -15,61 +16,27 @@ namespace Linna\Http;
  */
 class Route implements RouteInterface
 {
-    /**
-     * @var string Route name
-     */
-    protected $name;
-
-    /**
-     * @var string Indicates request method
-     */
-    protected $method;
-
-    /**
-     * @var string View to call
-     */
-    protected $view;
-
-    /**
-     * @var string View to call
-     */
-    protected $model;
-
-    /**
-     * @var string Controller to call
-     */
-    protected $controller;
-
-    /**
-     * @var string Action to call
-     */
-    protected $action;
-
-    /**
-     * @var array Parameter passed to controller
-     */
-    protected $param;
-
+    protected $route = [
+        'name'       => '',
+        'method'     => '',
+        'url'        => '',
+        'model'      => '',
+        'view'       => '',
+        'controller' => '',
+        'action'     => '',
+        'default'    => false,
+        'param'  => [],
+        'callback'   => false,
+    ];
+    
     /**
      * Constructor.
      *
-     * @param string $name
-     * @param string $method
-     * @param string $model
-     * @param string $view
-     * @param string $controller
-     * @param mixed  $action
-     * @param array  $param
+     * @param array $route
      */
-    public function __construct(string $name, string $method, string $model, string $view, string $controller, string $action, array $param)
+    public function __construct(array $route = [])
     {
-        $this->name = $name;
-        $this->method = $method;
-        $this->model = $model;
-        $this->view = $view;
-        $this->controller = $controller;
-        $this->action = $action;
-        $this->param = $param;
+        $this->route = array_replace_recursive($this->route, $route);
     }
 
     /**
@@ -79,7 +46,7 @@ class Route implements RouteInterface
      */
     public function getModel(): string
     {
-        return $this->model;
+        return $this->route['model'];
     }
 
     /**
@@ -89,7 +56,7 @@ class Route implements RouteInterface
      */
     public function getView(): string
     {
-        return $this->view;
+        return $this->route['view'];
     }
 
     /**
@@ -99,7 +66,7 @@ class Route implements RouteInterface
      */
     public function getController(): string
     {
-        return $this->controller;
+        return $this->route['controller'];
     }
 
     /**
@@ -109,7 +76,7 @@ class Route implements RouteInterface
      */
     public function getAction(): string
     {
-        return $this->action;
+        return $this->route['action'];
     }
 
     /**
@@ -119,6 +86,39 @@ class Route implements RouteInterface
      */
     public function getParam(): array
     {
-        return $this->param;
+        return $this->route['param'];
+    }
+    
+    /**
+     * Return if route is set as default.
+     *  
+     * @return bool
+     */
+    public function isDefault() : bool
+    {
+        return $this->route['dafault'];
+    }
+    
+    /**
+     * Return route callback
+     * 
+     * @return callable
+     */
+    public function getCallback() : callable
+    {
+        if (is_callable($this->route['callback'])){
+            return $this->route['callback'];
+        }
+        return function (){};
+    }
+    
+    /**
+     * Return route array.
+     * 
+     * @return array
+     */
+    public function getArray(): array
+    {
+        return $this->route;
     }
 }

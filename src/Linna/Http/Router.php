@@ -20,7 +20,8 @@ use Linna\Shared\ClassOptionsTrait;
 class Router
 {
     use ClassOptionsTrait;
-
+    use FastMapTrait;
+    
     /**
      * @var array Config options for class
      */
@@ -28,6 +29,7 @@ class Router
         'basePath'    => '/',
         'badRoute'    => false,
         'rewriteMode' => false,
+        'router'      => 'index.php',
     ];
 
     /**
@@ -64,7 +66,7 @@ class Router
      *
      * @todo Make router compatible with PSR7 REQUEST, instead of request uri pass a PSR7 request object
      */
-    public function __construct(array $routes, array $options = [])
+    public function __construct(array $routes = [], array $options = [])
     {
         //set options
         $this->options = array_replace_recursive($this->options, $options);
@@ -128,17 +130,11 @@ class Router
             $validRoute['url'] = preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $validRoute['url']);
         }
 
+        $validRoute['param'] = $this->buildParam($validRoute);
+        
         //assign valid route
-        $this->route = new Route(
-            $validRoute['name'],
-            $validRoute['method'],
-            $validRoute['model'],
-            $validRoute['view'],
-            $validRoute['controller'],
-            $validRoute['action'],
-            $this->buildParam($validRoute)
-        );
-
+        $this->route = new Route($validRoute);
+        
         return true;
     }
 
@@ -166,20 +162,12 @@ class Router
 
             return false;
         }
-
+        
         //pick route for errors
         $route = $this->routes[$key];
 
         //build and store route for errors
-        $this->route = new Route(
-            $route['name'],
-            $route['method'],
-            $route['model'],
-            $route['view'],
-            $route['controller'],
-            $route['action'],
-            []
-        );
+        $this->route = new Route($route);
 
         return true;
     }
@@ -218,12 +206,22 @@ class Router
     private function getCurrentUri(string $passedUri): string
     {
         if ($this->options['rewriteMode'] === false) {
-            $passedUri = str_replace('index.php?/', '', $passedUri);
+            $passedUri = str_replace($this->options['router'].'?index=/', '', $passedUri);
         }
-
+        
         $url = $passedUri ?? '/';
         $url = filter_var($url, FILTER_SANITIZE_URL);
 
         return '/'.substr($url, strlen($this->options['basePath']));
+    }
+    
+    /**
+     * Map a route
+     * 
+     * @param array $route
+     */
+    public function map(array $route)
+    {
+        array_push($this->routes, $route);
     }
 }
