@@ -32,7 +32,7 @@ class Authorize
      * @var int User id
      */
     protected $userId = 0;
-    
+
     /**
      * @var array User/Permission hash table
      */
@@ -50,7 +50,7 @@ class Authorize
         $this->permissionMapper = $permissionMapper;
 
         $this->userId = $this->authenticate->data['user_id'] ?? 0;
-        
+
         $this->hashTable = $this->permissionMapper->fetchUserPermissionHashTable($this->userId);
     }
 

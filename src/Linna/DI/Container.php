@@ -36,7 +36,7 @@ class Container implements ContainerInterface, \ArrayAccess
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function get($id)
     {
@@ -53,7 +53,7 @@ class Container implements ContainerInterface, \ArrayAccess
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function has($id)
     {

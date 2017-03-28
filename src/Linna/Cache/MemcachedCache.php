@@ -40,7 +40,7 @@ class MemcachedCache implements CacheInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function get($key, $default = null)
     {
@@ -61,7 +61,7 @@ class MemcachedCache implements CacheInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function set($key, $value, $ttl = null)
     {
@@ -79,7 +79,7 @@ class MemcachedCache implements CacheInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function delete($key)
     {
@@ -102,7 +102,7 @@ class MemcachedCache implements CacheInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function has($key)
     {
