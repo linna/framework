@@ -25,10 +25,10 @@ class Route implements RouteInterface
         'controller' => '',
         'action'     => '',
         'default'    => false,
-        'param'  => [],
+        'param'      => [],
         'callback'   => false,
     ];
-    
+
     /**
      * Constructor.
      *
@@ -88,33 +88,35 @@ class Route implements RouteInterface
     {
         return $this->route['param'];
     }
-    
+
     /**
      * Return if route is set as default.
-     *  
+     *
      * @return bool
      */
     public function isDefault() : bool
     {
         return $this->route['dafault'];
     }
-    
+
     /**
-     * Return route callback
-     * 
+     * Return route callback.
+     *
      * @return callable
      */
     public function getCallback() : callable
     {
-        if (is_callable($this->route['callback'])){
+        if (is_callable($this->route['callback'])) {
             return $this->route['callback'];
         }
-        return function (){};
+
+        return function () {
+        };
     }
-    
+
     /**
      * Return route array.
-     * 
+     *
      * @return array
      */
     public function getArray(): array

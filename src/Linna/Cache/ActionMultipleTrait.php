@@ -55,7 +55,7 @@ trait ActionMultipleTrait
     abstract public function delete($key);
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getMultiple($keys, $default = null)
     {
@@ -72,7 +72,7 @@ trait ActionMultipleTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setMultiple($values, $ttl = null)
     {
@@ -93,7 +93,7 @@ trait ActionMultipleTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function deleteMultiple($keys)
     {
