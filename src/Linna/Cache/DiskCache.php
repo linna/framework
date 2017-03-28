@@ -57,7 +57,7 @@ class DiskCache implements CacheInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function get($key, $default = null)
     {
@@ -94,7 +94,7 @@ class DiskCache implements CacheInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function set($key, $value, $ttl = null)
     {
@@ -143,7 +143,7 @@ class DiskCache implements CacheInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function delete($key)
     {
@@ -166,7 +166,7 @@ class DiskCache implements CacheInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clear()
     {
@@ -176,7 +176,7 @@ class DiskCache implements CacheInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function has($key)
     {
