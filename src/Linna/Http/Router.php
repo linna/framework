@@ -207,13 +207,13 @@ class Router
     {
         //filter url
         $url = filter_var($passedUri, FILTER_SANITIZE_URL);
-        
+
         //if url is a void string assign /
         $url = $url ?? '/';
-        
+
         //remove basepath
         $url = substr($url, strlen($this->options['basePath']));
-        
+
         //check for rewrite mode
         if ($this->options['rewriteMode'] === false) {
             return str_replace($this->options['router'], '', $url);
