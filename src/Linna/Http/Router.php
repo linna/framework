@@ -205,18 +205,17 @@ class Router
      */
     private function getCurrentUri(string $passedUri): string
     {
-        //filter url
+        //sanitize url
         $url = filter_var($passedUri, FILTER_SANITIZE_URL);
-
-        //if url is a void string assign /
-        $url = $url ?? '/';
 
         //remove basepath
         $url = substr($url, strlen($this->options['basePath']));
 
         //check for rewrite mode
-        if ($this->options['rewriteMode'] === false) {
-            return str_replace($this->options['router'], '', $url);
+        if (!$this->options['rewriteMode']) {
+            $url = str_replace($this->options['router'], '', $url);
+
+            return ($url === '') ? '/' : $url;
         }
 
         return '/'.$url;
