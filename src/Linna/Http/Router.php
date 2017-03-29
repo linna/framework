@@ -87,7 +87,7 @@ class Router
     {
         //get the current uri
         $currentUri = $this->getCurrentUri($requestUri);
-
+        
         //matches set empty array
         $matches = [];
 
@@ -205,14 +205,21 @@ class Router
      */
     private function getCurrentUri(string $passedUri): string
     {
+        //filter url
+        $url = filter_var($passedUri, FILTER_SANITIZE_URL);
+        
+        //if url is a void string assign /
+        $url = $url ?? '/';
+        
+        //remove basepath
+        $url = substr($url, strlen($this->options['basePath']));
+        
+        //check for rewrite mode
         if ($this->options['rewriteMode'] === false) {
-            $passedUri = str_replace($this->options['router'].'?index=/', '', $passedUri);
+            return str_replace($this->options['router'], '', $url);
         }
 
-        $url = $passedUri ?? '/';
-        $url = filter_var($url, FILTER_SANITIZE_URL);
-
-        return '/'.substr($url, strlen($this->options['basePath']));
+        return '/'.$url;
     }
 
     /**

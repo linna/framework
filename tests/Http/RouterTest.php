@@ -182,7 +182,7 @@ class RouterTest extends TestCase
         ]);
 
         //evaluate request uri
-        $this->router->validate('/index.php?index=/user/5/enable', 'GET');
+        $this->router->validate('/index.php/user/5/enable', 'GET');
 
         //get route
         $route = $this->router->getRoute();
