@@ -159,6 +159,49 @@ class RouterTest extends TestCase
         $this->assertEquals(['id'=>'5'], $route->getParam());
     }
 
+    public function RouteProvider()
+    {
+        return [
+            ['GET','/mapRouteTestGet','get'],
+            ['POST','/mapRouteTestPost','post'],
+            ['PUT','/mapRouteTestPut','put'],
+            ['DELETE','/mapRouteTestPatch','delete'],
+            ['PATCH','/mapRouteTestPatch','patch'],
+        ];
+    }
+    
+    /**
+     * @dataProvider RouteProvider
+     */
+    public function testMapRoute($method, $url, $func)
+    {
+        $route = ['method' => $method, 'url' => $url,];
+        
+        $this->router->map($route);
+        
+        $this->router->validate($url, $method);
+        
+        $this->assertInstanceOf(Route::class, $this->router->getRoute());
+    }
+    
+    /**
+     * @dataProvider RouteProvider
+     */
+    public function testFastMapRoute($method, $url, $func)
+    {
+        $this->router->$func($url, function($param){ return $param;});
+        
+        $this->router->validate($url, $method);
+        
+        $route = $this->router->getRoute();
+        
+        $this->assertInstanceOf(Route::class, $route);
+        
+        $callback = $route->getCallback();
+        
+        $this->assertEquals($method, $callback($method));
+    }
+    
     public function testNoBadRouteDeclared()
     {
         $this->router->setOptions([
