@@ -87,7 +87,7 @@ class Router
     {
         //get the current uri
         $currentUri = $this->getCurrentUri($requestUri);
-        
+
         //matches set empty array
         $matches = [];
 
