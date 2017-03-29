@@ -56,7 +56,8 @@ interface PermissionMapperInterface extends MapperInterface
     public function fetchPermissionsByUser(int $userId) : array;
 
     /**
-     * Combine al users-roles-permissions in storage
+     * Combine al users-roles-permissions in storage for
+     * passed user id.
      * Return an array containing a sha256 hash of
      * user_id.permission_id string.
      *
