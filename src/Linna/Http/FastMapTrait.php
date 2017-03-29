@@ -26,7 +26,7 @@ trait FastMapTrait
      * @param callable $callback
      * @param array    $options
      */
-    public function mapGet(string $url, callable $callback, array $options = [])
+    public function get(string $url, callable $callback, array $options = [])
     {
         $this->map($this->createRouteArray('GET', $url, $callback, $options));
     }
@@ -38,7 +38,7 @@ trait FastMapTrait
      * @param callable $callback
      * @param array    $options
      */
-    public function mapPost(string $url, callable $callback, array $options = [])
+    public function post(string $url, callable $callback, array $options = [])
     {
         $this->map($this->createRouteArray('POST', $url, $callback, $options));
     }
@@ -50,7 +50,7 @@ trait FastMapTrait
      * @param callable $callback
      * @param array    $options
      */
-    public function mapPut(string $url, callable $callback, array $options = [])
+    public function put(string $url, callable $callback, array $options = [])
     {
         $this->map($this->createRouteArray('PUT', $url, $callback, $options));
     }
@@ -62,7 +62,7 @@ trait FastMapTrait
      * @param callable $callback
      * @param array    $options
      */
-    public function mapPatch(string $url, callable $callback, array $options = [])
+    public function patch(string $url, callable $callback, array $options = [])
     {
         $this->map($this->createRouteArray('PATCH', $url, $callback, $options));
     }
@@ -74,7 +74,7 @@ trait FastMapTrait
      * @param callable $callback
      * @param array    $options
      */
-    public function mapDelete(string $url, callable $callback, array $options = [])
+    public function delete(string $url, callable $callback, array $options = [])
     {
         $this->map($this->createRouteArray('DELETE', $url, $callback, $options));
     }
