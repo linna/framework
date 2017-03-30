@@ -90,7 +90,7 @@ class FrontControllerTest extends TestCase
         //get controller linked to route
         $controller = new FOOController($model);
 
-        $FrontController = new FrontController($model, $view, $controller,'', []);
+        $FrontController = new FrontController($model, $view, $controller, '', []);
 
         $this->assertInstanceOf(FrontController::class, $FrontController);
     }
@@ -104,7 +104,7 @@ class FrontControllerTest extends TestCase
         $this->router->validate('/Foo/modifyData', 'GET');
 
         $route = $this->router->getRoute()->getArray();
-        
+
         $model = new FOOModel();
         //get view linked to route
         $view = new FOOView($model, new FOOTemplate());
@@ -134,9 +134,9 @@ class FrontControllerTest extends TestCase
     {
         //evaluate request uri
         $this->router->validate('/Foo/500/modifyDataFromParam', 'GET');
-        
+
         $route = $this->router->getRoute()->getArray();
-        
+
         $model = new FOOModel();
         //get view linked to route
         $view = new FOOView($model, new FOOTemplate());
@@ -207,7 +207,7 @@ class FrontControllerTest extends TestCase
         $this->router->validate('/Foo/modifyDataTimed', 'GET');
 
         $route = $this->router->getRoute()->getArray();
-        
+
         $model = new FOOModel();
         //get view linked to route
         $view = new FOOView($model, new FOOTemplate());
