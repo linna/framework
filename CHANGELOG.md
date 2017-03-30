@@ -6,6 +6,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v0.16.0](https://github.com/s3b4stian/linna-framework/compare/v0.15.0...v0.16.0) - 2017-XX-XX
+
+### Changed
+* `Linna\Http\FrontController` moved to `Linna\Mvc\FrontController`
+* `Linna\Mvc\FrontController` Route class dependency removed
+* `Linna\Http\Router` url evaluation improved with rewrite mode off
+* `Linna\Http\FastMapTrait->mapGet()` changed name to `Linna\Http\FastMapTrait->get()`
+* `Linna\Http\FastMapTrait->mapPost()` changed name to `Linna\Http\FastMapTrait->post()`
+* `Linna\Http\FastMapTrait->mapPut()` changed name to `Linna\Http\FastMapTrait->put()`
+* `Linna\Http\FastMapTrait->mapPatch()` changed name to `Linna\Http\FastMapTrait->patch()` 
+* `Linna\Http\FastMapTrait->mapDelete()` changed name to `Linna\Http\FastMapTrait->delete()`
+
+
 ## [v0.15.0](https://github.com/s3b4stian/linna-framework/compare/v0.14.0...v0.15.0) - 2017-03-28
 
 ### Added
