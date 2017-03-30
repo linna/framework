@@ -14,8 +14,8 @@ use Linna\FOO\FOOControllerBeforeAfter;
 use Linna\FOO\FOOModel;
 use Linna\FOO\FOOTemplate;
 use Linna\FOO\FOOView;
-use Linna\Http\FrontController;
 use Linna\Http\Router;
+use Linna\Mvc\FrontController;
 use PHPUnit\Framework\TestCase;
 
 class FrontControllerTest extends TestCase
@@ -82,7 +82,7 @@ class FrontControllerTest extends TestCase
     public function testNewFrontController()
     {
         //evaluate request uri
-        $this->router->validate('/Foo', 'GET');
+        //$this->router->validate('/Foo', 'GET');
 
         $model = new FOOModel();
         //get view linked to route
@@ -90,7 +90,7 @@ class FrontControllerTest extends TestCase
         //get controller linked to route
         $controller = new FOOController($model);
 
-        $FrontController = new FrontController($this->router->getRoute(), $model, $view, $controller);
+        $FrontController = new FrontController($model, $view, $controller,'', []);
 
         $this->assertInstanceOf(FrontController::class, $FrontController);
     }
@@ -103,13 +103,15 @@ class FrontControllerTest extends TestCase
         //evaluate request uri
         $this->router->validate('/Foo/modifyData', 'GET');
 
+        $route = $this->router->getRoute()->getArray();
+        
         $model = new FOOModel();
         //get view linked to route
         $view = new FOOView($model, new FOOTemplate());
         //get controller linked to route
         $controller = new FOOController($model);
 
-        $FrontController = new FrontController($this->router->getRoute(), $model, $view, $controller);
+        $FrontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
 
         $FrontController->run();
 
@@ -132,14 +134,16 @@ class FrontControllerTest extends TestCase
     {
         //evaluate request uri
         $this->router->validate('/Foo/500/modifyDataFromParam', 'GET');
-
+        
+        $route = $this->router->getRoute()->getArray();
+        
         $model = new FOOModel();
         //get view linked to route
         $view = new FOOView($model, new FOOTemplate());
         //get controller linked to route
         $controller = new FOOController($model);
 
-        $FrontController = new FrontController($this->router->getRoute(), $model, $view, $controller);
+        $FrontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
 
         $FrontController->run();
 
@@ -202,13 +206,15 @@ class FrontControllerTest extends TestCase
         //evaluate request uri
         $this->router->validate('/Foo/modifyDataTimed', 'GET');
 
+        $route = $this->router->getRoute()->getArray();
+        
         $model = new FOOModel();
         //get view linked to route
         $view = new FOOView($model, new FOOTemplate());
         //get controller linked to route
         $controller = new FOOControllerBeforeAfter($model);
 
-        $FrontController = new FrontController($this->router->getRoute(), $model, $view, $controller);
+        $FrontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
 
         $FrontController->run();
 

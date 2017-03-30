@@ -19,56 +19,52 @@ class RouterTest extends TestCase
 
     public function setUp()
     {
-        $routes = [];
-
-        $routes[] = [
-            'name'       => 'Home',
-            'method'     => 'GET',
-            'url'        => '/',
-            'model'      => 'HomeModel',
-            'view'       => 'HomeView',
-            'controller' => 'HomeController',
-            'action'     => '',
-        ];
-
-        $routes[] = [
-            'name'       => 'E404',
-            'method'     => 'GET',
-            'url'        => '/error',
-            'model'      => 'E404Model',
-            'view'       => 'E404View',
-            'controller' => 'E404Controller',
-            'action'     => '',
-        ];
-
-        $routes[] = [
-            'name'       => 'User',
-            'method'     => 'GET',
-            'url'        => '/user',
-            'model'      => 'UserModel',
-            'view'       => 'UserView',
-            'controller' => 'UserController',
-            'action'     => '',
-        ];
-
-        $routes[] = [
-            'name'       => '',
-            'method'     => 'GET',
-            'url'        => '/user/[id]/(disable|enable|delete|changePassword|modify)',
-            'model'      => 'UserModel',
-            'view'       => 'UserView',
-            'controller' => 'UserController',
-            'action'     => '',
-        ];
-
-        $routes[] = [
-            'name'       => '',
-            'method'     => 'GET',
-            'url'        => '/userOther/(disable|enable|delete|changePassword|modify)/[id]',
-            'model'      => 'UserModel',
-            'view'       => 'UserView',
-            'controller' => 'UserController',
-            'action'     => '',
+        $routes = [
+            [
+                'name'       => 'Home',
+                'method'     => 'GET',
+                'url'        => '/',
+                'model'      => 'HomeModel',
+                'view'       => 'HomeView',
+                'controller' => 'HomeController',
+                'action'     => '',
+            ],
+            [
+                'name'       => 'E404',
+                'method'     => 'GET',
+                'url'        => '/error',
+                'model'      => 'E404Model',
+                'view'       => 'E404View',
+                'controller' => 'E404Controller',
+                'action'     => '',
+            ],
+            [
+                'name'       => 'User',
+                'method'     => 'GET',
+                'url'        => '/user',
+                'model'      => 'UserModel',
+                'view'       => 'UserView',
+                'controller' => 'UserController',
+                'action'     => '',
+            ],
+            [
+                'name'       => '',
+                'method'     => 'GET',
+                'url'        => '/user/[id]/(disable|enable|delete|changePassword|modify)',
+                'model'      => 'UserModel',
+                'view'       => 'UserView',
+                'controller' => 'UserController',
+                'action'     => '',
+            ],
+            [
+                'name'       => '',
+                'method'     => 'GET',
+                'url'        => '/userOther/(disable|enable|delete|changePassword|modify)/[id]',
+                'model'      => 'UserModel',
+                'view'       => 'UserView',
+                'controller' => 'UserController',
+                'action'     => '',
+            ]
         ];
 
         //start router

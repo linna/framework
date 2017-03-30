@@ -9,11 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Http;
-
-use Linna\Mvc\Controller;
-use Linna\Mvc\Model;
-use Linna\Mvc\View;
+namespace Linna\Mvc;
 
 /**
  * FrontController.
@@ -36,11 +32,6 @@ class FrontController
     private $controller;
 
     /**
-     * @var object Contain controller object
-     */
-    private $route;
-
-    /**
      * @var string Contain Controller and View action name
      */
     private $routeAction;
@@ -53,17 +44,16 @@ class FrontController
     /**
      * Constructor.
      *
-     * @param RouteInterface $route      Resolved route from router
-     * @param object         $model      Model object already instantiated
-     * @param object         $view       View object already instantiated
-     * @param object         $controller Controller object already instantiated
+     * @param Model      $model
+     * @param View       $view
+     * @param Controller $controller
+     * @param string     $action
+     * @param array      $param
      */
-    public function __construct(RouteInterface $route, Model $model, View $view, Controller $controller)
+    public function __construct(Model $model, View $view, Controller $controller, string $action, array $param)
     {
-        $this->route = $route;
-
-        $this->routeAction = $route->getAction();
-        $this->routeParam = $route->getParam();
+        $this->routeAction = $action;
+        $this->routeParam = $param;
 
         $this->model = $model;
         $this->view = $view;
