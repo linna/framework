@@ -110,7 +110,8 @@ class Route implements RouteInterface
             return $this->route['callback'];
         }
 
-        return function () {};
+        return function () {
+        };
     }
 
     /**
