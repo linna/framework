@@ -9,14 +9,14 @@
  */
 declare(strict_types=1);
 
-use Linna\Storage\MysqlPdoAdapter;
+use Linna\Storage\MysqlPdoObject;
 use PHPUnit\Framework\TestCase;
 
-class MysqlPdoAdapterTest extends TestCase
+class MysqlPdoObjectTest extends TestCase
 {
     public function testConnection()
     {
-        $mysqlPdoAdapter = new MysqlPdoAdapter(
+        $mysqlPdoAdapter = new MysqlPdoObject(
             $GLOBALS['pdo_mysql_dsn'],
             $GLOBALS['pdo_mysql_user'],
             $GLOBALS['pdo_mysql_password'],
@@ -42,7 +42,7 @@ class MysqlPdoAdapterTest extends TestCase
     {
         $this->expectException(\Exception::class);
 
-        $mysqlPdoAdapter = new MysqlPdoAdapter($dsn, $user, $password, []);
+        $mysqlPdoAdapter = new MysqlPdoObject($dsn, $user, $password, []);
 
         $resource = $mysqlPdoAdapter->getResource();
     }

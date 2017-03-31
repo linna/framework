@@ -9,14 +9,14 @@
  */
 declare(strict_types=1);
 
-use Linna\Storage\MysqliAdapter;
+use Linna\Storage\MysqliObject;
 use PHPUnit\Framework\TestCase;
 
-class MysqliAdapterTest extends TestCase
+class MysqliTest extends TestCase
 {
     public function testConnection()
     {
-        $mysqliAdapter = new MysqliAdapter(
+        $mysqliAdapter = new MysqliObject(
             '127.0.0.1',
             $GLOBALS['pdo_mysql_user'],
             $GLOBALS['pdo_mysql_password'],
@@ -45,7 +45,7 @@ class MysqliAdapterTest extends TestCase
     {
         $this->expectException(\Exception::class);
 
-        $mysqliAdapter = new MysqliAdapter($host, $user, $password, $database, $port);
+        $mysqliAdapter = new MysqliObject($host, $user, $password, $database, $port);
 
         $resource = $mysqliAdapter->getResource();
     }

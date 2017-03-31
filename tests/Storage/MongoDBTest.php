@@ -7,15 +7,15 @@
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-use Linna\Storage\MongoDbAdapter;
+use Linna\Storage\MongoDbObject;
 use MongoDB\Client;
 use PHPUnit\Framework\TestCase;
 
-class MongoDbAdapterTest extends TestCase
+class MongoDbObjectTest extends TestCase
 {
     public function testConnection()
     {
-        $mongoDbAdapter = new MongoDbAdapter();
+        $mongoDbAdapter = new MongoDbObject();
 
         $this->assertInstanceOf(Client::class, $mongoDbAdapter->getResource());
     }
@@ -24,7 +24,7 @@ class MongoDbAdapterTest extends TestCase
     {
         $this->expectException(\Exception::class);
 
-        $mongoDbAdapter = new MongoDbAdapter('mongodb:/localhost:27017');
+        $mongoDbAdapter = new MongoDbObject('mongodb:/localhost:27017');
 
         $resource = $mongoDbAdapter->getResource();
     }

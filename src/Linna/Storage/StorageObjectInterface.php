@@ -14,7 +14,7 @@ namespace Linna\Storage;
 /**
  * Storage Interface.
  */
-interface StorageInterface
+interface StorageObjectInterface
 {
     /**
      * Return resource to Database class.

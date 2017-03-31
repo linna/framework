@@ -16,7 +16,7 @@ use MongoDB\Client;
 /**
  * MongoDB Adapter.
  */
-class MongoDbAdapter implements StorageInterface
+class MongoDbObject implements StorageObjectInterface
 {
     /**
      * @var string String for MongoDB connection

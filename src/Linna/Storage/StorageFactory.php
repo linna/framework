@@ -26,20 +26,20 @@ class StorageFactory
      *
      * @throws InvalidArgumentException If requred adapter is not supported
      *
-     * @return \Linna\Storage\MysqlPdoAdapter|\Linna\Storage\MysqliAdapter|\Linna\Storage\MongoDbAdapter
+     * @return \Linna\Storage\MysqlPdoObject|\Linna\Storage\MysqliObject|\Linna\Storage\MongoDbObject
      */
-    public function createConnection(string $adapter, array $options) : StorageInterface
+    public function createConnection(string $adapter, array $options) : StorageObjectInterface
     {
         if ($adapter === 'mysqlpdo') {
-            return new MysqlPdoAdapter($options['dsn'], $options['user'], $options['password'], $options['options']);
+            return new MysqlPdoObject($options['dsn'], $options['user'], $options['password'], $options['options']);
         }
 
         if ($adapter === 'mysqli') {
-            return new MysqliAdapter($options['host'], $options['user'], $options['password'], $options['database'], $options['port']);
+            return new MysqliObject($options['host'], $options['user'], $options['password'], $options['database'], $options['port']);
         }
 
         if ($adapter === 'mongodb') {
-            return new MongoDbAdapter($options['uri'], $options['uriOptions'], $options['driverOptions']);
+            return new MongoDbObject($options['uri'], $options['uriOptions'], $options['driverOptions']);
         }
 
         throw new InvalidArgumentException("[$adapter] not supported.");
