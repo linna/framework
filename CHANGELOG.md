@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Http\FastMapTrait->mapPut()` changed name to `Linna\Http\FastMapTrait->put()`
 * `Linna\Http\FastMapTrait->mapPatch()` changed name to `Linna\Http\FastMapTrait->patch()` 
 * `Linna\Http\FastMapTrait->mapDelete()` changed name to `Linna\Http\FastMapTrait->delete()`
+* `Linna\Storage\MysqlPdoAdapter` changed name to `Linna\Storage\MysqlPdoObject` 
+* `Linna\Storage\MysqliAdapter` changed name to `Linna\Storage\MysqliObject`
+* `Linna\Storage\MongoDbAdapter` changed name to `Linna\Storage\MongoDbOject`
+* `Linna\Storage\StorageInterface` changed name to `Linna\Storage\StorageObjectInterface` 
 
 
 ## [v0.15.0](https://github.com/s3b4stian/linna-framework/compare/v0.14.0...v0.15.0) - 2017-03-28
