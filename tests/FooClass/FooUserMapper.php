@@ -19,7 +19,7 @@ use Linna\DataMapper\MapperAbstract;
 /**
  * UserMapper.
  */
-class FOOUserMapper extends MapperAbstract
+class FooUserMapper extends MapperAbstract
 {
     /**
      * @var object Password util for user object
