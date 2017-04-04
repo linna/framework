@@ -9,12 +9,12 @@
  */
 declare(strict_types=1);
 
-namespace Linna\FOO;
+namespace Linna\Foo\DI;
 
-class FOOClassG
+class FooClassARules
 {
-    public function __construct(FOOClassI $i, FOOClassH $h)
+    public function __construct(bool $aaBool, FooClassI $i, string $aaString, int $aaInt, array $aaArray, $aaNoType)
     {
-        return 'G';
+        return $aaBool;
     }
 }

@@ -9,11 +9,11 @@
  * @license http://opensource.org/licenses/MIT MIT License
  */
 
-namespace Linna\FOO;
+namespace Linna\Foo\Mvc;
 
 use Linna\Mvc\TemplateInterface;
 
-class FOOTemplate implements TemplateInterface
+class FooTemplate implements TemplateInterface
 {
     public $data = null;
 

@@ -10,7 +10,7 @@
 declare(strict_types=1);
 
 use Linna\Autoloader;
-use Linna\FOO\FOOClassH;
+use Linna\Foo\DI\FooClassH;
 use PHPUnit\Framework\TestCase;
 
 class AutoloaderTest extends TestCase
@@ -21,7 +21,7 @@ class AutoloaderTest extends TestCase
     {
         $this->autoloader = new Autoloader();
         $this->autoloader->register();
-        $this->autoloader->addNamespaces([['Linna\FOO', __DIR__.'/FOO'], ['Linna\FOO_', __DIR__.'/FOO_']]);
+        $this->autoloader->addNamespaces([['Linna\Foo', __DIR__.'/Foo'], ['Linna\Foo_', __DIR__.'/Foo_']]);
     }
 
     public function testRegister()
@@ -37,35 +37,35 @@ class AutoloaderTest extends TestCase
      */
     public function testNamespace()
     {
-        $foo = new \Linna\FOO\FOOClassH();
+        $foo = new \Linna\Foo\DI\FooClassH();
 
-        $this->assertInstanceOf(FOOClassH::class, $foo);
+        $this->assertInstanceOf(FooClassH::class, $foo);
     }
 
     public function testClassExist()
     {
-        $foo = class_exists('\Linna\FOO\FOOClassH', true);
+        $foo = class_exists('\Linna\Foo\DI\FooClassH', true);
 
         $this->assertEquals(true, $foo);
     }
 
     public function testBadNamespace()
     {
-        $foo = class_exists('\Linna\BAZ\FOOClassH', true);
+        $foo = class_exists('\Linna\Baz\FooClassH', true);
 
         $this->assertEquals(false, $foo);
     }
 
     public function testBadClass()
     {
-        $foo = class_exists('\FOOClassNULL', true);
+        $foo = class_exists('\FooClassNULL', true);
 
         $this->assertEquals(false, $foo);
     }
 
     public function testBadPrefix()
     {
-        $foo = class_exists('BAZ\Foo\FOOClassNULL', true);
+        $foo = class_exists('Baz\Foo\FooClassNULL', true);
 
         $this->assertEquals(false, $foo);
     }

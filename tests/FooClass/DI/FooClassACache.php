@@ -9,12 +9,12 @@
  */
 declare(strict_types=1);
 
-namespace Linna\FOO;
+namespace Linna\Foo\DI;
 
-class FOOClassD
+class FooClassACache
 {
-    public function __construct(FOOClassE $e, FOOClassF $f, FOOClassG $g)
+    public function __construct(string $aCacheString)
     {
-        return 'D';
+        return $aCacheString;
     }
 }

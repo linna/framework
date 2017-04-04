@@ -10,7 +10,7 @@
 declare(strict_types=1);
 
 use Linna\Auth\Password;
-use Linna\FOO\FOOUser;
+use Linna\Auth\User;
 use PHPUnit\Framework\TestCase;
 
 class DomainObjectTest extends TestCase
@@ -20,12 +20,12 @@ class DomainObjectTest extends TestCase
     public function setUp()
     {
         $password = new Password();
-        $this->user = new FOOUser($password);
+        $this->user = new User($password);
     }
 
     public function testNewUser()
     {
-        $this->assertInstanceOf(FOOUser::class, $this->user);
+        $this->assertInstanceOf(User::class, $this->user);
     }
 
     public function testUserSetId()

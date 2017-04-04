@@ -9,12 +9,9 @@
  */
 declare(strict_types=1);
 
-namespace Linna\FOO;
+use PHPUnit\Framework\TestCase;
 
-class FOOClassF
+class UserTest extends TestCase
 {
-    public function __construct()
-    {
-        return 'F';
-    }
+
 }

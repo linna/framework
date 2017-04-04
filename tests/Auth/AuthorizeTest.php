@@ -9,12 +9,9 @@
  */
 declare(strict_types=1);
 
-namespace Linna\FOO;
+use PHPUnit\Framework\TestCase;
 
-class FOOClassResRules
+class AuthorizeTest extends TestCase
 {
-    public function __construct(FOOClassB $b, FOOClassARules $aRules)
-    {
-        return 'ResRules';
-    }
+
 }

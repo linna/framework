@@ -15,7 +15,7 @@ function call_autoloader()
         ['MongoDB', dirname(__DIR__).'/vendor/mongodb/mongodb/src'],
         //end composer packages
         ['Linna', dirname(__DIR__).'/src/Linna'],
-        ['Linna\FOO', __DIR__.'/FOO'],
+        ['Linna\Foo', __DIR__.'/FooClass'],
         ['Linna\Auth', dirname(__DIR__).'/src/Linna/Auth'],
         ['Linna\Cache', dirname(__DIR__).'/src/Linna/Cache'],
         ['Linna\DI', dirname(__DIR__).'/src/Linna/DI'],

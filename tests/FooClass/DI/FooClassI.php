@@ -9,9 +9,9 @@
  */
 declare(strict_types=1);
 
-namespace Linna\FOO;
+namespace Linna\Foo\DI;
 
-class FOOClassI
+class FooClassI
 {
     public function __construct()
     {

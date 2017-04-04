@@ -10,7 +10,7 @@
 declare(strict_types=1);
 
 use Linna\DI\Resolver;
-use Linna\FOO\FOOClassACache;
+use Linna\Foo\DI\FooClassACache;
 use PHPUnit\Framework\TestCase;
 
 class ResolverTest extends TestCase
@@ -19,83 +19,83 @@ class ResolverTest extends TestCase
     {
         $DIResolver = new Resolver();
 
-        $FOOClassResObject = $DIResolver->resolve('\Linna\FOO\FOOClassResObject');
-        $FOOClassB = $DIResolver->resolve('\Linna\FOO\FOOClassB');
-        $FOOClassC = $DIResolver->resolve('\Linna\FOO\FOOClassC');
-        $FOOClassD = $DIResolver->resolve('\Linna\FOO\FOOClassD');
-        $FOOClassE = $DIResolver->resolve('\Linna\FOO\FOOClassE');
-        $FOOClassF = $DIResolver->resolve('\Linna\FOO\FOOClassF');
-        $FOOClassG = $DIResolver->resolve('\Linna\FOO\FOOClassG');
-        $FOOClassH = $DIResolver->resolve('\Linna\FOO\FOOClassH');
-        $FOOClassI = $DIResolver->resolve('\Linna\FOO\FOOClassI');
+        $FOOClassResObject = $DIResolver->resolve('\Linna\Foo\DI\FooClassResObject');
+        $FOOClassB = $DIResolver->resolve('\Linna\Foo\DI\FooClassB');
+        $FOOClassC = $DIResolver->resolve('\Linna\Foo\DI\FooClassC');
+        $FOOClassD = $DIResolver->resolve('\Linna\Foo\DI\FooClassD');
+        $FOOClassE = $DIResolver->resolve('\Linna\Foo\DI\FooClassE');
+        $FOOClassF = $DIResolver->resolve('\Linna\Foo\DI\FooClassF');
+        $FOOClassG = $DIResolver->resolve('\Linna\Foo\DI\FooClassG');
+        $FOOClassH = $DIResolver->resolve('\Linna\Foo\DI\FooClassH');
+        $FOOClassI = $DIResolver->resolve('\Linna\Foo\DI\FooClassI');
 
-        $this->assertInstanceOf(\Linna\FOO\FOOClassResObject::class, $FOOClassResObject);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassB::class, $FOOClassB);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassC::class, $FOOClassC);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassD::class, $FOOClassD);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassE::class, $FOOClassE);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassF::class, $FOOClassF);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassG::class, $FOOClassG);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassH::class, $FOOClassH);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassI::class, $FOOClassI);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassResObject::class, $FOOClassResObject);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassB::class, $FOOClassB);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassC::class, $FOOClassC);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassD::class, $FOOClassD);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassE::class, $FOOClassE);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassF::class, $FOOClassF);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassG::class, $FOOClassG);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassH::class, $FOOClassH);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassI::class, $FOOClassI);
     }
 
     public function testResolveWithoutBackSlash()
     {
         $DIResolver = new Resolver();
 
-        $FOOClassResObject = $DIResolver->resolve('Linna\FOO\FOOClassResObject');
-        $FOOClassB = $DIResolver->resolve('Linna\FOO\FOOClassB');
-        $FOOClassC = $DIResolver->resolve('Linna\FOO\FOOClassC');
-        $FOOClassD = $DIResolver->resolve('Linna\FOO\FOOClassD');
-        $FOOClassE = $DIResolver->resolve('Linna\FOO\FOOClassE');
-        $FOOClassF = $DIResolver->resolve('Linna\FOO\FOOClassF');
-        $FOOClassG = $DIResolver->resolve('Linna\FOO\FOOClassG');
-        $FOOClassH = $DIResolver->resolve('Linna\FOO\FOOClassH');
-        $FOOClassI = $DIResolver->resolve('Linna\FOO\FOOClassI');
+        $FOOClassResObject = $DIResolver->resolve('Linna\Foo\DI\FooClassResObject');
+        $FOOClassB = $DIResolver->resolve('Linna\Foo\DI\FooClassB');
+        $FOOClassC = $DIResolver->resolve('Linna\Foo\DI\FooClassC');
+        $FOOClassD = $DIResolver->resolve('Linna\Foo\DI\FooClassD');
+        $FOOClassE = $DIResolver->resolve('Linna\Foo\DI\FooClassE');
+        $FOOClassF = $DIResolver->resolve('Linna\Foo\DI\FooClassF');
+        $FOOClassG = $DIResolver->resolve('Linna\Foo\DI\FooClassG');
+        $FOOClassH = $DIResolver->resolve('Linna\Foo\DI\FooClassH');
+        $FOOClassI = $DIResolver->resolve('Linna\Foo\DI\FooClassI');
 
-        $this->assertInstanceOf(\Linna\FOO\FOOClassResObject::class, $FOOClassResObject);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassB::class, $FOOClassB);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassC::class, $FOOClassC);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassD::class, $FOOClassD);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassE::class, $FOOClassE);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassF::class, $FOOClassF);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassG::class, $FOOClassG);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassH::class, $FOOClassH);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassI::class, $FOOClassI);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassResObject::class, $FOOClassResObject);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassB::class, $FOOClassB);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassC::class, $FOOClassC);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassD::class, $FOOClassD);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassE::class, $FOOClassE);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassF::class, $FOOClassF);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassG::class, $FOOClassG);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassH::class, $FOOClassH);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassI::class, $FOOClassI);
     }
 
     public function testResolveWithCache()
     {
         $resolver = new Resolver();
-        $resolver->cache('\Linna\FOO\FOOClassACache', new FOOClassACache('DIResolver'));
+        $resolver->cache('\Linna\Foo\DI\FooClassACache', new FooClassACache('DIResolver'));
 
-        $FOOClassResCache = $resolver->resolve('Linna\FOO\FOOClassResCache');
-        $FOOClassB = $resolver->resolve('Linna\FOO\FOOClassB');
-        $FOOClassC = $resolver->resolve('Linna\FOO\FOOClassC');
-        $FOOClassD = $resolver->resolve('Linna\FOO\FOOClassD');
-        $FOOClassE = $resolver->resolve('Linna\FOO\FOOClassE');
-        $FOOClassF = $resolver->resolve('Linna\FOO\FOOClassF');
-        $FOOClassG = $resolver->resolve('Linna\FOO\FOOClassG');
-        $FOOClassH = $resolver->resolve('Linna\FOO\FOOClassH');
-        $FOOClassI = $resolver->resolve('Linna\FOO\FOOClassI');
+        $FOOClassResCache = $resolver->resolve('Linna\Foo\DI\FooClassResCache');
+        /*$FOOClassB = $DIResolver->resolve('\Linna\Foo\DI\FooClassB');
+        $FOOClassC = $DIResolver->resolve('\Linna\Foo\DI\FooClassC');
+        $FOOClassD = $DIResolver->resolve('\Linna\Foo\DI\FooClassD');
+        $FOOClassE = $DIResolver->resolve('\Linna\Foo\DI\FooClassE');
+        $FOOClassF = $DIResolver->resolve('\Linna\Foo\DI\FooClassF');
+        $FOOClassG = $DIResolver->resolve('\Linna\Foo\DI\FooClassG');
+        $FOOClassH = $DIResolver->resolve('\Linna\Foo\DI\FooClassH');
+        $FOOClassI = $DIResolver->resolve('\Linna\Foo\DI\FooClassI');*/
 
-        $this->assertInstanceOf(\Linna\FOO\FOOClassResCache::class, $FOOClassResCache);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassB::class, $FOOClassB);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassResCache::class, $FOOClassResCache);
+        /*$this->assertInstanceOf(\Linna\FOO\FOOClassB::class, $FOOClassB);
         $this->assertInstanceOf(\Linna\FOO\FOOClassC::class, $FOOClassC);
         $this->assertInstanceOf(\Linna\FOO\FOOClassD::class, $FOOClassD);
         $this->assertInstanceOf(\Linna\FOO\FOOClassE::class, $FOOClassE);
         $this->assertInstanceOf(\Linna\FOO\FOOClassF::class, $FOOClassF);
         $this->assertInstanceOf(\Linna\FOO\FOOClassG::class, $FOOClassG);
         $this->assertInstanceOf(\Linna\FOO\FOOClassH::class, $FOOClassH);
-        $this->assertInstanceOf(\Linna\FOO\FOOClassI::class, $FOOClassI);
+        $this->assertInstanceOf(\Linna\FOO\FOOClassI::class, $FOOClassI);*/
     }
 
     public function testResolveWithRules()
     {
         $resolver = new Resolver();
         $resolver->rules([
-            '\Linna\FOO\FOOClassARules' => [
+            '\Linna\Foo\DI\FooClassARules' => [
                 0 => true,
                 2 => 'foo',
                 3 => 1,
@@ -104,16 +104,16 @@ class ResolverTest extends TestCase
             ],
         ]);
 
-        $FOOClassResRules = $resolver->resolve('Linna\FOO\FOOClassResRules');
+        $FOOClassResRules = $resolver->resolve('Linna\Foo\DI\FooClassResRules');
 
-        $this->assertInstanceOf(\Linna\FOO\FOOClassResRules::class, $FOOClassResRules);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassResRules::class, $FOOClassResRules);
     }
 
     public function testResolveWithConstructorRules()
     {
         $resolver = new Resolver();
         $rules = [
-            '\Linna\FOO\FOOClassARules' => [
+            '\Linna\Foo\DI\FooClassARules' => [
                 0 => true,
                 2 => 'foo',
                 3 => 1,
@@ -122,12 +122,12 @@ class ResolverTest extends TestCase
             ],
         ];
 
-        $FOOClassARules = $resolver->resolve('Linna\FOO\FOOClassARules', $rules);
+        $FOOClassARules = $resolver->resolve('Linna\Foo\DI\FooClassARules', $rules);
 
-        $this->assertInstanceOf(\Linna\FOO\FOOClassARules::class, $FOOClassARules);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassARules::class, $FOOClassARules);
 
-        $FOOClassResRules = $resolver->resolve('Linna\FOO\FOOClassResRules', $rules);
+        $FOOClassResRules = $resolver->resolve('Linna\Foo\DI\FooClassResRules', $rules);
 
-        $this->assertInstanceOf(\Linna\FOO\FOOClassResRules::class, $FOOClassResRules);
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassResRules::class, $FOOClassResRules);
     }
 }

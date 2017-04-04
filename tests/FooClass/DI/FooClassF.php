@@ -9,12 +9,12 @@
  */
 declare(strict_types=1);
 
-namespace Linna\FOO;
+namespace Linna\Foo\DI;
 
-class FOOClassB
+class FooClassF
 {
-    public function __construct(FOOClassC $c, FOOClassD $d)
+    public function __construct()
     {
-        return 'B';
+        return 'F';
     }
 }

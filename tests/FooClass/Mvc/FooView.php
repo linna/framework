@@ -9,13 +9,13 @@
  * @license http://opensource.org/licenses/MIT MIT License
  */
 
-namespace Linna\FOO;
+namespace Linna\Foo\Mvc;
 
 use Linna\Mvc\View;
 
-class FOOView extends View
+class FooView extends View
 {
-    private $htmlTemplate;
+    protected $template;
 
     public function __construct(FOOModel $model, FOOTemplate $htmlTemplate)
     {

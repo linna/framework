@@ -9,9 +9,10 @@
  * @license http://opensource.org/licenses/MIT MIT License
  */
 
-namespace Linna\FOO;
+namespace Linna\Foo;
 
 use Linna\Auth\Password;
+use Linna\Auth\User;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
 
@@ -58,7 +59,7 @@ class FOOUserMapper extends MapperAbstract
      */
     protected function concreteCreate() : DomainObjectInterface
     {
-        return new FOOUser($this->password);
+        return new User($this->password);
     }
 
     /**
@@ -68,7 +69,7 @@ class FOOUserMapper extends MapperAbstract
      */
     protected function concreteInsert(DomainObjectInterface $user)
     {
-        if (!($user instanceof FOOUser)) {
+        if (!($user instanceof User)) {
             throw new \Exception('$user must be instance of User class');
         }
 
@@ -86,7 +87,7 @@ class FOOUserMapper extends MapperAbstract
      */
     protected function concreteUpdate(DomainObjectInterface $user)
     {
-        if (!($user instanceof FOOUser)) {
+        if (!($user instanceof User)) {
             throw new \Exception('$user must be instance of User class');
         }
 
@@ -104,7 +105,7 @@ class FOOUserMapper extends MapperAbstract
      */
     protected function concreteDelete(DomainObjectInterface $user)
     {
-        if (!($user instanceof FOOUser)) {
+        if (!($user instanceof User)) {
             throw new \Exception('$user must be instance of User class');
         }
 

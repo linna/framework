@@ -9,11 +9,11 @@
  */
 declare(strict_types=1);
 
-use Linna\FOO\FOOController;
-use Linna\FOO\FOOControllerBeforeAfter;
-use Linna\FOO\FOOModel;
-use Linna\FOO\FOOTemplate;
-use Linna\FOO\FOOView;
+use Linna\Foo\Mvc\FooController;
+use Linna\Foo\Mvc\FooControllerBeforeAfter;
+use Linna\Foo\Mvc\FooModel;
+use Linna\Foo\Mvc\FooTemplate;
+use Linna\Foo\Mvc\FooView;
 use Linna\Http\Router;
 use Linna\Mvc\FrontController;
 use PHPUnit\Framework\TestCase;
@@ -84,11 +84,11 @@ class FrontControllerTest extends TestCase
         //evaluate request uri
         //$this->router->validate('/Foo', 'GET');
 
-        $model = new FOOModel();
+        $model = new FooModel();
         //get view linked to route
-        $view = new FOOView($model, new FOOTemplate());
+        $view = new FooView($model, new FooTemplate());
         //get controller linked to route
-        $controller = new FOOController($model);
+        $controller = new FooController($model);
 
         $FrontController = new FrontController($model, $view, $controller, '', []);
 
@@ -105,11 +105,11 @@ class FrontControllerTest extends TestCase
 
         $route = $this->router->getRoute()->getArray();
 
-        $model = new FOOModel();
+        $model = new FooModel();
         //get view linked to route
-        $view = new FOOView($model, new FOOTemplate());
+        $view = new FooView($model, new FooTemplate());
         //get controller linked to route
-        $controller = new FOOController($model);
+        $controller = new FooController($model);
 
         $FrontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
 
@@ -137,11 +137,11 @@ class FrontControllerTest extends TestCase
 
         $route = $this->router->getRoute()->getArray();
 
-        $model = new FOOModel();
+        $model = new FooModel();
         //get view linked to route
-        $view = new FOOView($model, new FOOTemplate());
+        $view = new FooView($model, new FooTemplate());
         //get controller linked to route
-        $controller = new FOOController($model);
+        $controller = new FooController($model);
 
         $FrontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
 
@@ -169,11 +169,11 @@ class FrontControllerTest extends TestCase
         $routeAction = $route->getAction();
         $routeParam = $route->getParam();
 
-        $model = new FOOModel();
+        $model = new FooModel();
 
-        $view = new FOOView($model, new FOOTemplate());
+        $view = new FooView($model, new FooTemplate());
 
-        $controller = new FOOController($model);
+        $controller = new FooController($model);
 
         $model->attach($view);
         $model->detach($view);
@@ -208,11 +208,11 @@ class FrontControllerTest extends TestCase
 
         $route = $this->router->getRoute()->getArray();
 
-        $model = new FOOModel();
+        $model = new FooModel();
         //get view linked to route
-        $view = new FOOView($model, new FOOTemplate());
+        $view = new FooView($model, new FOOTemplate());
         //get controller linked to route
-        $controller = new FOOControllerBeforeAfter($model);
+        $controller = new FooControllerBeforeAfter($model);
 
         $FrontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
 

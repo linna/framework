@@ -10,8 +10,8 @@
 declare(strict_types=1);
 
 use Linna\Auth\Password;
-use Linna\FOO\FOOUser;
-use Linna\FOO\FOOUserMapper;
+use Linna\Auth\User;
+use Linna\Foo\FooUserMapper;
 use PHPUnit\Framework\TestCase;
 
 class MapperAbstractTest extends TestCase
@@ -21,19 +21,19 @@ class MapperAbstractTest extends TestCase
     public function setUp()
     {
         $password = new Password();
-        $this->mapper = new FOOUserMapper($password);
+        $this->mapper = new FooUserMapper($password);
     }
 
     public function testNewMapper()
     {
-        $this->assertInstanceOf(FOOUserMapper::class, $this->mapper);
+        $this->assertInstanceOf(FooUserMapper::class, $this->mapper);
     }
 
     public function testNewObjectFromMapper()
     {
         $user = $this->mapper->create();
 
-        $this->assertInstanceOf(FOOUser::class, $user);
+        $this->assertInstanceOf(User::class, $user);
     }
 
     public function testSaveWithMapper()

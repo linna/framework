@@ -9,12 +9,9 @@
  */
 declare(strict_types=1);
 
-namespace Linna\FOO;
+use PHPUnit\Framework\TestCase;
 
-class FOOClassARules
+class EnhancedUserTest extends TestCase
 {
-    public function __construct(bool $aaBool, FOOClassI $i, string $aaString, int $aaInt, array $aaArray, $aaNoType)
-    {
-        return $aaBool;
-    }
+
 }

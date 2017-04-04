@@ -9,17 +9,17 @@
  * @license http://opensource.org/licenses/MIT MIT License
  */
 
-namespace Linna\FOO;
+namespace Linna\Foo\Mvc;
 
 use Linna\Auth\Authenticate;
 use Linna\Auth\ProtectedController;
 use Linna\Mvc\Controller;
 
-class FOOProtectedController extends Controller
+class FooProtectedController extends Controller
 {
     use ProtectedController;
 
-    public $test;
+    public $test = false;
 
     public function __construct(FOOModel $model, Authenticate $login)
     {

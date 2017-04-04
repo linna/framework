@@ -9,11 +9,11 @@
  * @license http://opensource.org/licenses/MIT MIT License
  */
 
-namespace Linna\FOO;
+namespace Linna\Foo\Mvc;
 
 use Linna\Mvc\Controller;
 
-class FOOControllerBeforeAfter extends Controller
+class FooControllerBeforeAfter extends Controller
 {
     public function __construct(FOOModel $model)
     {
