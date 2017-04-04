@@ -13,5 +13,8 @@ use PHPUnit\Framework\TestCase;
 
 class AuthorizeTest extends TestCase
 {
-
+    public function testTemp()
+    {
+        $this->assertEquals(true, true);
+    }
 }
