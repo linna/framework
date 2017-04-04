@@ -20,7 +20,7 @@ class ProtectedControllerTest extends TestCase
     public $autoloader;
     public $session;
     public $password;
-         
+
     public function setUp()
     {
         $autoloader = new Autoloader();
@@ -28,17 +28,18 @@ class ProtectedControllerTest extends TestCase
         $autoloader->addNamespaces([
            ['Linna\Foo', dirname(__DIR__).'/FooClass'],
         ]);
-        
+
         $this->autoloader = $autoloader;
-        
+
         $session = new Session();
         $password = new Password();
-        
+
         $this->session = $session;
         $this->password = $password;
-        
+
         $this->authenticate = new Authenticate($session, $password);
     }
+
     /**
      * @runInSeparateProcess
      * @outputBuffering disabled
@@ -51,19 +52,19 @@ class ProtectedControllerTest extends TestCase
         $storedUser = 'root';
 
         $this->authenticate->login('root', 'password', $storedUser, $storedPassword, 1);
-        
+
         $model = new FooModel();
 
         $controller = new FOOProtectedController($model, $this->authenticate);
-        
+
         $this->assertEquals(true, $this->authenticate->logged);
         $this->assertEquals(true, $controller->test);
-        
+
         $this->authenticate->logout();
-        
+
         $this->session->destroy();
     }
-    
+
     /**
      * @runInSeparateProcess
      * @outputBuffering disabled
@@ -75,7 +76,7 @@ class ProtectedControllerTest extends TestCase
         }
 
         $model = new FooModel();
-        
+
         ob_start();
 
         (new FooProtectedController($model, $this->authenticate));
