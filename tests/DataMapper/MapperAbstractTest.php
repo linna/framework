@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 use Linna\Auth\Password;
 use Linna\Auth\User;
-use Linna\Foo\FooUserMapper;
+use Linna\Foo\Mappers\FooUserMapper;
 use PHPUnit\Framework\TestCase;
 
 class MapperAbstractTest extends TestCase

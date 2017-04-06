@@ -9,7 +9,7 @@
  * @license http://opensource.org/licenses/MIT MIT License
  */
 
-namespace Linna\Foo;
+namespace Linna\Foo\Mappers;
 
 use Linna\Auth\Password;
 use Linna\Auth\User;
