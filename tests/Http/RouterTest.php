@@ -75,7 +75,7 @@ class RouterTest extends TestCase
         ]);
     }
 
-    public function testRoute()
+    public function testGetRoute()
     {
         //evaluate request uri
         $this->router->validate('/user', 'GET');
@@ -84,11 +84,6 @@ class RouterTest extends TestCase
         $route = $this->router->getRoute();
 
         $this->assertInstanceOf(Route::class, $route);
-        $this->assertEquals('UserModel', $route->getModel());
-        $this->assertEquals('UserView', $route->getView());
-        $this->assertEquals('UserController', $route->getController());
-        $this->assertEquals(null, $route->getAction());
-        $this->assertEquals([], $route->getParam());
     }
 
     public function testBadMethod()
