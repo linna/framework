@@ -95,7 +95,7 @@ trait FastMapTrait
             'method'   => $method,
             'url'      => $url,
             'callback' => $callback,
-        ]))->getArray();
+        ]))->toArray();
 
         $route = array_replace_recursive($routeArray, $options);
 

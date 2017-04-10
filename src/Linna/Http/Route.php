@@ -40,6 +40,36 @@ class Route implements RouteInterface
     }
 
     /**
+     * Return route name.
+     * 
+     * @return string
+     */
+    public function getName() : string
+    {
+        return $this->route['name'];
+    }
+    
+    /**
+     * Return route method.
+     * 
+     * @return string
+     */
+    public function getMethod() : string
+    {
+        return $this->route['method'];
+    }
+    
+    /**
+     * Return route url.
+     * 
+     * @return string
+     */
+    public function getUrl() : string
+    {
+        return $this->route['url'];
+    }
+    
+    /**
      * Return model name.
      *
      * @return string
@@ -119,7 +149,7 @@ class Route implements RouteInterface
      *
      * @return array
      */
-    public function getArray(): array
+    public function toArray(): array
     {
         return $this->route;
     }

@@ -81,9 +81,6 @@ class FrontControllerTest extends TestCase
      */
     public function testNewFrontController()
     {
-        //evaluate request uri
-        //$this->router->validate('/Foo', 'GET');
-
         $model = new FooModel();
         //get view linked to route
         $view = new FooView($model, new FooTemplate());
@@ -103,7 +100,7 @@ class FrontControllerTest extends TestCase
         //evaluate request uri
         $this->router->validate('/Foo/modifyData', 'GET');
 
-        $route = $this->router->getRoute()->getArray();
+        $route = $this->router->getRoute()->toArray();
 
         $model = new FooModel();
         //get view linked to route
@@ -135,7 +132,7 @@ class FrontControllerTest extends TestCase
         //evaluate request uri
         $this->router->validate('/Foo/500/modifyDataFromParam', 'GET');
 
-        $route = $this->router->getRoute()->getArray();
+        $route = $this->router->getRoute()->toArray();
 
         $model = new FooModel();
         //get view linked to route
@@ -206,7 +203,7 @@ class FrontControllerTest extends TestCase
         //evaluate request uri
         $this->router->validate('/Foo/modifyDataTimed', 'GET');
 
-        $route = $this->router->getRoute()->getArray();
+        $route = $this->router->getRoute()->toArray();
 
         $model = new FooModel();
         //get view linked to route
