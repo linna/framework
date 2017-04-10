@@ -11,7 +11,8 @@ declare(strict_types=1);
 
 use Linna\Auth\Password;
 use Linna\Auth\User;
-use Linna\Foo\Mappers\FooUserMapper;
+use Linna\Foo\Mappers\UserMapper;
+use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;
 
 class MapperAbstractTest extends TestCase
@@ -20,13 +21,22 @@ class MapperAbstractTest extends TestCase
 
     public function setUp()
     {
+        $options = [
+            'dsn'      => $GLOBALS['pdo_mysql_dsn'],
+            'user'     => $GLOBALS['pdo_mysql_user'],
+            'password' => $GLOBALS['pdo_mysql_password'],
+            'options'  => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING],
+        ];
+
+        $adapter = (new StorageFactory())->createConnection('mysqlpdo', $options);
+        
         $password = new Password();
-        $this->mapper = new FooUserMapper($password);
+        $this->mapper = new UserMapper($adapter, $password);
     }
 
     public function testNewMapper()
     {
-        $this->assertInstanceOf(FooUserMapper::class, $this->mapper);
+        $this->assertInstanceOf(UserMapper::class, $this->mapper);
     }
 
     public function testNewObjectFromMapper()
@@ -48,10 +58,10 @@ class MapperAbstractTest extends TestCase
 
     public function testSaveExistWithMapper()
     {
-        $user = $this->mapper->findById(5);
+        $user = $this->mapper->fetchById(1);
 
-        $this->assertEquals(5, $user->getId());
-        $this->assertEquals('user_5', $user->name);
+        $this->assertEquals(1, $user->getId());
+        $this->assertEquals('root', $user->name);
 
         $result = $this->mapper->save($user);
 
@@ -60,10 +70,10 @@ class MapperAbstractTest extends TestCase
 
     public function testDeleteWithMapper()
     {
-        $user = $this->mapper->findById(5);
+        $user = $this->mapper->fetchById(1);
 
-        $this->assertEquals(5, $user->getId());
-        $this->assertEquals('user_5', $user->name);
+        $this->assertEquals(1, $user->getId());
+        $this->assertEquals('root', $user->name);
 
         $result = $this->mapper->delete($user);
 
