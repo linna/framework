@@ -8,15 +8,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [v0.16.0](https://github.com/s3b4stian/linna-framework/compare/v0.15.0...v0.16.0) - 2017-XX-XX
 
+### Added
+* `Linna\Http\Route->getName()` method
+* `Linna\Http\Route->getMethod()` method
+* `Linna\Http\Route->getUrl()` method
+
 ### Changed
-* `Linna\Http\FrontController` moved to `Linna\Mvc\FrontController`
-* `Linna\Mvc\FrontController` Route class dependency removed
-* `Linna\Http\Router` url evaluation improved with rewrite mode off
 * `Linna\Http\FastMapTrait->mapGet()` changed name to `Linna\Http\FastMapTrait->get()`
 * `Linna\Http\FastMapTrait->mapPost()` changed name to `Linna\Http\FastMapTrait->post()`
 * `Linna\Http\FastMapTrait->mapPut()` changed name to `Linna\Http\FastMapTrait->put()`
 * `Linna\Http\FastMapTrait->mapPatch()` changed name to `Linna\Http\FastMapTrait->patch()` 
 * `Linna\Http\FastMapTrait->mapDelete()` changed name to `Linna\Http\FastMapTrait->delete()`
+* `Linna\Http\FrontController` moved to `Linna\Mvc\FrontController`
+* `Linna\Http\Route->getArray()` changed name to `Linna\Http\Route->toArray()`
+* `Linna\Http\Router` url evaluation improved with rewrite mode off
+* `Linna\Mvc\FrontController` Route class dependency removed
 * `Linna\Storage\MysqlPdoAdapter` changed name to `Linna\Storage\MysqlPdoObject` 
 * `Linna\Storage\MysqliAdapter` changed name to `Linna\Storage\MysqliObject`
 * `Linna\Storage\MongoDbAdapter` changed name to `Linna\Storage\MongoDbOject`
