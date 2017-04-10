@@ -29,36 +29,35 @@ class UserTest extends TestCase
         ];
 
         $pdo = (new StorageFactory())->createConnection('mysqlpdo', $options);
-        
+
         $password = new Password();
-        
+
         $this->userMapper = new UserMapper($pdo, $password);
     }
-    
+
     public function testCreateUser()
     {
         $user = $this->userMapper->create();
-        
+
         $this->assertInstanceOf(User::class, $user);
     }
-    
+
     public function testSetPassword()
     {
         $user = $this->userMapper->create();
-        
+
         $user->setPassword('password');
-        
+
         $this->assertInstanceOf(User::class, $user);
         $this->assertEquals(true, password_verify('password', $user->password));
-        
     }
-    
+
     public function testChangePassword()
     {
         $user = $this->userMapper->create();
-        
+
         $user->setPassword('password');
-        
+
         $this->assertInstanceOf(User::class, $user);
         $this->assertEquals(true, $user->chagePassword('new_password', 'password'));
         $this->assertEquals(true, $user->chagePassword('other_new_password', 'new_password'));
