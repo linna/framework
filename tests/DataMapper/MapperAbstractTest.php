@@ -29,7 +29,7 @@ class MapperAbstractTest extends TestCase
         ];
 
         $adapter = (new StorageFactory())->createConnection('mysqlpdo', $options);
-        
+
         $password = new Password();
         $this->mapper = new UserMapper($adapter, $password);
     }

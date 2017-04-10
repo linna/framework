@@ -9,18 +9,17 @@
  */
 declare(strict_types=1);
 
-use Linna\Auth\Password;
 use Linna\Auth\EnhancedUser;
+use Linna\Auth\Password;
 use Linna\Foo\Mappers\EnhancedUserMapper;
 use Linna\Foo\Mappers\PermissionMapper;
 use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;
 
-
 class EnhancedUserTest extends TestCase
 {
     protected $permissionMapper;
-    
+
     protected $enhancedUserMapper;
 
     public function setUp()
@@ -33,42 +32,42 @@ class EnhancedUserTest extends TestCase
         ];
 
         $pdo = (new StorageFactory())->createConnection('mysqlpdo', $options);
-        
+
         $password = new Password();
-        
+
         $this->permissionMapper = new PermissionMapper($pdo);
         $this->enhancedUserMapper = new EnhancedUserMapper($pdo, $password, $this->permissionMapper);
     }
-    
+
     public function testCreateEnhancedUser()
     {
         $user = $this->enhancedUserMapper->create();
-        
+
         $this->assertInstanceOf(EnhancedUser::class, $user);
     }
-    
+
     public function testEnhancedUserPermission()
     {
         $permission = $this->permissionMapper->fetchAll();
-        
+
         $arrayPermissions = [];
 
         foreach ($permission as $ownPermission) {
             $arrayPermissions[] = $ownPermission->name;
         }
-        
+
         $user = $this->enhancedUserMapper->create();
         $user->setPermissions($permission);
-        
+
         $this->assertEquals($arrayPermissions, $user->showPermissions());
     }
-    
+
     public function testEnhancedUserCan()
     {
         $permission = $this->permissionMapper->fetchAll();
         $user = $this->enhancedUserMapper->create();
         $user->setPermissions($permission);
-        
+
         $this->assertEquals(true, $user->can('see users'));
         $this->assertEquals(false, $user->can('other permission'));
     }
