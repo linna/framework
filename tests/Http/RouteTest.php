@@ -74,7 +74,7 @@ class RouteTest extends TestCase
         $this->assertEquals([], $this->route->getParam());
     }
 
-    public function isDefault()
+    public function testIsDefault()
     {
         $this->assertEquals(false, $this->route->isDefault());
     }
