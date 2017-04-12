@@ -126,7 +126,7 @@ class Route implements RouteInterface
      */
     public function isDefault() : bool
     {
-        return $this->route['dafault'];
+        return $this->route['default'];
     }
 
     /**
