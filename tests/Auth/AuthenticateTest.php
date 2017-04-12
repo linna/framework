@@ -18,14 +18,14 @@ class AuthenticateTest extends TestCase
 {
     protected $session;
     protected $password;
-    protected $login;
+    protected $authenticate;
 
     public function setUp()
     {
         $session = new Session();
         $password = new Password();
 
-        $this->login = new Authenticate($session, $password);
+        $this->authenticate = new Authenticate($session, $password);
         $this->password = $password;
         $this->session = $session;
     }
@@ -42,10 +42,10 @@ class AuthenticateTest extends TestCase
         $storedUser = 'root';
 
         //attemp first login
-        $loginResult = $this->login->login('root', 'password', $storedUser, $storedPassword, 1);
+        $loginResult = $this->authenticate->login('root', 'password', $storedUser, $storedPassword, 1);
 
         //attemp check if logged
-        $logged = $this->login->logged;
+        $logged = $this->authenticate->logged;
 
         //simulate expired login
         $this->session->loginTime = time() - 3600;
@@ -73,11 +73,11 @@ class AuthenticateTest extends TestCase
         $storedUser = 'root';
 
         //attemp first login
-        $this->login->login('root', 'password', $storedUser, $storedPassword, 1);
-        $loginResult = $this->login->logged;
+        $this->authenticate->login('root', 'password', $storedUser, $storedPassword, 1);
+        $loginResult = $this->authenticate->logged;
 
         //do logout
-        $this->login->logout();
+        $this->authenticate->logout();
 
         //create new login instance
         $login = new Authenticate($this->session, $this->password);
@@ -101,8 +101,8 @@ class AuthenticateTest extends TestCase
         $storedUser = 'root';
 
         //try login with bad credentials
-        $loginResult = $this->login->login('root', 'badPassword', $storedUser, $storedPassword, 1);
-        $loginResult2 = $this->login->login('badUser', 'password', $storedUser, $storedPassword, 1);
+        $loginResult = $this->authenticate->login('root', 'badPassword', $storedUser, $storedPassword, 1);
+        $loginResult2 = $this->authenticate->login('badUser', 'password', $storedUser, $storedPassword, 1);
 
         $this->assertEquals(false, $loginResult);
         $this->assertEquals(false, $loginResult2);
