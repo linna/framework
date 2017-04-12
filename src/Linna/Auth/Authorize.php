@@ -49,9 +49,9 @@ class Authorize
         $this->authenticate = $authenticate;
         $this->permissionMapper = $permissionMapper;
 
-        $this->userId = $this->authenticate->data['user_id'] ?? 0;
+        $this->userId = $authenticate->data['user_id'] ?? 0;
 
-        $this->hashTable = $this->permissionMapper->fetchUserPermissionHashTable($this->userId);
+        $this->hashTable = $permissionMapper->fetchUserPermissionHashTable($this->userId);
     }
 
     /**
