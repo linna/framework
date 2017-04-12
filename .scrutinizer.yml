@@ -14,7 +14,7 @@ tools:
 
 build:
     environment:
-       php: 7.0.8
+       php: 7.0
        mysql: 5.5
        memcached: true
        mongodb: true
