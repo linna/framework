@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 class RouteTest extends TestCase
 {
     public $route;
-    
+
     public function setUp()
     {
         $this->route = new Route([
@@ -28,27 +28,27 @@ class RouteTest extends TestCase
             'action'     => '',
         ]);
     }
-    
+
     public function testCreateRoute()
     {
         $this->assertInstanceOf(Route::class, $this->route);
     }
-    
+
     public function testGetName()
     {
         $this->assertEquals('Home', $this->route->getName());
     }
-    
+
     public function testGetMethod()
     {
         $this->assertEquals('GET', $this->route->getMethod());
     }
-    
+
     public function testGetUrl()
     {
         $this->assertEquals('/', $this->route->getUrl());
     }
-    
+
     public function testGetModel()
     {
         $this->assertEquals('HomeModel', $this->route->getModel());
@@ -81,7 +81,8 @@ class RouteTest extends TestCase
 
     public function testGetCallback()
     {
-        $this->assertEquals(function(){}, $this->route->getCallback());
+        $this->assertEquals(function () {
+        }, $this->route->getCallback());
     }
 
     public function toArray(): array
@@ -98,7 +99,7 @@ class RouteTest extends TestCase
             'param'      => [],
             'callback'   => false,
         ];
-        
+
         $this->assertEquals($route, $this->route->toArray());
     }
 }
