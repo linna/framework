@@ -74,7 +74,7 @@ class RouterTest extends TestCase
             'rewriteMode' => true,
         ]);
     }
-    
+
     public function BadRouterArgumentsProvider()
     {
         return [
@@ -83,11 +83,13 @@ class RouterTest extends TestCase
             [1, 1],
             [1.1, 1.1],
             ['foo', 'foo'],
-            [(object)[1], (object)[1]],
-            [function(){}, function(){}],
+            [(object) [1], (object) [1]],
+            [function () {
+            }, function () {
+            }],
         ];
     }
-   
+
     /**
      * @dataProvider BadRouterArgumentsProvider
      * @expectedException TypeError
@@ -96,7 +98,7 @@ class RouterTest extends TestCase
     {
         return new Router($routes, $options);
     }
-    
+
     public function BadRouteArgumentsProvider()
     {
         return [
@@ -105,11 +107,13 @@ class RouterTest extends TestCase
             [1, 1],
             [1.1, 1.1],
             [[1], [1]],
-            [(object)[1], (object)[1]],
-            [function(){}, function(){}],
+            [(object) [1], (object) [1]],
+            [function () {
+            }, function () {
+            }],
         ];
     }
-   
+
     /**
      * @dataProvider BadRouteArgumentsProvider
      * @expectedException TypeError
@@ -118,7 +122,7 @@ class RouterTest extends TestCase
     {
         $this->router->validate($url, $method);
     }
-    
+
     public function testGetRoute()
     {
         //evaluate request uri
@@ -129,35 +133,36 @@ class RouterTest extends TestCase
 
         $this->assertInstanceOf(Route::class, $route);
     }
-    
+
     public function routesProvider()
     {
         return [
-            ['/user','POST', ['E404Model','E404View','E404Controller',null,[]]], //test not allowed http method
-            ['/badroute','GET', ['E404Model','E404View','E404Controller',null,[]]], //test bad uri
-            ['/user/5/enable','GET', ['UserModel','UserView','UserController','enable',['id'=>'5']]], //test param route
-            ['/userOther/enable/5','GET', ['UserModel','UserView','UserController','enable',['id'=>'5']]], //test inverse param route
+            ['/user', 'POST', ['E404Model', 'E404View', 'E404Controller', null, []]], //test not allowed http method
+            ['/badroute', 'GET', ['E404Model', 'E404View', 'E404Controller', null, []]], //test bad uri
+            ['/user/5/enable', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']]], //test param route
+            ['/userOther/enable/5', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']]], //test inverse param route
         ];
     }
-    
+
     /**
      * @dataProvider routesProvider
      */
-    public function testRoutes($url, $method, $returneRoute){
-       //evaluate request uri
+    public function testRoutes($url, $method, $returneRoute)
+    {
+        //evaluate request uri
         $this->router->validate($url, $method);
 
         //get route
         $route = $this->router->getRoute();
-        
+
         $arrayRoute = $route->toArray();
-        
+
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals($returneRoute[0], $arrayRoute['model']);
         $this->assertEquals($returneRoute[1], $arrayRoute['view']);
         $this->assertEquals($returneRoute[2], $arrayRoute['controller']);
         $this->assertEquals($returneRoute[3], $arrayRoute['action']);
-        $this->assertEquals($returneRoute[4], $arrayRoute['param']); 
+        $this->assertEquals($returneRoute[4], $arrayRoute['param']);
     }
 
     public function RouteProvider()
@@ -232,9 +237,9 @@ class RouterTest extends TestCase
 
         //get route
         $route = $this->router->getRoute();
-        
+
         $arrayRoute = $route->toArray();
-        
+
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('UserModel', $arrayRoute['model']);
         $this->assertEquals('UserView', $arrayRoute['view']);
