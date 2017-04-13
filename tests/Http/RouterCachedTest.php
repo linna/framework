@@ -20,59 +20,53 @@ class RouterCachedTest extends TestCase
 
     public function setUp()
     {
-        $routes = [];
-
-        $routes[] = [
-            'name'       => 'Home',
-            'method'     => 'GET',
-            'url'        => '/',
-            'model'      => 'HomeModel',
-            'view'       => 'HomeView',
-            'controller' => 'HomeController',
-            'action'     => '',
+        $routes = [
+            [
+                'name'       => 'Home',
+                'method'     => 'GET',
+                'url'        => '/',
+                'model'      => 'HomeModel',
+                'view'       => 'HomeView',
+                'controller' => 'HomeController',
+                'action'     => '',
+            ],
+            [
+                'name'       => 'E404',
+                'method'     => 'GET',
+                'url'        => '/error',
+                'model'      => 'E404Model',
+                'view'       => 'E404View',
+                'controller' => 'E404Controller',
+                'action'     => '',
+            ],
+            [
+                'name'       => 'User',
+                'method'     => 'GET',
+                'url'        => '/user',
+                'model'      => 'UserModel',
+                'view'       => 'UserView',
+                'controller' => 'UserController',
+                'action'     => '',
+            ],
+            [
+                'name'       => '',
+                'method'     => 'GET',
+                'url'        => '/user/[id]/(disable|enable|delete|changePassword|modify)',
+                'model'      => 'UserModel',
+                'view'       => 'UserView',
+                'controller' => 'UserController',
+                'action'     => '',
+            ],
+            [
+                'name'       => '',
+                'method'     => 'GET',
+                'url'        => '/userOther/(disable|enable|delete|changePassword|modify)/[id]',
+                'model'      => 'UserModel',
+                'view'       => 'UserView',
+                'controller' => 'UserController',
+                'action'     => '',
+            ],
         ];
-
-        $routes[] = [
-            'name'       => 'E404',
-            'method'     => 'GET',
-            'url'        => '/error',
-            'model'      => 'E404Model',
-            'view'       => 'E404View',
-            'controller' => 'E404Controller',
-            'action'     => '',
-        ];
-
-        $routes[] = [
-            'name'       => 'User',
-            'method'     => 'GET',
-            'url'        => '/user',
-            'model'      => 'UserModel',
-            'view'       => 'UserView',
-            'controller' => 'UserController',
-            'action'     => '',
-        ];
-
-        $routes[] = [
-            'name'       => '',
-            'method'     => 'GET',
-            'url'        => '/user/[id]/(disable|enable|delete|changePassword|modify)',
-            'model'      => 'UserModel',
-            'view'       => 'UserView',
-            'controller' => 'UserController',
-            'action'     => '',
-        ];
-
-        $routes[] = [
-            'name'       => '',
-            'method'     => 'GET',
-            'url'        => '/userOther/(disable|enable|delete|changePassword|modify)/[id]',
-            'model'      => 'UserModel',
-            'view'       => 'UserView',
-            'controller' => 'UserController',
-            'action'     => '',
-        ];
-
-        //var_Dump($cache instanceof \Psr\SimpleCache\CacheInterface);
 
         //start router
         $this->router = new RouterCached($routes, [
@@ -80,22 +74,6 @@ class RouterCachedTest extends TestCase
             'badRoute'    => 'E404',
             'rewriteMode' => true,
         ], new DiskCache(['serialize' => true]));
-    }
-
-    public function testRoute()
-    {
-        //evaluate request uri
-        $this->router->validate('/user', 'GET');
-
-        //get route
-        $route = $this->router->getRoute();
-
-        $this->assertInstanceOf(Route::class, $route);
-        $this->assertEquals('UserModel', $route->getModel());
-        $this->assertEquals('UserView', $route->getView());
-        $this->assertEquals('UserController', $route->getController());
-        $this->assertEquals(null, $route->getAction());
-        $this->assertEquals([], $route->getParam());
     }
 
     public function testCachedRoute()
@@ -112,71 +90,37 @@ class RouterCachedTest extends TestCase
         $this->router->validate('/user', 'GET');
         $this->assertInstanceOf(Route::class, $this->router->getRoute());
     }
-
-    public function testBadMethod()
+    
+    public function routesProvider()
     {
-        //evaluate request uri
-        $this->router->validate('/user', 'POST');
+        return [
+            ['/user','POST', ['E404Model','E404View','E404Controller',null,[]]], //test not allowed http method
+            ['/badroute','GET', ['E404Model','E404View','E404Controller',null,[]]], //test bad uri
+            ['/user/5/enable','GET', ['UserModel','UserView','UserController','enable',['id'=>'5']]], //test param route
+            ['/userOther/enable/5','GET', ['UserModel','UserView','UserController','enable',['id'=>'5']]], //test inverse param route
+        ];
+    }
+    
+    /**
+     * @dataProvider routesProvider
+     */
+    public function testRoutes($url, $method, $returneRoute){
+       //evaluate request uri
+        $this->router->validate($url, $method);
 
         //get route
         $route = $this->router->getRoute();
-
+        
+        $arrayRoute = $route->toArray();
+        
         $this->assertInstanceOf(Route::class, $route);
-        $this->assertEquals('E404Model', $route->getModel());
-        $this->assertEquals('E404View', $route->getView());
-        $this->assertEquals('E404Controller', $route->getController());
-        $this->assertEquals(null, $route->getAction());
-        $this->assertEquals([], $route->getParam());
+        $this->assertEquals($returneRoute[0], $arrayRoute['model']);
+        $this->assertEquals($returneRoute[1], $arrayRoute['view']);
+        $this->assertEquals($returneRoute[2], $arrayRoute['controller']);
+        $this->assertEquals($returneRoute[3], $arrayRoute['action']);
+        $this->assertEquals($returneRoute[4], $arrayRoute['param']); 
     }
-
-    public function testBadRoute()
-    {
-        //evaluate request uri
-        $this->router->validate('/badroute', 'GET');
-
-        //get route
-        $route = $this->router->getRoute();
-
-        $this->assertInstanceOf(Route::class, $route);
-        $this->assertEquals('E404Model', $route->getModel());
-        $this->assertEquals('E404View', $route->getView());
-        $this->assertEquals('E404Controller', $route->getController());
-        $this->assertEquals(null, $route->getAction());
-        $this->assertEquals([], $route->getParam());
-    }
-
-    public function testParamRoute()
-    {
-        //evaluate request uri
-        $this->router->validate('/user/5/enable', 'GET');
-
-        //get route
-        $route = $this->router->getRoute();
-
-        $this->assertInstanceOf(Route::class, $route);
-        $this->assertEquals('UserModel', $route->getModel());
-        $this->assertEquals('UserView', $route->getView());
-        $this->assertEquals('UserController', $route->getController());
-        $this->assertEquals('enable', $route->getAction());
-        $this->assertEquals(['id'=>'5'], $route->getParam());
-    }
-
-    public function testInverseParamRoute()
-    {
-        //evaluate request uri
-        $this->router->validate('/userOther/enable/5', 'GET');
-
-        //get route
-        $route = $this->router->getRoute();
-
-        $this->assertInstanceOf(Route::class, $route);
-        $this->assertEquals('UserModel', $route->getModel());
-        $this->assertEquals('UserView', $route->getView());
-        $this->assertEquals('UserController', $route->getController());
-        $this->assertEquals('enable', $route->getAction());
-        $this->assertEquals(['id'=>'5'], $route->getParam());
-    }
-
+    
     public function testRewriteModeOff()
     {
         //routes
@@ -203,12 +147,14 @@ class RouterCachedTest extends TestCase
 
         //get route
         $route = $router->getRoute();
-
+        
+        $arrayRoute = $route->toArray();
+        
         $this->assertInstanceOf(Route::class, $route);
-        $this->assertEquals('UserModel', $route->getModel());
-        $this->assertEquals('UserView', $route->getView());
-        $this->assertEquals('UserController', $route->getController());
-        $this->assertEquals('enable', $route->getAction());
-        $this->assertEquals(['id'=>'5'], $route->getParam());
+        $this->assertEquals('UserModel', $arrayRoute['model']);
+        $this->assertEquals('UserView', $arrayRoute['view']);
+        $this->assertEquals('UserController', $arrayRoute['controller']);
+        $this->assertEquals('enable', $arrayRoute['action']);
+        $this->assertEquals(['id'=>'5'], $arrayRoute['param']);
     }
 }
