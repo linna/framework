@@ -36,21 +36,11 @@ class DomainObjectTest extends TestCase
     }
 
     /**
-     * @outputBuffering disabled
-     * @expectedExceptionMessage objectId is immutable
+     * @expectedException UnexpectedValueException
      */
     public function testUserOverrideId()
     {
         $this->user->setId(1);
-        $userId = $this->user->getId();
-
-        ob_start();
-
         $this->user->setId(2);
-
-        $message = ob_get_clean();
-
-        $this->assertEquals(1, $userId);
-        $this->assertEquals('UnexpectedValueException: objectId is immutable', $message);
     }
 }
