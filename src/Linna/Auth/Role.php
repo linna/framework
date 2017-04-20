@@ -47,9 +47,6 @@ class Role extends DomainObjectAbstract
 
     /**
      * Constructor.
-     *
-     * @param array $users
-     * @param array $permission
      */
     public function __construct()
     {
