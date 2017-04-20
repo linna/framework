@@ -96,16 +96,6 @@ class Authenticate
      */
     public function login(string $userName, string $password, string $storedUserName = '', string $storedPassword = '', int $storedId = 0): bool
     {
-        //check user presence
-        //if ($userName !== $storedUserName) {
-        //    return false;
-        //}
-
-        //if password daesnt' match return false
-        //if (!$this->password->verify($password, $storedPassword)) {
-        //    return false;
-        //}
-        
         if ($this->doesLoginChecksFailed($userName, $password, $storedUserName, $storedPassword)){
             return false;
         }
