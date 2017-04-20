@@ -105,18 +105,13 @@ class Resolver
 
                 //get param properties
                 $paramType = (string) $param->getType();
-                $paramPosition = (int) $param->getPosition();
-                $paramName = (string) $param->getName();
                 $paramClass = (is_object($param->getClass())) ? '\\'.$param->getClass()->name : null;
 
                 //make argument description
-                $paramDescription = ['class' => $paramClass, 'type' => $paramType, 'name' => $paramName,  'position' => $paramPosition];
+                $paramDescription = ['class' => $paramClass, 'type' => $paramType, 'name' => (string) $param->getName(),  'position' => (int) $param->getPosition()];
 
                 //check if argument is already stored
                 $notAlreadyStored = !in_array($paramDescription, $this->dependencyTree[$level][$class]);
-
-                //check if param has primitive type
-                $isPrimitiveType = in_array($paramType, ['bool', 'int', 'string', 'array', '']);
 
                 //if there is parameter with callable type
                 if (class_exists($paramType) && $notAlreadyStored) {
@@ -135,8 +130,7 @@ class Resolver
                     continue 2;
                 }
 
-                //if there is argument not typed or wit primitive type
-                if ($isPrimitiveType && $notAlreadyStored) {
+                if ($notAlreadyStored) {
                     //store dependency
                     $this->dependencyTree[$level][$class][] = $paramDescription;
                 }
