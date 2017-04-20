@@ -102,12 +102,12 @@ class Resolver
 
             //loop parameter
             foreach ($parameters as $param) {
-                
+
                 //check if argument is already stored
                 $notAlreadyStored = !in_array($param, $this->dependencyTree[$level][$class]);
 
                 //if there is parameter with callable type
-                if (class_exists((string)$param->getType()) && $notAlreadyStored) {
+                if (class_exists((string) $param->getType()) && $notAlreadyStored) {
 
                     //push values in stack for simulate later recursive function
                     $stack->push([$level, $class]);
@@ -189,7 +189,6 @@ class Resolver
 
         //argument required from class
         foreach ($dependency as $argValue) {
-            
             $paramClass = (is_object($argValue->getClass())) ? '\\'.$argValue->getClass()->name : null;
             //add to array of arguments
             $args[] = $this->cache[$paramClass] ?? null;

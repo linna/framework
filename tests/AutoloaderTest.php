@@ -54,6 +54,6 @@ class AutoloaderTest extends TestCase
 
     public function testBadPrefix()
     {
-       $this->assertEquals(false, class_exists('Baz\Foo\FooClassNULL', true));
+        $this->assertEquals(false, class_exists('Baz\Foo\FooClassNULL', true));
     }
 }

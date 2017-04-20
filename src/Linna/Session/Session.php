@@ -172,15 +172,15 @@ class Session implements ArrayAccess
 
             return false;
         }
-        
+
         $this->setSessionData($time);
-        
+
         return true;
     }
-    
+
     /**
-     * Set Session Data
-     * 
+     * Set Session Data.
+     *
      * @param int $time
      */
     private function setSessionData(int $time)
@@ -190,7 +190,7 @@ class Session implements ArrayAccess
         $this->data['expire'] = $this->options['expire'];
         $this->status = session_status();
     }
-    
+
     /**
      * Set session handler for new instance.
      *

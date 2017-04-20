@@ -71,9 +71,8 @@ class ResolverTest extends TestCase
         $resolver->cache('\Linna\Foo\DI\FooClassACache', new FooClassACache('DIResolver'));
 
         $FOOClassResCache = $resolver->resolve('Linna\Foo\DI\FooClassResCache');
-        
-        $this->assertInstanceOf(\Linna\Foo\DI\FooClassResCache::class, $FOOClassResCache);
 
+        $this->assertInstanceOf(\Linna\Foo\DI\FooClassResCache::class, $FOOClassResCache);
     }
 
     public function testResolveWithRules()

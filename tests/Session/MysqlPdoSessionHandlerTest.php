@@ -99,7 +99,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
         $conn->query('DELETE FROM session');
 
         $pdos = $conn->prepare('INSERT INTO session (session_id, session_data) VALUES (:session_id, :session_data)');
-        
+
         for ($i = 0; $i < 10; $i++) {
             $sessionId = md5((string) $i);
             $time = time() - $i;

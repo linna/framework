@@ -69,7 +69,7 @@ class StorageFactoryTest extends TestCase
         $this->assertInstanceOf(MongoDbObject::class, $adapter);
         $this->assertInstanceOf(Client::class, $adapter->getResource());
     }
-    
+
     /**
      * @expectedException InvalidArgumentException
      */

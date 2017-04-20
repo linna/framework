@@ -70,7 +70,7 @@ class ContainerTest extends TestCase
 
         $this->assertInstanceOf(stdClass::class, $FooClass);
     }
-    
+
     /**
      * @expectedException Exception
      */
@@ -100,7 +100,7 @@ class ContainerTest extends TestCase
 
         $this->assertInstanceOf(stdClass::class, $FooClass);
     }
-    
+
     /**
      * @expectedException Exception
      */
