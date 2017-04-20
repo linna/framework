@@ -97,15 +97,19 @@ class Authenticate
     public function login(string $userName, string $password, string $storedUserName = '', string $storedPassword = '', int $storedId = 0): bool
     {
         //check user presence
-        if ($userName !== $storedUserName) {
-            return false;
-        }
+        //if ($userName !== $storedUserName) {
+        //    return false;
+        //}
 
         //if password daesnt' match return false
-        if (!$this->password->verify($password, $storedPassword)) {
+        //if (!$this->password->verify($password, $storedPassword)) {
+        //    return false;
+        //}
+        
+        if ($this->doesLoginChecksFailed($userName, $password, $storedUserName, $storedPassword)){
             return false;
         }
-
+        
         //write valid login on session
         $this->sessionInstance->loginTime = time();
         $this->sessionInstance->login = [
@@ -120,7 +124,22 @@ class Authenticate
 
         return true;
     }
+    
+    private function doesLoginChecksFailed(string $userName, string $password, string $storedUserName, string $storedPassword) : bool
+    {
+        //check user presence
+        if ($userName !== $storedUserName) {
+            return true;
+        }
 
+        //if password daesnt' match return false
+        if (!$this->password->verify($password, $storedPassword)) {
+            return true;
+        }
+        
+        return false;
+    }
+    
     /**
      * For do logout, delete login information from session.
      *
