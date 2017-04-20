@@ -91,8 +91,8 @@ class Router
         //matches set empty array
         $matches = [];
 
-        //valid route set to 0
-        $validRoute = 0;
+        //valid route set to []
+        $validRoute = [];
 
         //filter registered routes for find route that match with current uri
         foreach ($this->routes as $value) {
