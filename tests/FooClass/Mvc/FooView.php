@@ -26,21 +26,17 @@ class FooView extends View
 
     public function index()
     {
-
     }
 
     public function modifyData()
     {
-
     }
 
     public function modifyDataTimed()
     {
-
     }
 
     public function modifyDataFromParam()
     {
-
     }
 }

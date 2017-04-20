@@ -9,7 +9,6 @@
  */
 declare(strict_types=1);
 
-use Linna\Cache\Exception\InvalidArgumentException;
 use Linna\Cache\MemcachedCache;
 use PHPUnit\Framework\TestCase;
 

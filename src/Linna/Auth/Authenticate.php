@@ -96,10 +96,10 @@ class Authenticate
      */
     public function login(string $userName, string $password, string $storedUserName = '', string $storedPassword = '', int $storedId = 0): bool
     {
-        if ($this->doesLoginChecksFailed($userName, $password, $storedUserName, $storedPassword)){
+        if ($this->doesLoginChecksFailed($userName, $password, $storedUserName, $storedPassword)) {
             return false;
         }
-        
+
         //write valid login on session
         $this->sessionInstance->loginTime = time();
         $this->sessionInstance->login = [
@@ -114,7 +114,7 @@ class Authenticate
 
         return true;
     }
-    
+
     private function doesLoginChecksFailed(string $userName, string $password, string $storedUserName, string $storedPassword) : bool
     {
         //check user presence
@@ -126,10 +126,10 @@ class Authenticate
         if (!$this->password->verify($password, $storedPassword)) {
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * For do logout, delete login information from session.
      *

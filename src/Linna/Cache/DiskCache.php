@@ -68,13 +68,13 @@ class DiskCache implements CacheInterface
 
         //create file name
         $file = $this->options['dir'].'/'.sha1($key).'.php';
-        
-        if ($this->doesFileChecksFailed($file)){
+
+        if ($this->doesFileChecksFailed($file)) {
             return $default;
         }
-        
+
         $cacheValue = include $file;
-        
+
         //check for unserialize
         if ($this->options['serialize']) {
             return unserialize($cacheValue['value']);
@@ -83,7 +83,7 @@ class DiskCache implements CacheInterface
         //return cache
         return $cacheValue['value'];
     }
-    
+
     private function doesFileChecksFailed(string $file) : bool
     {
         //check if file exist
@@ -100,10 +100,10 @@ class DiskCache implements CacheInterface
 
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -199,7 +199,7 @@ class DiskCache implements CacheInterface
         //create file name
         $file = $this->options['dir'].'/'.sha1($key).'.php';
 
-        if ($this->doesFileChecksFailed($file)){
+        if ($this->doesFileChecksFailed($file)) {
             return false;
         }
 

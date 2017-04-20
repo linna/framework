@@ -9,9 +9,9 @@
  */
 declare(strict_types=1);
 
+use Linna\Foo\Mvc\FooBadTemplateView;
 use Linna\Foo\Mvc\FooModel;
 use Linna\Foo\Mvc\FooTemplate;
-use Linna\Foo\Mvc\FooBadTemplateView;
 use Linna\Foo\Mvc\FooView;
 use PHPUnit\Framework\TestCase;
 
@@ -19,14 +19,14 @@ class ViewTest extends TestCase
 {
     public function testCreateView()
     {
-       $this->assertInstanceOf(FooView::class, new FooView(new FooModel(), new FooTemplate()));
+        $this->assertInstanceOf(FooView::class, new FooView(new FooModel(), new FooTemplate()));
     }
-    
+
     public function testBadTemplateView()
     {
-       $this->assertInstanceOf(FooBadTemplateView::class, new FooBadTemplateView(new FooModel(), 'badTemplate'));
+        $this->assertInstanceOf(FooBadTemplateView::class, new FooBadTemplateView(new FooModel(), 'badTemplate'));
     }
-    
+
     /**
      * @expectedException UnexpectedValueException
      */

@@ -26,6 +26,5 @@ class FooBadTemplateView extends View
 
     public function index()
     {
-
     }
 }

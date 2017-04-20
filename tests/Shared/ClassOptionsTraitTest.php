@@ -15,12 +15,12 @@ use PHPUnit\Framework\TestCase;
 class ClassOptionsTest extends TestCase
 {
     protected $router;
-    
+
     public function setUp()
     {
         $this->router = new Router();
     }
-    
+
     public function testSetOption()
     {
         $this->router->setOption('badRoute', 'foo');
