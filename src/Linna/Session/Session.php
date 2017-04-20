@@ -91,11 +91,8 @@ class Session implements ArrayAccess
         //set new cookie
         $this->setCookie();
 
-        //store id and new time for expire
-        $this->id = session_id();
-        $this->data['time'] = $time;
-        $this->data['expire'] = $this->options['expire'];
-        $this->status = session_status();
+        //store new session data
+        $this->setSessionData($time);
     }
 
     /**
@@ -129,9 +126,6 @@ class Session implements ArrayAccess
 
             //link session super global to $data property
             $this->data = &$_SESSION;
-
-            //update session status
-            $this->status = session_status();
         }
 
         //refresh session
@@ -162,9 +156,9 @@ class Session implements ArrayAccess
     /**
      * Refresh session.
      *
-     * @return null
+     * @return bool
      */
-    private function refresh()
+    private function refresh() : bool
     {
         $time = time();
 
@@ -176,14 +170,27 @@ class Session implements ArrayAccess
             //regenerate session
             $this->regenerate();
 
-            return;
+            return false;
         }
-
+        
+        $this->setSessionData($time);
+        
+        return true;
+    }
+    
+    /**
+     * Set Session Data
+     * 
+     * @param int $time
+     */
+    private function setSessionData(int $time)
+    {
         $this->id = session_id();
         $this->data['time'] = $time;
         $this->data['expire'] = $this->options['expire'];
+        $this->status = session_status();
     }
-
+    
     /**
      * Set session handler for new instance.
      *
