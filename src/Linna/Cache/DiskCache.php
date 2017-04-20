@@ -68,10 +68,27 @@ class DiskCache implements CacheInterface
 
         //create file name
         $file = $this->options['dir'].'/'.sha1($key).'.php';
+        
+        if ($this->doesFileChecksFailed($file)){
+            return $default;
+        }
+        
+        $cacheValue = include $file;
+        
+        //check for unserialize
+        if ($this->options['serialize']) {
+            return unserialize($cacheValue['value']);
+        }
 
+        //return cache
+        return $cacheValue['value'];
+    }
+    
+    private function doesFileChecksFailed(string $file) : bool
+    {
         //check if file exist
         if (!file_exists($file)) {
-            return $default;
+            return true;
         }
 
         //take cache from file
@@ -81,18 +98,12 @@ class DiskCache implements CacheInterface
         if ($cacheValue['expires'] <= time() && $cacheValue['expires'] !== null) {
             unlink($file);
 
-            return $default;
+            return true;
         }
-
-        //check for unserialize
-        if ($this->options['serialize']) {
-            return unserialize($cacheValue['value']);
-        }
-
-        //return cache
-        return $cacheValue['value'];
+        
+        return false;
     }
-
+    
     /**
      * {@inheritdoc}
      */
@@ -188,18 +199,7 @@ class DiskCache implements CacheInterface
         //create file name
         $file = $this->options['dir'].'/'.sha1($key).'.php';
 
-        //check if file exist
-        if (!file_exists($file)) {
-            return false;
-        }
-
-        //take cache from file
-        $cacheValue = include $file;
-
-        //check if cache is expired and delete file from storage
-        if ($cacheValue['expires'] <= time() && $cacheValue['expires'] !== null) {
-            unlink($file);
-
+        if ($this->doesFileChecksFailed($file)){
             return false;
         }
 
