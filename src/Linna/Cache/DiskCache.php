@@ -134,7 +134,7 @@ class DiskCache implements CacheInterface
         $content = var_export($cache, true);
         // HHVM fails at __set_state, so just use object cast for now
         $content = str_replace('stdClass::__set_state', '(object)', $content);
-        $content = '<?php return '.$content.';';
+        $content = "<?php return {$content};";
 
         //write file
         file_put_contents($this->options['dir'].'/'.sha1($key).'.php', $content);
