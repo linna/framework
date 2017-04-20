@@ -79,7 +79,7 @@ class FrontControllerTest extends TestCase
     /**
      * @outputBuffering disabled
      */
-    public function testNewFrontController()
+    public function testCreateFrontController()
     {
         $model = new FooModel();
         //get view linked to route
@@ -93,7 +93,7 @@ class FrontControllerTest extends TestCase
     }
 
     /**
-     * @depends testNewFrontController
+     * @depends testCreateFrontController
      */
     public function testRunFrontController()
     {
@@ -125,7 +125,7 @@ class FrontControllerTest extends TestCase
     }
 
     /**
-     * @depends testNewFrontController
+     * @depends testCreateFrontController
      */
     public function testRunFrontControllerParam()
     {
@@ -196,7 +196,7 @@ class FrontControllerTest extends TestCase
     }
 
     /**
-     * @depends testNewFrontController
+     * @depends testCreateFrontController
      */
     public function testRunFrontControllerWithActions()
     {
