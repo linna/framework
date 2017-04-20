@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v0.16.0](https://github.com/s3b4stian/linna-framework/compare/v0.15.0...v0.16.0) - 2017-XX-XX
+## [v0.16.0](https://github.com/s3b4stian/linna-framework/compare/v0.15.0...v0.16.0) - 2017-04-20
 
 ### Added
 * `Linna\Http\Route->getName()` method
@@ -26,7 +26,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Storage\MysqlPdoAdapter` changed name to `Linna\Storage\MysqlPdoObject` 
 * `Linna\Storage\MysqliAdapter` changed name to `Linna\Storage\MysqliObject`
 * `Linna\Storage\MongoDbAdapter` changed name to `Linna\Storage\MongoDbOject`
-* `Linna\Storage\StorageInterface` changed name to `Linna\Storage\StorageObjectInterface` 
+* `Linna\Storage\StorageInterface` changed name to `Linna\Storage\StorageObjectInterface`
+* Varius internal code improvements
+* Tests now cover 100% of code
 
 
 ## [v0.15.0](https://github.com/s3b4stian/linna-framework/compare/v0.14.0...v0.15.0) - 2017-03-28
@@ -67,7 +69,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Cache\Exception\InvalidArgumentException` exception
 * Tests for `Linna\Cache`
 * `Linna\Session\Session` can store value using array or property syntax
-* `Linna\Session\Session->status` property added, ndicate session status
+* `Linna\Session\Session->status` property added, indicate session status
 * `$options` parameter added to `Linna\Auth\Password->__construct()`
 * `Linna\Http\Router->validate()` type return bool
 
