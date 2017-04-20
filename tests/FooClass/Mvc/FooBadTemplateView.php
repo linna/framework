@@ -13,11 +13,11 @@ namespace Linna\Foo\Mvc;
 
 use Linna\Mvc\View;
 
-class FooView extends View
+class FooBadTemplateView extends View
 {
     protected $template;
 
-    public function __construct(FOOModel $model, FOOTemplate $htmlTemplate)
+    public function __construct(FOOModel $model, $htmlTemplate)
     {
         parent::__construct($model);
 
@@ -25,21 +25,6 @@ class FooView extends View
     }
 
     public function index()
-    {
-
-    }
-
-    public function modifyData()
-    {
-
-    }
-
-    public function modifyDataTimed()
-    {
-
-    }
-
-    public function modifyDataFromParam()
     {
 
     }

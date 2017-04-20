@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Linna\Mvc;
 
+use UnexpectedValueException;
+
 /**
  * Parent class for view classes.
  *
@@ -23,7 +25,7 @@ class View implements \SplObserver
     /**
      * @var array Data for the dynamic view
      */
-    protected $data;
+    protected $data = [];
 
     /**
      * @var TemplateInterface Template utilized for render data
@@ -42,7 +44,6 @@ class View implements \SplObserver
      */
     public function __construct(Model $model)
     {
-        $this->data = [];
         $this->model = $model;
     }
 
@@ -51,6 +52,10 @@ class View implements \SplObserver
      */
     public function render()
     {
+        if (!($this->template instanceof TemplateInterface)) {
+            throw new UnexpectedValueException('Template must implements Linna\Mvc\TemplateInterface');
+        }
+        
         $this->template->data = (object) $this->data;
         $this->template->output();
     }
