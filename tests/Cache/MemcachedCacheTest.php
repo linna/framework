@@ -47,10 +47,10 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
+     * @expectedException Linna\Cache\Exception\InvalidArgumentException
      */
     public function testSetInvalidKey($key)
     {
-        $this->expectException(InvalidArgumentException::class);
         $this->cache->set($key, [0, 1, 2, 3, 4]);
     }
 
@@ -77,10 +77,10 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
+     * @expectedException Linna\Cache\Exception\InvalidArgumentException
      */
     public function testGetInvalidKey($key)
     {
-        $this->expectException(InvalidArgumentException::class);
         $this->cache->get($key);
     }
 
@@ -109,10 +109,10 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
+     * @expectedException Linna\Cache\Exception\InvalidArgumentException
      */
     public function testDeleteInvalidKey($key)
     {
-        $this->expectException(InvalidArgumentException::class);
         $this->cache->delete($key);
     }
 
@@ -149,10 +149,10 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
+     * @expectedException Linna\Cache\Exception\InvalidArgumentException
      */
     public function testGetMultipleInvalidKey($key)
     {
-        $this->expectException(InvalidArgumentException::class);
         $this->cache->getMultiple($key);
     }
 
@@ -190,10 +190,10 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
+     * @expectedException Linna\Cache\Exception\InvalidArgumentException
      */
     public function testSetMultipleInvalidKey($key)
     {
-        $this->expectException(InvalidArgumentException::class);
         $this->cache->SetMultiple($key);
     }
 
@@ -267,10 +267,10 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
+     * @expectedException Linna\Cache\Exception\InvalidArgumentException
      */
     public function testDeleteMultipleInvalidKey($key)
     {
-        $this->expectException(InvalidArgumentException::class);
         $this->cache->deleteMultiple($key);
     }
 
@@ -308,10 +308,10 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
+     * @expectedException Linna\Cache\Exception\InvalidArgumentException
      */
     public function testHasInvalidKey($key)
     {
-        $this->expectException(InvalidArgumentException::class);
         $this->cache->Has($key);
     }
 

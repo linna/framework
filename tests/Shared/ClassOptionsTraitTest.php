@@ -14,26 +14,31 @@ use PHPUnit\Framework\TestCase;
 
 class ClassOptionsTest extends TestCase
 {
+    protected $router;
+    
+    public function setUp()
+    {
+        $this->router = new Router();
+    }
+    
     public function testSetOption()
     {
-        $router = new Router([]);
-        $router->setOption('badRoute', 'foo');
+        $this->router->setOption('badRoute', 'foo');
 
         $this->assertEquals(true, true);
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
     public function testSetBadOption()
     {
-        $router = new Router([]);
-
-        $this->expectException(\InvalidArgumentException::class);
-        $router->setOption('badRout', 'foo');
+        $this->router->setOption('badRout', 'foo');
     }
 
     public function testSetOptions()
     {
-        $router = new Router([]);
-        $router->setOptions([
+        $this->router->setOptions([
             'basePath'    => '/',
             'badRoute'    => 'E404',
             'rewriteMode' => true,

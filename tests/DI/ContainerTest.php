@@ -40,10 +40,12 @@ class ContainerTest extends TestCase
         $this->assertInstanceOf(stdClass::class, $FooClass);
     }
 
+    /**
+     * @expectedException Exception
+     */
     public function testContainerNotFoundGet()
     {
-        $this->expectException(\Exception::class);
-        $BarClass = $this->container->get('BarClass');
+        $this->container->get('BarClass');
     }
 
     public function testContainerHas()
@@ -68,11 +70,13 @@ class ContainerTest extends TestCase
 
         $this->assertInstanceOf(stdClass::class, $FooClass);
     }
-
+    
+    /**
+     * @expectedException Exception
+     */
     public function testArrayContainerNotFoundGet()
     {
-        $this->expectException(\Exception::class);
-        $BarClass = $this->container['BarClass'];
+        $this->container['BarClass'];
     }
 
     public function testArrayContainerHas()
@@ -96,11 +100,13 @@ class ContainerTest extends TestCase
 
         $this->assertInstanceOf(stdClass::class, $FooClass);
     }
-
+    
+    /**
+     * @expectedException Exception
+     */
     public function testPropertyContainerNotFoundGet()
     {
-        $this->expectException(\Exception::class);
-        $BarClass = $this->container->BarClass;
+        $this->container->BarClass;
     }
 
     public function testPropertyContainerHas()

@@ -69,10 +69,12 @@ class StorageFactoryTest extends TestCase
         $this->assertInstanceOf(MongoDbObject::class, $adapter);
         $this->assertInstanceOf(Client::class, $adapter->getResource());
     }
-
+    
+    /**
+     * @expectedException InvalidArgumentException
+     */
     public function testUnsupportedAdapter()
     {
-        $this->expectException(InvalidArgumentException::class);
-        $unsupportedAdapter = $this->factory->createConnection('unsupported', []);
+        $this->factory->createConnection('unsupported', []);
     }
 }

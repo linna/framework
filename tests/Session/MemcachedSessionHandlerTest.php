@@ -15,8 +15,6 @@ use PHPUnit\Framework\TestCase;
 
 class MemcachedSessionHandlerTest extends TestCase
 {
-    protected $memcached;
-
     protected $session;
 
     protected $sessionHandler;
@@ -31,8 +29,6 @@ class MemcachedSessionHandlerTest extends TestCase
         $memcached = new Memcached();
         //connect to memcached server
         $memcached->addServer($GLOBALS['mem_host'], (int) $GLOBALS['mem_port']);
-
-        $this->memcached = $memcached;
 
         $this->sessionHandler = new MemcachedSessionHandler($memcached, 5);
 

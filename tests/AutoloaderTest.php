@@ -26,10 +26,7 @@ class AutoloaderTest extends TestCase
 
     public function testRegister()
     {
-        $this->autoloader = new Autoloader();
-        $result = $this->autoloader->register();
-
-        $this->assertEquals(true, $result);
+        $this->assertEquals(true, (new Autoloader())->register());
     }
 
     /**
@@ -37,36 +34,26 @@ class AutoloaderTest extends TestCase
      */
     public function testNamespace()
     {
-        $foo = new \Linna\Foo\DI\FooClassH();
-
-        $this->assertInstanceOf(FooClassH::class, $foo);
+        $this->assertInstanceOf(FooClassH::class, new \Linna\Foo\DI\FooClassH());
     }
 
     public function testClassExist()
     {
-        $foo = class_exists('\Linna\Foo\DI\FooClassH', true);
-
-        $this->assertEquals(true, $foo);
+        $this->assertEquals(true, class_exists('\Linna\Foo\DI\FooClassH', true));
     }
 
     public function testBadNamespace()
     {
-        $foo = class_exists('\Linna\Baz\FooClassH', true);
-
-        $this->assertEquals(false, $foo);
+        $this->assertEquals(false, class_exists('\Linna\Baz\FooClassH', true));
     }
 
     public function testBadClass()
     {
-        $foo = class_exists('\FooClassNULL', true);
-
-        $this->assertEquals(false, $foo);
+        $this->assertEquals(false, class_exists('\FooClassNULL', true));
     }
 
     public function testBadPrefix()
     {
-        $foo = class_exists('Baz\Foo\FooClassNULL', true);
-
-        $this->assertEquals(false, $foo);
+       $this->assertEquals(false, class_exists('Baz\Foo\FooClassNULL', true));
     }
 }
