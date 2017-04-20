@@ -102,29 +102,22 @@ class Resolver
 
             //loop parameter
             foreach ($parameters as $param) {
-
-                //get param properties
-                $paramType = (string) $param->getType();
-                $paramClass = (is_object($param->getClass())) ? '\\'.$param->getClass()->name : null;
-
-                //make argument description
-                $paramDescription = ['class' => $paramClass, 'type' => $paramType, 'name' => (string) $param->getName(),  'position' => (int) $param->getPosition()];
-
+                
                 //check if argument is already stored
-                $notAlreadyStored = !in_array($paramDescription, $this->dependencyTree[$level][$class]);
+                $notAlreadyStored = !in_array($param, $this->dependencyTree[$level][$class]);
 
                 //if there is parameter with callable type
-                if (class_exists($paramType) && $notAlreadyStored) {
+                if (class_exists((string)$param->getType()) && $notAlreadyStored) {
 
                     //push values in stack for simulate later recursive function
                     $stack->push([$level, $class]);
 
                     //store dependency
-                    $this->dependencyTree[$level][$class][] = $paramDescription;
+                    $this->dependencyTree[$level][$class][] = $param;
 
                     //update values for simulate recursive function
                     $level = $level + 1;
-                    $class = $paramClass;
+                    $class = (is_object($param->getClass())) ? '\\'.$param->getClass()->name : null;
 
                     //return to main while
                     continue 2;
@@ -132,7 +125,7 @@ class Resolver
 
                 if ($notAlreadyStored) {
                     //store dependency
-                    $this->dependencyTree[$level][$class][] = $paramDescription;
+                    $this->dependencyTree[$level][$class][] = $param;
                 }
             }
 
@@ -196,9 +189,10 @@ class Resolver
 
         //argument required from class
         foreach ($dependency as $argValue) {
-
+            
+            $paramClass = (is_object($argValue->getClass())) ? '\\'.$argValue->getClass()->name : null;
             //add to array of arguments
-            $args[] = $this->cache[$argValue['class']] ?? null;
+            $args[] = $this->cache[$paramClass] ?? null;
         }
 
         //check if there is rules for this class
