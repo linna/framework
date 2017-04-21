@@ -65,7 +65,7 @@ trait ActionMultipleTrait
 
         $result = [];
         foreach ((array) $keys as $key) {
-            $result[$key] = $this->get($key);
+            $result[$key] = $this->get($key, $default);
         }
 
         return $result;
