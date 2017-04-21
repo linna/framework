@@ -41,8 +41,8 @@ class DiskCache implements CacheInterface
      */
     protected $options = [
         'dir'       => '/tmp',
-        'serialize' => false,
-        'ttl'       => null,
+        //'serialize' => false,
+        'ttl'       => 0,
     ];
 
     /**
@@ -76,12 +76,12 @@ class DiskCache implements CacheInterface
         $cacheValue = include $file;
 
         //check for unserialize
-        if ($this->options['serialize']) {
-            return unserialize($cacheValue['value']);
-        }
+        //if ($this->options['serialize']) {
+        return unserialize($cacheValue['value']);
+        //}
 
         //return cache
-        return $cacheValue['value'];
+        //return $cacheValue['value'];
     }
 
     /**
@@ -101,7 +101,7 @@ class DiskCache implements CacheInterface
         $cacheValue = include $file;
 
         //check if cache is expired and delete file from storage
-        if ($cacheValue['expires'] <= time() && $cacheValue['expires'] !== null) {
+        if ($cacheValue['expires'] <= time() && $cacheValue['expires'] !== 0) {
             unlink($file);
 
             return true;
@@ -121,36 +121,36 @@ class DiskCache implements CacheInterface
         }
 
         //pick time
-        $created = time();
+        //$created = time();
 
         // Converting to a TTL in seconds
-        if ($ttl instanceof DateInterval) {
-            $ttl = (new DateTime('now'))->add($ttl)->getTimeStamp() - $created;
-        }
+        //if ($ttl instanceof DateInterval) {
+        //    $ttl = (new DateTime('now'))->add($ttl)->getTimeStamp() - $created;
+        //}
 
         //check for usage of ttl default class option value
-        if ($ttl === null) {
-            $ttl = $this->options['ttl'];
-        }
+        //if ($ttl === null) {
+        //    $ttl = $this->options['ttl'];
+        //}
 
         //check for serialize and do if set to true
-        if ($this->options['serialize']) {
-            $value = serialize($value);
-        }
+        //if ($this->options['serialize']) {
+        //    $value = serialize($value);
+        //}
 
         //create cache array
         $cache = [
-            'created' => $created,
+            //'created' => $created,
             'key'     => $key,
-            'value'   => $value,
-            'ttl'     => $ttl,
-            'expires' => ($ttl) ? $created + $ttl : null,
+            'value'   => serialize($value),
+            //'ttl'     => $ttl,
+            'expires' => $this->calculateTtl($ttl),//($ttl) ? $created + $ttl : null,
         ];
 
         //export
-        $content = var_export($cache, true);
+        //$content = var_export($cache, true);
         // HHVM fails at __set_state, so just use object cast for now
-        $content = str_replace('stdClass::__set_state', '(object)', $content);
+        $content = str_replace('stdClass::__set_state', '(object)', var_export($cache, true));
         $content = "<?php return {$content};";
 
         //write file
@@ -158,7 +158,34 @@ class DiskCache implements CacheInterface
 
         return true;
     }
+    
+    /**
+     * Calculate ttl for cache file
+     * 
+     * @param null|int|DateInterval $ttl
+     * @return int
+     */
+    private function calculateTtl($ttl) : int
+    {
+        //pick time
+        //$created = time();
 
+        // Converting to a TTL in seconds
+        if ($ttl instanceof DateInterval) {
+            return (new DateTime('now'))->add($ttl)->getTimeStamp();// - $created;
+            
+            //var_dump($ttl);
+        }
+
+        //check for usage of ttl default class option value
+        if ($ttl === null) {
+            return $this->options['ttl'];
+        }
+        
+        //var_dump(time() + $ttl);
+        return time() + $ttl;
+    }
+    
     /**
      * {@inheritdoc}
      */

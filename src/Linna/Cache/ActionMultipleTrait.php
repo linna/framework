@@ -65,7 +65,7 @@ trait ActionMultipleTrait
 
         $result = [];
         foreach ((array) $keys as $key) {
-            $result[$key] = $this->has($key) ? $this->get($key) : $default;
+            $result[$key] = $this->get($key);//$this->has($key) ? $this->get($key) : $default;
         }
 
         return $result;
@@ -80,10 +80,10 @@ trait ActionMultipleTrait
             throw new InvalidArgumentException();
         }
 
-        if ($ttl instanceof DateInterval) {
+        //if ($ttl instanceof DateInterval) {
             // Converting to a TTL in seconds
-            $ttl = (new DateTime('now'))->add($ttl)->getTimeStamp() - time();
-        }
+        //    $ttl = (new DateTime('now'))->add($ttl)->getTimeStamp() - time();
+        //}
 
         foreach ((array) $values as $key => $value) {
             $this->set($key, $value, $ttl);
