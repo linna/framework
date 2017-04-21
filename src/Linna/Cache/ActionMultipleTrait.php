@@ -65,7 +65,7 @@ trait ActionMultipleTrait
 
         $result = [];
         foreach ((array) $keys as $key) {
-            $result[$key] = $this->get($key);//$this->has($key) ? $this->get($key) : $default;
+            $result[$key] = $this->get($key);
         }
 
         return $result;
@@ -79,11 +79,6 @@ trait ActionMultipleTrait
         if (!is_array($values) && !($values instanceof Traversable)) {
             throw new InvalidArgumentException();
         }
-
-        //if ($ttl instanceof DateInterval) {
-            // Converting to a TTL in seconds
-        //    $ttl = (new DateTime('now'))->add($ttl)->getTimeStamp() - time();
-        //}
 
         foreach ((array) $values as $key => $value) {
             $this->set($key, $value, $ttl);

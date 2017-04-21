@@ -16,13 +16,9 @@ class DiskCacheTest extends TestCase
 {
     protected $cache;
 
-    //protected $cacheSerialize;
-
     public function setUp()
     {
         $this->cache = new DiskCache();
-
-        //$this->cacheSerialize = new DiskCache(['serialize' => true]);
     }
 
     public function KeyProvider()
@@ -51,13 +47,6 @@ class DiskCacheTest extends TestCase
         $this->assertEquals(true, file_exists('/tmp/'.sha1('foo').'.php'));
     }
 
-    /*public function testSetSerialize()
-    {
-        $this->cacheSerialize->set('foo_serialize', [0, 1, 2, 3, 4]);
-
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_serialize').'.php'));
-    }*/
-    
     public function testSetTtlNull()
     {
         $this->cache->set('foo_ttl', [0, 1, 2, 3, 4]);
@@ -106,15 +95,6 @@ class DiskCacheTest extends TestCase
 
         $this->assertEquals([0, 1, 2, 3, 4], $this->cache->get('foo'));
     }
-
-    /*public function testGetSerialize()
-    {
-        $this->cacheSerialize->set('foo_serialize', [0, 1, 2, 3, 4]);
-
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_serialize').'.php'));
-
-        $this->assertEquals([0, 1, 2, 3, 4], $this->cacheSerialize->get('foo_serialize'));
-    }*/
 
     public function testGetDefault()
     {

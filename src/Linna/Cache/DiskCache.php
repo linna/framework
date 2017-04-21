@@ -75,13 +75,7 @@ class DiskCache implements CacheInterface
 
         $cacheValue = include $file;
 
-        //check for unserialize
-        //if ($this->options['serialize']) {
         return unserialize($cacheValue['value']);
-        //}
-
-        //return cache
-        //return $cacheValue['value'];
     }
 
     /**
@@ -120,35 +114,14 @@ class DiskCache implements CacheInterface
             throw new InvalidArgumentException();
         }
 
-        //pick time
-        //$created = time();
-
-        // Converting to a TTL in seconds
-        //if ($ttl instanceof DateInterval) {
-        //    $ttl = (new DateTime('now'))->add($ttl)->getTimeStamp() - $created;
-        //}
-
-        //check for usage of ttl default class option value
-        //if ($ttl === null) {
-        //    $ttl = $this->options['ttl'];
-        //}
-
-        //check for serialize and do if set to true
-        //if ($this->options['serialize']) {
-        //    $value = serialize($value);
-        //}
-
         //create cache array
         $cache = [
-            //'created' => $created,
             'key'     => $key,
             'value'   => serialize($value),
-            //'ttl'     => $ttl,
             'expires' => $this->calculateTtl($ttl),//($ttl) ? $created + $ttl : null,
         ];
 
         //export
-        //$content = var_export($cache, true);
         // HHVM fails at __set_state, so just use object cast for now
         $content = str_replace('stdClass::__set_state', '(object)', var_export($cache, true));
         $content = "<?php return {$content};";
@@ -167,14 +140,8 @@ class DiskCache implements CacheInterface
      */
     private function calculateTtl($ttl) : int
     {
-        //pick time
-        //$created = time();
-
-        // Converting to a TTL in seconds
         if ($ttl instanceof DateInterval) {
-            return (new DateTime('now'))->add($ttl)->getTimeStamp();// - $created;
-            
-            //var_dump($ttl);
+            return (new DateTime('now'))->add($ttl)->getTimeStamp();
         }
 
         //check for usage of ttl default class option value
@@ -182,7 +149,6 @@ class DiskCache implements CacheInterface
             return $this->options['ttl'];
         }
         
-        //var_dump(time() + $ttl);
         return time() + $ttl;
     }
     
