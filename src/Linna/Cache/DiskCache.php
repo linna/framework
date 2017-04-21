@@ -41,7 +41,6 @@ class DiskCache implements CacheInterface
      */
     protected $options = [
         'dir'       => '/tmp',
-        //'serialize' => false,
         'ttl'       => 0,
     ];
 
