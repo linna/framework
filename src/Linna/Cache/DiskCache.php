@@ -118,7 +118,7 @@ class DiskCache implements CacheInterface
         $cache = [
             'key'     => $key,
             'value'   => serialize($value),
-            'expires' => $this->calculateTtl($ttl),//($ttl) ? $created + $ttl : null,
+            'expires' => $this->calculateTtl($ttl),
         ];
 
         //export
