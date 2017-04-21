@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Linna\Cache;
 
 use DateInterval;
-use DateTime;
 use Linna\Cache\Exception\InvalidArgumentException;
 use Traversable;
 
