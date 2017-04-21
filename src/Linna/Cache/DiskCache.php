@@ -84,6 +84,12 @@ class DiskCache implements CacheInterface
         return $cacheValue['value'];
     }
 
+    /**
+     * Checks for cache file
+     * 
+     * @param string $file
+     * @return bool
+     */
     private function doesFileChecksFailed(string $file) : bool
     {
         //check if file exist
