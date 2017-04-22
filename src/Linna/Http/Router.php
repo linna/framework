@@ -53,7 +53,6 @@ class Router
      * @var array List of regex for find type of parameter inside passed routes
      */
     private $types = [
-
         '[0-9A-Za-z]++',
     ];
 
@@ -85,58 +84,77 @@ class Router
      */
     public function validate(string $requestUri, string $requestMethod) : bool
     {
-        //get the current uri
         $currentUri = $this->getCurrentUri($requestUri);
-
-        //matches set empty array
         $matches = [];
-
-        //valid route set to []
-        $validRoute = [];
+        $route = [];
 
         //filter registered routes for find route that match with current uri
         foreach ($this->routes as $value) {
             if (preg_match('`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`', $currentUri, $matches)) {
-                $validRoute = $value;
+                $route = $value;
                 break;
             }
         }
 
+        if ($this->doesRouteNotFound($route, $requestMethod)){
+            return false;
+        }    
+            
+        $this->buildValidRoute($route, $matches);
+        
+        return true;
+    }
+    
+    /**
+     * Checks for a bad route.
+     * 
+     * @param array $route
+     * @return bool
+     */
+    private function doesRouteNotFound(array $route, string $requestMethod) : bool
+    {
         //route daesn't macth
-        if (!$validRoute) {
-            //check and build for bad route
+        if (!$route) {
             $this->buildBadRoute();
 
-            return false;
+            return true;
         }
 
         //non allowed method
-        if (strpos($validRoute['method'], $requestMethod) === false) {
-            //check and build for bad route
+        if (strpos($route['method'], $requestMethod) === false) {
             $this->buildBadRoute();
 
-            return false;
+            return true;
         }
-
+        
+        return false;
+    }
+    
+    /**
+     * Build a valid route.
+     * 
+     * @param array $route
+     * @param array $matches
+     */
+    private function buildValidRoute(array $route, array $matches)
+    {
         //add to route array the passed uri for param check when call
-        $validRoute['matches'] = $matches;
+        $route['matches'] = $matches;
 
         //route match and there is a subpattern with action
         if (count($matches) > 1) {
             //assume that subpattern rapresent action
-            $validRoute['action'] = $matches[1];
+            $route['action'] = $matches[1];
 
             //url clean
-            $validRoute['url'] = preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $validRoute['url']);
+            $route['url'] = preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $route['url']);
         }
 
-        $validRoute['param'] = $this->buildParam($validRoute);
+        $route['param'] = $this->buildParam($route);
 
-        //assign valid route
-        $this->route = new Route($validRoute);
-
-        return true;
+        $this->route = new Route($route);
     }
+
 
     /**
      * Check if a route is valid and
