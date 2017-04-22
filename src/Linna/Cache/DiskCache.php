@@ -78,9 +78,10 @@ class DiskCache implements CacheInterface
     }
 
     /**
-     * Checks for cache file
-     * 
+     * Checks for cache file.
+     *
      * @param string $file
+     *
      * @return bool
      */
     private function doesFileChecksFailed(string $file) : bool
@@ -130,11 +131,12 @@ class DiskCache implements CacheInterface
 
         return true;
     }
-    
+
     /**
-     * Calculate ttl for cache file
-     * 
+     * Calculate ttl for cache file.
+     *
      * @param null|int|DateInterval $ttl
+     *
      * @return int
      */
     private function calculateTtl($ttl) : int
@@ -147,10 +149,10 @@ class DiskCache implements CacheInterface
         if ($ttl === null) {
             return $this->options['ttl'];
         }
-        
+
         return time() + $ttl;
     }
-    
+
     /**
      * {@inheritdoc}
      */

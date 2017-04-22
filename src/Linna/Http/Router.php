@@ -96,25 +96,26 @@ class Router
             }
         }
 
-        if ($this->doesRouteNotFound($route, $requestMethod)){
+        if ($this->doesRouteNotFound($route, $requestMethod)) {
             return false;
-        }    
-            
+        }
+
         $this->buildValidRoute($route, $matches);
-        
+
         return true;
     }
-    
+
     /**
      * Checks for a bad route.
-     * 
+     *
      * @param array $route
+     *
      * @return bool
      */
     private function doesRouteNotFound(array $route, string $requestMethod) : bool
     {
         //route daesn't match
-        if (sizeof($route) === 0) {
+        if (count($route) === 0) {
             $this->buildBadRoute();
 
             return true;
@@ -126,13 +127,13 @@ class Router
 
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
      * Build a valid route.
-     * 
+     *
      * @param array $route
      * @param array $matches
      */
@@ -154,7 +155,6 @@ class Router
 
         $this->route = new Route($route);
     }
-
 
     /**
      * Check if a route is valid and
