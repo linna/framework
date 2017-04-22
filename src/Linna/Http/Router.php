@@ -113,8 +113,8 @@ class Router
      */
     private function doesRouteNotFound(array $route, string $requestMethod) : bool
     {
-        //route daesn't macth
-        if (!$route) {
+        //route daesn't match
+        if (sizeof($route) === 0) {
             $this->buildBadRoute();
 
             return true;
