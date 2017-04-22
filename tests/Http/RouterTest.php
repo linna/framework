@@ -9,6 +9,7 @@
  */
 declare(strict_types=1);
 
+use Linna\Http\NullRoute;
 use Linna\Http\Route;
 use Linna\Http\Router;
 use PHPUnit\Framework\TestCase;
@@ -221,7 +222,7 @@ class RouterTest extends TestCase
         //evaluate request uri
         $this->router->validate('/badroute', 'GET');
 
-        $this->assertEquals(false, $this->router->getRoute());
+        $this->assertInstanceOf(NullRoute::class, $this->router->getRoute());
     }
 
     public function testRewriteModeOff()

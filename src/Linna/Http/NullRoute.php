@@ -7,25 +7,32 @@
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
+declare(strict_types=1);
 
 namespace Linna\Http;
 
 /**
- * Interface for routes.
+ * Describe valid routes.
  */
-interface RouteInterface
+class NullRoute implements RouteInterface
 {
+    protected $route = [];
+
     /**
      * Constructor.
-     *
-     * @param array $route
      */
-    public function __construct(array $route);
+    public function __construct(array $route = [])
+    {
+        unset($route);
+    }
 
     /**
      * Return route array.
      *
      * @return array
      */
-    public function toArray(): array;
+    public function toArray(): array
+    {
+        return $this->route;
+    }
 }

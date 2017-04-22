@@ -160,9 +160,9 @@ class Router
      * Check if a route is valid and
      * return the route object else return a bad route object.
      *
-     * @return Route|bool
+     * @return RouteInterface
      */
-    public function getRoute()
+    public function getRoute() : RouteInterface
     {
         return $this->route;
     }
@@ -176,7 +176,7 @@ class Router
     {
         //check if there is a declared route for errors, if no exit with false
         if (($key = array_search($this->options['badRoute'], array_column($this->routes, 'name'), true)) === false) {
-            $this->route = false;
+            $this->route = new NullRoute();
 
             return false;
         }
