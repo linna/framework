@@ -62,7 +62,6 @@ class Router
      *
      * @param array $routes
      * @param array $options
-     *
      */
     public function __construct(array $routes = [], array $options = [])
     {
