@@ -41,7 +41,6 @@ class RouterCached extends Router
      * @param array          $options Options for router config
      * @param CacheInterface $cache   Memcached resource
      *
-     * @todo Make router compatible with PSR7 REQUEST,instead of request uri pass a PSR7 request object
      */
     public function __construct(array $routes, array $options, CacheInterface $cache)
     {

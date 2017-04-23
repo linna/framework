@@ -63,7 +63,6 @@ class Router
      * @param array $routes
      * @param array $options
      *
-     * @todo Make router compatible with PSR7 REQUEST, instead of request uri pass a PSR7 request object
      */
     public function __construct(array $routes = [], array $options = [])
     {
