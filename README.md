@@ -7,6 +7,7 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/s3b4stian/linna-framework/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/s3b4stian/linna-framework/?branch=master)
 [![Code Climate](https://codeclimate.com/github/s3b4stian/linna-framework/badges/gpa.svg)](https://codeclimate.com/github/s3b4stian/linna-framework)
 [![Test Coverage](https://codeclimate.com/github/s3b4stian/linna-framework/badges/coverage.svg)](https://codeclimate.com/github/s3b4stian/linna-framework/coverage)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/76308064-4584-4bea-974d-525980ebbc72/mini.png)](https://insight.sensiolabs.com/projects/76308064-4584-4bea-974d-525980ebbc72)
 [![StyleCI](https://styleci.io/repos/41168432/shield?branch=master&style=flat)](https://styleci.io/repos/41168432)
 
 ## About this framework
