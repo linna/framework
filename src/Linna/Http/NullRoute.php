@@ -16,8 +16,6 @@ namespace Linna\Http;
  */
 class NullRoute implements RouteInterface
 {
-    protected $route = [];
-
     /**
      * Constructor.
      */
@@ -33,6 +31,6 @@ class NullRoute implements RouteInterface
      */
     public function toArray(): array
     {
-        return $this->route;
+        return [];
     }
 }
