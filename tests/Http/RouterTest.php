@@ -248,7 +248,7 @@ class RouterTest extends TestCase
         $this->assertEquals('enable', $arrayRoute['action']);
         $this->assertEquals(['id'=>'5'], $arrayRoute['param']);
     }
-    
+
     public function restRouteProvider()
     {
         return [
@@ -258,7 +258,7 @@ class RouterTest extends TestCase
             ['/user/5', 'DELETE', 'Delete'],
         ];
     }
-    
+
     /**
      * @dataProvider restRouteProvider
      */
@@ -302,20 +302,20 @@ class RouterTest extends TestCase
                 'action'     => '',
             ],
         ];
-        
+
         $router = new Router($restRoutes, [
             'basePath'    => '/',
             'badRoute'    => 'E404',
             'rewriteMode' => true,
         ]);
-        
+
         $router->validate($uri, $method);
 
         //get route
         $route = $router->getRoute();
 
         $arrayRoute = $route->toArray();
-        
+
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals('User'.$action.'Model', $arrayRoute['model']);
         $this->assertEquals('User'.$action.'View', $arrayRoute['view']);
