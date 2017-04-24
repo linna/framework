@@ -13,7 +13,7 @@ namespace Linna\Shared;
 
 /**
  * Class Options Trait
- * Provide methods for mange options in a class.
+ * Provide methods for manage options in a class.
  *
  * @property mixed $options Class options property
  */
