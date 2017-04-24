@@ -248,4 +248,77 @@ class RouterTest extends TestCase
         $this->assertEquals('enable', $arrayRoute['action']);
         $this->assertEquals(['id'=>'5'], $arrayRoute['param']);
     }
+    
+    public function restRouteProvider()
+    {
+        return [
+            ['/user/5', 'GET', 'Show'],
+            ['/user/5', 'POST', 'Create'],
+            ['/user/5', 'PUT', 'Update'],
+            ['/user/5', 'DELETE', 'Delete'],
+        ];
+    }
+    
+    /**
+     * @dataProvider restRouteProvider
+     */
+    public function testRESTRouting($uri, $method, $action)
+    {
+        $restRoutes = [
+            [
+                'name'       => '',
+                'method'     => 'GET',
+                'url'        => '/user/[id]',
+                'model'      => 'UserShowModel',
+                'view'       => 'UserShowView',
+                'controller' => 'UserShowController',
+                'action'     => '',
+            ],
+            [
+                'name'       => '',
+                'method'     => 'POST',
+                'url'        => '/user/[id]',
+                'model'      => 'UserCreateModel',
+                'view'       => 'UserCreateView',
+                'controller' => 'UserCreateController',
+                'action'     => '',
+            ],
+            [
+                'name'       => '',
+                'method'     => 'PUT',
+                'url'        => '/user/[id]',
+                'model'      => 'UserUpdateModel',
+                'view'       => 'UserUpdateView',
+                'controller' => 'UserUpdateController',
+                'action'     => '',
+            ],
+            [
+                'name'       => '',
+                'method'     => 'DELETE',
+                'url'        => '/user/[id]',
+                'model'      => 'UserDeleteModel',
+                'view'       => 'UserDeleteView',
+                'controller' => 'UserDeleteController',
+                'action'     => '',
+            ],
+        ];
+        
+        $router = new Router($restRoutes, [
+            'basePath'    => '/',
+            'badRoute'    => 'E404',
+            'rewriteMode' => true,
+        ]);
+        
+        $router->validate($uri, $method);
+
+        //get route
+        $route = $router->getRoute();
+
+        $arrayRoute = $route->toArray();
+        
+        $this->assertInstanceOf(Route::class, $route);
+        $this->assertEquals('User'.$action.'Model', $arrayRoute['model']);
+        $this->assertEquals('User'.$action.'View', $arrayRoute['view']);
+        $this->assertEquals('User'.$action.'Controller', $arrayRoute['controller']);
+    }
 }

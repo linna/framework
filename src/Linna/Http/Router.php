@@ -83,63 +83,57 @@ class Router
     public function validate(string $requestUri, string $requestMethod) : bool
     {
         $currentUri = $this->getCurrentUri($requestUri);
-        $matches = [];
-        $route = [];
-
-        //filter registered routes for find route that match with current uri
-        foreach ($this->routes as $value) {
-            if (preg_match('`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`', $currentUri, $matches)) {
-                $route = $value;
-                break;
-            }
-        }
-
-        if ($this->doesRouteNotFound($route, $requestMethod)) {
+        
+        $route = $this->findRoute($currentUri, $requestMethod);
+        
+        if (count($route) === 0) {
+            
+            $this->buildBadRoute();
             return false;
         }
 
-        $this->buildValidRoute($route, $matches);
+        $this->buildValidRoute($route);
 
         return true;
     }
-
+    
     /**
-     * Checks for a bad route.
-     *
-     * @param array $route
-     *
-     * @return bool
+     * Find if provided route match with one of registered routes.
+     * 
+     * @param string $uri
+     * @param string $method
+     * @return array
      */
-    private function doesRouteNotFound(array $route, string $requestMethod) : bool
+    private function findRoute(string $uri, string $method) : array
     {
-        //route daesn't match
-        if (count($route) === 0) {
-            $this->buildBadRoute();
-
-            return true;
+        $matches = [];
+        $route = [];
+        
+        foreach ($this->routes as $value) {
+            
+            $urlMatch = preg_match('`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`', $uri, $matches);
+            $methodMatch = strpos($value['method'], $method);
+            
+            if ($urlMatch && $methodMatch !== false) {
+                $route = $value;
+                $route['matches'] = $matches;
+                break;
+            }
         }
-
-        //non allowed method
-        if (strpos($route['method'], $requestMethod) === false) {
-            $this->buildBadRoute();
-
-            return true;
-        }
-
-        return false;
+        
+        return $route;
     }
-
+    
     /**
      * Build a valid route.
      *
      * @param array $route
-     * @param array $matches
      */
-    private function buildValidRoute(array $route, array $matches)
+    private function buildValidRoute(array $route)
     {
         //add to route array the passed uri for param check when call
-        $route['matches'] = $matches;
-
+        $matches = $route['matches'];
+        
         //route match and there is a subpattern with action
         if (count($matches) > 1) {
             //assume that subpattern rapresent action
