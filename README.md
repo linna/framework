@@ -10,15 +10,16 @@
 [![StyleCI](https://styleci.io/repos/41168432/shield?branch=master&style=flat)](https://styleci.io/repos/41168432)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/76308064-4584-4bea-974d-525980ebbc72/mini.png)](https://insight.sensiolabs.com/projects/76308064-4584-4bea-974d-525980ebbc72)
 
-
 ## About this framework
-Started as project for learn and master PHP, Linna framework turned into a simple and elegant toolset for build web application.
-<br/><br/> 
-The development of Framework is done trying to get PHP best pratices always in mind. 
-Code was fully commented, ready for [phpDocumentor](https://www.phpdoc.org/) and 
-is written applying the five [SOLID](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)) principles.<br/><br/>
+Started as a project for learning the modern PHP, it has become a set of simple and elegant tools for creating web applications.
+
+### Quality of code
+The development of Framework is done trying to get PHP best pratices always in mind.
+Code was fully tested and fully commented, ready for [phpDocumentor](https://www.phpdoc.org/) and 
+is written applying the five [SOLID](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)) principles.  
 If you wish deepen PHP best pratices you can start from [phptherightway](http://www.phptherightway.com/).
-<br/><br/>
+
+### Production environment
 At moment, code, isn't utilized in production environment, I hope in future, to use it for develop a new app as replacement of my actual (and very old) personnel management web application.
 
 ## Features
@@ -26,11 +27,10 @@ At moment, code, isn't utilized in production environment, I hope in future, to 
    * Model View Controller
    * Session Management
    * Login and User/Permission access control
-   * Routing
-   * Dependency Injections and PSR-11 Container
+   * Rest Router
+   * Dependency Injections
    * Wrappers for data base
-   * PSR-16 Simple Cache
-   * PSR-4 Autoloader
+   * Implementation for PSR-4 Autoloader, PSR-11 Container and PSR-16 Simple Cache
 
 ## Require
 
