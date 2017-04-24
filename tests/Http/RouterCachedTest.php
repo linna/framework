@@ -73,7 +73,7 @@ class RouterCachedTest extends TestCase
             'basePath'    => '/',
             'badRoute'    => 'E404',
             'rewriteMode' => true,
-        ], new DiskCache(['serialize' => true]));
+        ], new DiskCache());
     }
 
     public function testCachedRoute()
@@ -141,7 +141,7 @@ class RouterCachedTest extends TestCase
             'basePath'    => '/',
             'badRoute'    => 'E404',
             'rewriteMode' => false,
-        ], new DiskCache(['serialize' => true]));
+        ], new DiskCache());
 
         //evaluate request uri
         $router->validate('/index.php/user/5/enable', 'GET');
