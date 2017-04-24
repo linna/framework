@@ -69,7 +69,7 @@ class Session implements ArrayAccess
     public function __construct(array $options = [])
     {
         //set options
-        $this->options = array_replace_recursive($this->options, $options);
+        $this->setOptions($options);
 
         $this->name = $options['name'] ?? $this->options['name'];
 

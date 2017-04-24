@@ -66,7 +66,7 @@ class Router
     public function __construct(array $routes = [], array $options = [])
     {
         //set options
-        $this->options = array_replace_recursive($this->options, $options);
+        $this->setOptions($options);
 
         //set routes
         $this->routes = $routes;

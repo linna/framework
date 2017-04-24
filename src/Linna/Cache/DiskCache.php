@@ -52,7 +52,7 @@ class DiskCache implements CacheInterface
     public function __construct(array $options = [])
     {
         //set options
-        $this->options = array_replace_recursive($this->options, $options);
+        $this->setOptions($options);
     }
 
     /**
