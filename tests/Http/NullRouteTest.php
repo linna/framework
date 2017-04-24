@@ -19,7 +19,7 @@ class NullRouteTest extends TestCase
         $this->assertInstanceOf(NullRoute::class, new NullRoute());
     }
 
-    public function testToArray(): array
+    public function testToArray()
     {
         $this->assertEquals([], (new NullRoute())->toArray());
     }
