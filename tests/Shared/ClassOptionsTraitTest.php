@@ -46,4 +46,16 @@ class ClassOptionsTest extends TestCase
 
         $this->assertEquals(true, true);
     }
+    
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSetBadOptions()
+    {
+        $this->router->setOptions([
+            'basePath'    => '/',
+            'badRoute'    => 'E404',
+            'rewrite' => true,
+        ]);
+    }
 }
