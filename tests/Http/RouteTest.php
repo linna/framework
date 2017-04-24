@@ -85,7 +85,7 @@ class RouteTest extends TestCase
         }, $this->route->getCallback());
     }
 
-    public function toArray(): array
+    public function testToArray(): array
     {
         $route = [
             'name'       => 'Home',
