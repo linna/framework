@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased][v0.17.0](https://github.com/s3b4stian/linna-framework/compare/v0.16.0...v0.17.0) - 2017-XX-XX
+
+### Added
+* `Linna\Http\Router` now can use REST routes
+* `Linna\Http\Router` now return a `Linna\Http\NullRoute` when didn't find a route
+* `Linna\Http\NullRoute` object
+* `Linna\Shared\ClassOptionsTrait->setOptions` now throw an `\InvalidArgumentException` for bad option names
+
+### Changed
+
 ## [v0.16.0](https://github.com/s3b4stian/linna-framework/compare/v0.15.0...v0.16.0) - 2017-04-20
 
 ### Added
