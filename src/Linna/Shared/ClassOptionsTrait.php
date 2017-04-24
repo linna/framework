@@ -13,7 +13,7 @@ namespace Linna\Shared;
 
 /**
  * Class Options Trait
- * Provide methods for set options.
+ * Provide methods for mange options in a class.
  *
  * @property mixed $options Class options property
  */
@@ -25,7 +25,7 @@ trait ClassOptionsTrait
      * @param string $key
      * @param type   $value
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException If provided option name (key) are not valid
      */
     public function setOption(string $key, $value)
     {
@@ -40,9 +40,20 @@ trait ClassOptionsTrait
      * Set multiple Options.
      *
      * @param array $options
+     * 
+     * @throws \InvalidArgumentException If provided option names are not valid
      */
     public function setOptions(array $options)
     {
+        $badKeys = array_diff_key($options, $this->options);
+
+        if (sizeof($badKeys) > 0) {
+
+            $keys = implode(', ', array_keys($badKeys));
+
+            throw new \InvalidArgumentException(__CLASS__." class does not support the {$keys} option.");
+        }
+
         $this->options = array_replace_recursive($this->options, $options);
     }
 }
