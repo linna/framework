@@ -83,12 +83,12 @@ class Router
     public function validate(string $requestUri, string $requestMethod) : bool
     {
         $currentUri = $this->getCurrentUri($requestUri);
-        
+
         $route = $this->findRoute($currentUri, $requestMethod);
-        
+
         if (count($route) === 0) {
-            
             $this->buildBadRoute();
+
             return false;
         }
 
@@ -96,34 +96,34 @@ class Router
 
         return true;
     }
-    
+
     /**
      * Find if provided route match with one of registered routes.
-     * 
+     *
      * @param string $uri
      * @param string $method
+     *
      * @return array
      */
     private function findRoute(string $uri, string $method) : array
     {
         $matches = [];
         $route = [];
-        
+
         foreach ($this->routes as $value) {
-            
             $urlMatch = preg_match('`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`', $uri, $matches);
             $methodMatch = strpos($value['method'], $method);
-            
+
             if ($urlMatch && $methodMatch !== false) {
                 $route = $value;
                 $route['matches'] = $matches;
                 break;
             }
         }
-        
+
         return $route;
     }
-    
+
     /**
      * Build a valid route.
      *
@@ -133,7 +133,7 @@ class Router
     {
         //add to route array the passed uri for param check when call
         $matches = $route['matches'];
-        
+
         //route match and there is a subpattern with action
         if (count($matches) > 1) {
             //assume that subpattern rapresent action

@@ -40,15 +40,14 @@ trait ClassOptionsTrait
      * Set multiple Options.
      *
      * @param array $options
-     * 
+     *
      * @throws \InvalidArgumentException If provided option names are not valid
      */
     public function setOptions(array $options)
     {
         $badKeys = array_diff_key($options, $this->options);
 
-        if (sizeof($badKeys) > 0) {
-
+        if (count($badKeys) > 0) {
             $keys = implode(', ', array_keys($badKeys));
 
             throw new \InvalidArgumentException(__CLASS__." class does not support the {$keys} option.");
