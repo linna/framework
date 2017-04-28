@@ -37,11 +37,11 @@ class RouterCached extends Router
     /**
      * Constructor.
      *
+     * @param CacheInterface $cache   Cache resource
      * @param array          $routes  List of registerd routes for the app in routes.php
      * @param array          $options Options for router config
-     * @param CacheInterface $cache   Memcached resource
      */
-    public function __construct(array $routes, array $options, CacheInterface $cache)
+    public function __construct(CacheInterface $cache, array $routes = [], array $options = [])
     {
         //call parent constructor
         parent::__construct($routes, $options);

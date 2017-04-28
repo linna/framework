@@ -69,11 +69,11 @@ class RouterCachedTest extends TestCase
         ];
 
         //start router
-        $this->router = new RouterCached($routes, [
+        $this->router = new RouterCached(new DiskCache(), $routes, [
             'basePath'    => '/',
             'badRoute'    => 'E404',
             'rewriteMode' => true,
-        ], new DiskCache());
+        ]);
     }
 
     public function testCachedRoute()
@@ -137,11 +137,11 @@ class RouterCachedTest extends TestCase
         ];
 
         //start router
-        $router = new RouterCached($routes, [
+        $router = new RouterCached(new DiskCache(), $routes, [
             'basePath'    => '/',
             'badRoute'    => 'E404',
             'rewriteMode' => false,
-        ], new DiskCache());
+        ]);
 
         //evaluate request uri
         $router->validate('/index.php/user/5/enable', 'GET');
