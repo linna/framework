@@ -33,7 +33,7 @@ class AuthorizeTest extends TestCase
             'options'  => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING],
         ];
 
-        $pdo = (new StorageFactory())->createConnection('mysqlpdo', $options);
+        $pdo = (new StorageFactory('mysqlpdo', $options))->getConnection();
 
         $session = new Session();
         $password = new Password();
@@ -84,7 +84,7 @@ class AuthorizeTest extends TestCase
 
         //create new pdo here because run in separate process try to serialize it
         //and return error
-        $pdo = (new StorageFactory())->createConnection('mysqlpdo', $options);
+        $pdo = (new StorageFactory('mysqlpdo', $options))->getConnection();
 
         //hash password
         $storedPassword = $this->password->hash('password');

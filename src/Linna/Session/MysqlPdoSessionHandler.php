@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Session;
 
-use Linna\Storage\MysqlPdoObject;
+use Linna\Storage\MysqlPdoStorage;
 use SessionHandlerInterface;
 
 /**
@@ -39,9 +39,9 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
     /**
      * Constructor.
      *
-     * @param MysqlPdoAdapter $storage MysqlPdoResource
+     * @param MysqlPdoStorage $storage MysqlPdoResource
      */
-    public function __construct(MysqlPdoObject $storage)
+    public function __construct(MysqlPdoStorage $storage)
     {
         $this->dBase = $storage->getResource();
     }

@@ -9,22 +9,15 @@
  */
 declare(strict_types=1);
 
-use Linna\Storage\MongoDbObject;
-use Linna\Storage\MysqliObject;
-use Linna\Storage\MysqlPdoObject;
+use Linna\Storage\MongoDbStorage;
+use Linna\Storage\MysqliStorage;
+use Linna\Storage\MysqlPdoStorage;
 use Linna\Storage\StorageFactory;
 use MongoDB\Client;
 use PHPUnit\Framework\TestCase;
 
 class StorageFactoryTest extends TestCase
 {
-    protected $factory;
-
-    public function setUp()
-    {
-        $this->factory = new StorageFactory();
-    }
-
     public function testCreateMysqlPdo()
     {
         $options = [
@@ -32,12 +25,12 @@ class StorageFactoryTest extends TestCase
             'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
             'options'  => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING],
-        ];
+        ];       
 
-        $adapter = $this->factory->createConnection('mysqlpdo', $options);
+        $driver = (new StorageFactory('mysqlpdo', $options))->getConnection();
 
-        $this->assertInstanceOf(MysqlPdoObject::class, $adapter);
-        $this->assertInstanceOf(\PDO::class, $adapter->getResource());
+        $this->assertInstanceOf(MysqlPdoStorage::class, $driver);
+        $this->assertInstanceOf(\PDO::class, $driver->getResource());
     }
 
     public function testCreateMysqlI()
@@ -50,10 +43,10 @@ class StorageFactoryTest extends TestCase
             'port'     => 3306,
         ];
 
-        $adapter = $this->factory->createConnection('mysqli', $options);
+        $driver = (new StorageFactory('mysqli', $options))->getConnection();
 
-        $this->assertInstanceOf(MysqliObject::class, $adapter);
-        $this->assertInstanceOf(\mysqli::class, $adapter->getResource());
+        $this->assertInstanceOf(MysqliStorage::class, $driver);
+        $this->assertInstanceOf(\mysqli::class, $driver->getResource());
     }
 
     public function testCreateMongoDb()
@@ -64,10 +57,10 @@ class StorageFactoryTest extends TestCase
             'driverOptions' => [],
         ];
 
-        $adapter = $this->factory->createConnection('mongodb', $options);
+        $driver = (new StorageFactory('mongodb', $options))->getConnection();
 
-        $this->assertInstanceOf(MongoDbObject::class, $adapter);
-        $this->assertInstanceOf(Client::class, $adapter->getResource());
+        $this->assertInstanceOf(MongoDbStorage::class, $driver);
+        $this->assertInstanceOf(Client::class, $driver->getResource());
     }
 
     /**
@@ -75,6 +68,6 @@ class StorageFactoryTest extends TestCase
      */
     public function testUnsupportedAdapter()
     {
-        $this->factory->createConnection('unsupported', []);
+        (new StorageFactory('', []))->getConnection();
     }
 }

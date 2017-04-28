@@ -14,9 +14,9 @@ namespace Linna\Storage;
 use mysqli;
 
 /**
- * Mysql Improved Extension Adapter.
+ * Mysql Improved Extension.
  */
-class MysqliObject implements StorageObjectInterface
+class MysqliStorage implements StorageInterface
 {
     /**
      * @var string Mysql host es. 127.0.0.1
@@ -68,7 +68,7 @@ class MysqliObject implements StorageObjectInterface
     /**
      * Get Resource.
      *
-     * @return \mysqli
+     * @return mysqli
      */
     public function getResource()
     {

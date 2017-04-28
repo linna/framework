@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 use Linna\Session\MysqlPdoSessionHandler;
 use Linna\Session\Session;
-use Linna\Storage\MysqlPdoObject;
+use Linna\Storage\MysqlPdoStorage;
 use PHPUnit\Framework\TestCase;
 
 class MysqlPdoSessionHandlerTest extends TestCase
@@ -24,7 +24,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
 
     public function setUp()
     {
-        $pdo = new MysqlPdoObject(
+        $pdo = new MysqlPdoStorage(
             $GLOBALS['pdo_mysql_dsn'],
             $GLOBALS['pdo_mysql_user'],
             $GLOBALS['pdo_mysql_password'],
@@ -88,7 +88,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
      */
     public function testGc()
     {
-        $pdo = new MysqlPdoObject(
+        $pdo = new MysqlPdoStorage(
             $GLOBALS['pdo_mysql_dsn'],
             $GLOBALS['pdo_mysql_user'],
             $GLOBALS['pdo_mysql_password'],

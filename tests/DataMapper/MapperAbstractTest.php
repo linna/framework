@@ -28,10 +28,10 @@ class MapperAbstractTest extends TestCase
             'options'  => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING],
         ];
 
-        $adapter = (new StorageFactory())->createConnection('mysqlpdo', $options);
+        $driver = (new StorageFactory('mysqlpdo', $options))->getConnection();
 
         $password = new Password();
-        $this->mapper = new UserMapper($adapter, $password);
+        $this->mapper = new UserMapper($driver, $password);
     }
 
     public function testNewMapper()

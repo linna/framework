@@ -9,14 +9,14 @@
  */
 declare(strict_types=1);
 
-use Linna\Storage\MysqliObject;
+use Linna\Storage\MysqliStorage;
 use PHPUnit\Framework\TestCase;
 
 class MysqliTest extends TestCase
 {
     public function testConnection()
     {
-        $mysqliAdapter = new MysqliObject(
+        $mysqliAdapter = new MysqliStorage(
             '127.0.0.1',
             $GLOBALS['pdo_mysql_user'],
             $GLOBALS['pdo_mysql_password'],
@@ -40,13 +40,14 @@ class MysqliTest extends TestCase
 
     /**
      * @dataProvider connectionDataProvider
+     * @expectedException Exception
      */
     public function testFailConnection($host, $user, $password, $database, $port)
     {
-        $this->expectException(\Exception::class);
+        //$this->expectException(\Exception::class);
 
-        $mysqliAdapter = new MysqliObject($host, $user, $password, $database, $port);
+        /*$mysqliAdapter = */(new MysqliStorage($host, $user, $password, $database, $port))->getResource();
 
-        $resource = $mysqliAdapter->getResource();
+        //$resource = $mysqliAdapter->getResource();
     }
 }

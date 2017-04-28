@@ -9,14 +9,14 @@
  */
 declare(strict_types=1);
 
-use Linna\Storage\MysqlPdoObject;
+use Linna\Storage\MysqlPdoStorage;
 use PHPUnit\Framework\TestCase;
 
-class MysqlPdoObjectTest extends TestCase
+class MysqlPdoStorageTest extends TestCase
 {
     public function testConnection()
     {
-        $mysqlPdoAdapter = new MysqlPdoObject(
+        $mysqlPdoAdapter = new MysqlPdoStorage(
             $GLOBALS['pdo_mysql_dsn'],
             $GLOBALS['pdo_mysql_user'],
             $GLOBALS['pdo_mysql_password'],
@@ -37,13 +37,14 @@ class MysqlPdoObjectTest extends TestCase
 
     /**
      * @dataProvider connectionDataProvider
+     * @expectedException Exception
      */
     public function testFailConnection($dsn, $user, $password)
     {
-        $this->expectException(\Exception::class);
+        //$this->expectException(\Exception::class);
 
-        $mysqlPdoAdapter = new MysqlPdoObject($dsn, $user, $password, []);
+        /*$mysqlPdoAdapter = */(new MysqlPdoStorage($dsn, $user, $password, []))->getResource();
 
-        $resource = $mysqlPdoAdapter->getResource();
+        //$resource = $mysqlPdoAdapter->getResource();
     }
 }

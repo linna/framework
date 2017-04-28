@@ -31,7 +31,7 @@ class EnhancedUserTest extends TestCase
             'options'  => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING],
         ];
 
-        $pdo = (new StorageFactory())->createConnection('mysqlpdo', $options);
+        $pdo = (new StorageFactory('mysqlpdo', $options))->getConnection();
 
         $password = new Password();
 

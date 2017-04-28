@@ -19,29 +19,51 @@ use InvalidArgumentException;
 class StorageFactory
 {
     /**
+     * @var string $driver One of supported drivers   
+     */
+    private $driver;
+
+    /**
+     * @var array $options Options for the driver
+     */
+    private $options;
+
+    /**
+     * Constructor.
+     * 
+     * @param string $driver
+     * @param array $options
+     */
+    public function __construct(string $driver, array $options)
+    {
+        $this->driver = $driver;
+        $this->options = $options;
+    }
+    
+    /**
      * Create Database Connection.
-     *
-     * @param string $adapter
-     * @param array  $options
      *
      * @throws InvalidArgumentException If requred adapter is not supported
      *
-     * @return \Linna\Storage\MysqlPdoObject|\Linna\Storage\MysqliObject|\Linna\Storage\MongoDbObject
+     * @return StorageInterface
      */
-    public function createConnection(string $adapter, array $options) : StorageObjectInterface
+    public function getConnection() : StorageInterface
     {
-        if ($adapter === 'mysqlpdo') {
-            return new MysqlPdoObject($options['dsn'], $options['user'], $options['password'], $options['options']);
+        $driver = $this->driver;
+        $options = $this->options;
+
+        if ($driver === 'mysqlpdo') {
+            return new MysqlPdoStorage($options['dsn'], $options['user'], $options['password'], $options['options']);
         }
 
-        if ($adapter === 'mysqli') {
-            return new MysqliObject($options['host'], $options['user'], $options['password'], $options['database'], $options['port']);
+        if ($driver === 'mysqli') {
+            return new MysqliStorage($options['host'], $options['user'], $options['password'], $options['database'], $options['port']);
         }
 
-        if ($adapter === 'mongodb') {
-            return new MongoDbObject($options['uri'], $options['uriOptions'], $options['driverOptions']);
+        if ($driver === 'mongodb') {
+            return new MongoDbStorage($options['uri'], $options['uriOptions'], $options['driverOptions']);
         }
 
-        throw new InvalidArgumentException("[$adapter] not supported.");
+        throw new InvalidArgumentException("[$driver] not supported.");
     }
 }

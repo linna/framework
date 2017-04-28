@@ -17,7 +17,7 @@ use Linna\Auth\Password;
 use Linna\Auth\PermissionMapperInterface;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\NullDomainObject;
-use Linna\Storage\MysqlPdoObject;
+use Linna\Storage\MysqlPdoStorage;
 
 /**
  * EnhancedUserMapper.
@@ -32,11 +32,11 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     /**
      * Constructor.
      *
-     * @param MysqlPdoObject            $dBase
+     * @param MysqlPdoStorage           $dBase
      * @param Password                  $password
      * @param PermissionMapperInterface $permissionMapper
      */
-    public function __construct(MysqlPdoObject $dBase, Password $password, PermissionMapperInterface $permissionMapper)
+    public function __construct(MysqlPdoStorage $dBase, Password $password, PermissionMapperInterface $permissionMapper)
     {
         parent::__construct($dBase, $password);
 

@@ -14,9 +14,9 @@ namespace Linna\Storage;
 use MongoDB\Client;
 
 /**
- * MongoDB Adapter.
+ * MongoDB.
  */
-class MongoDbObject implements StorageObjectInterface
+class MongoDbStorage implements StorageInterface
 {
     /**
      * @var string String for MongoDB connection
