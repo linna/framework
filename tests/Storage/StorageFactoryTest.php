@@ -25,7 +25,7 @@ class StorageFactoryTest extends TestCase
             'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
             'options'  => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING],
-        ];       
+        ];
 
         $driver = (new StorageFactory('mysqlpdo', $options))->getConnection();
 

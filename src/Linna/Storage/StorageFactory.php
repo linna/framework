@@ -19,27 +19,27 @@ use InvalidArgumentException;
 class StorageFactory
 {
     /**
-     * @var string $driver One of supported drivers   
+     * @var string One of supported drivers
      */
     private $driver;
 
     /**
-     * @var array $options Options for the driver
+     * @var array Options for the driver
      */
     private $options;
 
     /**
      * Constructor.
-     * 
+     *
      * @param string $driver
-     * @param array $options
+     * @param array  $options
      */
     public function __construct(string $driver, array $options)
     {
         $this->driver = $driver;
         $this->options = $options;
     }
-    
+
     /**
      * Create Database Connection.
      *

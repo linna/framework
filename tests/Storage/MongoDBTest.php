@@ -26,7 +26,7 @@ class MongoDbStorageTest extends TestCase
     public function testFailConnection()
     {
         //$this->expectException(\Exception::class);
-        
+
         (new MongoDbStorage('mongodb:/localhost:27017'))->getResource();
         /*$mongoDbAdapter = new MongoDbStorage('mongodb:/localhost:27017');
 
