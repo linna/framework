@@ -6,7 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased][v0.17.0](https://github.com/s3b4stian/linna-framework/compare/v0.16.0...v0.17.0) - 2017-XX-XX
+## [v0.17.0](https://github.com/s3b4stian/linna-framework/compare/v0.16.0...v0.17.0) - 2017-05-05
+
+### 5 Maggio, May 5
+* [Napoleon death](https://en.wikipedia.org/wiki/Napoleon)
+* [May 5](https://it.wikipedia.org/wiki/Il_cinque_maggio)
 
 ### Added
 * `Linna\Http\Router` now can use REST routes
@@ -15,6 +19,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Shared\ClassOptionsTrait->setOptions` now throw an `\InvalidArgumentException` for bad option names
 
 ### Changed
+* `Linna\Http\RouterCached` constructor parameters order changed
+* `Linna\Storage\MysqlPdoObject` changed name to `Linna\Storage\MysqlPdoStorage` 
+* `Linna\Storage\MysqliObject` changed name to `Linna\Storage\MysqliStorage`
+* `Linna\Storage\MongoDbOject` changed name to `Linna\Storage\MongoDbStorage`
+* `Linna\Storage\StorageObjectInterface` changed name to `Linna\Storage\StorageInterface`
 
 ## [v0.16.0](https://github.com/s3b4stian/linna-framework/compare/v0.15.0...v0.16.0) - 2017-04-20
 
