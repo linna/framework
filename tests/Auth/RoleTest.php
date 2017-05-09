@@ -69,6 +69,16 @@ class RoleTest extends TestCase
         $this->assertEquals($arrayUsers, $role->showUsers());
     }
 
+    public function testRoleGetUsers()
+    {
+        $users = $this->enhancedUserMapper->fetchAll();
+
+        $role = $this->roleMapper->create();
+        $role->setUsers($users);
+
+        $this->assertEquals($users, $role->gerUsers()); 
+    }
+
     public function testIsUserInRole()
     {
         $user = $this->enhancedUserMapper->fetchAll();
@@ -94,6 +104,16 @@ class RoleTest extends TestCase
         $role->setPermissions($permission);
 
         $this->assertEquals($arrayPermissions, $role->showPermissions());
+    }
+
+    public function testRoleGetPermission()
+    {
+        $permission = $this->permissionMapper->fetchAll();
+
+        $role = $this->roleMapper->create();
+        $role->setPermissions($permission);
+
+        $this->assertEquals($permission, $role->getPermissions());
     }
 
     public function testRoleCan()
