@@ -66,7 +66,7 @@ class Role extends DomainObjectAbstract
     }
 
     /**
-     * Show users in group.
+     * Show users in role.
      *
      * @return array
      */
@@ -79,6 +79,16 @@ class Role extends DomainObjectAbstract
         }
 
         return $users;
+    }
+    
+    /**
+     * Get users in role.
+     *
+     * @return array
+     */
+    public function getUsers() : array
+    {
+        return $this->users;
     }
 
     /**
