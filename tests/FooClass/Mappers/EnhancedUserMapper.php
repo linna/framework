@@ -69,9 +69,9 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
      */
     public function fetchByName(string $userName) : DomainObjectInterface
     {
-        $pdos = $this->dBase->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE md5(name) = :name');
-
         $hashedUserName = md5($userName);
+
+        $pdos = $this->dBase->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE md5(name) = :name');
 
         $pdos->bindParam(':name', $hashedUserName, \PDO::PARAM_STR);
         $pdos->execute();
@@ -98,7 +98,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
 
         $users = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Auth\EnhancedUser', [$this->password]);
 
-        return $this->fillUsersArray($users);
+        return $this->setUserPermission($users);
     }
 
     /**
@@ -114,7 +114,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
 
         $users = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Auth\EnhancedUser', [$this->password]);
 
-        return $this->fillUsersArray($users);
+        return $this->setUserPermission($users);
     }
 
     /**
@@ -131,7 +131,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
 
         $users = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Auth\EnhancedUser', [$this->password]);
 
-        return $this->fillUsersArray($users);
+        return $this->setUserPermission($users);
     }
 
     /**
@@ -149,16 +149,16 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
      *
      * @return array
      */
-    protected function fillUsersArray(array $users) : array
+    protected function setUserPermission(array $users) : array
     {
-        $arrayUsers = [];
+        $tempArray = [];
 
         foreach ($users as $user) {
             $user->setPermissions($this->permissionMapper->fetchPermissionsByUser($user->getId()));
-            $arrayUsers[] = $user;
+            $tempArray[] = $user;
         }
 
-        return $arrayUsers;
+        return $tempArray;
     }
 
     /**
