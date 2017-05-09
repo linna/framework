@@ -76,7 +76,7 @@ class RoleTest extends TestCase
         $role = $this->roleMapper->create();
         $role->setUsers($users);
 
-        $this->assertEquals($users, $role->gerUsers()); 
+        $this->assertEquals($users, $role->getUsers());
     }
 
     public function testIsUserInRole()
