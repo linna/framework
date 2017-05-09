@@ -46,7 +46,7 @@ trait PermissionTrait
 
         return $arrayPermissions;
     }
-    
+
     /**
      * Get Permissions.
      *

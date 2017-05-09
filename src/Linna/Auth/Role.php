@@ -80,7 +80,7 @@ class Role extends DomainObjectAbstract
 
         return $users;
     }
-    
+
     /**
      * Get users in role.
      *
