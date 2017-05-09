@@ -46,6 +46,16 @@ trait PermissionTrait
 
         return $arrayPermissions;
     }
+    
+    /**
+     * Get Permissions.
+     *
+     * @return array
+     */
+    public function getPermissions() : array
+    {
+        return $this->permission;
+    }
 
     /**
      * Check Permission.
