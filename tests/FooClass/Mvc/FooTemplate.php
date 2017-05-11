@@ -22,7 +22,7 @@ class FooTemplate implements TemplateInterface
         $this->data = (object) null;
     }
 
-    public function output() :string
+    public function getOutput() : string
     {
         return json_encode($this->data);
     }

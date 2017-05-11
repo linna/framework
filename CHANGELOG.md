@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Mvc\FrontController->response()` return type added `:string`
 * `Linna\Mvc\TemplateInterface->output()` return type added `:string`
 * `Linna\Mvc\View->render()` return type added `:string`
+* `Linna\Mvc\TemplateInterface->output()` changed name to `Linna\Mvc\TemplateInterface->getOutput()`
 
 ## [v0.17.0](https://github.com/s3b4stian/linna-framework/compare/v0.16.0...v0.17.0) - 2017-05-05
 

@@ -62,7 +62,7 @@ class FrontControllerTest extends TestCase
                 'view'       => 'FOOView',
                 'controller' => 'FOOControllerBeforeAfter',
                 'action'     => '',
-            ]
+            ],
         ];
 
         //start router

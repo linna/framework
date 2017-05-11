@@ -58,7 +58,7 @@ class View implements \SplObserver
 
         $this->template->data = (object) $this->data;
 
-        return $this->template->output();
+        return $this->template->getOutput();
     }
 
     /**
