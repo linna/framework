@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased][v0.18.0](https://github.com/s3b4stian/linna-framework/compare/v0.17.0...v0.18.0) - 2017-XX-XX
+
+### Changed
+* `Linna\Mvc\FrontController->response()` return type added `:string`
+* `Linna\Mvc\TemplateInterface->output()` return type added `:string`
+* `Linna\Mvc\View->render()` return type added `:string`
+
 ## [v0.17.0](https://github.com/s3b4stian/linna-framework/compare/v0.16.0...v0.17.0) - 2017-05-05
 
 ### 5 Maggio, May 5
