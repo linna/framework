@@ -18,7 +18,6 @@ before_script:
 - if [[ $TRAVIS_PHP_VERSION != 'hhvm' ]]; then echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
 - mysql -e 'create database linna_db;'
 - mysql -u root linna_db < tests/linna_db.sql
-- phpunit --check-version
 - if [[ $TRAVIS_PHP_VERSION != 'hhvm' ]]; then composer require mongodb/mongodb; fi
 - if [[ $TRAVIS_PHP_VERSION = '7.0' ]]; then composer require codeclimate/php-test-reporter --dev; fi
 - composer install
