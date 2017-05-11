@@ -26,46 +26,43 @@ class FrontControllerTest extends TestCase
 
     public function setUp()
     {
-        $routes = [];
-
-        $routes[] = [
-            'name'       => 'Foo',
-            'method'     => 'GET',
-            'url'        => '/Foo',
-            'model'      => 'FOOModel',
-            'view'       => 'FOOView',
-            'controller' => 'FOOController',
-            'action'     => '',
-        ];
-
-        $routes[] = [
-            'name'       => 'Foo',
-            'method'     => 'GET',
-            'url'        => '/Foo/[passedData]/(modifyDataFromParam)',
-            'model'      => 'FOOModel',
-            'view'       => 'FOOView',
-            'controller' => 'FOOController',
-            'action'     => '',
-        ];
-
-        $routes[] = [
-            'name'       => 'Foo',
-            'method'     => 'GET',
-            'url'        => '/Foo/(modifyData)',
-            'model'      => 'FOOModel',
-            'view'       => 'FOOView',
-            'controller' => 'FOOController',
-            'action'     => '',
-        ];
-
-        $routes[] = [
-            'name'       => 'Foo',
-            'method'     => 'GET',
-            'url'        => '/Foo/(modifyDataTimed)',
-            'model'      => 'FOOModel',
-            'view'       => 'FOOView',
-            'controller' => 'FOOControllerBeforeAfter',
-            'action'     => '',
+        $routes = [
+            [
+                'name'       => 'Foo',
+                'method'     => 'GET',
+                'url'        => '/Foo',
+                'model'      => 'FOOModel',
+                'view'       => 'FOOView',
+                'controller' => 'FOOController',
+                'action'     => '',
+            ],
+            [
+                'name'       => 'Foo',
+                'method'     => 'GET',
+                'url'        => '/Foo/[passedData]/(modifyDataFromParam)',
+                'model'      => 'FOOModel',
+                'view'       => 'FOOView',
+                'controller' => 'FOOController',
+                'action'     => '',
+            ],
+            [
+                'name'       => 'Foo',
+                'method'     => 'GET',
+                'url'        => '/Foo/(modifyData)',
+                'model'      => 'FOOModel',
+                'view'       => 'FOOView',
+                'controller' => 'FOOController',
+                'action'     => '',
+            ],
+            [
+                'name'       => 'Foo',
+                'method'     => 'GET',
+                'url'        => '/Foo/(modifyDataTimed)',
+                'model'      => 'FOOModel',
+                'view'       => 'FOOView',
+                'controller' => 'FOOControllerBeforeAfter',
+                'action'     => '',
+            ]
         ];
 
         //start router
@@ -76,9 +73,6 @@ class FrontControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * @outputBuffering disabled
-     */
     public function testCreateFrontController()
     {
         $model = new FooModel();
@@ -112,13 +106,7 @@ class FrontControllerTest extends TestCase
 
         $FrontController->run();
 
-        ob_start();
-
-        $FrontController->response();
-
-        $test = json_decode(ob_get_contents());
-
-        ob_end_clean();
+        $test = json_decode($FrontController->response());
 
         $this->assertInstanceOf(stdClass::class, $test);
         $this->assertEquals(1234, $test->data);
@@ -144,13 +132,7 @@ class FrontControllerTest extends TestCase
 
         $FrontController->run();
 
-        ob_start();
-
-        $FrontController->response();
-
-        $test = json_decode(ob_get_contents());
-
-        ob_end_clean();
+        $test = json_decode($FrontController->response());
 
         $this->assertInstanceOf(stdClass::class, $test);
         $this->assertEquals(500, $test->data);
@@ -183,13 +165,7 @@ class FrontControllerTest extends TestCase
 
         call_user_func([$view, $routeAction]);
 
-        ob_start();
-
-        $view->render();
-
-        $test = json_decode(ob_get_contents());
-
-        ob_end_clean();
+        $test = json_decode($view->render()/*ob_get_contents()*/);
 
         $this->assertInstanceOf(stdClass::class, $test);
         $this->assertEquals(false, isset($test->data));
@@ -215,15 +191,7 @@ class FrontControllerTest extends TestCase
 
         $FrontController->run();
 
-        ob_start();
-
-        $FrontController->response();
-
-        $test = json_decode(ob_get_contents());
-
-        var_dump($test);
-
-        ob_end_clean();
+        $test = json_decode($FrontController->response());
 
         $this->assertInstanceOf(stdClass::class, $test);
         $this->assertEquals(123, (int) $test->data);

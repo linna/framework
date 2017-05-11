@@ -22,8 +22,8 @@ class FooTemplate implements TemplateInterface
         $this->data = (object) null;
     }
 
-    public function output()
+    public function output() :string
     {
-        echo json_encode($this->data);
+        return json_encode($this->data);
     }
 }
