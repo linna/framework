@@ -19,5 +19,5 @@ interface TemplateInterface
     /**
      * Return output for specific template.
      */
-    public function output();
+    public function output() : string;
 }

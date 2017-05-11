@@ -138,8 +138,8 @@ class FrontController
     /**
      * Return view data.
      */
-    public function response()
+    public function response() : string
     {
-        $this->view->render();
+        return $this->view->render();
     }
 }
