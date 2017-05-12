@@ -95,7 +95,7 @@ class Autoloader
 
             // normalize namespace prefix
             $prefix = trim($namespace[0], '\\');
-            
+
             // normalize the base directory with a trailing separator
             $baseDir = rtrim($namespace[1], DIRECTORY_SEPARATOR).'/';
 
