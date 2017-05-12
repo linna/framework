@@ -11,9 +11,6 @@ declare(strict_types=1);
 
 namespace Linna\Cache;
 
-use DateInterval;
-use DateTime;
-use Linna\Cache\Exception\InvalidArgumentException;
 use Memcached;
 use Psr\SimpleCache\CacheInterface;
 
@@ -42,13 +39,8 @@ class MemcachedCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
-        //check if key is string
-        if (!is_string($key)) {
-            throw new InvalidArgumentException();
-        }
-
         //get value from memcached
         $value = $this->memcached->get($key);
 
@@ -63,31 +55,16 @@ class MemcachedCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value, $ttl = null)
+    public function set(string $key, $value, int $ttl = 0) : bool
     {
-        //check if key is string
-        if (!is_string($key)) {
-            throw new InvalidArgumentException();
-        }
-
-        // Converting to a TTL in seconds
-        if ($ttl instanceof DateInterval) {
-            $ttl = (new DateTime('now'))->add($ttl)->getTimeStamp() - time();
-        }
-
         return $this->memcached->set($key, $value, (int) $ttl);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function delete($key)
+    public function delete(string $key) : bool
     {
-        //check if key is string
-        if (!is_string($key)) {
-            throw new InvalidArgumentException();
-        }
-
         return $this->memcached->delete($key);
     }
 
@@ -96,7 +73,7 @@ class MemcachedCache implements CacheInterface
      *
      * @return bool True on success and false on failure.
      */
-    public function clear()
+    public function clear() : bool
     {
         return $this->memcached->flush();
     }
@@ -104,13 +81,8 @@ class MemcachedCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function has($key)
+    public function has(string $key) : bool
     {
-        //check if key is string
-        if (!is_string($key)) {
-            throw new InvalidArgumentException();
-        }
-
         return ($this->memcached->get($key) !== false) ? true : false;
     }
 }

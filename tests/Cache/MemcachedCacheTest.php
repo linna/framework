@@ -46,7 +46,7 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
-     * @expectedException Linna\Cache\Exception\InvalidArgumentException
+     * @expectedException TypeError
      */
     public function testSetInvalidKey($key)
     {
@@ -66,17 +66,10 @@ class MemcachedCacheTest extends TestCase
 
         $this->assertEquals([0, 1, 2, 3, 4], $this->memcached->get('foo'));
     }
-
-    public function testSetTtlDateInterval()
-    {
-        $this->cache->set('foo_ttl', [0, 1, 2, 3, 4], new DateInterval('PT10S'));
-
-        $this->assertEquals([0, 1, 2, 3, 4], $this->memcached->get('foo'));
-    }
-
+    
     /**
      * @dataProvider KeyProvider
-     * @expectedException Linna\Cache\Exception\InvalidArgumentException
+     * @expectedException TypeError
      */
     public function testGetInvalidKey($key)
     {
@@ -108,7 +101,7 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
-     * @expectedException Linna\Cache\Exception\InvalidArgumentException
+     * @expectedException TypeError
      */
     public function testDeleteInvalidKey($key)
     {
@@ -148,7 +141,7 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
-     * @expectedException Linna\Cache\Exception\InvalidArgumentException
+     * @expectedException TypeError
      */
     public function testGetMultipleInvalidKey($key)
     {
@@ -189,7 +182,7 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
-     * @expectedException Linna\Cache\Exception\InvalidArgumentException
+     * @expectedException TypeError
      */
     public function testSetMultipleInvalidKey($key)
     {
@@ -230,43 +223,9 @@ class MemcachedCacheTest extends TestCase
         $this->cache->clear();
     }
 
-    public function testSetMultipleTtl()
-    {
-        $this->cache->SetMultiple([
-            'foo_0' => [0],
-            'foo_1' => [1],
-            'foo_2' => [2],
-            'foo_3' => [3],
-            'foo_4' => [4],
-            'foo_5' => [5],
-        ], new DateInterval('PT10S'));
-
-        $keys = [
-            'foo_0',
-            'foo_1',
-            'foo_2',
-            'foo_3',
-            'foo_4',
-            'foo_5',
-        ];
-
-        $values = [
-            'foo_0' => [0],
-            'foo_1' => [1],
-            'foo_2' => [2],
-            'foo_3' => [3],
-            'foo_4' => [4],
-            'foo_5' => [5],
-        ];
-
-        $this->assertEquals($values, $this->cache->getMultiple($keys));
-
-        $this->cache->clear();
-    }
-
     /**
      * @dataProvider KeyProvider
-     * @expectedException Linna\Cache\Exception\InvalidArgumentException
+     * @expectedException TypeError
      */
     public function testDeleteMultipleInvalidKey($key)
     {
@@ -307,7 +266,7 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
-     * @expectedException Linna\Cache\Exception\InvalidArgumentException
+     * @expectedException TypeError
      */
     public function testHasInvalidKey($key)
     {

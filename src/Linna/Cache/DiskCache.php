@@ -11,9 +11,6 @@ declare(strict_types=1);
 
 namespace Linna\Cache;
 
-use DateInterval;
-use DateTime;
-use Linna\Cache\Exception\InvalidArgumentException;
 use Linna\Shared\ClassOptionsTrait;
 use Psr\SimpleCache\CacheInterface;
 
@@ -58,13 +55,8 @@ class DiskCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
-        //check if key is string
-        if (!is_string($key)) {
-            throw new InvalidArgumentException();
-        }
-
         //create file name
         $file = $this->options['dir'].'/'.sha1($key).'.php';
 
@@ -107,13 +99,8 @@ class DiskCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value, $ttl = null)
+    public function set(string $key, $value, int $ttl = 0) : bool
     {
-        //check if key is string
-        if (!is_string($key)) {
-            throw new InvalidArgumentException();
-        }
-
         //create cache array
         $cache = [
             'key'     => $key,
@@ -135,18 +122,14 @@ class DiskCache implements CacheInterface
     /**
      * Calculate ttl for cache file.
      *
-     * @param null|int|DateInterval $ttl
+     * @param int $ttl
      *
      * @return int
      */
-    private function calculateTtl($ttl) : int
+    private function calculateTtl(int $ttl) : int
     {
-        if ($ttl instanceof DateInterval) {
-            return (new DateTime('now'))->add($ttl)->getTimeStamp();
-        }
-
         //check for usage of ttl default class option value
-        if ($ttl === null) {
+        if ($ttl === 0) {
             return $this->options['ttl'];
         }
 
@@ -156,13 +139,8 @@ class DiskCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function delete($key)
+    public function delete(string $key) : bool
     {
-        //check if key is string
-        if (!is_string($key)) {
-            throw new InvalidArgumentException();
-        }
-
         //create file name
         $file = $this->options['dir'].'/'.sha1($key).'.php';
 
@@ -179,7 +157,7 @@ class DiskCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function clear()
+    public function clear() : bool
     {
         array_map('unlink', glob($this->options['dir'].'/*.php'));
 
@@ -189,13 +167,8 @@ class DiskCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function has($key)
+    public function has(string $key) : bool
     {
-        //check if key is string
-        if (!is_string($key)) {
-            throw new InvalidArgumentException();
-        }
-
         //create file name
         $file = $this->options['dir'].'/'.sha1($key).'.php';
 

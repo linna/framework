@@ -10,7 +10,7 @@ function call_autoloader()
 
     $loader->addNamespaces([
         //start composer packages
-        ['Psr\SimpleCache', dirname(__DIR__).'/vendor/psr/simple-cache/src'],
+        ['Psr\SimpleCache', dirname(__DIR__).'/vendor/s3b4stian/simple-cache/src'],
         ['Psr\Container', dirname(__DIR__).'/vendor/psr/container/src'],
         ['MongoDB', dirname(__DIR__).'/vendor/mongodb/mongodb/src'],
         //end composer packages

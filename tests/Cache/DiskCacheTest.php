@@ -33,7 +33,7 @@ class DiskCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
-     * @expectedException Linna\Cache\Exception\InvalidArgumentException
+     * @expectedException TypeError
      */
     public function testSetInvalidKey($key)
     {
@@ -67,20 +67,9 @@ class DiskCacheTest extends TestCase
         $this->assertEquals($expectedTtl, $cacheValue['expires']);
     }
 
-    public function testSetTtlDateInterval()
-    {
-        $this->cache->set('foo_ttl', [0, 1, 2, 3, 4], new DateInterval('PT10S'));
-
-        $cacheValue = include '/tmp/'.sha1('foo_ttl').'.php';
-
-        $expectedTtl = time() + 10;
-
-        $this->assertEquals($expectedTtl, $cacheValue['expires']);
-    }
-
     /**
      * @dataProvider KeyProvider
-     * @expectedException Linna\Cache\Exception\InvalidArgumentException
+     * @expectedException TypeError
      */
     public function testGetInvalidKey($key)
     {
@@ -110,7 +99,7 @@ class DiskCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
-     * @expectedException Linna\Cache\Exception\InvalidArgumentException
+     * @expectedException TypeError
      */
     public function testDeleteInvalidKey($key)
     {
@@ -145,7 +134,7 @@ class DiskCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
-     * @expectedException Linna\Cache\Exception\InvalidArgumentException
+     * @expectedException TypeError
      */
     public function testGetMultipleInvalidKey($key)
     {
@@ -193,7 +182,7 @@ class DiskCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
-     * @expectedException Linna\Cache\Exception\InvalidArgumentException
+     * @expectedException TypeError
      */
     public function testSetMultipleInvalidKey($key)
     {
@@ -258,46 +247,9 @@ class DiskCacheTest extends TestCase
         $this->cache->clear();
     }
 
-    public function testSetMultipleTtlDateInterval()
-    {
-        $this->cache->SetMultiple([
-            'foo_0' => [0],
-            'foo_1' => [1],
-            'foo_2' => [2],
-            'foo_3' => [3],
-            'foo_4' => [4],
-            'foo_5' => [5],
-        ], new DateInterval('PT10S'));
-
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_0').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_1').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_2').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_3').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_4').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_5').'.php'));
-
-        $expectedTtl = time() + 10;
-
-        $cacheValue0 = include '/tmp/'.sha1('foo_0').'.php';
-        $cacheValue1 = include '/tmp/'.sha1('foo_1').'.php';
-        $cacheValue2 = include '/tmp/'.sha1('foo_2').'.php';
-        $cacheValue3 = include '/tmp/'.sha1('foo_3').'.php';
-        $cacheValue4 = include '/tmp/'.sha1('foo_4').'.php';
-        $cacheValue5 = include '/tmp/'.sha1('foo_5').'.php';
-
-        $this->assertEquals($expectedTtl, $cacheValue0['expires']);
-        $this->assertEquals($expectedTtl, $cacheValue1['expires']);
-        $this->assertEquals($expectedTtl, $cacheValue2['expires']);
-        $this->assertEquals($expectedTtl, $cacheValue3['expires']);
-        $this->assertEquals($expectedTtl, $cacheValue4['expires']);
-        $this->assertEquals($expectedTtl, $cacheValue5['expires']);
-
-        $this->cache->clear();
-    }
-
     /**
      * @dataProvider KeyProvider
-     * @expectedException Linna\Cache\Exception\InvalidArgumentException
+     * @expectedException TypeError
      */
     public function testDeleteMultipleInvalidKey($key)
     {
@@ -345,7 +297,7 @@ class DiskCacheTest extends TestCase
 
     /**
      * @dataProvider KeyProvider
-     * @expectedException Linna\Cache\Exception\InvalidArgumentException
+     * @expectedException TypeError
      */
     public function testHasInvalidKey($key)
     {

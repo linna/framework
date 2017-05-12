@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][v0.18.0](https://github.com/s3b4stian/linna-framework/compare/v0.17.0...v0.18.0) - 2017-XX-XX
 
 ### Changed
+* Cache depends from [s3b4stian simple-cache](https://github.com/s3b4stian/simple-cache) instead of [Psr simple-cache](https://github.com/php-fig/simple-cache)
 * `Linna\Mvc\FrontController->response()` return type added `:string`
 * `Linna\Mvc\TemplateInterface->output()` return type added `:string`
 * `Linna\Mvc\View->render()` return type added `:string`
