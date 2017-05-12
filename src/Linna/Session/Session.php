@@ -18,10 +18,6 @@ use SessionHandlerInterface;
 /**
  * Manage session lifetime and session data.
  *
- * @property int $time Time of session
- * @property array $login Login information set by Login class
- * @property int $loginTime Login time set by Login class
- * @property int $expire Login time set for Login class
  */
 class Session implements ArrayAccess
 {

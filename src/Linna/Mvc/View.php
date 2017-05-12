@@ -19,6 +19,8 @@ use UnexpectedValueException;
  * This class was implemented like part of Observer pattern
  * https://en.wikipedia.org/wiki/Observer_pattern
  * http://php.net/manual/en/class.splobserver.php
+ * 
+ * @property mixed $data Template data for rendering
  */
 class View implements \SplObserver
 {
