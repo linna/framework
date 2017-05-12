@@ -14,7 +14,7 @@ namespace Linna\Auth;
 use Linna\DataMapper\DomainObjectAbstract;
 
 /**
- * Group.
+ * Role.
  */
 class Role extends DomainObjectAbstract
 {
