@@ -11,10 +11,6 @@ declare(strict_types=1);
 
 namespace Linna\Cache;
 
-use DateInterval;
-use Linna\Cache\Exception\InvalidArgumentException;
-use Traversable;
-
 /**
  * ActionMultipleTrait.
  */
