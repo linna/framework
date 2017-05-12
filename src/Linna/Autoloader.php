@@ -94,13 +94,13 @@ class Autoloader
         foreach ($namespaces as $namespace) {
 
             // normalize namespace prefix
-            $prefix = trim($namespace[0], '\\').'\\';
-
+            $prefix = trim($namespace[0], '\\');
+            
             // normalize the base directory with a trailing separator
             $baseDir = rtrim($namespace[1], DIRECTORY_SEPARATOR).'/';
 
             //add namespace
-            $this->prefixes[$prefix][] = $baseDir;
+            $this->prefixes[$prefix] = $baseDir;
         }
     }
 
@@ -114,27 +114,20 @@ class Autoloader
      */
     public function loadClass(string $class) : bool
     {
-        // the current namespace prefix
-        $prefix = $class;
+        $arrayClass = explode('\\', $class);
 
-        // work backwards through the namespace names of the fully-qualified
-        // class name to find a mapped file name
-        while (false !== $pos = strrpos($prefix, '\\')) {
+        $arrayPrefix = [];
 
-            // retain the trailing namespace separator in the prefix
-            $prefix = substr($class, 0, $pos + 1);
+        for ($i = count($arrayClass) - 1; $i >= 0; $i--) {
+            $arrayPrefix[] = array_shift($arrayClass);
 
-            // the rest is the relative class name
-            $relativeClass = substr($class, $pos + 1);
+            $prefix = implode('\\', $arrayPrefix);
+            $relativeClass = implode('\\', $arrayClass);
 
             // try to load a mapped file for the prefix and relative class
-            if ($this->loadMappedFile($prefix, $relativeClass) !== false) {
+            if ($this->loadMappedFile($prefix, $relativeClass)) {
                 return true;
             }
-
-            // remove the trailing namespace separator for the next iteration
-            // of strrpos()
-            $prefix = rtrim($prefix, '\\');
         }
 
         // never found a mapped file
@@ -157,21 +150,16 @@ class Autoloader
             return false;
         }
 
-        // look through base directories for this namespace prefix
-        foreach ($this->prefixes[$prefix] as $baseDir) {
+        // replace namespace separators with directory separators
+        // in the relative class name, append with .php
+        $file = $this->prefixes[$prefix].str_replace('\\', '/', $relativeClass).'.php';
 
-            // replace the namespace prefix with the base directory,
-            // replace namespace separators with directory separators
-            // in the relative class name, append with .php
-            $file = $baseDir.str_replace('\\', '/', $relativeClass).'.php';
+        // if the mapped file exists, require it
+        if (file_exists($file)) {
+            require $file;
 
-            // if the mapped file exists, require it
-            if (file_exists($file)) {
-                require $file;
-
-                // yes, we're done
-                return true;
-            }
+            // yes, we're done
+            return true;
         }
 
         //Unable to find class in file.
