@@ -29,11 +29,11 @@ trait ActionMultipleTrait
     /**
      * Express Requirements by Abstract Methods.
      *
-     * @param string                $key   The key of the item to store.
-     * @param mixed                 $value The value of the item to store, must be serializable.
-     * @param int                   $ttl   Optional. The TTL (time to live) value in seconds of this item.
-     *                                     If no value is sent and the driver supports TTL then the
-     *                                     library may set a default value for it or let the driver take care of that.
+     * @param string $key   The key of the item to store.
+     * @param mixed  $value The value of the item to store, must be serializable.
+     * @param int    $ttl   Optional. The TTL (time to live) value in seconds of this item.
+     *                      If no value is sent and the driver supports TTL then the
+     *                      library may set a default value for it or let the driver take care of that.
      *
      * @return bool True on success and false on failure.
      */
@@ -59,7 +59,7 @@ trait ActionMultipleTrait
     public function getMultiple(array $keys, $default = null) : array
     {
         $arrayResult = [];
-        
+
         foreach ($keys as $key) {
             $arrayResult[$key] = $this->get($key, $default);
         }
