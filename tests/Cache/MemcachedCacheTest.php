@@ -66,7 +66,7 @@ class MemcachedCacheTest extends TestCase
 
         $this->assertEquals([0, 1, 2, 3, 4], $this->memcached->get('foo'));
     }
-    
+
     /**
      * @dataProvider KeyProvider
      * @expectedException TypeError
