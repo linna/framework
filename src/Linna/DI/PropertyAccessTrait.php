@@ -20,76 +20,76 @@ trait PropertyAccessTrait
     /**
      * Express Requirements by Abstract Methods.
      *
-     * @param string $id
+     * @param string $key
      */
-    abstract public function has($id);
+    abstract public function has($key);
 
     /**
      * Express Requirements by Abstract Methods.
      *
-     * @param string $id
+     * @param string $key
      */
-    abstract public function get($id);
+    abstract public function get($key);
 
     /**
      * Express Requirements by Abstract Methods.
      *
-     * @param string $id
+     * @param string $key
      * @param mixed  $value
      */
-    abstract public function set($id, $value);
+    abstract public function set($key, $value);
 
     /**
      * Express Requirements by Abstract Methods.
      *
-     * @param string $id
+     * @param string $key
      */
-    abstract public function delete($id);
+    abstract public function delete($key);
 
     /**
      * Set
      * http://php.net/manual/en/language.oop5.overloading.php.
      *
-     * @param string $id
+     * @param string $key
      * @param mixed  $value
      */
-    public function __set(string $id, callable $value)
+    public function __set(string $key, callable $value)
     {
-        $this->set($id, $value);
+        $this->set($key, $value);
     }
 
     /**
      * Get
      * http://php.net/manual/en/language.oop5.overloading.php.
      *
-     * @param string $id
+     * @param string $key
      *
      * @return object|bool Element stored in container or false
      */
-    public function __get(string $id)
+    public function __get(string $key)
     {
-        return $this->get($id);
+        return $this->get($key);
     }
 
     /**
      * Remove
      * http://php.net/manual/en/language.oop5.overloading.php.
      *
-     * @param string $id
+     * @param string $key
      */
-    public function __unset(string $id) : bool
+    public function __unset(string $key) : bool
     {
-        return $this->delete($id);
+        return $this->delete($key);
     }
 
     /**
      * Check
      * http://php.net/manual/en/language.oop5.overloading.php.
      *
-     * @param string $id
+     * @param string $key
      */
-    public function __isset(string $id) : bool
+    public function __isset(string $key) : bool
     {
-        return $this->has($id);
+        return $this->has($key);
     }
 }

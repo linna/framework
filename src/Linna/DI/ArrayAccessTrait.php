@@ -20,76 +20,76 @@ trait ArrayAccessTrait
     /**
      * Express Requirements by Abstract Methods.
      *
-     * @param string $id
+     * @param string $key
      */
-    abstract public function has($id);
+    abstract public function has($key);
 
     /**
      * Express Requirements by Abstract Methods.
      *
-     * @param string $id
+     * @param string $key
      */
-    abstract public function get($id);
+    abstract public function get($key);
 
     /**
      * Express Requirements by Abstract Methods.
      *
-     * @param string $id
+     * @param string $key
      * @param mixed  $value
      */
-    abstract public function set($id, $value);
+    abstract public function set($key, $value);
 
     /**
      * Express Requirements by Abstract Methods.
      *
-     * @param string $id
+     * @param string $key
      */
-    abstract public function delete($id);
+    abstract public function delete($key);
 
     /**
      * Check.
      *
-     * @param string $id
+     * @param string $key
      *
      * @return bool
      */
-    public function offsetExists($id)
+    public function offsetExists($key)
     {
-        return $this->has($id);
+        return $this->has($key);
     }
 
     /**
      * Get.
      *
-     * @param string $id
+     * @param string $key
      *
      * @return mixed
      */
-    public function offsetGet($id)
+    public function offsetGet($key)
     {
-        return $this->get($id);
+        return $this->get($key);
     }
 
     /**
      * Store.
      *
-     * @param string $id
+     * @param string $key
      * @param mixed  $value
      */
-    public function offsetSet($id, $value)
+    public function offsetSet($key, $value)
     {
-        $this->set($id, $value);
+        $this->set($key, $value);
     }
 
     /**
      * Delete.
      *
-     * @param string $id
+     * @param string $key
      *
      * @return mixed
      */
-    public function offsetUnset($id)
+    public function offsetUnset($key)
     {
-        return $this->delete($id);
+        return $this->delete($key);
     }
 }
