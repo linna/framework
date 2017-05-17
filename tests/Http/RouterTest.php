@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 class RouterTest extends TestCase
 {
     protected $routes;
-    
+
     protected $router;
 
     public function setUp()
@@ -69,9 +69,9 @@ class RouterTest extends TestCase
                 'action'     => '',
             ],
         ];
-        
+
         $this->routes = $routes;
-        
+
         //start router
         $this->router = new Router($routes, [
             'basePath'    => '/',
@@ -169,7 +169,7 @@ class RouterTest extends TestCase
         $this->assertEquals($returneRoute[3], $arrayRoute['action']);
         $this->assertEquals($returneRoute[4], $arrayRoute['param']);
     }
-    
+
     public function routesWithOtherBasePathProvider()
     {
         return [
@@ -179,14 +179,14 @@ class RouterTest extends TestCase
             ['/otherDir/userOther/enable/5', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']]], //test inverse param route
         ];
     }
-    
+
     /**
      * @dataProvider routesWithOtherBasePathProvider
      */
     public function testRoutesWithOtherBasePath($url, $method, $returneRoute)
     {
-        $this->router->setOption('basePath' , '/otherDir');
-        
+        $this->router->setOption('basePath', '/otherDir');
+
         //evaluate request uri
         $this->router->validate($url, $method);
 
@@ -202,7 +202,7 @@ class RouterTest extends TestCase
         $this->assertEquals($returneRoute[3], $arrayRoute['action']);
         $this->assertEquals($returneRoute[4], $arrayRoute['param']);
     }
-    
+
     public function RouteProvider()
     {
         return [
@@ -285,7 +285,7 @@ class RouterTest extends TestCase
         $this->assertEquals('enable', $arrayRoute['action']);
         $this->assertEquals(['id'=>'5'], $arrayRoute['param']);
     }
-    
+
     public function testRewriteModeOffWithOtherBasePath()
     {
         $this->router->setOptions([
@@ -309,7 +309,7 @@ class RouterTest extends TestCase
         $this->assertEquals('enable', $arrayRoute['action']);
         $this->assertEquals(['id'=>'5'], $arrayRoute['param']);
     }
-    
+
     public function restRouteProvider()
     {
         return [
