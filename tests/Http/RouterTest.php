@@ -16,6 +16,8 @@ use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase
 {
+    protected $routes;
+    
     protected $router;
 
     public function setUp()
@@ -67,7 +69,9 @@ class RouterTest extends TestCase
                 'action'     => '',
             ],
         ];
-
+        
+        $this->routes = $routes;
+        
         //start router
         $this->router = new Router($routes, [
             'basePath'    => '/',
@@ -165,7 +169,40 @@ class RouterTest extends TestCase
         $this->assertEquals($returneRoute[3], $arrayRoute['action']);
         $this->assertEquals($returneRoute[4], $arrayRoute['param']);
     }
+    
+    public function routesWithOtherBasePathProvider()
+    {
+        return [
+            ['/otherDir/user', 'POST', ['E404Model', 'E404View', 'E404Controller', null, []]], //test not allowed http method
+            ['/otherDir/badroute', 'GET', ['E404Model', 'E404View', 'E404Controller', null, []]], //test bad uri
+            ['/otherDir/user/5/enable', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']]], //test param route
+            ['/otherDir/userOther/enable/5', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']]], //test inverse param route
+        ];
+    }
+    
+    /**
+     * @dataProvider routesWithOtherBasePathProvider
+     */
+    public function testRoutesWithOtherBasePath($url, $method, $returneRoute)
+    {
+        $this->router->setOption('basePath' , '/otherDir');
+        
+        //evaluate request uri
+        $this->router->validate($url, $method);
 
+        //get route
+        $route = $this->router->getRoute();
+
+        $arrayRoute = $route->toArray();
+
+        $this->assertInstanceOf(Route::class, $route);
+        $this->assertEquals($returneRoute[0], $arrayRoute['model']);
+        $this->assertEquals($returneRoute[1], $arrayRoute['view']);
+        $this->assertEquals($returneRoute[2], $arrayRoute['controller']);
+        $this->assertEquals($returneRoute[3], $arrayRoute['action']);
+        $this->assertEquals($returneRoute[4], $arrayRoute['param']);
+    }
+    
     public function RouteProvider()
     {
         return [
@@ -248,7 +285,31 @@ class RouterTest extends TestCase
         $this->assertEquals('enable', $arrayRoute['action']);
         $this->assertEquals(['id'=>'5'], $arrayRoute['param']);
     }
+    
+    public function testRewriteModeOffWithOtherBasePath()
+    {
+        $this->router->setOptions([
+            'basePath'    => '/otherDir',
+            'badRoute'    => 'E404',
+            'rewriteMode' => false,
+        ]);
 
+        //evaluate request uri
+        $this->router->validate('/otherDir/index.php/user/5/enable', 'GET');
+
+        //get route
+        $route = $this->router->getRoute();
+
+        $arrayRoute = $route->toArray();
+
+        $this->assertInstanceOf(Route::class, $route);
+        $this->assertEquals('UserModel', $arrayRoute['model']);
+        $this->assertEquals('UserView', $arrayRoute['view']);
+        $this->assertEquals('UserController', $arrayRoute['controller']);
+        $this->assertEquals('enable', $arrayRoute['action']);
+        $this->assertEquals(['id'=>'5'], $arrayRoute['param']);
+    }
+    
     public function restRouteProvider()
     {
         return [

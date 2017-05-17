@@ -222,13 +222,12 @@ class Router
         $url = substr($url, strlen($this->options['basePath']));
 
         //check for rewrite mode
-        if (!$this->options['rewriteMode']) {
-            $url = str_replace($this->options['router'], '', $url);
+        $url = str_replace($this->options['router'], '', $url);
 
-            return ($url === '') ? '/' : $url;
-        }
+        //remove doubled slash
+        $url = str_replace('//', '/', $url);
 
-        return '/'.$url;
+        return (substr($url, 0, 1) === '/') ? $url : '/'.$url;
     }
 
     /**
