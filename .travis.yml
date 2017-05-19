@@ -16,6 +16,8 @@ services:
 before_script:
 - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
+before_script:
 - mysql -e 'create database linna_db;'
 - mysql -u root linna_db < tests/linna_db.sql
 - composer show --platform
