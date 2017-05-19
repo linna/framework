@@ -2,11 +2,11 @@ language: php
 php:
 - 7.0
 - 7.1
-- php-nightly
+- nightly
 
 matrix:
   allow_failures:
-  - php: php-nightly
+  - php: nightly
 
 services:
 - mysql
