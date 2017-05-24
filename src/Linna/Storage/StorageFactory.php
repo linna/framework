@@ -57,7 +57,7 @@ class StorageFactory
         }
 
         if ($driver === 'pgsqlpdo') {
-            return new PostgresqlPdoStorage($options['dsn'], $options['user'], $options['password']);
+            return new PostgresqlPdoStorage($options['dsn'], $options['user'], $options['password'], $options['options']);
         }
 
         if ($driver === 'mysqli') {

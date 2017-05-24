@@ -36,6 +36,7 @@ class MysqlPdoStorageTest extends TestCase
         return [
             ['0', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password']],
             [$GLOBALS['pdo_mysql_dsn'], '', $GLOBALS['pdo_mysql_password']],
+            [$GLOBALS['pdo_mysql_dsn'], $GLOBALS['pdo_mysql_user'], ''],
             [$GLOBALS['pdo_mysql_dsn'], $GLOBALS['pdo_mysql_user'], 'bad_password'],
         ];
     }
@@ -46,10 +47,11 @@ class MysqlPdoStorageTest extends TestCase
      */
     public function testFailConnection($dsn, $user, $password)
     {
-        //$this->expectException(\Exception::class);
-
-        /*$mysqlPdoAdapter = */(new MysqlPdoStorage($dsn, $user, $password, []))->getResource();
-
-        //$resource = $mysqlPdoAdapter->getResource();
+        (new MysqlPdoStorage($dsn, $user, $password, [
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, 
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_PERSISTENT => false,
+                \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci"
+            ]))->getResource();
     }
 }

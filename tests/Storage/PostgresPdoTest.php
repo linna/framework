@@ -19,7 +19,11 @@ class PostgresqlPdoStorageTest extends TestCase
         $PostgresqlPdoAdapter = new PostgresqlPdoStorage(
             $GLOBALS['pdo_pgsql_dsn'],
             $GLOBALS['pdo_pgsql_user'],
-            $GLOBALS['pdo_pgsql_password']
+            $GLOBALS['pdo_pgsql_password'],
+            [
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, 
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            ]
         );
 
         $this->assertInstanceOf(PDO::class, $PostgresqlPdoAdapter->getResource());
@@ -30,6 +34,7 @@ class PostgresqlPdoStorageTest extends TestCase
         return [
             ['0', $GLOBALS['pdo_pgsql_user'], $GLOBALS['pdo_pgsql_password']],
             [$GLOBALS['pdo_pgsql_dsn'], '', $GLOBALS['pdo_pgsql_password']],
+            [$GLOBALS['pdo_pgsql_dsn'], $GLOBALS['pdo_pgsql_user'], ''],
             [$GLOBALS['pdo_pgsql_dsn'], $GLOBALS['pdo_pgsql_user'], 'bad_password'],
         ];
     }
@@ -40,6 +45,9 @@ class PostgresqlPdoStorageTest extends TestCase
      */
     public function testFailConnection($dsn, $user, $password)
     {
-        (new PostgresqlPdoStorage($dsn, $user, $password))->getResource();
+        (new PostgresqlPdoStorage($dsn, $user, $password,[
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, 
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            ]))->getResource();
     }
 }

@@ -45,6 +45,10 @@ class StorageFactoryTest extends TestCase
             'dsn'      => $GLOBALS['pdo_pgsql_dsn'],
             'user'     => $GLOBALS['pdo_pgsql_user'],
             'password' => $GLOBALS['pdo_pgsql_password'],
+            'options'  => [
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ, 
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            ]
         ];
 
         $driver = (new StorageFactory('pgsqlpdo', $options))->getConnection();

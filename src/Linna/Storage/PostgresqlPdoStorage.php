@@ -34,19 +34,27 @@ class PostgresqlPdoStorage implements StorageInterface
     protected $password;
 
     /**
+     * @var array PDO options
+     */
+    protected $options;
+
+    /**
      * Constructor.
      *
      * @param string $dsn
      * @param string $user
      * @param string $password
+     * @param array  $options
      */
-    public function __construct(string $dsn, string $user, string $password)
+    public function __construct(string $dsn, string $user, string $password, array $options)
     {
         $this->dsn = $dsn;
 
         $this->user = $user;
 
         $this->password = $password;
+
+        $this->options = $options;
     }
 
     /**
@@ -56,6 +64,6 @@ class PostgresqlPdoStorage implements StorageInterface
      */
     public function getResource()
     {
-        return new PDO($this->dsn, $this->user, $this->password);
+        return new PDO($this->dsn, $this->user, $this->password, $this->options);
     }
 }
