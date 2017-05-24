@@ -30,7 +30,8 @@ build:
             before:
                 - composer require mongodb/mongodb
                 - mysql -e "CREATE DATABASE linna_db"
-                - mysql -u root linna_db < tests/linna_db.sql
+                - mysql -u root linna_db < tests/linna_db_mysql.sql
+                - psql --cluster 9.6/main -c 'CREATE DATABASE linna_db WITH OWNER postgres'
                 - wget https://phar.phpunit.de/phpunit.phar
                 - chmod +x phpunit.phar
                 - sudo mv phpunit.phar /usr/local/bin/phpunit

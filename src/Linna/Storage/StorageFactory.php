@@ -56,6 +56,10 @@ class StorageFactory
             return new MysqlPdoStorage($options['dsn'], $options['user'], $options['password'], $options['options']);
         }
 
+        if ($driver === 'pgsqlpdo') {
+            return new PostgresqlPdoStorage($options['dsn'], $options['user'], $options['password']);
+        }
+
         if ($driver === 'mysqli') {
             return new MysqliStorage($options['host'], $options['user'], $options['password'], $options['database'], $options['port']);
         }
