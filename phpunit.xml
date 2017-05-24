@@ -1,6 +1,10 @@
 <phpunit  colors="true" 
           bootstrap="tests/bootstrap.php"
-          verbose="true">
+          verbose="true"
+          convertErrorsToExceptions="false"
+          convertNoticesToExceptions="false"
+          convertWarningsToExceptions="false"  
+          >
     <testsuites>
         <testsuite name="Linna Test Suite">
             <directory suffix="Test.php">tests</directory>

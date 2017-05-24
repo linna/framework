@@ -30,7 +30,7 @@ class MysqliTest extends TestCase
     public function connectionDataProvider()
     {
         return [
-            ['..', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password'], 'linna_db', 3306],
+            ['a.a.a.a', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password'], 'linna_db', 3306],
             ['127.0.0.1', '', $GLOBALS['pdo_mysql_password'], 'linna_db', 3306],
             ['127.0.0.1', $GLOBALS['pdo_mysql_user'], 'bad_password', 'linna_db', 3306],
             ['127.0.0.1', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password'], 'otherdb', 3306],
@@ -40,14 +40,10 @@ class MysqliTest extends TestCase
 
     /**
      * @dataProvider connectionDataProvider
-     * @expectedException Exception
+     * @expectedException mysqli_sql_exception
      */
     public function testFailConnection($host, $user, $password, $database, $port)
     {
-        //$this->expectException(\Exception::class);
-
-        /*$mysqliAdapter = */(new MysqliStorage($host, $user, $password, $database, $port))->getResource();
-
-        //$resource = $mysqliAdapter->getResource();
+        (new MysqliStorage($host, $user, $password, $database, $port))->getResource();
     }
 }
