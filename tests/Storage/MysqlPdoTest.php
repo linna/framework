@@ -43,7 +43,7 @@ class MysqlPdoStorageTest extends TestCase
 
     /**
      * @dataProvider connectionDataProvider
-     * @expectedException Exception
+     * @expectedException PDOException
      */
     public function testFailConnection($dsn, $user, $password)
     {
