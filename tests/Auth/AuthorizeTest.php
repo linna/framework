@@ -27,13 +27,18 @@ class AuthorizeTest extends TestCase
     public function setUp()
     {
         $options = [
-            'dsn'      => $GLOBALS['pdo_mysql_dsn'],
-            'user'     => $GLOBALS['pdo_mysql_user'],
+            'dsn' => $GLOBALS['pdo_mysql_dsn'],
+            'user' => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
-            'options'  => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING],
+            'options' => [
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
+                \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_PERSISTENT         => false,
+                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
+            ]  
         ];
 
-        $pdo = (new StorageFactory('mysqlpdo', $options))->getConnection();
+        $pdo = (new StorageFactory('pdo', $options))->getConnection();
 
         $session = new Session();
         $password = new Password();
@@ -76,15 +81,20 @@ class AuthorizeTest extends TestCase
         $this->session->start();
 
         $options = [
-            'dsn'      => $GLOBALS['pdo_mysql_dsn'],
-            'user'     => $GLOBALS['pdo_mysql_user'],
+            'dsn' => $GLOBALS['pdo_mysql_dsn'],
+            'user' => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
-            'options'  => [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING],
+            'options' => [
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
+                \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_PERSISTENT         => false,
+                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
+            ]  
         ];
 
         //create new pdo here because run in separate process try to serialize it
         //and return error
-        $pdo = (new StorageFactory('mysqlpdo', $options))->getConnection();
+        $pdo = (new StorageFactory('pdo', $options))->getConnection();
 
         //hash password
         $storedPassword = $this->password->hash('password');

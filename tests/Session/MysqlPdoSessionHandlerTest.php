@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 use Linna\Session\MysqlPdoSessionHandler;
 use Linna\Session\Session;
-use Linna\Storage\MysqlPdoStorage;
+use Linna\Storage\PdoStorage;
 use PHPUnit\Framework\TestCase;
 
 class MysqlPdoSessionHandlerTest extends TestCase
@@ -36,7 +36,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
             ]  
         ];
 
-        $this->sessionHandler = new MysqlPdoSessionHandler((new MysqlPdoStorage($options)));
+        $this->sessionHandler = new MysqlPdoSessionHandler((new PdoStorage($options)));
 
         $this->session = new Session(['expire' => 10]);
     }
@@ -105,7 +105,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
             ]  
         ];
 
-        $conn = (new MysqlPdoStorage($options))->getResource();
+        $conn = (new PdoStorage($options))->getResource();
         $conn->query('DELETE FROM session');
 
         $pdos = $conn->prepare('INSERT INTO session (session_id, session_data) VALUES (:session_id, :session_data)');

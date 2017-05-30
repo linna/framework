@@ -9,33 +9,34 @@
  */
 declare(strict_types=1);
 
-use Linna\Storage\PostgresqlPdoStorage;
+use Linna\Storage\PdoStorage;
 use PHPUnit\Framework\TestCase;
 
-class PostgresqlPdoStorageTest extends TestCase
+class PdoTest extends TestCase
 {
     public function testConnection()
     {
         $options = [
-            'dsn' => $GLOBALS['pdo_pgsql_dsn'],
-            'user' => $GLOBALS['pdo_pgsql_user'],
-            'password' => $GLOBALS['pdo_pgsql_password'],
+            'dsn' => $GLOBALS['pdo_mysql_dsn'],
+            'user' => $GLOBALS['pdo_mysql_user'],
+            'password' => $GLOBALS['pdo_mysql_password'],
             'options' => [
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
                 \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-            ]
+                \PDO::ATTR_PERSISTENT         => false,
+                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
+            ]  
         ];
 
-        $this->assertInstanceOf(PDO::class, (new PostgresqlPdoStorage($options))->getResource());
+        $this->assertInstanceOf(PDO::class, (new PdoStorage($options))->getResource());
     }
 
     public function connectionDataProvider()
     {
         return [
-            ['0', $GLOBALS['pdo_pgsql_user'], $GLOBALS['pdo_pgsql_password']],
-            [$GLOBALS['pdo_pgsql_dsn'], '', $GLOBALS['pdo_pgsql_password']],
-            //[$GLOBALS['pdo_pgsql_dsn'], $GLOBALS['pdo_pgsql_user'], ''],
-            //[$GLOBALS['pdo_pgsql_dsn'], $GLOBALS['pdo_pgsql_user'], 'bad_password'],
+            ['0', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password']],
+            [$GLOBALS['pdo_mysql_dsn'], '', $GLOBALS['pdo_mysql_password']],
+            [$GLOBALS['pdo_mysql_dsn'], $GLOBALS['pdo_mysql_user'], 'bad_password'],
         ];
     }
 
@@ -52,9 +53,11 @@ class PostgresqlPdoStorageTest extends TestCase
             'options' => [
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
                 \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_PERSISTENT         => false,
+                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
             ]  
         ];
 
-        (new PostgresqlPdoStorage($options))->getResource();
+        (new PdoStorage($options))->getResource();
     }
 }

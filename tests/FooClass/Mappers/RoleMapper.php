@@ -20,7 +20,7 @@ use Linna\Auth\User;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
 use Linna\DataMapper\NullDomainObject;
-use Linna\Storage\MysqlPdoStorage;
+use Linna\Storage\PdoStorage;
 
 /**
  * Role Mapper.
@@ -50,13 +50,13 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
     /**
      * Constructor.
      *
-     * @param MysqlPdoStorage             $dBase
+     * @param PdoStorage                  $dBase
      * @param Password                    $password
      * @param EnhancedUserMapperInterface $userMapper
      * @param PermissionMapperInterface   $permissionMapper
      */
     public function __construct(
-            MysqlPdoStorage $dBase,
+            PdoStorage $dBase,
             Password $password,
             EnhancedUserMapperInterface $userMapper,
             PermissionMapperInterface $permissionMapper)

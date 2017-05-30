@@ -28,8 +28,7 @@ class StorageFactory
      * @var array Factory supported driver 
      */
     private $supportedDriver = [
-        'mysqlpdo' => MysqlPdoStorage::class,
-        'pgsqlpdo' => PostgresqlPdoStorage::class,
+        'pdo' => PdoStorage::class,
         'mysqli' => MysqliStorage::class,
         'mongodb' => MongoDbStorage::class
     ];

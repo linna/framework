@@ -11,15 +11,14 @@ declare(strict_types=1);
 
 use Linna\Storage\MongoDbStorage;
 use Linna\Storage\MysqliStorage;
-use Linna\Storage\MysqlPdoStorage;
-use Linna\Storage\PostgresqlPdoStorage;
+use Linna\Storage\PdoStorage;
 use Linna\Storage\StorageFactory;
 use MongoDB\Client;
 use PHPUnit\Framework\TestCase;
 
 class StorageFactoryTest extends TestCase
 {
-    public function testCreateMysqlPdo()
+    public function testCreatePdo()
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -33,27 +32,9 @@ class StorageFactoryTest extends TestCase
             ],
         ];
 
-        $driver = (new StorageFactory('mysqlpdo', $options))->getConnection();
+        $driver = (new StorageFactory('pdo', $options))->getConnection();
 
-        $this->assertInstanceOf(MysqlPdoStorage::class, $driver);
-        $this->assertInstanceOf(\PDO::class, $driver->getResource());
-    }
-
-    public function testCreatePostgresqlPdo()
-    {
-        $options = [
-            'dsn'      => $GLOBALS['pdo_pgsql_dsn'],
-            'user'     => $GLOBALS['pdo_pgsql_user'],
-            'password' => $GLOBALS['pdo_pgsql_password'],
-            'options'  => [
-                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
-                \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-            ],
-        ];
-
-        $driver = (new StorageFactory('pgsqlpdo', $options))->getConnection();
-
-        $this->assertInstanceOf(PostgresqlPdoStorage::class, $driver);
+        $this->assertInstanceOf(PdoStorage::class, $driver);
         $this->assertInstanceOf(\PDO::class, $driver->getResource());
     }
 

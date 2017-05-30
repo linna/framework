@@ -16,7 +16,7 @@ use Linna\Auth\PermissionMapperInterface;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
 use Linna\DataMapper\NullDomainObject;
-use Linna\Storage\MysqlPdoStorage;
+use Linna\Storage\PdoStorage;
 
 /**
  * PermissionMapper.
@@ -31,9 +31,9 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     /**
      * Constructor.
      *
-     * @param MysqlPdoObject $dBase
+     * @param Storage $dBase
      */
-    public function __construct(MysqlPdoStorage $dBase)
+    public function __construct(PdoStorage $dBase)
     {
         $this->dBase = $dBase->getResource();
     }

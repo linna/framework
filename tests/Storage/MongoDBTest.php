@@ -11,7 +11,7 @@ use Linna\Storage\MongoDbStorage;
 use MongoDB\Client;
 use PHPUnit\Framework\TestCase;
 
-class MongoDbStorageTest extends TestCase
+class MongoDBTest extends TestCase
 {
     public function testConnection()
     {

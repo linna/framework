@@ -14,9 +14,9 @@ namespace Linna\Storage;
 use PDO;
 
 /**
- * Mysql PDO.
+ * PDO storage.
  */
-class MysqlPdoStorage implements StorageInterface
+class PdoStorage implements StorageInterface
 {
     /**
      * @var array Mysql PDO connection options
