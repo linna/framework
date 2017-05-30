@@ -32,7 +32,7 @@ class PdoStorage implements StorageInterface
     {
         $this->options = $options;
     }
-    
+
     /**
      * Get Resource.
      *
@@ -41,9 +41,9 @@ class PdoStorage implements StorageInterface
     public function getResource()
     {
         return new PDO(
-            $this->options['dsn'], 
-            $this->options['user'], 
-            $this->options['password'], 
+            $this->options['dsn'],
+            $this->options['user'],
+            $this->options['password'],
             $this->options['options']
         );
     }

@@ -22,7 +22,7 @@ class MysqliStorage implements StorageInterface
      * @var array Mysqli connection options
      */
     protected $options;
-    
+
     /**
      * Constructor.
      *
@@ -32,7 +32,7 @@ class MysqliStorage implements StorageInterface
     {
         $this->options = $options;
     }
-    
+
     /**
      * Get Resource.
      *
@@ -43,10 +43,10 @@ class MysqliStorage implements StorageInterface
         mysqli_report(MYSQLI_REPORT_ALL);
 
         return new mysqli(
-            $this->options['host'], 
-            $this->options['user'], 
-            $this->options['password'], 
-            $this->options['database'], 
+            $this->options['host'],
+            $this->options['user'],
+            $this->options['password'],
+            $this->options['database'],
             $this->options['port']
         );
     }

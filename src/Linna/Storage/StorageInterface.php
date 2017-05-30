@@ -18,7 +18,7 @@ interface StorageInterface
 {
     /**
      * Constructor.
-     * 
+     *
      * @param array $options Connection options
      */
     public function __construct(array $options);

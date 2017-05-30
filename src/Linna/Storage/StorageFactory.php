@@ -22,17 +22,16 @@ class StorageFactory
      * @var string One of supported drivers
      */
     private $driver;
-    
+
     /**
-     *
-     * @var array Factory supported driver 
+     * @var array Factory supported driver
      */
     private $supportedDriver = [
-        'pdo' => PdoStorage::class,
-        'mysqli' => MysqliStorage::class,
-        'mongodb' => MongoDbStorage::class
+        'pdo'     => PdoStorage::class,
+        'mysqli'  => MysqliStorage::class,
+        'mongodb' => MongoDbStorage::class,
     ];
-        
+
     /**
      * @var array Options for the driver
      */
@@ -62,7 +61,7 @@ class StorageFactory
         $driver = $this->driver;
         $options = $this->options;
 
-        if (isset($this->supportedDriver[$driver])){
+        if (isset($this->supportedDriver[$driver])) {
             $storageClass = $this->supportedDriver[$driver];
 
             return new $storageClass($options);
