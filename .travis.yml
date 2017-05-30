@@ -12,7 +12,6 @@ services:
 - mysql
 - memcached
 - mongodb
-- postgresql
 
 before_install:
 - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
@@ -21,9 +20,6 @@ before_install:
 before_script:
 - mysql -e 'create database linna_db;'
 - mysql -u root linna_db < tests/linna_db_mysql.sql
-- psql -c 'create database linna_db;' -U postgres
-- composer show --platform
-- composer require mongodb/mongodb
 - if [[ $TRAVIS_PHP_VERSION = '7.0' ]]; then composer require codeclimate/php-test-reporter --dev; fi
 - composer install
 
