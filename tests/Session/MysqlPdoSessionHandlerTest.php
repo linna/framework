@@ -24,19 +24,19 @@ class MysqlPdoSessionHandlerTest extends TestCase
 
     public function setUp()
     {
-        $pdo = new MysqlPdoStorage(
-            $GLOBALS['pdo_mysql_dsn'],
-            $GLOBALS['pdo_mysql_user'],
-            $GLOBALS['pdo_mysql_password'],
-            [
+        $options = [
+            'dsn' => $GLOBALS['pdo_mysql_dsn'],
+            'user' => $GLOBALS['pdo_mysql_user'],
+            'password' => $GLOBALS['pdo_mysql_password'],
+            'options' => [
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
                 \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
                 \PDO::ATTR_PERSISTENT         => false,
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
-            ]
-        );
+            ]  
+        ];
 
-        $this->sessionHandler = new MysqlPdoSessionHandler($pdo);
+        $this->sessionHandler = new MysqlPdoSessionHandler((new MysqlPdoStorage($options)));
 
         $this->session = new Session(['expire' => 10]);
     }
@@ -93,14 +93,19 @@ class MysqlPdoSessionHandlerTest extends TestCase
      */
     public function testGc()
     {
-        $pdo = new MysqlPdoStorage(
-            $GLOBALS['pdo_mysql_dsn'],
-            $GLOBALS['pdo_mysql_user'],
-            $GLOBALS['pdo_mysql_password'],
-            [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING]
-        );
+        $options = [
+            'dsn' => $GLOBALS['pdo_mysql_dsn'],
+            'user' => $GLOBALS['pdo_mysql_user'],
+            'password' => $GLOBALS['pdo_mysql_password'],
+            'options' => [
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
+                \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_PERSISTENT         => false,
+                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
+            ]  
+        ];
 
-        $conn = $pdo->getResource();
+        $conn = (new MysqlPdoStorage($options))->getResource();
         $conn->query('DELETE FROM session');
 
         $pdos = $conn->prepare('INSERT INTO session (session_id, session_data) VALUES (:session_id, :session_data)');

@@ -42,7 +42,6 @@ class MysqliStorage implements StorageInterface
     {
         mysqli_report(MYSQLI_REPORT_ALL);
 
-        //return new mysqli($this->host, $this->user, $this->password, $this->database, $this->port);
         return new mysqli(
             $this->options['host'], 
             $this->options['user'], 
