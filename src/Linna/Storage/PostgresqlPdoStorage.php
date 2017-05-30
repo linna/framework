@@ -19,7 +19,7 @@ use PDO;
 class PostgresqlPdoStorage implements StorageInterface
 {
     /**
-     * @var array PDO options
+     * @var array Postgres PDO connection options
      */
     protected $options;
 

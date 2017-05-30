@@ -26,7 +26,7 @@ class MysqliStorage implements StorageInterface
     /**
      * Constructor.
      *
-     * @param array  $options
+     * @param array $options
      */
     public function __construct(array $options)
     {
