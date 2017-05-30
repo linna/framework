@@ -22,7 +22,18 @@ class StorageFactory
      * @var string One of supported drivers
      */
     private $driver;
-
+    
+    /**
+     *
+     * @var array Factory supported driver 
+     */
+    private $supportedDriver = [
+        'mysqlpdo' => MysqlPdoStorage::class,
+        'pgsqlpdo' => PostgresqlPdoStorage::class,
+        'mysqli' => MysqliStorage::class,
+        'mongodb' => MongoDbStorage::class
+    ];
+        
     /**
      * @var array Options for the driver
      */
@@ -43,7 +54,7 @@ class StorageFactory
     /**
      * Create Database Connection.
      *
-     * @throws InvalidArgumentException If requred adapter is not supported
+     * @throws InvalidArgumentException If required driver is not supported
      *
      * @return StorageInterface
      */
@@ -52,20 +63,10 @@ class StorageFactory
         $driver = $this->driver;
         $options = $this->options;
 
-        if ($driver === 'mysqlpdo') {
-            return new MysqlPdoStorage($options['dsn'], $options['user'], $options['password'], $options['options']);
-        }
+        if (isset($this->supportedDriver[$driver])){
+            $storageClass = $this->supportedDriver[$driver];
 
-        if ($driver === 'pgsqlpdo') {
-            return new PostgresqlPdoStorage($options['dsn'], $options['user'], $options['password'], $options['options']);
-        }
-
-        if ($driver === 'mysqli') {
-            return new MysqliStorage($options['host'], $options['user'], $options['password'], $options['database'], $options['port']);
-        }
-
-        if ($driver === 'mongodb') {
-            return new MongoDbStorage($options['uri'], $options['uriOptions'], $options['driverOptions']);
+            return new $storageClass($options);
         }
 
         throw new InvalidArgumentException("[$driver] not supported.");

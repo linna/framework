@@ -19,32 +19,18 @@ use MongoDB\Client;
 class MongoDbStorage implements StorageInterface
 {
     /**
-     * @var string String for MongoDB connection
+     * @var array MongoDB connection options
      */
-    protected $uri;
-
-    /**
-     * @var array Specifies additional URI options
-     */
-    protected $uriOptions;
-
-    /**
-     * @var array Specify driver-specific options
-     */
-    protected $driverOptions;
+    protected $options;
 
     /**
      * Constructor.
      *
-     * @param string $uri
-     * @param array  $uriOptions
-     * @param array  $driverOptions
+     * @param array  $options
      */
-    public function __construct(string $uri = 'mongodb://127.0.0.1/', array $uriOptions = [], array $driverOptions = [])
+    public function __construct(array $options)
     {
-        $this->uri = $uri;
-        $this->uriOptions = $uriOptions;
-        $this->driverOptions = $driverOptions;
+        $this->options = $options;
     }
 
     /**
@@ -54,6 +40,10 @@ class MongoDbStorage implements StorageInterface
      */
     public function getResource()
     {
-        return new Client($this->uri, $this->uriOptions, $this->driverOptions);
+        return new Client(
+            $this->options['uri'], 
+            $this->options['uriOptions'], 
+            $this->options['driverOptions']
+        );
     }
 }

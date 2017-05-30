@@ -16,19 +16,19 @@ class MysqlPdoStorageTest extends TestCase
 {
     public function testConnection()
     {
-        $mysqlPdoAdapter = new MysqlPdoStorage(
-            $GLOBALS['pdo_mysql_dsn'],
-            $GLOBALS['pdo_mysql_user'],
-            $GLOBALS['pdo_mysql_password'],
-            [
+        $options = [
+            'dsn' => $GLOBALS['pdo_mysql_dsn'],
+            'user' => $GLOBALS['pdo_mysql_user'],
+            'password' => $GLOBALS['pdo_mysql_password'],
+            'options' => [
                 \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
                 \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
                 \PDO::ATTR_PERSISTENT         => false,
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
-            ]
-        );
+            ]  
+        ];
 
-        $this->assertInstanceOf(PDO::class, $mysqlPdoAdapter->getResource());
+        $this->assertInstanceOf(PDO::class, (new MysqlPdoStorage($options))->getResource());
     }
 
     public function connectionDataProvider()
@@ -47,11 +47,18 @@ class MysqlPdoStorageTest extends TestCase
      */
     public function testFailConnection($dsn, $user, $password)
     {
-        (new MysqlPdoStorage($dsn, $user, $password, [
-            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
-            \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-            \PDO::ATTR_PERSISTENT         => false,
-            \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
-        ]))->getResource();
+        $options = [
+            'dsn' => $dsn,
+            'user' => $user,
+            'password' => $password,
+            'options' => [
+                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
+                \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_PERSISTENT         => false,
+                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
+            ]  
+        ];
+
+        (new MysqlPdoStorage($options))->getResource();
     }
 }

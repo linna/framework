@@ -21,17 +21,17 @@ class MysqlPdoStorage implements StorageInterface
     /**
      * @var string Dsn string for mysql
      */
-    protected $dsn;
+    //protected $dsn;
 
     /**
      * @var string Username for data base connection
      */
-    protected $user;
+    //protected $user;
 
     /**
      * @var string Password for data base connection
      */
-    protected $password;
+    //protected $password;
 
     /**
      * @var array PDO options
@@ -46,7 +46,7 @@ class MysqlPdoStorage implements StorageInterface
      * @param string $password
      * @param array  $options
      */
-    public function __construct(string $dsn, string $user, string $password, array $options)
+    /*public function __construct(string $dsn, string $user, string $password, array $options)
     {
         $this->dsn = $dsn;
 
@@ -55,8 +55,13 @@ class MysqlPdoStorage implements StorageInterface
         $this->password = $password;
 
         $this->options = $options;
-    }
+    }*/
 
+    public function __construct(array $options)
+    {
+        $this->options = $options;
+    }
+    
     /**
      * Get Resource.
      *
@@ -64,6 +69,12 @@ class MysqlPdoStorage implements StorageInterface
      */
     public function getResource()
     {
-        return new PDO($this->dsn, $this->user, $this->password, $this->options);
+        //return new PDO($this->dsn, $this->user, $this->password, $this->options);
+        return new PDO(
+            $this->options['dsn'], 
+            $this->options['user'], 
+            $this->options['password'], 
+            $this->options['options']
+        );
     }
 }

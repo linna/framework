@@ -17,6 +17,13 @@ namespace Linna\Storage;
 interface StorageInterface
 {
     /**
+     * Constructor.
+     * 
+     * @param array $options Connection options
+     */
+    public function __construct(array $options);
+
+    /**
      * Return resource to Database class.
      */
     public function getResource();

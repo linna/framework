@@ -16,15 +16,15 @@ class MysqliTest extends TestCase
 {
     public function testConnection()
     {
-        $mysqliAdapter = new MysqliStorage(
-            '127.0.0.1',
-            $GLOBALS['pdo_mysql_user'],
-            $GLOBALS['pdo_mysql_password'],
-            'linna_db',
-            3306
-        );
-
-        $this->assertInstanceOf(mysqli::class, $mysqliAdapter->getResource());
+        $options = [
+            'host' => '127.0.0.1',
+            'user' => $GLOBALS['pdo_mysql_user'],
+            'password' => $GLOBALS['pdo_mysql_password'],
+            'database' => 'linna_db',
+            'port' => 3306
+        ];
+        
+        $this->assertInstanceOf(mysqli::class, (new MysqliStorage($options))->getResource());
     }
 
     public function connectionDataProvider()
@@ -44,6 +44,14 @@ class MysqliTest extends TestCase
      */
     public function testFailConnection($host, $user, $password, $database, $port)
     {
-        (new MysqliStorage($host, $user, $password, $database, $port))->getResource();
+        $options = [
+            'host' => $host,
+            'user' => $user,
+            'password' => $password,
+            'database' => $database,
+            'port' => $port
+        ];
+        
+        (new MysqliStorage($options))->getResource();
     }
 }

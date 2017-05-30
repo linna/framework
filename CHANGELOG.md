@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 * `Linna\Storage\PostgresqlPdoStorage` for PostgreSql database connections.
+* `Linna\Storage\StorageInterface` implementation must contain `public function __construct(array $options)`
 
 ### Changed
 * Cache depends from [s3b4stian simple-cache](https://github.com/s3b4stian/simple-cache) instead of [Psr simple-cache](https://github.com/php-fig/simple-cache)

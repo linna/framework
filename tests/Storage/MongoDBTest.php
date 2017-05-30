@@ -15,9 +15,13 @@ class MongoDbStorageTest extends TestCase
 {
     public function testConnection()
     {
-        $mongoDbAdapter = new MongoDbStorage();
+        $options = [
+            'uri' => 'mongodb://127.0.0.1/', 
+            'uriOptions' => [], 
+            'driverOptions' => []
+        ];
 
-        $this->assertInstanceOf(Client::class, $mongoDbAdapter->getResource());
+        $this->assertInstanceOf(Client::class, (new MongoDbStorage($options))->getResource());
     }
 
     /**
@@ -25,11 +29,12 @@ class MongoDbStorageTest extends TestCase
      */
     public function testFailConnection()
     {
-        //$this->expectException(\Exception::class);
+        $options = [
+            'uri' => 'mongodb:/localhost:27017', 
+            'uriOptions' => [], 
+            'driverOptions' => []
+        ];
 
-        (new MongoDbStorage('mongodb:/localhost:27017'))->getResource();
-        /*$mongoDbAdapter = new MongoDbStorage('mongodb:/localhost:27017');
-
-        $resource = $mongoDbAdapter->getResource();*/
+        (new MongoDbStorage($options))->getResource();
     }
 }
