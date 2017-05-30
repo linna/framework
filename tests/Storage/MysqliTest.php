@@ -17,13 +17,13 @@ class MysqliTest extends TestCase
     public function testConnection()
     {
         $options = [
-            'host' => '127.0.0.1',
-            'user' => $GLOBALS['pdo_mysql_user'],
+            'host'     => '127.0.0.1',
+            'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
             'database' => 'linna_db',
-            'port' => 3306
+            'port'     => 3306,
         ];
-        
+
         $this->assertInstanceOf(mysqli::class, (new MysqliStorage($options))->getResource());
     }
 
@@ -45,13 +45,13 @@ class MysqliTest extends TestCase
     public function testFailConnection($host, $user, $password, $database, $port)
     {
         $options = [
-            'host' => $host,
-            'user' => $user,
+            'host'     => $host,
+            'user'     => $user,
             'password' => $password,
             'database' => $database,
-            'port' => $port
+            'port'     => $port,
         ];
-        
+
         (new MysqliStorage($options))->getResource();
     }
 }

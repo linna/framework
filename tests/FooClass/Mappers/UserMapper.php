@@ -38,8 +38,8 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
     /**
      * Constructor.
      *
-     * @param PdoStorage      $dBase
-     * @param Password        $password
+     * @param PdoStorage $dBase
+     * @param Password   $password
      */
     public function __construct(PdoStorage $dBase, Password $password)
     {

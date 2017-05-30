@@ -26,7 +26,7 @@ class MongoDbStorage implements StorageInterface
     /**
      * Constructor.
      *
-     * @param array  $options
+     * @param array $options
      */
     public function __construct(array $options)
     {
@@ -41,8 +41,8 @@ class MongoDbStorage implements StorageInterface
     public function getResource()
     {
         return new Client(
-            $this->options['uri'], 
-            $this->options['uriOptions'], 
+            $this->options['uri'],
+            $this->options['uriOptions'],
             $this->options['driverOptions']
         );
     }
