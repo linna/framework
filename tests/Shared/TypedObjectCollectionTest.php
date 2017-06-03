@@ -21,7 +21,7 @@ class TypedObjectCollectionTest extends TestCase
 
         $this->assertInstanceOf(TypedObjectCollection::class, $collection);
     }
-    
+
     public function BadArgumentsProvider()
     {
         return [
@@ -36,7 +36,7 @@ class TypedObjectCollectionTest extends TestCase
             }],
         ];
     }
-    
+
     /**
      * @dataProvider BadArgumentsProvider
      * @expectedException TypeError
@@ -45,7 +45,7 @@ class TypedObjectCollectionTest extends TestCase
     {
         (new Linna\Shared\TypedObjectCollection($args));
     }
-    
+
     public function testPopulateCollection()
     {
         $collection = new Linna\Shared\TypedObjectCollection(Route::class);
@@ -58,7 +58,7 @@ class TypedObjectCollectionTest extends TestCase
 
         $this->assertEquals(3, $collection->count());
     }
-    
+
     /**
      * @dataProvider BadArgumentsProvider
      * @expectedException TypeError
@@ -67,15 +67,15 @@ class TypedObjectCollectionTest extends TestCase
     {
         (new Linna\Shared\TypedObjectCollection(Route::class))->push($element);
     }
-    
+
     public function testCollectionGetType()
     {
         $this->assertEquals(
-            Route::class, 
+            Route::class,
             (new Linna\Shared\TypedObjectCollection(Route::class))->getType()
         );
     }
-    
+
     public function testCollectionToArray()
     {
         $collection = new Linna\Shared\TypedObjectCollection(Route::class);
@@ -95,4 +95,3 @@ class TypedObjectCollectionTest extends TestCase
         $this->assertEquals($array, $collection->toArray());
     }
 }
-
