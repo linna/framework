@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Shared\TypedObjectCollection` for create strictly typed collections.
 
 ### Removed
-* `Linna\Cache\Exception\InvalidArgumentException` reminiscence of PSR container.
+* `Linna\Cache\Exception\InvalidArgumentException` reminiscence of PSR simple-cache.
 
 ## [v0.18.0](https://github.com/s3b4stian/linna-framework/compare/v0.17.0...v0.18.0) - 2017-05-30
 
