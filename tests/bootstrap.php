@@ -1,6 +1,12 @@
 <?php
 
-//linna autoload
+/**
+ * Linna Framework.
+ *
+ * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
+ * @copyright (c) 2017, Sebastian Rapetti
+ * @license http://opensource.org/licenses/MIT MIT License
+ */
 include dirname(__DIR__).'/src/Linna/Autoloader.php';
 
 function call_autoloader()

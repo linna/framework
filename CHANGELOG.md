@@ -8,9 +8,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unrelased][v0.19.0](https://github.com/s3b4stian/linna-framework/compare/v0.18.0...v0.19.0) - 2017-XX-XX
 
-### Added
-* `Linna\Shared\TypedObjectCollection` for create strictly typed collections.
-
 ### Removed
 * `Linna\Cache\Exception\InvalidArgumentException` reminiscence of PSR simple-cache.
 

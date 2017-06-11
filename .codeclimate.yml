@@ -12,5 +12,4 @@ ratings:
   paths:
   - "**.php"
 exclude_paths:
-- "docs/"
 - "tests/"
