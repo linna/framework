@@ -1,5 +1,5 @@
 {
-    "name": "s3b4stian/linna-framework",
+    "name": "linna/framework",
     "type": "library",
     "description": "Linna Framework",
     "keywords": ["best-pratices", "framework", "learning", "mvc-framework", "php"],
@@ -8,7 +8,7 @@
         {
             "name": "Sebastian Rapetti",
             "email": "sebastian.rapetti@alice.it",
-            "homepage": "https://github.com/s3b4stian/linna-framework"
+            "homepage": "https://github.com/linna/framework"
         }
     ],
     "require": {
