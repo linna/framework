@@ -20,11 +20,7 @@ before_install:
 before_script:
 - mysql -e 'create database linna_db;'
 - mysql -u root linna_db < tests/linna_db_mysql.sql
-- if [[ $TRAVIS_PHP_VERSION = '7.0' ]]; then composer require codeclimate/php-test-reporter --dev; fi
 - composer install
 
 script: 
-- if [[ $TRAVIS_PHP_VERSION = '7.0' ]]; then phpunit --coverage-clover build/logs/clover.xml; else phpunit; fi
-
-after_script:
-- if [[ $TRAVIS_PHP_VERSION = '7.0' ]]; then CODECLIMATE_REPO_TOKEN="73843c11688645a6d15a453cc9259f18c0717933b7e12081a6e849e5eaad46d9" vendor/bin/test-reporter; fi
+- phpunit
