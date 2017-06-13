@@ -10,117 +10,309 @@
 declare(strict_types=1);
 
 use Linna\DI\Container;
+use Linna\DI\Exception\NotFoundException;
+use Linna\Foo\DI\FooClassACache;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Container test.
+ */
 class ContainerTest extends TestCase
 {
-    protected $container;
-
-    public function setUp()
+    /**
+     * Values Provider.
+     * 
+     * @return array
+     */
+    public function valuesProvaider()
     {
-        $this->container = new Container();
-
-        $this->container->set('FooClass', function () {
-            return new \stdClass();
-        });
-
-        $this->container['FooClass'] = function () {
-            return new \stdClass();
-        };
-
-        $this->container->FooClass = function () {
-            return new \stdClass();
-        };
+        return [
+            ['string', 'Hello World'],
+            ['int', 1],
+            ['float', 1.1],
+            ['array', [1, 2, 3, 4]],
+            ['closure', function () {return 'Hello World';}],
+            [\Linna\Foo\DI\FooClassACache::class, new FooClassACache('Hello World')],
+        ];
     }
-
-    public function testContainerGet()
+    
+    /**
+     * Test set and get callig method.
+     *
+     * @param string $key
+     * @param type $value
+     * 
+     * @dataProvider valuesProvaider
+     */
+    public function testSetAndGetWithMethodCall(string $key, $value)
     {
-        $FooClass = $this->container->get('FooClass');
-
-        $this->assertInstanceOf(stdClass::class, $FooClass);
+        $container = new Container();
+        
+        $container->set($key, $value);
+        
+        $this->assertEquals($value, $container->get($key));
+    }
+    
+    /**
+     * Test set and get utilizing array sntax.
+     * 
+     * @param string $key
+     * @param type $value
+     * 
+     * @dataProvider valuesProvaider
+     */
+    public function testSetAndGetWithArraySyntax(string $key, $value)
+    {
+        $container = new Container();
+        
+        $container[$key] = $value;
+        
+        $this->assertEquals($value, $container[$key]);
     }
 
     /**
-     * @expectedException Exception
+     * Test set and get utilizing property sntax.
+     * 
+     * @param string $key
+     * @param type $value
+     * 
+     * @dataProvider valuesProvaider
      */
-    public function testContainerNotFoundGet()
+    public function testSetAndGetWithPropertySyntax(string $key, $value)
     {
-        $this->container->get('BarClass');
-    }
-
-    public function testContainerHas()
-    {
-        $this->assertEquals(true, $this->container->has('FooClass'));
-        $this->assertEquals(false, $this->container->has('BarClass'));
-    }
-
-    public function testContainerDelete()
-    {
-        $this->assertEquals(true, $this->container->has('FooClass'));
-
-        $this->container->delete('FooClass');
-
-        $this->assertEquals(false, $this->container->has('FooClass'));
-        $this->assertEquals(false, $this->container->delete('FooClass'));
-    }
-
-    public function testArrayContainerGet()
-    {
-        $FooClass = $this->container['FooClass'];
-
-        $this->assertInstanceOf(stdClass::class, $FooClass);
+        $container = new Container();
+        
+        $container->$key = $value;
+        
+        $this->assertEquals($value, $container->$key);
     }
 
     /**
-     * @expectedException Exception
+     * Test has callig method.
+     * 
+     * @param string $key
+     * @param type $value
+     * 
+     * @dataProvider valuesProvaider
      */
-    public function testArrayContainerNotFoundGet()
+    public function testHasWithMethodCall(string $key, $value)
     {
-        $this->container['BarClass'];
+        $container = new Container();
+        
+        $container->set($key, $value);
+        
+        $this->assertEquals(true, $container->has($key));
     }
-
-    public function testArrayContainerHas()
+    
+    /**
+     * Test has utilizing array sntax.
+     * 
+     * @param string $key
+     * @param type $value
+     * 
+     * @dataProvider valuesProvaider
+     */
+    public function testHasWithArraySyntax(string $key, $value)
     {
-        $this->assertEquals(true, isset($this->container['FooClass']));
-        $this->assertEquals(false, isset($this->container['BarClass']));
+        $container = new Container();
+        
+        $container[$key] = $value;
+        
+        $this->assertEquals(true, isset($container[$key]));
     }
-
-    public function testArrayContainerDelete()
+    
+    /**
+     * Test has utilizing property sntax.
+     * 
+     * @param string $key
+     * @param type $value
+     * 
+     * @dataProvider valuesProvaider
+     */
+    public function testHasWithWithPropertySyntax(string $key, $value)
     {
-        $this->assertEquals(true, isset($this->container['FooClass']));
-
-        unset($this->container['FooClass']);
-
-        $this->assertEquals(false, isset($this->container['FooClass']));
-    }
-
-    public function testPropertyContainerGet()
-    {
-        $FooClass = $this->container->FooClass;
-
-        $this->assertInstanceOf(stdClass::class, $FooClass);
+        $container = new Container();
+        
+        $container->$key = $value;
+        
+        $this->assertEquals(true, isset($container->$key));
     }
 
     /**
-     * @expectedException Exception
+     * Test delete callig method.
+     * 
+     * @param string $key
+     * @param type $value
+     * 
+     * @dataProvider valuesProvaider
      */
-    public function testPropertyContainerNotFoundGet()
+    public function testDeleteWithMethodCall(string $key, $value)
     {
-        $this->container->BarClass;
+        $container = new Container();
+        
+        $container->set($key, $value);
+        
+        $this->assertEquals(true, $container->has($key));
+        
+        $container->delete($key);
+        
+        $this->assertEquals(false, $container->has($key));
+    }
+    
+    /**
+     * Test delete utilizing array sntax.
+     * 
+     * @param string $key
+     * @param type $value
+     * 
+     * @dataProvider valuesProvaider
+     */
+    public function testDeleteWithArraySyntax(string $key, $value)
+    {
+        $container = new Container();
+        
+        $container[$key] = $value;
+        
+        $this->assertEquals(true, isset($container[$key]));
+        
+        unset($container[$key]);
+        
+        $this->assertEquals(false, isset($container[$key]));
+    }
+    
+    /**
+     * Test delete utilizing property sntax.
+     * 
+     * @param string $key
+     * @param type $value
+     * 
+     * @dataProvider valuesProvaider
+     */
+    public function testDeleteWithWithPropertySyntax(string $key, $value)
+    {
+        $container = new Container();
+        
+        $container->$key = $value;
+        
+        $this->assertEquals(true, isset($container->$key));
+        
+        unset($container->$key);
+        
+        $this->assertEquals(false, isset($container->$key));
     }
 
-    public function testPropertyContainerHas()
+    /**
+     * Test get unexisting callig method.
+     * 
+     * @param string $key
+     * @param type $value
+     * 
+     * @dataProvider valuesProvaider
+     * @expectedException Linna\DI\Exception\NotFoundException
+     */
+    public function testGetUnexistingWithMethodCall(string $key, $value)
     {
-        $this->assertEquals(true, isset($this->container->FooClass));
-        $this->assertEquals(false, isset($this->container->BarClass));
+        $container = new Container();
+        $container->get($key);
+    }
+    
+    /**
+     * Test get unexisting utilizing array sntax.
+     * 
+     * @param string $key
+     * @param type $value
+     * 
+     * @dataProvider valuesProvaider
+     * @expectedException Linna\DI\Exception\NotFoundException
+     */
+    public function testGetUnexistingWithArraySyntax(string $key, $value)
+    {
+        $container = new Container();
+        $value = $container[$key];
+    }
+    
+    /**
+     * Test get unexisting utilizing property sntax.
+     * 
+     * @param string $key
+     * @param type $value
+     * 
+     * @dataProvider valuesProvaider
+     * @expectedException Linna\DI\Exception\NotFoundException
+     */
+    public function testGetUnexistingWithWithPropertySyntax(string $key, $value)
+    {
+        $container = new Container();
+        $value = $container->$key;
+    }
+    
+    /**
+     * Class Provider.
+     * 
+     * @return array
+     */
+    public function classProvider()
+    {
+        return [
+            [\Linna\Foo\DI\FooClassResObject::class],
+            [\Linna\Foo\DI\FooClassB::class],
+            [\Linna\Foo\DI\FooClassC::class],
+            [\Linna\Foo\DI\FooClassD::class],
+            [\Linna\Foo\DI\FooClassE::class],
+            [\Linna\Foo\DI\FooClassF::class],
+            [\Linna\Foo\DI\FooClassG::class],
+            [\Linna\Foo\DI\FooClassH::class],
+            [\Linna\Foo\DI\FooClassI::class],
+        ];
     }
 
-    public function testPropertyContainerDelete()
+    /**
+     * Test class resolving.
+     * 
+     * @dataProvider classProvider
+     * 
+     * @param string $class
+     */
+    public function testResolve($class)
     {
-        $this->assertEquals(true, isset($this->container->FooClass));
+        $this->assertInstanceOf($class, (new Container())->resolve($class));
+    }
 
-        unset($this->container->FooClass);
+    /**
+     * Test resolving class with pre cached dependencies.
+     */
+    public function testResolveWithCache()
+    {
+        $container = new Container();
 
-        $this->assertEquals(false, isset($this->container->FooClass));
+        $container->set(\Linna\Foo\DI\FooClassACache::class, new FooClassACache('Hello World'));
+
+        $this->assertInstanceOf(
+            \Linna\Foo\DI\FooClassResCache::class,
+            $container->resolve(\Linna\Foo\DI\FooClassResCache::class)
+        );
+    }
+
+    /**
+     * Test resolving class with rules
+     * for unsolvable arguments.
+     */
+    public function testResolveWithRules()
+    {
+        $container = new Container();
+        $container->setRules([
+            \Linna\Foo\DI\FooClassARules::class => [
+                0 => true,
+                2 => 'foo',
+                3 => 1,
+                4 => ['foo'],
+                5 => 'foo',
+            ],
+        ]);
+
+        $this->assertInstanceOf(
+            \Linna\Foo\DI\FooClassResRules::class,
+            $container->resolve(\Linna\Foo\DI\FooClassResRules::class)       
+        );
     }
 }
