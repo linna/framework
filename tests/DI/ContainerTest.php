@@ -10,7 +10,6 @@
 declare(strict_types=1);
 
 use Linna\DI\Container;
-use Linna\DI\Exception\NotFoundException;
 use Linna\Foo\DI\FooClassACache;
 use PHPUnit\Framework\TestCase;
 
@@ -137,7 +136,20 @@ class ContainerTest extends TestCase
         
         $this->assertEquals(true, isset($container->$key));
     }
-
+    
+    /**
+     * Test delete callig method.
+     * 
+     * @param string $key
+     * @param type $value
+     * 
+     * @dataProvider valuesProvaider
+     */
+    public function testDeleteUnexisting(string $key, $value)
+    {
+        $this->assertEquals(false, (new Container())->delete($key));
+    }
+    
     /**
      * Test delete callig method.
      * 
@@ -188,7 +200,7 @@ class ContainerTest extends TestCase
      * 
      * @dataProvider valuesProvaider
      */
-    public function testDeleteWithWithPropertySyntax(string $key, $value)
+    public function testDeleteWithPropertySyntax(string $key, $value)
     {
         $container = new Container();
         
@@ -240,7 +252,7 @@ class ContainerTest extends TestCase
      * @dataProvider valuesProvaider
      * @expectedException Linna\DI\Exception\NotFoundException
      */
-    public function testGetUnexistingWithWithPropertySyntax(string $key, $value)
+    public function testGetUnexistingWithPropertySyntax(string $key, $value)
     {
         $container = new Container();
         $value = $container->$key;
