@@ -21,7 +21,7 @@ class Container implements ContainerInterface, \ArrayAccess
 {
     use PropertyAccessTrait;
     use ArrayAccessTrait;
-    
+
     /**
      * @var array Contains object already resolved
      */
@@ -86,7 +86,7 @@ class Container implements ContainerInterface, \ArrayAccess
 
         return false;
     }
-    
+
     /**
      * Set rules for unserolvable classes.
      *
@@ -140,7 +140,7 @@ class Container implements ContainerInterface, \ArrayAccess
             if (!isset($this->tree[$level][$class])) {
                 $this->tree[$level][$class] = [];
             }
-            
+
             //get parameter from constructor
             $parameters = (new \ReflectionClass($class))->getConstructor()->getParameters();
 
@@ -162,7 +162,7 @@ class Container implements ContainerInterface, \ArrayAccess
                     //update values for simulate recursive function
                     $level++;
                     $class = (is_object($param->getClass())) ? $param->getClass()->name : null;
-                    
+
                     //return to main while
                     continue 2;
                 }
