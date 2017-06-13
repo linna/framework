@@ -53,7 +53,7 @@ trait PropertyAccessTrait
      * @param string $key
      * @param mixed  $value
      */
-    public function __set(string $key, callable $value)
+    public function __set(string $key, $value)
     {
         $this->set($key, $value);
     }
