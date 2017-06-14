@@ -11,6 +11,9 @@
             "homepage": "https://github.com/linna/framework"
         }
     ],
+    "support": {
+        "issues": "https://github.com/linna/framework/issues"
+    },
     "require": {
         "php": "^7.0.0",
         "psr/container": "^1.0",
@@ -26,7 +29,7 @@
     },
     "autoload-dev": {
         "psr-4": { 
-            "Linna\\FOO\\": "tests/FOO/" 
+            "Linna\\Foo\\": "tests/FooClass/" 
         }
     }
 }
