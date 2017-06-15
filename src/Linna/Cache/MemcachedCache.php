@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Linna\Cache;
 
 use Memcached;
+use InvalidArgumentException;
 use Psr\SimpleCache\CacheInterface;
 
 /**
@@ -29,11 +30,16 @@ class MemcachedCache implements CacheInterface
     /**
      * Constructor.
      *
-     * @param Memcached $memcached
+     * @param array $options
+     * @throws InvalidArgumentException if options not contain memcached resource
      */
-    public function __construct(Memcached $memcached)
+    public function __construct(array $options)
     {
-        $this->memcached = $memcached;
+        if (!($options['resource'] instanceof Memcached)){
+            throw new InvalidArgumentException(__class__.' need instance of Memcached passed as option. [\'resource\' => $memcached]');
+        }
+        
+        $this->memcached = $options['resource'];
     }
 
     /**

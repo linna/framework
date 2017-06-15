@@ -12,85 +12,117 @@ declare(strict_types=1);
 use Linna\Cache\DiskCache;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Disk Cache Driver test.
+ */
 class DiskCacheTest extends TestCase
 {
-    protected $cache;
+    /**
+     * @var DiskCache Disk Cache resource
+     */
+    private $cache = null;
 
+    /**
+     * Setup.
+     */
     public function setUp()
     {
         $this->cache = new DiskCache();
+        $this->cache->clear();
     }
-
-    public function KeyProvider()
+    
+    /**
+     * Invalid key provider.
+     * 
+     * @return array
+     */
+    public function invalidKeyProvider()
     {
         return [
             [1],
             [[0, 1]],
             [(object) [0, 1]],
             [1.5],
+            [true]
         ];
     }
 
     /**
-     * @dataProvider KeyProvider
+     * Test set with invalid key.
+     * 
+     * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
-    public function testSetInvalidKey($key)
+    public function testSetWithInvalidKey($key)
     {
         $this->cache->set($key, [0, 1, 2, 3, 4]);
     }
 
+    /**
+     * Test set.
+     */
     public function testSet()
     {
         $this->cache->set('foo', [0, 1, 2, 3, 4]);
 
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo').'.php'));
-    }
-
-    public function testSetTtlNull()
-    {
-        $this->cache->set('foo_ttl', [0, 1, 2, 3, 4]);
-
-        $cacheValue = include '/tmp/'.sha1('foo_ttl').'.php';
-
-        $this->assertEquals(0, $cacheValue['expires']);
-    }
-
-    public function testSetTtl()
-    {
-        $this->cache->set('foo_ttl', [0, 1, 2, 3, 4], 10);
-
-        $cacheValue = include '/tmp/'.sha1('foo_ttl').'.php';
-
-        $expectedTtl = time() + 10;
-
-        $this->assertEquals($expectedTtl, $cacheValue['expires']);
+        $this->assertEquals(true,  $this->cache->has('foo'));
     }
 
     /**
-     * @dataProvider KeyProvider
+     * Test set with ttl null.
+     */
+    public function testSetWithTtlNull()
+    {
+        $this->cache->set('foo_ttl', [0, 1, 2, 3, 4]);
+
+        $this->assertEquals(true,  $this->cache->has('foo_ttl'));
+    }
+
+    /**
+     * Test set with ttl value.
+     */
+    public function testSetWithTtl()
+    {
+        $this->cache->set('foo_ttl', [0, 1, 2, 3, 4], 1);
+        
+        usleep(1000005);
+        
+        $this->assertEquals(null,  $this->cache->get('foo_ttl'));
+    }
+
+    /**
+     * Test get with invalid key.
+     * 
+     * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
-    public function testGetInvalidKey($key)
+    public function testGetWithInvalidKey($key)
     {
         $this->cache->get($key);
     }
 
+    /**
+     * Test get.
+     */
     public function testGet()
     {
         $this->cache->set('foo', [0, 1, 2, 3, 4]);
 
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo').'.php'));
-
         $this->assertEquals([0, 1, 2, 3, 4], $this->cache->get('foo'));
     }
 
-    public function testGetDefault()
+    /**
+     * Test get with default value.
+     */
+    public function testGetWithDefault()
     {
         $this->assertEquals(null, $this->cache->get('foo_not_exist'));
     }
 
-    public function testGetExpired()
+    /**
+     * Test get with expired element.
+     */
+    public function testGetWithExpiredElement()
     {
         $this->cache->set('foo', [0, 1, 2, 3, 4], -10);
 
@@ -98,26 +130,37 @@ class DiskCacheTest extends TestCase
     }
 
     /**
-     * @dataProvider KeyProvider
+     * Test delete with invalid key.
+     * 
+     * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
-    public function testDeleteInvalidKey($key)
+    public function testDeleteWithInvalidKey($key)
     {
         $this->cache->delete($key);
     }
 
-    public function testDeleteTrue()
+    /**
+     * Test delete an existing element.
+     */
+    public function testDeleteExistingElement()
     {
         $this->cache->set('foo', [0, 1, 2, 3, 4]);
 
         $this->assertEquals(true, $this->cache->delete('foo'));
     }
 
-    public function testDeleteFalse()
+    /**
+     * Test delete not existing element.
+     */
+    public function testDeleteNotExistingElement()
     {
         $this->assertEquals(false, $this->cache->delete('foo'));
     }
 
+    /**
+     * Test clear all cache.
+     */
     public function testClear()
     {
         $this->cache->set('foo_0', [0]);
@@ -127,20 +170,37 @@ class DiskCacheTest extends TestCase
         $this->cache->set('foo_4', [4]);
         $this->cache->set('foo_5', [5]);
 
+        $this->assertEquals(true, $this->cache->has('foo_0'));
+        $this->assertEquals(true, $this->cache->has('foo_1'));
+        $this->assertEquals(true, $this->cache->has('foo_2'));
+        $this->assertEquals(true, $this->cache->has('foo_3'));
+        $this->assertEquals(true, $this->cache->has('foo_4'));
+        $this->assertEquals(true, $this->cache->has('foo_5'));
+
         $this->cache->clear();
 
-        $this->assertEquals([], glob('tmp/*.php'));
+        $this->assertEquals(false, $this->cache->has('foo_0'));
+        $this->assertEquals(false, $this->cache->has('foo_1'));
+        $this->assertEquals(false, $this->cache->has('foo_2'));
+        $this->assertEquals(false, $this->cache->has('foo_3'));
+        $this->assertEquals(false, $this->cache->has('foo_4'));
+        $this->assertEquals(false, $this->cache->has('foo_5'));
     }
 
     /**
-     * @dataProvider KeyProvider
+     * Test get multiple elements with invalid key.
+     * 
+     * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
-    public function testGetMultipleInvalidKey($key)
+    public function testGetMultipleWithInvalidKey($key)
     {
         $this->cache->getMultiple($key);
     }
 
+    /**
+     * Test get multiple elements.
+     */
     public function testGetMultiple()
     {
         $this->cache->set('foo_0', [0]);
@@ -150,48 +210,47 @@ class DiskCacheTest extends TestCase
         $this->cache->set('foo_4', [4]);
         $this->cache->set('foo_5', [5]);
 
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_0').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_1').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_2').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_3').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_4').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_5').'.php'));
+        $this->assertEquals(true, $this->cache->has('foo_0'));
+        $this->assertEquals(true, $this->cache->has('foo_1'));
+        $this->assertEquals(true, $this->cache->has('foo_2'));
+        $this->assertEquals(true, $this->cache->has('foo_3'));
+        $this->assertEquals(true, $this->cache->has('foo_4'));
+        $this->assertEquals(true, $this->cache->has('foo_5'));
 
-        $keys = [
-            'foo_0',
-            'foo_1',
-            'foo_2',
-            'foo_3',
-            'foo_4',
-            'foo_5',
-        ];
-
-        $values = [
+        $this->assertEquals([
             'foo_0' => [0],
             'foo_1' => [1],
             'foo_2' => [2],
             'foo_3' => [3],
             'foo_4' => [4],
             'foo_5' => [5],
-        ];
-
-        $this->assertEquals($values, $this->cache->getMultiple($keys));
-
-        $this->cache->clear();
+        ], $this->cache->getMultiple([
+            'foo_0',
+            'foo_1',
+            'foo_2',
+            'foo_3',
+            'foo_4',
+            'foo_5',
+        ]));
     }
 
     /**
-     * @dataProvider KeyProvider
+     * Test set multiple elements with invalid key.
+     * 
+     * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
-    public function testSetMultipleInvalidKey($key)
+    public function testSetMultipleWithInvalidKey($key)
     {
-        $this->cache->SetMultiple($key);
+        $this->cache->setMultiple($key);
     }
 
+    /**
+     * Test set multiple elements.
+     */
     public function testSetMultiple()
     {
-        $this->cache->SetMultiple([
+        $this->cache->setMultiple([
             'foo_0' => [0],
             'foo_1' => [1],
             'foo_2' => [2],
@@ -200,16 +259,33 @@ class DiskCacheTest extends TestCase
             'foo_5' => [5],
         ]);
 
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_0').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_1').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_2').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_3').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_4').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_5').'.php'));
-
-        $this->cache->clear();
+        $this->assertEquals(true, $this->cache->has('foo_0'));
+        $this->assertEquals(true, $this->cache->has('foo_1'));
+        $this->assertEquals(true, $this->cache->has('foo_2'));
+        $this->assertEquals(true, $this->cache->has('foo_3'));
+        $this->assertEquals(true, $this->cache->has('foo_4'));
+        $this->assertEquals(true, $this->cache->has('foo_5'));
+        
+        $this->assertEquals([
+            'foo_0' => [0],
+            'foo_1' => [1],
+            'foo_2' => [2],
+            'foo_3' => [3],
+            'foo_4' => [4],
+            'foo_5' => [5],
+        ], $this->cache->getMultiple([
+            'foo_0',
+            'foo_1',
+            'foo_2',
+            'foo_3',
+            'foo_4',
+            'foo_5',
+        ]));
     }
 
+    /**
+     * Test set multiple elements with ttl.
+     */
     public function testSetMultipleTtl()
     {
         $this->cache->SetMultiple([
@@ -219,46 +295,42 @@ class DiskCacheTest extends TestCase
             'foo_3' => [3],
             'foo_4' => [4],
             'foo_5' => [5],
-        ], 10);
+        ], 1);
 
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_0').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_1').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_2').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_3').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_4').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_5').'.php'));
+        $this->assertEquals(true, $this->cache->has('foo_0'));
+        $this->assertEquals(true, $this->cache->has('foo_1'));
+        $this->assertEquals(true, $this->cache->has('foo_2'));
+        $this->assertEquals(true, $this->cache->has('foo_3'));
+        $this->assertEquals(true, $this->cache->has('foo_4'));
+        $this->assertEquals(true, $this->cache->has('foo_5'));
 
-        $expectedTtl = time() + 10;
-
-        $cacheValue0 = include '/tmp/'.sha1('foo_0').'.php';
-        $cacheValue1 = include '/tmp/'.sha1('foo_1').'.php';
-        $cacheValue2 = include '/tmp/'.sha1('foo_2').'.php';
-        $cacheValue3 = include '/tmp/'.sha1('foo_3').'.php';
-        $cacheValue4 = include '/tmp/'.sha1('foo_4').'.php';
-        $cacheValue5 = include '/tmp/'.sha1('foo_5').'.php';
-
-        $this->assertEquals($expectedTtl, $cacheValue0['expires']);
-        $this->assertEquals($expectedTtl, $cacheValue1['expires']);
-        $this->assertEquals($expectedTtl, $cacheValue2['expires']);
-        $this->assertEquals($expectedTtl, $cacheValue3['expires']);
-        $this->assertEquals($expectedTtl, $cacheValue4['expires']);
-        $this->assertEquals($expectedTtl, $cacheValue5['expires']);
-
-        $this->cache->clear();
+        usleep(1000005);
+        
+        $this->assertEquals(null, $this->cache->get('foo_0'));
+        $this->assertEquals(null, $this->cache->get('foo_1'));
+        $this->assertEquals(null, $this->cache->get('foo_2'));
+        $this->assertEquals(null, $this->cache->get('foo_3'));
+        $this->assertEquals(null, $this->cache->get('foo_4'));
+        $this->assertEquals(null, $this->cache->get('foo_5'));
     }
 
     /**
-     * @dataProvider KeyProvider
+     * Teset delete multiple elements with invalid key.
+     * 
+     * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
-    public function testDeleteMultipleInvalidKey($key)
+    public function testDeleteMultipleWithInvalidKey($key)
     {
         $this->cache->deleteMultiple($key);
     }
 
+    /**
+     * Test delete multiple elements.
+     */
     public function testDeleteMultiple()
     {
-        $this->cache->SetMultiple([
+        $this->cache->setMultiple([
             'foo_0' => [0],
             'foo_1' => [1],
             'foo_2' => [2],
@@ -267,57 +339,63 @@ class DiskCacheTest extends TestCase
             'foo_5' => [5],
         ]);
 
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_0').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_1').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_2').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_3').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_4').'.php'));
-        $this->assertEquals(true, file_exists('/tmp/'.sha1('foo_5').'.php'));
+        $this->assertEquals(true, $this->cache->has('foo_0'));
+        $this->assertEquals(true, $this->cache->has('foo_1'));
+        $this->assertEquals(true, $this->cache->has('foo_2'));
+        $this->assertEquals(true, $this->cache->has('foo_3'));
+        $this->assertEquals(true, $this->cache->has('foo_4'));
+        $this->assertEquals(true, $this->cache->has('foo_5'));
 
-        $keys = [
+        $this->cache->deleteMultiple([
             'foo_0',
             'foo_1',
             'foo_2',
             'foo_3',
             'foo_4',
             'foo_5',
-        ];
+        ]);
 
-        $this->cache->deleteMultiple($keys);
-
-        $this->assertEquals(false, file_exists('/tmp/'.sha1('foo_0').'.php'));
-        $this->assertEquals(false, file_exists('/tmp/'.sha1('foo_1').'.php'));
-        $this->assertEquals(false, file_exists('/tmp/'.sha1('foo_2').'.php'));
-        $this->assertEquals(false, file_exists('/tmp/'.sha1('foo_3').'.php'));
-        $this->assertEquals(false, file_exists('/tmp/'.sha1('foo_4').'.php'));
-        $this->assertEquals(false, file_exists('/tmp/'.sha1('foo_5').'.php'));
-
-        $this->cache->clear();
+        $this->assertEquals(false, $this->cache->has('foo_0'));
+        $this->assertEquals(false, $this->cache->has('foo_1'));
+        $this->assertEquals(false, $this->cache->has('foo_2'));
+        $this->assertEquals(false, $this->cache->has('foo_3'));
+        $this->assertEquals(false, $this->cache->has('foo_4'));
+        $this->assertEquals(false, $this->cache->has('foo_5'));
     }
 
     /**
-     * @dataProvider KeyProvider
+     * Test has with invalid key.
+     * 
+     * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
-    public function testHasInvalidKey($key)
+    public function testHasWithInvalidKey($key)
     {
-        $this->cache->Has($key);
+        $this->cache->has($key);
     }
 
-    public function testHasFalse()
-    {
-        $this->assertEquals(false, $this->cache->Has('foo_false'));
-    }
-
-    public function testHasTrue()
+    /**
+     * Test has with existing element.
+     */
+    public function testHasExistingElement()
     {
         $this->cache->set('foo', [0, 1, 2, 3, 4]);
-        $this->assertEquals(true, $this->cache->Has('foo'));
-
-        $this->cache->clear();
+        
+        $this->assertEquals(true, $this->cache->has('foo'));
     }
-
-    public function testHasExpired()
+    
+    /**
+     * Test has with not existing element.
+     */
+    public function testHasNotExistingElement()
+    {
+        $this->assertEquals(false, $this->cache->has('foo_false'));
+    }
+    
+    /**
+     * Test has with expired element.
+     */
+    public function testHasWithExpiredElement()
     {
         $this->cache->set('foo', [0, 1, 2, 3, 4], -10);
 

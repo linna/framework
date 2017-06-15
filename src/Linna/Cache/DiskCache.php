@@ -48,7 +48,6 @@ class DiskCache implements CacheInterface
      */
     public function __construct(array $options = [])
     {
-        //set options
         $this->setOptions($options);
     }
 

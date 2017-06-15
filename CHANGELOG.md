@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unrelased][v0.19.0](https://github.com/s3b4stian/linna-framework/compare/v0.18.0...v0.19.0) - 2017-XX-XX
 
+### Added
+* `Linna\Cache\CacheFactory` for get cache resources
+
 ### Changed
 * `Linna\DI\Container` test updated
 * `Linna\DI\Resolver` merged with `Linna\DI\Container`
