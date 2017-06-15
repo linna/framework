@@ -46,7 +46,7 @@ class CacheFactoryTest extends TestCase
 
     /**
      * Test unsupported cache resource.
-     * 
+     *
      * @expectedException InvalidArgumentException
      */
     public function testUnsupportedCache()

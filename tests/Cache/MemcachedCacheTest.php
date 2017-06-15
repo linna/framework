@@ -39,7 +39,7 @@ class MemcachedCacheTest extends TestCase
     
     /**
      * Invalid resource provider.
-     * 
+     *
      * @return array
      */
     public function invalidResourceProvider() : array
@@ -55,7 +55,7 @@ class MemcachedCacheTest extends TestCase
     
     /**
      * Test create instance without memcachedresource
-     * 
+     *
      * @dataProvider invalidResourceProvider
      * @expectedException InvalidArgumentException
      */
@@ -66,7 +66,7 @@ class MemcachedCacheTest extends TestCase
     
     /**
      * Invalid key provider.
-     * 
+     *
      * @return array
      */
     public function invalidKeyProvider() : array
@@ -82,7 +82,7 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * Test set with invalid key.
-     * 
+     *
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
@@ -98,7 +98,7 @@ class MemcachedCacheTest extends TestCase
     {
         $this->cache->set('foo', [0, 1, 2, 3, 4]);
 
-        $this->assertEquals(true,  $this->cache->has('foo'));
+        $this->assertEquals(true, $this->cache->has('foo'));
     }
 
     /**
@@ -108,7 +108,7 @@ class MemcachedCacheTest extends TestCase
     {
         $this->cache->set('foo_ttl', [0, 1, 2, 3, 4]);
 
-        $this->assertEquals(true,  $this->cache->has('foo_ttl'));
+        $this->assertEquals(true, $this->cache->has('foo_ttl'));
     }
 
     /**
@@ -120,12 +120,12 @@ class MemcachedCacheTest extends TestCase
         
         usleep(1000005);
         
-        $this->assertEquals(null,  $this->cache->get('foo_ttl'));
+        $this->assertEquals(null, $this->cache->get('foo_ttl'));
     }
 
     /**
      * Test get with invalid key.
-     * 
+     *
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
@@ -164,7 +164,7 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * Test delete with invalid key.
-     * 
+     *
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
@@ -222,7 +222,7 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * Test get multiple elements with invalid key.
-     * 
+     *
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
@@ -269,7 +269,7 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * Test set multiple elements with invalid key.
-     * 
+     *
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
@@ -349,7 +349,7 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * Teset delete multiple elements with invalid key.
-     * 
+     *
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
@@ -398,7 +398,7 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * Test has with invalid key.
-     * 
+     *
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */

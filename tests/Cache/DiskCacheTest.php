@@ -33,7 +33,7 @@ class DiskCacheTest extends TestCase
     
     /**
      * Invalid key provider.
-     * 
+     *
      * @return array
      */
     public function invalidKeyProvider()
@@ -49,7 +49,7 @@ class DiskCacheTest extends TestCase
 
     /**
      * Test set with invalid key.
-     * 
+     *
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
@@ -65,7 +65,7 @@ class DiskCacheTest extends TestCase
     {
         $this->cache->set('foo', [0, 1, 2, 3, 4]);
 
-        $this->assertEquals(true,  $this->cache->has('foo'));
+        $this->assertEquals(true, $this->cache->has('foo'));
     }
 
     /**
@@ -75,7 +75,7 @@ class DiskCacheTest extends TestCase
     {
         $this->cache->set('foo_ttl', [0, 1, 2, 3, 4]);
 
-        $this->assertEquals(true,  $this->cache->has('foo_ttl'));
+        $this->assertEquals(true, $this->cache->has('foo_ttl'));
     }
 
     /**
@@ -87,12 +87,12 @@ class DiskCacheTest extends TestCase
         
         usleep(1000005);
         
-        $this->assertEquals(null,  $this->cache->get('foo_ttl'));
+        $this->assertEquals(null, $this->cache->get('foo_ttl'));
     }
 
     /**
      * Test get with invalid key.
-     * 
+     *
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
@@ -131,7 +131,7 @@ class DiskCacheTest extends TestCase
 
     /**
      * Test delete with invalid key.
-     * 
+     *
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
@@ -189,7 +189,7 @@ class DiskCacheTest extends TestCase
 
     /**
      * Test get multiple elements with invalid key.
-     * 
+     *
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
@@ -236,7 +236,7 @@ class DiskCacheTest extends TestCase
 
     /**
      * Test set multiple elements with invalid key.
-     * 
+     *
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
@@ -316,7 +316,7 @@ class DiskCacheTest extends TestCase
 
     /**
      * Teset delete multiple elements with invalid key.
-     * 
+     *
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
@@ -365,7 +365,7 @@ class DiskCacheTest extends TestCase
 
     /**
      * Test has with invalid key.
-     * 
+     *
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
