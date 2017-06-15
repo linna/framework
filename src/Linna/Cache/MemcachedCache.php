@@ -35,7 +35,7 @@ class MemcachedCache implements CacheInterface
      */
     public function __construct(array $options)
     {
-        if (!($options['resource'] instanceof Memcached)){
+        if (!($options['resource'] instanceof Memcached)) {
             throw new InvalidArgumentException(__class__.' need instance of Memcached passed as option. [\'resource\' => $memcached]');
         }
         
