@@ -15,10 +15,19 @@ use Linna\Foo\Mappers\UserMapper;
 use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * User Test.
+ */
 class UserTest extends TestCase
 {
+    /**
+     * @var UserMapper The user mapper
+     */
     protected $userMapper;
 
+    /**
+     * Setup.
+     */
     public function setUp()
     {
         $options = [
@@ -33,39 +42,47 @@ class UserTest extends TestCase
             ],
         ];
 
-        $pdo = (new StorageFactory('pdo', $options))->getConnection();
-
-        $password = new Password();
-
-        $this->userMapper = new UserMapper($pdo, $password);
+        $this->userMapper = new UserMapper(
+            (new StorageFactory('pdo', $options))->getConnection(),
+            new Password()
+        );
     }
 
-    public function testCreateUser()
+    /**
+     * Test new user instance.
+     */
+    public function testNewUserInstance()
     {
-        $user = $this->userMapper->create();
-
-        $this->assertInstanceOf(User::class, $user);
+        $this->assertInstanceOf(User::class, $this->userMapper->create());
     }
 
-    public function testSetPassword()
+    /**
+     * Test set user password.
+     */
+    public function testSetUserPassword()
     {
         $user = $this->userMapper->create();
 
         $user->setPassword('password');
 
         $this->assertInstanceOf(User::class, $user);
+        
         $this->assertEquals(true, password_verify('password', $user->password));
     }
 
-    public function testChangePassword()
+    /**
+     * Test change user password.
+     */
+    public function testChangeUserPassword()
     {
         $user = $this->userMapper->create();
 
-        $user->setPassword('password');
+        $user->setPassword('old_password');
 
         $this->assertInstanceOf(User::class, $user);
-        $this->assertEquals(true, $user->chagePassword('new_password', 'password'));
+        
+        $this->assertEquals(true, $user->chagePassword('new_password', 'old_password'));
         $this->assertEquals(true, $user->chagePassword('other_new_password', 'new_password'));
-        $this->assertEquals(false, $user->chagePassword('password', 'badpassword'));
+        $this->assertEquals(false, $user->chagePassword('password', 'wrong_password'));
     }
 }

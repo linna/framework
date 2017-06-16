@@ -16,12 +16,24 @@ use Linna\Foo\Mappers\PermissionMapper;
 use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Enhanced User Test.
+ */
 class EnhancedUserTest extends TestCase
 {
+    /**
+     * @var PermissionMapper The permission mapper 
+     */
     protected $permissionMapper;
 
+    /**
+     * @var EnhancedUserMapper The enhanced user mapper
+     */
     protected $enhancedUserMapper;
 
+    /**
+     * Setup.
+     */
     public function setUp()
     {
         $options = [
@@ -38,40 +50,39 @@ class EnhancedUserTest extends TestCase
 
         $pdo = (new StorageFactory('pdo', $options))->getConnection();
 
-        $password = new Password();
-
         $this->permissionMapper = new PermissionMapper($pdo);
-        $this->enhancedUserMapper = new EnhancedUserMapper($pdo, $password, $this->permissionMapper);
+        $this->enhancedUserMapper = new EnhancedUserMapper($pdo, new Password(), $this->permissionMapper);
     }
 
-    public function testCreateEnhancedUser()
+    /**
+     * Test create new enhanced user instance.
+     */
+    public function testNewEnhancedUserInstance()
     {
-        $user = $this->enhancedUserMapper->create();
-
-        $this->assertInstanceOf(EnhancedUser::class, $user);
+        $this->assertInstanceOf(EnhancedUser::class, $this->enhancedUserMapper->create());
     }
 
-    public function testEnhancedUserPermission()
+    /**
+     * Test enhanced user set and get permission.
+     */
+    public function testEnhancedUserSetAndGetPermission()
     {
         $permission = $this->permissionMapper->fetchAll();
-
-        $arrayPermissions = [];
-
-        foreach ($permission as $ownPermission) {
-            $arrayPermissions[] = $ownPermission->name;
-        }
 
         $user = $this->enhancedUserMapper->create();
         $user->setPermissions($permission);
 
-        $this->assertEquals($arrayPermissions, $user->showPermissions());
+        $this->assertEquals($permission, $user->getPermissions());
     }
 
-    public function testEnhancedUserCan()
+    /**
+     * Test enanched user can do action
+     */
+    public function testEnhancedUserCanDoAction()
     {
-        $permission = $this->permissionMapper->fetchAll();
         $user = $this->enhancedUserMapper->create();
-        $user->setPermissions($permission);
+        
+        $user->setPermissions($this->permissionMapper->fetchAll());
 
         $this->assertEquals(true, $user->can('see users'));
         $this->assertEquals(false, $user->can('other permission'));

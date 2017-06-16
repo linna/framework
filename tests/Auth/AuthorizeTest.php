@@ -17,13 +17,34 @@ use Linna\Session\Session;
 use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Authorize Test.
+ */
 class AuthorizeTest extends TestCase
 {
+    /**
+     * @var Session The session class.
+     */
     protected $session;
+    
+    /**
+     * @var Password The password class.
+     */
     protected $password;
+    
+    /**
+     * @var Authenticate The authenticate class
+     */
     protected $authenticate;
+    
+    /**
+     * @var PermissionMapper The permission mapper 
+     */
     protected $permissionMapper;
 
+    /**
+     * Setup.
+     */
     public function setUp()
     {
         $options = [
@@ -38,75 +59,66 @@ class AuthorizeTest extends TestCase
             ],
         ];
 
-        $pdo = (new StorageFactory('pdo', $options))->getConnection();
-
         $session = new Session();
         $password = new Password();
-
-        $this->authenticate = new Authenticate($session, $password);
+        $authenticate = new Authenticate($session, $password);
+        $permissionMapper = new PermissionMapper((new StorageFactory('pdo', $options))->getConnection());
+        
+        
         $this->password = $password;
         $this->session = $session;
-
-        $this->permissionMapper = new PermissionMapper($pdo);
+        $this->authenticate = $authenticate;
+        $this->permissionMapper = $permissionMapper;
+    
+        $this->authorize = new Authorize($authenticate, $permissionMapper);
     }
-
-    public function testCreateAuthorize()
+    
+    /**
+     * Test create new authorize instance.
+     */
+    public function testNewAuthorizeInstance()
     {
-        $authorize = new Authorize($this->authenticate, $this->permissionMapper);
-
-        $this->assertInstanceOf(Authorize::class, $authorize);
-    }
-
-    public function testCanWithoutLogin()
-    {
-        $authorize = new Authorize($this->authenticate, $this->permissionMapper);
-
-        $this->assertInstanceOf(Authorize::class, $authorize);
-        $this->assertEquals(false, $authorize->can('see users'));
-    }
-
-    public function testCanWithNotExistentPermission()
-    {
-        $authorize = new Authorize($this->authenticate, $this->permissionMapper);
-
-        $this->assertInstanceOf(Authorize::class, $authorize);
-        $this->assertEquals(false, $authorize->can('Not Existent Permission'));
+        $this->assertInstanceOf(Authorize::class, $this->authorize);
     }
 
     /**
+     * Test can do an action without login.
+     */
+    public function testCanDoActionWithoutLogin()
+    {
+        $this->assertEquals(false, $this->authorize->can('see users'));
+    }
+
+    /**
+     * Test can do an action with not existent permission.
+     */
+    public function testCanDoActionWithNotExistentPermission()
+    {
+        $this->assertEquals(false, $this->authorize->can('Not Existent Permission'));
+    }
+
+    /**
+     * Test can do an action with login.
+     * 
      * @runInSeparateProcess
      */
-    public function testCanWithLogin()
+    public function testCanDoActionWithLogin()
     {
         $this->session->start();
-
-        $options = [
-            'dsn'      => $GLOBALS['pdo_mysql_dsn'],
-            'user'     => $GLOBALS['pdo_mysql_user'],
-            'password' => $GLOBALS['pdo_mysql_password'],
-            'options'  => [
-                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
-                \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-                \PDO::ATTR_PERSISTENT         => false,
-                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
-            ],
-        ];
-
-        //create new pdo here because run in separate process try to serialize it
-        //and return error
-        $pdo = (new StorageFactory('pdo', $options))->getConnection();
-
-        //hash password
-        $storedPassword = $this->password->hash('password');
-        $storedUser = 'root';
 
         $authenticate = new Authenticate($this->session, $this->password);
 
         //attemp login
-        $authenticate->login('root', 'password', $storedUser, $storedPassword, 1);
+        $authenticate->login(
+            'root', 
+            'password', 
+            'root', 
+            $this->password->hash('password'), 
+            1
+        );
 
-        //pass as first argument new instance because phpunit try to serialize pdo.????? booo
-        $authorize = new Authorize(new Authenticate($this->session, $this->password), new PermissionMapper($pdo));
+        //pass as first argument new instance because phpunit try to serialize pdo.????? I don't know where.
+        $authorize = new Authorize(new Authenticate($this->session, $this->password), $this->permissionMapper);
 
         $this->assertEquals(true, $authenticate->logged);
         $this->assertEquals(true, $authorize->can('see users'));

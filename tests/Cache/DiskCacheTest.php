@@ -36,7 +36,7 @@ class DiskCacheTest extends TestCase
      *
      * @return array
      */
-    public function invalidKeyProvider()
+    public function invalidKeyProvider() : array
     {
         return [
             [1],
