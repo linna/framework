@@ -19,12 +19,24 @@ use PHPUnit\Framework\TestCase;
 
 class RoleTest extends TestCase
 {
+    /**
+     * @var PermissionMapper The permission mapper
+     */
     protected $permissionMapper;
 
+    /**
+     * @var EnhancedUserMapper The enhanced user mapper
+     */
     protected $enhancedUserMapper;
 
+    /**
+     * @var RoleMapper The role mapper
+     */
     protected $roleMapper;
 
+    /**
+     * Setup.
+     */
     public function setUp()
     {
         $options = [
@@ -45,87 +57,66 @@ class RoleTest extends TestCase
 
         $permissionMapper = new PermissionMapper($pdo);
         $enhancedUserMapper = new EnhancedUserMapper($pdo, $password, $permissionMapper);
+        
         $this->roleMapper = new RoleMapper($pdo, $password, $enhancedUserMapper, $permissionMapper);
 
         $this->permissionMapper = $permissionMapper;
         $this->enhancedUserMapper = $enhancedUserMapper;
     }
-
-    public function testCreateRole()
+    
+    /**
+     * Test new role instance.
+     */
+    public function testNewRoleInstance()
     {
-        $role = $this->roleMapper->create();
-
-        $this->assertInstanceOf(Role::class, $role);
+        $this->assertInstanceOf(Role::class, $this->roleMapper->create());
     }
 
-    public function testRoleUsers()
+    /**
+     * Test role set and get users.
+     */
+    public function testRoleSetAndGetUsers()
     {
         $users = $this->enhancedUserMapper->fetchAll();
-
-        $arrayUsers = [];
-
-        foreach ($users as $ownUser) {
-            $arrayUsers[] = $ownUser->name;
-        }
-
-        $role = $this->roleMapper->create();
-        $role->setUsers($users);
-
-        $this->assertEquals($arrayUsers, $role->showUsers());
-    }
-
-    public function testRoleGetUsers()
-    {
-        $users = $this->enhancedUserMapper->fetchAll();
-
+        
         $role = $this->roleMapper->create();
         $role->setUsers($users);
 
         $this->assertEquals($users, $role->getUsers());
     }
 
+    /**
+     * Test is user in role.
+     */
     public function testIsUserInRole()
     {
-        $user = $this->enhancedUserMapper->fetchAll();
-
         $role = $this->roleMapper->create();
-        $role->setUsers($user);
+        $role->setUsers($this->enhancedUserMapper->fetchAll());
 
         $this->assertEquals(true, $role->isUserInRole('root'));
         $this->assertEquals(false, $role->isUserInRole('foo_root'));
     }
 
-    public function testRolePermission()
+    /**
+     * Test role set and get permission.
+     */
+    public function testRoleSetAndGetPermission()
     {
         $permission = $this->permissionMapper->fetchAll();
-
-        $arrayPermissions = [];
-
-        foreach ($permission as $ownPermission) {
-            $arrayPermissions[] = $ownPermission->name;
-        }
-
-        $role = $this->roleMapper->create();
-        $role->setPermissions($permission);
-
-        $this->assertEquals($arrayPermissions, $role->showPermissions());
-    }
-
-    public function testRoleGetPermission()
-    {
-        $permission = $this->permissionMapper->fetchAll();
-
+        
         $role = $this->roleMapper->create();
         $role->setPermissions($permission);
 
         $this->assertEquals($permission, $role->getPermissions());
     }
 
-    public function testRoleCan()
+    /**
+     * Test role can do action.
+     */
+    public function testRoleCanDoAction()
     {
-        $permission = $this->permissionMapper->fetchAll();
         $role = $this->roleMapper->create();
-        $role->setPermissions($permission);
+        $role->setPermissions($this->permissionMapper->fetchAll());
 
         $this->assertEquals(true, $role->can('see users'));
         $this->assertEquals(false, $role->can('other permission'));

@@ -66,22 +66,6 @@ class Role extends DomainObjectAbstract
     }
 
     /**
-     * Show users in role.
-     *
-     * @return array
-     */
-    public function showUsers() : array
-    {
-        $users = [];
-
-        foreach ($this->users as $ownUser) {
-            $users[] = $ownUser->name;
-        }
-
-        return $users;
-    }
-
-    /**
      * Get users in role.
      *
      * @return array

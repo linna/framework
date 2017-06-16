@@ -9,28 +9,31 @@
  */
 use Linna\Auth\Authenticate;
 use Linna\Auth\Password;
-use Linna\Autoloader;
 use Linna\Foo\Mvc\FooModel;
 use Linna\Foo\Mvc\FooProtectedController;
 use Linna\Session\Session;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Protected Controller Test.
+ */
 class ProtectedControllerTest extends TestCase
 {
-    public $autoloader;
-    public $session;
-    public $password;
+    /**
+     * @var Session The session class.
+     */
+    protected $session;
+    
+    /**
+     * @var Password The password class.
+     */
+    protected $password;
 
+    /**
+     * Setup.
+     */
     public function setUp()
     {
-        $autoloader = new Autoloader();
-        $autoloader->register();
-        $autoloader->addNamespaces([
-           ['Linna\Foo', dirname(__DIR__).'/FooClass'],
-        ]);
-
-        $this->autoloader = $autoloader;
-
         $session = new Session();
         $password = new Password();
 
@@ -41,6 +44,8 @@ class ProtectedControllerTest extends TestCase
     }
 
     /**
+     * Test access to protected controller with login.
+     *
      * @runInSeparateProcess
      * @outputBuffering disabled
      */
@@ -48,14 +53,14 @@ class ProtectedControllerTest extends TestCase
     {
         $this->session->start();
 
-        $storedPassword = $this->password->hash('password');
-        $storedUser = 'root';
+        $this->authenticate->login(
+            'root',
+            'password',
+            'root',
+            $this->password->hash('password'), 1
+        );
 
-        $this->authenticate->login('root', 'password', $storedUser, $storedPassword, 1);
-
-        $model = new FooModel();
-
-        $controller = new FOOProtectedController($model, $this->authenticate);
+        $controller = new FOOProtectedController(new FooModel(), $this->authenticate);
 
         $this->assertEquals(true, $this->authenticate->logged);
         $this->assertEquals(true, $controller->test);
@@ -66,6 +71,8 @@ class ProtectedControllerTest extends TestCase
     }
 
     /**
+     * Test acces to protected controller without login.
+     *
      * @runInSeparateProcess
      * @outputBuffering disabled
      */
@@ -75,11 +82,9 @@ class ProtectedControllerTest extends TestCase
             $this->markTestSkipped('Xdebug not installed');
         }
 
-        $model = new FooModel();
-
         ob_start();
 
-        (new FooProtectedController($model, $this->authenticate));
+        (new FooProtectedController(new FooModel(), $this->authenticate));
         $headers_list = xdebug_get_headers();
 
         ob_end_clean();

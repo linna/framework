@@ -12,53 +12,68 @@ declare(strict_types=1);
 use Linna\Auth\Password;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Password Test.
+ */
 class PasswordTest extends TestCase
 {
+    /**
+     * @var Password The password class.
+     */
     protected $password;
 
+    /**
+     * Setup.
+     */
     public function setUp()
     {
         $this->password = new Password();
     }
 
-    public function testHash()
+    /**
+     * Test password hash.
+     */
+    public function testPasswordHashAndVerify()
     {
         $hash = $this->password->hash('password');
-        $result = $this->password->verify('password', $hash);
 
-        $this->assertEquals(true, $result);
+        $this->assertEquals(true, $this->password->verify('password', $hash));
     }
 
-    public function testHashFail()
+    /**
+     * Test password hash and verify fail verify.
+     */
+    public function testPasswordHashAndFailVerify()
     {
         $hash = $this->password->hash('password');
-        $result = $this->password->verify('otherpassword', $hash);
-
-        $this->assertEquals(false, $result);
+        
+        $this->assertEquals(false, $this->password->verify('otherpassword', $hash));
     }
 
-    public function testNeedRehash()
+    /**
+     * Test hash that need reash.
+     */
+    public function testHashThatNeedRehash()
     {
-        $options = [
-            'cost' => 9,
-        ];
+        $hash = password_hash('password', PASSWORD_DEFAULT, ['cost' => 9,]);
 
-        $hash = password_hash('password', PASSWORD_DEFAULT, $options);
-
-        $result = $this->password->needsRehash($hash);
-
-        $this->assertEquals(true, $result);
+        $this->assertEquals(true, $this->password->needsRehash($hash));
     }
 
-    public function testNoNeedRehash()
+    /**
+     * Test hash that not need rehash.
+     */
+    public function testHashThatNotNeedRehash()
     {
         $hash = $this->password->hash('password');
-        $result = $this->password->needsRehash($hash);
-
-        $this->assertEquals(false, $result);
+        
+        $this->assertEquals(false, $this->password->needsRehash($hash));
     }
 
-    public function testGetInfo()
+    /**
+     * Test get hash info.
+     */
+    public function testGetHashInfo()
     {
         $hash = '$2y$11$4IAn6SRaB0osPz8afZC5D.CmTrBGxnb5FQEygPjDirK9SWE/u8YuO';
 
@@ -68,7 +83,10 @@ class PasswordTest extends TestCase
         $this->assertEquals(1, $info['algo']);
     }
 
-    public function testNoGetInfo()
+    /**
+     * Test get bad hash info with bad hash.
+     */
+    public function testGetHashInfoWithBadHash()
     {
         $hash = 'badPaswordHash';
 

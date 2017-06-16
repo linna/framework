@@ -14,23 +14,42 @@ use Linna\Auth\Password;
 use Linna\Session\Session;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Authenticate Test.
+ */
 class AuthenticateTest extends TestCase
 {
+    /**
+     * @var Session The session class.
+     */
     protected $session;
+    
+    /**
+     * @var Password The password class.
+     */
     protected $password;
+    
+    /**
+     * @var Authenticate The authenticate class
+     */
     protected $authenticate;
 
+    /**
+     * Setup.
+     */
     public function setUp()
     {
         $session = new Session();
         $password = new Password();
-
-        $this->authenticate = new Authenticate($session, $password);
+        
         $this->password = $password;
         $this->session = $session;
+        $this->authenticate = new Authenticate($session, $password);
     }
 
     /**
+     * Test login.
+     *
      * @runInSeparateProcess
      */
     public function testLogin()
@@ -62,6 +81,8 @@ class AuthenticateTest extends TestCase
     }
 
     /**
+     * Test logout.
+     *
      * @runInSeparateProcess
      */
     public function testLogout()
@@ -90,6 +111,8 @@ class AuthenticateTest extends TestCase
     }
 
     /**
+     * Test incorrect login.
+     *
      * @runInSeparateProcess
      */
     public function testIncorrectLogin()
@@ -111,6 +134,8 @@ class AuthenticateTest extends TestCase
     }
 
     /**
+     * Test login refresh.
+     *
      * @runInSeparateProcess
      */
     public function testLoginRefresh()

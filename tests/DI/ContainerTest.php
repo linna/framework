@@ -23,7 +23,7 @@ class ContainerTest extends TestCase
      *
      * @return array
      */
-    public function valuesProvaider()
+    public function valuesProvaider() : array
     {
         return [
             ['string', 'Hello World'],
@@ -265,7 +265,7 @@ class ContainerTest extends TestCase
      *
      * @return array
      */
-    public function classProvider()
+    public function classProvider() : array
     {
         return [
             [\Linna\Foo\DI\FooClassResObject::class],

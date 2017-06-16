@@ -15,10 +15,19 @@ use Linna\Foo\Mappers\UserMapper;
 use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Mapper Abstract Test
+ */
 class MapperAbstractTest extends TestCase
 {
+    /**
+     * @var UserMapper The user mapper
+     */
     protected $mapper;
 
+    /**
+     * Setup.
+     */
     public function setUp()
     {
         $options = [
@@ -33,55 +42,62 @@ class MapperAbstractTest extends TestCase
             ],
         ];
 
-        $driver = (new StorageFactory('pdo', $options))->getConnection();
-
-        $password = new Password();
-        $this->mapper = new UserMapper($driver, $password);
+        $this->mapper = new UserMapper(
+            (new StorageFactory('pdo', $options))->getConnection(),
+            new Password()
+        );
     }
 
-    public function testNewMapper()
+    /**
+     * Test create new object instance.
+     */
+    public function testNewObjectInstance()
     {
         $this->assertInstanceOf(UserMapper::class, $this->mapper);
     }
 
-    public function testNewObjectFromMapper()
+    /**
+     * Test create new domain object with mapper.
+     */
+    public function testCreateDomainObjectWithMapper()
     {
-        $user = $this->mapper->create();
-
-        $this->assertInstanceOf(User::class, $user);
+        $this->assertInstanceOf(User::class, $this->mapper->create());
     }
 
-    public function testSaveWithMapper()
+    /**
+     * Test save domain object with mapper.
+     */
+    public function testSaveDomainObjectWithMapper()
     {
         $user = $this->mapper->create();
         $user->name = 'test';
 
-        $result = $this->mapper->save($user);
-
-        $this->assertEquals('insert', $result);
+        $this->assertEquals('insert', $this->mapper->save($user));
     }
 
-    public function testSaveExistWithMapper()
+    /**
+     * Test update domain object with mapper.
+     */
+    public function testUpdateDomainObjectWithMapper()
     {
         $user = $this->mapper->fetchById(1);
 
         $this->assertEquals(1, $user->getId());
         $this->assertEquals('root', $user->name);
 
-        $result = $this->mapper->save($user);
-
-        $this->assertEquals('update', $result);
+        $this->assertEquals('update', $this->mapper->save($user));
     }
 
-    public function testDeleteWithMapper()
+    /**
+     * Test delete domain object with mapper.
+     */
+    public function testDeleteDomainObjectWithMapper()
     {
         $user = $this->mapper->fetchById(1);
 
         $this->assertEquals(1, $user->getId());
         $this->assertEquals('root', $user->name);
 
-        $result = $this->mapper->delete($user);
-
-        $this->assertEquals('delete', $result);
+        $this->assertEquals('delete', $this->mapper->delete($user));
     }
 }

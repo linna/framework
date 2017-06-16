@@ -13,22 +13,36 @@ use Linna\Auth\Password;
 use Linna\Auth\User;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Domain Object Test
+ */
 class DomainObjectTest extends TestCase
 {
+    /**
+     * @var User The user class.
+     */
     protected $user;
 
+    /**
+     * Setup.
+     */
     public function setUp()
     {
-        $password = new Password();
-        $this->user = new User($password);
+        $this->user = new User(new Password());
     }
 
-    public function testNewUser()
+    /**
+     * Test create new object instance.
+     */
+    public function testNewObjectInstance()
     {
         $this->assertInstanceOf(User::class, $this->user);
     }
 
-    public function testUserSetId()
+    /**
+     * Test set object id.
+     */
+    public function testSetObjectId()
     {
         $this->user->setId(1);
 
@@ -36,9 +50,11 @@ class DomainObjectTest extends TestCase
     }
 
     /**
+     * Test override object id.
+     *
      * @expectedException UnexpectedValueException
      */
-    public function testUserOverrideId()
+    public function testOverrideObjectId()
     {
         $this->user->setId(1);
         $this->user->setId(2);
