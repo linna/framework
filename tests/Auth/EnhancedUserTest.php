@@ -22,7 +22,7 @@ use PHPUnit\Framework\TestCase;
 class EnhancedUserTest extends TestCase
 {
     /**
-     * @var PermissionMapper The permission mapper 
+     * @var PermissionMapper The permission mapper
      */
     protected $permissionMapper;
 

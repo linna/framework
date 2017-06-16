@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 class DomainObjectTest extends TestCase
 {
     /**
-     * @var User The user class. 
+     * @var User The user class.
      */
     protected $user;
 
@@ -51,7 +51,7 @@ class DomainObjectTest extends TestCase
 
     /**
      * Test override object id.
-     * 
+     *
      * @expectedException UnexpectedValueException
      */
     public function testOverrideObjectId()
