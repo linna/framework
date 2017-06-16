@@ -45,7 +45,7 @@ class ProtectedControllerTest extends TestCase
 
     /**
      * Test access to protected controller with login.
-     * 
+     *
      * @runInSeparateProcess
      * @outputBuffering disabled
      */
@@ -54,11 +54,10 @@ class ProtectedControllerTest extends TestCase
         $this->session->start();
 
         $this->authenticate->login(
-            'root', 
-            'password', 
-            'root', 
-            $this->password->hash('password')
-            , 1
+            'root',
+            'password',
+            'root',
+            $this->password->hash('password'), 1
         );
 
         $controller = new FOOProtectedController(new FooModel(), $this->authenticate);
@@ -73,7 +72,7 @@ class ProtectedControllerTest extends TestCase
 
     /**
      * Test acces to protected controller without login.
-     * 
+     *
      * @runInSeparateProcess
      * @outputBuffering disabled
      */
