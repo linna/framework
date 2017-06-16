@@ -32,22 +32,6 @@ trait PermissionTrait
     }
 
     /**
-     * Show Permissions.
-     *
-     * @return array
-     */
-    public function showPermissions() : array
-    {
-        $arrayPermissions = [];
-
-        foreach ($this->permission as $ownPermission) {
-            $arrayPermissions[] = $ownPermission->name;
-        }
-
-        return $arrayPermissions;
-    }
-
-    /**
      * Get Permissions.
      *
      * @return array
