@@ -38,7 +38,7 @@ class ViewTest extends TestCase
 
     /**
      * Test view with bad template on render.
-     * 
+     *
      * @expectedException UnexpectedValueException
      */
     public function testViewWithBadTemplateOnRender()

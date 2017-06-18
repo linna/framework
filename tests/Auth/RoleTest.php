@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 class RoleTest extends TestCase
 {
     /**
-     * @var PermissionMapper The permission mapper 
+     * @var PermissionMapper The permission mapper
      */
     protected $permissionMapper;
 

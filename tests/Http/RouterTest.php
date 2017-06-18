@@ -25,7 +25,7 @@ class RouterTest extends TestCase
     protected $routes;
 
     /**
-     * @var Router The router object. 
+     * @var Router The router object.
      */
     protected $router;
 
@@ -94,7 +94,7 @@ class RouterTest extends TestCase
 
     /**
      * Wrong arguments router class provider.
-     * 
+     *
      * @return array
      */
     public function WrongArgumentsForRouterProvider() : array
@@ -114,7 +114,7 @@ class RouterTest extends TestCase
 
     /**
      * Test new router instance with wrong arguments.
-     * 
+     *
      * @dataProvider WrongArgumentsForRouterProvider
      * @expectedException TypeError
      */
@@ -125,7 +125,7 @@ class RouterTest extends TestCase
 
     /**
      * Wrong arguments for validate a route provider.
-     * 
+     *
      * @return array
      */
     public function WrongArgumentsForValidateRouteProvider() : array
@@ -145,7 +145,7 @@ class RouterTest extends TestCase
 
     /**
      * Test validate route with worng arguments.
-     * 
+     *
      * @dataProvider WrongArgumentsForValidateRouteProvider
      * @expectedException TypeError
      */
@@ -166,7 +166,7 @@ class RouterTest extends TestCase
 
     /**
      * Routes provider.
-     * 
+     *
      * @return array
      */
     public function routeProvider() : array
@@ -181,7 +181,7 @@ class RouterTest extends TestCase
 
     /**
      * Test routes.
-     * 
+     *
      * @dataProvider routeProvider
      */
     public function testRoutes($url, $method, $returneRoute)
@@ -203,7 +203,7 @@ class RouterTest extends TestCase
 
     /**
      * Routes with other base path provider.
-     * 
+     *
      * @return array
      */
     public function routesWithOtherBasePathProvider() : array
@@ -218,7 +218,7 @@ class RouterTest extends TestCase
 
     /**
      * Test routes with other base path.
-     * 
+     *
      * @dataProvider routesWithOtherBasePathProvider
      */
     public function testRoutesWithOtherBasePath($url, $method, $returneRoute)
@@ -241,7 +241,7 @@ class RouterTest extends TestCase
 
     /**
      * Fast map route provider.
-     * 
+     *
      * @return array
      */
     public function fastMapRouteProvider() : array
@@ -257,7 +257,7 @@ class RouterTest extends TestCase
 
     /**
      * Test map route into router with map method.
-     * 
+     *
      * @dataProvider fastMapRouteProvider
      */
     public function testMapInToRouterWithMapMethod($method, $url, $func)
@@ -271,7 +271,7 @@ class RouterTest extends TestCase
 
     /**
      * Test map route into wouter with fast map methods.
-     * 
+     *
      * @dataProvider fastMapRouteProvider
      */
     public function testMapInToRouterWithFastMapRoute($method, $url, $func)
@@ -362,7 +362,7 @@ class RouterTest extends TestCase
 
     /**
      * Rest route provider.
-     * 
+     *
      * @return array
      */
     public function restRouteProvider() : array
@@ -377,7 +377,7 @@ class RouterTest extends TestCase
 
     /**
      * Test rest routing.
-     * 
+     *
      * @dataProvider restRouteProvider
      */
     public function testRESTRouting($uri, $method, $action)

@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 class MapperAbstractTest extends TestCase
 {
     /**
-     * @var UserMapper The user mapper 
+     * @var UserMapper The user mapper
      */
     protected $mapper;
 
@@ -43,7 +43,7 @@ class MapperAbstractTest extends TestCase
         ];
 
         $this->mapper = new UserMapper(
-            (new StorageFactory('pdo', $options))->getConnection(), 
+            (new StorageFactory('pdo', $options))->getConnection(),
             new Password()
         );
     }
