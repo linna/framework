@@ -29,22 +29,22 @@ class FrontControllerTest extends TestCase
     protected $routes;
 
     /**
-     * @var Router The router object. 
+     * @var Router The router object.
      */
     protected $router;
 
     /**
-     * @var Model The model object. 
+     * @var Model The model object.
      */
     protected $model;
     
     /**
-     * @var View The view object. 
+     * @var View The view object.
      */
     protected $view;
     
     /**
-     * @var Controller The controller object. 
+     * @var Controller The controller object.
      */
     protected $controller;
     
@@ -137,11 +137,11 @@ class FrontControllerTest extends TestCase
     
     /**
      * Test new front controller instance with wrong arguments.
-     * 
+     *
      * @dataProvider frontControllerArgProvider
      * @expectedException TypeError
      */
-    public function testNewFrontControllerWithWrongArguments($model, $view, $controller, $action, $param)     
+    public function testNewFrontControllerWithWrongArguments($model, $view, $controller, $action, $param)
     {
         (new FrontController($model, $view, $controller, $action, $param));
     }

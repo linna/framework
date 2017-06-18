@@ -49,7 +49,7 @@ class AuthenticateTest extends TestCase
 
     /**
      * Test login.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testLogin()
@@ -82,7 +82,7 @@ class AuthenticateTest extends TestCase
 
     /**
      * Test logout.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testLogout()
@@ -112,7 +112,7 @@ class AuthenticateTest extends TestCase
 
     /**
      * Test incorrect login.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testIncorrectLogin()
@@ -135,7 +135,7 @@ class AuthenticateTest extends TestCase
 
     /**
      * Test login refresh.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testLoginRefresh()

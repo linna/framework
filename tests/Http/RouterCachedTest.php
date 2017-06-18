@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 class RouterCachedTest extends TestCase
 {
     /**
-     * @var RouterCached The router object. 
+     * @var RouterCached The router object.
      */
     protected $router;
 
@@ -113,7 +113,7 @@ class RouterCachedTest extends TestCase
 
     /**
      * Route provider.
-     * 
+     *
      * @return array
      */
     public function routeProvider() : array
@@ -128,7 +128,7 @@ class RouterCachedTest extends TestCase
 
     /**
      * Test routes.
-     * 
+     *
      * @dataProvider routeProvider
      */
     public function testRoutes($url, $method, $returneRoute)
@@ -150,7 +150,7 @@ class RouterCachedTest extends TestCase
     
     /**
      * Routes with other base path provider.
-     * 
+     *
      * @return array
      */
     public function routesWithOtherBasePathProvider() : array
@@ -165,7 +165,7 @@ class RouterCachedTest extends TestCase
 
     /**
      * Test routes with other base path.
-     * 
+     *
      * @dataProvider routesWithOtherBasePathProvider
      */
     public function testRoutesWithOtherBasePath($url, $method, $returneRoute)
@@ -188,7 +188,7 @@ class RouterCachedTest extends TestCase
 
     /**
      * Fast map route provider.
-     * 
+     *
      * @return array
      */
     public function fastMapRouteProvider() : array
@@ -204,7 +204,7 @@ class RouterCachedTest extends TestCase
 
     /**
      * Test map route into router with map method.
-     * 
+     *
      * @dataProvider fastMapRouteProvider
      */
     public function testMapInToRouterWithMapMethod($method, $url, $func)
@@ -218,7 +218,7 @@ class RouterCachedTest extends TestCase
 
     /**
      * Test map route into wouter with fast map methods.
-     * 
+     *
      * @dataProvider fastMapRouteProvider
      * @expectedException Exception
      */
@@ -310,7 +310,7 @@ class RouterCachedTest extends TestCase
 
     /**
      * Rest route provider.
-     * 
+     *
      * @return array
      */
     public function restRouteProvider() : array
@@ -325,7 +325,7 @@ class RouterCachedTest extends TestCase
 
     /**
      * Test rest routing.
-     * 
+     *
      * @dataProvider restRouteProvider
      */
     public function testRESTRouting($uri, $method, $action)

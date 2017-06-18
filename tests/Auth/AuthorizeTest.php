@@ -38,7 +38,7 @@ class AuthorizeTest extends TestCase
     protected $authenticate;
     
     /**
-     * @var PermissionMapper The permission mapper 
+     * @var PermissionMapper The permission mapper
      */
     protected $permissionMapper;
 
@@ -99,7 +99,7 @@ class AuthorizeTest extends TestCase
 
     /**
      * Test can do an action with login.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testCanDoActionWithLogin()
@@ -110,10 +110,10 @@ class AuthorizeTest extends TestCase
 
         //attemp login
         $authenticate->login(
-            'root', 
-            'password', 
-            'root', 
-            $this->password->hash('password'), 
+            'root',
+            'password',
+            'root',
+            $this->password->hash('password'),
             1
         );
 
