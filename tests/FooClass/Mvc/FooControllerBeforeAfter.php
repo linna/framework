@@ -22,7 +22,7 @@ class FooControllerBeforeAfter extends Controller
 
     public function beforeModifyDataTimed()
     {
-        $this->model->addToData('before');
+        $this->model->addToData();
     }
 
     public function modifyDataTimed()
@@ -32,7 +32,7 @@ class FooControllerBeforeAfter extends Controller
 
     public function afterModifyDataTimed()
     {
-        $this->model->addToData('after');
+        $this->model->addToData();
     }
 
     public function before()

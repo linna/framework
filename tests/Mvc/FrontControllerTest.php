@@ -18,12 +18,39 @@ use Linna\Http\Router;
 use Linna\Mvc\FrontController;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Front Controller Test.
+ */
 class FrontControllerTest extends TestCase
 {
+    /**
+     * @var array Routes for test.
+     */
     protected $routes;
 
+    /**
+     * @var Router The router object.
+     */
     protected $router;
 
+    /**
+     * @var Model The model object.
+     */
+    protected $model;
+    
+    /**
+     * @var View The view object.
+     */
+    protected $view;
+    
+    /**
+     * @var Controller The controller object.
+     */
+    protected $controller;
+    
+    /**
+     * Setup.
+     */
     public function setUp()
     {
         $routes = [
@@ -65,133 +92,140 @@ class FrontControllerTest extends TestCase
             ],
         ];
 
-        //start router
         $this->router = new Router($routes, [
             'basePath'    => '/',
             'badRoute'    => 'E404',
             'rewriteMode' => true,
         ]);
-    }
-
-    public function testCreateFrontController()
-    {
+        
         $model = new FooModel();
-        //get view linked to route
         $view = new FooView($model, new FooTemplate());
-        //get controller linked to route
         $controller = new FooController($model);
-
-        $FrontController = new FrontController($model, $view, $controller, '', []);
-
-        $this->assertInstanceOf(FrontController::class, $FrontController);
+        
+        $this->model = $model;
+        $this->view = $view;
+        $this->controller = $controller;
     }
 
     /**
-     * @depends testCreateFrontController
+     * Test new fron controller instance.
+     */
+    public function testNewFrontControllerInstance()
+    {
+        $this->assertInstanceOf(FrontController::class, new FrontController($this->model, $this->view, $this->controller, '', []));
+    }
+
+    /**
+     * Front controller arguments provider.
+     *
+     * @return array
+     */
+    public function frontControllerArgProvider() : array
+    {
+        $model = new FooModel();
+        $view = new FooView($model, new FooTemplate());
+        $controller = new FooController($model);
+        
+        return [
+            [false, $view, $controller, 'index', []],
+            [$model, false, $controller, 'index', []],
+            [$model, $view, false, 'index', []],
+            [$model, $view, $controller, false, []],
+            [$model, $view, $controller, 'index', false]
+        ];
+    }
+    
+    /**
+     * Test new front controller instance with wrong arguments.
+     *
+     * @dataProvider frontControllerArgProvider
+     * @expectedException TypeError
+     */
+    public function testNewFrontControllerWithWrongArguments($model, $view, $controller, $action, $param)
+    {
+        (new FrontController($model, $view, $controller, $action, $param));
+    }
+    
+    /**
+     * Test run front controller
      */
     public function testRunFrontController()
     {
-        //evaluate request uri
         $this->router->validate('/Foo/modifyData', 'GET');
 
         $route = $this->router->getRoute()->toArray();
 
-        $model = new FooModel();
-        //get view linked to route
-        $view = new FooView($model, new FooTemplate());
-        //get controller linked to route
-        $controller = new FooController($model);
+        $frontController = new FrontController($this->model, $this->view, $this->controller, $route['action'], $route['param']);
 
-        $FrontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
+        $frontController->run();
 
-        $FrontController->run();
-
-        $test = json_decode($FrontController->response());
+        $test = json_decode($frontController->response());
 
         $this->assertInstanceOf(stdClass::class, $test);
         $this->assertEquals(1234, $test->data);
     }
 
     /**
-     * @depends testCreateFrontController
+     * Test run front controller with param
      */
-    public function testRunFrontControllerParam()
+    public function testRunFrontControllerWithParam()
     {
-        //evaluate request uri
         $this->router->validate('/Foo/500/modifyDataFromParam', 'GET');
 
         $route = $this->router->getRoute()->toArray();
 
-        $model = new FooModel();
-        //get view linked to route
-        $view = new FooView($model, new FooTemplate());
-        //get controller linked to route
-        $controller = new FooController($model);
+        $frontController = new FrontController($this->model, $this->view, $this->controller, $route['action'], $route['param']);
 
-        $FrontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
+        $frontController->run();
 
-        $FrontController->run();
-
-        $test = json_decode($FrontController->response());
+        $test = json_decode($frontController->response());
 
         $this->assertInstanceOf(stdClass::class, $test);
         $this->assertEquals(500, $test->data);
     }
 
+    /**
+     * Test model detach.
+     */
     public function testModelDetach()
     {
-        //evaluate request uri
         $this->router->validate('/Foo/data500/modifyDataFromParam', 'GET');
 
         $route = $this->router->getRoute();
 
-        $routeAction = $route->getAction();
-        $routeParam = $route->getParam();
+        $action = (($action = $route->getAction()) !== null) ? $action : 'index';
+        
+        $this->model->attach($this->view);
+        $this->model->detach($this->view);
 
-        $model = new FooModel();
+        call_user_func_array([$this->controller, $action], $route->getParam());
 
-        $view = new FooView($model, new FooTemplate());
+        $this->model->notify();
 
-        $controller = new FooController($model);
+        call_user_func([$this->view, $action]);
 
-        $model->attach($view);
-        $model->detach($view);
-
-        call_user_func_array([$controller, $routeAction], $routeParam);
-
-        $model->notify();
-
-        $routeAction = ($routeAction !== null) ? $routeAction : 'index';
-
-        call_user_func([$view, $routeAction]);
-
-        $test = json_decode($view->render()/*ob_get_contents()*/);
+        $test = json_decode($this->view->render());
 
         $this->assertInstanceOf(stdClass::class, $test);
         $this->assertEquals(false, isset($test->data));
     }
 
     /**
-     * @depends testCreateFrontController
+     * Test run front controller with action.
      */
-    public function testRunFrontControllerWithActions()
+    public function testRunFrontControllerWithAction()
     {
-        //evaluate request uri
         $this->router->validate('/Foo/modifyDataTimed', 'GET');
 
         $route = $this->router->getRoute()->toArray();
 
-        $model = new FooModel();
-        //get view linked to route
-        $view = new FooView($model, new FOOTemplate());
-        //get controller linked to route
-        $controller = new FooControllerBeforeAfter($model);
+        $controller = new FooControllerBeforeAfter($this->model);
 
-        $FrontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
+        $frontController = new FrontController($this->model, $this->view, $controller, $route['action'], $route['param']);
 
-        $FrontController->run();
+        $frontController->run();
 
-        $test = json_decode($FrontController->response());
+        $test = json_decode($frontController->response());
 
         $this->assertInstanceOf(stdClass::class, $test);
         $this->assertEquals(123, (int) $test->data);
