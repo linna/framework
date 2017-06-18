@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Linna\Http;
 
 /**
- * Describe valid routes.
+ * Describe null routes.
  */
 class NullRoute implements RouteInterface
 {

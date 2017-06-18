@@ -20,7 +20,7 @@ class FooModel extends Model
         parent::__construct();
     }
 
-    public function addToData(string $when)
+    public function addToData()
     {
         if (!isset($this->getUpdate['data'])) {
             $this->getUpdate = ['data' => 100];

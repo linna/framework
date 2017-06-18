@@ -15,22 +15,33 @@ use Linna\Foo\Mvc\FooTemplate;
 use Linna\Foo\Mvc\FooView;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * View Test
+ */
 class ViewTest extends TestCase
 {
-    public function testCreateView()
+    /**
+     * Test new view instance.
+     */
+    public function testNewViewInstance()
     {
         $this->assertInstanceOf(FooView::class, new FooView(new FooModel(), new FooTemplate()));
     }
 
-    public function testBadTemplateView()
+    /**
+     * Test view with bad template.
+     */
+    public function testViewWithBadTemplate()
     {
         $this->assertInstanceOf(FooBadTemplateView::class, new FooBadTemplateView(new FooModel(), 'badTemplate'));
     }
 
     /**
+     * Test view with bad template on render.
+     * 
      * @expectedException UnexpectedValueException
      */
-    public function testBadTemplateOnRender()
+    public function testViewWithBadTemplateOnRender()
     {
         (new FooBadTemplateView(new FooModel(), 'badTemplate'))->render();
     }
