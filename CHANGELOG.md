@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\DI\Container` test updated
 * `Linna\DI\Resolver` merged with `Linna\DI\Container`
 
+### Fixed
+* `Linna\Session\Session` bug on cookie create
+
 ### Removed
 * `Linna\Cache\Exception\InvalidArgumentException` reminiscence of PSR simple-cache
 * `Linna\Auth\PermissionTrait->showPermissions()` method, use `getPermissions()` instead

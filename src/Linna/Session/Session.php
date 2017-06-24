@@ -103,9 +103,11 @@ class Session implements ArrayAccess
         setcookie(
             session_name(),
             session_id(),
-            time() + $this->options['expire'],
-            (string) $this->options['cookieSecure'],
-            (string) $this->options['cookieHttpOnly']
+            (int) time() + $this->options['expire'],
+            $this->options['cookiePath'],
+            $this->options['cookieDomain'],
+            $this->options['cookieSecure'],
+            $this->options['cookieHttpOnly']
         );
     }
 
@@ -121,12 +123,12 @@ class Session implements ArrayAccess
             //start session
             session_start();
 
-            //set new cookie
-            $this->setCookie();
-
             //link session super global to $data property
             $this->data = &$_SESSION;
         }
+
+        //set new cookie
+        $this->setCookie();
 
         //refresh session
         $this->refresh();
