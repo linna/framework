@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unrelased][v0.19.0](https://github.com/s3b4stian/linna-framework/compare/v0.18.0...v0.19.0) - 2017-XX-XX
+## [v0.19.0](https://github.com/s3b4stian/linna-framework/compare/v0.18.0...v0.19.0) - 2017-06-24
 
 ### Added
 * `Linna\Cache\CacheFactory` for get cache resources
