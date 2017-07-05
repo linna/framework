@@ -10,50 +10,56 @@
 declare(strict_types=1);
 
 use Linna\Autoloader;
-use Linna\Foo\DI\FooClassH;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Autoloader Test
+ */
 class AutoloaderTest extends TestCase
 {
-    protected $autoloader;
-
+    /**
+     * Setup.
+     */
     public function setUp()
     {
-        $this->autoloader = new Autoloader();
-        $this->autoloader->register();
-        $this->autoloader->addNamespaces([['Linna\Foo', __DIR__.'/Foo'], ['Linna\Foo_', __DIR__.'/Foo_']]);
-    }
-
-    public function testRegister()
-    {
-        $this->assertEquals(true, (new Autoloader())->register());
+        $autoloader = new Autoloader();
+        $autoloader->register();
+        $autoloader->addNamespaces([
+            ['Linna\FooAuto', __DIR__.'/FooClass'], 
+            ['Linna\Foo_', __DIR__.'/FooClass'],
+            ['Baz\Foo', __DIR__.'/FooClass']
+        ]);
     }
 
     /**
-     * @depends testRegister
+     * Test class exist.
      */
-    public function testNamespace()
+    public function testAutoloadCorrectClassWithCorrectNamespace()
     {
-        $this->assertInstanceOf(FooClassH::class, new \Linna\Foo\DI\FooClassH());
+        $this->assertTrue(class_exists('Linna\FooAuto\Autoload\FooClassAuto', true));
     }
 
-    public function testClassExist()
+    /**
+     * Test class exist.
+     */
+    public function testAutoloadWrongClassWithCorrectNamespace()
     {
-        $this->assertEquals(true, class_exists('\Linna\Foo\DI\FooClassH', true));
+        $this->assertNotTrue(class_exists('Linna\FooAuto\Autoload\FooClassAuto2', true));
     }
 
-    public function testBadNamespace()
+    /**
+     * Test bad namespace.
+     */
+    public function testAutoloadCorrectClassWithWrongNamespace()
     {
-        $this->assertEquals(false, class_exists('\Linna\Baz\FooClassH', true));
+        $this->assertNotTrue(class_exists('Linna\Foo\Baz\FooClassAuto', true));
     }
 
-    public function testBadClass()
+    /**
+     * Test bad class.
+     */
+    public function testAutoloadWrongClassWithWrongNamespace()
     {
-        $this->assertEquals(false, class_exists('\FooClassNULL', true));
-    }
-
-    public function testBadPrefix()
-    {
-        $this->assertEquals(false, class_exists('Baz\Foo\FooClassNULL', true));
+        $this->assertNotTrue(class_exists('Linna\Foo_\Autoload\FooClassAuto2', true));
     }
 }
