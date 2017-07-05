@@ -32,7 +32,7 @@ class SessionTest extends TestCase
 
     /**
      * Test Session Start.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testSessionStart()
@@ -50,7 +50,7 @@ class SessionTest extends TestCase
     
     /**
      * Test session commit.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testSessionCommit()
@@ -97,7 +97,7 @@ class SessionTest extends TestCase
     
     /**
      * Test session regenerate.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testSessionRegenerate()
@@ -127,7 +127,7 @@ class SessionTest extends TestCase
     
     /**
      * Test session expired.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testSessionExpired()
