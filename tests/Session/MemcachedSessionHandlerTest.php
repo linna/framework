@@ -13,40 +13,57 @@ use Linna\Session\MemcachedSessionHandler;
 use Linna\Session\Session;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Memcached Session Handler Test
+ */
 class MemcachedSessionHandlerTest extends TestCase
 {
+    /**
+     * @var Session The session class.
+     */
     protected $session;
 
-    protected $sessionHandler;
+    /**
+     * @var MemcachedSessionHandler The session handler class.
+     */
+    protected $handler;
 
+    /**
+     * @var Memcached The memcached class.
+     */
+    protected $memcached;
+
+    /**
+     * Setup.
+     */
     public function setUp()
     {
         if (!class_exists('Memcached')) {
             return;
         }
 
-        //create memcached instance
         $memcached = new Memcached();
-        //connect to memcached server
+        
         $memcached->addServer($GLOBALS['mem_host'], (int) $GLOBALS['mem_port']);
 
-        $this->sessionHandler = new MemcachedSessionHandler($memcached, 5);
+        $handler = new MemcachedSessionHandler($memcached, 5);
+        $session = new Session(['expire' => 10]);
+        
+        $session->setSessionHandler($handler);
+        
+        $this->handler = $handler;
 
-        $this->session = new Session(['expire' => 10]);
+        $this->session = $session;
     }
 
     /**
+     * Test Session Start.
+     *
      * @runInSeparateProcess
      */
     public function testSessionStart()
     {
-        if (!class_exists('Memcached')) {
-            $this->markTestSkipped('Memcached module not installed');
-        }
-
         $session = $this->session;
-
-        $session->setSessionHandler($this->sessionHandler);
 
         $this->assertEquals(1, $session->status);
 
@@ -56,19 +73,92 @@ class MemcachedSessionHandlerTest extends TestCase
 
         $session->destroy();
     }
-
+    
     /**
+     * Test session commit.
+     *
      * @runInSeparateProcess
      */
-    public function testExpiredSession()
+    public function testSessionCommit()
     {
-        if (!class_exists('Memcached')) {
-            $this->markTestSkipped('Memcached module not installed');
-        }
-
+        $session = $this->session;
+        $session->start();
+        
+        $this->assertEquals($session->id, session_id());
+        
+        $session['fooData'] = 'fooData';
+        
+        $session->commit();
+        
+        $session->start();
+        
+        $this->assertEquals($session->id, session_id());
+        $this->assertEquals('fooData', $session['fooData']);
+        
+        $session->destroy();
+    }
+    
+    /**
+     * Test session destroy.
+     *
+     * @runInSeparateProcess
+     */
+    public function testSessionDestroy()
+    {
         $session = $this->session;
 
-        $session->setSessionHandler($this->sessionHandler);
+        $session->start();
+        $session['fooData'] = 'fooData';
+        
+        $this->assertEquals(2, $session->status);
+        $this->assertEquals(session_id(), $session->id);
+        $this->assertEquals('fooData', $session['fooData']);
+        
+        $session->destroy();
+        
+        $this->assertEquals(1, $session->status);
+        $this->assertEquals('', $session->id);
+        $this->assertFalse($session['fooData']);
+    }
+    
+    /**
+     * Test session regenerate.
+     *
+     * @runInSeparateProcess
+     */
+    public function testSessionRegenerate()
+    {
+        $session = $this->session;
+
+        $session->start();
+        $session['fooData'] = 'fooData';
+        
+        $sessionIdBefore = session_id();
+        
+        $this->assertEquals(2, $session->status);
+        $this->assertEquals($sessionIdBefore, $session->id);
+        $this->assertEquals('fooData', $session['fooData']);
+        
+        $session->regenerate();
+        
+        $sessionIdAfter = session_id();
+        
+        $this->assertEquals(2, $session->status);
+        $this->assertEquals($sessionIdAfter, $session->id);
+        $this->assertNotEquals($sessionIdAfter, $sessionIdBefore);
+        $this->assertEquals('fooData', $session['fooData']);
+        
+        $session->destroy();
+    }
+    
+    /**
+     * Test session expired.
+     *
+     * @runInSeparateProcess
+     */
+    public function testSessionExpired()
+    {
+        $session = $this->session;
 
         $session->start();
 
@@ -78,19 +168,21 @@ class MemcachedSessionHandlerTest extends TestCase
 
         $session->commit();
 
-        $session->setSessionHandler($this->sessionHandler);
+        $session->setSessionHandler($this->handler);
 
         $session->start();
 
         $session2_id = $session->id;
 
-        $this->assertEquals(false, ($session_id === $session2_id));
+        $this->assertNotEquals($session_id, $session2_id);
         $this->assertEquals(2, $session->status);
 
         $session->destroy();
     }
 
     /**
+     * Test garbage.
+     *
      * @runInSeparateProcess
      */
     public function testGc()
@@ -99,8 +191,6 @@ class MemcachedSessionHandlerTest extends TestCase
             $this->markTestSkipped('Memcached module not installed');
         }
 
-        $test = $this->sessionHandler->gc(0);
-
-        $this->assertEquals(true, $test);
+        $this->assertTrue($this->handler->gc(0));
     }
 }

@@ -213,9 +213,13 @@ class Session implements ArrayAccess
     {
         //delete session data
         $this->data = [];
-
+        $this->id = '';
+        
         //call session destroy
         session_destroy();
+        
+        //update status
+        $this->status = session_status();
     }
 
     /**
@@ -224,5 +228,8 @@ class Session implements ArrayAccess
     public function commit()
     {
         session_write_close();
+        
+        //update status
+        $this->status = session_status();
     }
 }

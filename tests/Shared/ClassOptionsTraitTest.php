@@ -12,15 +12,28 @@ declare(strict_types=1);
 use Linna\Http\Router;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class Options Trait test.
+ */
 class ClassOptionsTest extends TestCase
 {
+    /**
+     *
+     * @var Router The router class.
+     */
     protected $router;
 
+    /**
+     * Setup.
+     */
     public function setUp()
     {
         $this->router = new Router();
     }
 
+    /**
+     * Test set option.
+     */
     public function testSetOption()
     {
         $this->router->setOption('badRoute', 'foo');
@@ -29,13 +42,18 @@ class ClassOptionsTest extends TestCase
     }
 
     /**
+     * Test set with wrong option.
+     *
      * @expectedException InvalidArgumentException
      */
-    public function testSetBadOption()
+    public function testSetWithWrongOption()
     {
         $this->router->setOption('badRout', 'foo');
     }
 
+    /**
+     * Test set options.
+     */
     public function testSetOptions()
     {
         $this->router->setOptions([
@@ -48,9 +66,11 @@ class ClassOptionsTest extends TestCase
     }
 
     /**
+     * Test set with wrong options.
+     *
      * @expectedException InvalidArgumentException
      */
-    public function testSetBadOptions()
+    public function testSetWithWrongOptions()
     {
         $this->router->setOptions([
             'basePath'    => '/',
