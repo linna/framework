@@ -34,7 +34,7 @@ class Session implements ArrayAccess
      */
     protected $options = [
         'expire'         => 1800,
-        'name'           => 'LINNA_SESSION',
+        'name'           => 'linna_session',
         'cookieDomain'   => '/',
         'cookiePath'     => '/',
         'cookieSecure'   => false,
