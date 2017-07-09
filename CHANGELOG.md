@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v0.20.0](https://github.com/linna/framework/compare/v0.19.0...v0.20.0) - 2017-XX-XX
+## [Unrelased] [v0.20.0](https://github.com/linna/framework/compare/v0.19.0...v0.20.0) - 2017-XX-XX
 
 ### Fixed
 * `CHANGELOG.md` links url
