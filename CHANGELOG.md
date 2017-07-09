@@ -1,12 +1,17 @@
 
-# Changelog
+# Linna Framework Changelog
 
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v0.19.0](https://github.com/s3b4stian/linna-framework/compare/v0.18.0...v0.19.0) - 2017-06-24
+## [v0.20.0](https://github.com/linna/framework/compare/v0.19.0...v0.20.0) - 2017-XX-XX
+
+### Fixed
+* `CHANGELOG.md` links url
+
+## [v0.19.0](https://github.com/linna/framework/compare/v0.18.0...v0.19.0) - 2017-06-24
 
 ### Added
 * `Linna\Cache\CacheFactory` for get cache resources
@@ -23,7 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Auth\PermissionTrait->showPermissions()` method, use `getPermissions()` instead
 * `Linna\Auth\Role->showUsers()` method, use `getUsers()` instead
 
-## [v0.18.0](https://github.com/s3b4stian/linna-framework/compare/v0.17.0...v0.18.0) - 2017-05-30
+## [v0.18.0](https://github.com/linna/framework/compare/v0.17.0...v0.18.0) - 2017-05-30
 
 ### Added
 * `Linna\Storage\PostgresqlPdoStorage` for PostgreSql database connections.
@@ -37,7 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Mvc\View->render()` return type added `:string`
 * `Linna\Mvc\TemplateInterface->output()` changed name to `Linna\Mvc\TemplateInterface->getOutput()`
 
-## [v0.17.0](https://github.com/s3b4stian/linna-framework/compare/v0.16.0...v0.17.0) - 2017-05-05
+## [v0.17.0](https://github.com/linna/framework/compare/v0.16.0...v0.17.0) - 2017-05-05
 
 ### 5 Maggio, May 5
 * [Napoleon death](https://en.wikipedia.org/wiki/Napoleon)
@@ -56,7 +61,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Storage\MongoDbOject` changed name to `Linna\Storage\MongoDbStorage`
 * `Linna\Storage\StorageObjectInterface` changed name to `Linna\Storage\StorageInterface`
 
-## [v0.16.0](https://github.com/s3b4stian/linna-framework/compare/v0.15.0...v0.16.0) - 2017-04-20
+## [v0.16.0](https://github.com/linna/framework/compare/v0.15.0...v0.16.0) - 2017-04-20
 
 ### Added
 * `Linna\Http\Route->getName()` method
@@ -81,7 +86,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Tests now cover 100% of code
 
 
-## [v0.15.0](https://github.com/s3b4stian/linna-framework/compare/v0.14.0...v0.15.0) - 2017-03-28
+## [v0.15.0](https://github.com/linna/framework/compare/v0.14.0...v0.15.0) - 2017-03-28
 
 ### Added
 * `Linna\Http\FastMapTrait` trait
@@ -102,7 +107,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Shared\ClassOptionsTrait` trait, provide methods for set options
 
 ### Changed
-* Documentation [moved](https://github.com/s3b4stian/linna-framework-doc)
+* Documentation [moved](https://github.com/linna/docs)
 * `Linna\Http\Router` return `false` when there isn't an error route configured
 * `Linna\Auth\Login` changed name to `Linna\Auth\Authenticate`
 * `Linna\Storage\AdapterInterface` changed name to `Linna\Storage\StorageInterface`
@@ -110,7 +115,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 * Deprecated property `private $expire` in `Linna\Auth\Login`
 
-## [v0.14.0](https://github.com/s3b4stian/linna-framework/compare/v0.13.0...v0.14.0) - 2017-02-27
+## [v0.14.0](https://github.com/linna/framework/compare/v0.13.0...v0.14.0) - 2017-02-27
 
 ### Added
 * `Linna\Cache` namespace
@@ -129,7 +134,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\DI\DIContainer` changed name to `Linna\DI\Container`
 * `Linna\DI\DIResolver` changed name to `Linna\DI\Resolver`
 
-## [v0.13.0](https://github.com/s3b4stian/linna-framework/compare/v0.12.0...v0.13.0) - 2017-02-19
+## [v0.13.0](https://github.com/linna/framework/compare/v0.12.0...v0.13.0) - 2017-02-19
 
 ### Added
 * `Linna\Http\FrontController` can execute actions before and after main controller action
@@ -145,7 +150,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * Abstract methods in `Linna\DI\ArrayAccessTrait` and `Linna\DI\PropertyAccessTrait` undeclared arguments
 
-## [v0.12.0](https://github.com/s3b4stian/linna-framework/compare/v0.11.0...v0.12.0) - 2017-02-14
+## [v0.12.0](https://github.com/linna/framework/compare/v0.11.0...v0.12.0) - 2017-02-14
 
 ### Changed
 * `Linna\DI\DIContainer` switched from `Interop\Container\ContainerInterface` to [PSR-11](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-11-container.md)
@@ -154,7 +159,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Autoloader` now not throw exceptions 
 * `Linna\Autoloader` tests updated
 
-## [v0.11.0](https://github.com/s3b4stian/linna-framework/compare/v0.10.0...v0.11.0) - 2017-02-11
+## [v0.11.0](https://github.com/linna/framework/compare/v0.10.0...v0.11.0) - 2017-02-11
 
 ### Added
 * Tests for `Linna\Storage\MysqliAdapter`
@@ -166,7 +171,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\DI\DIResolver` now implements `Interop\Container\ContainerInterface`
 * `Linna\DI\DIResolver` now possible access data with array syntax or with methods
 
-## [v0.10.0](https://github.com/s3b4stian/linna-framework/compare/v0.9.1...v0.10.0) - 2017-02-03
+## [v0.10.0](https://github.com/linna/framework/compare/v0.9.1...v0.10.0) - 2017-02-03
 
 ### Added
 * Added `Linna\Storage\MysqlPdoAdapter` class
