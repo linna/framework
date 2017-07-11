@@ -3,12 +3,12 @@
     "type": "library",
     "description": "Linna Framework",
     "keywords": ["best-pratices", "framework", "learning", "mvc-framework", "php"],
+    "homepage": "https://github.com/linna/framework",
     "license": "MIT",
     "authors": [
         {
             "name": "Sebastian Rapetti",
-            "email": "sebastian.rapetti@alice.it",
-            "homepage": "https://github.com/linna/framework"
+            "email": "sebastian.rapetti@alice.it"
         }
     ],
     "support": {
