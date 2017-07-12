@@ -12,8 +12,14 @@ declare(strict_types=1);
 use Linna\Storage\MysqliStorage;
 use PHPUnit\Framework\TestCase;
 
-class MysqliTest extends TestCase
+/**
+ * Mysqli Storage Test
+ */
+class MysqliStorageTest extends TestCase
 {
+    /**
+     * Test connection.
+     */
     public function testConnection()
     {
         $options = [
@@ -27,7 +33,12 @@ class MysqliTest extends TestCase
         $this->assertInstanceOf(mysqli::class, (new MysqliStorage($options))->getResource());
     }
 
-    public function connectionDataProvider()
+    /**
+     * Connection data provider.
+     * 
+     * @return array
+     */
+    public function connectionDataProvider() : array
     {
         return [
             ['a.a.a.a', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password'], 'linna_db', 3306],
@@ -39,10 +50,18 @@ class MysqliTest extends TestCase
     }
 
     /**
+     * Test fail connection.
+     * 
      * @dataProvider connectionDataProvider
      * @expectedException mysqli_sql_exception
      */
-    public function testFailConnection($host, $user, $password, $database, $port)
+    public function testFailConnection(
+            string $host, 
+            string $user, 
+            string $password, 
+            string $database, 
+            int $port
+            )
     {
         $options = [
             'host'     => $host,

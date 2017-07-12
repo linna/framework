@@ -16,8 +16,14 @@ use Linna\Storage\StorageFactory;
 use MongoDB\Client;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Storage Factory Test
+ */
 class StorageFactoryTest extends TestCase
 {
+    /**
+     * Test create pdo storage.
+     */
     public function testCreatePdo()
     {
         $options = [
@@ -38,6 +44,9 @@ class StorageFactoryTest extends TestCase
         $this->assertInstanceOf(\PDO::class, $driver->getResource());
     }
 
+    /**
+     * Test create mysqli storage.
+     */
     public function testCreateMysqlI()
     {
         $options = [
@@ -54,6 +63,9 @@ class StorageFactoryTest extends TestCase
         $this->assertInstanceOf(\mysqli::class, $driver->getResource());
     }
 
+    /**
+     * Test create mongodb storage.
+     */
     public function testCreateMongoDb()
     {
         $options = [
@@ -69,6 +81,8 @@ class StorageFactoryTest extends TestCase
     }
 
     /**
+     * Test unsupported storage.
+     * 
      * @expectedException InvalidArgumentException
      */
     public function testUnsupportedAdapter()

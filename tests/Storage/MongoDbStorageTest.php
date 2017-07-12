@@ -11,8 +11,14 @@ use Linna\Storage\MongoDbStorage;
 use MongoDB\Client;
 use PHPUnit\Framework\TestCase;
 
-class MongoDBTest extends TestCase
+/**
+ * MongoDB Storage Test
+ */
+class MongoDbStorageTest extends TestCase
 {
+    /**
+     * Test connection.
+     */
     public function testConnection()
     {
         $options = [
@@ -25,7 +31,9 @@ class MongoDBTest extends TestCase
     }
 
     /**
-     * @expectedException Exception
+     * Test fail connenction.
+     * 
+     * @expectedException InvalidArgumentException
      */
     public function testFailConnection()
     {
