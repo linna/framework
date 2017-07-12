@@ -29,7 +29,7 @@ class MemcachedSessionHandlerTest extends TestCase
     protected $handler;
 
     /**
-     * @var Memcached The memcached class. 
+     * @var Memcached The memcached class.
      */
     protected $memcached;
 
@@ -58,7 +58,7 @@ class MemcachedSessionHandlerTest extends TestCase
 
     /**
      * Test Session Start.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testSessionStart()
@@ -76,7 +76,7 @@ class MemcachedSessionHandlerTest extends TestCase
     
     /**
      * Test session commit.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testSessionCommit()
@@ -123,7 +123,7 @@ class MemcachedSessionHandlerTest extends TestCase
     
     /**
      * Test session regenerate.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testSessionRegenerate()
@@ -153,7 +153,7 @@ class MemcachedSessionHandlerTest extends TestCase
     
     /**
      * Test session expired.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testSessionExpired()
@@ -182,7 +182,7 @@ class MemcachedSessionHandlerTest extends TestCase
 
     /**
      * Test garbage.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testGc()

@@ -82,7 +82,7 @@ class StorageFactoryTest extends TestCase
 
     /**
      * Test unsupported storage.
-     * 
+     *
      * @expectedException InvalidArgumentException
      */
     public function testUnsupportedAdapter()

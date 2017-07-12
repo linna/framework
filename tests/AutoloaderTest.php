@@ -25,7 +25,7 @@ class AutoloaderTest extends TestCase
         $autoloader = new Autoloader();
         $autoloader->register();
         $autoloader->addNamespaces([
-            ['Linna\FooAuto', __DIR__.'/FooClass'], 
+            ['Linna\FooAuto', __DIR__.'/FooClass'],
             ['Linna\Foo_', __DIR__.'/FooClass'],
             ['Baz\Foo', __DIR__.'/FooClass']
         ]);

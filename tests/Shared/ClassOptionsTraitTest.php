@@ -19,7 +19,7 @@ class ClassOptionsTest extends TestCase
 {
     /**
      *
-     * @var Router The router class. 
+     * @var Router The router class.
      */
     protected $router;
 
@@ -43,7 +43,7 @@ class ClassOptionsTest extends TestCase
 
     /**
      * Test set with wrong option.
-     * 
+     *
      * @expectedException InvalidArgumentException
      */
     public function testSetWithWrongOption()
@@ -67,7 +67,7 @@ class ClassOptionsTest extends TestCase
 
     /**
      * Test set with wrong options.
-     * 
+     *
      * @expectedException InvalidArgumentException
      */
     public function testSetWithWrongOptions()
