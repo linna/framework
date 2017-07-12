@@ -12,7 +12,10 @@ declare(strict_types=1);
 use Linna\Storage\PdoStorage;
 use PHPUnit\Framework\TestCase;
 
-class PdoTest extends TestCase
+/**
+ * Pdo Storage Test
+ */
+class PdoStorageTest extends TestCase
 {
     public function testConnection()
     {
@@ -31,7 +34,11 @@ class PdoTest extends TestCase
         $this->assertInstanceOf(PDO::class, (new PdoStorage($options))->getResource());
     }
 
-    public function connectionDataProvider()
+    /**
+     *
+     * @return array
+     */
+    public function connectionDataProvider() : array
     {
         return [
             ['0', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password']],
@@ -41,10 +48,12 @@ class PdoTest extends TestCase
     }
 
     /**
+     * Test fail connection.
+     *
      * @dataProvider connectionDataProvider
      * @expectedException PDOException
      */
-    public function testFailConnection($dsn, $user, $password)
+    public function testFailConnection(string $dsn, string $user, string $password)
     {
         $options = [
             'dsn'      => $dsn,
