@@ -35,7 +35,7 @@ class MysqliStorageTest extends TestCase
 
     /**
      * Connection data provider.
-     * 
+     *
      * @return array
      */
     public function connectionDataProvider() : array
@@ -51,18 +51,17 @@ class MysqliStorageTest extends TestCase
 
     /**
      * Test fail connection.
-     * 
+     *
      * @dataProvider connectionDataProvider
      * @expectedException mysqli_sql_exception
      */
     public function testFailConnection(
-            string $host, 
-            string $user, 
-            string $password, 
-            string $database, 
+            string $host,
+            string $user,
+            string $password,
+            string $database,
             int $port
-            )
-    {
+            ) {
         $options = [
             'host'     => $host,
             'user'     => $user,

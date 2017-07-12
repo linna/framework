@@ -30,7 +30,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
     protected $handler;
 
     /**
-     * @var PdoStorage The pdo class. 
+     * @var PdoStorage The pdo class.
      */
     protected $pdo;
 
@@ -67,7 +67,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
 
     /**
      * Test Session Start.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testSessionStart()
@@ -85,7 +85,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
     
     /**
      * Test session commit.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testSessionCommit()
@@ -132,7 +132,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
     
     /**
      * Test session regenerate.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testSessionRegenerate()
@@ -162,7 +162,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
     
     /**
      * Test session expired.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testSessionExpired()
@@ -191,7 +191,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
 
     /**
      * Test garbage.
-     * 
+     *
      * @runInSeparateProcess
      */
     public function testGc()

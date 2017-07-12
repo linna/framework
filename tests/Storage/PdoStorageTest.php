@@ -35,7 +35,7 @@ class PdoStorageTest extends TestCase
     }
 
     /**
-     * 
+     *
      * @return array
      */
     public function connectionDataProvider() : array
@@ -49,7 +49,7 @@ class PdoStorageTest extends TestCase
 
     /**
      * Test fail connection.
-     * 
+     *
      * @dataProvider connectionDataProvider
      * @expectedException PDOException
      */

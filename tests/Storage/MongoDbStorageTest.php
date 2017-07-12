@@ -32,7 +32,7 @@ class MongoDbStorageTest extends TestCase
 
     /**
      * Test fail connenction.
-     * 
+     *
      * @expectedException InvalidArgumentException
      */
     public function testFailConnection()
