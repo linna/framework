@@ -6,10 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unrelased] [v0.20.0](https://github.com/linna/framework/compare/v0.19.0...v0.20.0) - 2017-XX-XX
+## [v0.20.0](https://github.com/linna/framework/compare/v0.19.0...v0.20.0) - 2017-07-16
 
 ### Added
-* `Linna\Http\RouteCollection`
+* `Linna\Http\RouteCollection` for create `Linna\Http\Route` objectc collections
+* require [linna/typed-array > ^v1.0](https://github.com/linna/typed-array/releases)
+
+### Changed
+* tests updated
 
 ### Fixed
 * `CHANGELOG.md` links url
