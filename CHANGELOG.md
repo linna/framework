@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unrelased] [v0.20.0](https://github.com/linna/framework/compare/v0.19.0...v0.20.0) - 2017-XX-XX
 
+### Added
+* `Linna\Http\RouteCollection`
+
 ### Fixed
 * `CHANGELOG.md` links url
 
