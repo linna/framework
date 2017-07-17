@@ -3,8 +3,13 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/) 
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## [v0.20.1](https://github.com/linna/framework/compare/v0.20.0...v0.20.1) - 2017-07-16
+
+### Fixed
+* file permissions
 
 ## [v0.20.0](https://github.com/linna/framework/compare/v0.19.0...v0.20.0) - 2017-07-16
 
@@ -63,7 +68,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 * `Linna\Http\RouterCached` constructor parameters order changed
-* `Linna\Storage\MysqlPdoObject` changed name to `Linna\Storage\MysqlPdoStorage` 
+* `Linna\Storage\MysqlPdoObject` changed name to `Linna\Storage\MysqlPdoStorage`
 * `Linna\Storage\MysqliObject` changed name to `Linna\Storage\MysqliStorage`
 * `Linna\Storage\MongoDbOject` changed name to `Linna\Storage\MongoDbStorage`
 * `Linna\Storage\StorageObjectInterface` changed name to `Linna\Storage\StorageInterface`
@@ -79,13 +84,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Http\FastMapTrait->mapGet()` changed name to `Linna\Http\FastMapTrait->get()`
 * `Linna\Http\FastMapTrait->mapPost()` changed name to `Linna\Http\FastMapTrait->post()`
 * `Linna\Http\FastMapTrait->mapPut()` changed name to `Linna\Http\FastMapTrait->put()`
-* `Linna\Http\FastMapTrait->mapPatch()` changed name to `Linna\Http\FastMapTrait->patch()` 
+* `Linna\Http\FastMapTrait->mapPatch()` changed name to `Linna\Http\FastMapTrait->patch()`
 * `Linna\Http\FastMapTrait->mapDelete()` changed name to `Linna\Http\FastMapTrait->delete()`
 * `Linna\Http\FrontController` moved to `Linna\Mvc\FrontController`
 * `Linna\Http\Route->getArray()` changed name to `Linna\Http\Route->toArray()`
 * `Linna\Http\Router` url evaluation improved with rewrite mode off
 * `Linna\Mvc\FrontController` Route class dependency removed
-* `Linna\Storage\MysqlPdoAdapter` changed name to `Linna\Storage\MysqlPdoObject` 
+* `Linna\Storage\MysqlPdoAdapter` changed name to `Linna\Storage\MysqlPdoObject`
 * `Linna\Storage\MysqliAdapter` changed name to `Linna\Storage\MysqliObject`
 * `Linna\Storage\MongoDbAdapter` changed name to `Linna\Storage\MongoDbOject`
 * `Linna\Storage\StorageInterface` changed name to `Linna\Storage\StorageObjectInterface`
@@ -163,7 +168,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\DI\DIContainer` switched from `Interop\Container\ContainerInterface` to [PSR-11](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-11-container.md)
 * `Linna\DI\Exception\Container` change name to `Linna\DI\Exception\ContainerException`
 * `Linna\DI\Exception\NotFound` change name to `Linna\DI\Exception\NotFoundException`
-* `Linna\Autoloader` now not throw exceptions 
+* `Linna\Autoloader` now not throw exceptions
 * `Linna\Autoloader` tests updated
 
 ## [v0.11.0](https://github.com/linna/framework/compare/v0.10.0...v0.11.0) - 2017-02-11
@@ -196,4 +201,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Tests updated
 
 ### Removed
-* Removed class `Linna\Database\Database` 
+* Removed class `Linna\Database\Database`
