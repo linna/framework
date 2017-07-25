@@ -6,6 +6,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v0.20.2](https://github.com/linna/framework/compare/v0.20.1...v0.20.2) - 2017-07-25
+
+### Added
+* `Linna\Http\Router` option `rewriteModeOffRouter`
+
+### Fixed
+* `Linna\Http\Router` when work in write mode off
+* tests updated
+
 ## [v0.20.1](https://github.com/linna/framework/compare/v0.20.0...v0.20.1) - 2017-07-17
 
 ### Fixed
