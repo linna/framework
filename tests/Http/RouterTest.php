@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 use Linna\Http\NullRoute;
 use Linna\Http\Route;
+use Linna\Http\RouteCollection;
 use Linna\Http\Router;
 use PHPUnit\Framework\TestCase;
 
@@ -34,53 +35,46 @@ class RouterTest extends TestCase
      */
     public function setUp()
     {
-        $routes = [
-            [
+        $routes = (new RouteCollection([
+            new Route([
                 'name'       => 'Home',
                 'method'     => 'GET',
                 'url'        => '/',
                 'model'      => 'HomeModel',
                 'view'       => 'HomeView',
                 'controller' => 'HomeController',
-                'action'     => '',
-            ],
-            [
+            ]),
+            new Route([
                 'name'       => 'E404',
                 'method'     => 'GET',
                 'url'        => '/error',
                 'model'      => 'E404Model',
                 'view'       => 'E404View',
                 'controller' => 'E404Controller',
-                'action'     => '',
-            ],
-            [
+            ]),
+            new Route([
                 'name'       => 'User',
                 'method'     => 'GET',
                 'url'        => '/user',
                 'model'      => 'UserModel',
                 'view'       => 'UserView',
                 'controller' => 'UserController',
-                'action'     => '',
-            ],
-            [
-                'name'       => '',
+            ]),
+            new Route([
                 'method'     => 'GET',
                 'url'        => '/user/[id]/(disable|enable|delete|changePassword|modify)',
                 'model'      => 'UserModel',
                 'view'       => 'UserView',
                 'controller' => 'UserController',
-                'action'     => '',
-            ],
-            [
-                'name'       => '',
+            ]),
+            new Route([
                 'method'     => 'GET',
                 'url'        => '/userOther/(disable|enable|delete|changePassword|modify)/[id]',
                 'model'      => 'UserModel',
                 'view'       => 'UserView',
                 'controller' => 'UserController',
-                'action'     => '',
-            ],
-        ];
+            ])
+        ]))->toArray();
 
         $this->routes = $routes;
 
@@ -298,7 +292,6 @@ class RouterTest extends TestCase
     {
         //using a worng bad route for overwrite previous setting
         $this->router->setOptions([
-            'basePath'    => '/',
             'badRoute'    => 'E40',
             'rewriteMode' => true,
         ]);
@@ -314,12 +307,11 @@ class RouterTest extends TestCase
     public function testValidateWithRewriteModeOff()
     {
         $this->router->setOptions([
-            'basePath'    => '/',
             'badRoute'    => 'E404',
             'rewriteMode' => false,
         ]);
 
-        $this->router->validate('/index.php/user/5/enable', 'GET');
+        $this->router->validate('/index.php?/user/5/enable', 'GET');
 
         $route = $this->router->getRoute();
 
@@ -345,7 +337,7 @@ class RouterTest extends TestCase
         ]);
 
         //evaluate request uri
-        $this->router->validate('/other_dir/index.php/user/5/enable', 'GET');
+        $this->router->validate('/other_dir/index.php?/user/5/enable', 'GET');
 
         //get route
         $route = $this->router->getRoute();
@@ -382,47 +374,45 @@ class RouterTest extends TestCase
      */
     public function testRESTRouting($uri, $method, $action)
     {
-        $restRoutes = [
-            [
-                'name'       => '',
+        $restRoutes = (new RouteCollection([
+            new Route([
                 'method'     => 'GET',
                 'url'        => '/user/[id]',
                 'model'      => 'UserShowModel',
                 'view'       => 'UserShowView',
                 'controller' => 'UserShowController',
-                'action'     => '',
-            ],
-            [
-                'name'       => '',
+            ]),
+            new Route([
                 'method'     => 'POST',
                 'url'        => '/user/[id]',
                 'model'      => 'UserCreateModel',
                 'view'       => 'UserCreateView',
                 'controller' => 'UserCreateController',
-                'action'     => '',
-            ],
-            [
-                'name'       => '',
+            ]),
+            new Route([
                 'method'     => 'PUT',
                 'url'        => '/user/[id]',
                 'model'      => 'UserUpdateModel',
                 'view'       => 'UserUpdateView',
                 'controller' => 'UserUpdateController',
-                'action'     => '',
-            ],
-            [
-                'name'       => '',
+            ]),
+            new Route([
+                'method'     => 'PUT',
+                'url'        => '/user/[id]',
+                'model'      => 'UserUpdateModel',
+                'view'       => 'UserUpdateView',
+                'controller' => 'UserUpdateController',
+            ]),
+            new Route([
                 'method'     => 'DELETE',
                 'url'        => '/user/[id]',
                 'model'      => 'UserDeleteModel',
                 'view'       => 'UserDeleteView',
                 'controller' => 'UserDeleteController',
-                'action'     => '',
-            ],
-        ];
+            ])
+        ]))->toArray();
 
         $router = new Router($restRoutes, [
-            'basePath'    => '/',
             'badRoute'    => 'E404',
             'rewriteMode' => true,
         ]);

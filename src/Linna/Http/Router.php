@@ -26,10 +26,10 @@ class Router
      * @var array Config options for class
      */
     protected $options = [
-        'basePath'    => '/',
-        'badRoute'    => false,
-        'rewriteMode' => false,
-        'router'      => 'index.php',
+        'basePath'             => '/',
+        'badRoute'             => false,
+        'rewriteMode'          => false,
+        'rewriteModeOffRouter' => '/index.php?',
     ];
 
     /**
@@ -82,9 +82,7 @@ class Router
      */
     public function validate(string $requestUri, string $requestMethod) : bool
     {
-        $currentUri = $this->getCurrentUri($requestUri);
-
-        $route = $this->findRoute($currentUri, $requestMethod);
+        $route = $this->findRoute($this->filterUri($requestUri), $requestMethod);
 
         if (count($route) === 0) {
             $this->buildBadRoute();
@@ -213,16 +211,16 @@ class Router
      *
      * @return string
      */
-    private function getCurrentUri(string $passedUri): string
+    private function filterUri(string $passedUri): string
     {
         //sanitize url
         $url = filter_var($passedUri, FILTER_SANITIZE_URL);
 
+        //check for rewrite mode
+        $url = str_replace($this->options['rewriteModeOffRouter'], '', $url);
+
         //remove basepath
         $url = substr($url, strlen($this->options['basePath']));
-
-        //check for rewrite mode
-        $url = str_replace($this->options['router'], '', $url);
 
         //remove doubled slash
         $url = str_replace('//', '/', $url);
