@@ -143,6 +143,9 @@ class Router
 
         $route['param'] = $this->buildParam($route);
 
+        //delete matches key because not required inside route object
+        unset($route['matches']);
+
         $this->route = new Route($route);
     }
 

@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unrelased - [v0.21.0](https://github.com/linna/framework/compare/v0.20.2...v0.21.0) - 2017-XX-XX
+
+### Changed
+* `Linna\Http\Router` does not pass attribute `matches` to `Linna\Http\Route`
+
 ## [v0.20.2](https://github.com/linna/framework/compare/v0.20.1...v0.20.2) - 2017-07-25
 
 ### Added
