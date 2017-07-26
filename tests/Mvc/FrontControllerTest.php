@@ -14,6 +14,8 @@ use Linna\Foo\Mvc\FooControllerBeforeAfter;
 use Linna\Foo\Mvc\FooModel;
 use Linna\Foo\Mvc\FooTemplate;
 use Linna\Foo\Mvc\FooView;
+use Linna\Http\Route;
+use Linna\Http\RouteCollection;
 use Linna\Http\Router;
 use Linna\Mvc\FrontController;
 use PHPUnit\Framework\TestCase;
@@ -53,47 +55,42 @@ class FrontControllerTest extends TestCase
      */
     public function setUp()
     {
-        $routes = [
-            [
+        $routes = (new RouteCollection([
+            new Route([
                 'name'       => 'Foo',
                 'method'     => 'GET',
                 'url'        => '/Foo',
                 'model'      => 'FOOModel',
                 'view'       => 'FOOView',
                 'controller' => 'FOOController',
-                'action'     => '',
-            ],
-            [
+            ]),
+            new Route([
                 'name'       => 'Foo',
                 'method'     => 'GET',
                 'url'        => '/Foo/[passedData]/(modifyDataFromParam)',
                 'model'      => 'FOOModel',
                 'view'       => 'FOOView',
                 'controller' => 'FOOController',
-                'action'     => '',
-            ],
-            [
+            ]),
+            new Route([
                 'name'       => 'Foo',
                 'method'     => 'GET',
                 'url'        => '/Foo/(modifyData)',
                 'model'      => 'FOOModel',
                 'view'       => 'FOOView',
                 'controller' => 'FOOController',
-                'action'     => '',
-            ],
-            [
+            ]),
+            new Route([
                 'name'       => 'Foo',
                 'method'     => 'GET',
                 'url'        => '/Foo/(modifyDataTimed)',
                 'model'      => 'FOOModel',
                 'view'       => 'FOOView',
                 'controller' => 'FOOControllerBeforeAfter',
-                'action'     => '',
-            ],
-        ];
-
+            ])
+        ]))->toArray();
+        
         $this->router = new Router($routes, [
-            'basePath'    => '/',
             'badRoute'    => 'E404',
             'rewriteMode' => true,
         ]);

@@ -56,7 +56,7 @@ class View implements \SplObserver
             throw new UnexpectedValueException('Template must implements Linna\Mvc\TemplateInterface');
         }
 
-        $this->template->data = (object) $this->data;
+        $this->template->setData($this->data);
 
         return $this->template->getOutput();
     }

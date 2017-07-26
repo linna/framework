@@ -63,7 +63,7 @@ class MemcachedCache implements CacheInterface
      */
     public function set(string $key, $value, int $ttl = 0) : bool
     {
-        return $this->memcached->set($key, $value, (int) $ttl);
+        return $this->memcached->set($key, $value, $ttl);
     }
 
     /**

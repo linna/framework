@@ -17,9 +17,9 @@ class FooTemplate implements TemplateInterface
 {
     public $data = null;
 
-    public function __construct()
+    public function setData(array $data)
     {
-        $this->data = (object) null;
+        $this->data = (object) $data;
     }
 
     public function getOutput() : string

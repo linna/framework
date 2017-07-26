@@ -33,7 +33,7 @@ class Router
     ];
 
     /**
-     * @var object|bool Utilized for return the most recently parsed route
+     * @var RouteInterface Utilized for return the most recently parsed route
      */
     protected $route;
 
