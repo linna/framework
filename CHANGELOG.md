@@ -8,8 +8,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unrelased - [v0.21.0](https://github.com/linna/framework/compare/v0.20.2...v0.21.0) - 2017-XX-XX
 
+### Added
+* `Linna\Mvc\TemplateInterface->setData()` for set template data
+
 ### Changed
 * `Linna\Http\Router` does not pass attribute `matches` to `Linna\Http\Route`
+* `Linna\Mvc\View->render()` now call `Linna\Mvc\TemplateInterface->setData()`
+* Tests updated
+
+### Fixed
+* `Linna\Http\Router` property `$router` docblock
+* `Linna\Cache\MemcachedCache->set()` double cast to int
+* `Linna\DataMapper\DomaninObjectAbstract->setId()` double cast to int
 
 ## [v0.20.2](https://github.com/linna/framework/compare/v0.20.1...v0.20.2) - 2017-07-25
 

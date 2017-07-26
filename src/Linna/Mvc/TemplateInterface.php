@@ -17,6 +17,13 @@ namespace Linna\Mvc;
 interface TemplateInterface
 {
     /**
+     * Data for template.
+     *
+     * @param array $data
+     */
+    public function setData(array $data);
+
+    /**
      * Return output for specific template.
      */
     public function getOutput() : string;
