@@ -20,7 +20,7 @@ class RouteCollection extends TypedObjectArray
 {
     /**
      * Contructor.
-     * 
+     *
      * @param array $array
      */
     public function __construct(array $array = [])
@@ -30,7 +30,7 @@ class RouteCollection extends TypedObjectArray
     
     /**
      * Return collection as array.
-     * 
+     *
      * @return array
      */
     public function toArray() : array
