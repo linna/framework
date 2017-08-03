@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace Linna\Storage;
 
-use PDO;
-
 /**
  * PDO storage.
  */
@@ -40,7 +38,7 @@ class PdoStorage implements StorageInterface
      */
     public function getResource()
     {
-        return new PDO(
+        return new ExtendedPDO(
             $this->options['dsn'],
             $this->options['user'],
             $this->options['password'],

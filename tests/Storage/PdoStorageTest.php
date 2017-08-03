@@ -10,6 +10,7 @@
 declare(strict_types=1);
 
 use Linna\Storage\PdoStorage;
+use Linna\Storage\ExtendedPDO;
 use PHPUnit\Framework\TestCase;
 
 /**
