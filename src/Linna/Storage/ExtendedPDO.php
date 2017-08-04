@@ -34,7 +34,6 @@ class ExtendedPDO extends PDO
         $statment = $this->prepare($query);
 
         foreach ($param as $value) {
-
             $this->checkValue($value);
 
             //reassign as reference
