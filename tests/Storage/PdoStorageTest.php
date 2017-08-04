@@ -10,7 +10,6 @@
 declare(strict_types=1);
 
 use Linna\Storage\PdoStorage;
-use Linna\Storage\ExtendedPDO;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,6 +17,9 @@ use PHPUnit\Framework\TestCase;
  */
 class PdoStorageTest extends TestCase
 {
+    /**
+     * Test connection.
+     */
     public function testConnection()
     {
         $options = [
@@ -36,6 +38,7 @@ class PdoStorageTest extends TestCase
     }
 
     /**
+     * Connection data provider.
      *
      * @return array
      */
