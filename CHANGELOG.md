@@ -16,7 +16,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Http\Router` does not pass attribute `matches` to `Linna\Http\Route`
 * `Linna\Mvc\View->render()` now call `Linna\Mvc\TemplateInterface->setData()`
 * `Linna\Storage\PdoStorage` now return a `Linna\Storeage\ExtendedPDO` instance
-
 * Tests updated
 
 ### Fixed
