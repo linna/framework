@@ -41,7 +41,8 @@ class ExtendedPDOTest extends TestCase
     }
     
     /**
-     * Correct parameters provider
+     * Correct parameters provider.
+     *
      * @return array
      */
     public function correctParametersProvider() : array
@@ -52,7 +53,7 @@ class ExtendedPDOTest extends TestCase
                 ]
             ],
             ['SELECT user_id, name, email FROM user WHERE name = :name AND user_id = :id', [
-                    [':name', 'root', PDO::PARAM_STR], 
+                    [':name', 'root', PDO::PARAM_STR],
                     [':id', 1, PDO::PARAM_INT]
                 ]
             ],
@@ -64,8 +65,8 @@ class ExtendedPDOTest extends TestCase
     }
     
     /**
-     * Test query with parameter.
-     * 
+     * Test query with parameters.
+     *
      * @dataProvider correctParametersProvider
      */
     public function testQueryWithParameters(string $query, array $param)
@@ -87,7 +88,7 @@ class ExtendedPDOTest extends TestCase
      */
     public function testQueryWithParameterWithWrongParameterName()
     {
-        $user = (new PdoStorage($this->options))
+        (new PdoStorage($this->options))
             ->getResource()
             ->queryWithParam(
                 'SELECT user_id, name, email FROM user WHERE name = :name',
@@ -102,7 +103,7 @@ class ExtendedPDOTest extends TestCase
      */
     public function testQueryWithParameterWithTooManyParameters()
     {
-        $user = (new PdoStorage($this->options))
+        (new PdoStorage($this->options))
             ->getResource()
             ->queryWithParam(
                 'SELECT user_id, name, email FROM user WHERE name = :name',
@@ -117,7 +118,7 @@ class ExtendedPDOTest extends TestCase
      */
     public function testQueryWithParameterWithoutParameters()
     {
-        $user = (new PdoStorage($this->options))
+        (new PdoStorage($this->options))
             ->getResource()
             ->queryWithParam(
                 'SELECT user_id, name, email FROM user WHERE name = :name',

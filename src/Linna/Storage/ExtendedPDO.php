@@ -32,15 +32,10 @@ class ExtendedPDO extends PDO
     public function queryWithParam(string $query, array $param) : PDOStatement
     {
         $statment = $this->prepare($query);
-               
-        foreach ($param as $value) {
-            if (count($value) < 2) {
-                throw new InvalidArgumentException(__METHOD__.': Parameters array must contain at least two elements with this form: [\':name\', \'value\']');
-            }
 
-            if (strpos($value[0], ':') !== 0) {
-                throw new InvalidArgumentException(__METHOD__.': Parameter name will be in the form :name');
-            }
+        foreach ($param as $value) {
+
+            $this->checkValue($value);
 
             //reassign as reference
             //because bindParam need it as reference
@@ -53,5 +48,22 @@ class ExtendedPDO extends PDO
         $statment->execute();
 
         return $statment;
+    }
+
+    /**
+     * Check values passed to queryWithParam.
+     *
+     * @param array $value
+     * @throws InvalidArgumentException
+     */
+    private function checkValue(array &$value)
+    {
+        if (count($value) < 2) {
+            throw new InvalidArgumentException(__METHOD__.': Parameters array must contain at least two elements with this form: [\':name\', \'value\']');
+        }
+
+        if (strpos($value[0], ':') !== 0) {
+            throw new InvalidArgumentException(__METHOD__.': Parameter name will be in the form :name');
+        }
     }
 }
