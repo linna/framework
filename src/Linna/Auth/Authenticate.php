@@ -96,7 +96,7 @@ class Authenticate
      */
     public function login(string $userName, string $password, string $storedUserName = '', string $storedPassword = '', int $storedId = 0): bool
     {
-        if ($this->doesLoginChecksFailed($userName, $password, $storedUserName, $storedPassword)) {
+        if ($this->theLoginChecksFail($userName, $password, $storedUserName, $storedPassword)) {
             return false;
         }
 
@@ -115,14 +115,24 @@ class Authenticate
         return true;
     }
 
-    private function doesLoginChecksFailed(string $userName, string $password, string $storedUserName, string $storedPassword) : bool
+    /**
+     * Check if login fail.
+     *
+     * @param string $userName
+     * @param string $password
+     * @param string $storedUserName
+     * @param string $storedPassword
+     *
+     * @return bool
+     */
+    private function theLoginChecksFail(string $userName, string $password, string $storedUserName, string $storedPassword) : bool
     {
         //check user presence
         if ($userName !== $storedUserName) {
             return true;
         }
 
-        //if password daesnt' match return false
+        //if password doesn't match return false
         if (!$this->password->verify($password, $storedPassword)) {
             return true;
         }
