@@ -20,21 +20,21 @@ use SessionHandlerInterface;
  * Check below link for PHP session Handler
  * http://php.net/manual/en/class.sessionhandler.php
  *
- * Before use create table session on DB, I prefered memory engine for speed
+ * Before use create table session on DB.
  *
  * CREATE TABLE `session` (
  *  `session_id` char(128) NOT NULL,
- *  `session_data` varchar(8191) NOT NULL,
+ *  `session_data` varchar(3096) NOT NULL,
  *  `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  *  PRIMARY KEY (`session_id`)
- * ) ENGINE=MEMORY DEFAULT CHARSET=utf8;
+ * ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
  */
 class MysqlPdoSessionHandler implements SessionHandlerInterface
 {
     /**
-     * @var object Database Connection
+     * @var ExtendedPDO Database Connection
      */
-    private $dBase;
+    private $pdo;
 
     /**
      * Constructor.
@@ -43,7 +43,7 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
      */
     public function __construct(PdoStorage $storage)
     {
-        $this->dBase = $storage->getResource();
+        $this->pdo = $storage->getResource();
     }
 
     /**
@@ -74,16 +74,16 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
      */
     public function gc($maxLifetime)
     {
-        $pdos = $this->dBase->prepare('DELETE FROM session WHERE last_update < DATE_SUB(NOW(), INTERVAL :maxlifetime SECOND)');
-
-        $pdos->bindParam(':maxlifetime', $maxLifetime, \PDO::PARAM_INT);
-        $pdos->execute();
+        $this->pdo->queryWithParam(
+            'DELETE FROM session WHERE last_update < DATE_SUB(NOW(), INTERVAL :maxlifetime SECOND)',
+            [[':maxlifetime', $maxLifetime, \PDO::PARAM_INT]]
+        );
 
         return true;
     }
 
     /**
-     * Read sessio data from storage.
+     * Read session data from storage.
      *
      * http://php.net/manual/en/sessionhandler.read.php.
      *
@@ -93,13 +93,12 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
      */
     public function read($sessionId)
     {
-        $pdos = $this->dBase->prepare('SELECT session_data FROM session WHERE session_id = :session_id');
-
-        $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
-        $pdos->execute();
-
-        //fix for php7
-        return (string) $pdos->fetchColumn();
+        //string casting is a fix for PHP 7
+        //when strict type are enable
+        return (string) $this->pdo->queryWithParam(
+            'SELECT session_data FROM session WHERE session_id = :session_id',
+            [[':session_id', $sessionId, \PDO::PARAM_STR]]
+        )->fetchColumn();
     }
 
     /**
@@ -114,11 +113,13 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
      */
     public function write($sessionId, $data)
     {
-        $pdos = $this->dBase->prepare('INSERT INTO session SET session_id = :session_id, session_data = :session_data ON DUPLICATE KEY UPDATE session_data = :session_data');
-
-        $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
-        $pdos->bindParam(':session_data', $data, \PDO::PARAM_STR);
-        $pdos->execute();
+        $this->pdo->queryWithParam(
+            'INSERT INTO session SET session_id = :session_id, session_data = :session_data ON DUPLICATE KEY UPDATE session_data = :session_data',
+            [
+                [':session_id', $sessionId, \PDO::PARAM_STR],
+                [':session_data', $data, \PDO::PARAM_STR]
+            ]
+        );
 
         return true;
     }
@@ -146,9 +147,10 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
      */
     public function destroy($sessionId)
     {
-        $pdos = $this->dBase->prepare('DELETE FROM session WHERE session_id = :session_id');
-        $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
-        $pdos->execute();
+        $this->pdo->queryWithParam(
+            'DELETE FROM session WHERE session_id = :session_id',
+            [[':session_id', $sessionId, \PDO::PARAM_STR]]
+        );
 
         return true;
     }
