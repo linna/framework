@@ -32,7 +32,7 @@ use SessionHandlerInterface;
 class MysqlPdoSessionHandler implements SessionHandlerInterface
 {
     /**
-     * @var Linna\Storage\ExtendedPDO Database Connection
+     * @var \Linna\Storage\ExtendedPDO Database Connection
      */
     private $pdo;
 
