@@ -11,62 +11,27 @@ declare(strict_types=1);
 
 namespace Linna\Storage;
 
-use InvalidArgumentException;
-
 /**
  * Storage Factory.
  */
-class StorageFactory
+class StorageFactory extends AbstractStorageFactory
 {
-    /**
-     * @var string One of supported drivers
-     */
-    private $driver;
-
     /**
      * @var array Factory supported driver
      */
-    private $supportedDriver = [
+    protected $supportedDriver = [
         'pdo'     => PdoStorage::class,
         'mysqli'  => MysqliStorage::class,
         'mongodb' => MongoDbStorage::class,
     ];
 
     /**
-     * @var array Options for the driver
-     */
-    private $options;
-
-    /**
-     * Constructor.
-     *
-     * @param string $driver
-     * @param array  $options
-     */
-    public function __construct(string $driver, array $options)
-    {
-        $this->driver = $driver;
-        $this->options = $options;
-    }
-
-    /**
-     * Create Database Connection.
-     *
-     * @throws InvalidArgumentException If required driver is not supported
+     * Return Storage Resource.
      *
      * @return StorageInterface
      */
-    public function getConnection() : StorageInterface
+    public function get() : StorageInterface
     {
-        $driver = $this->driver;
-        $options = $this->options;
-
-        if (isset($this->supportedDriver[$driver])) {
-            $storageClass = $this->supportedDriver[$driver];
-
-            return new $storageClass($options);
-        }
-
-        throw new InvalidArgumentException("[$driver] not supported.");
+        return $this->returnStorageObject();
     }
 }

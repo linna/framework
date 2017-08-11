@@ -51,7 +51,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
             ],
         ];
         
-        $pdo = (new StorageFactory('pdo', $options))->getConnection();
+        $pdo = (new StorageFactory('pdo', $options))->get();
 
         $handler = new MysqlPdoSessionHandler($pdo);
         $session = new Session(['expire' => 10]);

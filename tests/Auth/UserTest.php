@@ -43,7 +43,7 @@ class UserTest extends TestCase
         ];
 
         $this->userMapper = new UserMapper(
-            (new StorageFactory('pdo', $options))->getConnection(),
+            (new StorageFactory('pdo', $options))->get(),
             new Password()
         );
     }

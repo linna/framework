@@ -38,7 +38,7 @@ class StorageFactoryTest extends TestCase
             ],
         ];
 
-        $driver = (new StorageFactory('pdo', $options))->getConnection();
+        $driver = (new StorageFactory('pdo', $options))->get();
 
         $this->assertInstanceOf(PdoStorage::class, $driver);
         $this->assertInstanceOf(\PDO::class, $driver->getResource());
@@ -57,7 +57,7 @@ class StorageFactoryTest extends TestCase
             'port'     => 3306,
         ];
 
-        $driver = (new StorageFactory('mysqli', $options))->getConnection();
+        $driver = (new StorageFactory('mysqli', $options))->get();
 
         $this->assertInstanceOf(MysqliStorage::class, $driver);
         $this->assertInstanceOf(\mysqli::class, $driver->getResource());
@@ -74,7 +74,7 @@ class StorageFactoryTest extends TestCase
             'driverOptions' => [],
         ];
 
-        $driver = (new StorageFactory('mongodb', $options))->getConnection();
+        $driver = (new StorageFactory('mongodb', $options))->get();
 
         $this->assertInstanceOf(MongoDbStorage::class, $driver);
         $this->assertInstanceOf(Client::class, $driver->getResource());
@@ -87,6 +87,6 @@ class StorageFactoryTest extends TestCase
      */
     public function testUnsupportedAdapter()
     {
-        (new StorageFactory('', []))->getConnection();
+        (new StorageFactory('', []))->get();
     }
 }

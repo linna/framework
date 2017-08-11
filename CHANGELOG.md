@@ -10,12 +10,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 * `Linna\Mvc\TemplateInterface->setData()` for set template data
-* `Linna\Storeage\ExtendedPDO` class
+* `Linna\Storage\ExtendedPDO` class
+* `Linna\Storage\AbstractStorageFactory` class
 
 ### Changed
 * `Linna\Http\Router` does not pass attribute `matches` to `Linna\Http\Route`
 * `Linna\Mvc\View->render()` now call `Linna\Mvc\TemplateInterface->setData()`
 * `Linna\Storage\PdoStorage` now return a `Linna\Storeage\ExtendedPDO` instance
+* `Linna\Cache\DiskCache` now depends from `Linna\Storage\AbstractStorageFactory`
+* `Linna\Storage\StorageFactory` now depends from `Linna\Storage\AbstractStorageFactory`
+* `Linna\Storage\StorageFactory->getConnection()` changed name to `Linna\Storage\StorageFactory->get()`
 * Tests updated
 
 ### Fixed

@@ -48,7 +48,7 @@ class EnhancedUserTest extends TestCase
             ],
         ];
 
-        $pdo = (new StorageFactory('pdo', $options))->getConnection();
+        $pdo = (new StorageFactory('pdo', $options))->get();
 
         $this->permissionMapper = new PermissionMapper($pdo);
         $this->enhancedUserMapper = new EnhancedUserMapper($pdo, new Password(), $this->permissionMapper);

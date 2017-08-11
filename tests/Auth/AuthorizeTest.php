@@ -62,7 +62,7 @@ class AuthorizeTest extends TestCase
         $session = new Session();
         $password = new Password();
         $authenticate = new Authenticate($session, $password);
-        $permissionMapper = new PermissionMapper((new StorageFactory('pdo', $options))->getConnection());
+        $permissionMapper = new PermissionMapper((new StorageFactory('pdo', $options))->get());
         
         
         $this->password = $password;

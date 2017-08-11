@@ -51,7 +51,7 @@ class RoleTest extends TestCase
             ],
         ];
 
-        $pdo = (new StorageFactory('pdo', $options))->getConnection();
+        $pdo = (new StorageFactory('pdo', $options))->get();
 
         $password = new Password();
 
