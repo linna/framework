@@ -30,12 +30,12 @@ class Container implements ContainerInterface, \ArrayAccess
     /**
      * @var array A map for resolve dependencies
      */
-    private $tree = [];
+    protected $tree = [];
 
     /**
      * @var array For resolve scalar arguments and unexpected behavior
      */
-    private $rules = [];
+    protected $rules = [];
 
     /**
      * {@inheritdoc}
@@ -125,7 +125,7 @@ class Container implements ContainerInterface, \ArrayAccess
      *
      * @param string $class
      */
-    private function buildTree(string $class)
+    protected function buildTree(string $class)
     {
         //set start level
         $level = 0;
