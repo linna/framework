@@ -119,7 +119,7 @@ class AuthenticateTest extends TestCase
     {
         $this->session->start();
 
-         //hash password
+        //hash password
         $storedPassword = $this->password->hash('password');
         $storedUser = 'root';
 
