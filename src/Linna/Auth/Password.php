@@ -14,9 +14,12 @@ namespace Linna\Auth;
 use Linna\Shared\ClassOptionsTrait;
 
 /**
- * Class for manage password, using PHP 5.5.0 password, see php documentation for more information.
+ * Password.
  *
- * http://php.net/manual/en/ref.password.php.
+ * Class for manage password, using PHP password hashing function,
+ * see php documentation for more information.
+ * <br/>
+ * <a href="http://php.net/manual/en/book.password.php">http://php.net/manual/en/book.password.php</a>
  */
 class Password
 {
@@ -34,6 +37,8 @@ class Password
 
     /**
      * Constructor.
+     * 
+     * Class constructor.
      *
      * @param array $options
      */
@@ -44,8 +49,9 @@ class Password
     }
 
     /**
-     * Verifies that a password matches a hash.
-     * Return the result of password_verify PHP function.
+     * Verify.
+     *
+     * Verifies if a password matches a hash and return the result as boolean.
      *
      * @param string $password
      * @param string $hash
@@ -58,8 +64,9 @@ class Password
     }
 
     /**
-     * Create a password hash.
-     * Return the hashed password.
+     * Hash.
+     *
+     * Create password hash from the given string and return it.
      *
      * @param string $password
      *
@@ -72,8 +79,9 @@ class Password
     }
 
     /**
-     * Checks if the given hash matches the given options.
-     * Return the hashed password.
+     * needsRehash.
+     *
+     * Checks if the given hash matches the algorithm and the options provided. 
      *
      * @param string $hash
      *
@@ -89,6 +97,8 @@ class Password
     }
 
     /**
+     * getInfo.
+     *
      * Returns information about the given hash.
      *
      * @param string $hash

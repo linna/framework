@@ -14,7 +14,8 @@ namespace Linna\Auth;
 use Linna\DataMapper\MapperInterface;
 
 /**
- * User Mapper Interface
+ * User Mapper Interface.
+ *
  * Contain methods required from concrete User Mapper.
  */
 interface UserMapperInterface extends MapperInterface

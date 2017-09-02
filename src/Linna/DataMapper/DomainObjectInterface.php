@@ -24,7 +24,7 @@ interface DomainObjectInterface
     /**
      * Set the id for this object.
      *
-     * @param type $objectId
+     * @param int $objectId
      */
     public function setId(int $objectId);
 }

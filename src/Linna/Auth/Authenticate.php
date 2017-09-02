@@ -16,37 +16,19 @@ use Linna\Session\Session;
 /**
  * Class a for autenticate users.
  *
+ * This class provide methods for authenticate a user.
+ * <br /><br />
  * Utilize
  *
- *      <?php
- *      $user = ''; //user from login page form
- *      $password = ''; //password from login page form
- *
- *      $storedUser = ''; //user from stored user informations
- *      $storedPassword = ''; //password from stored user informations
- *      $storedId = ''; //user id from stored user informations
- *
- *
- *      $auth = new Authenticate();
- *      $auth->login($user, $password, $storedUser, $storedPassword, $storedId);
- *
- *      //redirect
- *
- *
  * Utilize for check login
+ * <pre><code class="php">$auth = new Authenticate();
  *
- *      <?php
- *      $auth = new Authenticate();
- *
- *      if ($auth->logged === true)
- *      {
- *              //do actions
- *      }
- *
+ * if ($auth->logged === true) {
+ *     //do actions
+ * }
+ * </code></pre>
+ * 
  * Utilize for logout
- *
- *      $auth = new Authenticate();
- *      $auth->logout();
  */
 class Authenticate
 {
@@ -71,10 +53,12 @@ class Authenticate
     private $password;
 
     /**
-     * Constructor.
+     * __construct.
+     * 
+     * Class constructor.
      *
-     * @param Session  $session
-     * @param Password $password
+     * @param Session  $session  Session class instance.
+     * @param Password $password Password class instance.
      */
     public function __construct(Session $session, Password $password)
     {
@@ -84,7 +68,22 @@ class Authenticate
     }
 
     /**
-     * Try to log the user passed by param, return true if ok else false.
+     * login.
+     * 
+     * Try to attemp login for the informations passed by param.
+     *
+     * <pre><code class="php">$user = ''; //user from login page form
+     * $password = ''; //password from login page form
+     *
+     * $storedUser = ''; //user from stored user informations
+     * $storedPassword = ''; //password hash from stored user informations
+     * $storedId = ''; //user id from stored user informations
+     *
+     * $auth = new Authenticate();
+     * $auth->login($user, $password, $storedUser, $storedPassword, $storedId);
+     *
+     * //other operation after login
+     * </code></pre>
      *
      * @param string $userName
      * @param string $password
@@ -116,7 +115,9 @@ class Authenticate
     }
 
     /**
-     * Check if login fail.
+     * theLoginChecksFail.
+     * 
+     * Check if the login fail.
      *
      * @param string $userName
      * @param string $password
@@ -141,7 +142,12 @@ class Authenticate
     }
 
     /**
-     * For do logout, delete login information from session.
+     * logout.
+     *
+     * Do logout and delete login information from session.
+     * <pre><code class="php">$auth = new Authenticate();
+     * $auth->logout();
+     * </code></pre>
      *
      * @return bool
      */
@@ -158,6 +164,8 @@ class Authenticate
     }
 
     /**
+     * refresh.
+     * 
      * Check if user is logged, get login data from session and update it.
      *
      * @return bool

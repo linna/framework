@@ -52,6 +52,8 @@ trait PropertyAccessTrait
      *
      * @param string $key
      * @param mixed  $value
+     * 
+     * @ignore
      */
     public function __set(string $key, $value)
     {
@@ -65,6 +67,8 @@ trait PropertyAccessTrait
      * @param string $key
      *
      * @return object|bool Element stored in container or false
+     * 
+     * @ignore
      */
     public function __get(string $key)
     {
@@ -76,6 +80,8 @@ trait PropertyAccessTrait
      * http://php.net/manual/en/language.oop5.overloading.php.
      *
      * @param string $key
+     * 
+     * @ignore
      */
     public function __unset(string $key) : bool
     {
@@ -87,6 +93,8 @@ trait PropertyAccessTrait
      * http://php.net/manual/en/language.oop5.overloading.php.
      *
      * @param string $key
+     * 
+     * @ignore
      */
     public function __isset(string $key) : bool
     {

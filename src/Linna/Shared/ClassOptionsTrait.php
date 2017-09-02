@@ -20,10 +20,12 @@ namespace Linna\Shared;
 trait ClassOptionsTrait
 {
     /**
-     * Set an Option.
+     * setOption.
      *
+     * Set an option.
+     * 
      * @param string $key
-     * @param type   $value
+     * @param mixed  $value
      *
      * @throws \InvalidArgumentException If provided option name (key) are not valid
      */
@@ -37,8 +39,10 @@ trait ClassOptionsTrait
     }
 
     /**
-     * Set multiple Options.
+     * setOptions.
      *
+     * Set one or more options.
+     * 
      * @param array $options
      *
      * @throws \InvalidArgumentException If provided option names are not valid

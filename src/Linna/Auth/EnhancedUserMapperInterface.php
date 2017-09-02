@@ -20,8 +20,10 @@ use Linna\DataMapper\MapperInterface;
 interface EnhancedUserMapperInterface extends MapperInterface
 {
     /**
-     * Fetch users by role
-     * From role id as argument, this method must return an array containing
+     * fetchUserByRole.
+     *
+     * Fetch users by role.<br/>
+     * From a role id as argument, this method must return an array containing
      * a User object instance for every user that belongs at the
      * given role.
      *
@@ -32,8 +34,10 @@ interface EnhancedUserMapperInterface extends MapperInterface
     public function fetchUserByRole(int $roleId) : array;
 
     /**
-     * Fetch users by permission
-     * From permission id as argument, this method must return an array containing
+     * fetchUserByPermission.
+     *
+     * Fetch users by permission.<br/>
+     * From a permission id as argument, this method must return an array containing
      * a User object instance for every user that have the
      * given permission.
      *
@@ -44,11 +48,14 @@ interface EnhancedUserMapperInterface extends MapperInterface
     public function fetchUserByPermission(int $permissionId) : array;
 
     /**
-     * Grant a permission to an user
+     * grant.
+     *
+     * Grant a permission to an user.<br/>
      * This method must insert new user-permission coupling in persistent
-     * storage and update EnhancedUser calling EnhancedUser->setPermissions()
-     * method.
-     * Remind to pass all user's permission to EnhancedUser->setPermissions(),
+     * storage and update <code class="php_i">EnhancedUser</code> calling
+     * <code class="php_i">EnhancedUser->setPermissions()</code> method.<br/>
+     * Remind to pass all user's permission to 
+     * <code class="php_i">EnhancedUser->setPermissions()</code>,
      * when write concrete mapper is well pass PermissionMapper as constructor
      * dependency.
      *
@@ -58,12 +65,14 @@ interface EnhancedUserMapperInterface extends MapperInterface
     public function grant(EnhancedUser &$user, string $permission);
 
     /**
-     * Revoke a permission to an user
+     * revoke.
+     *
+     * Revoke a permission to an user.<br/>
      * This method must remove user-permission coupling in persistent
-     * storage and update EnhancedUser calling EnhancedUser->setPermissions()
-     * method.
+     * storage and update <code class="php_i">EnhancedUser</code> calling 
+     * <code class="php_i">EnhancedUser->setPermissions()</code> method.<br/>
      * As previous method remind to pass all user's permission to
-     * EnhancedUser->setPermissions(), when write concrete mapper is
+     * <code class="php_i">EnhancedUser->setPermissions()</code>, when write concrete mapper is
      * well pass PermissionMapper as constructor dependency.
      *
      * @param EnhancedUser $user
