@@ -14,33 +14,19 @@ namespace Linna\Auth;
 use Linna\Session\Session;
 
 /**
- * Class a for autenticate users.
- *
- * This class provide methods for authenticate a user.
- * <br /><br />
- * Utilize
- *
- * Utilize for check login
- * <pre><code class="php">$auth = new Authenticate();
- *
- * if ($auth->logged === true) {
- *     //do actions
- * }
- * </code></pre>
- * 
- * Utilize for logout
+ * This class provide methods for manage user authentication.
  */
 class Authenticate
 {
     /**
      * @var array Login status
      */
-    public $data = ['user_name'=>''];
+    private $data = ['user_name'=>''];
 
     /**
      * @var bool Indicate login status, true or false
      */
-    public $logged = false;
+    private $logged = false;
 
     /**
      * @var Session Session class
@@ -53,9 +39,8 @@ class Authenticate
     private $password;
 
     /**
-     * __construct.
-     * 
      * Class constructor.
+     * <pre><code class="php">$auth = new Authenticate($session, $password);</code></pre>
      *
      * @param Session  $session  Session class instance.
      * @param Password $password Password class instance.
@@ -68,8 +53,68 @@ class Authenticate
     }
 
     /**
-     * login.
-     * 
+     * Utilize this method for check if an user in the current session,
+     * is currently logged in.
+     * <pre><code class="php">$auth = new Authenticate($session, $password);
+     *
+     * if ($auth->isLogged()) {
+     *     //do actions
+     * }
+     * </code></pre>
+     *
+     * @return bool
+     */
+    public function isLogged() : bool
+    {
+        return $this->logged;
+    }
+
+    /**
+     * Opposite to isLogged() method.
+     *
+     * Utilize this method for check if an user in the current session,
+     * is currently not logged in.
+     * <pre><code class="php">$auth = new Authenticate($session, $password);
+     *
+     * if ($auth->isNotLogged()) {
+     *     //redirect or other action
+     * }
+     *
+     * //do actions
+     * </code></pre>
+     *
+     * @return bool
+     */
+    public function isNotLogged() : bool
+    {
+        return !$this->logged;
+    }
+
+    /**
+     * Get Login Data.
+     *
+     * Return array containing login data. 
+     * <pre><code class="php">//after session start and login, session data appear like below array:
+     * [
+     *     'time' => 1479641396
+     *     'expire' => 1800
+     *     'loginTime' => 1479641395
+     *     'login' => [
+     *         'login' => true
+     *         'user_id' => 1
+     *         'user_name' => 'root'
+     *     ]
+     * ]
+     * </code></pre>
+     *
+     * @return array
+     */
+    public function getLoginData() : array
+    {
+        return $this->data;
+    }
+
+    /**
      * Try to attemp login for the informations passed by param.
      *
      * <pre><code class="php">$user = ''; //user from login page form
@@ -79,7 +124,7 @@ class Authenticate
      * $storedPassword = ''; //password hash from stored user informations
      * $storedId = ''; //user id from stored user informations
      *
-     * $auth = new Authenticate();
+     * $auth = new Authenticate($session, $password);
      * $auth->login($user, $password, $storedUser, $storedPassword, $storedId);
      *
      * //other operation after login
@@ -115,8 +160,6 @@ class Authenticate
     }
 
     /**
-     * theLoginChecksFail.
-     * 
      * Check if the login fail.
      *
      * @param string $userName
@@ -142,8 +185,6 @@ class Authenticate
     }
 
     /**
-     * logout.
-     *
      * Do logout and delete login information from session.
      * <pre><code class="php">$auth = new Authenticate();
      * $auth->logout();
@@ -164,8 +205,6 @@ class Authenticate
     }
 
     /**
-     * refresh.
-     * 
      * Check if user is logged, get login data from session and update it.
      *
      * @return bool
