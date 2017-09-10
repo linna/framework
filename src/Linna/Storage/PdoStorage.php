@@ -34,7 +34,7 @@ class PdoStorage implements StorageInterface
     /**
      * Get Resource.
      *
-     * @return PDO
+     * @return ExtendedPDO
      */
     public function getResource()
     {
