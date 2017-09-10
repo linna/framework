@@ -62,7 +62,7 @@ class ProtectedControllerTest extends TestCase
 
         $controller = new FOOProtectedController(new FooModel(), $this->authenticate);
 
-        $this->assertEquals(true, $this->authenticate->logged);
+        $this->assertEquals(true, $this->authenticate->isLogged());
         $this->assertEquals(true, $controller->test);
 
         $this->authenticate->logout();
@@ -89,7 +89,7 @@ class ProtectedControllerTest extends TestCase
 
         ob_end_clean();
 
-        $this->assertEquals(false, $this->authenticate->logged);
+        $this->assertEquals(false, $this->authenticate->isLogged());
         $this->assertEquals(true, in_array('Location: http://localhost', $headers_list));
     }
 }

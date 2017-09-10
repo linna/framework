@@ -120,7 +120,7 @@ class AuthorizeTest extends TestCase
         //pass as first argument new instance because phpunit try to serialize pdo.????? I don't know where.
         $authorize = new Authorize(new Authenticate($this->session, $this->password), $this->permissionMapper);
 
-        $this->assertEquals(true, $authenticate->logged);
+        $this->assertEquals(true, $authenticate->isLogged());
         $this->assertEquals(true, $authorize->can('see users'));
         $this->assertEquals(false, $authorize->can('Not Existent Permission'));
 
