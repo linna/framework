@@ -120,9 +120,9 @@ class Authenticate
      * <pre><code class="php">$user = ''; //user from login page form
      * $password = ''; //password from login page form
      *
-     * $storedUser = ''; //user from stored user informations
-     * $storedPassword = ''; //password hash from stored user informations
-     * $storedId = ''; //user id from stored user informations
+     * $storedUser = ''; //user from stored informations
+     * $storedPassword = ''; //password hash from stored informations
+     * $storedId = ''; //user id from stored informations
      *
      * $auth = new Authenticate($session, $password);
      * $auth->login($user, $password, $storedUser, $storedPassword, $storedId);
