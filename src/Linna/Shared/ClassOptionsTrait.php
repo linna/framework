@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Linna\Shared;
 
 /**
- * Class Options Trait
  * Provide methods for manage options in a class.
  *
  * @property mixed $options Class options property
@@ -20,8 +19,6 @@ namespace Linna\Shared;
 trait ClassOptionsTrait
 {
     /**
-     * setOption.
-     *
      * Set an option.
      * 
      * @param string $key
@@ -39,8 +36,6 @@ trait ClassOptionsTrait
     }
 
     /**
-     * setOptions.
-     *
      * Set one or more options.
      * 
      * @param array $options

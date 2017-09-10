@@ -14,11 +14,8 @@ namespace Linna\Auth;
 use Linna\Shared\ClassOptionsTrait;
 
 /**
- * Password.
- *
- * Class for manage password, using PHP password hashing function,
+ * Provide methods for manage password, this class use PHP password hashing function,
  * see php documentation for more information.
- * <br/>
  * <a href="http://php.net/manual/en/book.password.php">http://php.net/manual/en/book.password.php</a>
  */
 class Password
@@ -36,9 +33,36 @@ class Password
         ];
 
     /**
-     * Constructor.
-     * 
      * Class constructor.
+     * <p><b>$options valid keys:</b></p>
+     * <table class="parameter">
+     * <thead>
+     * <tr>
+     * <th>Name</th>
+     * <th>Default</th>
+     * <th>Description</th>
+     * </tr>
+     * </thead>
+     * <tbody>
+     * <tr>
+     * <td>cost</td>
+     * <td>11</td>
+     * <td>indicating key expansion rounds</td>
+     * </tr>
+     * <tr>
+     * <td>algo</td>
+     * <td>PASSWORD_DEFAULT</td>
+     * <td>password algorithm denoting the algorithm to use when hashing the password</td>
+     * </tr>
+     * </tbody>
+     * </table>
+     * <p>For password algorithm constants see <a href="http://php.net/manual/en/password.constants.php">Password Constants</a>.</p>
+     * <pre><code class="php">//Options passed to class constructor as ['key' => 'value'] array.
+     * $password = new Password([
+     *     'cost' => 11,
+     *     'algo' => PASSWORD_DEFAULT,
+     * ]);
+     * </code></pre>
      *
      * @param array $options
      */
@@ -49,14 +73,20 @@ class Password
     }
 
     /**
-     * Verify.
+     * Verifies if a password matches an hash and return the result as boolean.
+     * <pre><code class="php">//create new class instance with default options.
+     * $password = new Password();
      *
-     * Verifies if a password matches a hash and return the result as boolean.
+     * $storedHash = '$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6';
+     * $password = 'FooPassword';
+     *
+     * $passwordCheck = $password->verify($password, $storedHash);
+     * </code></pre>
      *
      * @param string $password
      * @param string $hash
      *
-     * @return bool
+     * @return bool True if password match, false if not.
      */
     public function verify(string $password, string $hash): bool
     {
@@ -64,9 +94,14 @@ class Password
     }
 
     /**
-     * Hash.
-     *
      * Create password hash from the given string and return it.
+     * <pre><code class="php">$password = new Password();
+     * $hash = $password->hash('FooPassword');
+     *
+     * //var_dump result
+     * //$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6
+     * var_dump($hash)
+     * </code></pre>
      *
      * @param string $password
      *
@@ -79,9 +114,14 @@ class Password
     }
 
     /**
-     * needsRehash.
-     *
      * Checks if the given hash matches the algorithm and the options provided. 
+     * <pre><code class="php">$password = new Password();
+     * 
+     * $hash = '$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6';
+     * 
+     * //true if rehash is needed, false if no
+     * $rehashCheck = $password->needsRehash($hash);
+     * </code></pre>
      *
      * @param string $hash
      *
@@ -97,10 +137,24 @@ class Password
     }
 
     /**
-     * getInfo.
-     *
      * Returns information about the given hash.
+     * <pre><code class="php">$password = new Password();
      *
+     * $hash = '$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6';
+     *
+     * $info = $password->getInfo($hash);
+     *
+     * //var_dump result
+     * //[
+     * // 'algo' => 1,
+     * // 'algoName' => 'bcrypt',
+     * // 'options' => [
+     * //      'cost' => int 11
+     * // ]
+     * //]
+     * var_dump($info);
+     * </code></pre>
+     * 
      * @param string $hash
      *
      * @return array

@@ -14,53 +14,52 @@ namespace Linna\Auth;
 use Linna\DataMapper\DomainObjectAbstract;
 
 /**
- * User.
+ * Provide a basic user for authentication system.
  */
 class User extends DomainObjectAbstract
 {
     /**
-     * @var string User name
+     * @var string User name.
      */
     public $name;
 
     /**
-     * @var string User description
+     * @var string User description.
      */
     public $description;
 
     /**
-     * @var string User e-mail
+     * @var string User e-mail.
      */
     public $email;
 
     /**
-     * @var string User hashed password
+     * @var string User hashed password.
      */
     public $password;
 
     /**
-     * @var int It say if user is active or not
+     * @var int It say if user is active or not.
      */
     public $active = 0;
 
     /**
-     * @var string User creation date
+     * @var string User creation date.
      */
     public $created;
 
     /**
-     * @var string Last update
+     * @var string Last update.
      */
     public $lastUpdate;
 
     /**
-     * @var object Password class for manage password
+     * @var object Password class for manage password.
      */
     private $passwordUtility;
 
     /**
-     * Constructor
-     * Do type conversion because PDO doesn't return any original type from db :(.
+     * Class Constructor.
      *
      * @param Password $password
      */
@@ -69,6 +68,7 @@ class User extends DomainObjectAbstract
         $this->passwordUtility = $password;
 
         //set required type
+        //do type conversion because PDO doesn't return any original type from db :(.
         settype($this->objectId, 'integer');
         settype($this->active, 'integer');
     }

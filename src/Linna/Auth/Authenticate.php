@@ -14,7 +14,7 @@ namespace Linna\Auth;
 use Linna\Session\Session;
 
 /**
- * This class provide methods for manage user authentication.
+ * This class provide methods for manage user authentication system.
  */
 class Authenticate
 {
@@ -91,8 +91,6 @@ class Authenticate
     }
 
     /**
-     * Get Login Data.
-     *
      * Return array containing login data. 
      * <pre><code class="php">//after session start and login, session data appear like below array:
      * [
