@@ -44,19 +44,19 @@ class Authorize
      * use Linna\Auth\Authorize;
      * use Linna\Auth\Password;
      * use Linna\Session\Session;
-     * 
+     *
      * //your concrete permission mapper
      * use YourApp\Mapper\PermissionMapper;
-     * 
+     *
      * $password = new Password();
      * $session = new Session();
-     * 
+     *
      * $authenticate = new Authenticate($session, $password);
      * $permissionMapper = new PermissionMapper();
-     * 
+     *
      * $authorize = new Authorize($authenticate, $permissionMapper);
      * </code></pre>
-     * 
+     *
      * @param Authenticate              $authenticate
      * @param PermissionMapperInterface $permissionMapper
      */
@@ -74,7 +74,7 @@ class Authorize
      * Check if authenticated user has a permission.
      * <pre><code class="php">$authorize = new Authorize($authenticate, $permissionMapper);
      *
-     * //with this example, the class checks if the authenticated 
+     * //with this example, the class checks if the authenticated
      * //user has the permission 'update user'.
      * $authorize->can('update user');
      * </code></pre>

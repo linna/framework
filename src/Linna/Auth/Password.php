@@ -114,11 +114,11 @@ class Password
     }
 
     /**
-     * Checks if the given hash matches the algorithm and the options provided. 
+     * Checks if the given hash matches the algorithm and the options provided.
      * <pre><code class="php">$password = new Password();
-     * 
+     *
      * $hash = '$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6';
-     * 
+     *
      * //true if rehash is needed, false if no
      * $rehashCheck = $password->needsRehash($hash);
      * </code></pre>
@@ -154,7 +154,7 @@ class Password
      * //]
      * var_dump($info);
      * </code></pre>
-     * 
+     *
      * @param string $hash
      *
      * @return array
