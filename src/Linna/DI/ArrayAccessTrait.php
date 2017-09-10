@@ -52,7 +52,7 @@ trait ArrayAccessTrait
      * @param string $key
      *
      * @return bool
-     * 
+     *
      * @ignore
      */
     public function offsetExists($key)
@@ -66,7 +66,7 @@ trait ArrayAccessTrait
      * @param string $key
      *
      * @return mixed
-     * 
+     *
      * @ignore
      */
     public function offsetGet($key)
@@ -79,7 +79,7 @@ trait ArrayAccessTrait
      *
      * @param string $key
      * @param mixed  $value
-     * 
+     *
      * @ignore
      */
     public function offsetSet($key, $value)
@@ -93,7 +93,7 @@ trait ArrayAccessTrait
      * @param string $key
      *
      * @return mixed
-     * 
+     *
      * @ignore
      */
     public function offsetUnset($key)

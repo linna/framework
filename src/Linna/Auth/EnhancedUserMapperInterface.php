@@ -54,7 +54,7 @@ interface EnhancedUserMapperInterface extends MapperInterface
      * This method must insert new user-permission coupling in persistent
      * storage and update <code class="php_i">EnhancedUser</code> calling
      * <code class="php_i">EnhancedUser->setPermissions()</code> method.<br/>
-     * Remind to pass all user's permission to 
+     * Remind to pass all user's permission to
      * <code class="php_i">EnhancedUser->setPermissions()</code>,
      * when write concrete mapper is well pass PermissionMapper as constructor
      * dependency.
@@ -69,7 +69,7 @@ interface EnhancedUserMapperInterface extends MapperInterface
      *
      * Revoke a permission to an user.<br/>
      * This method must remove user-permission coupling in persistent
-     * storage and update <code class="php_i">EnhancedUser</code> calling 
+     * storage and update <code class="php_i">EnhancedUser</code> calling
      * <code class="php_i">EnhancedUser->setPermissions()</code> method.<br/>
      * As previous method remind to pass all user's permission to
      * <code class="php_i">EnhancedUser->setPermissions()</code>, when write concrete mapper is

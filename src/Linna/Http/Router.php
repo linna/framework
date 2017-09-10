@@ -15,7 +15,7 @@ use Linna\Shared\ClassOptionsTrait;
 
 /**
  * Router.
- * 
+ *
  * Manage routes, verify every resource requested by browser and return
  * a RouteInterface Object.
  */

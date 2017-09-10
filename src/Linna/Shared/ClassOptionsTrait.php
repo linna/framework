@@ -20,7 +20,7 @@ trait ClassOptionsTrait
 {
     /**
      * Set an option.
-     * 
+     *
      * @param string $key
      * @param mixed  $value
      *
@@ -37,7 +37,7 @@ trait ClassOptionsTrait
 
     /**
      * Set one or more options.
-     * 
+     *
      * @param array $options
      *
      * @throws \InvalidArgumentException If provided option names are not valid

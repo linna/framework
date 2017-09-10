@@ -91,7 +91,7 @@ class Authenticate
     }
 
     /**
-     * Return array containing login data. 
+     * Return array containing login data.
      * <pre><code class="php">//after session start and login, session data appear like below array:
      * [
      *     'time' => 1479641396
