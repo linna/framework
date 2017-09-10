@@ -29,7 +29,7 @@ trait ProtectedController
      */
     protected function protect(Authenticate $authenticate, string $redirect)
     {
-        if (($this->authentication = $authenticate->logged) === false) {
+        if (($this->authentication = $authenticate->isLogged()) === false) {
             header('Location: '.$redirect);
         }
     }
