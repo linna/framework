@@ -17,7 +17,7 @@ use Linna\DataMapper\DomainObjectAbstract;
  * Provide a basic user for authentication system.
  * This class is thinked to be used with PHP PDO,
  * but should be instantiated like a normal class.
- * 
+ *
  * <pre><code class="php">$password = new Password();
  *
  * $userId = 1;
@@ -34,7 +34,7 @@ use Linna\DataMapper\DomainObjectAbstract;
  *
  * $pdos->bindParam(':id', $userId, \PDO::PARAM_INT);
  * $pdos->execute();
- * 
+ *
  * //pdo return an User class instance
  * $user = $pdos->fetchObject('\Linna\Auth\User', [$password]);
  *
@@ -111,7 +111,7 @@ class User extends DomainObjectAbstract
      * <pre><code class="php">$password = new Password();
      *
      * $user = new User($password);
-     * 
+     *
      * $user->setPassword('newPassword');
      * </code></pre>
      *
