@@ -38,4 +38,4 @@ At moment, code, isn't utilized in production environment, Hope in future.
    * Mongodb extension (optional)
 
 ## Documentation 
-For more details please see [documentation (incomplete)](https://github.com/linna/docs) and read our [licence](https://github.com/linna/framework/blob/master/LICENSE.md)
+For more details please see the [user guide (soon)](https://linna.tools/docs/current/) or the [api (incomplete)](https://linna.tools/api/current/) and read our [licence](https://github.com/linna/framework/blob/master/LICENSE.md)
