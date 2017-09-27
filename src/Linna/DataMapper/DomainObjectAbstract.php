@@ -24,9 +24,14 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     protected $objectId = 0;
 
     /**
-     * Get the ID of this object (unique to the object type).
+     * Get the ID of the object (unique to the object type).
      *
-     * @return int
+     * <pre><code class="php">$object = new DomainObject($dependencies);
+     *
+     * $object->getId();
+     * </code></pre>
+     *
+     * @return int Current object id
      */
     public function getId(): int
     {
@@ -34,13 +39,18 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     }
 
     /**
-     * Set the id for this object.
+     * Set the id for the object.
      *
-     * @param int $objectId
+     * <pre><code class="php">$object = new DomainObject($dependencies);
+     *
+     * $object->setId(5);
+     * </code></pre>
+     *
+     * @param int $objectId New object id
      *
      * @throws UnexpectedValueException If the id on the object is already set
      *
-     * @return int
+     * @return int New object id
      */
     public function setId(int $objectId): int
     {

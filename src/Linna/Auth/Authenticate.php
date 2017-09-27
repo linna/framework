@@ -40,7 +40,14 @@ class Authenticate
 
     /**
      * Class constructor.
-     * <pre><code class="php">$auth = new Authenticate($session, $password);</code></pre>
+     * <pre><code class="php">use Linna\Session\Session;
+     * use Linna\Auth\Password;
+     *
+     * $session = new Session();
+     * $password = new Password();
+     *
+     * $auth = new Authenticate($session, $password);
+     * </code></pre>
      *
      * @param Session  $session  Session class instance.
      * @param Password $password Password class instance.
@@ -92,17 +99,23 @@ class Authenticate
 
     /**
      * Return array containing login data.
-     * <pre><code class="php">//after session start and login, session data appear like below array:
-     * [
-     *     'time' => 1479641396
-     *     'expire' => 1800
-     *     'loginTime' => 1479641395
-     *     'login' => [
-     *         'login' => true
-     *         'user_id' => 1
-     *         'user_name' => 'root'
-     *     ]
-     * ]
+     * <pre><code class="php">$auth = new Authenticate($session, $password);
+     *
+     * $data = $auth->getLoginData();
+     *
+     * //var_dump result
+     * //after session start and login, session data appear like below array:
+     * //[
+     * //    'time' => 1479641396
+     * //    'expire' => 1800
+     * //    'loginTime' => 1479641395
+     * //    'login' => [
+     * //        'login' => true
+     * //        'user_id' => 1
+     * //        'user_name' => 'root'
+     * //    ]
+     * //]
+     * var_dump($data);
      * </code></pre>
      *
      * @return array
@@ -184,7 +197,7 @@ class Authenticate
 
     /**
      * Do logout and delete login information from session.
-     * <pre><code class="php">$auth = new Authenticate();
+     * <pre><code class="php">$auth = new Authenticate($session, $password);
      * $auth->logout();
      * </code></pre>
      *

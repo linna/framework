@@ -74,13 +74,12 @@ class Password
 
     /**
      * Verifies if a password matches an hash and return the result as boolean.
-     * <pre><code class="php">//create new class instance with default options.
-     * $password = new Password();
+     * <pre><code class="php">$password = new Password();
      *
      * $storedHash = '$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6';
      * $password = 'FooPassword';
      *
-     * $passwordCheck = $password->verify($password, $storedHash);
+     * $verified = $password->verify($password, $storedHash);
      * </code></pre>
      *
      * @param string $password
@@ -96,6 +95,7 @@ class Password
     /**
      * Create password hash from the given string and return it.
      * <pre><code class="php">$password = new Password();
+     *
      * $hash = $password->hash('FooPassword');
      *
      * //var_dump result
@@ -146,11 +146,11 @@ class Password
      *
      * //var_dump result
      * //[
-     * // 'algo' => 1,
-     * // 'algoName' => 'bcrypt',
-     * // 'options' => [
-     * //      'cost' => int 11
-     * // ]
+     * //    'algo' => 1,
+     * //    'algoName' => 'bcrypt',
+     * //    'options' => [
+     * //        'cost' => int 11
+     * //    ]
      * //]
      * var_dump($info);
      * </code></pre>
