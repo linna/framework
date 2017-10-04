@@ -20,11 +20,9 @@ use Linna\DataMapper\MapperInterface;
 interface EnhancedUserMapperInterface extends MapperInterface
 {
     /**
-     * fetchUserByRole.
-     *
      * Fetch users by role.<br/>
      * From a role id as argument, this method must return an array containing
-     * a User object instance for every user that belongs at the
+     * a <code class="php_i">User</code> object instance for every user that belongs at the
      * given role.
      *
      * @param int $roleId
@@ -34,11 +32,9 @@ interface EnhancedUserMapperInterface extends MapperInterface
     public function fetchUserByRole(int $roleId) : array;
 
     /**
-     * fetchUserByPermission.
-     *
      * Fetch users by permission.<br/>
      * From a permission id as argument, this method must return an array containing
-     * a User object instance for every user that have the
+     * a <code class="php_i">User</code> object instance for every user that have the
      * given permission.
      *
      * @param int $permissionId
@@ -48,8 +44,6 @@ interface EnhancedUserMapperInterface extends MapperInterface
     public function fetchUserByPermission(int $permissionId) : array;
 
     /**
-     * grant.
-     *
      * Grant a permission to an user.<br/>
      * This method must insert new user-permission coupling in persistent
      * storage and update <code class="php_i">EnhancedUser</code> calling
@@ -65,8 +59,6 @@ interface EnhancedUserMapperInterface extends MapperInterface
     public function grant(EnhancedUser &$user, string $permission);
 
     /**
-     * revoke.
-     *
      * Revoke a permission to an user.<br/>
      * This method must remove user-permission coupling in persistent
      * storage and update <code class="php_i">EnhancedUser</code> calling

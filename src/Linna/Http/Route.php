@@ -16,6 +16,9 @@ namespace Linna\Http;
  */
 class Route implements RouteInterface
 {
+    /**
+     * @var array Route default vales
+     */
     protected $route = [
         'name'       => '',
         'method'     => '',

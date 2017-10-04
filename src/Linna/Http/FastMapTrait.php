@@ -10,6 +10,9 @@
 
 namespace Linna\Http;
 
+/**
+ * Contains shortcuts for methods for route mapping.
+ */
 trait FastMapTrait
 {
     /**

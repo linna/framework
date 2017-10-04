@@ -18,6 +18,8 @@ class NullRoute implements RouteInterface
 {
     /**
      * Constructor.
+     *
+     * @param array $route
      */
     public function __construct(array $route = [])
     {
