@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unrelased - [v0.21.0](https://github.com/linna/framework/compare/v0.20.2...v0.21.0) - 2017-XX-XX
+## [v0.21.0](https://github.com/linna/framework/compare/v0.20.2...v0.21.0) - 2017-10-04
 
 ### Added
 * `Linna\Mvc\TemplateInterface->setData()` for set template data
