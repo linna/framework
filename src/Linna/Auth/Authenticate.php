@@ -151,44 +151,19 @@ class Authenticate
      */
     public function login(string $userName, string $password, string $storedUserName = '', string $storedPassword = '', int $storedId = 0): bool
     {
-        if ($this->theLoginChecksFail($userName, $password, $storedUserName, $storedPassword)) {
-            return false;
-        }
+        if ($userName === $storedUserName && $this->password->verify($password, $storedPassword)) {
+            //write valid login on session
+            $this->sessionInstance->loginTime = time();
+            $this->sessionInstance->login = [
+                'login'     => true,
+                'user_id'   => $storedId,
+                'user_name' => $storedUserName,
+            ];
 
-        //write valid login on session
-        $this->sessionInstance->loginTime = time();
-        $this->sessionInstance->login = [
-            'login'     => true,
-            'user_id'   => $storedId,
-            'user_name' => $storedUserName,
-        ];
+            //regenerate session id
+            $this->sessionInstance->regenerate();
+            $this->logged = true;
 
-        //regenerate session id
-        $this->sessionInstance->regenerate();
-        $this->logged = true;
-
-        return true;
-    }
-
-    /**
-     * Check if the login fail.
-     *
-     * @param string $userName
-     * @param string $password
-     * @param string $storedUserName
-     * @param string $storedPassword
-     *
-     * @return bool
-     */
-    private function theLoginChecksFail(string $userName, string $password, string $storedUserName, string $storedPassword) : bool
-    {
-        //check user presence
-        if ($userName !== $storedUserName) {
-            return true;
-        }
-
-        //if password doesn't match return false
-        if (!$this->password->verify($password, $storedPassword)) {
             return true;
         }
 
