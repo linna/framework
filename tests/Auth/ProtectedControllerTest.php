@@ -7,6 +7,8 @@
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
+declare(strict_types=1);
+
 use Linna\Auth\Authenticate;
 use Linna\Auth\Password;
 use Linna\Foo\Mvc\FooModel;
