@@ -57,7 +57,8 @@ class ProtectedControllerTest extends TestCase
             'root',
             'password',
             'root',
-            $this->password->hash('password'), 1
+            $this->password->hash('password'),
+            1
         );
 
         $controller = new FOOProtectedController(new FooModel(), $this->authenticate);

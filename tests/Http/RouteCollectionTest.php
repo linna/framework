@@ -57,7 +57,8 @@ class RouteCollectionTest extends TestCase
     {
         $this->assertInstanceOf(
             TypedObjectArray::class,
-            (new RouteCollection([
+            (
+                new RouteCollection([
                     new ArrayObject([1, 2, 3]),
                     new ArrayObject([1.1, 2.2, 3.3]),
                     new SplStack(),

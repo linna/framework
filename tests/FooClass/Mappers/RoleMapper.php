@@ -59,8 +59,8 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
             PdoStorage $dBase,
             Password $password,
             EnhancedUserMapperInterface $userMapper,
-            PermissionMapperInterface $permissionMapper)
-    {
+            PermissionMapperInterface $permissionMapper
+    ) {
         $this->dBase = $dBase->getResource();
         $this->password = $password;
         $this->userMapper = $userMapper;

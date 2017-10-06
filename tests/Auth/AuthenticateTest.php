@@ -23,12 +23,12 @@ class AuthenticateTest extends TestCase
      * @var Session The session class.
      */
     protected $session;
-    
+
     /**
      * @var Password The password class.
      */
     protected $password;
-    
+
     /**
      * @var Authenticate The authenticate class
      */
