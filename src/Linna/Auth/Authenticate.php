@@ -14,7 +14,8 @@ namespace Linna\Auth;
 use Linna\Session\Session;
 
 /**
- * This class provide methods for manage user authentication system.
+ * Provide methods for manage basic user authentication system. Checks for 
+ * correct login cover only the user name and the password.
  */
 class Authenticate
 {
@@ -126,7 +127,7 @@ class Authenticate
     }
 
     /**
-     * Try to attemp login for the informations passed by param.
+     * Try to attemp login with the informations passed by param.
      *
      * <pre><code class="php">$user = ''; //user from login page form
      * $password = ''; //password from login page form
