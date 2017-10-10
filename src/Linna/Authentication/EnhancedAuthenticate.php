@@ -52,7 +52,7 @@ class EnhancedAuthenticate extends Authenticate
      *
      * @return boolean
      */
-    public function login(string $userName, string $password, string $storedUserName = '', string $storedPassword = '', int $storedId = 0)
+    public function login(string $userName, string $password, string $storedUserName = '', string $storedPassword = '', int $storedId = 0): bool
     {
         if (parent::login($userName, $password, $storedUserName, $storedPassword, $storedId)) {
             return true;
