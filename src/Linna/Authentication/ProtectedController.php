@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Auth;
+namespace Linna\Authentication;
 
 /**
  * Help protect a controller with login.

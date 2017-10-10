@@ -9,8 +9,9 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Auth;
+namespace Linna\Authorization;
 
+use Linna\Authentication\Authenticate;
 use Linna\DataMapper\NullDomainObject;
 
 /**

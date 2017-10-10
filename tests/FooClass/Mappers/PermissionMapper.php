@@ -11,8 +11,8 @@
 
 namespace Linna\Foo\Mappers;
 
-use Linna\Auth\Permission;
-use Linna\Auth\PermissionMapperInterface;
+use Linna\Authorization\Permission;
+use Linna\Authorization\PermissionMapperInterface;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
 use Linna\DataMapper\NullDomainObject;
@@ -48,7 +48,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
         $pdos->bindParam(':id', $permissionId, \PDO::PARAM_INT);
         $pdos->execute();
 
-        $result = $pdos->fetchObject('\Linna\Auth\Permission');
+        $result = $pdos->fetchObject('\Linna\Authorization\Permission');
 
         return ($result instanceof Permission) ? $result : new NullDomainObject();
     }
@@ -63,7 +63,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
         $pdos->bindParam(':name', $permissionName, \PDO::PARAM_STR);
         $pdos->execute();
 
-        $result = $pdos->fetchObject('\Linna\Auth\Permission');
+        $result = $pdos->fetchObject('\Linna\Authorization\Permission');
 
         return ($result instanceof Permission) ? $result : new NullDomainObject();
     }
@@ -77,7 +77,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
 
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Auth\Permission');
+        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\Permission');
     }
 
     /**
@@ -91,7 +91,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
         $pdos->bindParam(':rowcount', $rowCount, \PDO::PARAM_INT);
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Auth\Permission');
+        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\Permission');
     }
 
     /**
@@ -109,7 +109,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
         $pdos->bindParam(':id', $roleId, \PDO::PARAM_INT);
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Auth\Permission');
+        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\Permission');
     }
 
     /**
@@ -127,7 +127,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
         $pdos->bindParam(':id', $userId, \PDO::PARAM_INT);
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Auth\Permission');
+        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\Permission');
     }
 
     /**

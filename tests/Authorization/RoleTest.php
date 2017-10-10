@@ -9,8 +9,8 @@
  */
 declare(strict_types=1);
 
-use Linna\Auth\Password;
-use Linna\Auth\Role;
+use Linna\Authentication\Password;
+use Linna\Authorization\Role;
 use Linna\Foo\Mappers\EnhancedUserMapper;
 use Linna\Foo\Mappers\PermissionMapper;
 use Linna\Foo\Mappers\RoleMapper;

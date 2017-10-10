@@ -9,12 +9,12 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Auth;
+namespace Linna\Authentication;
 
 use Linna\Session\Session;
 
 /**
- * Provide methods for manage basic user authentication system. Checks for 
+ * Provide methods for manage basic user authentication system. Checks for
  * correct login cover only the user name and the password.
  */
 class Authenticate

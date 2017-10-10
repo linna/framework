@@ -11,12 +11,12 @@
 
 namespace Linna\Foo\Mappers;
 
-use Linna\Auth\EnhancedUserMapperInterface;
-use Linna\Auth\Password;
-use Linna\Auth\PermissionMapperInterface;
-use Linna\Auth\Role;
-use Linna\Auth\RoleMapperInterface;
-use Linna\Auth\User;
+use Linna\Authorization\EnhancedUserMapperInterface;
+use Linna\Authentication\Password;
+use Linna\Authorization\PermissionMapperInterface;
+use Linna\Authorization\Role;
+use Linna\Authorization\RoleMapperInterface;
+use Linna\Authentication\User;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
 use Linna\DataMapper\NullDomainObject;
@@ -77,7 +77,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
         $pdos->bindParam(':id', $roleId, \PDO::PARAM_INT);
         $pdos->execute();
 
-        $role = $pdos->fetchObject('\Linna\Auth\Role');
+        $role = $pdos->fetchObject('\Linna\Authorization\Role');
 
         if (!($role instanceof Role)) {
             return new NullDomainObject();
@@ -101,7 +101,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
 
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Auth\Role');
+        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\Role');
     }
 
     /**
@@ -115,7 +115,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
         $pdos->bindParam(':rowcount', $rowCount, \PDO::PARAM_INT);
         $pdos->execute();
 
-        $roles = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Auth\Role');
+        $roles = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\Role');
 
         return $this->fillRolesArray($roles);
     }

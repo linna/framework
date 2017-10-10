@@ -9,8 +9,8 @@
  */
 declare(strict_types=1);
 
-use Linna\Auth\Authenticate;
-use Linna\Auth\Password;
+use Linna\Authentication\Authenticate;
+use Linna\Authentication\Password;
 use Linna\Foo\Mvc\FooModel;
 use Linna\Foo\Mvc\FooProtectedController;
 use Linna\Session\Session;

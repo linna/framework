@@ -11,8 +11,8 @@
 
 namespace Linna\Foo\Mvc;
 
-use Linna\Auth\Authenticate;
-use Linna\Auth\ProtectedController;
+use Linna\Authentication\Authenticate;
+use Linna\Authentication\ProtectedController;
 use Linna\Mvc\Controller;
 
 class FooProtectedController extends Controller

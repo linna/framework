@@ -9,9 +9,9 @@
  */
 declare(strict_types=1);
 
-use Linna\Auth\Authenticate;
-use Linna\Auth\Authorize;
-use Linna\Auth\Password;
+use Linna\Authentication\Authenticate;
+use Linna\Authentication\Password;
+use Linna\Authorization\Authorize;
 use Linna\Foo\Mappers\PermissionMapper;
 use Linna\Session\Session;
 use Linna\Storage\StorageFactory;

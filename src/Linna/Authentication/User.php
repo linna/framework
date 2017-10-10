@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Auth;
+namespace Linna\Authentication;
 
 use Linna\DataMapper\DomainObjectAbstract;
 

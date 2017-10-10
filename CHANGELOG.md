@@ -6,6 +6,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unrelased - [v0.22.0](https://github.com/linna/framework/compare/v0.21.0...v0.22.0) - 2017-XX-XX
+
+### Added
+* `Linna\Authentication\EnhancedAuthenticate` class
+
+### Changed
+* `Linna\Auth` splitted into `Linna\Authentication` and `Linna\Authorization`
+* `Linna\Auth\Authenticate` moved under namespace `Linna\Authentication`
+* `Linna\Auth\Password` moved under namespace `Linna\Authentication`
+* `Linna\Auth\ProtectedController` moved under namespace `Linna\Authentication`
+* `Linna\Auth\User` moved under namespace `Linna\Authentication`
+* `Linna\Auth\UserMapperInterface` moved under namespace `Linna\Authentication`
+* `Linna\Auth\Authorize` moved under namespace `Linna\Authorization`
+* `Linna\Auth\EnhancedUser` moved under namespace `Linna\Authorization`
+* `Linna\Auth\EnhancedUserMapperInterface` moved under namespace `Linna\Authorization`
+* `Linna\Auth\Permission` moved under namespace `Linna\Authorization`
+* `Linna\Auth\PermissionMapperInterface` moved under namespace `Linna\Authorization`
+* `Linna\Auth\PermissionTrait` moved under namespace `Linna\Authorization`
+* `Linna\Auth\Role` moved under namespace `Linna\Authorization`
+* `Linna\Auth\RoleMapperInterface` moved under namespace `Linna\Authorization`
+
 ## [v0.21.0](https://github.com/linna/framework/compare/v0.20.2...v0.21.0) - 2017-10-04
 
 ### Added

@@ -9,8 +9,8 @@
  */
 declare(strict_types=1);
 
-use Linna\Auth\EnhancedUser;
-use Linna\Auth\Password;
+use Linna\Authentication\Password;
+use Linna\Authorization\EnhancedUser;
 use Linna\Foo\Mappers\EnhancedUserMapper;
 use Linna\Foo\Mappers\PermissionMapper;
 use Linna\Storage\StorageFactory;

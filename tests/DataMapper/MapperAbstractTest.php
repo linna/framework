@@ -9,8 +9,8 @@
  */
 declare(strict_types=1);
 
-use Linna\Auth\Password;
-use Linna\Auth\User;
+use Linna\Authentication\Password;
+use Linna\Authentication\User;
 use Linna\Foo\Mappers\UserMapper;
 use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;

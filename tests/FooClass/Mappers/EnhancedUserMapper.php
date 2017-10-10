@@ -11,10 +11,10 @@
 
 namespace Linna\Foo\Mappers;
 
-use Linna\Auth\EnhancedUser;
-use Linna\Auth\EnhancedUserMapperInterface;
-use Linna\Auth\Password;
-use Linna\Auth\PermissionMapperInterface;
+use Linna\Authorization\EnhancedUser;
+use Linna\Authorization\EnhancedUserMapperInterface;
+use Linna\Authentication\Password;
+use Linna\Authorization\PermissionMapperInterface;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\NullDomainObject;
 use Linna\Storage\PdoStorage;
@@ -53,7 +53,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
         $pdos->bindParam(':id', $userId, \PDO::PARAM_INT);
         $pdos->execute();
 
-        $user = $pdos->fetchObject('\Linna\Auth\EnhancedUser', [$this->password]);
+        $user = $pdos->fetchObject('\Linna\Authorization\EnhancedUser', [$this->password]);
 
         if (!($user instanceof EnhancedUser)) {
             return new NullDomainObject();
@@ -76,7 +76,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
         $pdos->bindParam(':name', $hashedUserName, \PDO::PARAM_STR);
         $pdos->execute();
 
-        $user = $pdos->fetchObject('\Linna\Auth\EnhancedUser', [$this->password]);
+        $user = $pdos->fetchObject('\Linna\Authorization\EnhancedUser', [$this->password]);
 
         if (!($user instanceof EnhancedUser)) {
             return new NullDomainObject();
@@ -96,7 +96,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
 
         $pdos->execute();
 
-        $users = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Auth\EnhancedUser', [$this->password]);
+        $users = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\EnhancedUser', [$this->password]);
 
         return $this->setUserPermission($users);
     }
@@ -112,7 +112,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
         $pdos->bindParam(':rowcount', $rowCount, \PDO::PARAM_INT);
         $pdos->execute();
 
-        $users = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Auth\EnhancedUser', [$this->password]);
+        $users = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\EnhancedUser', [$this->password]);
 
         return $this->setUserPermission($users);
     }
@@ -129,7 +129,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
         $pdos->bindParam(':id', $roleId, \PDO::PARAM_INT);
         $pdos->execute();
 
-        $users = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Auth\EnhancedUser', [$this->password]);
+        $users = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\EnhancedUser', [$this->password]);
 
         return $this->setUserPermission($users);
     }

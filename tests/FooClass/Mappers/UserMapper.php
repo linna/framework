@@ -11,9 +11,9 @@
 
 namespace Linna\Foo\Mappers;
 
-use Linna\Auth\Password;
-use Linna\Auth\User;
-use Linna\Auth\UserMapperInterface;
+use Linna\Authentication\Password;
+use Linna\Authentication\User;
+use Linna\Authentication\UserMapperInterface;
 use Linna\DataMapper\DomainObjectAbstract;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
@@ -57,7 +57,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
         $pdos->bindParam(':id', $userId, \PDO::PARAM_INT);
         $pdos->execute();
 
-        $result = $pdos->fetchObject('\Linna\Auth\User', [$this->password]);
+        $result = $pdos->fetchObject('\Linna\Authentication\User', [$this->password]);
 
         return ($result instanceof User) ? $result : new NullDomainObject();
     }
@@ -78,7 +78,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
         $pdos->bindParam(':name', $hashedUserName, \PDO::PARAM_STR);
         $pdos->execute();
 
-        $result = $pdos->fetchObject('\Linna\Auth\User', [$this->password]);
+        $result = $pdos->fetchObject('\Linna\Authentication\User', [$this->password]);
 
         return ($result instanceof User) ? $result : new NullDomainObject();
     }
@@ -92,7 +92,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
 
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Auth\User', [$this->password]);
+        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authentication\User', [$this->password]);
     }
 
     /**
@@ -106,7 +106,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
         $pdos->bindParam(':rowcount', $rowCount, \PDO::PARAM_INT);
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Auth\User', [$this->password]);
+        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authentication\User', [$this->password]);
     }
 
     /**
