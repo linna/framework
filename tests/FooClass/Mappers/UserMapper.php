@@ -120,13 +120,23 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
     /**
      * {@inheritdoc}
      */
-    protected function concreteInsert(DomainObjectInterface $user) : string
+    protected function concreteInsert(DomainObjectInterface $user) : int
     {
-        if (!($user instanceof User)) {
-            throw new \InvalidArgumentException('$user must be instance of User class');
-        }
+        $this->checkValidDomainObject($user);
 
-        return 'insert';
+        try {
+            $pdos = $this->dBase->prepare('INSERT INTO user (name, email, description, password, created) VALUES (:name, :email, :description, :password, NOW())');
+
+            $pdos->bindParam(':name', $user->name, \PDO::PARAM_STR);
+            $pdos->bindParam(':email', $user->email, \PDO::PARAM_STR);
+            $pdos->bindParam(':description', $user->description, \PDO::PARAM_STR);
+            $pdos->bindParam(':password', $user->password, \PDO::PARAM_STR);
+            $pdos->execute();
+
+            return (int) $this->dBase->lastInsertId();
+        } catch (\RuntimeException $e) {
+            echo 'Mapper: Insert not compled, ', $e->getMessage(), "\n";
+        }
     }
 
     /**
@@ -134,11 +144,25 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
      */
     protected function concreteUpdate(DomainObjectInterface $user)
     {
-        if (!($user instanceof User)) {
-            throw new \InvalidArgumentException('$user must be instance of User class');
-        }
+        $this->checkValidDomainObject($user);
 
-        return 'update';
+        try {
+            $pdos = $this->dBase->prepare('UPDATE user SET name = :name, email = :email, description = :description,  password = :password, active = :active WHERE user_id = :user_id');
+
+            $objId = $user->getId();
+
+            $pdos->bindParam(':user_id', $objId, \PDO::PARAM_INT);
+
+            $pdos->bindParam(':name', $user->name, \PDO::PARAM_STR);
+            $pdos->bindParam(':email', $user->email, \PDO::PARAM_STR);
+            $pdos->bindParam(':password', $user->password, \PDO::PARAM_STR);
+            $pdos->bindParam(':description', $user->description, \PDO::PARAM_STR);
+            $pdos->bindParam(':active', $user->active, \PDO::PARAM_INT);
+
+            $pdos->execute();
+        } catch (\Exception $e) {
+            echo 'Mapper exception: ', $e->getMessage(), "\n";
+        }
     }
 
     /**
@@ -146,10 +170,28 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
      */
     protected function concreteDelete(DomainObjectInterface $user)
     {
+        $this->checkValidDomainObject($user);
+
+        try {
+            $objId = $user->getId();
+            $pdos = $this->dBase->prepare('DELETE FROM user WHERE user_id = :user_id');
+            $pdos->bindParam(':user_id', $objId, \PDO::PARAM_INT);
+            $pdos->execute();
+        } catch (\Exception $e) {
+            echo 'Mapper exception: ', $e->getMessage(), "\n";
+        }
+    }
+    
+    /**
+     * Check for valid domain Object.
+     *
+     * @param DomainObjectInterface $user
+     * @throws \InvalidArgumentException
+     */
+    protected function checkValidDomainObject(DomainObjectInterface &$user)
+    {
         if (!($user instanceof User)) {
             throw new \InvalidArgumentException('$user must be instance of User class');
         }
-
-        return 'delete';
     }
 }

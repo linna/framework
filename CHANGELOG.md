@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 * `Linna\Authentication\EnhancedAuthenticate` class
+* `Linna\Authentication\EnhancedAuthenticateMapperInterface` interface
+* `Linna\Authentication\LoginAttempt` class
 
 ### Changed
 * `Linna\Auth` splitted into `Linna\Authentication` and `Linna\Authorization`
