@@ -41,4 +41,11 @@ interface EnhancedAuthenticateMapperInterface extends MapperInterface
      * @param int    $timeInSeconds Attempts in the last specified seconds
      */
     public function fetchAttemptsWithSameIp(string $ipAddress, int $timeInSeconds) : int;
+    
+    /**
+     * Remove old login attempts
+     *
+     * @param int $timeInSeconds
+     */
+    public function deleteOldLoginAttempts(int $timeInSeconds) : bool;
 }

@@ -30,14 +30,14 @@ class Authenticate
     private $logged = false;
 
     /**
-     * @var Session Session class
-     */
-    private $sessionInstance;
-
-    /**
      * @var Password Password class
      */
     private $password;
+
+    /**
+     * @var Session Session class
+     */
+    protected $session;
 
     /**
      * Class constructor.
@@ -56,7 +56,7 @@ class Authenticate
     public function __construct(Session $session, Password $password)
     {
         $this->password = $password;
-        $this->sessionInstance = $session;
+        $this->session = $session;
         $this->logged = $this->refresh();
     }
 
@@ -154,15 +154,15 @@ class Authenticate
     {
         if ($userName === $storedUserName && $this->password->verify($password, $storedPassword)) {
             //write valid login on session
-            $this->sessionInstance->loginTime = time();
-            $this->sessionInstance->login = [
+            $this->session->loginTime = time();
+            $this->session->login = [
                 'login'     => true,
                 'user_id'   => $storedId,
                 'user_name' => $storedUserName,
             ];
 
             //regenerate session id
-            $this->sessionInstance->regenerate();
+            $this->session->regenerate();
             $this->logged = true;
 
             return true;
@@ -182,10 +182,10 @@ class Authenticate
     public function logout(): bool
     {
         //remove login data from session
-        unset($this->sessionInstance->login, $this->sessionInstance->loginTime);
+        unset($this->session->login, $this->session->loginTime);
 
         //regenerate session id
-        $this->sessionInstance->regenerate();
+        $this->session->regenerate();
         $this->logged = false;
 
         return true;
@@ -199,7 +199,7 @@ class Authenticate
     private function refresh(): bool
     {
         //check for login data on in current session
-        if (!isset($this->sessionInstance->login)) {
+        if (!isset($this->session->login)) {
             return false;
         }
 
@@ -207,13 +207,13 @@ class Authenticate
         $time = time();
 
         //check if login expired
-        if (($this->sessionInstance->loginTime + $this->sessionInstance->expire) < $time) {
+        if (($this->session->loginTime + $this->session->expire) < $time) {
             return false;
         }
 
         //update login data
-        $this->sessionInstance->loginTime = $time;
-        $this->data = $this->sessionInstance->login;
+        $this->session->loginTime = $time;
+        $this->data = $this->session->login;
 
         return true;
     }

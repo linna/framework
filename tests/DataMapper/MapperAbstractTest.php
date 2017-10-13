@@ -72,7 +72,7 @@ class MapperAbstractTest extends TestCase
         /*$user = $this->mapper->create();
         $user->name = 'test_user';
         $user->password = 'password';
-        
+
         $this->assertEquals('insert', $this->mapper->save($user));*/
         
         $this->assertEquals(true, true);

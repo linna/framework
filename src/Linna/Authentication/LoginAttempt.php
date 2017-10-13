@@ -19,19 +19,19 @@ use Linna\DataMapper\DomainObjectAbstract;
 class LoginAttempt extends DomainObjectAbstract
 {
     /**
+     * @var string User name.
+     */
+    public $userName;
+    
+    /**
      * @var string Session id.
      */
     public $sessionId;
 
     /**
-     * @var string Remote IP v4 address.
+     * @var string Remote IP address.
      */
-    public $ipv4;
-
-    /**
-     * @var string Remote IP v6 address.
-     */
-    public $ipv6;
+    public $ipAddress;
 
     /**
      * @var string Show when login attempted.

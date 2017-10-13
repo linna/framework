@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Authentication;
 
+use Linna\Authentication\EnhancedAuthenticateMapperInterface;
 use Linna\Session\Session;
 use Linna\Shared\ClassOptionsTrait;
 
@@ -25,11 +26,17 @@ class EnhancedAuthenticate extends Authenticate
      * @var array An associative array containing options
      */
     protected $options = [
-        'maxAttemptsForUser' => 5,
-        'maxAttemptsForSession' => 10,
-        'maxAttemptsForIp' => 20,
-        'lockTimeInSeconds' => 900 //15 minutes
+        'maxAttemptsForUserName' => 5,
+        'maxAttemptsForSessionId' => 10,
+        'maxAttemptsForIpAddress' => 20,
+        'maxAttemptsForSecond' => 40,
+        'banTimeInSeconds' => 900 //15 minutes
     ];
+    
+    /**
+     * @var EnhancedAuthenticateMapperInterface Enhanced Authenticate Mapper
+     */
+    private $enhancedAuthenticateMapper;
     
     /**
      * Class Constructor
@@ -38,42 +45,17 @@ class EnhancedAuthenticate extends Authenticate
      * @param Password $password
      * @param array    $options
      */
-    public function __construct(Session $session, Password $password, array $options = [])
-    {
+    public function __construct(
+            Session $session,
+            Password $password,
+            EnhancedAuthenticateMapperInterface $enhancedAuthenticateMapper,
+            array $options = []
+        ) {
         parent::__construct($session, $password);
         
+        $this->enhancedAuthenticateMapper = $enhancedAuthenticateMapper;
         //set options
         $this->setOptions($options);
-    }
-    
-    /**
-     * Try to attempt login with the informations passed by param.
-     *
-     * @param string $userName
-     * @param string $password
-     * @param string $storedUserName
-     * @param string $storedPassword
-     * @param int    $storedId
-     *
-     * @return boolean
-     */
-    public function login(string $userName, string $password, string $storedUserName = '', string $storedPassword = '', int $storedId = 0): bool
-    {
-        if (parent::login($userName, $password, $storedUserName, $storedPassword, $storedId)) {
-            return true;
-        }
-    }
-    
-    /**
-     * Check if an account is locked after too much failed.
-     *
-     * @param string $userName
-     *
-     * @return bool
-     */
-    public function IsAccountLocked(string $userName) : bool
-    {
-        return true;
     }
     
     /**
@@ -127,11 +109,11 @@ class EnhancedAuthenticate extends Authenticate
     /**
      * Check if an ip address is banned from do login.
      *
-     * @param string $ip
+     * @param string $ipAddress
      *
      * @return bool
      */
-    public function isIpBanned(string $ip) : bool
+    public function isIpBanned(string $ipAddress) : bool
     {
         return true;
     }
