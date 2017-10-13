@@ -24,14 +24,19 @@ class EnhancedAuthenticate extends Authenticate
     /**
      * @var array An associative array containing options
      */
-    protected $options = [];
+    protected $options = [
+        'maxAttemptsForUser' => 5,
+        'maxAttemptsForSession' => 10,
+        'maxAttemptsForIp' => 20,
+        'lockTimeInSeconds' => 900 //15 minutes
+    ];
     
     /**
      * Class Constructor
      *
-     * @param Session $session
+     * @param Session  $session
      * @param Password $password
-     * @param array $options
+     * @param array    $options
      */
     public function __construct(Session $session, Password $password, array $options = [])
     {
@@ -48,7 +53,7 @@ class EnhancedAuthenticate extends Authenticate
      * @param string $password
      * @param string $storedUserName
      * @param string $storedPassword
-     * @param int $storedId
+     * @param int    $storedId
      *
      * @return boolean
      */
@@ -84,18 +89,6 @@ class EnhancedAuthenticate extends Authenticate
     }
     
     /**
-     * Return how many attemps are left for same ip.
-     *
-     * @param string $ip
-     *
-     * @return int
-     */
-    public function getAttemptsLeftWithSameIp(string $ip) : int
-    {
-        return 0;
-    }
-    
-    /**
      * Return how many attemps are left for same session id.
      *
      * @param string $sessionId
@@ -103,6 +96,18 @@ class EnhancedAuthenticate extends Authenticate
      * @return int
      */
     public function getAttemptsLeftWithSameSession(string $sessionId) : int
+    {
+        return 0;
+    }
+    
+    /**
+     * Return how many attemps are left for same ip.
+     *
+     * @param string $ipAddress
+     *
+     * @return int
+     */
+    public function getAttemptsLeftWithSameIp(string $ipAddress) : int
     {
         return 0;
     }
