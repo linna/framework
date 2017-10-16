@@ -21,7 +21,9 @@
         "s3b4stian/simple-cache": "^1.0"
     },
     "require-dev": {
-        "mongodb/mongodb": "^1.1.0"
+        "mongodb/mongodb": "^1.1.0",
+        "phpmetrics/phpmetrics": "^2.3",
+        "phpstan/phpstan": "^0.8.5"
     },
     "autoload": {
         "psr-4": {
