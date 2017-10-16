@@ -67,7 +67,9 @@ class EnhancedAuthenticate extends Authenticate
      */
     public function getAttemptsLeftWithSameUser(string $userName) : int
     {
-        return 0;
+        $attemptsLeft = $this->options['maxAttemptsForUserName'] - $this->enhancedAuthenticateMapper->fetchAttemptsWithSameUser($userName, $this->options['banTimeInSeconds']);
+
+        return ($attemptsLeft < 0) ? 0 : $attemptsLeft;
     }
     
     /**
@@ -79,7 +81,9 @@ class EnhancedAuthenticate extends Authenticate
      */
     public function getAttemptsLeftWithSameSession(string $sessionId) : int
     {
-        return 0;
+        $attemptsLeft = $this->options['maxAttemptsForSessionId'] - $this->enhancedAuthenticateMapper->fetchAttemptsWithSameSession($sessionId, $this->options['banTimeInSeconds']);
+
+        return ($attemptsLeft < 0) ? 0 : $attemptsLeft;
     }
     
     /**
@@ -91,7 +95,9 @@ class EnhancedAuthenticate extends Authenticate
      */
     public function getAttemptsLeftWithSameIp(string $ipAddress) : int
     {
-        return 0;
+        $attemptsLeft = $this->options['maxAttemptsForIpAddress'] - $this->enhancedAuthenticateMapper->fetchAttemptsWithSameIp($ipAddress, $this->options['banTimeInSeconds']);
+
+        return ($attemptsLeft < 0) ? 0 : $attemptsLeft;
     }
     
     /**
@@ -103,19 +109,7 @@ class EnhancedAuthenticate extends Authenticate
      */
     public function isUserBanned(string $userName) : bool
     {
-        return true;
-    }
-    
-    /**
-     * Check if an ip address is banned from do login.
-     *
-     * @param string $ipAddress
-     *
-     * @return bool
-     */
-    public function isIpBanned(string $ipAddress) : bool
-    {
-        return true;
+        return !$this->getAttemptsLeftWithSameUser($userName);
     }
     
     /**
@@ -127,6 +121,18 @@ class EnhancedAuthenticate extends Authenticate
      */
     public function isSessionBanned(string $sessionId) : bool
     {
-        return true;
+        return !$this->getAttemptsLeftWithSameSession($sessionId);
+    }
+    
+    /**
+     * Check if an ip address is banned from do login.
+     *
+     * @param string $ipAddress
+     *
+     * @return bool
+     */
+    public function isIpBanned(string $ipAddress) : bool
+    {
+        return !$this->getAttemptsLeftWithSameIp($ipAddress);
     }
 }

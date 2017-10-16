@@ -106,6 +106,14 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
      */
     public function fetchAttemptsWithSameSession(string $sessionId, int $timeInSeconds) : int
     {
+        $pdos = $this->dBase->prepare('SELECT count(session_id) as attempts FROM login_attempt WHERE session_id = :session_id AND date_time > (now() - :time)');
+
+        $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
+        $pdos->bindParam(':time', $timeInSeconds, \PDO::PARAM_STR);
+        
+        $pdos->execute();
+        
+        return (int) $pdos->fetch(\PDO::FETCH_LAZY)->attempts;
     }
     
     /**
@@ -116,6 +124,14 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
      */
     public function fetchAttemptsWithSameIp(string $ipAddress, int $timeInSeconds) : int
     {
+        $pdos = $this->dBase->prepare('SELECT count(ip) as attempts FROM login_attempt WHERE ip = :ip AND date_time > (now() - :time)');
+
+        $pdos->bindParam(':ip', $ipAddress, \PDO::PARAM_STR);
+        $pdos->bindParam(':time', $timeInSeconds, \PDO::PARAM_STR);
+        
+        $pdos->execute();
+        
+        return (int) $pdos->fetch(\PDO::FETCH_LAZY)->attempts;
     }
     
     /**
