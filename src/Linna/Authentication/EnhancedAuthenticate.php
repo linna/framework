@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Linna\Authentication;
 
-use Linna\Authentication\EnhancedAuthenticateMapperInterface;
 use Linna\Session\Session;
 use Linna\Shared\ClassOptionsTrait;
 
@@ -41,9 +40,10 @@ class EnhancedAuthenticate extends Authenticate
     /**
      * Class Constructor
      *
-     * @param Session  $session
+     * @param Session $session
      * @param Password $password
-     * @param array    $options
+     * @param EnhancedAuthenticateMapperInterface $enhancedAuthenticateMapper
+     * @param array $options
      */
     public function __construct(
             Session $session,
