@@ -3,11 +3,11 @@ php:
 - 7.0.21
 - 7.1
 - 7.2
-- nightly
+- master
 
 matrix:
   allow_failures:
-  - php: nightly
+  - php: master
   - php: 7.2
 
 services:
@@ -22,7 +22,7 @@ before_install:
 before_script:
 - mysql -e 'create database linna_db;'
 - mysql -u root linna_db < tests/linna_db_mysql.sql
-- composer install
+- composer install --no-dev
 
 script: 
 - phpunit
