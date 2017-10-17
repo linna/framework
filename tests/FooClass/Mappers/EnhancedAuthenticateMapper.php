@@ -141,6 +141,13 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
      */
     public function deleteOldLoginAttempts(int $timeInSeconds) : bool
     {
+        $pdos = $this->dBase->prepare('DELETE FROM login_attempt WHERE date_time < (now() - :time)');
+
+        $pdos->bindParam(':time', $timeInSeconds, \PDO::PARAM_STR);
+        
+        $pdos->execute();
+        
+        return true;
     }
     
     /**
