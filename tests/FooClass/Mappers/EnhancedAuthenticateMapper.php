@@ -88,10 +88,14 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
     
     public function fetchAttemptsWithSameUser(string $userName, int $timeInSeconds) : int
     {
-        $pdos = $this->dBase->prepare('SELECT count(user_name) as attempts FROM login_attempt WHERE user_name = :user_name AND date_time > (now() - :time)');
+        $pdos = $this->dBase->prepare('SELECT count(user_name) as attempts FROM login_attempt WHERE user_name = :user_name AND date_time > :time');
 
         $pdos->bindParam(':user_name', $userName, \PDO::PARAM_STR);
-        $pdos->bindParam(':time', $timeInSeconds, \PDO::PARAM_STR);
+        
+        $time = (int) date('YmdHis', time() - $timeInSeconds);
+        $pdos->bindParam(':time', $time, \PDO::PARAM_INT);
+        
+        
         
         $pdos->execute();
         
@@ -106,10 +110,12 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
      */
     public function fetchAttemptsWithSameSession(string $sessionId, int $timeInSeconds) : int
     {
-        $pdos = $this->dBase->prepare('SELECT count(session_id) as attempts FROM login_attempt WHERE session_id = :session_id AND date_time > (now() - :time)');
+        $pdos = $this->dBase->prepare('SELECT count(session_id) as attempts FROM login_attempt WHERE session_id = :session_id AND date_time > :time');
 
         $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
-        $pdos->bindParam(':time', $timeInSeconds, \PDO::PARAM_STR);
+        
+        $time = (int) date('YmdHis', time() - $timeInSeconds);
+        $pdos->bindParam(':time', $time, \PDO::PARAM_INT);
         
         $pdos->execute();
         
@@ -124,10 +130,12 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
      */
     public function fetchAttemptsWithSameIp(string $ipAddress, int $timeInSeconds) : int
     {
-        $pdos = $this->dBase->prepare('SELECT count(ip) as attempts FROM login_attempt WHERE ip = :ip AND date_time > (now() - :time)');
+        $pdos = $this->dBase->prepare('SELECT count(ip) as attempts FROM login_attempt WHERE ip = :ip AND date_time > :time');
 
         $pdos->bindParam(':ip', $ipAddress, \PDO::PARAM_STR);
-        $pdos->bindParam(':time', $timeInSeconds, \PDO::PARAM_STR);
+        
+        $time = (int) date('YmdHis', time() - $timeInSeconds);
+        $pdos->bindParam(':time', $time, \PDO::PARAM_INT);
         
         $pdos->execute();
         
@@ -141,9 +149,10 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
      */
     public function deleteOldLoginAttempts(int $timeInSeconds) : bool
     {
-        $pdos = $this->dBase->prepare('DELETE FROM login_attempt WHERE date_time < (now() - :time)');
+        $pdos = $this->dBase->prepare('DELETE FROM login_attempt WHERE date_time < :time');
 
-        $pdos->bindParam(':time', $timeInSeconds, \PDO::PARAM_STR);
+        $time = (int) date('YmdHis', time() - $timeInSeconds);
+        $pdos->bindParam(':time', $time, \PDO::PARAM_INT);
         
         $pdos->execute();
         
