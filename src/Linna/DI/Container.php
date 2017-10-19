@@ -125,7 +125,7 @@ class Container implements ContainerInterface, \ArrayAccess
      *
      * @param string $class
      */
-    protected function buildTree(string $class)
+    private function buildTree(string $class)
     {
         //set start level
         $level = 0;
@@ -198,7 +198,7 @@ class Container implements ContainerInterface, \ArrayAccess
                 $object = $this->cache[$class] ?? null;
 
                 //if object is not in cache and need arguments try to build
-                if ($object === null && count($arguments) > 0) {
+                if ($object === null && count($arguments) !== 0) {
 
                     //build arguments
                     $args = $this->buildArguments($class, $arguments);
