@@ -1,4 +1,5 @@
 composer.phar
 composer.lock
 clover.xml
+infection.json
 vendor/
