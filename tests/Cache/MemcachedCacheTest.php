@@ -96,9 +96,9 @@ class MemcachedCacheTest extends TestCase
      */
     public function testSet()
     {
-        $this->cache->set('foo', [0, 1, 2, 3, 4]);
+        $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4]));
 
-        $this->assertEquals(true, $this->cache->has('foo'));
+        $this->assertTrue($this->cache->has('foo'));
     }
 
     /**
@@ -106,9 +106,9 @@ class MemcachedCacheTest extends TestCase
      */
     public function testSetWithTtlNull()
     {
-        $this->cache->set('foo_ttl', [0, 1, 2, 3, 4]);
+        $this->assertTrue($this->cache->set('foo_ttl', [0, 1, 2, 3, 4]));
 
-        $this->assertEquals(true, $this->cache->has('foo_ttl'));
+        $this->assertTrue($this->cache->has('foo_ttl'));
     }
 
     /**
@@ -116,11 +116,11 @@ class MemcachedCacheTest extends TestCase
      */
     public function testSetWithTtl()
     {
-        $this->cache->set('foo_ttl', [0, 1, 2, 3, 4], 1);
+        $this->assertTrue($this->cache->set('foo_ttl', [0, 1, 2, 3, 4], 1));
         
         usleep(1000005);
         
-        $this->assertEquals(null, $this->cache->get('foo_ttl'));
+        $this->assertNull($this->cache->get('foo_ttl'));
     }
 
     /**
@@ -139,7 +139,7 @@ class MemcachedCacheTest extends TestCase
      */
     public function testGet()
     {
-        $this->cache->set('foo', [0, 1, 2, 3, 4]);
+        $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4]));
 
         $this->assertEquals([0, 1, 2, 3, 4], $this->cache->get('foo'));
     }
@@ -149,7 +149,7 @@ class MemcachedCacheTest extends TestCase
      */
     public function testGetWithDefault()
     {
-        $this->assertEquals(null, $this->cache->get('foo_not_exist'));
+        $this->assertNull($this->cache->get('foo_not_exist'));
     }
 
     /**
@@ -157,9 +157,9 @@ class MemcachedCacheTest extends TestCase
      */
     public function testGetWithExpiredElement()
     {
-        $this->cache->set('foo', [0, 1, 2, 3, 4], -10);
+        $this->assertFalse($this->cache->set('foo', [0, 1, 2, 3, 4], -10));
 
-        $this->assertEquals(null, $this->cache->get('foo'));
+        $this->assertNull($this->cache->get('foo'));
     }
 
     /**
@@ -178,9 +178,9 @@ class MemcachedCacheTest extends TestCase
      */
     public function testDeleteExistingElement()
     {
-        $this->cache->set('foo', [0, 1, 2, 3, 4]);
+        $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4]));
 
-        $this->assertEquals(true, $this->cache->delete('foo'));
+        $this->assertTrue($this->cache->delete('foo'));
     }
 
     /**
@@ -188,7 +188,7 @@ class MemcachedCacheTest extends TestCase
      */
     public function testDeleteNotExistingElement()
     {
-        $this->assertEquals(false, $this->cache->delete('foo'));
+        $this->assertFalse($this->cache->delete('foo'));
     }
 
     /**
@@ -196,28 +196,28 @@ class MemcachedCacheTest extends TestCase
      */
     public function testClear()
     {
-        $this->cache->set('foo_0', [0]);
-        $this->cache->set('foo_1', [1]);
-        $this->cache->set('foo_2', [2]);
-        $this->cache->set('foo_3', [3]);
-        $this->cache->set('foo_4', [4]);
-        $this->cache->set('foo_5', [5]);
+        $this->assertTrue($this->cache->set('foo_0', [0]));
+        $this->assertTrue($this->cache->set('foo_1', [1]));
+        $this->assertTrue($this->cache->set('foo_2', [2]));
+        $this->assertTrue($this->cache->set('foo_3', [3]));
+        $this->assertTrue($this->cache->set('foo_4', [4]));
+        $this->assertTrue($this->cache->set('foo_5', [5]));
 
-        $this->assertEquals(true, $this->cache->has('foo_0'));
-        $this->assertEquals(true, $this->cache->has('foo_1'));
-        $this->assertEquals(true, $this->cache->has('foo_2'));
-        $this->assertEquals(true, $this->cache->has('foo_3'));
-        $this->assertEquals(true, $this->cache->has('foo_4'));
-        $this->assertEquals(true, $this->cache->has('foo_5'));
+        $this->assertTrue($this->cache->has('foo_0'));
+        $this->assertTrue($this->cache->has('foo_1'));
+        $this->assertTrue($this->cache->has('foo_2'));
+        $this->assertTrue($this->cache->has('foo_3'));
+        $this->assertTrue($this->cache->has('foo_4'));
+        $this->assertTrue($this->cache->has('foo_5'));
 
-        $this->cache->clear();
+        $this->assertTrue($this->cache->clear());
 
-        $this->assertEquals(false, $this->cache->has('foo_0'));
-        $this->assertEquals(false, $this->cache->has('foo_1'));
-        $this->assertEquals(false, $this->cache->has('foo_2'));
-        $this->assertEquals(false, $this->cache->has('foo_3'));
-        $this->assertEquals(false, $this->cache->has('foo_4'));
-        $this->assertEquals(false, $this->cache->has('foo_5'));
+        $this->assertFalse($this->cache->has('foo_0'));
+        $this->assertFalse($this->cache->has('foo_1'));
+        $this->assertFalse($this->cache->has('foo_2'));
+        $this->assertFalse($this->cache->has('foo_3'));
+        $this->assertFalse($this->cache->has('foo_4'));
+        $this->assertFalse($this->cache->has('foo_5'));
     }
 
     /**
@@ -236,19 +236,19 @@ class MemcachedCacheTest extends TestCase
      */
     public function testGetMultiple()
     {
-        $this->cache->set('foo_0', [0]);
-        $this->cache->set('foo_1', [1]);
-        $this->cache->set('foo_2', [2]);
-        $this->cache->set('foo_3', [3]);
-        $this->cache->set('foo_4', [4]);
-        $this->cache->set('foo_5', [5]);
+        $this->assertTrue($this->cache->set('foo_0', [0]));
+        $this->assertTrue($this->cache->set('foo_1', [1]));
+        $this->assertTrue($this->cache->set('foo_2', [2]));
+        $this->assertTrue($this->cache->set('foo_3', [3]));
+        $this->assertTrue($this->cache->set('foo_4', [4]));
+        $this->assertTrue($this->cache->set('foo_5', [5]));
 
-        $this->assertEquals(true, $this->cache->has('foo_0'));
-        $this->assertEquals(true, $this->cache->has('foo_1'));
-        $this->assertEquals(true, $this->cache->has('foo_2'));
-        $this->assertEquals(true, $this->cache->has('foo_3'));
-        $this->assertEquals(true, $this->cache->has('foo_4'));
-        $this->assertEquals(true, $this->cache->has('foo_5'));
+        $this->assertTrue($this->cache->has('foo_0'));
+        $this->assertTrue($this->cache->has('foo_1'));
+        $this->assertTrue($this->cache->has('foo_2'));
+        $this->assertTrue($this->cache->has('foo_3'));
+        $this->assertTrue($this->cache->has('foo_4'));
+        $this->assertTrue($this->cache->has('foo_5'));
 
         $this->assertEquals([
             'foo_0' => [0],
@@ -283,21 +283,21 @@ class MemcachedCacheTest extends TestCase
      */
     public function testSetMultiple()
     {
-        $this->cache->setMultiple([
+        $this->assertTrue($this->cache->setMultiple([
             'foo_0' => [0],
             'foo_1' => [1],
             'foo_2' => [2],
             'foo_3' => [3],
             'foo_4' => [4],
             'foo_5' => [5],
-        ]);
+        ]));
 
-        $this->assertEquals(true, $this->cache->has('foo_0'));
-        $this->assertEquals(true, $this->cache->has('foo_1'));
-        $this->assertEquals(true, $this->cache->has('foo_2'));
-        $this->assertEquals(true, $this->cache->has('foo_3'));
-        $this->assertEquals(true, $this->cache->has('foo_4'));
-        $this->assertEquals(true, $this->cache->has('foo_5'));
+        $this->assertTrue($this->cache->has('foo_0'));
+        $this->assertTrue($this->cache->has('foo_1'));
+        $this->assertTrue($this->cache->has('foo_2'));
+        $this->assertTrue($this->cache->has('foo_3'));
+        $this->assertTrue($this->cache->has('foo_4'));
+        $this->assertTrue($this->cache->has('foo_5'));
         
         $this->assertEquals([
             'foo_0' => [0],
@@ -321,30 +321,30 @@ class MemcachedCacheTest extends TestCase
      */
     public function testSetMultipleTtl()
     {
-        $this->cache->SetMultiple([
+        $this->assertTrue($this->cache->SetMultiple([
             'foo_0' => [0],
             'foo_1' => [1],
             'foo_2' => [2],
             'foo_3' => [3],
             'foo_4' => [4],
             'foo_5' => [5],
-        ], 1);
+        ], 1));
 
-        $this->assertEquals(true, $this->cache->has('foo_0'));
-        $this->assertEquals(true, $this->cache->has('foo_1'));
-        $this->assertEquals(true, $this->cache->has('foo_2'));
-        $this->assertEquals(true, $this->cache->has('foo_3'));
-        $this->assertEquals(true, $this->cache->has('foo_4'));
-        $this->assertEquals(true, $this->cache->has('foo_5'));
+        $this->assertTrue($this->cache->has('foo_0'));
+        $this->assertTrue($this->cache->has('foo_1'));
+        $this->assertTrue($this->cache->has('foo_2'));
+        $this->assertTrue($this->cache->has('foo_3'));
+        $this->assertTrue($this->cache->has('foo_4'));
+        $this->assertTrue($this->cache->has('foo_5'));
 
         usleep(1000005);
         
-        $this->assertEquals(null, $this->cache->get('foo_0'));
-        $this->assertEquals(null, $this->cache->get('foo_1'));
-        $this->assertEquals(null, $this->cache->get('foo_2'));
-        $this->assertEquals(null, $this->cache->get('foo_3'));
-        $this->assertEquals(null, $this->cache->get('foo_4'));
-        $this->assertEquals(null, $this->cache->get('foo_5'));
+        $this->assertNull($this->cache->get('foo_0'));
+        $this->assertNull($this->cache->get('foo_1'));
+        $this->assertNull($this->cache->get('foo_2'));
+        $this->assertNull($this->cache->get('foo_3'));
+        $this->assertNull($this->cache->get('foo_4'));
+        $this->assertNull($this->cache->get('foo_5'));
     }
 
     /**
@@ -363,37 +363,37 @@ class MemcachedCacheTest extends TestCase
      */
     public function testDeleteMultiple()
     {
-        $this->cache->setMultiple([
+        $this->assertTrue($this->cache->setMultiple([
             'foo_0' => [0],
             'foo_1' => [1],
             'foo_2' => [2],
             'foo_3' => [3],
             'foo_4' => [4],
             'foo_5' => [5],
-        ]);
+        ]));
 
-        $this->assertEquals(true, $this->cache->has('foo_0'));
-        $this->assertEquals(true, $this->cache->has('foo_1'));
-        $this->assertEquals(true, $this->cache->has('foo_2'));
-        $this->assertEquals(true, $this->cache->has('foo_3'));
-        $this->assertEquals(true, $this->cache->has('foo_4'));
-        $this->assertEquals(true, $this->cache->has('foo_5'));
+        $this->assertTrue($this->cache->has('foo_0'));
+        $this->assertTrue($this->cache->has('foo_1'));
+        $this->assertTrue($this->cache->has('foo_2'));
+        $this->assertTrue($this->cache->has('foo_3'));
+        $this->assertTrue($this->cache->has('foo_4'));
+        $this->assertTrue($this->cache->has('foo_5'));
 
-        $this->cache->deleteMultiple([
+        $this->assertTrue($this->cache->deleteMultiple([
             'foo_0',
             'foo_1',
             'foo_2',
             'foo_3',
             'foo_4',
             'foo_5',
-        ]);
+        ]));
 
-        $this->assertEquals(false, $this->cache->has('foo_0'));
-        $this->assertEquals(false, $this->cache->has('foo_1'));
-        $this->assertEquals(false, $this->cache->has('foo_2'));
-        $this->assertEquals(false, $this->cache->has('foo_3'));
-        $this->assertEquals(false, $this->cache->has('foo_4'));
-        $this->assertEquals(false, $this->cache->has('foo_5'));
+        $this->assertFalse($this->cache->has('foo_0'));
+        $this->assertFalse($this->cache->has('foo_1'));
+        $this->assertFalse($this->cache->has('foo_2'));
+        $this->assertFalse($this->cache->has('foo_3'));
+        $this->assertFalse($this->cache->has('foo_4'));
+        $this->assertFalse($this->cache->has('foo_5'));
     }
 
     /**
@@ -412,9 +412,9 @@ class MemcachedCacheTest extends TestCase
      */
     public function testHasExistingElement()
     {
-        $this->cache->set('foo', [0, 1, 2, 3, 4]);
+        $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4]));
         
-        $this->assertEquals(true, $this->cache->has('foo'));
+        $this->assertTrue($this->cache->has('foo'));
     }
     
     /**
@@ -422,7 +422,7 @@ class MemcachedCacheTest extends TestCase
      */
     public function testHasNotExistingElement()
     {
-        $this->assertEquals(false, $this->cache->has('foo_false'));
+        $this->assertFalse($this->cache->has('foo_false'));
     }
     
     /**
@@ -430,8 +430,8 @@ class MemcachedCacheTest extends TestCase
      */
     public function testHasWithExpiredElement()
     {
-        $this->cache->set('foo', [0, 1, 2, 3, 4], -10);
-
-        $this->assertEquals(false, $this->cache->has('foo'));
+        $this->assertFalse($this->cache->set('foo', [0, 1, 2, 3, 4], -10));
+        
+        $this->assertFalse($this->cache->has('foo'));
     }
 }

@@ -23,7 +23,7 @@ class ContainerTest extends TestCase
      *
      * @return array
      */
-    public function valuesProvaider() : array
+    public function valuesProvider() : array
     {
         return [
             ['string', 'Hello World'],
@@ -43,7 +43,7 @@ class ContainerTest extends TestCase
      * @param string $key
      * @param type   $value
      *
-     * @dataProvider valuesProvaider
+     * @dataProvider valuesProvider
      */
     public function testSetAndGetWithMethodCall(string $key, $value)
     {
@@ -60,7 +60,7 @@ class ContainerTest extends TestCase
      * @param string $key
      * @param type   $value
      *
-     * @dataProvider valuesProvaider
+     * @dataProvider valuesProvider
      */
     public function testSetAndGetWithArraySyntax(string $key, $value)
     {
@@ -77,7 +77,7 @@ class ContainerTest extends TestCase
      * @param string $key
      * @param type   $value
      *
-     * @dataProvider valuesProvaider
+     * @dataProvider valuesProvider
      */
     public function testSetAndGetWithPropertySyntax(string $key, $value)
     {
@@ -94,7 +94,7 @@ class ContainerTest extends TestCase
      * @param string $key
      * @param type   $value
      *
-     * @dataProvider valuesProvaider
+     * @dataProvider valuesProvider
      */
     public function testHasWithMethodCall(string $key, $value)
     {
@@ -102,7 +102,7 @@ class ContainerTest extends TestCase
 
         $container->set($key, $value);
 
-        $this->assertEquals(true, $container->has($key));
+        $this->assertTrue($container->has($key));
     }
 
     /**
@@ -111,7 +111,7 @@ class ContainerTest extends TestCase
      * @param string $key
      * @param type   $value
      *
-     * @dataProvider valuesProvaider
+     * @dataProvider valuesProvider
      */
     public function testHasWithArraySyntax(string $key, $value)
     {
@@ -119,7 +119,7 @@ class ContainerTest extends TestCase
 
         $container[$key] = $value;
 
-        $this->assertEquals(true, isset($container[$key]));
+        $this->assertTrue(isset($container[$key]));
     }
 
     /**
@@ -128,7 +128,7 @@ class ContainerTest extends TestCase
      * @param string $key
      * @param type   $value
      *
-     * @dataProvider valuesProvaider
+     * @dataProvider valuesProvider
      */
     public function testHasWithWithPropertySyntax(string $key, $value)
     {
@@ -136,7 +136,7 @@ class ContainerTest extends TestCase
 
         $container->$key = $value;
 
-        $this->assertEquals(true, isset($container->$key));
+        $this->assertTrue(isset($container->$key));
     }
 
     /**
@@ -145,11 +145,11 @@ class ContainerTest extends TestCase
      * @param string $key
      * @param type   $value
      *
-     * @dataProvider valuesProvaider
+     * @dataProvider valuesProvider
      */
     public function testDeleteUnexisting(string $key, $value)
     {
-        $this->assertEquals(false, (new Container())->delete($key));
+        $this->assertFalse((new Container())->delete($key));
     }
 
     /**
@@ -158,7 +158,7 @@ class ContainerTest extends TestCase
      * @param string $key
      * @param type   $value
      *
-     * @dataProvider valuesProvaider
+     * @dataProvider valuesProvider
      */
     public function testDeleteWithMethodCall(string $key, $value)
     {
@@ -166,11 +166,11 @@ class ContainerTest extends TestCase
 
         $container->set($key, $value);
 
-        $this->assertEquals(true, $container->has($key));
+        $this->assertTrue($container->has($key));
 
-        $container->delete($key);
+        $this->assertTrue($container->delete($key));
 
-        $this->assertEquals(false, $container->has($key));
+        $this->assertFalse($container->has($key));
     }
 
     /**
@@ -179,7 +179,7 @@ class ContainerTest extends TestCase
      * @param string $key
      * @param type   $value
      *
-     * @dataProvider valuesProvaider
+     * @dataProvider valuesProvider
      */
     public function testDeleteWithArraySyntax(string $key, $value)
     {
@@ -187,11 +187,11 @@ class ContainerTest extends TestCase
 
         $container[$key] = $value;
 
-        $this->assertEquals(true, isset($container[$key]));
+        $this->assertTrue(isset($container[$key]));
 
         unset($container[$key]);
 
-        $this->assertEquals(false, isset($container[$key]));
+        $this->assertFalse(isset($container[$key]));
     }
 
     /**
@@ -200,7 +200,7 @@ class ContainerTest extends TestCase
      * @param string $key
      * @param type   $value
      *
-     * @dataProvider valuesProvaider
+     * @dataProvider valuesProvider
      */
     public function testDeleteWithPropertySyntax(string $key, $value)
     {
@@ -208,11 +208,11 @@ class ContainerTest extends TestCase
 
         $container->$key = $value;
 
-        $this->assertEquals(true, isset($container->$key));
+        $this->assertTrue(isset($container->$key));
 
         unset($container->$key);
 
-        $this->assertEquals(false, isset($container->$key));
+        $this->assertFalse(isset($container->$key));
     }
 
     /**
@@ -221,7 +221,7 @@ class ContainerTest extends TestCase
      * @param string $key
      * @param type   $value
      *
-     * @dataProvider valuesProvaider
+     * @dataProvider valuesProvider
      * @expectedException Linna\DI\Exception\NotFoundException
      */
     public function testGetUnexistingWithMethodCall(string $key, $value)
@@ -236,13 +236,13 @@ class ContainerTest extends TestCase
      * @param string $key
      * @param type   $value
      *
-     * @dataProvider valuesProvaider
+     * @dataProvider valuesProvider
      * @expectedException Linna\DI\Exception\NotFoundException
      */
     public function testGetUnexistingWithArraySyntax(string $key, $value)
     {
         $container = new Container();
-        $value = $container[$key];
+        $foo = $container[$key];
     }
 
     /**
@@ -251,13 +251,13 @@ class ContainerTest extends TestCase
      * @param string $key
      * @param type   $value
      *
-     * @dataProvider valuesProvaider
+     * @dataProvider valuesProvider
      * @expectedException Linna\DI\Exception\NotFoundException
      */
     public function testGetUnexistingWithPropertySyntax(string $key, $value)
     {
         $container = new Container();
-        $value = $container->$key;
+        $foo = $container->$key;
     }
 
     /**
