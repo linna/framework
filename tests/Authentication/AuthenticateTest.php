@@ -56,27 +56,19 @@ class AuthenticateTest extends TestCase
     {
         $this->session->start();
 
-        //hash password
-        $storedPassword = $this->password->hash('password');
-        $storedUser = 'root';
-
         //attemp first login
-        $loginResult = $this->authenticate->login('root', 'password', $storedUser, $storedPassword, 1);
-
+        $this->assertTrue($this->authenticate->login('root', 'password', 'root', $this->password->hash('password'), 1));
+        $this->assertTrue($this->session->login['login']);
+        
         //attemp check if logged
-        $logged = $this->authenticate->isLogged();
+        $this->assertTrue($this->authenticate->isLogged());
 
         //simulate expired login
         $this->session->loginTime = time() - 3600;
 
         //attemp second login
-        $secondLogin = new Authenticate($this->session, $this->password);
-        $notLogged = $secondLogin->isNotLogged();
-
-        $this->assertEquals(true, $loginResult);
-        $this->assertEquals(true, $logged);
-        $this->assertEquals(true, $notLogged);
-
+        $this->assertTrue((new Authenticate($this->session, $this->password))->isNotLogged());
+        
         $this->session->destroy();
     }
 
@@ -89,23 +81,21 @@ class AuthenticateTest extends TestCase
     {
         $this->session->start();
 
-        //hash password
-        $storedPassword = $this->password->hash('password');
-        $storedUser = 'root';
-
         //attemp first login
-        $this->authenticate->login('root', 'password', $storedUser, $storedPassword, 1);
-        $loginResult = $this->authenticate->isLogged();
+        $this->assertTrue($this->authenticate->login('root', 'password', 'root', $this->password->hash('password'), 1));
+        $this->assertTrue($this->session->login['login']);
+        
+        //attemp check if logged
+        $this->assertTrue($this->authenticate->isLogged());
 
         //do logout
-        $this->authenticate->logout();
-
+        $this->assertTrue($this->authenticate->logout());
+        
+        //re check if logged
+        $this->assertFalse($this->authenticate->isLogged());
+        
         //create new login instance
-        $login = new Authenticate($this->session, $this->password);
-        $noLoginResult = $login->isNotLogged();
-
-        $this->assertEquals(true, $loginResult);
-        $this->assertEquals(true, $noLoginResult);
+        $this->assertTrue((new Authenticate($this->session, $this->password))->isNotLogged());
 
         $this->session->destroy();
     }
@@ -117,20 +107,13 @@ class AuthenticateTest extends TestCase
      */
     public function testIncorrectLogin()
     {
-        $this->session->start();
-
-        //hash password
-        $storedPassword = $this->password->hash('password');
-        $storedUser = 'root';
+        //$this->session->start();
 
         //try login with bad credentials
-        $loginResult = $this->authenticate->login('root', 'badPassword', $storedUser, $storedPassword, 1);
-        $loginResult2 = $this->authenticate->login('badUser', 'password', $storedUser, $storedPassword, 1);
+        $this->assertFalse($this->authenticate->login('root', 'badPassword', 'root', $this->password->hash('password'), 1));
+        $this->assertFalse($this->authenticate->login('badUser', 'password', 'root', $this->password->hash('password'), 1));
 
-        $this->assertEquals(false, $loginResult);
-        $this->assertEquals(false, $loginResult2);
-
-        $this->session->destroy();
+        //$this->session->destroy();
     }
 
     /**
@@ -142,37 +125,72 @@ class AuthenticateTest extends TestCase
     {
         $this->session->start();
 
-        //hash password
-        $storedPassword = $this->password->hash('password');
-        $storedUser = 'root';
-
         //attemp first login
-        $login = new Authenticate($this->session, $this->password);
-        $firstLogin = $login->login('root', 'password', $storedUser, $storedPassword, 1);
+        $this->assertTrue($this->authenticate->login('root', 'password', 'root', $this->password->hash('password'), 1));
+        $this->assertTrue($this->session->login['login']);
+        
         //attemp check if logged
-        $firstLogged = $login->isLogged();
+        $this->assertTrue($this->authenticate->isLogged());
 
         $this->session->commit();
 
         $this->session->start();
-
-        //create second instance
-        $login = new Authenticate($this->session, $this->password);
-        //attemp check if logged
-        $secondLogged = $login->isLogged();
-
+        
+        $this->assertTrue($this->session->login['login']);
+        
+        //create second instance and attemp check if logged
+        $this->assertTrue((new Authenticate($this->session, $this->password))->isLogged());
+        
         //simulate expired login
         $this->session->loginTime = time() - 3600;
 
         //attemp second login
-        $secondLogin = new Authenticate($this->session, $this->password);
-        $notLogged = $secondLogin->isNotLogged();
+        $this->assertTrue((new Authenticate($this->session, $this->password))->isNotLogged());
+        
+        $this->session->destroy();
+    }
+    
+    /**
+     * Login time provider.
+     *
+     * @return array
+     */
+    public function loginTimeProvider() : array
+    {
+        return [
+            [1798, false],
+            [1799, false],
+            [1800, false],
+            [1801, true],
+            [1802, true],
+            [1803, true]
+        ];
+    }
+    
+    /**
+     * Test login refresh.
+     *
+     * @dataProvider loginTimeProvider
+     * @runInSeparateProcess
+     */
+    public function testLoginRefreshTime(int $time, bool $loginPass)
+    {
+        $this->session->start();
 
-        $this->assertEquals(true, $firstLogin);
-        $this->assertEquals(true, $firstLogged);
-        $this->assertEquals(true, $secondLogged);
-        $this->assertEquals(true, $notLogged);
+        //attemp first login
+        $this->assertTrue($this->authenticate->login('root', 'password', 'root', $this->password->hash('password'), 1));
+        $this->assertTrue($this->session->login['login']);
+        
+        //create second instance and attemp check if logged
+        $this->assertTrue((new Authenticate($this->session, $this->password))->isLogged());
+        
+        //simulate expired login
+        $this->session->loginTime = time() - $time;
 
+        //attemp second login
+        $this->assertEquals($loginPass, (new Authenticate($this->session, $this->password))->isNotLogged());
+        $this->assertEquals(!$loginPass, (new Authenticate($this->session, $this->password))->isLogged());
+        
         $this->session->destroy();
     }
 }

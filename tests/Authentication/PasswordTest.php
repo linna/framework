@@ -37,7 +37,7 @@ class PasswordTest extends TestCase
     {
         $hash = $this->password->hash('password');
 
-        $this->assertEquals(true, $this->password->verify('password', $hash));
+        $this->assertTrue($this->password->verify('password', $hash));
     }
 
     /**
@@ -47,7 +47,7 @@ class PasswordTest extends TestCase
     {
         $hash = $this->password->hash('password');
         
-        $this->assertEquals(false, $this->password->verify('otherpassword', $hash));
+        $this->assertFalse($this->password->verify('otherpassword', $hash));
     }
 
     /**
@@ -57,7 +57,7 @@ class PasswordTest extends TestCase
     {
         $hash = password_hash('password', PASSWORD_DEFAULT, ['cost' => 9,]);
 
-        $this->assertEquals(true, $this->password->needsRehash($hash));
+        $this->assertTrue($this->password->needsRehash($hash));
     }
 
     /**
@@ -67,7 +67,7 @@ class PasswordTest extends TestCase
     {
         $hash = $this->password->hash('password');
         
-        $this->assertEquals(false, $this->password->needsRehash($hash));
+        $this->assertFalse($this->password->needsRehash($hash));
     }
 
     /**

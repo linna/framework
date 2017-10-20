@@ -93,15 +93,19 @@ class RouterCachedTest extends TestCase
     public function testCachedRoute()
     {
         //evaluate request uri
-        $this->router->validate('/user', 'GET');
+        $this->assertTrue($this->router->validate('/user', 'GET'));
         $this->assertInstanceOf(Route::class, $this->router->getRoute());
 
         //now from cache
-        $this->router->validate('/user', 'GET');
+        $this->assertTrue($this->router->validate('/user', 'GET'));
         $this->assertInstanceOf(Route::class, $this->router->getRoute());
 
         //now from cache
-        $this->router->validate('/user', 'GET');
+        $this->assertTrue($this->router->validate('/user', 'GET'));
+        $this->assertInstanceOf(Route::class, $this->router->getRoute());
+        
+        //now return error route
+        $this->assertFalse($this->router->validate('/user', 'POST'));
         $this->assertInstanceOf(Route::class, $this->router->getRoute());
     }
 

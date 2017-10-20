@@ -55,20 +55,18 @@ class ProtectedControllerTest extends TestCase
     {
         $this->session->start();
 
-        $this->authenticate->login(
+        $this->assertTrue($this->authenticate->login(
             'root',
             'password',
             'root',
             $this->password->hash('password'),
             1
-        );
+        ));
 
-        $controller = new FOOProtectedController(new FooModel(), $this->authenticate);
+        $this->assertTrue($this->authenticate->isLogged());
+        $this->assertTrue((new FOOProtectedController(new FooModel(), $this->authenticate))->test);
 
-        $this->assertEquals(true, $this->authenticate->isLogged());
-        $this->assertEquals(true, $controller->test);
-
-        $this->authenticate->logout();
+        $this->assertTrue($this->authenticate->logout());
 
         $this->session->destroy();
     }
@@ -92,7 +90,7 @@ class ProtectedControllerTest extends TestCase
 
         ob_end_clean();
 
-        $this->assertEquals(false, $this->authenticate->isLogged());
-        $this->assertEquals(true, in_array('Location: http://localhost', $headers_list));
+        $this->assertFalse($this->authenticate->isLogged());
+        $this->assertTrue(in_array('Location: http://localhost', $headers_list));
     }
 }

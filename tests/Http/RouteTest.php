@@ -116,7 +116,7 @@ class RouteTest extends TestCase
      */
     public function testIsDefaultRoute()
     {
-        $this->assertEquals(false, $this->route->isDefault());
+        $this->assertFalse($this->route->isDefault());
     }
 
     /**

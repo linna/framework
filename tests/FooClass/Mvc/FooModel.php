@@ -45,4 +45,11 @@ class FooModel extends Model
     {
         $this->getUpdate = ['data' => $param];
     }
+    
+    public function modifyDataFromSomeParam($year, $month, $day)
+    {
+        $date = date('Y-m-d H:i:s', mktime(1, 2, 3, $month, $day, $year));
+        
+        $this->getUpdate = ['data' => $date];
+    }
 }

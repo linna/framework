@@ -67,7 +67,7 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(User::class, $user);
         
-        $this->assertEquals(true, password_verify('password', $user->password));
+        $this->assertTrue(password_verify('password', $user->password));
     }
 
     /**
@@ -81,8 +81,8 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(User::class, $user);
         
-        $this->assertEquals(true, $user->chagePassword('new_password', 'old_password'));
-        $this->assertEquals(true, $user->chagePassword('other_new_password', 'new_password'));
-        $this->assertEquals(false, $user->chagePassword('password', 'wrong_password'));
+        $this->assertTrue($user->chagePassword('new_password', 'old_password'));
+        $this->assertTrue($user->chagePassword('other_new_password', 'new_password'));
+        $this->assertFalse($user->chagePassword('password', 'wrong_password'));
     }
 }

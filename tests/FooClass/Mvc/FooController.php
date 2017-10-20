@@ -29,4 +29,9 @@ class FooController extends Controller
     {
         $this->model->modifyDataFromParam($passedData);
     }
+    
+    public function modifyDataFromSomeParam($year, $month, $day)
+    {
+        $this->model->modifyDataFromSomeParam($year, $month, $day);
+    }
 }

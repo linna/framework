@@ -86,7 +86,7 @@ class AuthorizeTest extends TestCase
      */
     public function testCanDoActionWithoutLogin()
     {
-        $this->assertEquals(false, $this->authorize->can('see users'));
+        $this->assertFalse($this->authorize->can('see users'));
     }
 
     /**
@@ -94,7 +94,7 @@ class AuthorizeTest extends TestCase
      */
     public function testCanDoActionWithNotExistentPermission()
     {
-        $this->assertEquals(false, $this->authorize->can('Not Existent Permission'));
+        $this->assertFalse($this->authorize->can('Not Existent Permission'));
     }
 
     /**
@@ -109,20 +109,20 @@ class AuthorizeTest extends TestCase
         $authenticate = new Authenticate($this->session, $this->password);
 
         //attemp login
-        $authenticate->login(
+        $this->assertTrue($authenticate->login(
             'root',
             'password',
             'root',
             $this->password->hash('password'),
             1
-        );
+        ));
 
         //pass as first argument new instance because phpunit try to serialize pdo.????? I don't know where.
         $authorize = new Authorize(new Authenticate($this->session, $this->password), $this->permissionMapper);
 
-        $this->assertEquals(true, $authenticate->isLogged());
-        $this->assertEquals(true, $authorize->can('see users'));
-        $this->assertEquals(false, $authorize->can('Not Existent Permission'));
+        $this->assertTrue($authenticate->isLogged());
+        $this->assertTrue($authorize->can('see users'));
+        $this->assertFalse($authorize->can('Not Existent Permission'));
 
         $this->session->destroy();
     }

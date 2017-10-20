@@ -40,11 +40,13 @@ class SessionTest extends TestCase
         $session = $this->session;
 
         $this->assertEquals(1, $session->status);
-
+        
         $session->start();
-
+        
+        $this->getCookieValues();
+        
         $this->assertEquals(2, $session->status);
-
+        
         $session->destroy();
     }
     
@@ -126,11 +128,29 @@ class SessionTest extends TestCase
     }
     
     /**
+     * Wrong arguments router class provider.
+     *
+     * @return array
+     */
+    public function sessionTimeProvider() : array
+    {
+        return [
+            [3, true],
+            [4, true],
+            [5, true],
+            [6, false],
+            [7, false],
+            [8, false]
+        ];
+    }
+    
+    /**
      * Test session expired.
      *
+     * @dataProvider sessionTimeProvider
      * @runInSeparateProcess
      */
-    public function testSessionExpired()
+    public function testSessionExpired(int $time, bool $equals)
     {
         $session = $this->session;
 
@@ -138,7 +158,7 @@ class SessionTest extends TestCase
 
         $session_id = $session->id;
 
-        $session->time = $session->time - 1800;
+        $session->time = $session->time - $time;
 
         $session->commit();
 
@@ -146,7 +166,12 @@ class SessionTest extends TestCase
 
         $session2_id = $session->id;
 
-        $this->assertNotEquals($session_id, $session2_id);
+        if ($equals) {
+            $this->assertEquals($session_id, $session2_id);
+        } else {
+            $this->assertNotEquals($session_id, $session2_id);
+        }
+            
         $this->assertEquals(2, $session->status);
 
         $session->destroy();
@@ -206,5 +231,22 @@ class SessionTest extends TestCase
     public function testGetUnstoredValueWithArrayAccess()
     {
         $this->assertFalse($this->session['testData']);
+    }
+    
+    /**
+     * Get session cookie set values.
+     */
+    public function getCookieValues()
+    {
+        $headers = xdebug_get_headers();
+        $cookie = [];
+       
+        foreach ($headers as $value) {
+            if (strstr($value, 'Set-Cookie:') !== false) {
+                $cookie[] = $value;
+            }
+        }
+       
+        //var_dump($cookie);
     }
 }

@@ -153,7 +153,7 @@ class RouterTest extends TestCase
      */
     public function testGetRoute()
     {
-        $this->router->validate('/user', 'GET');
+        $this->assertTrue($this->router->validate('/user', 'GET'));
 
         $this->assertInstanceOf(Route::class, $this->router->getRoute());
     }
@@ -166,10 +166,10 @@ class RouterTest extends TestCase
     public function routeProvider() : array
     {
         return [
-            ['/user', 'POST', ['E404Model', 'E404View', 'E404Controller', null, []]], //test not allowed http method
-            ['/badroute', 'GET', ['E404Model', 'E404View', 'E404Controller', null, []]], //test bad uri
-            ['/user/5/enable', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']]], //test param route
-            ['/userOther/enable/5', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']]], //test inverse param route
+            ['/user', 'POST', ['E404Model', 'E404View', 'E404Controller', null, []], false], //test not allowed http method
+            ['/badroute', 'GET', ['E404Model', 'E404View', 'E404Controller', null, []], false], //test bad uri
+            ['/user/5/enable', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']], true], //test param route
+            ['/userOther/enable/5', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']], true], //test inverse param route
         ];
     }
 
@@ -178,9 +178,9 @@ class RouterTest extends TestCase
      *
      * @dataProvider routeProvider
      */
-    public function testRoutes($url, $method, $returneRoute)
+    public function testRoutes(string $url, string $method, array $returneRoute, bool $validate)
     {
-        $this->router->validate($url, $method);
+        $this->assertEquals($validate, $this->router->validate($url, $method));
 
         $route = $this->router->getRoute();
 
@@ -196,30 +196,15 @@ class RouterTest extends TestCase
     }
 
     /**
-     * Routes with other base path provider.
-     *
-     * @return array
-     */
-    public function routesWithOtherBasePathProvider() : array
-    {
-        return [
-            ['/other_dir/user', 'POST', ['E404Model', 'E404View', 'E404Controller', null, []]], //test not allowed http method
-            ['/other_dir/badroute', 'GET', ['E404Model', 'E404View', 'E404Controller', null, []]], //test bad uri
-            ['/other_dir/user/5/enable', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']]], //test param route
-            ['/other_dir/userOther/enable/5', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']]], //test inverse param route
-        ];
-    }
-
-    /**
      * Test routes with other base path.
      *
-     * @dataProvider routesWithOtherBasePathProvider
+     * @dataProvider routeProvider
      */
-    public function testRoutesWithOtherBasePath($url, $method, $returneRoute)
+    public function testRoutesWithOtherBasePath(string $url, string $method, array $returneRoute, bool $validate)
     {
         $this->router->setOption('basePath', '/other_dir');
 
-        $this->router->validate($url, $method);
+        $this->assertEquals($validate, $this->router->validate('/other_dir'.$url, $method));
 
         $route = $this->router->getRoute();
 
@@ -258,7 +243,7 @@ class RouterTest extends TestCase
     {
         $this->router->map(['method' => $method, 'url' => $url]);
 
-        $this->router->validate($url, $method);
+        $this->assertTrue($this->router->validate($url, $method));
 
         $this->assertInstanceOf(Route::class, $this->router->getRoute());
     }
@@ -275,7 +260,7 @@ class RouterTest extends TestCase
             return $param;
         });
 
-        $this->router->validate($url, $method);
+        $this->assertTrue($this->router->validate($url, $method));
 
         $route = $this->router->getRoute();
 
@@ -296,7 +281,7 @@ class RouterTest extends TestCase
             'rewriteMode' => true,
         ]);
 
-        $this->router->validate('/badroute', 'GET');
+        $this->assertFalse($this->router->validate('/badroute', 'GET'));
 
         $this->assertInstanceOf(NullRoute::class, $this->router->getRoute());
     }
@@ -311,7 +296,7 @@ class RouterTest extends TestCase
             'rewriteMode' => false,
         ]);
 
-        $this->router->validate('/index.php?/user/5/enable', 'GET');
+        $this->assertTrue($this->router->validate('/index.php?/user/5/enable', 'GET'));
 
         $route = $this->router->getRoute();
 
@@ -337,7 +322,7 @@ class RouterTest extends TestCase
         ]);
 
         //evaluate request uri
-        $this->router->validate('/other_dir/index.php?/user/5/enable', 'GET');
+        $this->assertTrue($this->router->validate('/other_dir/index.php?/user/5/enable', 'GET'));
 
         //get route
         $route = $this->router->getRoute();
@@ -361,8 +346,9 @@ class RouterTest extends TestCase
     {
         return [
             ['/user/5', 'GET', 'Show'],
-            ['/user/5', 'POST', 'Create'],
-            ['/user/5', 'PUT', 'Update'],
+            ['/user/5', 'POST', 'Update'],
+            ['/user/5', 'PATCH', 'Update'],
+            ['/user/5', 'PUT', 'Create'],
             ['/user/5', 'DELETE', 'Delete'],
         ];
     }
@@ -383,21 +369,21 @@ class RouterTest extends TestCase
                 'controller' => 'UserShowController',
             ]),
             new Route([
-                'method'     => 'POST',
+                'method'     => 'PUT',
                 'url'        => '/user/[id]',
                 'model'      => 'UserCreateModel',
                 'view'       => 'UserCreateView',
                 'controller' => 'UserCreateController',
             ]),
             new Route([
-                'method'     => 'PUT',
+                'method'     => 'POST',
                 'url'        => '/user/[id]',
                 'model'      => 'UserUpdateModel',
                 'view'       => 'UserUpdateView',
                 'controller' => 'UserUpdateController',
             ]),
             new Route([
-                'method'     => 'PUT',
+                'method'     => 'PATCH',
                 'url'        => '/user/[id]',
                 'model'      => 'UserUpdateModel',
                 'view'       => 'UserUpdateView',
@@ -417,7 +403,7 @@ class RouterTest extends TestCase
             'rewriteMode' => true,
         ]);
 
-        $router->validate($uri, $method);
+        $this->assertTrue($router->validate($uri, $method));
 
         //get route
         $route = $router->getRoute();
@@ -428,5 +414,44 @@ class RouterTest extends TestCase
         $this->assertEquals('User'.$action.'Model', $array['model']);
         $this->assertEquals('User'.$action.'View', $array['view']);
         $this->assertEquals('User'.$action.'Controller', $array['controller']);
+    }
+    
+    public function testReturnFirstMatchingRoute()
+    {
+        $routes = (new RouteCollection([
+            new Route([
+                'name'       => 'User',
+                'method'     => 'GET',
+                'url'        => '/user',
+                'model'      => 'UserModel',
+                'view'       => 'UserView',
+                'controller' => 'UserController',
+            ]),
+            new Route([
+                'name'       => 'User',
+                'method'     => 'GET',
+                'url'        => '/user',
+                'model'      => 'User1Model',
+                'view'       => 'User1View',
+                'controller' => 'User1Controller',
+            ])
+        ]))->toArray();
+
+        $router = new Router($routes, [
+            'basePath'    => '/',
+            'rewriteMode' => true,
+        ]);
+        
+        $this->assertTrue($router->validate('/user', 'GET'));
+
+        //get route
+        $route = $router->getRoute();
+
+        $array = $route->toArray();
+
+        $this->assertInstanceOf(Route::class, $route);
+        $this->assertEquals('UserModel', $array['model']);
+        $this->assertEquals('UserView', $array['view']);
+        $this->assertEquals('UserController', $array['controller']);
     }
 }

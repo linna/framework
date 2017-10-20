@@ -75,6 +75,14 @@ class FrontControllerTest extends TestCase
             new Route([
                 'name'       => 'Foo',
                 'method'     => 'GET',
+                'url'        => '/Foo/(modifyDataFromSomeParam)/[year]/[month]/[day]',
+                'model'      => 'FOOModel',
+                'view'       => 'FOOView',
+                'controller' => 'FOOController',
+            ]),
+            new Route([
+                'name'       => 'Foo',
+                'method'     => 'GET',
                 'url'        => '/Foo/(modifyData)',
                 'model'      => 'FOOModel',
                 'view'       => 'FOOView',
@@ -180,6 +188,25 @@ class FrontControllerTest extends TestCase
         $this->assertInstanceOf(stdClass::class, $test);
         $this->assertEquals(500, $test->data);
     }
+    
+    /**
+     * Test run front controller with param
+     */
+    public function testRunFrontControllerWithSomeParam()
+    {
+        $this->router->validate('/Foo/modifyDataFromSomeParam/2017/10/20', 'GET');
+
+        $route = $this->router->getRoute()->toArray();
+
+        $frontController = new FrontController($this->model, $this->view, $this->controller, $route['action'], $route['param']);
+
+        $frontController->run();
+
+        $test = json_decode($frontController->response());
+
+        $this->assertInstanceOf(stdClass::class, $test);
+        $this->assertEquals('2017-10-20 01:02:03', $test->data);
+    }
 
     /**
      * Test model detach.
@@ -226,5 +253,23 @@ class FrontControllerTest extends TestCase
 
         $this->assertInstanceOf(stdClass::class, $test);
         $this->assertEquals(123, (int) $test->data);
+    }
+    
+    /**
+      * Test run front controller without action.
+     */
+    public function testRunFrontControllerWithOutAction()
+    {
+        $this->router->validate('/Foo', 'GET');
+
+        $route = $this->router->getRoute()->toArray();
+
+        $frontController = new FrontController($this->model, $this->view, $this->controller, $route['action'], $route['param']);
+
+        $frontController->run();
+
+        $test = json_decode($frontController->response());
+
+        $this->assertInstanceOf(stdClass::class, $test);
     }
 }

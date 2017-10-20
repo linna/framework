@@ -84,7 +84,7 @@ class EnhancedUserTest extends TestCase
         
         $user->setPermissions($this->permissionMapper->fetchAll());
 
-        $this->assertEquals(true, $user->can('see users'));
-        $this->assertEquals(false, $user->can('other permission'));
+        $this->assertTrue($user->can('see users'));
+        $this->assertFalse($user->can('other permission'));
     }
 }

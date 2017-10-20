@@ -93,8 +93,8 @@ class RoleTest extends TestCase
         $role = $this->roleMapper->create();
         $role->setUsers($this->enhancedUserMapper->fetchAll());
 
-        $this->assertEquals(true, $role->isUserInRole('root'));
-        $this->assertEquals(false, $role->isUserInRole('foo_root'));
+        $this->assertTrue($role->isUserInRole('root'));
+        $this->assertFalse($role->isUserInRole('foo_root'));
     }
 
     /**
@@ -118,7 +118,7 @@ class RoleTest extends TestCase
         $role = $this->roleMapper->create();
         $role->setPermissions($this->permissionMapper->fetchAll());
 
-        $this->assertEquals(true, $role->can('see users'));
-        $this->assertEquals(false, $role->can('other permission'));
+        $this->assertTrue($role->can('see users'));
+        $this->assertFalse($role->can('other permission'));
     }
 }

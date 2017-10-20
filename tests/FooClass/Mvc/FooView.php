@@ -39,4 +39,8 @@ class FooView extends View
     public function modifyDataFromParam()
     {
     }
+    
+    public function modifyDataFromSomeParam()
+    {
+    }
 }
