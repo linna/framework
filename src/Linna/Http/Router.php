@@ -165,15 +165,15 @@ class Router
     /**
      * Actions for bad route.
      *
-     * @return bool
+     * @return void
      */
-    private function buildBadRoute() : bool
+    private function buildBadRoute()
     {
         //check if there is a declared route for errors, if no exit with false
         if (($key = array_search($this->options['badRoute'], array_column($this->routes, 'name'), true)) === false) {
             $this->route = new NullRoute();
 
-            return false;
+            return;
         }
 
         //pick route for errors
@@ -181,8 +181,6 @@ class Router
 
         //build and store route for errors
         $this->route = new Route($route);
-
-        return true;
     }
 
     /**
