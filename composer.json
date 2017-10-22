@@ -26,6 +26,9 @@
         "phpstan/phpstan": "^0.8.5"
     },
     "autoload": {
+        "files": [
+            "src/Linna/Support/Helpers.php"
+        ],
         "psr-4": {
             "Linna\\": "src/Linna/"
         }
