@@ -28,5 +28,5 @@ before_script:
 - chmod +x infection.phar
 
 script: 
-- phpunit
+- vendor/bin/phpunit
 - ./infection.phar --min-msi=48 --threads=4
