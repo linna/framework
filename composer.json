@@ -23,7 +23,8 @@
     "require-dev": {
         "mongodb/mongodb": "^1.1.0",
         "phpmetrics/phpmetrics": "^2.3",
-        "phpstan/phpstan": "^0.8.5"
+        "phpstan/phpstan": "^0.8.5",
+        "phpunit/phpunit": "^6.4"
     },
     "autoload": {
         "psr-4": {

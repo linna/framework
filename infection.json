@@ -9,6 +9,6 @@
         "text": "infection-log.txt"
     },
     "phpUnit": {
-        "customPath": "phpunit"
+        "customPath": "vendor/bin/phpunit"
     }
 }
