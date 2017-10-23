@@ -23,6 +23,10 @@ before_script:
 - mysql -e 'create database linna_db;'
 - mysql -u root linna_db < tests/linna_db_mysql.sql
 - composer install
+- wget https://github.com/infection/infection/releases/download/0.6.0/infection.phar
+- wget https://github.com/infection/infection/releases/download/0.6.0/infection.phar.pubkey
+- chmod +x infection.phar
 
 script: 
 - phpunit
+- ./infection.phar --min-msi=48 --threads=4
