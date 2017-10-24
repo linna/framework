@@ -37,9 +37,9 @@ class AutoloaderTest extends TestCase
         $this->assertTrue($autoloader->unregister());
     }
     
-     /**
-     * Test load mapped file fail.
-     */
+    /**
+    * Test load mapped file fail.
+    */
     public function testLoadMappedFileFalse()
     {
         $autoloader = new Autoloader();

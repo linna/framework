@@ -286,20 +286,17 @@ class SessionTest extends TestCase
        
         foreach ($headers as $value) {
             if (strstr($value, 'Set-Cookie:') !== false) {
-                
                 $cookie[] = explode(';', str_replace('Set-Cookie: ', "", $value));
             }
         }
        
         $cleanedCookie = [];
         
-        foreach ($cookie as $values){
-            
+        foreach ($cookie as $values) {
             $tmpCookie = [];
             
-            foreach ($values as $value){
-                
-                $explode = explode('=' ,ltrim(rtrim($value)));
+            foreach ($values as $value) {
+                $explode = explode('=', ltrim(rtrim($value)));
                 
                 $name = ltrim(rtrim($explode[0]));
                 
@@ -309,7 +306,7 @@ class SessionTest extends TestCase
             $cleanedCookie[] = $tmpCookie;
         }
         
-       return $cleanedCookie;
+        return $cleanedCookie;
     }
     
     /**
@@ -325,7 +322,7 @@ class SessionTest extends TestCase
         
         $cookieTime = strtotime($cookieArray[$last]['expires']);
         
-        if ($cookieTime > time() + $time){
+        if ($cookieTime > time() + $time) {
             return true;
         }
         

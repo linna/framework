@@ -21,7 +21,7 @@ use InvalidArgumentException;
 class ExtendedPDO extends PDO
 {
     /**
-     * @var bool Status for last operation. 
+     * @var bool Status for last operation.
      */
     private $lastOperationStatus;
     
