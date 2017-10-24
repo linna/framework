@@ -135,9 +135,24 @@ class EnhancedAuthenticateTest extends TestCase
     
     /**
      * Set up before class.
-     * Clean the login attempt table.
      */
     public static function setUpBeforeClass()
+    {
+        self::loginClean();
+    }
+    
+    /**
+     * Tear down After Class.
+     */
+    public static function tearDownAfterClass()
+    {
+        self::loginClean();
+    }
+    
+    /**
+     * Remove record from login_attemp table.
+     */
+    protected static function loginClean()
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -151,7 +166,7 @@ class EnhancedAuthenticateTest extends TestCase
             ],
         ];
         
-        (new EnhancedAuthenticateMapper((new StorageFactory('pdo', $options))->get()))->deleteOldLoginAttempts(-5);
+        (new EnhancedAuthenticateMapper((new StorageFactory('pdo', $options))->get()))->deleteOldLoginAttempts(-86400);
     }
     
     /**

@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace Linna\FooAuto\Autoload;
 
-class FooClassAuto
+class FooClassAutoOther
 {
     public function __construct()
     {
-        return 'Auto';
+        return 'Auto Other';
     }
 }

@@ -36,9 +36,9 @@ class ClassOptionsTest extends TestCase
      */
     public function testSetOption()
     {
-        $this->router->setOption('badRoute', 'foo');
+        $this->assertEmpty($this->router->setOption('badRoute', 'foo'));
 
-        $this->assertEquals(true, true);
+        $this->assertTrue(true);
     }
 
     /**
@@ -48,7 +48,7 @@ class ClassOptionsTest extends TestCase
      */
     public function testSetWithWrongOption()
     {
-        $this->router->setOption('badRout', 'foo');
+        $this->assertEmpty($this->router->setOption('badRout', 'foo'));
     }
 
     /**
@@ -56,13 +56,13 @@ class ClassOptionsTest extends TestCase
      */
     public function testSetOptions()
     {
-        $this->router->setOptions([
+        $this->assertEmpty($this->router->setOptions([
             'basePath'    => '/',
             'badRoute'    => 'E404',
             'rewriteMode' => true,
-        ]);
+        ]));
 
-        $this->assertEquals(true, true);
+        $this->assertTrue(true);
     }
 
     /**
@@ -72,10 +72,10 @@ class ClassOptionsTest extends TestCase
      */
     public function testSetWithWrongOptions()
     {
-        $this->router->setOptions([
+        $this->assertEmpty($this->router->setOptions([
             'basePath'    => '/',
             'badRoute'    => 'E404',
             'rewrite'     => true,
-        ]);
+        ]));
     }
 }

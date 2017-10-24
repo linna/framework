@@ -18,48 +18,116 @@ use PHPUnit\Framework\TestCase;
 class AutoloaderTest extends TestCase
 {
     /**
-     * Setup.
+     * Test load mapped file.
      */
-    public function setUp()
+    public function testLoadMappedFileTrue()
     {
         $autoloader = new Autoloader();
-        $autoloader->register();
+        
+        $this->assertTrue($autoloader->register());
+        
         $autoloader->addNamespaces([
-            ['Linna\FooAuto', __DIR__.'/FooClass'],
-            ['Linna\Foo_', __DIR__.'/FooClass'],
-            ['Baz\Foo', __DIR__.'/FooClass']
+            ['Linna\FooAuto', dirname(__DIR__).'/FooClass'],
+            ['Linna\Foo_', dirname(__DIR__).'/FooClass'],
+            ['Baz\Foo', dirname(__DIR__).'/FooClass']
         ]);
+        
+        $this->assertTrue($autoloader->loadClass(Linna\FooAuto\Autoload\FooClassAuto::class));
+        
+        $this->assertTrue($autoloader->unregister());
     }
-
-    /**
-     * Test class exist.
+    
+     /**
+     * Test load mapped file fail.
      */
-    public function testAutoloadCorrectClassWithCorrectNamespace()
+    public function testLoadMappedFileFalse()
     {
-        $this->assertTrue(class_exists('Linna\FooAuto\Autoload\FooClassAuto', true));
+        $autoloader = new Autoloader();
+        
+        $this->assertTrue($autoloader->register());
+        
+        $autoloader->addNamespaces([
+            ['Linna\FooAuto', dirname(__DIR__).'/FooClass'],
+            ['Linna\Foo_', dirname(__DIR__).'/FooClass'],
+            ['Baz\Foo', dirname(__DIR__).'/FooClass']
+        ]);
+        
+        $this->assertFalse($autoloader->loadClass(Linna\FooAuto\Autoload\FooClassAuto2::class));
+        
+        $this->assertTrue($autoloader->unregister());
     }
-
+    
     /**
-     * Test class exist.
+     * Test load mapped file no prefix.
      */
-    public function testAutoloadWrongClassWithCorrectNamespace()
+    public function testLoadMappedFileNoPrefix()
     {
-        $this->assertNotTrue(class_exists('Linna\FooAuto\Autoload\FooClassAuto2', true));
+        $autoloader = new Autoloader();
+        
+        $this->assertTrue($autoloader->register());
+        
+        $autoloader->addNamespaces([
+            ['Linna\FooAuto', dirname(__DIR__).'/FooClass'],
+            ['Linna\Foo_', dirname(__DIR__).'/FooClass'],
+            ['Baz\Foo', dirname(__DIR__).'/FooClass']
+        ]);
+        
+        $this->assertFalse($autoloader->loadClass(Linna\FooBaz\Autoload\FooClassAuto::class));
+        
+        $this->assertTrue($autoloader->unregister());
     }
-
+    
     /**
-     * Test bad namespace.
+     * Test load mapped file with one namespace.
      */
-    public function testAutoloadCorrectClassWithWrongNamespace()
+    public function testLoadMappedFileTrueWithOneNamespace()
     {
-        $this->assertNotTrue(class_exists('Linna\Foo\Baz\FooClassAuto', true));
+        $autoloader = new Autoloader();
+        
+        $this->assertTrue($autoloader->register());
+        
+        $autoloader->addNamespaces([
+            ['Linna\FooAuto', dirname(__DIR__).'/FooClass'],
+        ]);
+        
+        $this->assertTrue($autoloader->loadClass(Linna\FooAuto\Autoload\FooClassAutoOther::class));
+        
+        $this->assertTrue($autoloader->unregister());
     }
-
+    
     /**
-     * Test bad class.
+     * Test load mapped file fail with one namespace.
      */
-    public function testAutoloadWrongClassWithWrongNamespace()
+    public function testLoadMappedFileFalseWithOneNamespace()
     {
-        $this->assertNotTrue(class_exists('Linna\Foo_\Autoload\FooClassAuto2', true));
+        $autoloader = new Autoloader();
+        
+        $this->assertTrue($autoloader->register());
+        
+        $autoloader->addNamespaces([
+            ['Linna\FooAuto', dirname(__DIR__).'/FooClass'],
+        ]);
+        
+        $this->assertFalse($autoloader->loadClass(Linna\FooAuto\Autoload\FooClassAuto2::class));
+        
+        $this->assertTrue($autoloader->unregister());
+    }
+    
+    /**
+     * Test load mapped file no prefix with one namespace.
+     */
+    public function testLoadMappedFileNoPrefixWithOneNamespace()
+    {
+        $autoloader = new Autoloader();
+        
+        $this->assertTrue($autoloader->register());
+        
+        $autoloader->addNamespaces([
+            ['Linna\FooAuto', dirname(__DIR__).'/FooClass'],
+        ]);
+        
+        $this->assertFalse($autoloader->loadClass(Linna\FooBaz\Autoload\FooClassAuto::class));
+        
+        $this->assertTrue($autoloader->unregister());
     }
 }

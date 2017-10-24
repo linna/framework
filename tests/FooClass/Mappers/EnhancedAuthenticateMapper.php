@@ -94,9 +94,7 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
         
         $time = (int) date('YmdHis', time() - $timeInSeconds);
         $pdos->bindParam(':time', $time, \PDO::PARAM_INT);
-        
-        
-        
+
         $pdos->execute();
         
         return (int) $pdos->fetch(\PDO::FETCH_LAZY)->attempts;
@@ -222,10 +220,8 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
     {
         $this->checkValidDomainObject($loginAttempt);
         
-        $this->checkValidDomainObject($user);
-
         try {
-            $objId = $user->getId();
+            $objId = $loginAttempt->getId();
             $pdos = $this->dBase->prepare('DELETE FROM login_attempt WHERE login_attempt_id = :login_attempt_id');
             $pdos->bindParam(':login_attempt_id', $objId, \PDO::PARAM_INT);
             $pdos->execute();

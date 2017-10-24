@@ -125,4 +125,22 @@ class ExtendedPDOTest extends TestCase
                 []
             )->fetchAll(PDO::FETCH_ASSOC);
     }
+    
+    /**
+     * Test query status.
+     *
+     * @dataProvider correctParametersProvider
+     */
+    public function testQueryStatus(string $query, array $param)
+    {
+        $pdo = (new PdoStorage($this->options))->getResource();
+        
+        $user = $pdo->queryWithParam(
+            $query,
+            $param
+        )->fetchAll(PDO::FETCH_ASSOC);
+
+        $this->assertEquals(1, count($user));
+        $this->assertTrue($pdo->getLastOperationStatus());
+    }
 }
