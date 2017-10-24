@@ -81,6 +81,16 @@ class Autoloader
     {
         return spl_autoload_register([$this, 'loadClass']);
     }
+    
+    /**
+     * Unregister loader with SPL autoloader stack.
+     *
+     * @return bool
+     */
+    public function unregister()
+    {
+        return spl_autoload_unregister([$this, 'loadClass']);
+    }
 
     /**
      * Adds a base directory for a namespace prefix, accept an array of namespaces
@@ -117,8 +127,9 @@ class Autoloader
         $arrayClass = explode('\\', $class);
 
         $arrayPrefix = [];
-
-        for ($i = count($arrayClass) - 1; $i >= 0; $i--) {
+        $sizeof = count($arrayClass);
+        
+        for ($i = 0; $i < $sizeof; $i++) {
             $arrayPrefix[] = array_shift($arrayClass);
 
             $prefix = implode('\\', $arrayPrefix);
@@ -143,7 +154,7 @@ class Autoloader
      * @return bool Boolean false there are any base directories for namespace prefix or file,
      *              true on success.
      */
-    protected function loadMappedFile(string $prefix, string $relativeClass) : bool
+    private function loadMappedFile(string $prefix, string $relativeClass) : bool
     {
         // are there any base directories for this namespace prefix?
         if (!isset($this->prefixes[$prefix])) {
@@ -157,11 +168,11 @@ class Autoloader
         // if the mapped file exists, require it
         if (file_exists($file)) {
             require $file;
-
+            
             // yes, we're done
             return true;
         }
-
+        
         //Unable to find class in file.
         return false;
     }
