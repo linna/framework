@@ -6,12 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unrelased - [v0.22.0](https://github.com/linna/framework/compare/v0.21.0...v0.22.0) - 2017-XX-XX
+## [v0.22.0](https://github.com/linna/framework/compare/v0.21.0...v0.22.0) - 2017-10-24
 
 ### Added
+* `Linna\Autoloader->unregister()` method
 * `Linna\Authentication\EnhancedAuthenticate` class
 * `Linna\Authentication\EnhancedAuthenticateMapperInterface` interface
 * `Linna\Authentication\LoginAttempt` class
+* `Linna\Storage\ExtendedPDO->getLastOperationStatus()` method
 
 ### Changed
 * `Linna\Auth` splitted into `Linna\Authentication` and `Linna\Authorization`
@@ -28,6 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Auth\PermissionTrait` moved under namespace `Linna\Authorization`
 * `Linna\Auth\Role` moved under namespace `Linna\Authorization`
 * `Linna\Auth\RoleMapperInterface` moved under namespace `Linna\Authorization`
+* Tests updated
 
 ## [v0.21.0](https://github.com/linna/framework/compare/v0.20.2...v0.21.0) - 2017-10-04
 
