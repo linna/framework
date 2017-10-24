@@ -21,6 +21,11 @@ use InvalidArgumentException;
 class ExtendedPDO extends PDO
 {
     /**
+     * @var bool Status for last operation. 
+     */
+    private $lastOperationStatus;
+    
+    /**
      * Executes an SQL statement with parameters,
      * returning a result set as a PDOStatement object
      *
@@ -44,11 +49,21 @@ class ExtendedPDO extends PDO
             call_user_func_array([$statment, "bindParam"], $ref);
         }
 
-        $statment->execute();
+        $this->lastOperationStatus = $statment->execute();
 
         return $statment;
     }
 
+    /**
+     * Return the last opration status.
+     *
+     * @return bool
+     */
+    public function getLastOperationStatus() : bool
+    {
+        return $this->lastOperationStatus;
+    }
+    
     /**
      * Check values passed to queryWithParam.
      *
