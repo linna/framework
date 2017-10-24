@@ -81,18 +81,14 @@ class Session implements ArrayAccess
      */
     public function regenerate()
     {
-        //take time
-        $time = time();
         //invalidate cookie
-        setcookie(session_name(), '', $time - 86400);
+        setcookie(session_name(), '', time());
         //regenerate session id
-        session_regenerate_id(true);
-
+        session_regenerate_id();
         //set new cookie
         $this->setCookie();
-
         //store new session data
-        $this->setSessionData($time);
+        $this->setSessionData(time());
     }
 
     /**
@@ -160,24 +156,20 @@ class Session implements ArrayAccess
      *
      * @return bool
      */
-    private function refresh() : bool
+    private function refresh()
     {
         $time = time();
 
-        if (isset($this->data['time']) && $this->data['time'] < ($time - $this->options['expire'])) {
+        if (isset($this->data['time']) && $this->data['time'] <= ($time - $this->options['expire'])) {
 
             //delete session data
             $this->data = [];
 
             //regenerate session
             $this->regenerate();
-
-            return false;
         }
 
         $this->setSessionData($time);
-
-        return true;
     }
 
     /**

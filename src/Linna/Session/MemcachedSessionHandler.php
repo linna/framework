@@ -105,9 +105,7 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      */
     public function write($sessionId, $data)
     {
-        $this->memcached->set($sessionId, $data, $this->expire);
-
-        return true;
+        return $this->memcached->set($sessionId, $data, $this->expire);
     }
 
     /**
@@ -133,8 +131,14 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      */
     public function destroy($sessionId)
     {
-        $this->memcached->delete($sessionId);
-
-        return true;
+        if ($this->memcached->delete($sessionId)){
+            return true;
+        }
+        
+        if ($this->memcached->getResultCode() === 16){
+            return true;
+        }
+        
+        return false;
     }
 }

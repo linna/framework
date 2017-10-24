@@ -79,7 +79,7 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
             [[':maxlifetime', $maxLifetime, \PDO::PARAM_INT]]
         );
 
-        return true;
+        return $this->pdo->getLastOperationStatus();
     }
 
     /**
@@ -121,7 +121,7 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
             ]
         );
 
-        return true;
+        return $this->pdo->getLastOperationStatus();
     }
 
     /**
@@ -152,6 +152,6 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
             [[':session_id', $sessionId, \PDO::PARAM_STR]]
         );
 
-        return true;
+        return $this->pdo->getLastOperationStatus();
     }
 }
