@@ -12,10 +12,12 @@
 Started as a project for learning the modern PHP, it has become a set of simple and elegant tools for creating web applications.
 
 ### Quality of code
-The development of Framework is done trying to get PHP best pratices always in mind.
-Code was fully tested and fully commented, ready for [phpDocumentor](https://www.phpdoc.org/) and 
-is written applying the five [SOLID](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)) principles.  
-If you wish deepen PHP best pratices you can start from [phptherightway](http://www.phptherightway.com/).
+
+    * The development of Framework is done trying to get PHP best pratices always in mind. If you wish deepen PHP best pratices you can start from [phptherightway](http://www.phptherightway.com/)
+    * Code is fully tested with [phpstan](https://github.com/phpstan/phpstan), [phpunit](https://github.com/sebastianbergmann/phpunit) and [infection](https://github.com/infection/infection)
+    * code is fully commented, ready for [phpDocumentor](https://www.phpdoc.org/)
+    * Code is written applying the five [SOLID](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)) principles
+    * Check the [code metrics](https://linna.tools/metrics/)
 
 ### Production environment
 At moment, code, isn't utilized in production environment, Hope in future.
