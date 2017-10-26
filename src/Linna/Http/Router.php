@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Http;
 
+use BadMethodCallException;
 use Linna\Shared\ClassOptionsTrait;
 
 /**
@@ -22,7 +23,6 @@ use Linna\Shared\ClassOptionsTrait;
 class Router
 {
     use ClassOptionsTrait;
-    use FastMapTrait;
 
     /**
      * @var array Config options for class
@@ -86,15 +86,15 @@ class Router
     {
         $route = $this->findRoute($this->filterUri($requestUri), $requestMethod);
 
-        if (count($route) === 0) {
-            $this->buildBadRoute();
+        if ($route) {
+            $this->buildValidRoute($route);
 
-            return false;
+            return true;
         }
 
-        $this->buildValidRoute($route);
+        $this->buildErrorRoute();
 
-        return true;
+        return false;
     }
 
     /**
@@ -152,38 +152,6 @@ class Router
     }
 
     /**
-     * Check if a route is valid and
-     * return the route object else return a bad route object.
-     *
-     * @return RouteInterface
-     */
-    public function getRoute() : RouteInterface
-    {
-        return $this->route;
-    }
-
-    /**
-     * Actions for bad route.
-     *
-     * @return void
-     */
-    private function buildBadRoute()
-    {
-        //check if there is a declared route for errors, if no exit with false
-        if (($key = array_search($this->options['badRoute'], array_column($this->routes, 'name'), true)) === false) {
-            $this->route = new NullRoute();
-
-            return;
-        }
-
-        //pick route for errors
-        $route = $this->routes[$key];
-
-        //build and store route for errors
-        $this->route = new Route($route);
-    }
-
-    /**
      * Try to find parameters in a valid route and return it.
      *
      * @param array $route
@@ -207,6 +175,38 @@ class Router
         return $param;
     }
 
+    /**
+     * Actions for error route.
+     *
+     * @return void
+     */
+    private function buildErrorRoute()
+    {
+        //check if there is a declared route for errors, if no exit with false
+        if (($key = array_search($this->options['badRoute'], array_column($this->routes, 'name'), true)) === false) {
+            $this->route = new NullRoute();
+
+            return;
+        }
+
+        //pick route for errors
+        $route = $this->routes[$key];
+
+        //build and store route for errors
+        $this->route = new Route($route);
+    }
+    
+    /**
+     * Check if a route is valid and
+     * return the route object else return a bad route object.
+     *
+     * @return RouteInterface
+     */
+    public function getRoute() : RouteInterface
+    {
+        return $this->route;
+    }
+    
     /**
      * Analize $_SERVER['REQUEST_URI'] for current uri, sanitize and return it.
      *
@@ -232,6 +232,17 @@ class Router
     }
 
     /**
+     * @var array Allowed Http methods for fast route mapping.
+     */
+    private $fastMapMethods = [
+        'GET' => true,
+        'POST' => true,
+        'PUT' => true,
+        'PATCH' => true,
+        'DELETE' => true,
+    ];
+    
+    /**
      * Map a route.
      *
      * @param array $route
@@ -239,5 +250,51 @@ class Router
     public function map(array $route)
     {
         array_push($this->routes, $route);
+    }
+    
+    /**
+     * Fast route mapping.
+     *
+     * @param string $name
+     * @param array $arguments
+     *
+     * @return void
+     *
+     * @throws BadMethodCallException
+     */
+    public function __call(string $name, array $arguments)
+    {
+        $method = strtoupper($name);
+        
+        if (isset($this->fastMapMethods[$method])) {
+            $this->map($this->createRouteArray($method, $arguments[0], $arguments[1], $arguments[2] ?? []));
+            
+            return;
+        }
+        
+        throw new BadMethodCallException(__METHOD__.": Router->{$name}() method do not exist.");
+    }
+    
+    /**
+     * Create route array for previous methods.
+     *
+     * @param string   $method
+     * @param string   $url
+     * @param callable $callback
+     * @param array    $options
+     *
+     * @return array
+     */
+    private function createRouteArray(string $method, string $url, callable $callback, array $options) : array
+    {
+        $routeArray = (new Route([
+            'method'   => $method,
+            'url'      => $url,
+            'callback' => $callback,
+        ]))->toArray();
+
+        $route = array_replace_recursive($routeArray, $options);
+
+        return $route;
     }
 }

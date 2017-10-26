@@ -219,27 +219,27 @@ class RouterTest extends TestCase
     }
 
     /**
-     * Fast map route provider.
+     *  Map route provider.
      *
      * @return array
      */
-    public function fastMapRouteProvider() : array
+    public function mapMethodRouteProvider() : array
     {
         return [
-            ['GET', '/mapRouteTestGet', 'get'],
-            ['POST', '/mapRouteTestPost', 'post'],
-            ['PUT', '/mapRouteTestPut', 'put'],
-            ['DELETE', '/mapRouteTestPatch', 'delete'],
-            ['PATCH', '/mapRouteTestPatch', 'patch'],
+            ['GET', '/mapRouteTestGet'],
+            ['POST', '/mapRouteTestPost'],
+            ['PUT', '/mapRouteTestPut'],
+            ['DELETE', '/mapRouteTestPatch'],
+            ['PATCH', '/mapRouteTestPatch'],
         ];
     }
 
     /**
      * Test map route into router with map method.
      *
-     * @dataProvider fastMapRouteProvider
+     * @dataProvider mapMethodRouteProvider
      */
-    public function testMapInToRouterWithMapMethod($method, $url, $func)
+    public function testMapInToRouterWithMapMethod(string $method, string $url)
     {
         $this->router->map(['method' => $method, 'url' => $url]);
 
@@ -249,11 +249,65 @@ class RouterTest extends TestCase
     }
 
     /**
+     * Fast map route provider.
+     *
+     * @return array
+     */
+    public function fastMapRouteProvider() : array
+    {
+        return [
+            ['GET', '/mapRouteTestGet', 'get', []],
+            ['POST', '/mapRouteTestPost', 'post', []],
+            ['PUT', '/mapRouteTestPut', 'put', []],
+            ['DELETE', '/mapRouteTestPatch', 'delete', []],
+            ['PATCH', '/mapRouteTestPatch', 'patch', []],
+        ];
+    }
+    
+    /**
      * Test map route into wouter with fast map methods.
      *
      * @dataProvider fastMapRouteProvider
      */
-    public function testMapInToRouterWithFastMapRoute($method, $url, $func)
+    public function testMapInToRouterWithFastMapRoute(string $method, string $url, string $func, array $options)
+    {
+        //map route with method
+        $this->router->$func($url, function ($param) {
+            return $param;
+        }, $options);
+
+        $this->assertTrue($this->router->validate($url, $method));
+
+        $route = $this->router->getRoute();
+
+        $callback = $route->getCallback();
+        
+        $this->assertInstanceOf(Route::class, $route);
+        $this->assertEquals($method, $callback($method));
+    }
+    
+    /**
+     * Fast map route provider without options.
+     *
+     * @return array
+     */
+    public function fastMapRouteProviderNoOptions() : array
+    {
+        return [
+            ['GET', '/mapRouteTestGet', 'get', []],
+            ['POST', '/mapRouteTestPost', 'post', []],
+            ['PUT', '/mapRouteTestPut', 'put', []],
+            ['DELETE', '/mapRouteTestPatch', 'delete', []],
+            ['PATCH', '/mapRouteTestPatch', 'patch', []],
+        ];
+    }
+    
+    /**
+     * Test map route into wouter with fast map methods.
+     *
+     * @dataProvider fastMapRouteProviderNoOptions
+     */
+    public function testMapInToRouterWithFastMapRouteWithoutOptions(string $method, string $url, string $func)
     {
         //map route with method
         $this->router->$func($url, function ($param) {
@@ -269,7 +323,7 @@ class RouterTest extends TestCase
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals($method, $callback($method));
     }
-
+    
     /**
      * Test validate a route with no bad route options declared.
      */
@@ -416,6 +470,9 @@ class RouterTest extends TestCase
         $this->assertEquals('User'.$action.'Controller', $array['controller']);
     }
     
+    /**
+     * Test return first matching route
+     */
     public function testReturnFirstMatchingRoute()
     {
         $routes = (new RouteCollection([
@@ -453,5 +510,39 @@ class RouterTest extends TestCase
         $this->assertEquals('UserModel', $array['model']);
         $this->assertEquals('UserView', $array['view']);
         $this->assertEquals('UserController', $array['controller']);
+    }
+    
+    /**
+     * Test return first matching route
+     */
+    public function testEqualRouteName()
+    {
+        $routes = (new RouteCollection([
+            new Route([
+                'name'       => 'User',
+                'method'     => 'GET',
+                'url'        => '/user',
+                'model'      => 'UserModel',
+                'view'       => 'UserView',
+                'controller' => 'UserController',
+            ]),
+            new Route([
+                'name'       => 404,
+                'method'     => 'GET',
+                'url'        => '/error',
+                'model'      => 'ErrorModel',
+                'view'       => 'ErrorView',
+                'controller' => 'ErrorController',
+            ])
+        ]))->toArray();
+
+        $router = new Router($routes, [
+            'basePath'    => '/',
+            'badRoute'    => '404',
+            'rewriteMode' => true,
+        ]);
+        
+        $this->assertFalse($router->validate('/user/bad', 'GET'));
+        $this->assertInstanceOf(NullRoute::class, $router->getRoute());
     }
 }
