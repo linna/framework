@@ -21,6 +21,7 @@
         "s3b4stian/simple-cache": "^1.0"
     },
     "require-dev": {
+        "infection/infection": "^0.6",
         "mongodb/mongodb": "^1.1.0",
         "phpmetrics/phpmetrics": "^2.3",
         "phpstan/phpstan": "^0.8.5",

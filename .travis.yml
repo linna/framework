@@ -8,7 +8,6 @@ php:
 matrix:
   allow_failures:
   - php: nightly
-  - php: 7.2
 
 services:
 - mysql
@@ -23,11 +22,8 @@ before_script:
 - mysql -e 'create database linna_db;'
 - mysql -u root linna_db < tests/linna_db_mysql.sql
 - composer install
-- wget https://github.com/infection/infection/releases/download/0.6.0/infection.phar
-- wget https://github.com/infection/infection/releases/download/0.6.0/infection.phar.pubkey
-- chmod +x infection.phar
 
 script:
 - ./vendor/bin/phpstan analyse --level 7 src
-- vendor/bin/phpunit
-- ./infection.phar --min-msi=75 --min-covered-msi=75 --threads=2
+- ./vendor/bin/phpunit
+- ./vendor/bin/infection --min-msi=75 --min-covered-msi=75
