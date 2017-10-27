@@ -150,7 +150,7 @@ class Authenticate
      *
      * @return bool
      */
-    public function login(string $userName, string $password, string $storedUserName = '', string $storedPassword = '', int $storedId = 0): bool
+    public function login(string $userName, string $password, string $storedUserName = '', string $storedPassword = '', int $storedId): bool
     {
         if ($userName === $storedUserName && $this->password->verify($password, $storedPassword)) {
             //write valid login on session
@@ -161,10 +161,13 @@ class Authenticate
                 'user_name' => $storedUserName,
             ];
 
+            //update login data
+            $this->data = $this->session->login;
+            
             //regenerate session id
             $this->session->regenerate();
             $this->logged = true;
-
+            
             return true;
         }
 
