@@ -198,7 +198,7 @@ class Container implements ContainerInterface, \ArrayAccess
                 $object = $this->cache[$class] ?? null;
 
                 //if object is not in cache and need arguments try to build
-                if ($object === null && count($arguments) !== 0) {
+                if ($object === null && count($arguments)) {
 
                     //build arguments
                     $args = $this->buildArguments($class, $arguments);
