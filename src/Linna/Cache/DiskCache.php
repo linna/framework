@@ -38,7 +38,6 @@ class DiskCache implements CacheInterface
      */
     protected $options = [
         'dir'       => '/tmp',
-        'ttl'       => 0,
     ];
 
     /**
@@ -128,11 +127,11 @@ class DiskCache implements CacheInterface
     private function calculateTtl(int $ttl) : int
     {
         //check for usage of ttl default class option value
-        if ($ttl === 0) {
-            return $this->options['ttl'];
+        if ($ttl) {
+            return time() + $ttl;
         }
 
-        return time() + $ttl;
+        return $ttl;
     }
 
     /**
