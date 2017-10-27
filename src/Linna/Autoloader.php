@@ -127,9 +127,8 @@ class Autoloader
         $arrayClass = explode('\\', $class);
 
         $arrayPrefix = [];
-        $sizeof = count($arrayClass);
         
-        for ($i = 0; $i < $sizeof; $i++) {
+        while (count($arrayClass)) {
             $arrayPrefix[] = array_shift($arrayClass);
 
             $prefix = implode('\\', $arrayPrefix);
