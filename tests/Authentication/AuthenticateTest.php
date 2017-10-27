@@ -73,6 +73,36 @@ class AuthenticateTest extends TestCase
     }
 
     /**
+     * Test login data.
+     *
+     * @runInSeparateProcess
+     */
+    public function testLoginData()
+    {
+        $this->session->start();
+
+        //attemp first login
+        $this->assertTrue($this->authenticate->login('root', 'password', 'root', $this->password->hash('password'), 1));
+        $this->assertTrue($this->session->login['login']);
+        
+        //attemp check if logged
+        $this->assertTrue($this->authenticate->isLogged());
+        
+        //check login data
+        $this->assertTrue($this->authenticate->getLoginData()['login']);
+        $this->assertEquals(1, $this->authenticate->getLoginData()['user_id']);
+        $this->assertEquals('root', $this->authenticate->getLoginData()['user_name']);
+        
+        //simulate expired login
+        $this->session->loginTime = time() - 3600;
+
+        //attemp second login
+        $this->assertTrue((new Authenticate($this->session, $this->password))->isNotLogged());
+        
+        $this->session->destroy();
+    }
+    
+    /**
      * Test logout.
      *
      * @runInSeparateProcess

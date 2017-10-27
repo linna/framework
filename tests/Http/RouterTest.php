@@ -325,6 +325,16 @@ class RouterTest extends TestCase
     }
     
     /**
+     * Test Router bad method call
+     *
+     * @expectedException BadMethodCallException
+     */
+    public function testRouterBadMethodCall()
+    {
+        $this->router->foo();
+    }
+    
+    /**
      * Test validate a route with no bad route options declared.
      */
     public function testValidateRouteWithNoBadRouteDeclared()

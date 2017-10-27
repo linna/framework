@@ -65,6 +65,7 @@ class ProtectedControllerTest extends TestCase
 
         $this->assertTrue($this->authenticate->isLogged());
         $this->assertTrue((new FOOProtectedController(new FooModel(), $this->authenticate))->test);
+        $this->assertTrue((new FOOProtectedController(new FooModel(), $this->authenticate))->fooAction());
 
         $this->assertTrue($this->authenticate->logout());
 

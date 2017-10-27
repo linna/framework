@@ -64,17 +64,21 @@ class DiskCacheTest extends TestCase
     public function testSet()
     {
         $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4]));
-
+        
+        usleep(2000100);
+        
         $this->assertTrue($this->cache->has('foo'));
     }
 
     /**
      * Test set with ttl null.
      */
-    public function testSetWithTtlNull()
+    public function testSetWithTtlAtZero()
     {
-        $this->assertTrue($this->cache->set('foo_ttl', [0, 1, 2, 3, 4]));
-
+        $this->assertTrue($this->cache->set('foo_ttl', [0, 1, 2, 3, 4], 0));
+        
+        usleep(1000100);
+        
         $this->assertTrue($this->cache->has('foo_ttl'));
     }
 
@@ -85,7 +89,7 @@ class DiskCacheTest extends TestCase
     {
         $this->assertTrue($this->cache->set('foo_ttl', [0, 1, 2, 3, 4], 1));
         
-        usleep(1000005);
+        usleep(1000100);
         
         $this->assertNull($this->cache->get('foo_ttl'));
     }
@@ -107,7 +111,7 @@ class DiskCacheTest extends TestCase
     public function testGet()
     {
         $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4]));
-
+        
         $this->assertEquals([0, 1, 2, 3, 4], $this->cache->get('foo'));
     }
 
@@ -146,7 +150,7 @@ class DiskCacheTest extends TestCase
     public function testDeleteExistingElement()
     {
         $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4]));
-
+        
         $this->assertTrue($this->cache->delete('foo'));
     }
 
@@ -209,7 +213,7 @@ class DiskCacheTest extends TestCase
         $this->assertTrue($this->cache->set('foo_3', [3]));
         $this->assertTrue($this->cache->set('foo_4', [4]));
         $this->assertTrue($this->cache->set('foo_5', [5]));
-
+        
         $this->assertTrue($this->cache->has('foo_0'));
         $this->assertTrue($this->cache->has('foo_1'));
         $this->assertTrue($this->cache->has('foo_2'));
@@ -258,7 +262,7 @@ class DiskCacheTest extends TestCase
             'foo_4' => [4],
             'foo_5' => [5],
         ]));
-
+        
         $this->assertTrue($this->cache->has('foo_0'));
         $this->assertTrue($this->cache->has('foo_1'));
         $this->assertTrue($this->cache->has('foo_2'));
@@ -304,7 +308,7 @@ class DiskCacheTest extends TestCase
         $this->assertTrue($this->cache->has('foo_4'));
         $this->assertTrue($this->cache->has('foo_5'));
 
-        usleep(1000005);
+        usleep(1000100);
         
         $this->assertNull($this->cache->get('foo_0'));
         $this->assertNull($this->cache->get('foo_1'));
@@ -338,7 +342,7 @@ class DiskCacheTest extends TestCase
             'foo_4' => [4],
             'foo_5' => [5],
         ]));
-
+        
         $this->assertTrue($this->cache->has('foo_0'));
         $this->assertTrue($this->cache->has('foo_1'));
         $this->assertTrue($this->cache->has('foo_2'));

@@ -97,17 +97,21 @@ class MemcachedCacheTest extends TestCase
     public function testSet()
     {
         $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4]));
-
+        
+        usleep(2000100);
+        
         $this->assertTrue($this->cache->has('foo'));
     }
 
     /**
      * Test set with ttl null.
      */
-    public function testSetWithTtlNull()
+    public function testSetWithTtlAtZero()
     {
-        $this->assertTrue($this->cache->set('foo_ttl', [0, 1, 2, 3, 4]));
-
+        $this->assertTrue($this->cache->set('foo_ttl', [0, 1, 2, 3, 4], 0));
+        
+        usleep(1000100);
+        
         $this->assertTrue($this->cache->has('foo_ttl'));
     }
 
@@ -118,7 +122,7 @@ class MemcachedCacheTest extends TestCase
     {
         $this->assertTrue($this->cache->set('foo_ttl', [0, 1, 2, 3, 4], 1));
         
-        usleep(1000005);
+        usleep(1000100);
         
         $this->assertNull($this->cache->get('foo_ttl'));
     }
@@ -337,7 +341,7 @@ class MemcachedCacheTest extends TestCase
         $this->assertTrue($this->cache->has('foo_4'));
         $this->assertTrue($this->cache->has('foo_5'));
 
-        usleep(1000005);
+        usleep(1000100);
         
         $this->assertNull($this->cache->get('foo_0'));
         $this->assertNull($this->cache->get('foo_1'));

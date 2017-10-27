@@ -29,4 +29,13 @@ class FooProtectedController extends Controller
 
         $this->test = true;
     }
+
+    public function fooAction() : bool
+    {
+        if ($this->authentication === false) {
+            return false;
+        }
+        
+        return true;
+    }
 }
