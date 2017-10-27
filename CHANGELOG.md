@@ -6,6 +6,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unrelased [v0.23.0](https://github.com/linna/framework/compare/v0.22.0...v0.23.0) - 201X-XX-XX
+
+### Changed
+* `Linna\Http\FastMapTrait` merged into `Linna\Http\Router` through magic `__call()`;
+* `Linna\Cache\DiskCache->__construct() ttl option removed
+
+### Fixed
+* `Linna\Auth\Authenticate` login data doesn't update after login
+
+### Removed
+* `Linna\Http\FastMapTrait`
+
 ## [v0.22.0](https://github.com/linna/framework/compare/v0.21.0...v0.22.0) - 2017-10-24
 
 ### Added
