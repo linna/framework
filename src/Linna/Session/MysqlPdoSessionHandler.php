@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Session;
 
+use Linna\Storage\ExtendedPDO;
 use Linna\Storage\PdoStorage;
 use SessionHandlerInterface;
 
@@ -32,7 +33,7 @@ use SessionHandlerInterface;
 class MysqlPdoSessionHandler implements SessionHandlerInterface
 {
     /**
-     * @var \Linna\Storage\ExtendedPDO Database Connection
+     * @var ExtendedPDO Database Connection
      */
     private $pdo;
 
@@ -59,10 +60,10 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
     public function open($savePath, $sessionName)
     {
         unset($savePath, $sessionName);
-
+        
         return true;
     }
-
+        
     /**
      * Delete old sessions from storage.
      *
@@ -120,7 +121,7 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
                 [':session_data', $data, \PDO::PARAM_STR]
             ]
         );
-
+        
         return $this->pdo->getLastOperationStatus();
     }
 
