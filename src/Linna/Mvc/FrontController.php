@@ -69,6 +69,7 @@ class FrontController
         $this->model->attach($this->view);
 
         //run action before controller
+        $this->beforeAfterController('before');
         $this->beforeAfterControllerAction('before');
 
         //run controller
@@ -76,6 +77,7 @@ class FrontController
 
         //run action after controller
         $this->beforeAfterControllerAction('after');
+        $this->beforeAfterController('after');
 
         //notify model changes to view
         $this->model->notify();
@@ -85,17 +87,12 @@ class FrontController
     }
 
     /**
-     * Run action before or after controller execution.
+     * Run action before or after controller action execution.
      *
      * @param string $when
      */
     private function beforeAfterControllerAction(string $when)
     {
-        //check for before action method
-        if (method_exists($this->controller, $when)) {
-            $this->controller->before();
-        }
-
         $actionMethod = $when.ucfirst($this->routeAction);
 
         if (method_exists($this->controller, $actionMethod) && $actionMethod !== $when) {
@@ -103,6 +100,19 @@ class FrontController
         }
     }
 
+    /**
+     * Run action before or after controller execution.
+     *
+     * @param string $when
+     */
+    private function beforeAfterController(string $when)
+    {
+        if (method_exists($this->controller, $when)) {
+            call_user_func([$this->controller, $when]);
+        }
+    }
+
+    
     /**
      * Run controller.
      */
@@ -129,9 +139,9 @@ class FrontController
      */
     private function runView()
     {
-        $routeAction = ($this->routeAction) ? $this->routeAction : 'index';
-
-        call_user_func([$this->view, $routeAction]);
+        if ($this->routeAction) {
+            call_user_func([$this->view, $this->routeAction]);
+        }
     }
 
     /**
