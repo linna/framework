@@ -8,12 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unrelased [v0.23.0](https://github.com/linna/framework/compare/v0.22.0...v0.23.0) - 201X-XX-XX
 
+### Added
+* `Linna\Mvc\Model->set()` method for set data to notify to observer
+* `Linna\Mvc\Model->get()` method for retrive data to notify to observer
+
 ### Changed
 * `Linna\Http\FastMapTrait` merged into `Linna\Http\Router` through magic `__call()`;
 * `Linna\Cache\DiskCache->__construct() ttl option removed
 
 ### Fixed
 * `Linna\Auth\Authenticate` login data doesn't update after login
+* `Linna\Mvc\FrontController` action execution before and after
 
 ### Removed
 * `Linna\Http\FastMapTrait`
