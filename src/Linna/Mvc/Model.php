@@ -28,7 +28,7 @@ class Model implements \SplSubject
     /**
      * @var array Data for notify to observerer
      */
-    public $getUpdate = [];
+    private $updates = [];
 
     /**
      * Constructor.
@@ -71,5 +71,25 @@ class Model implements \SplSubject
         foreach ($this->observers as $value) {
             $value->update($this);
         }
+    }
+    
+    /**
+     * Set the data to notify to all registered Observeres.
+     *
+     * @param array $data
+     */
+    public function set(array $data)
+    {
+        $this->updates = array_merge_recursive($this->updates, $data);
+    }
+    
+    /**
+     * Get the data to notify to all registered Observeres.
+     *
+     * @return array
+     */
+    public function get() : array
+    {
+        return $this->updates;
     }
 }
