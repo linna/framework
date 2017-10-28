@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 use Linna\Authentication\Password;
 use Linna\Authorization\Role;
-use Linna\Foo\Mappers\EnhancedUserMapper;
-use Linna\Foo\Mappers\PermissionMapper;
-use Linna\Foo\Mappers\RoleMapper;
+use Linna\TestHelper\Mappers\EnhancedUserMapper;
+use Linna\TestHelper\Mappers\PermissionMapper;
+use Linna\TestHelper\Mappers\RoleMapper;
 use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;
 

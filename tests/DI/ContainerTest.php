@@ -10,7 +10,7 @@
 declare(strict_types=1);
 
 use Linna\DI\Container;
-use Linna\Foo\DI\FooClassACache;
+use Linna\TestHelper\DI\ClassACache;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -33,7 +33,7 @@ class ContainerTest extends TestCase
             ['closure', function () {
                 return 'Hello World';
             }],
-            [\Linna\Foo\DI\FooClassACache::class, new FooClassACache('Hello World')],
+            [\Linna\TestHelper\DI\ClassACache::class, new ClassACache('Hello World')],
         ];
     }
 
@@ -268,15 +268,15 @@ class ContainerTest extends TestCase
     public function classProvider() : array
     {
         return [
-            [\Linna\Foo\DI\FooClassResObject::class],
-            [\Linna\Foo\DI\FooClassB::class],
-            [\Linna\Foo\DI\FooClassC::class],
-            [\Linna\Foo\DI\FooClassD::class],
-            [\Linna\Foo\DI\FooClassE::class],
-            [\Linna\Foo\DI\FooClassF::class],
-            [\Linna\Foo\DI\FooClassG::class],
-            [\Linna\Foo\DI\FooClassH::class],
-            [\Linna\Foo\DI\FooClassI::class],
+            [\Linna\TestHelper\DI\ClassResObject::class],
+            [\Linna\TestHelper\DI\ClassB::class],
+            [\Linna\TestHelper\DI\ClassC::class],
+            [\Linna\TestHelper\DI\ClassD::class],
+            [\Linna\TestHelper\DI\ClassE::class],
+            [\Linna\TestHelper\DI\ClassF::class],
+            [\Linna\TestHelper\DI\ClassG::class],
+            [\Linna\TestHelper\DI\ClassH::class],
+            [\Linna\TestHelper\DI\ClassI::class],
         ];
     }
 
@@ -299,11 +299,11 @@ class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->set(\Linna\Foo\DI\FooClassACache::class, new FooClassACache('Hello World'));
+        $container->set(\Linna\TestHelper\DI\ClassACache::class, new ClassACache('Hello World'));
 
         $this->assertInstanceOf(
-            \Linna\Foo\DI\FooClassResCache::class,
-            $container->resolve(\Linna\Foo\DI\FooClassResCache::class)
+            \Linna\TestHelper\DI\ClassResCache::class,
+            $container->resolve(\Linna\TestHelper\DI\ClassResCache::class)
         );
     }
 
@@ -315,7 +315,7 @@ class ContainerTest extends TestCase
     {
         $container = new Container();
         $container->setRules([
-            \Linna\Foo\DI\FooClassARules::class => [
+            \Linna\TestHelper\DI\ClassARules::class => [
                 0 => true,
                 2 => 'foo',
                 3 => 1,
@@ -325,8 +325,8 @@ class ContainerTest extends TestCase
         ]);
 
         $this->assertInstanceOf(
-            \Linna\Foo\DI\FooClassResRules::class,
-            $container->resolve(\Linna\Foo\DI\FooClassResRules::class)
+            \Linna\TestHelper\DI\ClassResRules::class,
+            $container->resolve(\Linna\TestHelper\DI\ClassResRules::class)
         );
     }
 }

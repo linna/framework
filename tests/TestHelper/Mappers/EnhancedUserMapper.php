@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Linna App.
- *
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
+declare(strict_types=1);
 
-namespace Linna\Foo\Mappers;
+namespace Linna\TestHelper\Mappers;
 
 use Linna\Authorization\EnhancedUser;
 use Linna\Authorization\EnhancedUserMapperInterface;

@@ -1,30 +1,26 @@
 <?php
 
 /**
- * Linna App.
- *
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
+declare(strict_types=1);
 
-namespace Linna\Foo\Mvc;
+namespace Linna\TestHelper\Mvc;
 
 use Linna\Mvc\View;
 
-class FooBadTemplateView extends View
+class BadTemplateView extends View
 {
     protected $template;
 
-    public function __construct(FOOModel $model, $htmlTemplate)
+    public function __construct(CalculatorModel $model, $template)
     {
         parent::__construct($model);
 
-        $this->template = $htmlTemplate;
-    }
-
-    public function index()
-    {
+        $this->template = $template;
     }
 }

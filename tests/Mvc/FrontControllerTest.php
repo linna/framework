@@ -9,15 +9,21 @@
  */
 declare(strict_types=1);
 
-use Linna\Foo\Mvc\FooController;
-use Linna\Foo\Mvc\FooControllerBeforeAfter;
-use Linna\Foo\Mvc\FooModel;
-use Linna\Foo\Mvc\FooTemplate;
-use Linna\Foo\Mvc\FooView;
 use Linna\Http\Route;
 use Linna\Http\RouteCollection;
 use Linna\Http\Router;
 use Linna\Mvc\FrontController;
+use Linna\TestHelper\Mvc\BeforeAfterController;
+use Linna\TestHelper\Mvc\BeforeAfterModel;
+use Linna\TestHelper\Mvc\BeforeAfterView;
+use Linna\TestHelper\Mvc\CalculatorController;
+use Linna\TestHelper\Mvc\CalculatorModel;
+use Linna\TestHelper\Mvc\CalculatorView;
+use Linna\TestHelper\Mvc\MultipleController;
+use Linna\TestHelper\Mvc\MultipleModel;
+use Linna\TestHelper\Mvc\MultipleView;
+use Linna\TestHelper\Mvc\JsonTemplate;
+
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -57,13 +63,22 @@ class FrontControllerTest extends TestCase
     {
         $routes = (new RouteCollection([
             new Route([
-                'name'       => 'Foo',
-                'method'     => 'GET',
-                'url'        => '/Foo',
-                'model'      => 'FOOModel',
-                'view'       => 'FOOView',
-                'controller' => 'FOOController',
+                'name'       => 'Calculator',
+                'method'     => 'POST',
+                'url'        => '/calculator/(multiply|divide|add|sub)',
+                'model'      => 'CalculatorModel',
+                'view'       => 'CalculatorView',
+                'controller' => 'CalculatorController',
             ]),
+            new Route([
+                'name'       => 'BeforeAfter',
+                'method'     => 'GET',
+                'url'        => '/before/after/[value]',
+                'model'      => 'BeforeAfterModel',
+                'view'       => 'BeforeAfterView',
+                'controller' => 'BeforeAfterController',
+                'action'     => 'Action'
+            ]),/*
             new Route([
                 'name'       => 'Foo',
                 'method'     => 'GET',
@@ -71,15 +86,16 @@ class FrontControllerTest extends TestCase
                 'model'      => 'FOOModel',
                 'view'       => 'FOOView',
                 'controller' => 'FOOController',
-            ]),
+            ]),*/
             new Route([
-                'name'       => 'Foo',
+                'name'       => 'MultiParam',
                 'method'     => 'GET',
-                'url'        => '/Foo/(modifyDataFromSomeParam)/[year]/[month]/[day]',
-                'model'      => 'FOOModel',
-                'view'       => 'FOOView',
-                'controller' => 'FOOController',
-            ]),
+                'url'        => '/multi/param/[year]/[month]/[day]',
+                'model'      => 'MultiModel',
+                'view'       => 'MultiView',
+                'controller' => 'MultiController',
+                'action'     => 'SomeParam'
+            ])/*
             new Route([
                 'name'       => 'Foo',
                 'method'     => 'GET',
@@ -95,7 +111,7 @@ class FrontControllerTest extends TestCase
                 'model'      => 'FOOModel',
                 'view'       => 'FOOView',
                 'controller' => 'FOOControllerBeforeAfter',
-            ])
+            ])*/
         ]))->toArray();
         
         $this->router = new Router($routes, [
@@ -103,9 +119,9 @@ class FrontControllerTest extends TestCase
             'rewriteMode' => true,
         ]);
         
-        $model = new FooModel();
-        $view = new FooView($model, new FooTemplate());
-        $controller = new FooController($model);
+        $model = new CalculatorModel();
+        $view = new CalculatorView($model, new JsonTemplate());
+        $controller = new CalculatorController($model);
         
         $this->model = $model;
         $this->view = $view;
@@ -127,9 +143,9 @@ class FrontControllerTest extends TestCase
      */
     public function frontControllerArgProvider() : array
     {
-        $model = new FooModel();
-        $view = new FooView($model, new FooTemplate());
-        $controller = new FooController($model);
+        $model = $this->model;
+        $view = $this->view;
+        $controller = $this->controller;
         
         return [
             [false, $view, $controller, 'index', []],
@@ -150,30 +166,49 @@ class FrontControllerTest extends TestCase
     {
         (new FrontController($model, $view, $controller, $action, $param));
     }
-    
+
+    /**
+     * Calculator provider.
+     *
+     * @return array
+     */
+    public function calculatorProvider() : array
+    {
+        return [
+            ['/calculator/multiply',[2,2,2],8],
+            ['/calculator/divide',[16,2,2],4],
+            ['/calculator/add',[2,2,2],6],
+            ['/calculator/sub',[16,2,2],12]
+        ];
+    }
+
     /**
      * Test run front controller
+     *
+     * @dataProvider calculatorProvider
      */
-    public function testRunFrontController()
+    public function testRunFrontController(string $route, array $parameter, int $result)
     {
-        $this->router->validate('/Foo/modifyData', 'GET');
+        $_POST['numbers'] = $parameter;
+        
+        $this->router->validate($route, 'POST');
 
-        $route = $this->router->getRoute()->toArray();
+        $routeArray = $this->router->getRoute()->toArray();
 
-        $frontController = new FrontController($this->model, $this->view, $this->controller, $route['action'], $route['param']);
+        $frontController = new FrontController($this->model, $this->view, $this->controller, $routeArray['action'], $routeArray['param']);
 
         $frontController->run();
 
-        $test = json_decode($frontController->response());
-
-        $this->assertInstanceOf(stdClass::class, $test);
-        $this->assertEquals(1234, $test->data);
+        //var_dump(json_decode($frontController->response())->result);
+        
+        $this->assertEquals($result, json_decode($frontController->response())->result);
+        //$this->assertTrue(true);
     }
 
     /**
      * Test run front controller with param
      */
-    public function testRunFrontControllerWithParam()
+    /*public function testRunFrontControllerWithParam()
     {
         $this->router->validate('/Foo/500/modifyDataFromParam', 'GET');
 
@@ -187,25 +222,44 @@ class FrontControllerTest extends TestCase
 
         $this->assertInstanceOf(stdClass::class, $test);
         $this->assertEquals(500, $test->data);
+    }*/
+    
+    /**
+     * Some param provider.
+     *
+     * @return array
+     */
+    public function someParamProvider() : array
+    {
+        return [
+            ['/multi/param/2017/1/1','2017-01-01 12:00:00'],
+            ['/multi/param/2018/2/2','2018-02-02 12:00:00'],
+            ['/multi/param/2019/3/3','2019-03-03 12:00:00'],
+            ['/multi/param/2020/4/4','2020-04-04 12:00:00'],
+            ['/multi/param/2021/5/5','2021-05-05 12:00:00']
+        ];
     }
     
     /**
-     * Test run front controller with param
+     * Test run front controller with param.
+     *
+     * @dataProvider someParamProvider
      */
-    public function testRunFrontControllerWithSomeParam()
+    public function testRunFrontControllerWithSomeParam(string $route, string $result)
     {
-        $this->router->validate('/Foo/modifyDataFromSomeParam/2017/10/20', 'GET');
+        $this->router->validate($route, 'GET');
 
         $route = $this->router->getRoute()->toArray();
 
-        $frontController = new FrontController($this->model, $this->view, $this->controller, $route['action'], $route['param']);
+        $model = new MultipleModel();
+        $view = new MultipleView($model, new JsonTemplate());
+        $controller = new MultipleController($model);
+        
+        $frontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
 
         $frontController->run();
 
-        $test = json_decode($frontController->response());
-
-        $this->assertInstanceOf(stdClass::class, $test);
-        $this->assertEquals('2017-10-20 01:02:03', $test->data);
+        $this->assertEquals($result, json_decode($frontController->response())->result);
     }
 
     /**
@@ -213,52 +267,77 @@ class FrontControllerTest extends TestCase
      */
     public function testModelDetach()
     {
-        $this->router->validate('/Foo/data500/modifyDataFromParam', 'GET');
+        $this->router->validate('/multi/param/2017/1/1', 'GET');
 
         $route = $this->router->getRoute();
 
-        $action = (($action = $route->getAction()) !== null) ? $action : 'index';
+        $model = new MultipleModel();
+        $view = new MultipleView($model, new JsonTemplate());
+        $controller = new MultipleController($model);
         
-        $this->model->attach($this->view);
-        $this->model->detach($this->view);
+        //attach and detach
+        $model->attach($view);
+        $model->detach($view);
 
-        call_user_func_array([$this->controller, $action], $route->getParam());
+        call_user_func_array([$controller, $route->getAction()], $route->getParam());
 
-        $this->model->notify();
+        $model->notify();
 
-        call_user_func([$this->view, $action]);
+        $this->assertFalse(isset(json_decode($view->render())->result));
+        
+        //attach
+        $model->attach($view);
 
-        $test = json_decode($this->view->render());
+        call_user_func_array([$controller, $route->getAction()], $route->getParam());
 
-        $this->assertInstanceOf(stdClass::class, $test);
-        $this->assertEquals(false, isset($test->data));
+        $model->notify();
+        
+        $this->assertTrue(isset(json_decode($view->render())->result));
     }
 
     /**
-     * Test run front controller with action.
+     * Calculator provider.
+     *
+     * @return array
      */
-    public function testRunFrontControllerWithAction()
+    public function beforeAfterProvider() : array
     {
-        $this->router->validate('/Foo/modifyDataTimed', 'GET');
+        return [
+            [10,15],
+            [20,25],
+            [30,35],
+            [40,45],
+            [50,55],
+        ];
+    }
+    
+    /**
+     * Test run front controller before after.
+     *
+     * @dataProvider beforeAfterProvider
+     */
+    public function testRunFrontControllerBeforeAfter(int $input, int $result)
+    {
+        $this->router->validate('/before/after/'.$input, 'GET');
 
         $route = $this->router->getRoute()->toArray();
 
-        $controller = new FooControllerBeforeAfter($this->model);
-
-        $frontController = new FrontController($this->model, $this->view, $controller, $route['action'], $route['param']);
+        $model = new BeforeAfterModel();
+        $controller = new BeforeAfterController($model);
+        $view = new BeforeAfterView($model, new JsonTemplate());
+        
+        $frontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
 
         $frontController->run();
 
-        $test = json_decode($frontController->response());
-
-        $this->assertInstanceOf(stdClass::class, $test);
-        $this->assertEquals(123, (int) $test->data);
+        $this->assertEquals($result, json_decode($frontController->response())->result);
+        //$this->assertTrue(true);
     }
     
     /**
       * Test run front controller without action.
      */
-    public function testRunFrontControllerWithOutAction()
+   /* public function testRunFrontControllerWithOutAction()
     {
         $this->router->validate('/Foo', 'GET');
 
@@ -271,5 +350,5 @@ class FrontControllerTest extends TestCase
         $test = json_decode($frontController->response());
 
         $this->assertInstanceOf(stdClass::class, $test);
-    }
+    }*/
 }

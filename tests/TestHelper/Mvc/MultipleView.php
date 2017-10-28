@@ -1,46 +1,30 @@
 <?php
 
 /**
- * Linna App.
- *
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
+declare(strict_types=1);
 
-namespace Linna\Foo\Mvc;
+namespace Linna\TestHelper\Mvc;
 
 use Linna\Mvc\View;
 
-class FooView extends View
+class MultipleView extends View
 {
     protected $template;
 
-    public function __construct(FOOModel $model, FOOTemplate $htmlTemplate)
+    public function __construct(MultipleModel $model, JsonTemplate $template)
     {
         parent::__construct($model);
 
-        $this->template = $htmlTemplate;
-    }
-
-    public function index()
-    {
-    }
-
-    public function modifyData()
-    {
-    }
-
-    public function modifyDataTimed()
-    {
-    }
-
-    public function modifyDataFromParam()
-    {
+        $this->template = $template;
     }
     
-    public function modifyDataFromSomeParam()
+    public function SomeParam()
     {
     }
 }

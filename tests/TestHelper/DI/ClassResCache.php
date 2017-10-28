@@ -9,11 +9,11 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Foo\DI;
+namespace Linna\TestHelper\DI;
 
-class FooClassResCache
+class ClassResCache
 {
-    public function __construct(FooClassB $b, FooClassACache $aCache)
+    public function __construct(ClassB $b, ClassACache $aCache)
     {
         return 'ResCache';
     }

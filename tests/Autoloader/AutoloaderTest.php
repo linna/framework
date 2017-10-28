@@ -27,12 +27,12 @@ class AutoloaderTest extends TestCase
         $this->assertTrue($autoloader->register());
         
         $autoloader->addNamespaces([
-            ['Linna\FooAuto', dirname(__DIR__).'/FooClass'],
+            ['Linna\TestHelper', dirname(__DIR__).'/TestHelper'],
             ['Linna\Foo_', dirname(__DIR__).'/FooClass'],
             ['Baz\Foo', dirname(__DIR__).'/FooClass']
         ]);
         
-        $this->assertTrue($autoloader->loadClass(Linna\FooAuto\Autoload\FooClassAuto::class));
+        $this->assertTrue($autoloader->loadClass(Linna\TestHelper\DI\ClassI::class));
         
         $this->assertTrue($autoloader->unregister());
     }
@@ -47,12 +47,12 @@ class AutoloaderTest extends TestCase
         $this->assertTrue($autoloader->register());
         
         $autoloader->addNamespaces([
-            ['Linna\FooAuto', dirname(__DIR__).'/FooClass'],
+            ['Linna\TestHelper', dirname(__DIR__).'/TestHelper'],
             ['Linna\Foo_', dirname(__DIR__).'/FooClass'],
             ['Baz\Foo', dirname(__DIR__).'/FooClass']
         ]);
         
-        $this->assertFalse($autoloader->loadClass(Linna\FooAuto\Autoload\FooClassAuto2::class));
+        $this->assertFalse($autoloader->loadClass(Linna\TestHelper\DI\NotExistClass::class));
         
         $this->assertTrue($autoloader->unregister());
     }
@@ -67,12 +67,12 @@ class AutoloaderTest extends TestCase
         $this->assertTrue($autoloader->register());
         
         $autoloader->addNamespaces([
-            ['Linna\FooAuto', dirname(__DIR__).'/FooClass'],
+            ['Linna\TestHelper', dirname(__DIR__).'/TestHelper'],
             ['Linna\Foo_', dirname(__DIR__).'/FooClass'],
             ['Baz\Foo', dirname(__DIR__).'/FooClass']
         ]);
         
-        $this->assertFalse($autoloader->loadClass(Linna\FooBaz\Autoload\FooClassAuto::class));
+        $this->assertFalse($autoloader->loadClass(Linna\NoPrefix\ClassI::class));
         
         $this->assertTrue($autoloader->unregister());
     }
@@ -87,10 +87,10 @@ class AutoloaderTest extends TestCase
         $this->assertTrue($autoloader->register());
         
         $autoloader->addNamespaces([
-            ['Linna\FooAuto', dirname(__DIR__).'/FooClass'],
+            ['Linna\TestHelper', dirname(__DIR__).'/TestHelper'],
         ]);
         
-        $this->assertTrue($autoloader->loadClass(Linna\FooAuto\Autoload\FooClassAutoOther::class));
+        $this->assertTrue($autoloader->loadClass(Linna\TestHelper\DI\ClassH::class));
         
         $this->assertTrue($autoloader->unregister());
     }
@@ -105,10 +105,10 @@ class AutoloaderTest extends TestCase
         $this->assertTrue($autoloader->register());
         
         $autoloader->addNamespaces([
-            ['Linna\FooAuto', dirname(__DIR__).'/FooClass'],
+            ['Linna\TestHelper', dirname(__DIR__).'/TestHelper'],
         ]);
         
-        $this->assertFalse($autoloader->loadClass(Linna\FooAuto\Autoload\FooClassAuto2::class));
+        $this->assertFalse($autoloader->loadClass(Linna\NoPrefix\ClassH::class));
         
         $this->assertTrue($autoloader->unregister());
     }
@@ -123,10 +123,10 @@ class AutoloaderTest extends TestCase
         $this->assertTrue($autoloader->register());
         
         $autoloader->addNamespaces([
-            ['Linna\FooAuto', dirname(__DIR__).'/FooClass'],
+            ['Linna\TestHelper', dirname(__DIR__).'/TestHelper'],
         ]);
         
-        $this->assertFalse($autoloader->loadClass(Linna\FooBaz\Autoload\FooClassAuto::class));
+        $this->assertFalse($autoloader->loadClass(Linna\NoPrefix\NotExistClass::class));
         
         $this->assertTrue($autoloader->unregister());
     }

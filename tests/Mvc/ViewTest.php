@@ -9,10 +9,10 @@
  */
 declare(strict_types=1);
 
-use Linna\Foo\Mvc\FooBadTemplateView;
-use Linna\Foo\Mvc\FooModel;
-use Linna\Foo\Mvc\FooTemplate;
-use Linna\Foo\Mvc\FooView;
+use Linna\TestHelper\Mvc\CalculatorModel;
+use Linna\TestHelper\Mvc\CalculatorView;
+use Linna\TestHelper\Mvc\BadTemplateView;
+use Linna\TestHelper\Mvc\JsonTemplate;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -25,7 +25,7 @@ class ViewTest extends TestCase
      */
     public function testNewViewInstance()
     {
-        $this->assertInstanceOf(FooView::class, new FooView(new FooModel(), new FooTemplate()));
+        $this->assertInstanceOf(CalculatorView::class, new CalculatorView(new CalculatorModel(), new JsonTemplate()));
     }
 
     /**
@@ -33,7 +33,7 @@ class ViewTest extends TestCase
      */
     public function testViewWithBadTemplate()
     {
-        $this->assertInstanceOf(FooBadTemplateView::class, new FooBadTemplateView(new FooModel(), 'badTemplate'));
+        $this->assertInstanceOf(BadTemplateView::class, new BadTemplateView(new CalculatorModel(), 'badTemplate'));
     }
 
     /**
@@ -43,6 +43,6 @@ class ViewTest extends TestCase
      */
     public function testViewWithBadTemplateOnRender()
     {
-        (new FooBadTemplateView(new FooModel(), 'badTemplate'))->render();
+        (new BadTemplateView(new CalculatorModel(), 'badTemplate'))->render();
     }
 }

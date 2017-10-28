@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 use Linna\Authentication\Password;
 use Linna\Authentication\User;
-use Linna\Foo\Mappers\UserMapper;
+use Linna\TestHelper\Mappers\UserMapper;
 use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;
 

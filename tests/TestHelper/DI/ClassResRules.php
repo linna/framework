@@ -9,11 +9,11 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Foo\DI;
+namespace Linna\TestHelper\DI;
 
-class FooClassResRules
+class ClassResRules
 {
-    public function __construct(FooClassB $b, FooClassARules $aRules)
+    public function __construct(ClassB $b, ClassARules $aRules)
     {
         return 'ResRules';
     }

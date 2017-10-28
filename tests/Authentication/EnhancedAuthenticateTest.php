@@ -10,7 +10,7 @@
 declare(strict_types=1);
 
 use Linna\Authentication\EnhancedAuthenticate;
-use Linna\Foo\Mappers\EnhancedAuthenticateMapper;
+use Linna\TestHelper\Mappers\EnhancedAuthenticateMapper;
 use Linna\Authentication\Password;
 use Linna\Session\Session;
 use Linna\Storage\StorageFactory;

@@ -37,6 +37,10 @@ class SessionTest extends TestCase
      */
     public function testSessionStart()
     {
+        if (!function_exists('xdebug_get_headers')) {
+            $this->markTestSkipped('Xdebug not installed');
+        }
+        
         $session = $this->session;
 
         $this->assertEquals(1, $session->status);
@@ -56,6 +60,10 @@ class SessionTest extends TestCase
      */
     public function testSessionCommit()
     {
+        if (!function_exists('xdebug_get_headers')) {
+            $this->markTestSkipped('Xdebug not installed');
+        }
+        
         $session = $this->session;
         $session->start();
         
@@ -82,6 +90,10 @@ class SessionTest extends TestCase
      */
     public function testSessionDestroy()
     {
+        if (!function_exists('xdebug_get_headers')) {
+            $this->markTestSkipped('Xdebug not installed');
+        }
+        
         $session = $this->session;
 
         $session->start();
@@ -107,6 +119,10 @@ class SessionTest extends TestCase
      */
     public function testSessionRegenerate()
     {
+        if (!function_exists('xdebug_get_headers')) {
+            $this->markTestSkipped('Xdebug not installed');
+        }
+        
         $session = $this->session;
 
         $session->start();
@@ -161,6 +177,10 @@ class SessionTest extends TestCase
      */
     public function testSessionExpired(int $time, bool $equals)
     {
+        if (!function_exists('xdebug_get_headers')) {
+            $this->markTestSkipped('Xdebug not installed');
+        }
+        
         $session = $this->session;
 
         $session->start();

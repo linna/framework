@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 use Linna\Authentication\Authenticate;
 use Linna\Authentication\Password;
-use Linna\Foo\Mvc\FooModel;
-use Linna\Foo\Mvc\FooProtectedController;
+use Linna\TestHelper\Mvc\MultipleModel;
+use Linna\TestHelper\Mvc\MultipleProtectedController;
 use Linna\Session\Session;
 use PHPUnit\Framework\TestCase;
 
@@ -64,8 +64,8 @@ class ProtectedControllerTest extends TestCase
         ));
 
         $this->assertTrue($this->authenticate->isLogged());
-        $this->assertTrue((new FOOProtectedController(new FooModel(), $this->authenticate))->test);
-        $this->assertTrue((new FOOProtectedController(new FooModel(), $this->authenticate))->fooAction());
+        $this->assertTrue((new MultipleProtectedController(new MultipleModel(), $this->authenticate))->test);
+        $this->assertTrue((new MultipleProtectedController(new MultipleModel(), $this->authenticate))->ProtectedAction());
 
         $this->assertTrue($this->authenticate->logout());
 
@@ -86,7 +86,7 @@ class ProtectedControllerTest extends TestCase
 
         ob_start();
 
-        (new FooProtectedController(new FooModel(), $this->authenticate));
+        (new MultipleProtectedController(new MultipleModel(), $this->authenticate));
         $headers_list = xdebug_get_headers();
 
         ob_end_clean();

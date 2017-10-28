@@ -8,18 +8,19 @@
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
+declare(strict_types = 1);
 
-namespace Linna\Foo\Mvc;
+namespace Linna\TestHelper\Mvc;
 
 use Linna\Mvc\TemplateInterface;
 
-class FooTemplate implements TemplateInterface
+class JsonTemplate implements TemplateInterface
 {
     public $data = null;
 
     public function setData(array $data)
     {
-        $this->data = (object) $data;
+        $this->data = $data;
     }
 
     public function getOutput() : string

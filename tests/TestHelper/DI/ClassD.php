@@ -9,11 +9,11 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Foo\DI;
+namespace Linna\TestHelper\DI;
 
-class FooClassD
+class ClassD
 {
-    public function __construct(FooClassE $e, FooClassF $f, FooClassG $g)
+    public function __construct(ClassE $e, ClassF $f, ClassG $g)
     {
         return 'D';
     }

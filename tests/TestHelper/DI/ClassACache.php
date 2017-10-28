@@ -9,9 +9,9 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Foo\DI;
+namespace Linna\TestHelper\DI;
 
-class FooClassACache
+class ClassACache
 {
     public function __construct(string $aCacheString)
     {

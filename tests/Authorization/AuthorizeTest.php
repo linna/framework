@@ -12,7 +12,7 @@ declare(strict_types=1);
 use Linna\Authentication\Authenticate;
 use Linna\Authentication\Password;
 use Linna\Authorization\Authorize;
-use Linna\Foo\Mappers\PermissionMapper;
+use Linna\TestHelper\Mappers\PermissionMapper;
 use Linna\Session\Session;
 use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;

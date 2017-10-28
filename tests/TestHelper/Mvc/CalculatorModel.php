@@ -1,55 +1,71 @@
 <?php
 
 /**
- * Linna App.
- *
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
+declare(strict_types=1);
 
-namespace Linna\Foo\Mvc;
+namespace Linna\TestHelper\Mvc;
 
 use Linna\Mvc\Model;
 
-class FooModel extends Model
+class CalculatorModel extends Model
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function addToData()
+    public function multiply(array $numbers)
     {
-        if (!isset($this->getUpdate['data'])) {
-            $this->getUpdate = ['data' => 100];
+        $this->set(['result' => $this->operation('*', $numbers)]);
+    }
 
-            return;
+    public function divide(array $numbers)
+    {
+        $this->set(['result' => $this->operation('/', $numbers)]);
+    }
+
+    public function sub(array $numbers)
+    {
+        $this->set(['result' => $this->operation('-', $numbers)]);
+    }
+
+    public function add(array $numbers)
+    {
+        $this->set(['result' => $this->operation('+', $numbers)]);
+    }
+
+    private function operation(string $operator, array $numbers)
+    {
+        $temp = null;
+
+        foreach ($numbers as $n) {
+            if ($temp === null) {
+                $temp = $n;
+                continue;
+            }
+            
+            switch ($operator) {
+                case '*':
+                    $temp = $temp * $n;
+                    break;
+                case '/':
+                    $temp = $temp / $n;
+                    break;
+                case '-':
+                    $temp = $temp - $n;
+                    break;
+                case '+':
+                    $temp = $temp + $n;
+                    break;
+            }
         }
-
-        $this->getUpdate['data'] += 3;
-    }
-
-    public function modifyDataTimed()
-    {
-        $this->getUpdate['data'] += 20;
-    }
-
-    public function modifyData()
-    {
-        $this->getUpdate = ['data' => 1234];
-    }
-
-    public function modifyDataFromParam($param)
-    {
-        $this->getUpdate = ['data' => $param];
-    }
-    
-    public function modifyDataFromSomeParam($year, $month, $day)
-    {
-        $date = date('Y-m-d H:i:s', mktime(1, 2, 3, $month, $day, $year));
         
-        $this->getUpdate = ['data' => $date];
+        return $temp;
     }
 }

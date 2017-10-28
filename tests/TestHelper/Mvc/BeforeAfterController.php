@@ -1,38 +1,38 @@
 <?php
 
 /**
- * Linna App.
- *
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
+declare(strict_types=1);
 
-namespace Linna\Foo\Mvc;
+namespace Linna\TestHelper\Mvc;
 
 use Linna\Mvc\Controller;
 
-class FooControllerBeforeAfter extends Controller
+class BeforeAfterController extends Controller
 {
-    public function __construct(FOOModel $model)
+    public function __construct(BeforeAfterModel $model)
     {
         parent::__construct($model);
     }
 
-    public function beforeModifyDataTimed()
+    public function beforeAction()
     {
-        $this->model->addToData();
+        $this->model->sub();
     }
 
-    public function modifyDataTimed()
+    public function Action($param)
     {
-        $this->model->modifyDataTimed();
+        $this->model->doAction($param);
     }
 
-    public function afterModifyDataTimed()
+    public function afterAction()
     {
-        $this->model->addToData();
+        $this->model->add();
     }
 
     public function before()
@@ -42,6 +42,6 @@ class FooControllerBeforeAfter extends Controller
 
     public function after()
     {
-        //do nothing
+        $this->model->end();
     }
 }

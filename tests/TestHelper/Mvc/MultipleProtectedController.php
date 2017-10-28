@@ -1,27 +1,27 @@
 <?php
 
 /**
- * Linna App.
- *
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
+declare(strict_types=1);
 
-namespace Linna\Foo\Mvc;
+namespace Linna\TestHelper\Mvc;
 
 use Linna\Authentication\Authenticate;
 use Linna\Authentication\ProtectedController;
 use Linna\Mvc\Controller;
 
-class FooProtectedController extends Controller
+class MultipleProtectedController extends Controller
 {
     use ProtectedController;
 
     public $test = false;
 
-    public function __construct(FOOModel $model, Authenticate $login)
+    public function __construct(MultipleModel $model, Authenticate $login)
     {
         parent::__construct($model);
 
@@ -30,7 +30,7 @@ class FooProtectedController extends Controller
         $this->test = true;
     }
 
-    public function fooAction() : bool
+    public function ProtectedAction() : bool
     {
         if ($this->authentication === false) {
             return false;

@@ -9,11 +9,11 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Foo\DI;
+namespace Linna\TestHelper\DI;
 
-class FooClassARules
+class ClassARules
 {
-    public function __construct(bool $aaBool, FooClassI $i, string $aaString, int $aaInt, array $aaArray, $aaNoType)
+    public function __construct(bool $aaBool, ClassI $i, string $aaString, int $aaInt, array $aaArray, $aaNoType)
     {
         return $aaBool;
     }

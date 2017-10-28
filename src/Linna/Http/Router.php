@@ -88,7 +88,7 @@ class Router
 
         if ($route) {
             $this->buildValidRoute($route);
-
+            
             return true;
         }
 
@@ -109,7 +109,7 @@ class Router
     {
         $matches = [];
         $route = [];
-
+        
         foreach ($this->routes as $value) {
             $urlMatch = preg_match('`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`', $uri, $matches);
             $methodMatch = strpos($value['method'], $method);
@@ -133,7 +133,7 @@ class Router
     {
         //add to route array the passed uri for param check when call
         $matches = $route['matches'];
-
+        
         //route match and there is a subpattern with action
         if (count($matches) > 1) {
             //assume that subpattern rapresent action

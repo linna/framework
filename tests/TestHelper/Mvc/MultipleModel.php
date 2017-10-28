@@ -1,55 +1,27 @@
 <?php
 
 /**
- * Linna App.
- *
+ * Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2017, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
+declare(strict_types = 1);
 
-namespace Linna\Foo\Mvc;
+namespace Linna\TestHelper\Mvc;
 
 use Linna\Mvc\Model;
 
-class FooModel extends Model
+class MultipleModel extends Model
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function addToData()
+    public function SomeParam($year, $month, $day)
     {
-        if (!isset($this->getUpdate['data'])) {
-            $this->getUpdate = ['data' => 100];
-
-            return;
-        }
-
-        $this->getUpdate['data'] += 3;
-    }
-
-    public function modifyDataTimed()
-    {
-        $this->getUpdate['data'] += 20;
-    }
-
-    public function modifyData()
-    {
-        $this->getUpdate = ['data' => 1234];
-    }
-
-    public function modifyDataFromParam($param)
-    {
-        $this->getUpdate = ['data' => $param];
-    }
-    
-    public function modifyDataFromSomeParam($year, $month, $day)
-    {
-        $date = date('Y-m-d H:i:s', mktime(1, 2, 3, $month, $day, $year));
-        
-        $this->getUpdate = ['data' => $date];
+        $this->set(['result' => date('Y-m-d H:i:s', mktime(12, 0, 0, $month, $day, $year))]);
     }
 }

@@ -9,9 +9,9 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Foo\DI;
+namespace Linna\TestHelper\DI;
 
-class FooClassI
+class ClassI
 {
     public function __construct()
     {
