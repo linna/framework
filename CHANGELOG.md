@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 * `Linna\Mvc\Model->set()` method for set data to notify to observer
 * `Linna\Mvc\Model->get()` method for retrive data to notify to observer
+* `Linna\Authentication\User->uuid` property
 
 ### Changed
 * `Linna\Http\FastMapTrait` merged into `Linna\Http\Router` through magic `__call()`;

@@ -4,7 +4,7 @@ USE `linna_db`;
 --
 -- Host: 192.168.0.8    Database: linna_db
 -- ------------------------------------------------------
--- Server version	5.7.19
+-- Server version	5.7.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -158,6 +158,7 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` char(36) DEFAULT NULL,
   `name` varchar(32) NOT NULL,
   `description` tinytext,
   `email` char(64) DEFAULT NULL,
@@ -165,8 +166,9 @@ CREATE TABLE `user` (
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
   `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `uuid_UNIQUE` (`uuid`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +177,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'root','System User',NULL,'$2y$11$4IAn6SRaB0osPz8afZC5D.CmTrBGxnb5FQEygPjDirK9SWE/u8YuO',1,'2015-02-14 10:39:00','2016-08-30 16:46:56'),(2,'User_0','Descrizione User_0',NULL,'$2y$11$IeS/XWjIy2CBE6.hLJhruuHedtq.wm.PI6VJpPmVaxCPct2wSWRJa',1,'2015-08-07 18:50:44','2017-03-09 20:50:06'),(3,'User_1','Descrizione User_1',NULL,'$2y$11$Jjs/IB4cKWtU/ZKwb5t6eeXbR0iWrOzqUyJDriSfcOY/dRrpf9zKC',1,'2015-08-07 18:50:44','2017-03-09 20:49:54'),(4,'User_2','Descrizione User_2',NULL,'$2y$11$pJalB4tJwvD3ZHSAvhIFE.bZFC7M3QdXRJ/SOBPU7ylqQ2aW9spY.',1,'2015-08-07 18:50:44','2017-03-09 20:49:54'),(5,'User_3','Descrizione User_3',NULL,'$2y$11$J/9GjpefJUvqO1clihPkEuxZrWVwDIXk1zR9XAjOEzK5HI90cr5FO',0,'2015-08-07 18:50:45','2017-02-28 17:52:13'),(6,'User_4','Descrizione User_4',NULL,'$2y$11$oC64K4.qGruuVqEgJV.Nxe7/f84jR2cSEywf3BmfmWnlM0wDO/ApG',0,'2015-08-07 18:50:45','2017-02-15 22:07:21'),(7,'User_5','Descrizione User_5',NULL,'$2y$11$aLl8Rdz3duayXTOpNqFCUOw4aIyPQOwIEsZCMfoVJ8ZjJajt4SpPe',0,'2015-08-07 18:50:45','2017-02-12 20:25:41'),(8,'test_user',NULL,NULL,'password',0,'2017-10-11 20:26:13','2017-10-11 18:26:13');
+INSERT INTO `user` VALUES (1,'ea172268-1d16-428b-9666-4d087475cf74','root','System User',NULL,'$2y$11$4IAn6SRaB0osPz8afZC5D.CmTrBGxnb5FQEygPjDirK9SWE/u8YuO',1,'2015-02-14 10:39:00','2017-10-29 17:59:18'),(2,'fda9da6f-973a-4212-b151-f731128349b9','User_0','Descrizione User_0',NULL,'$2y$11$IeS/XWjIy2CBE6.hLJhruuHedtq.wm.PI6VJpPmVaxCPct2wSWRJa',1,'2015-08-07 18:50:44','2017-10-29 17:59:18'),(3,'5ab77795-ad18-4150-87e3-cffb4b47d3c9','User_1','Descrizione User_1',NULL,'$2y$11$Jjs/IB4cKWtU/ZKwb5t6eeXbR0iWrOzqUyJDriSfcOY/dRrpf9zKC',1,'2015-08-07 18:50:44','2017-10-29 17:59:18'),(4,'9eb97425-8f44-4ba1-a4b5-89b65026f30c','User_2','Descrizione User_2',NULL,'$2y$11$pJalB4tJwvD3ZHSAvhIFE.bZFC7M3QdXRJ/SOBPU7ylqQ2aW9spY.',1,'2015-08-07 18:50:44','2017-10-29 17:59:18'),(5,'f6dbe6dd-89e8-40e5-acd6-5873caec060a','User_3','Descrizione User_3',NULL,'$2y$11$J/9GjpefJUvqO1clihPkEuxZrWVwDIXk1zR9XAjOEzK5HI90cr5FO',0,'2015-08-07 18:50:45','2017-10-29 17:59:18'),(6,'1421bc55-e428-4604-b0f7-1d1b98855b2e','User_4','Descrizione User_4',NULL,'$2y$11$oC64K4.qGruuVqEgJV.Nxe7/f84jR2cSEywf3BmfmWnlM0wDO/ApG',0,'2015-08-07 18:50:45','2017-10-29 17:59:18'),(7,'a36ee340-a432-4d48-85f2-5cf3f708c4ce','User_5','Descrizione User_5',NULL,'$2y$11$aLl8Rdz3duayXTOpNqFCUOw4aIyPQOwIEsZCMfoVJ8ZjJajt4SpPe',0,'2015-08-07 18:50:45','2017-10-29 17:59:18');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,4 +248,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-16 18:54:49
+-- Dump completed on 2017-10-29 19:02:14

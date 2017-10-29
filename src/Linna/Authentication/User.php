@@ -23,6 +23,7 @@ use Linna\DataMapper\DomainObjectAbstract;
  * $userId = 1;
  *
  * $pdos = $pdo->prepare('SELECT user_id AS objectId,
+ *     uuid,
  *     name,
  *     email,
  *     description,
@@ -45,6 +46,11 @@ use Linna\DataMapper\DomainObjectAbstract;
  */
 class User extends DomainObjectAbstract
 {
+    /**
+     * @var string Universal unique identifier
+     */
+    public $uuid;
+    
     /**
      * @var string User name.
      */
