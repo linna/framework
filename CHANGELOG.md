@@ -9,13 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Unrelased [v0.23.0](https://github.com/linna/framework/compare/v0.22.0...v0.23.0) - 201X-XX-XX
 
 ### Added
+* `Linna\Authentication\User->uuid` property
 * `Linna\Mvc\Model->set()` method for set data to notify to observer
 * `Linna\Mvc\Model->get()` method for retrive data to notify to observer
-* `Linna\Authentication\User->uuid` property
+* `Linna\Helper\Str` class [#58](https://github.com/linna/framework/pull/58)
+* `Linna\Helper\Str->startsWith` method
+* `Linna\Helper\Str->endsWith` method
 
 ### Changed
-* `Linna\Http\FastMapTrait` merged into `Linna\Http\Router` through magic `__call()`;
 * `Linna\Cache\DiskCache->__construct() ttl option removed
+* `Linna\Http\FastMapTrait` merged into `Linna\Http\Router` through magic `__call()`;
 
 ### Fixed
 * `Linna\Auth\Authenticate` login data doesn't update after login
