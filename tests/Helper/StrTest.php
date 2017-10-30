@@ -13,7 +13,7 @@ use Linna\Helper\Str;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Route test.
+ * String Helper test.
  */
 class StrTest extends TestCase
 {
@@ -179,5 +179,46 @@ class StrTest extends TestCase
     public function testEndsWithSomeNeedle(string $haystack, array $needles, bool $result)
     {
         $this->assertEquals($result, Str::endsWith($haystack, $needles));
+    }
+    
+    /**
+     * Starts and ends some needle provider.
+     *
+     * @return array
+     */
+    public function startEndsSomeNeedleProvider() : array
+    {
+        return [
+            ['=his is a strin=', ['=','^'], true],
+            ['t=is is a string', ['=','^'], false],
+            ['th=s is a string', ['=','^'], false],
+            ['thi= is a string', ['=','^'], false],
+            ['this=is a string', ['=','^'], false],
+            ['this =s a string', ['=','^'], false],
+            ['this i= a string', ['=','^'], false],
+            ['^his is=a strin^', ['=','^'], true],
+            ['this is = string', ['=','^'], false],
+            ['this is a=string', ['=','^'], false],
+            ['this is a =tring', ['=','^'], false],
+            ['this is a s=ring', ['=','^'], false],
+            ['this is a st=ing', ['=','^'], false],
+            ['this is a str=ng', ['=','^'], false],
+            ['this is a stri=g', ['=','^'], false],
+            ['^his is a strin=', ['=','^'], false]
+        ];
+    }
+    
+    /**
+     * Test endsWith with some needle
+     *
+     * @dataProvider startEndsSomeNeedleProvider
+     *
+     * @param string $haystack
+     * @param array $needles
+     * @param bool $result
+     */
+    public function testStartEndsWithSomeNeedle(string $haystack, array $needles, bool $result)
+    {
+        $this->assertEquals($result, Str::startsEndsWith($haystack, $needles));
     }
 }

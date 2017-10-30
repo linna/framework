@@ -12,9 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Authentication\User->uuid` property
 * `Linna\Mvc\Model->set()` method for set data to notify to observer
 * `Linna\Mvc\Model->get()` method for retrive data to notify to observer
+* `Linna\Helper\Env` class [#58](https://github.com/linna/framework/pull/58)
+* `Linna\Helper\Eng::get()` static method
 * `Linna\Helper\Str` class [#58](https://github.com/linna/framework/pull/58)
-* `Linna\Helper\Str->startsWith` method
-* `Linna\Helper\Str->endsWith` method
+* `Linna\Helper\Str::startsWith()` static method
+* `Linna\Helper\Str::endsWith()` static method
 
 ### Changed
 * `Linna\Cache\DiskCache->__construct() ttl option removed
