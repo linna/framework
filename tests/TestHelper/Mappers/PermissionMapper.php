@@ -16,7 +16,7 @@ use Linna\Authorization\PermissionMapperInterface;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
 use Linna\DataMapper\NullDomainObject;
-use Linna\Storage\PdoStorage;
+use Linna\Storage\ExtendedPDO;
 
 /**
  * PermissionMapper.
@@ -26,16 +26,16 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     /**
      * @var \PDO Database Connection
      */
-    protected $dBase;
+    protected $pdo;
 
     /**
      * Constructor.
      *
-     * @param Storage $dBase
+     * @param ExtendedPDO $pdo
      */
-    public function __construct(PdoStorage $dBase)
+    public function __construct(ExtendedPDO $pdo)
     {
-        $this->dBase = $dBase->getResource();
+        $this->pdo = $pdo;
     }
 
     /**
@@ -43,7 +43,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
      */
     public function fetchById(int $permissionId) : DomainObjectInterface
     {
-        $pdos = $this->dBase->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission WHERE permission_id = :id');
+        $pdos = $this->pdo->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission WHERE permission_id = :id');
 
         $pdos->bindParam(':id', $permissionId, \PDO::PARAM_INT);
         $pdos->execute();
@@ -58,7 +58,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
      */
     public function fetchByName(string $permissionName) : DomainObjectInterface
     {
-        $pdos = $this->dBase->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission WHERE name = :name');
+        $pdos = $this->pdo->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission WHERE name = :name');
 
         $pdos->bindParam(':name', $permissionName, \PDO::PARAM_STR);
         $pdos->execute();
@@ -73,7 +73,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
      */
     public function fetchAll() : array
     {
-        $pdos = $this->dBase->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission');
+        $pdos = $this->pdo->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission');
 
         $pdos->execute();
 
@@ -85,7 +85,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
      */
     public function fetchLimit(int $offset, int $rowCount) : array
     {
-        $pdos = $this->dBase->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission LIMIT :offset, :rowcount');
+        $pdos = $this->pdo->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission LIMIT :offset, :rowcount');
 
         $pdos->bindParam(':offset', $offset, \PDO::PARAM_INT);
         $pdos->bindParam(':rowcount', $rowCount, \PDO::PARAM_INT);
@@ -99,7 +99,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
      */
     public function fetchPermissionsByRole(int $roleId) : array
     {
-        $pdos = $this->dBase->prepare('
+        $pdos = $this->pdo->prepare('
         SELECT rp.permission_id AS objectId, name, description, last_update AS lastUpdate
         FROM permission AS p
         INNER JOIN role_permission AS rp 
@@ -117,7 +117,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
      */
     public function fetchPermissionsByUser(int $userId) : array
     {
-        $pdos = $this->dBase->prepare('
+        $pdos = $this->pdo->prepare('
         SELECT up.permission_id AS objectId, name, description, last_update AS lastUpdate
         FROM permission AS p
         INNER JOIN user_permission AS up 
@@ -135,7 +135,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
      */
     public function fetchUserPermissionHashTable(int $userId) : array
     {
-        $pdos = $this->dBase->prepare("(SELECT sha2(concat(u.user_id, '.', up.permission_id),0) as p_hash
+        $pdos = $this->pdo->prepare("(SELECT sha2(concat(u.user_id, '.', up.permission_id),0) as p_hash
         FROM user AS u
         INNER JOIN user_permission AS up
         ON u.user_id = up.permission_id WHERE u.user_id = :id)
@@ -164,7 +164,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
      */
     public function permissionExist(string $permission) : bool
     {
-        $pdos = $this->dBase->prepare('SELECT permission_id FROM permission WHERE name = :name');
+        $pdos = $this->pdo->prepare('SELECT permission_id FROM permission WHERE name = :name');
 
         $pdos->bindParam(':name', $permission, \PDO::PARAM_STR);
         $pdos->execute();

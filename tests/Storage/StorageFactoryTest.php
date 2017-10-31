@@ -9,9 +9,9 @@
  */
 declare(strict_types=1);
 
-use Linna\Storage\MongoDbStorage;
-use Linna\Storage\MysqliStorage;
-use Linna\Storage\PdoStorage;
+use Linna\Storage\Connectors\MongoDBConnector;
+use Linna\Storage\Connectors\MysqliConnector;
+use Linna\Storage\Connectors\PdoConnector;
 use Linna\Storage\StorageFactory;
 use MongoDB\Client;
 use PHPUnit\Framework\TestCase;
@@ -40,8 +40,7 @@ class StorageFactoryTest extends TestCase
 
         $driver = (new StorageFactory('pdo', $options))->get();
 
-        $this->assertInstanceOf(PdoStorage::class, $driver);
-        $this->assertInstanceOf(\PDO::class, $driver->getResource());
+        $this->assertInstanceOf(\PDO::class, $driver);
     }
 
     /**
@@ -59,8 +58,7 @@ class StorageFactoryTest extends TestCase
 
         $driver = (new StorageFactory('mysqli', $options))->get();
 
-        $this->assertInstanceOf(MysqliStorage::class, $driver);
-        $this->assertInstanceOf(\mysqli::class, $driver->getResource());
+        $this->assertInstanceOf(\mysqli::class, $driver);
     }
 
     /**
@@ -76,8 +74,7 @@ class StorageFactoryTest extends TestCase
 
         $driver = (new StorageFactory('mongodb', $options))->get();
 
-        $this->assertInstanceOf(MongoDbStorage::class, $driver);
-        $this->assertInstanceOf(Client::class, $driver->getResource());
+        $this->assertInstanceOf(Client::class, $driver);
     }
 
     /**

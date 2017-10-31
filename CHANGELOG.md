@@ -21,6 +21,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * `Linna\Cache\DiskCache->__construct() ttl option removed
 * `Linna\Http\FastMapTrait` merged into `Linna\Http\Router` through magic `__call()`;
+* `Linna\Session\MysqlPdoSessionHandler->__construct()` now expect `Linna\Storage\ExtendedPDO` as parameter
+* `Linna\Storage\PdoStorage` moved to `Linna\Storage\Connectors\PdoConnector`
+* `Linna\Storage\MysqliStorage` moved to `Linna\Storage\Connectors\MysqliConnector`
+* `Linna\Storage\MongoDbStorage` moved to `Linna\Storage\Connectors\MongoDBConnector`
+* `Linna\Storage\StorageInterface` renamed to `Linna\Storage\ConnectorInterface`
+* `Linna\Storage\StorageFactory->get()` now return the connection resource directly
 
 ### Fixed
 * `Linna\Auth\Authenticate` login data doesn't update after login

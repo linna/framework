@@ -11,6 +11,10 @@ declare(strict_types=1);
 
 namespace Linna\Storage;
 
+use Linna\Storage\Connectors\PdoConnector;
+use Linna\Storage\Connectors\MongoDBConnector;
+use Linna\Storage\Connectors\MysqliConnector;
+
 /**
  * Storage Factory.
  */
@@ -20,18 +24,18 @@ class StorageFactory extends AbstractStorageFactory
      * @var array Factory supported driver
      */
     protected $supportedDriver = [
-        'pdo'     => PdoStorage::class,
-        'mysqli'  => MysqliStorage::class,
-        'mongodb' => MongoDbStorage::class,
+        'pdo'     => PdoConnector::class,
+        'mongodb' => MongoDBConnector::class,
+        'mysqli'  => MysqliConnector::class,
     ];
 
     /**
      * Return Storage Resource.
      *
-     * @return StorageInterface
+     * @return mixed
      */
-    public function get() : StorageInterface
+    public function get()
     {
-        return $this->returnStorageObject();
+        return $this->returnStorageObject()->getResource();
     }
 }

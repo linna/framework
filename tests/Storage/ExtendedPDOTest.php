@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-use Linna\Storage\PdoStorage;
+use Linna\Storage\Connectors\PdoConnector;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -71,7 +71,7 @@ class ExtendedPDOTest extends TestCase
      */
     public function testQueryWithParameters(string $query, array $param)
     {
-        $user = (new PdoStorage($this->options))
+        $user = (new PdoConnector($this->options))
             ->getResource()
             ->queryWithParam(
                 $query,
@@ -88,7 +88,7 @@ class ExtendedPDOTest extends TestCase
      */
     public function testQueryWithParameterWithWrongParameterName()
     {
-        (new PdoStorage($this->options))
+        (new PdoConnector($this->options))
             ->getResource()
             ->queryWithParam(
                 'SELECT user_id, name, email FROM user WHERE name = :name',
@@ -103,7 +103,7 @@ class ExtendedPDOTest extends TestCase
      */
     public function testQueryWithParameterWithTooManyParameters()
     {
-        (new PdoStorage($this->options))
+        (new PdoConnector($this->options))
             ->getResource()
             ->queryWithParam(
                 'SELECT user_id, name, email FROM user WHERE name = :name',
@@ -118,7 +118,7 @@ class ExtendedPDOTest extends TestCase
      */
     public function testQueryWithParameterWithoutParameters()
     {
-        (new PdoStorage($this->options))
+        (new PdoConnector($this->options))
             ->getResource()
             ->queryWithParam(
                 'SELECT user_id, name, email FROM user WHERE name = :name',
@@ -133,7 +133,7 @@ class ExtendedPDOTest extends TestCase
      */
     public function testQueryStatus(string $query, array $param)
     {
-        $pdo = (new PdoStorage($this->options))->getResource();
+        $pdo = (new PdoConnector($this->options))->getResource();
         
         $user = $pdo->queryWithParam(
             $query,

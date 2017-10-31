@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-use Linna\Storage\MongoDbStorage;
+use Linna\Storage\Connectors\MongoDBConnector;
 use MongoDB\Client;
 use PHPUnit\Framework\TestCase;
 
@@ -29,7 +29,7 @@ class MongoDbStorageTest extends TestCase
             'driverOptions' => [],
         ];
 
-        $this->assertInstanceOf(Client::class, (new MongoDbStorage($options))->getResource());
+        $this->assertInstanceOf(Client::class, (new MongoDBConnector($options))->getResource());
     }
 
     /**
@@ -45,6 +45,6 @@ class MongoDbStorageTest extends TestCase
             'driverOptions' => [],
         ];
 
-        (new MongoDbStorage($options))->getResource();
+        (new MongoDBConnector($options))->getResource();
     }
 }

@@ -9,17 +9,18 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Storage;
+namespace Linna\Storage\Connectors;
 
-use MongoDB\Client;
+use Linna\Storage\ExtendedPDO;
+use Linna\Storage\ConnectorInterface;
 
 /**
- * MongoDB.
+ * PDO storage Connector.
  */
-class MongoDbStorage implements StorageInterface
+class PdoConnector implements ConnectorInterface
 {
     /**
-     * @var array MongoDB connection options
+     * @var array Mysql PDO connection options
      */
     protected $options;
 
@@ -36,14 +37,15 @@ class MongoDbStorage implements StorageInterface
     /**
      * Get Resource.
      *
-     * @return Client
+     * @return ExtendedPDO
      */
     public function getResource()
     {
-        return new Client(
-            $this->options['uri'],
-            $this->options['uriOptions'],
-            $this->options['driverOptions']
+        return new ExtendedPDO(
+            $this->options['dsn'],
+            $this->options['user'],
+            $this->options['password'],
+            $this->options['options']
         );
     }
 }

@@ -196,10 +196,9 @@ class MysqlPdoSessionHandlerTest extends TestCase
      */
     public function testGc()
     {
-        $conn = $this->pdo->getResource();
-        $conn->query('DELETE FROM session');
+        $this->pdo->query('DELETE FROM session');
 
-        $pdos = $conn->prepare('INSERT INTO session (session_id, session_data) VALUES (:session_id, :session_data)');
+        $pdos = $this->pdo->prepare('INSERT INTO session (session_id, session_data) VALUES (:session_id, :session_data)');
 
         for ($i = 0; $i < 10; $i++) {
             $sessionId = md5((string) $i);
@@ -213,7 +212,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
 
         $this->handler->gc(-1);
 
-        $pdos = $conn->prepare('SELECT * FROM session');
+        $pdos = $this->pdo->prepare('SELECT * FROM session');
         $pdos->execute();
 
         $this->assertEquals(0, $pdos->rowCount());

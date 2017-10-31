@@ -18,7 +18,7 @@ use Linna\DataMapper\DomainObjectAbstract;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
 use Linna\DataMapper\NullDomainObject;
-use Linna\Storage\PdoStorage;
+use Linna\Storage\ExtendedPDO;
 
 /**
  * UserMapper.
@@ -31,19 +31,19 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
     protected $password;
 
     /**
-     * @var \PDO Database Connection
+     * @var ExtendedPDO Database Connection
      */
-    protected $dBase;
+    protected $pdo;
 
     /**
      * Constructor.
      *
-     * @param PdoStorage $dBase
+     * @param ExtendedPDO $pdo
      * @param Password   $password
      */
-    public function __construct(PdoStorage $dBase, Password $password)
+    public function __construct(ExtendedPDO $pdo, Password $password)
     {
-        $this->dBase = $dBase->getResource();
+        $this->pdo = $pdo;
         $this->password = $password;
     }
 
@@ -52,7 +52,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
      */
     public function fetchById(int $userId) : DomainObjectInterface
     {
-        $pdos = $this->dBase->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE user_id = :id');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE user_id = :id');
 
         $pdos->bindParam(':id', $userId, \PDO::PARAM_INT);
         $pdos->execute();
@@ -71,7 +71,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
      */
     public function fetchByName(string $userName) : DomainObjectInterface
     {
-        $pdos = $this->dBase->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE md5(name) = :name');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE md5(name) = :name');
 
         $hashedUserName = md5($userName);
 
@@ -88,7 +88,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
      */
     public function fetchAll() : array
     {
-        $pdos = $this->dBase->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC');
 
         $pdos->execute();
 
@@ -100,7 +100,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
      */
     public function fetchLimit(int $offset, int $rowCount) : array
     {
-        $pdos = $this->dBase->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC LIMIT :offset, :rowcount');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC LIMIT :offset, :rowcount');
 
         $pdos->bindParam(':offset', $offset, \PDO::PARAM_INT);
         $pdos->bindParam(':rowcount', $rowCount, \PDO::PARAM_INT);
@@ -125,7 +125,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
         $this->checkValidDomainObject($user);
 
         try {
-            $pdos = $this->dBase->prepare('INSERT INTO user (name, email, description, password, created) VALUES (:name, :email, :description, :password, NOW())');
+            $pdos = $this->pdo->prepare('INSERT INTO user (name, email, description, password, created) VALUES (:name, :email, :description, :password, NOW())');
 
             $pdos->bindParam(':name', $user->name, \PDO::PARAM_STR);
             $pdos->bindParam(':email', $user->email, \PDO::PARAM_STR);
@@ -133,7 +133,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
             $pdos->bindParam(':password', $user->password, \PDO::PARAM_STR);
             $pdos->execute();
 
-            return (int) $this->dBase->lastInsertId();
+            return (int) $this->pdo->lastInsertId();
         } catch (\RuntimeException $e) {
             echo 'Mapper: Insert not compled, ', $e->getMessage(), "\n";
         }
@@ -147,7 +147,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
         $this->checkValidDomainObject($user);
 
         try {
-            $pdos = $this->dBase->prepare('UPDATE user SET name = :name, email = :email, description = :description,  password = :password, active = :active WHERE user_id = :user_id');
+            $pdos = $this->pdo->prepare('UPDATE user SET name = :name, email = :email, description = :description,  password = :password, active = :active WHERE user_id = :user_id');
 
             $objId = $user->getId();
 
@@ -174,7 +174,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
 
         try {
             $objId = $user->getId();
-            $pdos = $this->dBase->prepare('DELETE FROM user WHERE user_id = :user_id');
+            $pdos = $this->pdo->prepare('DELETE FROM user WHERE user_id = :user_id');
             $pdos->bindParam(':user_id', $objId, \PDO::PARAM_INT);
             $pdos->execute();
         } catch (\Exception $e) {

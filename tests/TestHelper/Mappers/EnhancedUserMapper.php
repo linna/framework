@@ -17,7 +17,7 @@ use Linna\Authentication\Password;
 use Linna\Authorization\PermissionMapperInterface;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\NullDomainObject;
-use Linna\Storage\PdoStorage;
+use Linna\Storage\ExtendedPDO;
 
 /**
  * EnhancedUserMapper.
@@ -32,13 +32,13 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     /**
      * Constructor.
      *
-     * @param PdoStorage                $dBase
+     * @param ExtendedPDO               $pdo
      * @param Password                  $password
      * @param PermissionMapperInterface $permissionMapper
      */
-    public function __construct(PdoStorage $dBase, Password $password, PermissionMapperInterface $permissionMapper)
+    public function __construct(ExtendedPDO $pdo, Password $password, PermissionMapperInterface $permissionMapper)
     {
-        parent::__construct($dBase, $password);
+        parent::__construct($pdo, $password);
 
         $this->permissionMapper = $permissionMapper;
     }
@@ -48,7 +48,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
      */
     public function fetchById(int $userId) : DomainObjectInterface
     {
-        $pdos = $this->dBase->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE user_id = :id');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE user_id = :id');
 
         $pdos->bindParam(':id', $userId, \PDO::PARAM_INT);
         $pdos->execute();
@@ -71,7 +71,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     {
         $hashedUserName = md5($userName);
 
-        $pdos = $this->dBase->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE md5(name) = :name');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE md5(name) = :name');
 
         $pdos->bindParam(':name', $hashedUserName, \PDO::PARAM_STR);
         $pdos->execute();
@@ -92,7 +92,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
      */
     public function fetchAll() : array
     {
-        $pdos = $this->dBase->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC');
 
         $pdos->execute();
 
@@ -106,7 +106,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
      */
     public function fetchLimit(int $offset, int $rowCount) : array
     {
-        $pdos = $this->dBase->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC LIMIT :offset, :rowcount');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC LIMIT :offset, :rowcount');
 
         $pdos->bindParam(':offset', $offset, \PDO::PARAM_INT);
         $pdos->bindParam(':rowcount', $rowCount, \PDO::PARAM_INT);
@@ -122,7 +122,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
      */
     public function fetchUserByRole(int $roleId) : array
     {
-        $pdos = $this->dBase->prepare('SELECT u.user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate
+        $pdos = $this->pdo->prepare('SELECT u.user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate
         FROM user AS u INNER JOIN user_role AS ur ON u.user_id = ur.user_id
         WHERE role_id = :id');
 
@@ -167,7 +167,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     public function grant(EnhancedUser &$user, string $permission)
     {
         if ($this->permissionMapper->permissionExist($permission)) {
-            $pdos = $this->dBase->prepare('INSERT INTO user_permission (user_id, permission_id) VALUES (:user_id, (SELECT permission_id FROM permission WHERE name = :permission))');
+            $pdos = $this->pdo->prepare('INSERT INTO user_permission (user_id, permission_id) VALUES (:user_id, (SELECT permission_id FROM permission WHERE name = :permission))');
 
             $userId = $user->getId();
 
@@ -185,7 +185,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     public function revoke(EnhancedUser &$user, string $permission)
     {
         if ($this->permissionMapper->permissionExist($permission)) {
-            $pdos = $this->dBase->prepare('DELETE FROM user_permission WHERE user_id = :user_id AND permission_id = (SELECT permission_id FROM permission WHERE name = :permission)');
+            $pdos = $this->pdo->prepare('DELETE FROM user_permission WHERE user_id = :user_id AND permission_id = (SELECT permission_id FROM permission WHERE name = :permission)');
 
             $userId = $user->getId();
 

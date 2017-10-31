@@ -9,17 +9,18 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Storage;
+namespace Linna\Storage\Connectors;
 
-use mysqli;
+use Linna\Storage\ConnectorInterface;
+use MongoDB\Client;
 
 /**
- * Mysql Improved Extension.
+ * MongoDB Connector.
  */
-class MysqliStorage implements StorageInterface
+class MongoDBConnector implements ConnectorInterface
 {
     /**
-     * @var array Mysqli connection options
+     * @var array MongoDB connection options
      */
     protected $options;
 
@@ -36,18 +37,14 @@ class MysqliStorage implements StorageInterface
     /**
      * Get Resource.
      *
-     * @return mysqli
+     * @return Client
      */
     public function getResource()
     {
-        mysqli_report(MYSQLI_REPORT_ALL);
-
-        return new mysqli(
-            $this->options['host'],
-            $this->options['user'],
-            $this->options['password'],
-            $this->options['database'],
-            $this->options['port']
+        return new Client(
+            $this->options['uri'],
+            $this->options['uriOptions'],
+            $this->options['driverOptions']
         );
     }
 }

@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-use Linna\Storage\MysqliStorage;
+use Linna\Storage\Connectors\MysqliConnector;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,7 +30,7 @@ class MysqliStorageTest extends TestCase
             'port'     => 3306,
         ];
 
-        $this->assertInstanceOf(mysqli::class, (new MysqliStorage($options))->getResource());
+        $this->assertInstanceOf(mysqli::class, (new MysqliConnector($options))->getResource());
     }
 
     /**
@@ -70,6 +70,6 @@ class MysqliStorageTest extends TestCase
             'port'     => $port,
         ];
 
-        (new MysqliStorage($options))->getResource();
+        (new MysqliConnector($options))->getResource();
     }
 }

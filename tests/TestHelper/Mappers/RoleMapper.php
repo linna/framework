@@ -20,7 +20,7 @@ use Linna\Authentication\User;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
 use Linna\DataMapper\NullDomainObject;
-use Linna\Storage\PdoStorage;
+use Linna\Storage\ExtendedPDO;
 
 /**
  * Role Mapper.
@@ -35,7 +35,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
     /**
      * @var \PDO Database Connection
      */
-    protected $dBase;
+    protected $pdo;
 
     /**
      * @var PermissionMapperInterface Permission Mapper
@@ -56,12 +56,12 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
      * @param PermissionMapperInterface   $permissionMapper
      */
     public function __construct(
-            PdoStorage $dBase,
+            ExtendedPDO $pdo,
             Password $password,
             EnhancedUserMapperInterface $userMapper,
             PermissionMapperInterface $permissionMapper
     ) {
-        $this->dBase = $dBase->getResource();
+        $this->pdo = $pdo;
         $this->password = $password;
         $this->userMapper = $userMapper;
         $this->permissionMapper = $permissionMapper;
@@ -72,7 +72,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
      */
     public function fetchById(int $roleId) : DomainObjectInterface
     {
-        $pdos = $this->dBase->prepare('SELECT role_id AS objectId, name, description, active, last_update AS lastUpdate FROM role WHERE role_id = :id');
+        $pdos = $this->pdo->prepare('SELECT role_id AS objectId, name, description, active, last_update AS lastUpdate FROM role WHERE role_id = :id');
 
         $pdos->bindParam(':id', $roleId, \PDO::PARAM_INT);
         $pdos->execute();
@@ -97,7 +97,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
      */
     public function fetchAll() : array
     {
-        $pdos = $this->dBase->prepare('SELECT role_id AS objectId, name, description, active, last_update AS lastUpdate FROM role ');
+        $pdos = $this->pdo->prepare('SELECT role_id AS objectId, name, description, active, last_update AS lastUpdate FROM role ');
 
         $pdos->execute();
 
@@ -109,7 +109,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
      */
     public function fetchLimit(int $offset, int $rowCount) : array
     {
-        $pdos = $this->dBase->prepare('SELECT role_id AS objectId, name, description, active, last_update AS lastUpdate FROM groups LIMIT :offset, :rowcount');
+        $pdos = $this->pdo->prepare('SELECT role_id AS objectId, name, description, active, last_update AS lastUpdate FROM groups LIMIT :offset, :rowcount');
 
         $pdos->bindParam(':offset', $offset, \PDO::PARAM_INT);
         $pdos->bindParam(':rowcount', $rowCount, \PDO::PARAM_INT);

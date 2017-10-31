@@ -14,7 +14,7 @@ namespace Linna\Storage;
 /**
  * Storage Interface.
  */
-interface StorageInterface
+interface ConnectorInterface
 {
     /**
      * Constructor.

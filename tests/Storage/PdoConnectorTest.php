@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-use Linna\Storage\PdoStorage;
+use Linna\Storage\Connectors\PdoConnector;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -34,7 +34,7 @@ class PdoStorageTest extends TestCase
             ],
         ];
 
-        $this->assertInstanceOf(PDO::class, (new PdoStorage($options))->getResource());
+        $this->assertInstanceOf(PDO::class, (new PdoConnector($options))->getResource());
     }
 
     /**
@@ -71,6 +71,6 @@ class PdoStorageTest extends TestCase
             ],
         ];
 
-        (new PdoStorage($options))->getResource();
+        (new PdoConnector($options))->getResource();
     }
 }

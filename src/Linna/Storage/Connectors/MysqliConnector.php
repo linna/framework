@@ -9,15 +9,18 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Storage;
+namespace Linna\Storage\Connectors;
+
+use Linna\Storage\ConnectorInterface;
+use mysqli;
 
 /**
- * PDO storage.
+ * Mysql Improved Extension Connector.
  */
-class PdoStorage implements StorageInterface
+class MysqliConnector implements ConnectorInterface
 {
     /**
-     * @var array Mysql PDO connection options
+     * @var array Mysqli connection options
      */
     protected $options;
 
@@ -34,15 +37,18 @@ class PdoStorage implements StorageInterface
     /**
      * Get Resource.
      *
-     * @return ExtendedPDO
+     * @return mysqli
      */
     public function getResource()
     {
-        return new ExtendedPDO(
-            $this->options['dsn'],
+        mysqli_report(MYSQLI_REPORT_ALL);
+
+        return new mysqli(
+            $this->options['host'],
             $this->options['user'],
             $this->options['password'],
-            $this->options['options']
+            $this->options['database'],
+            $this->options['port']
         );
     }
 }
