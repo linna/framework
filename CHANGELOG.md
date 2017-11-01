@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v0.23.1](https://github.com/linna/framework/compare/v0.23.0...v0.23.1) - 2017-11-01
+
+### Fixed
+* `Linna\Mvc\FrontController` view don't call default method
+
 ## [v0.23.0](https://github.com/linna/framework/compare/v0.22.0...v0.23.0) - 2017-11-01
 
 ### Added
@@ -20,7 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 * `Linna\Cache\DiskCache->__construct()` ttl option removed
-* `Linna\Http\FastMapTrait` merged into `Linna\Http\Router` through magic `__call()`;
+* `Linna\Http\FastMapTrait` merged into `Linna\Http\Router` through magic `__call()`
 * `Linna\Session\MysqlPdoSessionHandler->__construct()` now expect `Linna\Storage\ExtendedPDO` as parameter
 * `Linna\Storage\PdoStorage` moved to `Linna\Storage\Connectors\PdoConnector`
 * `Linna\Storage\MysqliStorage` moved to `Linna\Storage\Connectors\MysqliConnector`
