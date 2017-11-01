@@ -13,9 +13,9 @@ use Linna\Storage\Connectors\MysqliConnector;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Mysqli Storage Test
+ * Mysqli Connector Test
  */
-class MysqliStorageTest extends TestCase
+class MysqliConnectorTest extends TestCase
 {
     /**
      * Test connection.

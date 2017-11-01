@@ -11,29 +11,15 @@ declare(strict_types=1);
 
 namespace Linna\Storage\Connectors;
 
+use Linna\Storage\AbstractConnector;
 use Linna\Storage\ConnectorInterface;
 use MongoDB\Client;
 
 /**
  * MongoDB Connector.
  */
-class MongoDBConnector implements ConnectorInterface
+class MongoDBConnector extends AbstractConnector implements ConnectorInterface
 {
-    /**
-     * @var array MongoDB connection options
-     */
-    protected $options;
-
-    /**
-     * Constructor.
-     *
-     * @param array $options
-     */
-    public function __construct(array $options)
-    {
-        $this->options = $options;
-    }
-
     /**
      * Get Resource.
      *

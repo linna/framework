@@ -14,9 +14,9 @@ use MongoDB\Client;
 use PHPUnit\Framework\TestCase;
 
 /**
- * MongoDB Storage Test
+ * MongoDB Connector Test
  */
-class MongoDbStorageTest extends TestCase
+class MongoDBConnectorTest extends TestCase
 {
     /**
      * Test connection.

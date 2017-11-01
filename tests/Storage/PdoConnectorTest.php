@@ -13,9 +13,9 @@ use Linna\Storage\Connectors\PdoConnector;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Pdo Storage Test
+ * Pdo Connector Test
  */
-class PdoStorageTest extends TestCase
+class PdoConnectorTest extends TestCase
 {
     /**
      * Test connection.
