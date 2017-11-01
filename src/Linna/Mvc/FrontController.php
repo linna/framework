@@ -93,10 +93,10 @@ class FrontController
      */
     private function beforeAfterControllerAction(string $when)
     {
-        $actionMethod = $when.ucfirst($this->routeAction);
+        $method = $when.ucfirst($this->routeAction);
 
-        if (method_exists($this->controller, $actionMethod) && $actionMethod !== $when) {
-            call_user_func([$this->controller, $actionMethod]);
+        if (method_exists($this->controller, $method) && $method !== $when) {
+            call_user_func([$this->controller, $method]);
         }
     }
 
@@ -119,18 +119,18 @@ class FrontController
     private function runController()
     {
         //get route information
-        $routeAction = $this->routeAction;
-        $routeParam = $this->routeParam;
+        $action = $this->routeAction;
+        $param = $this->routeParam;
 
         //action - call controller passing params
-        if ($routeParam) {
-            call_user_func_array([$this->controller, $routeAction], $routeParam);
+        if ($param) {
+            call_user_func_array([$this->controller, $action], $param);
             return;
         }
 
         //action - call controller
-        if ($routeAction) {
-            call_user_func([$this->controller, $routeAction]);
+        if ($action) {
+            call_user_func([$this->controller, $action]);
         }
     }
 
@@ -139,9 +139,9 @@ class FrontController
      */
     private function runView()
     {
-        if ($this->routeAction) {
-            call_user_func([$this->view, $this->routeAction]);
-        }
+        $action = ($this->routeAction) ? $this->routeAction : 'index';
+        
+        call_user_func([$this->view, $action]);
     }
 
     /**
