@@ -78,15 +78,7 @@ class FrontControllerTest extends TestCase
                 'view'       => 'BeforeAfterView',
                 'controller' => 'BeforeAfterController',
                 'action'     => 'Action'
-            ]),/*
-            new Route([
-                'name'       => 'Foo',
-                'method'     => 'GET',
-                'url'        => '/Foo/[passedData]/(modifyDataFromParam)',
-                'model'      => 'FOOModel',
-                'view'       => 'FOOView',
-                'controller' => 'FOOController',
-            ]),*/
+            ]),
             new Route([
                 'name'       => 'MultiParam',
                 'method'     => 'GET',
@@ -95,23 +87,7 @@ class FrontControllerTest extends TestCase
                 'view'       => 'MultiView',
                 'controller' => 'MultiController',
                 'action'     => 'SomeParam'
-            ])/*
-            new Route([
-                'name'       => 'Foo',
-                'method'     => 'GET',
-                'url'        => '/Foo/(modifyData)',
-                'model'      => 'FOOModel',
-                'view'       => 'FOOView',
-                'controller' => 'FOOController',
-            ]),
-            new Route([
-                'name'       => 'Foo',
-                'method'     => 'GET',
-                'url'        => '/Foo/(modifyDataTimed)',
-                'model'      => 'FOOModel',
-                'view'       => 'FOOView',
-                'controller' => 'FOOControllerBeforeAfter',
-            ])*/
+            ])
         ]))->toArray();
         
         $this->router = new Router($routes, [
@@ -205,25 +181,6 @@ class FrontControllerTest extends TestCase
         //$this->assertTrue(true);
     }
 
-    /**
-     * Test run front controller with param
-     */
-    /*public function testRunFrontControllerWithParam()
-    {
-        $this->router->validate('/Foo/500/modifyDataFromParam', 'GET');
-
-        $route = $this->router->getRoute()->toArray();
-
-        $frontController = new FrontController($this->model, $this->view, $this->controller, $route['action'], $route['param']);
-
-        $frontController->run();
-
-        $test = json_decode($frontController->response());
-
-        $this->assertInstanceOf(stdClass::class, $test);
-        $this->assertEquals(500, $test->data);
-    }*/
-    
     /**
      * Some param provider.
      *
@@ -331,24 +288,5 @@ class FrontControllerTest extends TestCase
         $frontController->run();
 
         $this->assertEquals($result, json_decode($frontController->response())->result);
-        //$this->assertTrue(true);
     }
-    
-    /**
-      * Test run front controller without action.
-     */
-   /* public function testRunFrontControllerWithOutAction()
-    {
-        $this->router->validate('/Foo', 'GET');
-
-        $route = $this->router->getRoute()->toArray();
-
-        $frontController = new FrontController($this->model, $this->view, $this->controller, $route['action'], $route['param']);
-
-        $frontController->run();
-
-        $test = json_decode($frontController->response());
-
-        $this->assertInstanceOf(stdClass::class, $test);
-    }*/
 }
