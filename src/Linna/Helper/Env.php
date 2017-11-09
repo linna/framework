@@ -34,7 +34,7 @@ class Env
     ];
     
     /**
-     * Return the default value of the given value.
+     * Return value or the returned value if function is passed.
      *
      * @param mixed $value
      *
