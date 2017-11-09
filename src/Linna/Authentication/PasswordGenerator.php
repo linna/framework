@@ -161,7 +161,9 @@ class PasswordGenerator
      */
     private function getRandomChar(array $interval): string
     {
-        while ($int = random_int(33, 122)) {
+        $int = random_int(33, 122);
+        
+        while (true) {
             if ($this->inRanges($int, $interval)) {
                 break;
             }
