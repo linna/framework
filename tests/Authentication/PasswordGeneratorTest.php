@@ -9,13 +9,13 @@
  */
 declare(strict_types=1);
 
-use Linna\Authentication\Password;
+use Linna\Authentication\PasswordGenerator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Password Test.
+ * Password Generator Test.
  */
-class PasswordTest extends TestCase
+class PasswordGeneratorTest extends TestCase
 {
     /**
      * @var Password The password class.
@@ -27,72 +27,132 @@ class PasswordTest extends TestCase
      */
     public function setUp()
     {
-        $this->password = new Password();
+        $this->password = new PasswordGenerator();
     }
 
     /**
-     * Test password hash.
+     * String length provider.
      */
-    public function testPasswordHashAndVerify()
+    public function stringLengthProvider() : array
     {
-        $hash = $this->password->hash('password');
-
-        $this->assertTrue($this->password->verify('password', $hash));
+        return [
+            [15],
+            [20],
+            [25],
+            [30]
+        ];
     }
-
+    
     /**
-     * Test password hash and verify fail verify.
+     * Test get from random.
+     *
+     * @dataProvider stringLengthProvider
      */
-    public function testPasswordHashAndFailVerify()
+    public function testGetFromRandom(int $strLen)
     {
-        $hash = $this->password->hash('password');
+        $password = $this->password->getFromRandom($strLen);
+
+        $this->assertEquals($strLen, strlen($password));
+    }
+    
+    /**
+     * Test get from random.
+     *
+     * @dataProvider stringLengthProvider
+     */
+    public function testCheckRandomTopology(int $strLen)
+    {
+        $topology = $this->password->getTopology($this->password->getFromRandom($strLen));
         
-        $this->assertFalse($this->password->verify('otherpassword', $hash));
+        $this->assertTrue((strpos($topology, 'u') === false) ? false : true);
+        $this->assertTrue((strpos($topology, 'l') === false) ? false : true);
+        $this->assertTrue((strpos($topology, 'd') === false) ? false : true);
+        $this->assertTrue((strpos($topology, 's') === false) ? false : true);
     }
 
     /**
-     * Test hash that need reash.
+     * Test in range edges.
      */
-    public function testHashThatNeedRehash()
+    public function testCheckRangesEdges()
     {
-        $hash = password_hash('password', PASSWORD_DEFAULT, ['cost' => 9,]);
-
-        $this->assertTrue($this->password->needsRehash($hash));
+        $this->assertEquals('ssddssuussllss', (new PasswordGenerator())->getTopology('!/09:@AZ[`az{~'));
     }
-
+    
     /**
-     * Test hash that not need rehash.
+     * Topology and passwords provider.
      */
-    public function testHashThatNotNeedRehash()
+    public function topologyAndPasswordProvider() : array
     {
-        $hash = $this->password->hash('password');
+        $array = [];
         
-        $this->assertFalse($this->password->needsRehash($hash));
+        for ($i = 0; $i < 10; $i++) {
+            $password = (new PasswordGenerator())->getFromRandom(20);
+            $topology = (new PasswordGenerator())->getTopology($password);
+            
+            $array[] = [$password, $topology];
+        }
+        
+        return $array;
+    }
+    
+    /**
+     * Test get topology.
+     *
+     * @dataProvider topologyAndPasswordProvider
+     */
+    public function testGetTopology(string $password, string $topology)
+    {
+        $this->assertEquals($topology, $this->password->getTopology($password));
     }
 
     /**
-     * Test get hash info.
+     * Bad topology provider.
      */
-    public function testGetHashInfo()
+    public function badTopologyProvider() : array
     {
-        $hash = '$2y$11$4IAn6SRaB0osPz8afZC5D.CmTrBGxnb5FQEygPjDirK9SWE/u8YuO';
-
-        $info = $this->password->getInfo($hash);
-
-        $this->assertEquals('array', gettype($info));
-        $this->assertEquals(1, $info['algo']);
+        return [
+           ['uldz'],
+           ['uld!'],
+           ['uld1'],
+           ['...'],
+           ['']
+       ];
     }
-
+    
     /**
-     * Test get bad hash info with bad hash.
+     * Test get topology.
+     *
+     * @dataProvider badTopologyProvider
+     * @expectedException InvalidArgumentException
      */
-    public function testGetHashInfoWithBadHash()
+    public function testGetTopologyWithBadTopology(string $topology)
     {
-        $hash = 'badPaswordHash';
-
-        $info = $this->password->getInfo($hash);
-
-        $this->assertEquals('array', gettype($info));
-        $this->assertEquals(0, $info['algo']);
+        $this->password->getFromTopology($topology);
+    }
+    
+    /**
+     * Topology provider.
+     */
+    public function topologyProvider() : array
+    {
+        $array = [];
+        
+        for ($i = 0; $i < 10; $i++) {
+            $password = (new PasswordGenerator())->getFromRandom(20);
+            $array[] = [(new PasswordGenerator())->getTopology($password)];
+        }
+        
+        return $array;
+    }
+    
+    /**
+     * Test get topology.
+     *
+     * @dataProvider topologyProvider
+     */
+    public function testGetFromTopology(string $topology)
+    {
+        $password = $this->password->getFromTopology($topology);
+        $this->assertEquals($topology, $this->password->getTopology($password));
     }
 }
