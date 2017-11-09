@@ -20,22 +20,22 @@ use Linna\Session\Session;
 class Authenticate
 {
     /**
-     * @var array Login status
+     * @var array Login status.
      */
     private $data = ['user_name'=>''];
 
     /**
-     * @var bool Indicate login status, true or false
+     * @var bool Indicate login status, true or false.
      */
     private $logged = false;
 
     /**
-     * @var Password Password class
+     * @var Password Password class.
      */
     private $password;
 
     /**
-     * @var Session Session class
+     * @var Session Session class.
      */
     protected $session;
 
@@ -70,7 +70,7 @@ class Authenticate
      * }
      * </code></pre>
      *
-     * @return bool
+     * @return bool True if logged false if no.
      */
     public function isLogged() : bool
     {
@@ -91,7 +91,7 @@ class Authenticate
      * //do actions
      * </code></pre>
      *
-     * @return bool
+     * @return bool True if not logged false if logged.
      */
     public function isNotLogged() : bool
     {
@@ -119,7 +119,7 @@ class Authenticate
      * var_dump($data);
      * </code></pre>
      *
-     * @return array
+     * @return array Login data.
      */
     public function getLoginData() : array
     {
@@ -142,11 +142,11 @@ class Authenticate
      * //other operation after login
      * </code></pre>
      *
-     * @param string $userName
-     * @param string $password
-     * @param string $storedUserName
-     * @param string $storedPassword
-     * @param int    $storedId
+     * @param string $userName       User name from browser input.
+     * @param string $password       Password from browser input.
+     * @param string $storedUserName User name from persistent storage.
+     * @param string $storedPassword Password from persistent storage.
+     * @param int    $storedId       User id from persistent storage.
      *
      * @return bool
      */
@@ -180,7 +180,7 @@ class Authenticate
      * $auth->logout();
      * </code></pre>
      *
-     * @return bool
+     * @return bool True if logout is done.
      */
     public function logout(): bool
     {
@@ -197,7 +197,7 @@ class Authenticate
     /**
      * Check if user is logged, get login data from session and update it.
      *
-     * @return bool
+     * @return bool True if refresh is done false if no.
      */
     private function refresh(): bool
     {
