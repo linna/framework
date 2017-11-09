@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v0.24.0](https://github.com/linna/framework/compare/v0.23.1...v0.24.0) - 2017-XX-XX
+
+### Added
+* `Linna\Authentication\PasswordGenerator`
+
 ## [v0.23.1](https://github.com/linna/framework/compare/v0.23.0...v0.23.1) - 2017-11-01
 
 ### Fixed
