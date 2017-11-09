@@ -89,32 +89,40 @@ class PasswordGenerator
         $topology = [];
 
         foreach ($array as $char) {
-            $int = ord($char);
-
-            if ($this->inRanges($int, $this->chars[0])) {
-                $topology[] = 'u';
-                continue;
-            }
-
-            if ($this->inRanges($int, $this->chars[1])) {
-                $topology[] = 'l';
-                continue;
-            }
-
-            if ($this->inRanges($int, $this->chars[2])) {
-                $topology[] = 'd';
-                continue;
-            }
-
-            if ($this->inRanges($int, $this->chars[3])) {
-                $topology[] = 's';
-                continue;
-            }
+            $topology[] = $this->getTopologyGroup($char);
         }
 
         return implode($topology);
     }
 
+    /**
+     * Return topology group.
+     *
+     * @param string $char
+     *
+     * @return string
+     */
+    private function getTopologyGroup(string $char) : string
+    {
+        $int = ord($char);
+
+        if ($this->inRanges($int, $this->chars[0])) {
+            return 'u';
+        }
+
+        if ($this->inRanges($int, $this->chars[1])) {
+            return 'l';
+        }
+
+        if ($this->inRanges($int, $this->chars[2])) {
+            return 'd';
+        }
+
+        if ($this->inRanges($int, $this->chars[3])) {
+            return 's';
+        }
+    }
+    
     /**
      * Generate a random password corresponding at the given topology.
      * <pre><code class="php">use Linna\Auth\PasswordGenerator;
@@ -161,14 +169,13 @@ class PasswordGenerator
      */
     private function getRandomChar(array $interval): string
     {
-        $int = random_int(33, 122);
-        
-        while (true) {
+        do {
+            $int = random_int(33, 122);
             if ($this->inRanges($int, $interval)) {
                 break;
             }
-        }
-
+        } while (true);
+            
         return chr($int);
     }
 
