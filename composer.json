@@ -22,9 +22,9 @@
     },
     "require-dev": {
         "infection/infection": "^0.6",
-        "mongodb/mongodb": "^1.1.0",
+        "mongodb/mongodb": "^1.2",
         "phpmetrics/phpmetrics": "^2.3",
-        "phpstan/phpstan": "^0.8.5",
+        "phpstan/phpstan": "^0.8",
         "phpunit/phpunit": "^6.4"
     },
     "autoload": {
