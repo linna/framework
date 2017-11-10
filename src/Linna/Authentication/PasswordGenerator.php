@@ -30,17 +30,6 @@ class PasswordGenerator
     ];
 
     /**
-     * @var array Characters utf8 dec rappresentation
-     */
-    private $groups = [
-        117 => 0, //u
-        108 => 1, //l
-        100 => 2, //d
-        115 => 3  //s
-    ];
-
-    
-    /**
      * Generate a random password.
      * <pre><code class="php">use Linna\Auth\PasswordGenerator;
      *
@@ -87,7 +76,7 @@ class PasswordGenerator
     {
         $array = str_split($password);
         $topology = [];
-
+        
         foreach ($array as $char) {
             $topology[] = $this->getTopologyGroup($char);
         }
@@ -96,7 +85,7 @@ class PasswordGenerator
     }
 
     /**
-     * Return topology group.
+     * Return topology group for the given char.
      *
      * @param string $char
      *
@@ -105,21 +94,12 @@ class PasswordGenerator
     private function getTopologyGroup(string $char) : string
     {
         $int = ord($char);
-
-        if ($this->inRanges($int, $this->chars[0])) {
-            return 'u';
-        }
-
-        if ($this->inRanges($int, $this->chars[1])) {
-            return 'l';
-        }
-
-        if ($this->inRanges($int, $this->chars[2])) {
-            return 'd';
-        }
-
-        if ($this->inRanges($int, $this->chars[3])) {
-            return 's';
+        $groups = ['u', 'l', 'd', 's'];
+        
+        foreach ($groups as $key => $group) {
+            if ($this->inRanges($int, $this->chars[$key])) {
+                return $group;
+            }
         }
     }
     
@@ -143,14 +123,14 @@ class PasswordGenerator
     public function getFromTopology(string $topology): string
     {
         $array = str_split(strtolower($topology));
+        $groups = [117 => 0, 108 => 1, 100 => 2, 115 => 3];
         $password = [];
 
         foreach ($array as $char) {
             $int = ord($char);
 
-            if (isset($this->groups[$int])) {
-                $key = $this->groups[$int];
-                $password[] = $this->getRandomChar($this->chars[$key]);
+            if (isset($groups[$int])) {
+                $password[] = $this->getRandomChar($this->chars[$groups[$int]]);
 
                 continue;
             }

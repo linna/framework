@@ -115,6 +115,7 @@ class PasswordGeneratorTest extends TestCase
            ['uld!'],
            ['uld1'],
            ['...'],
+           [' '],
            ['']
        ];
     }
