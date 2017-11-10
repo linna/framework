@@ -129,11 +129,7 @@ class Password
      */
     public function needsRehash(string $hash): bool
     {
-        if (password_needs_rehash($hash, $this->options['algo'], $this->options)) {
-            return true;
-        }
-
-        return false;
+        return password_needs_rehash($hash, $this->options['algo'], $this->options);
     }
 
     /**

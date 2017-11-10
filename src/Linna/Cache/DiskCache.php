@@ -37,7 +37,7 @@ class DiskCache implements CacheInterface
      * @var array Config options for class
      */
     protected $options = [
-        'dir'       => '/tmp',
+        'dir' => '/tmp',
     ];
 
     /**
@@ -167,13 +167,6 @@ class DiskCache implements CacheInterface
      */
     public function has(string $key) : bool
     {
-        //create file name
-        $file = $this->options['dir'].'/'.sha1($key).'.php';
-
-        if ($this->doesFileChecksFailed($file)) {
-            return false;
-        }
-
-        return true;
+        return !$this->doesFileChecksFailed($this->options['dir'].'/'.sha1($key).'.php');;
     }
 }
