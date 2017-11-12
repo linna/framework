@@ -167,6 +167,6 @@ class DiskCache implements CacheInterface
      */
     public function has(string $key) : bool
     {
-        return !$this->doesFileChecksFailed($this->options['dir'].'/'.sha1($key).'.php');;
+        return !$this->doesFileChecksFailed($this->options['dir'].'/'.sha1($key).'.php');
     }
 }
