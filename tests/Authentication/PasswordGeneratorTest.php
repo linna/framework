@@ -62,8 +62,19 @@ class PasswordGeneratorTest extends TestCase
      */
     public function testCheckRandomTopology(int $strLen)
     {
-        $topology = $this->password->getTopology($this->password->getFromRandom($strLen));
-        
+        while (true) {
+            $topology = $this->password->getTopology($this->password->getFromRandom($strLen));
+
+            $presU = strpos($topology, 'u');
+            $presL = strpos($topology, 'l');
+            $presD = strpos($topology, 'd');
+            $presS = strpos($topology, 's');
+
+            if ($presU !== false &&  $presL !== false && $presD !== false && $presS !== false) {
+                break;
+            }
+        }
+
         $this->assertTrue((strpos($topology, 'u') === false) ? false : true);
         $this->assertTrue((strpos($topology, 'l') === false) ? false : true);
         $this->assertTrue((strpos($topology, 'd') === false) ? false : true);
