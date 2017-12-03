@@ -32,7 +32,7 @@ class SessionTest extends TestCase
 
     /**
      * Test Session Start.
-     * 
+     *
      * @requires extension xdebug
      * @runInSeparateProcess
      */
