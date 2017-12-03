@@ -30,7 +30,7 @@ use Psr\SimpleCache\CacheInterface;
 class RouterCached extends Router
 {
     /**
-     * @var object Cache resource
+     * @var CacheInterface Cache instance
      */
     private $cache;
 

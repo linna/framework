@@ -22,7 +22,7 @@ interface MapperInterface
      * From object id as argument, this method must return an instance
      * of DomainObject instance or an instance of NullDomainObject.
      *
-     * @param string $objectId
+     * @param int $objectId
      *
      * @return DomainObjectInterface
      */

@@ -50,7 +50,7 @@ abstract class AbstractStorageFactory
      *
      * @throws InvalidArgumentException If required driver is not supported
      *
-     * @return object
+     * @return mixed
      */
     protected function returnStorageObject()
     {

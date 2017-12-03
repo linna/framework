@@ -25,7 +25,7 @@ class Controller
     /**
      * Constructor.
      *
-     * @param object $model
+     * @param Model $model
      */
     public function __construct(Model $model)
     {

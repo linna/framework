@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Linna\Mvc;
 
+use SplObserver;
+use SplObjectStorage;
+
 /**
  * Parent class for model classes.
  *
@@ -21,7 +24,7 @@ namespace Linna\Mvc;
 class Model implements \SplSubject
 {
     /**
-     * @var object List of attached observerer
+     * @var SplObjectStorage List of attached observerer
      */
     private $observers;
 
@@ -35,16 +38,16 @@ class Model implements \SplSubject
      */
     public function __construct()
     {
-        $this->observers = new \SplObjectStorage();
+        $this->observers = new SplObjectStorage();
     }
 
     /**
      * Attach an Observer class to this Subject for updates
      * when occour a subject state change.
      *
-     * @param \SplObserver $observer
+     * @param SplObserver $observer
      */
-    public function attach(\SplObserver $observer)
+    public function attach(SplObserver $observer)
     {
         if ($observer instanceof View) {
             $this->observers->attach($observer);

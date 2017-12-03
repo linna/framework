@@ -23,7 +23,7 @@ use SessionHandlerInterface;
 class MemcachedSessionHandler implements SessionHandlerInterface
 {
     /**
-     * @var object Memcached resource
+     * @var Memcached Memcached instance
      */
     private $memcached;
 

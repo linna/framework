@@ -17,17 +17,17 @@ namespace Linna\Mvc;
 class FrontController
 {
     /**
-     * @var object Contain view object for render
+     * @var View Contain view object for render
      */
     private $view;
 
     /**
-     * @var object Contain model object
+     * @var Model Contain model object
      */
     private $model;
 
     /**
-     * @var object Contain controller object
+     * @var Controller Contain controller object
      */
     private $controller;
 

@@ -61,7 +61,7 @@ class Container implements ContainerInterface, \ArrayAccess
      * Store a value inside container.
      *
      * @param string   $key
-     * @param callable $value
+     * @param mixed $value
      */
     public function set(string $key, $value)
     {
@@ -127,13 +127,9 @@ class Container implements ContainerInterface, \ArrayAccess
      */
     private function buildTree(string $class)
     {
-        //set start level
         $level = 0;
-
-        //create stack
         $stack = new \SplStack();
 
-        //iterate
         while (true) {
 
             //initialize array if not already initialized
@@ -161,7 +157,7 @@ class Container implements ContainerInterface, \ArrayAccess
 
                     //update values for simulate recursive function
                     $level++;
-                    $class = (is_object($param->getClass())) ? $param->getClass()->name : null;
+                    $class = $param->getClass()->name;
 
                     //return to main while
                     continue 2;
@@ -233,7 +229,12 @@ class Container implements ContainerInterface, \ArrayAccess
 
         //argument required from class
         foreach ($dependency as $argValue) {
-            $paramClass = (is_object($argValue->getClass())) ? $argValue->getClass()->name : null;
+            $paramClass = null;
+            
+            if (class_exists((string) $argValue->getType())) {
+                $paramClass = $argValue->getClass()->name;
+            }
+
             //add to array of arguments
             $args[] = $this->cache[$paramClass] ?? null;
         }

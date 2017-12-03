@@ -23,7 +23,7 @@ class MemcachedCache implements CacheInterface
     use ActionMultipleTrait;
 
     /**
-     * @var object Memcached resource
+     * @var Memcached Memcached instance
      */
     private $memcached;
 

@@ -87,7 +87,7 @@ class User extends DomainObjectAbstract
     public $lastUpdate;
 
     /**
-     * @var object Password class for manage password.
+     * @var Password Password class for manage password.
      */
     private $passwordUtility;
 
