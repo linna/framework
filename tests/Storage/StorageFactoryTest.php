@@ -9,9 +9,6 @@
  */
 declare(strict_types=1);
 
-use Linna\Storage\Connectors\MongoDBConnector;
-use Linna\Storage\Connectors\MysqliConnector;
-use Linna\Storage\Connectors\PdoConnector;
 use Linna\Storage\StorageFactory;
 use MongoDB\Client;
 use PHPUnit\Framework\TestCase;

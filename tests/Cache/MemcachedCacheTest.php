@@ -21,15 +21,11 @@ class MemcachedCacheTest extends TestCase
 
     /**
      * Setup.
+     *
+     * @requires extension memcached
      */
     public function setUp()
     {
-        if (!extension_loaded('memcached')) {
-            $this->markTestSkipped(
-              'The Memcached extension is not available.'
-            );
-        }
-
         $memcached = new Memcached();
         $memcached->addServer($GLOBALS['mem_host'], (int) $GLOBALS['mem_port']);
 

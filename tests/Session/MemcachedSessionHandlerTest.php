@@ -35,13 +35,11 @@ class MemcachedSessionHandlerTest extends TestCase
 
     /**
      * Setup.
+     *
+     * @requires extension memcached
      */
     public function setUp()
     {
-        if (!class_exists('Memcached')) {
-            return;
-        }
-
         $memcached = new Memcached();
         
         $memcached->addServer($GLOBALS['mem_host'], (int) $GLOBALS['mem_port']);
@@ -183,14 +181,11 @@ class MemcachedSessionHandlerTest extends TestCase
     /**
      * Test garbage.
      *
+     * @requires extension memcached
      * @runInSeparateProcess
      */
     public function testGc()
     {
-        if (!class_exists('Memcached')) {
-            $this->markTestSkipped('Memcached module not installed');
-        }
-
         $this->assertTrue($this->handler->gc(0));
     }
 }

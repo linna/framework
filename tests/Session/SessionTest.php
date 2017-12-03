@@ -32,15 +32,12 @@ class SessionTest extends TestCase
 
     /**
      * Test Session Start.
-     *
+     * 
+     * @requires extension xdebug
      * @runInSeparateProcess
      */
     public function testSessionStart()
     {
-        if (!function_exists('xdebug_get_headers')) {
-            $this->markTestSkipped('Xdebug not installed');
-        }
-        
         $session = $this->session;
 
         $this->assertEquals(1, $session->status);
@@ -56,14 +53,11 @@ class SessionTest extends TestCase
     /**
      * Test session commit.
      *
+     * @requires extension xdebug
      * @runInSeparateProcess
      */
     public function testSessionCommit()
     {
-        if (!function_exists('xdebug_get_headers')) {
-            $this->markTestSkipped('Xdebug not installed');
-        }
-        
         $session = $this->session;
         $session->start();
         
@@ -86,14 +80,11 @@ class SessionTest extends TestCase
     /**
      * Test session destroy.
      *
+     * @requires extension xdebug
      * @runInSeparateProcess
      */
     public function testSessionDestroy()
     {
-        if (!function_exists('xdebug_get_headers')) {
-            $this->markTestSkipped('Xdebug not installed');
-        }
-        
         $session = $this->session;
 
         $session->start();
@@ -115,14 +106,11 @@ class SessionTest extends TestCase
     /**
      * Test session regenerate.
      *
+     * @requires extension xdebug
      * @runInSeparateProcess
      */
     public function testSessionRegenerate()
     {
-        if (!function_exists('xdebug_get_headers')) {
-            $this->markTestSkipped('Xdebug not installed');
-        }
-        
         $session = $this->session;
 
         $session->start();
@@ -173,14 +161,11 @@ class SessionTest extends TestCase
      * Test session expired.
      *
      * @dataProvider sessionTimeProvider
+     * @requires extension xdebug
      * @runInSeparateProcess
      */
     public function testSessionExpired(int $time, bool $equals)
     {
-        if (!function_exists('xdebug_get_headers')) {
-            $this->markTestSkipped('Xdebug not installed');
-        }
-        
         $session = $this->session;
 
         $session->start();
@@ -298,6 +283,8 @@ class SessionTest extends TestCase
     
     /**
      * Get session cookie set values.
+     *
+     * @requires extension xdebug
      */
     public function getCookieValues() : array
     {

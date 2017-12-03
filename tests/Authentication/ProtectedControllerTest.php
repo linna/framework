@@ -75,15 +75,12 @@ class ProtectedControllerTest extends TestCase
     /**
      * Test acces to protected controller without login.
      *
+     * @requires extension xdebug
      * @runInSeparateProcess
      * @outputBuffering disabled
      */
     public function testAccessProtectedControllerWithoutLogin()
     {
-        if (!function_exists('xdebug_get_headers')) {
-            $this->markTestSkipped('Xdebug not installed');
-        }
-
         ob_start();
 
         (new MultipleProtectedController(new MultipleModel(), $this->authenticate));

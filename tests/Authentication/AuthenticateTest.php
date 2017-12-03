@@ -137,13 +137,9 @@ class AuthenticateTest extends TestCase
      */
     public function testIncorrectLogin()
     {
-        //$this->session->start();
-
         //try login with bad credentials
         $this->assertFalse($this->authenticate->login('root', 'badPassword', 'root', $this->password->hash('password'), 1));
         $this->assertFalse($this->authenticate->login('badUser', 'password', 'root', $this->password->hash('password'), 1));
-
-        //$this->session->destroy();
     }
 
     /**
