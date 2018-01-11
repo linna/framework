@@ -13,9 +13,6 @@ tools:
             standard: "PSR2"
 
 build:
-    dependencies:
-        before:
-            - pecl install mongodb
     environment:
        php: 7.1
        mysql: 5.5
