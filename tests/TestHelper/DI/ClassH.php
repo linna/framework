@@ -15,6 +15,5 @@ class ClassH
 {
     public function __construct()
     {
-
     }
 }
