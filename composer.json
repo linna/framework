@@ -16,15 +16,15 @@
     },
     "require": {
         "linna/typed-array" :  "^1.0",
-        "php": "^7.0.0",
+        "php": "^7.1",
         "psr/container": "^1.0",
         "s3b4stian/simple-cache": "^1.0"
     },
     "require-dev": {
-        "infection/infection": "^0.6",
+        "infection/infection": "^0.8",
         "mongodb/mongodb": "^1.2",
         "phpstan/phpstan": "^0.9",
-        "phpunit/phpunit": "^6.0"
+        "phpunit/phpunit": "^7.0"
     },
     "autoload": {
         "psr-4": {
@@ -34,6 +34,7 @@
     "autoload-dev": {
         "psr-4": { 
             "Linna\\TestHelper\\": "tests/TestHelper/"
-        }
+        },
+        "classmap": ["tests/"]
     }
 }

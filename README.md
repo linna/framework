@@ -33,7 +33,7 @@ At moment, code, isn't utilized in production environment, Hope in future.
 
 ## Require
 
-   * PHP >= 7.0
+   * PHP >= 7.1
    * PDO extension (optional)
    * Memcached extension (optional)
    * Mongodb extension (optional)

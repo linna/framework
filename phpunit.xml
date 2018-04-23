@@ -16,7 +16,7 @@
     <php>
         <var name="pdo_mysql_dsn" value="mysql:host=localhost;dbname=linna_db;charset=utf8mb4"/> 
         <var name="pdo_mysql_user" value="root" />
-        <var name="pdo_mysql_password" value="" />
+        <var name="pdo_mysql_password" value="cagiva" />
         <var name="mem_host" value="localhost" />
         <var name="mem_port" value="11211"/>
         <var name="mongodb_server_string" value="mongodb://localhost:27017"/> 
