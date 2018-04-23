@@ -38,6 +38,11 @@ class AuthorizeTest extends TestCase
     protected $authenticate;
     
     /**
+     * @var Authorize The authorize class
+     */
+    protected $authorize;
+    
+    /**
      * @var PermissionMapper The permission mapper
      */
     protected $permissionMapper;

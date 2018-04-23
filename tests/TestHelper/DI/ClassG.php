@@ -13,8 +13,12 @@ namespace Linna\TestHelper\DI;
 
 class ClassG
 {
+    private $classI;
+    private $classH;
+    
     public function __construct(ClassI $i, ClassH $h)
     {
-        return 'G';
+        $this->classI = $i;
+        $this->classH = $h;
     }
 }

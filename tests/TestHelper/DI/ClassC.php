@@ -13,8 +13,8 @@ namespace Linna\TestHelper\DI;
 
 class ClassC
 {
-    public function __construct(ClassG $g)
+    public function __construct()
     {
-        return 'C';
+
     }
 }

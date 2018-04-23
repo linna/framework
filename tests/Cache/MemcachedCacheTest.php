@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 class MemcachedCacheTest extends TestCase
 {
     /**
-     * @var DiskCache Disk Cache resource
+     * @var MemcachedCache Memcached Cache resource
      */
     private $cache = null;
 
@@ -321,7 +321,7 @@ class MemcachedCacheTest extends TestCase
      */
     public function testSetMultipleTtl()
     {
-        $this->assertTrue($this->cache->SetMultiple([
+        $this->assertTrue($this->cache->setMultiple([
             'foo_0' => [0],
             'foo_1' => [1],
             'foo_2' => [2],

@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 use Linna\Http\Route;
 use Linna\Http\RouteCollection;
+use Linna\TypedObjectArray;
 use PHPUnit\Framework\TestCase;
 
 /**

@@ -292,7 +292,7 @@ class DiskCacheTest extends TestCase
      */
     public function testSetMultipleTtl()
     {
-        $this->assertTrue($this->cache->SetMultiple([
+        $this->assertTrue($this->cache->setMultiple([
             'foo_0' => [0],
             'foo_1' => [1],
             'foo_2' => [2],

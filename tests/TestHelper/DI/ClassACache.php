@@ -13,8 +13,10 @@ namespace Linna\TestHelper\DI;
 
 class ClassACache
 {
+    private $string;
+    
     public function __construct(string $aCacheString)
     {
-        return $aCacheString;
+        $this->string = $aCacheString;
     }
 }

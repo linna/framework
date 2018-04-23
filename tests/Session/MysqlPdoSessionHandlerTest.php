@@ -12,6 +12,7 @@ declare(strict_types=1);
 use Linna\Session\MysqlPdoSessionHandler;
 use Linna\Session\Session;
 use Linna\Storage\StorageFactory;
+use Linna\Storage\ExtendedPDO;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,7 +31,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
     protected $handler;
 
     /**
-     * @var PdoStorage The pdo class.
+     * @var ExtendedPDO The pdo class.
      */
     protected $pdo;
 

@@ -66,7 +66,7 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      *
      * http://php.net/manual/en/sessionhandler.gc.php.
      *
-     * @param string $maxLifetime
+     * @param int $maxLifetime
      *
      * @return bool
      */

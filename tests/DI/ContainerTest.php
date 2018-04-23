@@ -41,7 +41,7 @@ class ContainerTest extends TestCase
      * Test set and get callig method.
      *
      * @param string $key
-     * @param type   $value
+     * @param mixed  $value
      *
      * @dataProvider valuesProvider
      */
@@ -58,7 +58,7 @@ class ContainerTest extends TestCase
      * Test set and get utilizing array sntax.
      *
      * @param string $key
-     * @param type   $value
+     * @param mixed  $value
      *
      * @dataProvider valuesProvider
      */
@@ -75,7 +75,7 @@ class ContainerTest extends TestCase
      * Test set and get utilizing property sntax.
      *
      * @param string $key
-     * @param type   $value
+     * @param mixed  $value
      *
      * @dataProvider valuesProvider
      */
@@ -92,7 +92,7 @@ class ContainerTest extends TestCase
      * Test has callig method.
      *
      * @param string $key
-     * @param type   $value
+     * @param mixed  $value
      *
      * @dataProvider valuesProvider
      */
@@ -109,7 +109,7 @@ class ContainerTest extends TestCase
      * Test has utilizing array sntax.
      *
      * @param string $key
-     * @param type   $value
+     * @param mixed  $value
      *
      * @dataProvider valuesProvider
      */
@@ -126,7 +126,7 @@ class ContainerTest extends TestCase
      * Test has utilizing property sntax.
      *
      * @param string $key
-     * @param type   $value
+     * @param mixed  $value
      *
      * @dataProvider valuesProvider
      */
@@ -143,7 +143,7 @@ class ContainerTest extends TestCase
      * Test delete callig method.
      *
      * @param string $key
-     * @param type   $value
+     * @param mixed  $value
      *
      * @dataProvider valuesProvider
      */
@@ -156,7 +156,7 @@ class ContainerTest extends TestCase
      * Test delete callig method.
      *
      * @param string $key
-     * @param type   $value
+     * @param mixed  $value
      *
      * @dataProvider valuesProvider
      */
@@ -177,7 +177,7 @@ class ContainerTest extends TestCase
      * Test delete utilizing array sntax.
      *
      * @param string $key
-     * @param type   $value
+     * @param mixed  $value
      *
      * @dataProvider valuesProvider
      */
@@ -198,7 +198,7 @@ class ContainerTest extends TestCase
      * Test delete utilizing property sntax.
      *
      * @param string $key
-     * @param type   $value
+     * @param mixed  $value
      *
      * @dataProvider valuesProvider
      */
@@ -219,7 +219,7 @@ class ContainerTest extends TestCase
      * Test get unexisting callig method.
      *
      * @param string $key
-     * @param type   $value
+     * @param mixed  $value
      *
      * @dataProvider valuesProvider
      * @expectedException Linna\DI\Exception\NotFoundException
@@ -234,7 +234,7 @@ class ContainerTest extends TestCase
      * Test get unexisting utilizing array sntax.
      *
      * @param string $key
-     * @param type   $value
+     * @param mixed  $value
      *
      * @dataProvider valuesProvider
      * @expectedException Linna\DI\Exception\NotFoundException
@@ -249,7 +249,7 @@ class ContainerTest extends TestCase
      * Test get unexisting utilizing property sntax.
      *
      * @param string $key
-     * @param type   $value
+     * @param mixed  $value
      *
      * @dataProvider valuesProvider
      * @expectedException Linna\DI\Exception\NotFoundException
@@ -287,7 +287,7 @@ class ContainerTest extends TestCase
      *
      * @param string $class
      */
-    public function testResolve($class)
+    public function testResolve(string $class)
     {
         $this->assertInstanceOf($class, (new Container())->resolve($class));
     }
