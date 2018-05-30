@@ -28,7 +28,6 @@ build:
 
     project_setup:
             before:
-                - composer require mongodb/mongodb
                 - mysql -e "CREATE DATABASE linna_db"
                 - mysql -u root linna_db < tests/linna_db_mysql.sql
                 - wget https://phar.phpunit.de/phpunit.phar
