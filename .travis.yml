@@ -1,23 +1,23 @@
 language: php
 php:
-- 7.1
-- 7.2
+    - 7.1
+    - 7.2
 
 services:
-- mysql
-- memcached
-- mongodb
+    - mysql
+    - memcached
+    - mongodb
 
 before_install:
-- echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-- echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 before_script:
-- mysql -e 'create database linna_db;'
-- mysql -u root linna_db < tests/linna_db_mysql.sql
-- composer install
+    - mysql -e 'create database linna_db;'
+    - mysql -u root linna_db < tests/linna_db_mysql.sql
+    - composer install
 
 script:
-- ./vendor/bin/phpstan analyse --level 7 src
-- ./vendor/bin/phpunit
-- ./vendor/bin/infection --min-msi=75 --min-covered-msi=75
+    - ./vendor/bin/phpstan analyse --level 7 src
+    - ./vendor/bin/phpunit
+    - ./vendor/bin/infection --min-msi=75 --min-covered-msi=75
