@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit colors="true" bootstrap="vendor/autoload.php" verbose="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/7.1/phpunit.xsd"
+         colors="true"
+         bootstrap="vendor/autoload.php"
+         verbose="true">
     <testsuites>
         <testsuite name="Linna Test Suite">
             <directory suffix="Test.php">tests</directory>
