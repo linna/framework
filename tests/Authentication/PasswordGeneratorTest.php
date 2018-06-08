@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 class PasswordGeneratorTest extends TestCase
 {
     /**
-     * @var Password The password class.
+     * @var PasswordGenerator The password class.
      */
     protected $password;
 
@@ -62,6 +62,8 @@ class PasswordGeneratorTest extends TestCase
      */
     public function testCheckRandomTopology(int $strLen)
     {
+        $topology = '';
+
         while (true) {
             $topology = $this->password->getTopology($this->password->getFromRandom($strLen));
 

@@ -13,8 +13,10 @@ namespace Linna\TestHelper\DI;
 
 class ClassResObject
 {
+    private $classB;
+
     public function __construct(ClassB $b)
     {
-        return 'ResObject';
+        $this->classB = $b;
     }
 }

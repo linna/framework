@@ -61,6 +61,7 @@ class UserTest extends TestCase
      */
     public function testSetUserPassword()
     {
+        /** @var User User Class. */
         $user = $this->userMapper->create();
 
         $user->setPassword('password');
@@ -75,6 +76,7 @@ class UserTest extends TestCase
      */
     public function testChangeUserPassword()
     {
+        /** @var User User Class. */
         $user = $this->userMapper->create();
 
         $user->setPassword('old_password');

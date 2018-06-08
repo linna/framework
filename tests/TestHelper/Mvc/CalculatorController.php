@@ -14,13 +14,26 @@ namespace Linna\TestHelper\Mvc;
 use InvalidArgumentException;
 use Linna\Mvc\Controller;
 
+/**
+ * Calculator Class.
+ * 
+ * @property \Linna\TestHelper\Mvc\CalculatorModel $model Calculator Model.
+ */
 class CalculatorController extends Controller
 {
+    /**
+     * Class Constructor.
+     * 
+     * @param \Linna\TestHelper\Mvc\CalculatorModel $model
+     */
     public function __construct(CalculatorModel $model)
     {
         parent::__construct($model);
     }
 
+    /**
+     * Multiply.
+     */
     public function multiply()
     {
         $numbers = $_POST['numbers'];
@@ -28,6 +41,9 @@ class CalculatorController extends Controller
         $this->model->multiply($numbers);
     }
 
+    /**
+     * Divide.
+     */
     public function divide()
     {
         $numbers = $_POST['numbers'];
@@ -35,6 +51,9 @@ class CalculatorController extends Controller
         $this->model->divide($numbers);
     }
 
+    /**
+     * Sub.
+     */
     public function sub()
     {
         $numbers = $_POST['numbers'];
@@ -42,6 +61,9 @@ class CalculatorController extends Controller
         $this->model->sub($numbers);
     }
 
+    /**
+     * Add.
+     */
     public function add()
     {
         $numbers = $_POST['numbers'];
@@ -49,7 +71,13 @@ class CalculatorController extends Controller
         $this->model->add($numbers);
     }
 
-    public function filter($numbers)
+    /**
+     * Filter.
+     * 
+     * @param array $numbers
+     * @throws InvalidArgumentException
+     */
+    public function filter(array $numbers)
     {
         foreach ($numbers as $key => $number) {
             switch (gettype($number)) {

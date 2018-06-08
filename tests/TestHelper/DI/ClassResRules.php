@@ -13,8 +13,12 @@ namespace Linna\TestHelper\DI;
 
 class ClassResRules
 {
+    private $classB;
+    private $classARules;
+
     public function __construct(ClassB $b, ClassARules $aRules)
     {
-        return 'ResRules';
+        $this->classB = $b;
+        $this->classARules = $aRules;
     }
 }

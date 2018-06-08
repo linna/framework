@@ -18,6 +18,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Mapper Abstract Test
+ *
  */
 class MapperAbstractTest extends TestCase
 {
@@ -70,12 +71,14 @@ class MapperAbstractTest extends TestCase
      */
     public function testSaveDomainObjectWithMapper()
     {
+        /** @var User User Class. */
         $user = $this->mapper->create();
         $user->name = 'test_user_create';
         $user->setPassword('password');
 
         $this->mapper->save($user);
         
+        /** @var User User Class. */
         $newUser = $this->mapper->fetchByName('test_user_create');
         
         $this->assertEquals('test_user_create', $newUser->name);
@@ -88,12 +91,14 @@ class MapperAbstractTest extends TestCase
      */
     public function testUpdateDomainObjectWithMapper()
     {
+        /** @var User User Class. */
         $user = $this->mapper->create();
         $user->name = 'test_user_update';
         $user->setPassword('password');
         
         $this->mapper->save($user);
         
+        /** @var User User Class. */
         $newUser = $this->mapper->fetchByName('test_user_update');
         $newUserId = $newUser->getId();
         
@@ -102,6 +107,7 @@ class MapperAbstractTest extends TestCase
         $newUser->name = 'test_user_updated';
         $this->mapper->save($newUser);
         
+        /** @var User User Class. */
         $newUserUpdated = $this->mapper->fetchById($newUserId);
         
         $this->assertEquals('test_user_updated', $newUserUpdated->name);
@@ -114,18 +120,21 @@ class MapperAbstractTest extends TestCase
      */
     public function testDeleteDomainObjectWithMapper()
     {
+        /** @var User User Class. */
         $user = $this->mapper->create();
         $user->name = 'test_user_delete';
         $user->setPassword('password');
         
         $this->mapper->save($user);
         
+        /** @var User User Class. */
         $newUser = $this->mapper->fetchByName('test_user_delete');
          
         $this->assertEquals('test_user_delete', $newUser->name);
         
         $this->mapper->delete($newUser);
         
+        /** @var User User Class. */
         $nullUser = $this->mapper->fetchByName('test_user_delete');
         
         $this->assertInstanceOf(NullDomainObject::class, $nullUser);

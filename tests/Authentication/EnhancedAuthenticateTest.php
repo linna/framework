@@ -178,6 +178,7 @@ class EnhancedAuthenticateTest extends TestCase
      */
     protected function storeLoginAttempt(string &$user, string &$sessionId, string &$ipAddress)
     {
+        /** @var \Linna\Authentication\LoginAttempt Login Attempt. */
         $loginAttempt = $this->eAMapper->create();
         $loginAttempt->userName = $user;
         $loginAttempt->sessionId = $sessionId;

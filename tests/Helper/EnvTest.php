@@ -48,7 +48,7 @@ class EnvTest extends TestCase
      *
      * @param string $forPut
      * @param string $key
-     * @param type $result
+     * @param mixed $result
      */
     public function testEnv(string $forPut, string $key, $result)
     {
@@ -58,10 +58,6 @@ class EnvTest extends TestCase
     
     /**
      * Test env with default value.
-     *
-     * @param string $forPut
-     * @param string $key
-     * @param type $result
      */
     public function testEnvWithDefaultValue()
     {

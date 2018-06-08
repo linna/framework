@@ -229,6 +229,7 @@ class FrontControllerTest extends TestCase
     {
         $this->router->validate('/multi/param/2017/1/1', 'GET');
 
+        /** @var Route */
         $route = $this->router->getRoute();
 
         $model = new MultipleModel();

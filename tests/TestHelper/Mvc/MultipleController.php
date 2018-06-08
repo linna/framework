@@ -13,23 +13,30 @@ namespace Linna\TestHelper\Mvc;
 
 use Linna\Mvc\Controller;
 
+/**
+ * Multiple Controller.
+ * 
+ * @property \Linna\TestHelper\Mvc\MultipleModel $model Multiple Model.
+ */
 class MultipleController extends Controller
 {
+    /**
+     * Class Contructor.
+     * 
+     * @param \Linna\TestHelper\Mvc\MultipleModel $model
+     */
     public function __construct(MultipleModel $model)
     {
         parent::__construct($model);
     }
 
-    //public function modifyData()
-    //{
-    //    $this->model->modifyData();
-    //}
-
-    //public function modifyDataFromParam($passedData)
-    //{
-    //    $this->model->modifyDataFromParam($passedData);
-    //}
-    
+    /**
+     * Some Param.
+     * 
+     * @param mixed $year
+     * @param mixed $month
+     * @param mixed $day
+     */
     public function SomeParam($year, $month, $day)
     {
         $this->model->SomeParam((int) $year, (int) $month, (int) $day);

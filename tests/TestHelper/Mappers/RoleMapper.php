@@ -50,10 +50,10 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
     /**
      * Constructor.
      *
-     * @param PdoStorage                  $dBase
-     * @param Password                    $password
+     * @param ExtendedPDO $pdo
+     * @param Password $password
      * @param EnhancedUserMapperInterface $userMapper
-     * @param PermissionMapperInterface   $permissionMapper
+     * @param PermissionMapperInterface $permissionMapper
      */
     public function __construct(
             ExtendedPDO $pdo,
@@ -132,6 +132,9 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
         $arrayRoles = [];
 
         foreach ($roles as $role) {
+
+            $roleId = $role->getId();
+
             $roleUsers = $this->userMapper->fetchUserByRole($roleId);
             $rolePermissions = $this->permissionMapper->fetchPermissionsByRole($roleId);
 

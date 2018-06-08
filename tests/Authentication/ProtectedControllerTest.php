@@ -32,6 +32,11 @@ class ProtectedControllerTest extends TestCase
     protected $password;
 
     /**
+     * @var Authenticate Authenticate Instance.
+     */
+    protected $authenticate;
+    
+    /**
      * Setup.
      */
     public function setUp()

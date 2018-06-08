@@ -13,8 +13,12 @@ namespace Linna\TestHelper\DI;
 
 class ClassResCache
 {
+    private $classB;
+    private $classACache;
+
     public function __construct(ClassB $b, ClassACache $aCache)
     {
-        return 'ResCache';
+        $this->classB = $b;
+        $this->classACache = $aCache;
     }
 }
