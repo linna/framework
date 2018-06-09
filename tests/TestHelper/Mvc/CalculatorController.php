@@ -16,14 +16,14 @@ use Linna\Mvc\Controller;
 
 /**
  * Calculator Class.
- * 
+ *
  * @property \Linna\TestHelper\Mvc\CalculatorModel $model Calculator Model.
  */
 class CalculatorController extends Controller
 {
     /**
      * Class Constructor.
-     * 
+     *
      * @param \Linna\TestHelper\Mvc\CalculatorModel $model
      */
     public function __construct(CalculatorModel $model)
@@ -73,7 +73,7 @@ class CalculatorController extends Controller
 
     /**
      * Filter.
-     * 
+     *
      * @param array $numbers
      * @throws InvalidArgumentException
      */

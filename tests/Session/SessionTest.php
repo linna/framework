@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Session Test
- * 
+ *
  */
 class SessionTest extends TestCase
 {
@@ -200,7 +200,7 @@ class SessionTest extends TestCase
     
     /**
      * Test create and get with property access.
-     * 
+     *
      */
     public function testCreateAndGetWithPropertyAccess()
     {

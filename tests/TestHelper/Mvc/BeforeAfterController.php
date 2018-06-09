@@ -15,7 +15,7 @@ use Linna\Mvc\Controller;
 
 /**
  * BeforeAfter Controller.
- * 
+ *
  * @property \Linna\TestHelper\Mvc\BeforeAfterModel $model Before After Model.
  */
 class BeforeAfterController extends Controller
@@ -40,7 +40,7 @@ class BeforeAfterController extends Controller
 
     /**
      * Action.
-     * 
+     *
      * @param mixed $param
      */
     public function Action($param)

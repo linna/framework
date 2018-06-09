@@ -132,7 +132,6 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
         $arrayRoles = [];
 
         foreach ($roles as $role) {
-
             $roleId = $role->getId();
 
             $roleUsers = $this->userMapper->fetchUserByRole($roleId);

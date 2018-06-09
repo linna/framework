@@ -15,14 +15,14 @@ use Linna\Mvc\Controller;
 
 /**
  * Multiple Controller.
- * 
+ *
  * @property \Linna\TestHelper\Mvc\MultipleModel $model Multiple Model.
  */
 class MultipleController extends Controller
 {
     /**
      * Class Contructor.
-     * 
+     *
      * @param \Linna\TestHelper\Mvc\MultipleModel $model
      */
     public function __construct(MultipleModel $model)
@@ -32,7 +32,7 @@ class MultipleController extends Controller
 
     /**
      * Some Param.
-     * 
+     *
      * @param mixed $year
      * @param mixed $month
      * @param mixed $day
