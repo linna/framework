@@ -27,21 +27,21 @@ class RouteCollection extends TypedObjectArray
     {
         parent::__construct(Route::class, $array);
     }
-    
+
     /**
      * Return collection as array.
      *
      * @return array
      */
-    public function toArray() : array
+    public function toArray(): array
     {
         $array = $this->getArrayCopy();
         $tmp = [];
-        
+
         foreach ($array as $route) {
             $tmp[] = $route->toArray();
         }
-        
+
         return $tmp;
     }
 }

@@ -31,7 +31,7 @@ interface RoleMapperInterface extends MapperInterface
      *
      * @return array
      */
-    public function fetchUserInheritedPermissions(Role &$role, User $user) : array;
+    public function fetchUserInheritedPermissions(Role &$role, User $user): array;
 
     /**
      * Grant a permission at role

@@ -47,7 +47,7 @@ class Route implements RouteInterface
      *
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->route['name'];
     }
@@ -57,7 +57,7 @@ class Route implements RouteInterface
      *
      * @return string
      */
-    public function getMethod() : string
+    public function getMethod(): string
     {
         return $this->route['method'];
     }
@@ -67,7 +67,7 @@ class Route implements RouteInterface
      *
      * @return string
      */
-    public function getUrl() : string
+    public function getUrl(): string
     {
         return $this->route['url'];
     }
@@ -127,7 +127,7 @@ class Route implements RouteInterface
      *
      * @return bool
      */
-    public function isDefault() : bool
+    public function isDefault(): bool
     {
         return $this->route['default'];
     }
@@ -137,7 +137,7 @@ class Route implements RouteInterface
      *
      * @return callable
      */
-    public function getCallback() : callable
+    public function getCallback(): callable
     {
         if (is_callable($this->route['callback'])) {
             return $this->route['callback'];

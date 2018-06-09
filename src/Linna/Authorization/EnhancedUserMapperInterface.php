@@ -29,7 +29,7 @@ interface EnhancedUserMapperInterface extends MapperInterface
      *
      * @return array
      */
-    public function fetchUserByRole(int $roleId) : array;
+    public function fetchUserByRole(int $roleId): array;
 
     /**
      * Fetch users by permission.<br/>
@@ -41,7 +41,7 @@ interface EnhancedUserMapperInterface extends MapperInterface
      *
      * @return array
      */
-    public function fetchUserByPermission(int $permissionId) : array;
+    public function fetchUserByPermission(int $permissionId): array;
 
     /**
      * Grant a permission to an user.<br/>
@@ -56,7 +56,7 @@ interface EnhancedUserMapperInterface extends MapperInterface
      * @param EnhancedUser $user
      * @param string       $permission
      */
-    public function grant(EnhancedUser &$user, string $permission);
+    public function grant(EnhancedUser &$user, string $permission): void;
 
     /**
      * Revoke a permission to an user.<br/>
@@ -70,5 +70,5 @@ interface EnhancedUserMapperInterface extends MapperInterface
      * @param EnhancedUser $user
      * @param string       $permission
      */
-    public function revoke(EnhancedUser &$user, string $permission);
+    public function revoke(EnhancedUser &$user, string $permission): void;
 }

@@ -50,7 +50,7 @@ class User extends DomainObjectAbstract
      * @var string Universal unique identifier
      */
     public $uuid;
-    
+
     /**
      * @var string User name.
      */
@@ -123,7 +123,7 @@ class User extends DomainObjectAbstract
      *
      * @param string $newPassword
      */
-    public function setPassword(string $newPassword)
+    public function setPassword(string $newPassword): void
     {
         //hash provided password
         $this->password = $this->passwordUtility->hash($newPassword);
@@ -144,7 +144,7 @@ class User extends DomainObjectAbstract
      *
      * @return bool
      */
-    public function chagePassword(string $newPassword, string $oldPassword) : bool
+    public function chagePassword(string $newPassword, string $oldPassword): bool
     {
         //verfy password match
         if ($this->passwordUtility->verify($oldPassword, $this->password)) {

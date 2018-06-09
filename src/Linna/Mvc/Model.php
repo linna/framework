@@ -75,23 +75,23 @@ class Model implements \SplSubject
             $value->update($this);
         }
     }
-    
+
     /**
      * Set the data to notify to all registered Observeres.
      *
      * @param array $data
      */
-    public function set(array $data)
+    public function set(array $data): void
     {
         $this->updates = array_merge_recursive($this->updates, $data);
     }
-    
+
     /**
      * Get the data to notify to all registered Observeres.
      *
      * @return array
      */
-    public function get() : array
+    public function get(): array
     {
         return $this->updates;
     }

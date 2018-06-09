@@ -20,7 +20,7 @@ class PdoConnectorTest extends TestCase
     /**
      * Test connection.
      */
-    public function testConnection()
+    public function testConnection(): void
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -42,7 +42,7 @@ class PdoConnectorTest extends TestCase
      *
      * @return array
      */
-    public function connectionDataProvider() : array
+    public function connectionDataProvider(): array
     {
         return [
             ['0', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password']],
@@ -57,7 +57,7 @@ class PdoConnectorTest extends TestCase
      * @dataProvider connectionDataProvider
      * @expectedException PDOException
      */
-    public function testFailConnection(string $dsn, string $user, string $password)
+    public function testFailConnection(string $dsn, string $user, string $password): void
     {
         $options = [
             'dsn'      => $dsn,

@@ -25,7 +25,7 @@ class PasswordGeneratorTest extends TestCase
     /**
      * Setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->password = new PasswordGenerator();
     }
@@ -33,7 +33,7 @@ class PasswordGeneratorTest extends TestCase
     /**
      * String length provider.
      */
-    public function stringLengthProvider() : array
+    public function stringLengthProvider(): array
     {
         return [
             [15],
@@ -42,25 +42,25 @@ class PasswordGeneratorTest extends TestCase
             [30]
         ];
     }
-    
+
     /**
      * Test get from random.
      *
      * @dataProvider stringLengthProvider
      */
-    public function testGetFromRandom(int $strLen)
+    public function testGetFromRandom(int $strLen): void
     {
         $password = $this->password->getFromRandom($strLen);
 
         $this->assertEquals($strLen, strlen($password));
     }
-    
+
     /**
      * Test get from random.
      *
      * @dataProvider stringLengthProvider
      */
-    public function testCheckRandomTopology(int $strLen)
+    public function testCheckRandomTopology(int $strLen): void
     {
         $topology = '';
 
@@ -86,34 +86,34 @@ class PasswordGeneratorTest extends TestCase
     /**
      * Test in range edges.
      */
-    public function testCheckRangesEdges()
+    public function testCheckRangesEdges(): void
     {
         $this->assertEquals('ssddssuussllss', (new PasswordGenerator())->getTopology('!/09:@AZ[`az{~'));
     }
-    
+
     /**
      * Topology and passwords provider.
      */
-    public function topologyAndPasswordProvider() : array
+    public function topologyAndPasswordProvider(): array
     {
         $array = [];
-        
+
         for ($i = 0; $i < 10; $i++) {
             $password = (new PasswordGenerator())->getFromRandom(20);
             $topology = (new PasswordGenerator())->getTopology($password);
-            
+
             $array[] = [$password, $topology];
         }
-        
+
         return $array;
     }
-    
+
     /**
      * Test get topology.
      *
      * @dataProvider topologyAndPasswordProvider
      */
-    public function testGetTopology(string $password, string $topology)
+    public function testGetTopology(string $password, string $topology): void
     {
         $this->assertEquals($topology, $this->password->getTopology($password));
     }
@@ -121,7 +121,7 @@ class PasswordGeneratorTest extends TestCase
     /**
      * Bad topology provider.
      */
-    public function badTopologyProvider() : array
+    public function badTopologyProvider(): array
     {
         return [
            ['uldz'],
@@ -132,39 +132,39 @@ class PasswordGeneratorTest extends TestCase
            ['']
        ];
     }
-    
+
     /**
      * Test get topology.
      *
      * @dataProvider badTopologyProvider
      * @expectedException InvalidArgumentException
      */
-    public function testGetTopologyWithBadTopology(string $topology)
+    public function testGetTopologyWithBadTopology(string $topology): void
     {
         $this->password->getFromTopology($topology);
     }
-    
+
     /**
      * Topology provider.
      */
-    public function topologyProvider() : array
+    public function topologyProvider(): array
     {
         $array = [];
-        
+
         for ($i = 0; $i < 10; $i++) {
             $password = (new PasswordGenerator())->getFromRandom(20);
             $array[] = [(new PasswordGenerator())->getTopology($password)];
         }
-        
+
         return $array;
     }
-    
+
     /**
      * Test get topology.
      *
      * @dataProvider topologyProvider
      */
-    public function testGetFromTopology(string $topology)
+    public function testGetFromTopology(string $topology): void
     {
         $password = $this->password->getFromTopology($topology);
         $this->assertEquals($topology, $this->password->getTopology($password));

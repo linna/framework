@@ -34,7 +34,7 @@ class Permission extends DomainObjectAbstract
     public $lastUpdate;
 
     /**
-     * Constructor.
+     * Class Constructor.
      */
     public function __construct()
     {

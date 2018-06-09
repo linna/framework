@@ -26,7 +26,7 @@ trait PermissionTrait
      *
      * @param array $permissions
      */
-    public function setPermissions(array $permissions)
+    public function setPermissions(array $permissions): void
     {
         $this->permission = $permissions;
     }
@@ -36,7 +36,7 @@ trait PermissionTrait
      *
      * @return array
      */
-    public function getPermissions() : array
+    public function getPermissions(): array
     {
         return $this->permission;
     }
@@ -48,7 +48,7 @@ trait PermissionTrait
      *
      * @return bool
      */
-    public function can(string $permission) : bool
+    public function can(string $permission): bool
     {
         foreach ($this->permission as $ownPermission) {
             if ($ownPermission->name === $permission) {

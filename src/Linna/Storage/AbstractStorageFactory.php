@@ -65,7 +65,7 @@ abstract class AbstractStorageFactory
 
         throw new InvalidArgumentException("[$driver] not supported.");
     }
-    
+
     /**
      * Get storage object.
      *

@@ -20,114 +20,114 @@ class AutoloaderTest extends TestCase
     /**
      * Test load mapped file.
      */
-    public function testLoadMappedFileTrue()
+    public function testLoadMappedFileTrue(): void
     {
         $autoloader = new Autoloader();
-        
+
         $this->assertTrue($autoloader->register());
-        
+
         $autoloader->addNamespaces([
             ['Linna\TestHelper', dirname(__DIR__).'/TestHelper'],
             ['Linna\Foo_', dirname(__DIR__).'/FooClass'],
             ['Baz\Foo', dirname(__DIR__).'/FooClass']
         ]);
-        
+
         $this->assertTrue($autoloader->loadClass(Linna\TestHelper\DI\ClassI::class));
-        
+
         $this->assertTrue($autoloader->unregister());
     }
-    
+
     /**
     * Test load mapped file fail.
     */
-    public function testLoadMappedFileFalse()
+    public function testLoadMappedFileFalse(): void
     {
         $autoloader = new Autoloader();
-        
+
         $this->assertTrue($autoloader->register());
-        
+
         $autoloader->addNamespaces([
             ['Linna\TestHelper', dirname(__DIR__).'/TestHelper'],
             ['Linna\Foo_', dirname(__DIR__).'/FooClass'],
             ['Baz\Foo', dirname(__DIR__).'/FooClass']
         ]);
-        
+
         $this->assertFalse($autoloader->loadClass('Linna\TestHelper\DI\NotExistClass'));
-        
+
         $this->assertTrue($autoloader->unregister());
     }
-    
+
     /**
      * Test load mapped file no prefix.
      */
-    public function testLoadMappedFileNoPrefix()
+    public function testLoadMappedFileNoPrefix(): void
     {
         $autoloader = new Autoloader();
-        
+
         $this->assertTrue($autoloader->register());
-        
+
         $autoloader->addNamespaces([
             ['Linna\TestHelper', dirname(__DIR__).'/TestHelper'],
             ['Linna\Foo_', dirname(__DIR__).'/FooClass'],
             ['Baz\Foo', dirname(__DIR__).'/FooClass']
         ]);
-        
+
         $this->assertFalse($autoloader->loadClass('Linna\NoPrefix\ClassI'));
-        
+
         $this->assertTrue($autoloader->unregister());
     }
-    
+
     /**
      * Test load mapped file with one namespace.
      */
-    public function testLoadMappedFileTrueWithOneNamespace()
+    public function testLoadMappedFileTrueWithOneNamespace(): void
     {
         $autoloader = new Autoloader();
-        
+
         $this->assertTrue($autoloader->register());
-        
+
         $autoloader->addNamespaces([
             ['Linna\TestHelper', dirname(__DIR__).'/TestHelper'],
         ]);
-        
+
         $this->assertTrue($autoloader->loadClass(Linna\TestHelper\DI\ClassH::class));
-        
+
         $this->assertTrue($autoloader->unregister());
     }
-    
+
     /**
      * Test load mapped file fail with one namespace.
      */
-    public function testLoadMappedFileFalseWithOneNamespace()
+    public function testLoadMappedFileFalseWithOneNamespace(): void
     {
         $autoloader = new Autoloader();
-        
+
         $this->assertTrue($autoloader->register());
-        
+
         $autoloader->addNamespaces([
             ['Linna\TestHelper', dirname(__DIR__).'/TestHelper'],
         ]);
-        
+
         $this->assertFalse($autoloader->loadClass('Linna\NoPrefix\ClassH'));
-        
+
         $this->assertTrue($autoloader->unregister());
     }
-    
+
     /**
      * Test load mapped file no prefix with one namespace.
      */
-    public function testLoadMappedFileNoPrefixWithOneNamespace()
+    public function testLoadMappedFileNoPrefixWithOneNamespace(): void
     {
         $autoloader = new Autoloader();
-        
+
         $this->assertTrue($autoloader->register());
-        
+
         $autoloader->addNamespaces([
             ['Linna\TestHelper', dirname(__DIR__).'/TestHelper'],
         ]);
-        
+
         $this->assertFalse($autoloader->loadClass('Linna\NoPrefix\NotExistClass'));
-        
+
         $this->assertTrue($autoloader->unregister());
     }
 }

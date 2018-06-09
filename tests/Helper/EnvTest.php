@@ -22,7 +22,7 @@ class EnvTest extends TestCase
      *
      * @return array
      */
-    public function envProvider() : array
+    public function envProvider(): array
     {
         return [
             ['FOO=foo', 'FOO', 'foo'],
@@ -40,7 +40,7 @@ class EnvTest extends TestCase
             ['FOO="', 'FOO', '"'],
         ];
     }
-    
+
     /**
      * Test env with.
      *
@@ -50,16 +50,16 @@ class EnvTest extends TestCase
      * @param string $key
      * @param mixed $result
      */
-    public function testEnv(string $forPut, string $key, $result)
+    public function testEnv(string $forPut, string $key, $result): void
     {
         putenv($forPut);
         $this->assertEquals($result, Env::get($key));
     }
-    
+
     /**
      * Test env with default value.
      */
-    public function testEnvWithDefaultValue()
+    public function testEnvWithDefaultValue(): void
     {
         putenv('FOO=foo');
         $this->assertEquals('bar', Env::get('BAR', 'bar'));

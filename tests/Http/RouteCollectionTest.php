@@ -22,7 +22,7 @@ class RouteCollectionTest extends TestCase
     /**
      * Test new instance.
      */
-    public function testCreateInstance()
+    public function testCreateInstance(): void
     {
         $this->assertInstanceOf(RouteCollection::class, (new RouteCollection()));
     }
@@ -30,7 +30,7 @@ class RouteCollectionTest extends TestCase
     /**
      * Test new instance passing right typed array to constructor.
      */
-    public function testCreateInstanceWithRightTypedArray()
+    public function testCreateInstanceWithRightTypedArray(): void
     {
         $this->assertInstanceOf(
             RouteCollection::class,
@@ -54,7 +54,7 @@ class RouteCollectionTest extends TestCase
      *
      * @expectedException InvalidArgumentException
      */
-    public function testCreateInstanceWithWrongTypedArray()
+    public function testCreateInstanceWithWrongTypedArray(): void
     {
         $this->assertInstanceOf(
             TypedObjectArray::class,
@@ -71,7 +71,7 @@ class RouteCollectionTest extends TestCase
     /**
      * Test assign to array a right typed value.
      */
-    public function testAssignrRightTypedValueToArray()
+    public function testAssignrRightTypedValueToArray(): void
     {
         $routes = new RouteCollection();
         $routes[] = new Route([
@@ -88,16 +88,16 @@ class RouteCollectionTest extends TestCase
      *
      * @expectedException InvalidArgumentException
      */
-    public function testAssignWrongTypedValueToArray()
+    public function testAssignWrongTypedValueToArray(): void
     {
         $routes = new RouteCollection();
         $routes[] = new SplStack();
     }
-    
+
     /**
      * Test route to array.
      */
-    public function testRouteCollectionToArray()
+    public function testRouteCollectionToArray(): void
     {
         $routes = new RouteCollection([
             new Route([
@@ -106,7 +106,7 @@ class RouteCollectionTest extends TestCase
                 'url'        => '/',
             ])
         ]);
-        
+
         $this->assertEquals([[
             'name'       => 'Home',
             'method'     => 'GET',

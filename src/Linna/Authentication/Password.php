@@ -28,9 +28,9 @@ class Password
      * http://php.net/manual/en/password.constants.php
      */
     protected $options = [
-            'cost' => 11,
-            'algo' => PASSWORD_DEFAULT,
-        ];
+        'cost' => 11,
+        'algo' => PASSWORD_DEFAULT,
+    ];
 
     /**
      * Class constructor.
@@ -68,7 +68,6 @@ class Password
      */
     public function __construct(array $options = [])
     {
-        //set options
         $this->setOptions($options);
     }
 
@@ -155,7 +154,7 @@ class Password
      *
      * @return array
      */
-    public function getInfo(string $hash) : array
+    public function getInfo(string $hash): array
     {
         return password_get_info($hash);
     }

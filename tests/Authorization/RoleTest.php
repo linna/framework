@@ -37,7 +37,7 @@ class RoleTest extends TestCase
     /**
      * Setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -57,7 +57,7 @@ class RoleTest extends TestCase
 
         $permissionMapper = new PermissionMapper($pdo);
         $enhancedUserMapper = new EnhancedUserMapper($pdo, $password, $permissionMapper);
-        
+
         $this->roleMapper = new RoleMapper($pdo, $password, $enhancedUserMapper, $permissionMapper);
 
         $this->permissionMapper = $permissionMapper;
@@ -67,7 +67,7 @@ class RoleTest extends TestCase
     /**
      * Test new role instance.
      */
-    public function testNewRoleInstance()
+    public function testNewRoleInstance(): void
     {
         $this->assertInstanceOf(Role::class, $this->roleMapper->create());
     }
@@ -75,10 +75,10 @@ class RoleTest extends TestCase
     /**
      * Test role set and get users.
      */
-    public function testRoleSetAndGetUsers()
+    public function testRoleSetAndGetUsers(): void
     {
         $users = $this->enhancedUserMapper->fetchAll();
-        
+
         /** @var Role Role Class. */
         $role = $this->roleMapper->create();
         $role->setUsers($users);
@@ -89,7 +89,7 @@ class RoleTest extends TestCase
     /**
      * Test is user in role.
      */
-    public function testIsUserInRole()
+    public function testIsUserInRole(): void
     {
         /** @var Role Role Class. */
         $role = $this->roleMapper->create();
@@ -102,7 +102,7 @@ class RoleTest extends TestCase
     /**
      * Test role set and get permission.
      */
-    public function testRoleSetAndGetPermission()
+    public function testRoleSetAndGetPermission(): void
     {
         $permission = $this->permissionMapper->fetchAll();
 
@@ -116,7 +116,7 @@ class RoleTest extends TestCase
     /**
      * Test role can do action.
      */
-    public function testRoleCanDoAction()
+    public function testRoleCanDoAction(): void
     {
         /** @var Role Role Class. */
         $role = $this->roleMapper->create();

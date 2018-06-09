@@ -26,7 +26,7 @@ class ClassOptionsTest extends TestCase
     /**
      * Setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->router = new Router();
     }
@@ -34,7 +34,7 @@ class ClassOptionsTest extends TestCase
     /**
      * Test set option.
      */
-    public function testSetOption()
+    public function testSetOption(): void
     {
         $this->assertEmpty($this->router->setOption('badRoute', 'foo'));
 
@@ -46,7 +46,7 @@ class ClassOptionsTest extends TestCase
      *
      * @expectedException InvalidArgumentException
      */
-    public function testSetWithWrongOption()
+    public function testSetWithWrongOption(): void
     {
         $this->assertEmpty($this->router->setOption('badRout', 'foo'));
     }
@@ -54,7 +54,7 @@ class ClassOptionsTest extends TestCase
     /**
      * Test set options.
      */
-    public function testSetOptions()
+    public function testSetOptions(): void
     {
         $this->assertEmpty($this->router->setOptions([
             'basePath'    => '/',
@@ -70,7 +70,7 @@ class ClassOptionsTest extends TestCase
      *
      * @expectedException InvalidArgumentException
      */
-    public function testSetWithWrongOptions()
+    public function testSetWithWrongOptions(): void
     {
         $this->assertEmpty($this->router->setOptions([
             'basePath'    => '/',

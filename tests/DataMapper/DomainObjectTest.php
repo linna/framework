@@ -26,7 +26,7 @@ class DomainObjectTest extends TestCase
     /**
      * Setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->user = new User(new Password());
     }
@@ -34,7 +34,7 @@ class DomainObjectTest extends TestCase
     /**
      * Test create new object instance.
      */
-    public function testNewObjectInstance()
+    public function testNewObjectInstance(): void
     {
         $this->assertInstanceOf(User::class, $this->user);
     }
@@ -42,7 +42,7 @@ class DomainObjectTest extends TestCase
     /**
      * Test set object id.
      */
-    public function testSetObjectId()
+    public function testSetObjectId(): void
     {
         $this->user->setId(1);
 
@@ -54,7 +54,7 @@ class DomainObjectTest extends TestCase
      *
      * @expectedException UnexpectedValueException
      */
-    public function testOverrideObjectId()
+    public function testOverrideObjectId(): void
     {
         $this->user->setId(1);
         $this->user->setId(2);

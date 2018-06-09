@@ -79,7 +79,7 @@ class Session implements ArrayAccess
     /**
      * Regenerate session_id without double cookie problem.
      */
-    public function regenerate()
+    public function regenerate(): void
     {
         //invalidate cookie
         setcookie(session_name(), '', time());
@@ -94,7 +94,7 @@ class Session implements ArrayAccess
     /**
      * Set cookie.
      */
-    private function setCookie()
+    private function setCookie(): void
     {
         setcookie(
             session_name(),
@@ -110,7 +110,7 @@ class Session implements ArrayAccess
     /**
      * Start session.
      */
-    public function start()
+    public function start(): void
     {
         if (session_status() !== 2) {
             //prepare session start
@@ -133,7 +133,7 @@ class Session implements ArrayAccess
     /**
      * Set session options before start.
      */
-    private function prepare()
+    private function prepare(): void
     {
         //setting session name
         session_name($this->options['name']);
@@ -153,10 +153,8 @@ class Session implements ArrayAccess
 
     /**
      * Refresh session.
-     *
-     * @return bool
      */
-    private function refresh()
+    private function refresh(): void
     {
         $time = time();
 
@@ -177,7 +175,7 @@ class Session implements ArrayAccess
      *
      * @param int $time
      */
-    private function setSessionData(int $time)
+    private function setSessionData(int $time): void
     {
         $this->id = session_id();
         $this->data['time'] = $time;
@@ -190,7 +188,7 @@ class Session implements ArrayAccess
      *
      * @param SessionHandlerInterface $handler
      */
-    public function setSessionHandler(SessionHandlerInterface $handler)
+    public function setSessionHandler(SessionHandlerInterface $handler): void
     {
         //setting a different save handler if passed
         if ($handler instanceof SessionHandlerInterface) {
@@ -201,15 +199,15 @@ class Session implements ArrayAccess
     /**
      * Destroy session.
      */
-    public function destroy()
+    public function destroy(): void
     {
         //delete session data
         $this->data = [];
         $this->id = '';
-        
+
         //call session destroy
         session_destroy();
-        
+
         //update status
         $this->status = session_status();
     }
@@ -217,10 +215,10 @@ class Session implements ArrayAccess
     /**
      * Write session data and end session.
      */
-    public function commit()
+    public function commit(): void
     {
         session_write_close();
-        
+
         //update status
         $this->status = session_status();
     }

@@ -56,7 +56,7 @@ class RouterCached extends Router
      * @param string $requestUri
      * @param string $requestMethod
      */
-    public function validate(string $requestUri, string $requestMethod) : bool
+    public function validate(string $requestUri, string $requestMethod): bool
     {
         //check if route is already cached
         if (($cachedRoute = $this->cache->get($requestUri.$requestMethod)) !== null) {

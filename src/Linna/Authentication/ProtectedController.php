@@ -27,7 +27,7 @@ trait ProtectedController
      * @param Authenticate $authenticate
      * @param string       $redirect
      */
-    private function protect(Authenticate $authenticate, string $redirect)
+    private function protect(Authenticate $authenticate, string $redirect): void
     {
         if (($this->authentication = $authenticate->isLogged()) === false) {
             header('Location: '.$redirect);

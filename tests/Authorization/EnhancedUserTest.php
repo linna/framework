@@ -83,7 +83,7 @@ class EnhancedUserTest extends TestCase
     {
         /** @var EnhancedUser User Class. */
         $user = $this->enhancedUserMapper->create();
-        
+
         $user->setPermissions($this->permissionMapper->fetchAll());
 
         $this->assertTrue($user->can('see users'));

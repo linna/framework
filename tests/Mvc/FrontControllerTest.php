@@ -48,21 +48,21 @@ class FrontControllerTest extends TestCase
      * @var Model The model object.
      */
     protected $model;
-    
+
     /**
      * @var View The view object.
      */
     protected $view;
-    
+
     /**
      * @var Controller The controller object.
      */
     protected $controller;
-    
+
     /**
      * Setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $routes = (new RouteCollection([
             new Route([
@@ -92,16 +92,16 @@ class FrontControllerTest extends TestCase
                 'action'     => 'SomeParam'
             ])
         ]))->toArray();
-        
+
         $this->router = new Router($routes, [
             'badRoute'    => 'E404',
             'rewriteMode' => true,
         ]);
-        
+
         $model = new CalculatorModel();
         $view = new CalculatorView($model, new JsonTemplate());
         $controller = new CalculatorController($model);
-        
+
         $this->model = $model;
         $this->view = $view;
         $this->controller = $controller;
@@ -110,7 +110,7 @@ class FrontControllerTest extends TestCase
     /**
      * Test new fron controller instance.
      */
-    public function testNewFrontControllerInstance()
+    public function testNewFrontControllerInstance(): void
     {
         $this->assertInstanceOf(FrontController::class, new FrontController($this->model, $this->view, $this->controller, '', []));
     }
@@ -120,7 +120,7 @@ class FrontControllerTest extends TestCase
      *
      * @return array
      */
-    public function frontControllerArgProvider() : array
+    public function frontControllerArgProvider(): array
     {
         $model = $this->model;
         $view = $this->view;
@@ -134,14 +134,14 @@ class FrontControllerTest extends TestCase
             [$model, $view, $controller, 'index', false]
         ];
     }
-    
+
     /**
      * Test new front controller instance with wrong arguments.
      *
      * @dataProvider frontControllerArgProvider
      * @expectedException TypeError
      */
-    public function testNewFrontControllerWithWrongArguments($model, $view, $controller, $action, $param)
+    public function testNewFrontControllerWithWrongArguments($model, $view, $controller, $action, $param): void
     {
         (new FrontController($model, $view, $controller, $action, $param));
     }
@@ -151,7 +151,7 @@ class FrontControllerTest extends TestCase
      *
      * @return array
      */
-    public function calculatorProvider() : array
+    public function calculatorProvider(): array
     {
         return [
             ['/calculator/multiply',[2,2,2],8],
@@ -166,10 +166,10 @@ class FrontControllerTest extends TestCase
      *
      * @dataProvider calculatorProvider
      */
-    public function testRunFrontController(string $route, array $parameter, int $result)
+    public function testRunFrontController(string $route, array $parameter, int $result): void
     {
         $_POST['numbers'] = $parameter;
-        
+
         $this->router->validate($route, 'POST');
 
         $routeArray = $this->router->getRoute()->toArray();
@@ -178,10 +178,7 @@ class FrontControllerTest extends TestCase
 
         $frontController->run();
 
-        //var_dump(json_decode($frontController->response())->result);
-        
         $this->assertEquals($result, json_decode($frontController->response())->result);
-        //$this->assertTrue(true);
     }
 
     /**
@@ -189,7 +186,7 @@ class FrontControllerTest extends TestCase
      *
      * @return array
      */
-    public function someParamProvider() : array
+    public function someParamProvider(): array
     {
         return [
             ['/multi/param/2017/1/1','2017-01-01 12:00:00'],
@@ -199,13 +196,13 @@ class FrontControllerTest extends TestCase
             ['/multi/param/2021/5/5','2021-05-05 12:00:00']
         ];
     }
-    
+
     /**
      * Test run front controller with param.
      *
      * @dataProvider someParamProvider
      */
-    public function testRunFrontControllerWithSomeParam(string $route, string $result)
+    public function testRunFrontControllerWithSomeParam(string $route, string $result): void
     {
         $this->router->validate($route, 'GET');
 
@@ -214,7 +211,7 @@ class FrontControllerTest extends TestCase
         $model = new MultipleModel();
         $view = new MultipleView($model, new JsonTemplate());
         $controller = new MultipleController($model);
-        
+
         $frontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
 
         $frontController->run();
@@ -225,7 +222,7 @@ class FrontControllerTest extends TestCase
     /**
      * Test model detach.
      */
-    public function testModelDetach()
+    public function testModelDetach(): void
     {
         $this->router->validate('/multi/param/2017/1/1', 'GET');
 
@@ -235,7 +232,7 @@ class FrontControllerTest extends TestCase
         $model = new MultipleModel();
         $view = new MultipleView($model, new JsonTemplate());
         $controller = new MultipleController($model);
-        
+
         //attach and detach
         $model->attach($view);
         $model->detach($view);
@@ -245,14 +242,14 @@ class FrontControllerTest extends TestCase
         $model->notify();
 
         $this->assertFalse(isset(json_decode($view->render())->result));
-        
+
         //attach
         $model->attach($view);
 
         call_user_func_array([$controller, $route->getAction()], $route->getParam());
 
         $model->notify();
-        
+
         $this->assertTrue(isset(json_decode($view->render())->result));
     }
 
@@ -261,7 +258,7 @@ class FrontControllerTest extends TestCase
      *
      * @return array
      */
-    public function beforeAfterProvider() : array
+    public function beforeAfterProvider(): array
     {
         return [
             [10,15],
@@ -271,13 +268,13 @@ class FrontControllerTest extends TestCase
             [50,55],
         ];
     }
-    
+
     /**
      * Test run front controller before after.
      *
      * @dataProvider beforeAfterProvider
      */
-    public function testRunFrontControllerBeforeAfter(int $input, int $result)
+    public function testRunFrontControllerBeforeAfter(int $input, int $result): void
     {
         $this->router->validate('/before/after/'.$input, 'GET');
 
@@ -286,7 +283,7 @@ class FrontControllerTest extends TestCase
         $model = new BeforeAfterModel();
         $controller = new BeforeAfterController($model);
         $view = new BeforeAfterView($model, new JsonTemplate());
-        
+
         $frontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
 
         $frontController->run();

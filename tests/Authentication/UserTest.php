@@ -28,7 +28,7 @@ class UserTest extends TestCase
     /**
      * Setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -51,7 +51,7 @@ class UserTest extends TestCase
     /**
      * Test new user instance.
      */
-    public function testNewUserInstance()
+    public function testNewUserInstance(): void
     {
         $this->assertInstanceOf(User::class, $this->userMapper->create());
     }
@@ -59,7 +59,7 @@ class UserTest extends TestCase
     /**
      * Test set user password.
      */
-    public function testSetUserPassword()
+    public function testSetUserPassword(): void
     {
         /** @var User User Class. */
         $user = $this->userMapper->create();
@@ -67,14 +67,14 @@ class UserTest extends TestCase
         $user->setPassword('password');
 
         $this->assertInstanceOf(User::class, $user);
-        
+
         $this->assertTrue(password_verify('password', $user->password));
     }
 
     /**
      * Test change user password.
      */
-    public function testChangeUserPassword()
+    public function testChangeUserPassword(): void
     {
         /** @var User User Class. */
         $user = $this->userMapper->create();
@@ -82,7 +82,7 @@ class UserTest extends TestCase
         $user->setPassword('old_password');
 
         $this->assertInstanceOf(User::class, $user);
-        
+
         $this->assertTrue($user->chagePassword('new_password', 'old_password'));
         $this->assertTrue($user->chagePassword('other_new_password', 'new_password'));
         $this->assertFalse($user->chagePassword('password', 'wrong_password'));

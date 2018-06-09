@@ -22,7 +22,7 @@ class StrTest extends TestCase
      *
      * @return array
      */
-    public function startOneNeedleProvider() : array
+    public function startOneNeedleProvider(): array
     {
         return [
             ['=his is a string', ['='], true],
@@ -43,7 +43,7 @@ class StrTest extends TestCase
             ['this is a strin=', ['='], false]
         ];
     }
-    
+
     /**
      * Test startWith with one needle
      *
@@ -53,17 +53,17 @@ class StrTest extends TestCase
      * @param array $needles
      * @param bool $result
      */
-    public function testStartsWithOneNeedle(string $haystack, array $needles, bool $result)
+    public function testStartsWithOneNeedle(string $haystack, array $needles, bool $result): void
     {
         $this->assertEquals($result, Str::startsWith($haystack, $needles));
     }
-    
+
     /**
      * Ends one needle provider.
      *
      * @return array
      */
-    public function endsOneNeedleProvider() : array
+    public function endsOneNeedleProvider(): array
     {
         return [
             ['=his is a string', ['='], false],
@@ -84,7 +84,7 @@ class StrTest extends TestCase
             ['this is a strin=', ['='], true]
         ];
     }
-    
+
     /**
      * Test endsWith with one needle
      *
@@ -94,7 +94,7 @@ class StrTest extends TestCase
      * @param array $needles
      * @param bool $result
      */
-    public function testEndsWithOneNeedle(string $haystack, array $needles, bool $result)
+    public function testEndsWithOneNeedle(string $haystack, array $needles, bool $result): void
     {
         $this->assertEquals($result, Str::endsWith($haystack, $needles));
     }
@@ -104,7 +104,7 @@ class StrTest extends TestCase
      *
      * @return array
      */
-    public function startSomeNeedleProvider() : array
+    public function startSomeNeedleProvider(): array
     {
         return [
             ['=his is a string', ['=','^'], true],
@@ -125,7 +125,7 @@ class StrTest extends TestCase
             ['this is a strin=', ['=','^'], false]
         ];
     }
-    
+
     /**
      * Test startWith with some needle
      *
@@ -135,17 +135,17 @@ class StrTest extends TestCase
      * @param array $needles
      * @param bool $result
      */
-    public function testStartsWithSomeNeedle(string $haystack, array $needles, bool $result)
+    public function testStartsWithSomeNeedle(string $haystack, array $needles, bool $result): void
     {
         $this->assertEquals($result, Str::startsWith($haystack, $needles));
     }
-    
+
     /**
      * Ends some needle provider.
      *
      * @return array
      */
-    public function endsSomeNeedleProvider() : array
+    public function endsSomeNeedleProvider(): array
     {
         return [
             ['=his is a string', ['=','^'], false],
@@ -166,7 +166,7 @@ class StrTest extends TestCase
             ['this is a strin=', ['=','^'], true]
         ];
     }
-    
+
     /**
      * Test endsWith with some needle
      *
@@ -176,17 +176,17 @@ class StrTest extends TestCase
      * @param array $needles
      * @param bool $result
      */
-    public function testEndsWithSomeNeedle(string $haystack, array $needles, bool $result)
+    public function testEndsWithSomeNeedle(string $haystack, array $needles, bool $result): void
     {
         $this->assertEquals($result, Str::endsWith($haystack, $needles));
     }
-    
+
     /**
      * Starts and ends some needle provider.
      *
      * @return array
      */
-    public function startEndsSomeNeedleProvider() : array
+    public function startEndsSomeNeedleProvider(): array
     {
         return [
             ['=his is a strin=', ['=','^'], true],
@@ -207,7 +207,7 @@ class StrTest extends TestCase
             ['^his is a strin=', ['=','^'], false]
         ];
     }
-    
+
     /**
      * Test endsWith with some needle
      *
@@ -217,7 +217,7 @@ class StrTest extends TestCase
      * @param array $needles
      * @param bool $result
      */
-    public function testStartEndsWithSomeNeedle(string $haystack, array $needles, bool $result)
+    public function testStartEndsWithSomeNeedle(string $haystack, array $needles, bool $result): void
     {
         $this->assertEquals($result, Str::startsEndsWith($haystack, $needles));
     }

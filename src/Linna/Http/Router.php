@@ -82,13 +82,13 @@ class Router
      *
      * @return bool
      */
-    public function validate(string $requestUri, string $requestMethod) : bool
+    public function validate(string $requestUri, string $requestMethod): bool
     {
         $route = $this->findRoute($this->filterUri($requestUri), $requestMethod);
 
         if ($route) {
             $this->buildValidRoute($route);
-            
+
             return true;
         }
 
@@ -105,11 +105,11 @@ class Router
      *
      * @return array
      */
-    private function findRoute(string $uri, string $method) : array
+    private function findRoute(string $uri, string $method): array
     {
         $matches = [];
         $route = [];
-        
+
         foreach ($this->routes as $value) {
             $urlMatch = preg_match('`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`', $uri, $matches);
             $methodMatch = strpos($value['method'], $method);
@@ -129,11 +129,11 @@ class Router
      *
      * @param array $route
      */
-    private function buildValidRoute(array $route)
+    private function buildValidRoute(array $route): void
     {
         //add to route array the passed uri for param check when call
         $matches = $route['matches'];
-        
+
         //route match and there is a subpattern with action
         if (count($matches) > 1) {
             //assume that subpattern rapresent action
@@ -180,7 +180,7 @@ class Router
      *
      * @return void
      */
-    private function buildErrorRoute()
+    private function buildErrorRoute(): void
     {
         //check if there is a declared route for errors, if no exit with false
         if (($key = array_search($this->options['badRoute'], array_column($this->routes, 'name'), true)) === false) {
@@ -195,18 +195,18 @@ class Router
         //build and store route for errors
         $this->route = new Route($route);
     }
-    
+
     /**
      * Check if a route is valid and
      * return the route object else return a bad route object.
      *
      * @return RouteInterface
      */
-    public function getRoute() : RouteInterface
+    public function getRoute(): RouteInterface
     {
         return $this->route;
     }
-    
+
     /**
      * Analize $_SERVER['REQUEST_URI'] for current uri, sanitize and return it.
      *
@@ -241,17 +241,17 @@ class Router
         'PATCH' => true,
         'DELETE' => true,
     ];
-    
+
     /**
      * Map a route.
      *
      * @param array $route
      */
-    public function map(array $route)
+    public function map(array $route): void
     {
         array_push($this->routes, $route);
     }
-    
+
     /**
      * Fast route mapping.
      *
@@ -265,16 +265,16 @@ class Router
     public function __call(string $name, array $arguments)
     {
         $method = strtoupper($name);
-        
+
         if (isset($this->fastMapMethods[$method])) {
             $this->map($this->createRouteArray($method, $arguments[0], $arguments[1], $arguments[2] ?? []));
-            
+
             return;
         }
-        
+
         throw new BadMethodCallException(__METHOD__.": Router->{$name}() method do not exist.");
     }
-    
+
     /**
      * Create route array for previous methods.
      *
@@ -285,7 +285,7 @@ class Router
      *
      * @return array
      */
-    private function createRouteArray(string $method, string $url, callable $callback, array $options) : array
+    private function createRouteArray(string $method, string $url, callable $callback, array $options): array
     {
         $routeArray = (new Route([
             'method'   => $method,

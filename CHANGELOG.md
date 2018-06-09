@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 * `Linna\Authentication\PasswordGenerator`
+* void return type to methods
 
 ### Changed
 * Minimun PHP version: 7.1

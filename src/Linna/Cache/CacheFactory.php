@@ -32,7 +32,7 @@ class CacheFactory extends AbstractStorageFactory
      *
      * @return CacheInterface
      */
-    public function get() : CacheInterface
+    public function get(): CacheInterface
     {
         return $this->returnStorageObject();
     }

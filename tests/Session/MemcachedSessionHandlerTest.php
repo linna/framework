@@ -38,7 +38,7 @@ class MemcachedSessionHandlerTest extends TestCase
      *
      * @requires extension memcached
      */
-    public function setUp()
+    public function setUp(): void
     {
         $memcached = new Memcached();
         
@@ -59,7 +59,7 @@ class MemcachedSessionHandlerTest extends TestCase
      *
      * @runInSeparateProcess
      */
-    public function testSessionStart()
+    public function testSessionStart(): void
     {
         $session = $this->session;
 
@@ -71,90 +71,90 @@ class MemcachedSessionHandlerTest extends TestCase
 
         $session->destroy();
     }
-    
+
     /**
      * Test session commit.
      *
      * @runInSeparateProcess
      */
-    public function testSessionCommit()
+    public function testSessionCommit(): void
     {
         $session = $this->session;
         $session->start();
-        
+
         $this->assertEquals($session->id, session_id());
-        
+
         $session['fooData'] = 'fooData';
-        
+
         $session->commit();
-        
+
         $session->start();
-        
+
         $this->assertEquals($session->id, session_id());
         $this->assertEquals('fooData', $session['fooData']);
-        
+
         $session->destroy();
     }
-    
+
     /**
      * Test session destroy.
      *
      * @runInSeparateProcess
      */
-    public function testSessionDestroy()
+    public function testSessionDestroy(): void
     {
         $session = $this->session;
 
         $session->start();
         $session['fooData'] = 'fooData';
-        
+
         $this->assertEquals(2, $session->status);
         $this->assertEquals(session_id(), $session->id);
         $this->assertEquals('fooData', $session['fooData']);
-        
+
         $session->destroy();
-        
+
         $this->assertEquals(1, $session->status);
         $this->assertEquals('', $session->id);
         $this->assertFalse($session['fooData']);
     }
-    
+
     /**
      * Test session regenerate.
      *
      * @runInSeparateProcess
      */
-    public function testSessionRegenerate()
+    public function testSessionRegenerate(): void
     {
         $session = $this->session;
 
         $session->start();
         $session['fooData'] = 'fooData';
-        
+
         $sessionIdBefore = session_id();
-        
+
         $this->assertEquals(2, $session->status);
         $this->assertEquals($sessionIdBefore, $session->id);
         $this->assertEquals('fooData', $session['fooData']);
-        
+
         $session->regenerate();
-        
+
         $sessionIdAfter = session_id();
-        
+
         $this->assertEquals(2, $session->status);
         $this->assertEquals($sessionIdAfter, $session->id);
         $this->assertNotEquals($sessionIdAfter, $sessionIdBefore);
         $this->assertEquals('fooData', $session['fooData']);
-        
+
         $session->destroy();
     }
-    
+
     /**
      * Test session expired.
      *
      * @runInSeparateProcess
      */
-    public function testSessionExpired()
+    public function testSessionExpired(): void
     {
         $session = $this->session;
 
@@ -184,7 +184,7 @@ class MemcachedSessionHandlerTest extends TestCase
      * @requires extension memcached
      * @runInSeparateProcess
      */
-    public function testGc()
+    public function testGc(): void
     {
         $this->assertTrue($this->handler->gc(0));
     }

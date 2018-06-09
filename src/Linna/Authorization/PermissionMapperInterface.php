@@ -29,7 +29,7 @@ interface PermissionMapperInterface extends MapperInterface
      *
      * @return DomainObjectInterface
      */
-    public function fetchByName(string $permissionName) : DomainObjectInterface;
+    public function fetchByName(string $permissionName): DomainObjectInterface;
 
     /**
      * Fetch permissions for a role
@@ -41,7 +41,7 @@ interface PermissionMapperInterface extends MapperInterface
      *
      * @return array
      */
-    public function fetchPermissionsByRole(int $roleId) : array;
+    public function fetchPermissionsByRole(int $roleId): array;
 
     /**
      * Fetch permissions for a user
@@ -53,7 +53,7 @@ interface PermissionMapperInterface extends MapperInterface
      *
      * @return array
      */
-    public function fetchPermissionsByUser(int $userId) : array;
+    public function fetchPermissionsByUser(int $userId): array;
 
     /**
      * Combine al users-roles-permissions in storage for
@@ -70,7 +70,7 @@ interface PermissionMapperInterface extends MapperInterface
      *
      * @return array
      */
-    public function fetchUserPermissionHashTable(int $userId) : array;
+    public function fetchUserPermissionHashTable(int $userId): array;
 
     /**
      * Check if a permission exist.
@@ -79,5 +79,5 @@ interface PermissionMapperInterface extends MapperInterface
      *
      * @return bool
      */
-    public function permissionExist(string $permission) : bool;
+    public function permissionExist(string $permission): bool;
 }

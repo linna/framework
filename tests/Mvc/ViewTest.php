@@ -23,7 +23,7 @@ class ViewTest extends TestCase
     /**
      * Test new view instance.
      */
-    public function testNewViewInstance()
+    public function testNewViewInstance(): void
     {
         $this->assertInstanceOf(CalculatorView::class, new CalculatorView(new CalculatorModel(), new JsonTemplate()));
     }
@@ -31,7 +31,7 @@ class ViewTest extends TestCase
     /**
      * Test view with bad template.
      */
-    public function testViewWithBadTemplate()
+    public function testViewWithBadTemplate(): void
     {
         $this->assertInstanceOf(BadTemplateView::class, new BadTemplateView(new CalculatorModel(), 'badTemplate'));
     }
@@ -41,7 +41,7 @@ class ViewTest extends TestCase
      *
      * @expectedException UnexpectedValueException
      */
-    public function testViewWithBadTemplateOnRender()
+    public function testViewWithBadTemplateOnRender(): void
     {
         (new BadTemplateView(new CalculatorModel(), 'badTemplate'))->render();
     }

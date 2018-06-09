@@ -26,22 +26,22 @@ class AuthorizeTest extends TestCase
      * @var Session The session class.
      */
     protected $session;
-    
+
     /**
      * @var Password The password class.
      */
     protected $password;
-    
+
     /**
      * @var Authenticate The authenticate class
      */
     protected $authenticate;
-    
+
     /**
      * @var Authorize The authorize class
      */
     protected $authorize;
-    
+
     /**
      * @var PermissionMapper The permission mapper
      */
@@ -50,7 +50,7 @@ class AuthorizeTest extends TestCase
     /**
      * Setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -68,20 +68,19 @@ class AuthorizeTest extends TestCase
         $password = new Password();
         $authenticate = new Authenticate($session, $password);
         $permissionMapper = new PermissionMapper((new StorageFactory('pdo', $options))->get());
-        
-        
+
         $this->password = $password;
         $this->session = $session;
         $this->authenticate = $authenticate;
         $this->permissionMapper = $permissionMapper;
-    
+
         $this->authorize = new Authorize($authenticate, $permissionMapper);
     }
-    
+
     /**
      * Test create new authorize instance.
      */
-    public function testNewAuthorizeInstance()
+    public function testNewAuthorizeInstance(): void
     {
         $this->assertInstanceOf(Authorize::class, $this->authorize);
     }
@@ -89,7 +88,7 @@ class AuthorizeTest extends TestCase
     /**
      * Test can do an action without login.
      */
-    public function testCanDoActionWithoutLogin()
+    public function testCanDoActionWithoutLogin(): void
     {
         $this->assertFalse($this->authorize->can('see users'));
     }
@@ -97,7 +96,7 @@ class AuthorizeTest extends TestCase
     /**
      * Test can do an action with not existent permission.
      */
-    public function testCanDoActionWithNotExistentPermission()
+    public function testCanDoActionWithNotExistentPermission(): void
     {
         $this->assertFalse($this->authorize->can('Not Existent Permission'));
     }
@@ -107,7 +106,7 @@ class AuthorizeTest extends TestCase
      *
      * @runInSeparateProcess
      */
-    public function testCanDoActionWithLogin()
+    public function testCanDoActionWithLogin(): void
     {
         $this->session->start();
 

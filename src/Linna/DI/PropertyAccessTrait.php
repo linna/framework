@@ -83,7 +83,7 @@ trait PropertyAccessTrait
      *
      * @ignore
      */
-    public function __unset(string $key) : bool
+    public function __unset(string $key): bool
     {
         return $this->delete($key);
     }
@@ -96,7 +96,7 @@ trait PropertyAccessTrait
      *
      * @ignore
      */
-    public function __isset(string $key) : bool
+    public function __isset(string $key): bool
     {
         return $this->has($key);
     }

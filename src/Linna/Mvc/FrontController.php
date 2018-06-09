@@ -63,7 +63,7 @@ class FrontController
     /**
      * Run mvc pattern.
      */
-    public function run()
+    public function run(): void
     {
         //attach Oserver to Subjetc
         $this->model->attach($this->view);
@@ -91,7 +91,7 @@ class FrontController
      *
      * @param string $when
      */
-    private function beforeAfterControllerAction(string $when)
+    private function beforeAfterControllerAction(string $when): void
     {
         $method = $when.ucfirst($this->routeAction);
 
@@ -112,11 +112,10 @@ class FrontController
         }
     }
 
-    
     /**
      * Run controller.
      */
-    private function runController()
+    private function runController(): void
     {
         //get route information
         $action = $this->routeAction;
@@ -137,10 +136,10 @@ class FrontController
     /**
      * Run view.
      */
-    private function runView()
+    private function runView(): void
     {
         $action = ($this->routeAction) ? $this->routeAction : 'index';
-        
+
         call_user_func([$this->view, $action]);
     }
 

@@ -23,7 +23,7 @@ class ContainerTest extends TestCase
      *
      * @return array
      */
-    public function valuesProvider() : array
+    public function valuesProvider(): array
     {
         return [
             ['string', 'Hello World'],
@@ -45,7 +45,7 @@ class ContainerTest extends TestCase
      *
      * @dataProvider valuesProvider
      */
-    public function testSetAndGetWithMethodCall(string $key, $value)
+    public function testSetAndGetWithMethodCall(string $key, $value): void
     {
         $container = new Container();
 
@@ -62,7 +62,7 @@ class ContainerTest extends TestCase
      *
      * @dataProvider valuesProvider
      */
-    public function testSetAndGetWithArraySyntax(string $key, $value)
+    public function testSetAndGetWithArraySyntax(string $key, $value): void
     {
         $container = new Container();
 
@@ -79,7 +79,7 @@ class ContainerTest extends TestCase
      *
      * @dataProvider valuesProvider
      */
-    public function testSetAndGetWithPropertySyntax(string $key, $value)
+    public function testSetAndGetWithPropertySyntax(string $key, $value): void
     {
         $container = new Container();
 
@@ -96,7 +96,7 @@ class ContainerTest extends TestCase
      *
      * @dataProvider valuesProvider
      */
-    public function testHasWithMethodCall(string $key, $value)
+    public function testHasWithMethodCall(string $key, $value): void
     {
         $container = new Container();
 
@@ -113,7 +113,7 @@ class ContainerTest extends TestCase
      *
      * @dataProvider valuesProvider
      */
-    public function testHasWithArraySyntax(string $key, $value)
+    public function testHasWithArraySyntax(string $key, $value): void
     {
         $container = new Container();
 
@@ -130,7 +130,7 @@ class ContainerTest extends TestCase
      *
      * @dataProvider valuesProvider
      */
-    public function testHasWithWithPropertySyntax(string $key, $value)
+    public function testHasWithWithPropertySyntax(string $key, $value): void
     {
         $container = new Container();
 
@@ -147,7 +147,7 @@ class ContainerTest extends TestCase
      *
      * @dataProvider valuesProvider
      */
-    public function testDeleteUnexisting(string $key, $value)
+    public function testDeleteUnexisting(string $key, $value): void
     {
         $this->assertFalse((new Container())->delete($key));
     }
@@ -160,7 +160,7 @@ class ContainerTest extends TestCase
      *
      * @dataProvider valuesProvider
      */
-    public function testDeleteWithMethodCall(string $key, $value)
+    public function testDeleteWithMethodCall(string $key, $value): void
     {
         $container = new Container();
 
@@ -181,7 +181,7 @@ class ContainerTest extends TestCase
      *
      * @dataProvider valuesProvider
      */
-    public function testDeleteWithArraySyntax(string $key, $value)
+    public function testDeleteWithArraySyntax(string $key, $value): void
     {
         $container = new Container();
 
@@ -202,7 +202,7 @@ class ContainerTest extends TestCase
      *
      * @dataProvider valuesProvider
      */
-    public function testDeleteWithPropertySyntax(string $key, $value)
+    public function testDeleteWithPropertySyntax(string $key, $value): void
     {
         $container = new Container();
 
@@ -224,7 +224,7 @@ class ContainerTest extends TestCase
      * @dataProvider valuesProvider
      * @expectedException Linna\DI\Exception\NotFoundException
      */
-    public function testGetUnexistingWithMethodCall(string $key, $value)
+    public function testGetUnexistingWithMethodCall(string $key, $value): void
     {
         $container = new Container();
         $container->get($key);
@@ -239,7 +239,7 @@ class ContainerTest extends TestCase
      * @dataProvider valuesProvider
      * @expectedException Linna\DI\Exception\NotFoundException
      */
-    public function testGetUnexistingWithArraySyntax(string $key, $value)
+    public function testGetUnexistingWithArraySyntax(string $key, $value): void
     {
         $container = new Container();
         $foo = $container[$key];
@@ -254,7 +254,7 @@ class ContainerTest extends TestCase
      * @dataProvider valuesProvider
      * @expectedException Linna\DI\Exception\NotFoundException
      */
-    public function testGetUnexistingWithPropertySyntax(string $key, $value)
+    public function testGetUnexistingWithPropertySyntax(string $key, $value): void
     {
         $container = new Container();
         $foo = $container->$key;
@@ -265,7 +265,7 @@ class ContainerTest extends TestCase
      *
      * @return array
      */
-    public function classProvider() : array
+    public function classProvider(): array
     {
         return [
             [\Linna\TestHelper\DI\ClassResObject::class],
@@ -287,7 +287,7 @@ class ContainerTest extends TestCase
      *
      * @param string $class
      */
-    public function testResolve(string $class)
+    public function testResolve(string $class): void
     {
         $this->assertInstanceOf($class, (new Container())->resolve($class));
     }
@@ -295,7 +295,7 @@ class ContainerTest extends TestCase
     /**
      * Test resolving class with pre cached dependencies.
      */
-    public function testResolveWithCache()
+    public function testResolveWithCache(): void
     {
         $container = new Container();
 
@@ -311,7 +311,7 @@ class ContainerTest extends TestCase
      * Test resolving class with rules
      * for unsolvable arguments.
      */
-    public function testResolveWithRules()
+    public function testResolveWithRules(): void
     {
         $container = new Container();
         $container->setRules([

@@ -74,7 +74,7 @@ class DiskCache implements CacheInterface
      *
      * @return bool
      */
-    private function doesFileChecksFailed(string $file) : bool
+    private function doesFileChecksFailed(string $file): bool
     {
         //check if file exist
         if (!file_exists($file)) {
@@ -97,7 +97,7 @@ class DiskCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function set(string $key, $value, int $ttl = 0) : bool
+    public function set(string $key, $value, int $ttl = 0): bool
     {
         //create cache array
         $cache = [
@@ -124,7 +124,7 @@ class DiskCache implements CacheInterface
      *
      * @return int
      */
-    private function calculateTtl(int $ttl) : int
+    private function calculateTtl(int $ttl): int
     {
         //check for usage of ttl default class option value
         if ($ttl) {
@@ -137,7 +137,7 @@ class DiskCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function delete(string $key) : bool
+    public function delete(string $key): bool
     {
         //create file name
         $file = $this->options['dir'].'/'.sha1($key).'.php';
@@ -155,7 +155,7 @@ class DiskCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function clear() : bool
+    public function clear(): bool
     {
         array_map('unlink', glob($this->options['dir'].'/*.php'));
 
@@ -165,7 +165,7 @@ class DiskCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function has(string $key) : bool
+    public function has(string $key): bool
     {
         return !$this->doesFileChecksFailed($this->options['dir'].'/'.sha1($key).'.php');
     }

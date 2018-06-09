@@ -20,7 +20,7 @@ use Linna\Shared\ClassOptionsTrait;
 class EnhancedAuthenticate extends Authenticate
 {
     use ClassOptionsTrait;
-    
+
     /**
      * @var array An associative array containing options
      */
@@ -31,12 +31,12 @@ class EnhancedAuthenticate extends Authenticate
         'maxAttemptsForSecond' => 40,
         'banTimeInSeconds' => 900 //15 minutes
     ];
-    
+
     /**
      * @var EnhancedAuthenticateMapperInterface Enhanced Authenticate Mapper
      */
     private $enhancedAuthenticateMapper;
-    
+
     /**
      * Class Constructor
      *
@@ -52,12 +52,12 @@ class EnhancedAuthenticate extends Authenticate
             array $options = []
         ) {
         parent::__construct($session, $password);
-        
+
         $this->enhancedAuthenticateMapper = $enhancedAuthenticateMapper;
         //set options
         $this->setOptions($options);
     }
-    
+
     /**
      * Return how many attemps are left for incorrect password.
      *
@@ -65,13 +65,13 @@ class EnhancedAuthenticate extends Authenticate
      *
      * @return int
      */
-    public function getAttemptsLeftWithSameUser(string $userName) : int
+    public function getAttemptsLeftWithSameUser(string $userName): int
     {
         $attemptsLeft = $this->options['maxAttemptsForUserName'] - $this->enhancedAuthenticateMapper->fetchAttemptsWithSameUser($userName, $this->options['banTimeInSeconds']);
 
         return max(0, $attemptsLeft);
     }
-    
+
     /**
      * Return how many attemps are left for same session id.
      *
@@ -79,13 +79,13 @@ class EnhancedAuthenticate extends Authenticate
      *
      * @return int
      */
-    public function getAttemptsLeftWithSameSession(string $sessionId) : int
+    public function getAttemptsLeftWithSameSession(string $sessionId): int
     {
         $attemptsLeft = $this->options['maxAttemptsForSessionId'] - $this->enhancedAuthenticateMapper->fetchAttemptsWithSameSession($sessionId, $this->options['banTimeInSeconds']);
 
         return max(0, $attemptsLeft);
     }
-    
+
     /**
      * Return how many attemps are left for same ip.
      *
@@ -93,13 +93,13 @@ class EnhancedAuthenticate extends Authenticate
      *
      * @return int
      */
-    public function getAttemptsLeftWithSameIp(string $ipAddress) : int
+    public function getAttemptsLeftWithSameIp(string $ipAddress): int
     {
         $attemptsLeft = $this->options['maxAttemptsForIpAddress'] - $this->enhancedAuthenticateMapper->fetchAttemptsWithSameIp($ipAddress, $this->options['banTimeInSeconds']);
 
         return max(0, $attemptsLeft);
     }
-    
+
     /**
      * Check if an user is banned from do login.
      *
@@ -107,11 +107,11 @@ class EnhancedAuthenticate extends Authenticate
      *
      * @return bool
      */
-    public function isUserBanned(string $userName) : bool
+    public function isUserBanned(string $userName): bool
     {
         return !$this->getAttemptsLeftWithSameUser($userName);
     }
-    
+
     /**
      * Check if a session id is banned from do login.
      *
@@ -119,11 +119,11 @@ class EnhancedAuthenticate extends Authenticate
      *
      * @return bool
      */
-    public function isSessionBanned(string $sessionId) : bool
+    public function isSessionBanned(string $sessionId): bool
     {
         return !$this->getAttemptsLeftWithSameSession($sessionId);
     }
-    
+
     /**
      * Check if an ip address is banned from do login.
      *
@@ -131,7 +131,7 @@ class EnhancedAuthenticate extends Authenticate
      *
      * @return bool
      */
-    public function isIpBanned(string $ipAddress) : bool
+    public function isIpBanned(string $ipAddress): bool
     {
         return !$this->getAttemptsLeftWithSameIp($ipAddress);
     }

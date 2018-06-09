@@ -26,7 +26,7 @@ interface MapperInterface
      *
      * @return DomainObjectInterface
      */
-    public function fetchById(int $objectId) : DomainObjectInterface;
+    public function fetchById(int $objectId): DomainObjectInterface;
 
     /**
      * Fetch all DomainObject stored in data base.
@@ -36,7 +36,7 @@ interface MapperInterface
      *
      * @return array
      */
-    public function fetchAll() : array;
+    public function fetchAll(): array;
 
     /**
      * Fetch DomainObject with limit.
@@ -49,5 +49,5 @@ interface MapperInterface
      *
      * @return array
      */
-    public function fetchLimit(int $offset, int $rowCount) : array;
+    public function fetchLimit(int $offset, int $rowCount): array;
 }

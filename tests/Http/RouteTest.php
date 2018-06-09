@@ -26,7 +26,7 @@ class RouteTest extends TestCase
     /**
      * Setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->route = new Route([
             'name'       => 'Home',
@@ -42,7 +42,7 @@ class RouteTest extends TestCase
     /**
      * Test new route instance.
      */
-    public function testNewRouteInstance()
+    public function testNewRouteInstance(): void
     {
         $this->assertInstanceOf(Route::class, $this->route);
     }
@@ -50,7 +50,7 @@ class RouteTest extends TestCase
     /**
      * Test get name.
      */
-    public function testGetName()
+    public function testGetName(): void
     {
         $this->assertEquals('Home', $this->route->getName());
     }
@@ -58,7 +58,7 @@ class RouteTest extends TestCase
     /**
      * Test get method.
      */
-    public function testGetMethod()
+    public function testGetMethod(): void
     {
         $this->assertEquals('GET', $this->route->getMethod());
     }
@@ -66,7 +66,7 @@ class RouteTest extends TestCase
     /**
      * Test get url.
      */
-    public function testGetUrl()
+    public function testGetUrl(): void
     {
         $this->assertEquals('/', $this->route->getUrl());
     }
@@ -74,7 +74,7 @@ class RouteTest extends TestCase
     /**
      * Test get model.
      */
-    public function testGetModel()
+    public function testGetModel(): void
     {
         $this->assertEquals('HomeModel', $this->route->getModel());
     }
@@ -82,7 +82,7 @@ class RouteTest extends TestCase
     /**
      * Test get view.
      */
-    public function testGetView()
+    public function testGetView(): void
     {
         $this->assertEquals('HomeView', $this->route->getView());
     }
@@ -90,7 +90,7 @@ class RouteTest extends TestCase
     /**
      * Test get controller.
      */
-    public function testGetController()
+    public function testGetController(): void
     {
         $this->assertEquals('HomeController', $this->route->getController());
     }
@@ -98,7 +98,7 @@ class RouteTest extends TestCase
     /**
      * Test get action.
      */
-    public function testGetAction()
+    public function testGetAction(): void
     {
         $this->assertEquals('', $this->route->getAction());
     }
@@ -106,7 +106,7 @@ class RouteTest extends TestCase
     /**
      * Test get param.
      */
-    public function testGetParam()
+    public function testGetParam(): void
     {
         $this->assertEquals([], $this->route->getParam());
     }
@@ -114,7 +114,7 @@ class RouteTest extends TestCase
     /**
      * Test is default route.
      */
-    public function testIsDefaultRoute()
+    public function testIsDefaultRoute(): void
     {
         $this->assertFalse($this->route->isDefault());
     }
@@ -122,7 +122,7 @@ class RouteTest extends TestCase
     /**
      * Test get callback.
      */
-    public function testGetCallback()
+    public function testGetCallback(): void
     {
         $this->assertEquals(function () {
         }, $this->route->getCallback());
@@ -131,7 +131,7 @@ class RouteTest extends TestCase
     /**
      * Test route to array.
      */
-    public function testRouteToArray()
+    public function testRouteToArray(): void
     {
         $route = [
             'name'       => 'Home',

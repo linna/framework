@@ -25,18 +25,18 @@ class DiskCacheTest extends TestCase
     /**
      * Setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->cache = new DiskCache();
         $this->cache->clear();
     }
-    
+
     /**
      * Invalid key provider.
      *
      * @return array
      */
-    public function invalidKeyProvider() : array
+    public function invalidKeyProvider(): array
     {
         return [
             [1],
@@ -53,7 +53,7 @@ class DiskCacheTest extends TestCase
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
-    public function testSetWithInvalidKey($key)
+    public function testSetWithInvalidKey($key): void
     {
         $this->cache->set($key, [0, 1, 2, 3, 4]);
     }
@@ -61,36 +61,36 @@ class DiskCacheTest extends TestCase
     /**
      * Test set.
      */
-    public function testSet()
+    public function testSet(): void
     {
         $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4]));
-        
+
         usleep(2000100);
-        
+
         $this->assertTrue($this->cache->has('foo'));
     }
 
     /**
      * Test set with ttl null.
      */
-    public function testSetWithTtlAtZero()
+    public function testSetWithTtlAtZero(): void
     {
         $this->assertTrue($this->cache->set('foo_ttl', [0, 1, 2, 3, 4], 0));
-        
+
         usleep(1000100);
-        
+
         $this->assertTrue($this->cache->has('foo_ttl'));
     }
 
     /**
      * Test set with ttl value.
      */
-    public function testSetWithTtl()
+    public function testSetWithTtl(): void
     {
         $this->assertTrue($this->cache->set('foo_ttl', [0, 1, 2, 3, 4], 1));
-        
+
         usleep(1000100);
-        
+
         $this->assertNull($this->cache->get('foo_ttl'));
     }
 
@@ -100,7 +100,7 @@ class DiskCacheTest extends TestCase
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
-    public function testGetWithInvalidKey($key)
+    public function testGetWithInvalidKey($key): void
     {
         $this->cache->get($key);
     }
@@ -108,17 +108,17 @@ class DiskCacheTest extends TestCase
     /**
      * Test get.
      */
-    public function testGet()
+    public function testGet(): void
     {
         $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4]));
-        
+
         $this->assertEquals([0, 1, 2, 3, 4], $this->cache->get('foo'));
     }
 
     /**
      * Test get with default value.
      */
-    public function testGetWithDefault()
+    public function testGetWithDefault(): void
     {
         $this->assertNull($this->cache->get('foo_not_exist'));
     }
@@ -126,7 +126,7 @@ class DiskCacheTest extends TestCase
     /**
      * Test get with expired element.
      */
-    public function testGetWithExpiredElement()
+    public function testGetWithExpiredElement(): void
     {
         $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4], -10));
 
@@ -139,7 +139,7 @@ class DiskCacheTest extends TestCase
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
-    public function testDeleteWithInvalidKey($key)
+    public function testDeleteWithInvalidKey($key): void
     {
         $this->cache->delete($key);
     }
@@ -147,17 +147,17 @@ class DiskCacheTest extends TestCase
     /**
      * Test delete an existing element.
      */
-    public function testDeleteExistingElement()
+    public function testDeleteExistingElement(): void
     {
         $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4]));
-        
+
         $this->assertTrue($this->cache->delete('foo'));
     }
 
     /**
      * Test delete not existing element.
      */
-    public function testDeleteNotExistingElement()
+    public function testDeleteNotExistingElement(): void
     {
         $this->assertFalse($this->cache->delete('foo'));
     }
@@ -165,7 +165,7 @@ class DiskCacheTest extends TestCase
     /**
      * Test clear all cache.
      */
-    public function testClear()
+    public function testClear(): void
     {
         $this->assertTrue($this->cache->set('foo_0', [0]));
         $this->assertTrue($this->cache->set('foo_1', [1]));
@@ -197,7 +197,7 @@ class DiskCacheTest extends TestCase
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
-    public function testGetMultipleWithInvalidKey($key)
+    public function testGetMultipleWithInvalidKey($key): void
     {
         $this->cache->getMultiple($key);
     }
@@ -205,7 +205,7 @@ class DiskCacheTest extends TestCase
     /**
      * Test get multiple elements.
      */
-    public function testGetMultiple()
+    public function testGetMultiple(): void
     {
         $this->assertTrue($this->cache->set('foo_0', [0]));
         $this->assertTrue($this->cache->set('foo_1', [1]));
@@ -213,7 +213,7 @@ class DiskCacheTest extends TestCase
         $this->assertTrue($this->cache->set('foo_3', [3]));
         $this->assertTrue($this->cache->set('foo_4', [4]));
         $this->assertTrue($this->cache->set('foo_5', [5]));
-        
+
         $this->assertTrue($this->cache->has('foo_0'));
         $this->assertTrue($this->cache->has('foo_1'));
         $this->assertTrue($this->cache->has('foo_2'));
@@ -244,7 +244,7 @@ class DiskCacheTest extends TestCase
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
-    public function testSetMultipleWithInvalidKey($key)
+    public function testSetMultipleWithInvalidKey($key): void
     {
         $this->cache->setMultiple($key);
     }
@@ -252,7 +252,7 @@ class DiskCacheTest extends TestCase
     /**
      * Test set multiple elements.
      */
-    public function testSetMultiple()
+    public function testSetMultiple(): void
     {
         $this->assertTrue($this->cache->setMultiple([
             'foo_0' => [0],
@@ -262,14 +262,14 @@ class DiskCacheTest extends TestCase
             'foo_4' => [4],
             'foo_5' => [5],
         ]));
-        
+
         $this->assertTrue($this->cache->has('foo_0'));
         $this->assertTrue($this->cache->has('foo_1'));
         $this->assertTrue($this->cache->has('foo_2'));
         $this->assertTrue($this->cache->has('foo_3'));
         $this->assertTrue($this->cache->has('foo_4'));
         $this->assertTrue($this->cache->has('foo_5'));
-        
+
         $this->assertEquals([
             'foo_0' => [0],
             'foo_1' => [1],
@@ -290,7 +290,7 @@ class DiskCacheTest extends TestCase
     /**
      * Test set multiple elements with ttl.
      */
-    public function testSetMultipleTtl()
+    public function testSetMultipleTtl(): void
     {
         $this->assertTrue($this->cache->setMultiple([
             'foo_0' => [0],
@@ -309,7 +309,7 @@ class DiskCacheTest extends TestCase
         $this->assertTrue($this->cache->has('foo_5'));
 
         usleep(1000100);
-        
+
         $this->assertNull($this->cache->get('foo_0'));
         $this->assertNull($this->cache->get('foo_1'));
         $this->assertNull($this->cache->get('foo_2'));
@@ -324,7 +324,7 @@ class DiskCacheTest extends TestCase
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
-    public function testDeleteMultipleWithInvalidKey($key)
+    public function testDeleteMultipleWithInvalidKey($key): void
     {
         $this->cache->deleteMultiple($key);
     }
@@ -332,7 +332,7 @@ class DiskCacheTest extends TestCase
     /**
      * Test delete multiple elements.
      */
-    public function testDeleteMultiple()
+    public function testDeleteMultiple(): void
     {
         $this->assertTrue($this->cache->setMultiple([
             'foo_0' => [0],
@@ -342,7 +342,7 @@ class DiskCacheTest extends TestCase
             'foo_4' => [4],
             'foo_5' => [5],
         ]));
-        
+
         $this->assertTrue($this->cache->has('foo_0'));
         $this->assertTrue($this->cache->has('foo_1'));
         $this->assertTrue($this->cache->has('foo_2'));
@@ -373,7 +373,7 @@ class DiskCacheTest extends TestCase
      * @dataProvider invalidKeyProvider
      * @expectedException TypeError
      */
-    public function testHasWithInvalidKey($key)
+    public function testHasWithInvalidKey($key): void
     {
         $this->cache->has($key);
     }
@@ -381,25 +381,25 @@ class DiskCacheTest extends TestCase
     /**
      * Test has with existing element.
      */
-    public function testHasExistingElement()
+    public function testHasExistingElement(): void
     {
         $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4]));
         
         $this->assertTrue($this->cache->has('foo'));
     }
-    
+
     /**
      * Test has with not existing element.
      */
-    public function testHasNotExistingElement()
+    public function testHasNotExistingElement(): void
     {
         $this->assertFalse($this->cache->has('foo_false'));
     }
-    
+
     /**
      * Test has with expired element.
      */
-    public function testHasWithExpiredElement()
+    public function testHasWithExpiredElement(): void
     {
         $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4], -10));
 

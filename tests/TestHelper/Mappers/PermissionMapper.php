@@ -41,7 +41,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function fetchById(int $permissionId) : DomainObjectInterface
+    public function fetchById(int $permissionId): DomainObjectInterface
     {
         $pdos = $this->pdo->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission WHERE permission_id = :id');
 
@@ -56,7 +56,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function fetchByName(string $permissionName) : DomainObjectInterface
+    public function fetchByName(string $permissionName): DomainObjectInterface
     {
         $pdos = $this->pdo->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission WHERE name = :name');
 
@@ -71,7 +71,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function fetchAll() : array
+    public function fetchAll(): array
     {
         $pdos = $this->pdo->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission');
 
@@ -83,7 +83,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function fetchLimit(int $offset, int $rowCount) : array
+    public function fetchLimit(int $offset, int $rowCount): array
     {
         $pdos = $this->pdo->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission LIMIT :offset, :rowcount');
 
@@ -97,7 +97,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function fetchPermissionsByRole(int $roleId) : array
+    public function fetchPermissionsByRole(int $roleId): array
     {
         $pdos = $this->pdo->prepare('
         SELECT rp.permission_id AS objectId, name, description, last_update AS lastUpdate
@@ -115,7 +115,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function fetchPermissionsByUser(int $userId) : array
+    public function fetchPermissionsByUser(int $userId): array
     {
         $pdos = $this->pdo->prepare('
         SELECT up.permission_id AS objectId, name, description, last_update AS lastUpdate
@@ -133,7 +133,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function fetchUserPermissionHashTable(int $userId) : array
+    public function fetchUserPermissionHashTable(int $userId): array
     {
         $pdos = $this->pdo->prepare("(SELECT sha2(concat(u.user_id, '.', up.permission_id),0) as p_hash
         FROM user AS u
@@ -162,7 +162,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function permissionExist(string $permission) : bool
+    public function permissionExist(string $permission): bool
     {
         $pdos = $this->pdo->prepare('SELECT permission_id FROM permission WHERE name = :name');
 
@@ -175,7 +175,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     /**
      * {@inheritdoc}
      */
-    protected function concreteCreate() : DomainObjectInterface
+    protected function concreteCreate(): DomainObjectInterface
     {
         return new Permission();
     }
@@ -183,7 +183,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     /**
      * {@inheritdoc}
      */
-    protected function concreteInsert(DomainObjectInterface $permission) : string
+    protected function concreteInsert(DomainObjectInterface $permission): string
     {
         return 'insert';
     }

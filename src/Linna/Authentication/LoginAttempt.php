@@ -22,7 +22,7 @@ class LoginAttempt extends DomainObjectAbstract
      * @var string User name.
      */
     public $userName;
-    
+
     /**
      * @var string Session id.
      */
@@ -37,7 +37,7 @@ class LoginAttempt extends DomainObjectAbstract
      * @var string Show when login attempted.
      */
     public $when;
-    
+
     /**
      * @var string Last update.
      */

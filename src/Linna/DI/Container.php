@@ -73,7 +73,7 @@ class Container implements ContainerInterface, \ArrayAccess
      *
      * @param string $key
      */
-    public function delete(string $key) : bool
+    public function delete(string $key): bool
     {
         if (array_key_exists($key, $this->cache)) {
 
@@ -125,7 +125,7 @@ class Container implements ContainerInterface, \ArrayAccess
      *
      * @param string $class
      */
-    private function buildTree(string $class)
+    private function buildTree(string $class): void
     {
         $level = 0;
         $stack = new \SplStack();
@@ -182,7 +182,7 @@ class Container implements ContainerInterface, \ArrayAccess
     /**
      * Build objects from dependencyTree.
      */
-    private function buildObjects()
+    private function buildObjects(): void
     {
         //deep dependency level, start to array end for not use array_reverse
         for ($i = count($this->tree) - 1; $i >= 0; $i--) {

@@ -20,7 +20,7 @@ class MysqliConnectorTest extends TestCase
     /**
      * Test connection.
      */
-    public function testConnection()
+    public function testConnection(): void
     {
         $options = [
             'host'     => '127.0.0.1',
@@ -38,7 +38,7 @@ class MysqliConnectorTest extends TestCase
      *
      * @return array
      */
-    public function connectionDataProvider() : array
+    public function connectionDataProvider(): array
     {
         return [
             ['a.a.a.a', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password'], 'linna_db', 3306],
@@ -61,7 +61,7 @@ class MysqliConnectorTest extends TestCase
             string $password,
             string $database,
             int $port
-            ) {
+            ): void {
         $options = [
             'host'     => $host,
             'user'     => $user,

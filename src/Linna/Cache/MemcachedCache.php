@@ -38,7 +38,7 @@ class MemcachedCache implements CacheInterface
         if (!($options['resource'] instanceof Memcached)) {
             throw new InvalidArgumentException(__class__.' need instance of Memcached passed as option. [\'resource\' => $memcached]');
         }
-        
+
         $this->memcached = $options['resource'];
     }
 
@@ -61,7 +61,7 @@ class MemcachedCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function set(string $key, $value, int $ttl = 0) : bool
+    public function set(string $key, $value, int $ttl = 0): bool
     {
         return $this->memcached->set($key, $value, $ttl);
     }
@@ -69,7 +69,7 @@ class MemcachedCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function delete(string $key) : bool
+    public function delete(string $key): bool
     {
         return $this->memcached->delete($key);
     }
@@ -79,7 +79,7 @@ class MemcachedCache implements CacheInterface
      *
      * @return bool True on success and false on failure.
      */
-    public function clear() : bool
+    public function clear(): bool
     {
         return $this->memcached->flush();
     }
@@ -87,7 +87,7 @@ class MemcachedCache implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function has(string $key) : bool
+    public function has(string $key): bool
     {
         return ($this->memcached->get($key) !== false) ? true : false;
     }

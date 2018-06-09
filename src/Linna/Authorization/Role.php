@@ -60,7 +60,7 @@ class Role extends DomainObjectAbstract
      *
      * @param array $users
      */
-    public function setUsers(array $users)
+    public function setUsers(array $users): void
     {
         $this->users = $users;
     }
@@ -70,7 +70,7 @@ class Role extends DomainObjectAbstract
      *
      * @return array
      */
-    public function getUsers() : array
+    public function getUsers(): array
     {
         return $this->users;
     }
@@ -82,7 +82,7 @@ class Role extends DomainObjectAbstract
      *
      * @return bool
      */
-    public function isUserInRole(string $user) : bool
+    public function isUserInRole(string $user): bool
     {
         foreach ($this->users as $ownUser) {
             if ($ownUser->name === $user) {

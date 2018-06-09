@@ -21,24 +21,24 @@ class ModelTest extends TestCase
     /**
      * Test new view instance.
      */
-    public function testNewModelInstance()
+    public function testNewModelInstance(): void
     {
         $this->assertInstanceOf(MultipleModel::class, new MultipleModel());
     }
-    
+
     /*
      * Test model get and set.
      */
-    public function testModelGetAndSet()
+    public function testModelGetAndSet(): void
     {
         $model = new MultipleModel();
         
         $model->set([1,2,3,4,5]);
-        
+
         $this->assertEquals([1,2,3,4,5], $model->get());
-        
+
         $model->set([6,7,8,9,10]);
-        
+
         $this->assertEquals([1,2,3,4,5,6,7,8,9,10], $model->get());
     }
 }

@@ -38,7 +38,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
     /**
      * Setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -51,16 +51,16 @@ class MysqlPdoSessionHandlerTest extends TestCase
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
             ],
         ];
-        
+
         $pdo = (new StorageFactory('pdo', $options))->get();
 
         $handler = new MysqlPdoSessionHandler($pdo);
         $session = new Session(['expire' => 10]);
-        
+
         $session->setSessionHandler($handler);
-        
+
         $this->pdo = $pdo;
-        
+
         $this->handler = $handler;
 
         $this->session = $session;
@@ -71,7 +71,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
      *
      * @runInSeparateProcess
      */
-    public function testSessionStart()
+    public function testSessionStart(): void
     {
         $session = $this->session;
 
@@ -83,90 +83,90 @@ class MysqlPdoSessionHandlerTest extends TestCase
 
         $session->destroy();
     }
-    
+
     /**
      * Test session commit.
      *
      * @runInSeparateProcess
      */
-    public function testSessionCommit()
+    public function testSessionCommit(): void
     {
         $session = $this->session;
         $session->start();
-        
+
         $this->assertEquals($session->id, session_id());
-        
+
         $session['fooData'] = 'fooData';
-        
+
         $session->commit();
-        
+
         $session->start();
-        
+
         $this->assertEquals($session->id, session_id());
         $this->assertEquals('fooData', $session['fooData']);
-        
+
         $session->destroy();
     }
-    
+
     /**
      * Test session destroy.
      *
      * @runInSeparateProcess
      */
-    public function testSessionDestroy()
+    public function testSessionDestroy(): void
     {
         $session = $this->session;
 
         $session->start();
         $session['fooData'] = 'fooData';
-        
+
         $this->assertEquals(2, $session->status);
         $this->assertEquals(session_id(), $session->id);
         $this->assertEquals('fooData', $session['fooData']);
-        
+
         $session->destroy();
-        
+
         $this->assertEquals(1, $session->status);
         $this->assertEquals('', $session->id);
         $this->assertFalse($session['fooData']);
     }
-    
+
     /**
      * Test session regenerate.
      *
      * @runInSeparateProcess
      */
-    public function testSessionRegenerate()
+    public function testSessionRegenerate(): void
     {
         $session = $this->session;
 
         $session->start();
         $session['fooData'] = 'fooData';
-        
+
         $sessionIdBefore = session_id();
-        
+
         $this->assertEquals(2, $session->status);
         $this->assertEquals($sessionIdBefore, $session->id);
         $this->assertEquals('fooData', $session['fooData']);
-        
+
         $session->regenerate();
-        
+
         $sessionIdAfter = session_id();
-        
+
         $this->assertEquals(2, $session->status);
         $this->assertEquals($sessionIdAfter, $session->id);
         $this->assertNotEquals($sessionIdAfter, $sessionIdBefore);
         $this->assertEquals('fooData', $session['fooData']);
-        
+
         $session->destroy();
     }
-    
+
     /**
      * Test session expired.
      *
      * @runInSeparateProcess
      */
-    public function testSessionExpired()
+    public function testSessionExpired(): void
     {
         $session = $this->session;
 
@@ -195,7 +195,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
      *
      * @runInSeparateProcess
      */
-    public function testGc()
+    public function testGc(): void
     {
         $this->pdo->query('DELETE FROM session');
 

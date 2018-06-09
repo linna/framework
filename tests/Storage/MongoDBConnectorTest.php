@@ -21,7 +21,7 @@ class MongoDBConnectorTest extends TestCase
     /**
      * Test connection.
      */
-    public function testConnection()
+    public function testConnection(): void
     {
         $options = [
             'uri'           => 'mongodb://127.0.0.1/',
@@ -37,7 +37,7 @@ class MongoDBConnectorTest extends TestCase
      *
      * @expectedException InvalidArgumentException
      */
-    public function testFailConnection()
+    public function testFailConnection(): void
     {
         $options = [
             'uri'           => 'mongodb:/localhost:27017',

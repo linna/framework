@@ -21,11 +21,11 @@ class ExtendedPDOTest extends TestCase
      * @var array Connection options.
      */
     protected $options = [];
-    
+
     /**
      * Setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -39,13 +39,13 @@ class ExtendedPDOTest extends TestCase
             ],
         ];
     }
-    
+
     /**
      * Correct parameters provider.
      *
      * @return array
      */
-    public function correctParametersProvider() : array
+    public function correctParametersProvider(): array
     {
         return [
             ['SELECT user_id, name, email FROM user WHERE name = :name', [
@@ -63,13 +63,13 @@ class ExtendedPDOTest extends TestCase
             ]
         ];
     }
-    
+
     /**
      * Test query with parameters.
      *
      * @dataProvider correctParametersProvider
      */
-    public function testQueryWithParameters(string $query, array $param)
+    public function testQueryWithParameters(string $query, array $param): void
     {
         $user = (new PdoConnector($this->options))
             ->getResource()
@@ -80,13 +80,13 @@ class ExtendedPDOTest extends TestCase
 
         $this->assertEquals(1, count($user));
     }
-    
+
     /**
      * Test query with parameter with wrong parameter name.
      *
      * @expectedException InvalidArgumentException
      */
-    public function testQueryWithParameterWithWrongParameterName()
+    public function testQueryWithParameterWithWrongParameterName(): void
     {
         (new PdoConnector($this->options))
             ->getResource()
@@ -95,13 +95,13 @@ class ExtendedPDOTest extends TestCase
                 [['name', 'root', PDO::PARAM_STR]]
             )->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     /**
      * Test query with parameter with too many parameters.
      *
      * @expectedException InvalidArgumentException
      */
-    public function testQueryWithParameterWithTooManyParameters()
+    public function testQueryWithParameterWithTooManyParameters(): void
     {
         (new PdoConnector($this->options))
             ->getResource()
@@ -110,13 +110,13 @@ class ExtendedPDOTest extends TestCase
                 [[':name']]
             )->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     /**
      * Test query with parameter with too many parameters.
      *
      * @expectedException PDOException
      */
-    public function testQueryWithParameterWithoutParameters()
+    public function testQueryWithParameterWithoutParameters(): void
     {
         (new PdoConnector($this->options))
             ->getResource()
@@ -125,16 +125,16 @@ class ExtendedPDOTest extends TestCase
                 []
             )->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     /**
      * Test query status.
      *
      * @dataProvider correctParametersProvider
      */
-    public function testQueryStatus(string $query, array $param)
+    public function testQueryStatus(string $query, array $param): void
     {
         $pdo = (new PdoConnector($this->options))->getResource();
-        
+
         $user = $pdo->queryWithParam(
             $query,
             $param

@@ -50,7 +50,7 @@ class View implements \SplObserver
     /**
      * Render a template.
      */
-    public function render() : string
+    public function render(): string
     {
         if (!($this->template instanceof TemplateInterface)) {
             throw new UnexpectedValueException('Template must implements Linna\Mvc\TemplateInterface');

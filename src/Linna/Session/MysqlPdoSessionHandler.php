@@ -59,10 +59,10 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
     public function open($savePath, $sessionName)
     {
         unset($savePath, $sessionName);
-        
+
         return true;
     }
-        
+
     /**
      * Delete old sessions from storage.
      *

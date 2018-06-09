@@ -19,12 +19,12 @@ interface DomainObjectInterface
     /**
      * Get the ID of this object (unique to the object type).
      */
-    public function getId();
+    public function getId(): int;
 
     /**
      * Set the id for this object.
      *
      * @param int $objectId
      */
-    public function setId(int $objectId);
+    public function setId(int $objectId): int;
 }

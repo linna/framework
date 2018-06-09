@@ -164,7 +164,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function grant(EnhancedUser &$user, string $permission)
+    public function grant(EnhancedUser &$user, string $permission): void
     {
         if ($this->permissionMapper->permissionExist($permission)) {
             $pdos = $this->pdo->prepare('INSERT INTO user_permission (user_id, permission_id) VALUES (:user_id, (SELECT permission_id FROM permission WHERE name = :permission))');
@@ -182,7 +182,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function revoke(EnhancedUser &$user, string $permission)
+    public function revoke(EnhancedUser &$user, string $permission): void
     {
         if ($this->permissionMapper->permissionExist($permission)) {
             $pdos = $this->pdo->prepare('DELETE FROM user_permission WHERE user_id = :user_id AND permission_id = (SELECT permission_id FROM permission WHERE name = :permission)');

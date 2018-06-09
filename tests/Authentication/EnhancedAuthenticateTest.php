@@ -45,7 +45,7 @@ class EnhancedAuthenticateTest extends TestCase
     /**
      * Setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -58,10 +58,10 @@ class EnhancedAuthenticateTest extends TestCase
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
             ],
         ];
-        
+
         $session = new Session();
         $password = new Password();
-        
+
         $this->password = $password;
         $this->session = $session;
         $this->eAMapper = new EnhancedAuthenticateMapper((new StorageFactory('pdo', $options))->get());
@@ -73,7 +73,7 @@ class EnhancedAuthenticateTest extends TestCase
      *
      * @return array
      */
-    public function wrongCredentialProvider() : array
+    public function wrongCredentialProvider(): array
     {
         return [
             ['root', 'mbvi2lgdpcj6vp3qemh2estei2', '192.168.1.2', 4, 9, 19, false, false, false],
@@ -112,7 +112,7 @@ class EnhancedAuthenticateTest extends TestCase
      *
      * @dataProvider wrongCredentialProvider
      */
-    public function testLogin(string $user, string $sessionId, string $ipAddress, int $awsU, int $awsS, int $awsI, bool $banU, bool $banS, bool $banI)
+    public function testLogin(string $user, string $sessionId, string $ipAddress, int $awsU, int $awsS, int $awsI, bool $banU, bool $banS, bool $banI): void
     {
         $this->assertFalse($this->enhancedAuthenticate->login($user, 'passwor', $user, '$2y$11$4IAn6SRaB0osPz8afZC5D.CmTrBGxnb5FQEygPjDirK9SWE/u8YuO', 1));
 
@@ -132,27 +132,27 @@ class EnhancedAuthenticateTest extends TestCase
         //Ip Banned
         $this->assertEquals($banI, $this->enhancedAuthenticate->isIpBanned($ipAddress));
     }
-    
+
     /**
      * Set up before class.
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::loginClean();
     }
-    
+
     /**
      * Tear down After Class.
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::loginClean();
     }
-    
+
     /**
      * Remove record from login_attemp table.
      */
-    protected static function loginClean()
+    protected static function loginClean(): void
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -165,10 +165,10 @@ class EnhancedAuthenticateTest extends TestCase
                 \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
             ],
         ];
-        
+
         (new EnhancedAuthenticateMapper((new StorageFactory('pdo', $options))->get()))->deleteOldLoginAttempts(-86400);
     }
-    
+
     /**
      * Store login attempts.
      *
@@ -176,7 +176,7 @@ class EnhancedAuthenticateTest extends TestCase
      * @param string $sessionId
      * @param string $ipAddress
      */
-    protected function storeLoginAttempt(string &$user, string &$sessionId, string &$ipAddress)
+    protected function storeLoginAttempt(string &$user, string &$sessionId, string &$ipAddress): void
     {
         /** @var \Linna\Authentication\LoginAttempt Login Attempt. */
         $loginAttempt = $this->eAMapper->create();

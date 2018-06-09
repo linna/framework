@@ -26,7 +26,7 @@ trait ClassOptionsTrait
      *
      * @throws \InvalidArgumentException If provided option name (key) are not valid
      */
-    public function setOption(string $key, $value)
+    public function setOption(string $key, $value): void
     {
         if (!isset($this->options[$key])) {
             throw new \InvalidArgumentException(__CLASS__." class does not support the {$key} option.");
@@ -42,7 +42,7 @@ trait ClassOptionsTrait
      *
      * @throws \InvalidArgumentException If provided option names are not valid
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $badKeys = array_diff_key($options, $this->options);
 

@@ -18,7 +18,6 @@ use Closure;
  */
 class Env
 {
-
     /**
      * @var array Matches for particula values
      */
@@ -32,7 +31,7 @@ class Env
         'null' => null,
         '(null)' => null,
     ];
-    
+
     /**
      * Return value or the returned value if function is passed.
      *
@@ -58,15 +57,15 @@ class Env
         if (($value = getenv($key)) === false) {
             return self::value($default);
         }
-        
+
         if (array_key_exists(strtolower($value), self::$valuesMatches)) {
             return self::$valuesMatches[strtolower($value)];
         }
-        
+
         if (strlen($value) > 1 && Str::startsEndsWith($value, ['"', '\''])) {
             return substr($value, 1, -1);
         }
-        
+
         return $value;
     }
 }

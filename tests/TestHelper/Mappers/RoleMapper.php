@@ -70,7 +70,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
     /**
      * {@inheritdoc}
      */
-    public function fetchById(int $roleId) : DomainObjectInterface
+    public function fetchById(int $roleId): DomainObjectInterface
     {
         $pdos = $this->pdo->prepare('SELECT role_id AS objectId, name, description, active, last_update AS lastUpdate FROM role WHERE role_id = :id');
 
@@ -95,7 +95,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
     /**
      * {@inheritdoc}
      */
-    public function fetchAll() : array
+    public function fetchAll(): array
     {
         $pdos = $this->pdo->prepare('SELECT role_id AS objectId, name, description, active, last_update AS lastUpdate FROM role ');
 
@@ -107,7 +107,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
     /**
      * {@inheritdoc}
      */
-    public function fetchLimit(int $offset, int $rowCount) : array
+    public function fetchLimit(int $offset, int $rowCount): array
     {
         $pdos = $this->pdo->prepare('SELECT role_id AS objectId, name, description, active, last_update AS lastUpdate FROM groups LIMIT :offset, :rowcount');
 
@@ -127,7 +127,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
      *
      * @return array
      */
-    protected function fillRolesArray(array $roles) : array
+    protected function fillRolesArray(array $roles): array
     {
         $arrayRoles = [];
 
@@ -148,7 +148,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
     /**
      * {@inheritdoc}
      */
-    public function fetchUserInheritedPermissions(Role &$role, User $user) : array
+    public function fetchUserInheritedPermissions(Role &$role, User $user): array
     {
         return [];
     }
@@ -184,7 +184,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
     /**
      * {@inheritdoc}
      */
-    protected function concreteCreate() : DomainObjectInterface
+    protected function concreteCreate(): DomainObjectInterface
     {
         return new Role();
     }
@@ -192,7 +192,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
     /**
      * {@inheritdoc}
      */
-    protected function concreteInsert(DomainObjectInterface $role) : string
+    protected function concreteInsert(DomainObjectInterface $role): string
     {
         return 'insert';
     }

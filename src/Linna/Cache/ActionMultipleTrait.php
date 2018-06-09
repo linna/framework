@@ -37,26 +37,26 @@ trait ActionMultipleTrait
      *
      * @return bool True on success and false on failure.
      */
-    abstract public function set(string $key, $value, int $ttl = 0) : bool;
+    abstract public function set(string $key, $value, int $ttl = 0): bool;
 
     /**
      * Express Requirements by Abstract Methods.
      *
      * @param string $key The cache item key.
      */
-    abstract public function has(string $key) : bool;
+    abstract public function has(string $key): bool;
 
     /**
      * Express Requirements by Abstract Methods.
      *
      * @param string $key The unique cache key of the item to delete.
      */
-    abstract public function delete(string $key) : bool;
+    abstract public function delete(string $key): bool;
 
     /**
      * {@inheritdoc}
      */
-    public function getMultiple(array $keys, $default = null) : array
+    public function getMultiple(array $keys, $default = null): array
     {
         $arrayResult = [];
 
@@ -70,7 +70,7 @@ trait ActionMultipleTrait
     /**
      * {@inheritdoc}
      */
-    public function setMultiple(array $values, int $ttl = 0) : bool
+    public function setMultiple(array $values, int $ttl = 0): bool
     {
         foreach ($values as $key => $value) {
             $this->set($key, $value, $ttl);
@@ -82,7 +82,7 @@ trait ActionMultipleTrait
     /**
      * {@inheritdoc}
      */
-    public function deleteMultiple(array $keys) : bool
+    public function deleteMultiple(array $keys): bool
     {
         foreach ($keys as $key) {
             $this->delete($key);

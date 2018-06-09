@@ -84,7 +84,7 @@ class Authorize
      *
      * @return bool
      */
-    public function can(string $permissionName) : bool
+    public function can(string $permissionName): bool
     {
         //get permission
         $permission = $this->permissionMapper->fetchByName($permissionName);

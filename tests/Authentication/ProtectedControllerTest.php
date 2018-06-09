@@ -25,7 +25,7 @@ class ProtectedControllerTest extends TestCase
      * @var Session The session class.
      */
     protected $session;
-    
+
     /**
      * @var Password The password class.
      */
@@ -35,11 +35,11 @@ class ProtectedControllerTest extends TestCase
      * @var Authenticate Authenticate Instance.
      */
     protected $authenticate;
-    
+
     /**
      * Setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $session = new Session();
         $password = new Password();
@@ -56,7 +56,7 @@ class ProtectedControllerTest extends TestCase
      * @runInSeparateProcess
      * @outputBuffering disabled
      */
-    public function testAccessProtectedControllerWithLogin()
+    public function testAccessProtectedControllerWithLogin(): void
     {
         $this->session->start();
 
@@ -84,7 +84,7 @@ class ProtectedControllerTest extends TestCase
      * @runInSeparateProcess
      * @outputBuffering disabled
      */
-    public function testAccessProtectedControllerWithoutLogin()
+    public function testAccessProtectedControllerWithoutLogin(): void
     {
         ob_start();
 

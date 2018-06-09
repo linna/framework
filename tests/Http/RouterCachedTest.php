@@ -29,7 +29,7 @@ class RouterCachedTest extends TestCase
     /**
      * Setup.
      */
-    public function setUp()
+    public function setUp(): void
     {
         $routes = (new RouteCollection([
             new Route([
@@ -82,15 +82,15 @@ class RouterCachedTest extends TestCase
     /**
      * Tear Down
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         (new DiskCache())->clear();
     }
-    
+
     /**
      * Test cached routes.
      */
-    public function testCachedRoute()
+    public function testCachedRoute(): void
     {
         //evaluate request uri
         $this->assertTrue($this->router->validate('/user', 'GET'));
@@ -103,7 +103,7 @@ class RouterCachedTest extends TestCase
         //now from cache
         $this->assertTrue($this->router->validate('/user', 'GET'));
         $this->assertInstanceOf(Route::class, $this->router->getRoute());
-        
+
         //now return error route
         $this->assertFalse($this->router->validate('/user', 'POST'));
         $this->assertInstanceOf(Route::class, $this->router->getRoute());
@@ -114,7 +114,7 @@ class RouterCachedTest extends TestCase
      *
      * @return array
      */
-    public function routeProvider() : array
+    public function routeProvider(): array
     {
         return [
             ['/user', 'POST', ['E404Model', 'E404View', 'E404Controller', null, []]], //test not allowed http method
@@ -129,7 +129,7 @@ class RouterCachedTest extends TestCase
      *
      * @dataProvider routeProvider
      */
-    public function testRoutes($url, $method, $returneRoute)
+    public function testRoutes($url, $method, $returneRoute): void
     {
         $this->router->validate($url, $method);
 
@@ -138,20 +138,20 @@ class RouterCachedTest extends TestCase
         $array = $route->toArray();
 
         $this->assertInstanceOf(Route::class, $route);
-        
+
         $this->assertEquals($returneRoute[0], $array['model']);
         $this->assertEquals($returneRoute[1], $array['view']);
         $this->assertEquals($returneRoute[2], $array['controller']);
         $this->assertEquals($returneRoute[3], $array['action']);
         $this->assertEquals($returneRoute[4], $array['param']);
     }
-    
+
     /**
      * Routes with other base path provider.
      *
      * @return array
      */
-    public function routesWithOtherBasePathProvider() : array
+    public function routesWithOtherBasePathProvider(): array
     {
         return [
             ['/other_dir/user', 'POST', ['E404Model', 'E404View', 'E404Controller', null, []]], //test not allowed http method
@@ -166,7 +166,7 @@ class RouterCachedTest extends TestCase
      *
      * @dataProvider routesWithOtherBasePathProvider
      */
-    public function testRoutesWithOtherBasePath($url, $method, $returneRoute)
+    public function testRoutesWithOtherBasePath($url, $method, $returneRoute): void
     {
         $this->router->setOption('basePath', '/other_dir');
 
@@ -189,7 +189,7 @@ class RouterCachedTest extends TestCase
      *
      * @return array
      */
-    public function fastMapRouteProvider() : array
+    public function fastMapRouteProvider(): array
     {
         return [
             ['GET', '/mapRouteTestGet', 'get'],
@@ -205,7 +205,7 @@ class RouterCachedTest extends TestCase
      *
      * @dataProvider fastMapRouteProvider
      */
-    public function testMapInToRouterWithMapMethod($method, $url, $func)
+    public function testMapInToRouterWithMapMethod($method, $url, $func): void
     {
         $this->router->map(['method' => $method, 'url' => $url]);
 
@@ -220,7 +220,7 @@ class RouterCachedTest extends TestCase
      * @dataProvider fastMapRouteProvider
      * @expectedException Exception
      */
-    public function testMapInToRouterWithFastMapRoute($method, $url, $func)
+    public function testMapInToRouterWithFastMapRoute($method, $url, $func): void
     {
         //map route with method
         $this->router->$func($url, function ($param) {
@@ -233,7 +233,7 @@ class RouterCachedTest extends TestCase
         $route = $this->router->getRoute();
 
         $callback = $route->getCallback();
-        
+
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals($method, $callback($method));
     }
@@ -241,7 +241,7 @@ class RouterCachedTest extends TestCase
     /**
      * Test validate a route with no bad route options declared.
      */
-    public function testValidateRouteWithNoBadRouteDeclared()
+    public function testValidateRouteWithNoBadRouteDeclared(): void
     {
         //using a worng bad route for overwrite previous setting
         $this->router->setOptions([
@@ -257,7 +257,7 @@ class RouterCachedTest extends TestCase
     /**
      * Test validate with rewrite mode off.
      */
-    public function testValidateWithRewriteModeOff()
+    public function testValidateWithRewriteModeOff(): void
     {
         $this->router->setOptions([
             'badRoute'    => 'E404',
@@ -281,7 +281,7 @@ class RouterCachedTest extends TestCase
     /**
      * Test validate with rewrite mode off and other base path.
      */
-    public function testValidateWithRewriteModeOffWithAndOtherBasePath()
+    public function testValidateWithRewriteModeOffWithAndOtherBasePath(): void
     {
         $this->router->setOptions([
             'basePath'    => '/other_dir',
@@ -310,7 +310,7 @@ class RouterCachedTest extends TestCase
      *
      * @return array
      */
-    public function restRouteProvider() : array
+    public function restRouteProvider(): array
     {
         return [
             ['/user/5', 'GET', 'Show'],
@@ -325,7 +325,7 @@ class RouterCachedTest extends TestCase
      *
      * @dataProvider restRouteProvider
      */
-    public function testRESTRouting($uri, $method, $action)
+    public function testRESTRouting($uri, $method, $action): void
     {
         $restRoutes = (new RouteCollection([
             new Route([

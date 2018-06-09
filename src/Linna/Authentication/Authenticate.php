@@ -72,7 +72,7 @@ class Authenticate
      *
      * @return bool True if logged false if no.
      */
-    public function isLogged() : bool
+    public function isLogged(): bool
     {
         return $this->logged;
     }
@@ -93,7 +93,7 @@ class Authenticate
      *
      * @return bool True if not logged false if logged.
      */
-    public function isNotLogged() : bool
+    public function isNotLogged(): bool
     {
         return !$this->logged;
     }
@@ -121,7 +121,7 @@ class Authenticate
      *
      * @return array Login data.
      */
-    public function getLoginData() : array
+    public function getLoginData(): array
     {
         return $this->data;
     }
@@ -163,11 +163,11 @@ class Authenticate
 
             //update login data
             $this->data = $this->session->login;
-            
+
             //regenerate session id
             $this->session->regenerate();
             $this->logged = true;
-            
+
             return true;
         }
 

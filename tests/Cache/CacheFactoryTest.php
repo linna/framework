@@ -22,7 +22,7 @@ class CacheFactoryTest extends TestCase
     /**
      * Test create disk cache resource.
      */
-    public function testCreateDiskCache()
+    public function testCreateDiskCache(): void
     {
         $this->assertInstanceOf(DiskCache::class, (new CacheFactory('disk', []))->get());
     }
@@ -32,7 +32,7 @@ class CacheFactoryTest extends TestCase
      *
      * @requires extension memcached
      */
-    public function testCreateMemcachedCache()
+    public function testCreateMemcachedCache(): void
     {
         $memcached = new Memcached();
         $memcached->addServer($GLOBALS['mem_host'], (int) $GLOBALS['mem_port']);
@@ -45,7 +45,7 @@ class CacheFactoryTest extends TestCase
      *
      * @expectedException InvalidArgumentException
      */
-    public function testUnsupportedCache()
+    public function testUnsupportedCache(): void
     {
         (new CacheFactory('', []))->get();
     }

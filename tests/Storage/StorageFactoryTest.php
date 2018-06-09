@@ -21,7 +21,7 @@ class StorageFactoryTest extends TestCase
     /**
      * Test create pdo storage.
      */
-    public function testCreatePdo()
+    public function testCreatePdo(): void
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -43,7 +43,7 @@ class StorageFactoryTest extends TestCase
     /**
      * Test create mysqli storage.
      */
-    public function testCreateMysqlI()
+    public function testCreateMysqlI(): void
     {
         $options = [
             'host'     => '127.0.0.1',
@@ -61,7 +61,7 @@ class StorageFactoryTest extends TestCase
     /**
      * Test create mongodb storage.
      */
-    public function testCreateMongoDb()
+    public function testCreateMongoDb(): void
     {
         $options = [
             'uri'           => 'mongodb://localhost:27017',
@@ -79,7 +79,7 @@ class StorageFactoryTest extends TestCase
      *
      * @expectedException InvalidArgumentException
      */
-    public function testUnsupportedAdapter()
+    public function testUnsupportedAdapter(): void
     {
         (new StorageFactory('', []))->get();
     }

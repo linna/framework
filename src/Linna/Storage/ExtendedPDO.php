@@ -24,7 +24,7 @@ class ExtendedPDO extends PDO
      * @var bool Status for last operation.
      */
     private $lastOperationStatus;
-    
+
     /**
      * Executes an SQL statement with parameters,
      * returning a result set as a PDOStatement object
@@ -34,7 +34,7 @@ class ExtendedPDO extends PDO
      *
      * @return PDOStatement
      */
-    public function queryWithParam(string $query, array $param) : PDOStatement
+    public function queryWithParam(string $query, array $param): PDOStatement
     {
         $statment = $this->prepare($query);
 
@@ -59,18 +59,18 @@ class ExtendedPDO extends PDO
      *
      * @return bool
      */
-    public function getLastOperationStatus() : bool
+    public function getLastOperationStatus(): bool
     {
         return $this->lastOperationStatus;
     }
-    
+
     /**
      * Check values passed to queryWithParam.
      *
      * @param array $value
      * @throws InvalidArgumentException
      */
-    private function checkValue(array &$value)
+    private function checkValue(array &$value): void
     {
         if (count($value) < 2) {
             throw new InvalidArgumentException(__METHOD__.': Parameters array must contain at least two elements with this form: [\':name\', \'value\']');
