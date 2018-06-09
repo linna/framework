@@ -218,5 +218,5 @@ class AuthenticateTest extends TestCase
         $this->assertEquals(!$loginPass, (new Authenticate($this->session, $this->password))->isLogged());
 
         $this->session->destroy();
-        }
+    }
 }
