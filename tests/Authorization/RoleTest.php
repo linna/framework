@@ -79,6 +79,7 @@ class RoleTest extends TestCase
     {
         $users = $this->enhancedUserMapper->fetchAll();
         
+        /** @var Role Role Class. */
         $role = $this->roleMapper->create();
         $role->setUsers($users);
 
@@ -90,6 +91,7 @@ class RoleTest extends TestCase
      */
     public function testIsUserInRole()
     {
+        /** @var Role Role Class. */
         $role = $this->roleMapper->create();
         $role->setUsers($this->enhancedUserMapper->fetchAll());
 
@@ -103,7 +105,8 @@ class RoleTest extends TestCase
     public function testRoleSetAndGetPermission()
     {
         $permission = $this->permissionMapper->fetchAll();
-        
+
+        /** @var Role Role Class. */
         $role = $this->roleMapper->create();
         $role->setPermissions($permission);
 
@@ -115,6 +118,7 @@ class RoleTest extends TestCase
      */
     public function testRoleCanDoAction()
     {
+        /** @var Role Role Class. */
         $role = $this->roleMapper->create();
         $role->setPermissions($this->permissionMapper->fetchAll());
 

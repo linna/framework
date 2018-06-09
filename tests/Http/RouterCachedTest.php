@@ -229,6 +229,7 @@ class RouterCachedTest extends TestCase
 
         $this->router->validate($url, $method);
 
+        /** @var Route Route Class. */
         $route = $this->router->getRoute();
 
         $callback = $route->getCallback();

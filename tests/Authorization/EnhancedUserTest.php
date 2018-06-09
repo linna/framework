@@ -69,6 +69,7 @@ class EnhancedUserTest extends TestCase
     {
         $permission = $this->permissionMapper->fetchAll();
 
+        /** @var EnhancedUser User Class. */
         $user = $this->enhancedUserMapper->create();
         $user->setPermissions($permission);
 
@@ -80,6 +81,7 @@ class EnhancedUserTest extends TestCase
      */
     public function testEnhancedUserCanDoAction()
     {
+        /** @var EnhancedUser User Class. */
         $user = $this->enhancedUserMapper->create();
         
         $user->setPermissions($this->permissionMapper->fetchAll());
