@@ -254,7 +254,7 @@ class SessionTest extends TestCase
     {
         $this->assertFalse($this->session['testData']);
     }
-    
+
     /**
      * Test create and get with array access trait method.
      */

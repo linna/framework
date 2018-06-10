@@ -230,7 +230,7 @@ class Container implements ContainerInterface, \ArrayAccess
         //argument required from class
         foreach ($dependency as $argValue) {
             $paramClass = null;
-            
+
             if (class_exists((string) $argValue->getType())) {
                 $paramClass = $argValue->getClass()->name;
             }

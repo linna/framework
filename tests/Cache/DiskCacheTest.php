@@ -384,7 +384,7 @@ class DiskCacheTest extends TestCase
     public function testHasExistingElement(): void
     {
         $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4]));
-        
+
         $this->assertTrue($this->cache->has('foo'));
     }
 

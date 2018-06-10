@@ -125,7 +125,7 @@ class FrontControllerTest extends TestCase
         $model = $this->model;
         $view = $this->view;
         $controller = $this->controller;
-        
+
         return [
             [false, $view, $controller, 'index', []],
             [$model, false, $controller, 'index', []],

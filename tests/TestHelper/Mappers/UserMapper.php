@@ -181,7 +181,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
             echo 'Mapper exception: ', $e->getMessage(), "\n";
         }
     }
-    
+
     /**
      * Check for valid domain Object.
      *

@@ -23,19 +23,19 @@ class CalculatorView extends View
 
         $this->template = $template;
     }
-    
+
     public function multiply()
     {
     }
-    
+
     public function divide()
     {
     }
-    
+
     public function add()
     {
     }
-    
+
     public function sub()
     {
     }

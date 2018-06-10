@@ -98,7 +98,7 @@ class StrTest extends TestCase
     {
         $this->assertEquals($result, Str::endsWith($haystack, $needles));
     }
-    
+
     /**
      * Start some needle provider.
      *

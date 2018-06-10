@@ -37,7 +37,7 @@ class CalculatorController extends Controller
     public function multiply()
     {
         $numbers = $_POST['numbers'];
-        
+
         $this->model->multiply($numbers);
     }
 
@@ -47,7 +47,7 @@ class CalculatorController extends Controller
     public function divide()
     {
         $numbers = $_POST['numbers'];
-        
+
         $this->model->divide($numbers);
     }
 
@@ -57,7 +57,7 @@ class CalculatorController extends Controller
     public function sub()
     {
         $numbers = $_POST['numbers'];
-        
+
         $this->model->sub($numbers);
     }
 
@@ -67,7 +67,7 @@ class CalculatorController extends Controller
     public function add()
     {
         $numbers = $_POST['numbers'];
-        
+
         $this->model->add($numbers);
     }
 

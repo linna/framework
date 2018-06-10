@@ -134,11 +134,11 @@ class MemcachedSessionHandler implements SessionHandlerInterface
         if ($this->memcached->delete($sessionId)) {
             return true;
         }
-        
+
         if ($this->memcached->getResultCode() === 16) {
             return true;
         }
-        
+
         return false;
     }
 }

@@ -68,7 +68,7 @@ class AuthenticateTest extends TestCase
 
         //attemp second login
         $this->assertTrue((new Authenticate($this->session, $this->password))->isNotLogged());
-        
+
         $this->session->destroy();
     }
 
@@ -98,10 +98,10 @@ class AuthenticateTest extends TestCase
 
         //attemp second login
         $this->assertTrue((new Authenticate($this->session, $this->password))->isNotLogged());
-        
+
         $this->session->destroy();
     }
-    
+
     /**
      * Test logout.
      *
@@ -175,7 +175,7 @@ class AuthenticateTest extends TestCase
 
         $this->session->destroy();
     }
-    
+
     /**
      * Login time provider.
      *
@@ -192,7 +192,7 @@ class AuthenticateTest extends TestCase
             [1803, true]
         ];
     }
-    
+
     /**
      * Test login refresh.
      *

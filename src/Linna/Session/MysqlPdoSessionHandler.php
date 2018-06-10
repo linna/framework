@@ -120,7 +120,7 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
                 [':session_data', $data, \PDO::PARAM_STR]
             ]
         );
-        
+
         return $this->pdo->getLastOperationStatus();
     }
 

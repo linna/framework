@@ -15,7 +15,7 @@ class ClassG
 {
     private $classI;
     private $classH;
-    
+
     public function __construct(ClassI $i, ClassH $h)
     {
         $this->classI = $i;

@@ -32,7 +32,7 @@ class ModelTest extends TestCase
     public function testModelGetAndSet(): void
     {
         $model = new MultipleModel();
-        
+
         $model->set([1,2,3,4,5]);
 
         $this->assertEquals([1,2,3,4,5], $model->get());

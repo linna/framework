@@ -335,7 +335,7 @@ class RouterTest extends TestCase
     {
         $this->router->foo();
     }
-    
+
     /**
      * Test validate a route with no bad route options declared.
      */

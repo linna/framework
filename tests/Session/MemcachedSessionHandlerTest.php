@@ -41,14 +41,14 @@ class MemcachedSessionHandlerTest extends TestCase
     public function setUp(): void
     {
         $memcached = new Memcached();
-        
+
         $memcached->addServer($GLOBALS['mem_host'], (int) $GLOBALS['mem_port']);
 
         $handler = new MemcachedSessionHandler($memcached, 5);
         $session = new Session(['expire' => 10]);
-        
+
         $session->setSessionHandler($handler);
-        
+
         $this->handler = $handler;
 
         $this->session = $session;

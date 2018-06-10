@@ -23,7 +23,7 @@ class MultipleView extends View
 
         $this->template = $template;
     }
-    
+
     public function SomeParam()
     {
     }

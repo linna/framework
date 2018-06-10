@@ -32,7 +32,7 @@ class MemcachedCacheTest extends TestCase
         $this->cache = new MemcachedCache(['resource' => $memcached]);
         $this->cache->clear();
     }
-    
+
     /**
      * Invalid resource provider.
      *
@@ -413,7 +413,7 @@ class MemcachedCacheTest extends TestCase
     public function testHasExistingElement(): void
     {
         $this->assertTrue($this->cache->set('foo', [0, 1, 2, 3, 4]));
-        
+
         $this->assertTrue($this->cache->has('foo'));
     }
 
@@ -431,7 +431,7 @@ class MemcachedCacheTest extends TestCase
     public function testHasWithExpiredElement(): void
     {
         $this->assertFalse($this->cache->set('foo', [0, 1, 2, 3, 4], -10));
-        
+
         $this->assertFalse($this->cache->has('foo'));
     }
 }

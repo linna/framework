@@ -36,12 +36,12 @@ class EnhancedAuthenticateTest extends TestCase
      */
     protected $enhancedAuthenticate;
 
-    
+
     /**
      * @var EnhancedAuthenticateMapper The enhanced authenticate mapper class
      */
     protected $eAMapper;
-    
+
     /**
      * Setup.
      */
@@ -106,7 +106,7 @@ class EnhancedAuthenticateTest extends TestCase
             ['fooroot', '3hto06tko273jjc1se0v1aqvvn', '192.168.1.3', 1, 6, 16, false, false, false],
         ];
     }
-    
+
     /**
      * Test login.
      *

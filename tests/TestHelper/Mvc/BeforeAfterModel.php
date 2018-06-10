@@ -16,7 +16,7 @@ use Linna\Mvc\Model;
 class BeforeAfterModel extends Model
 {
     protected $value = 0;
-    
+
     public function __construct()
     {
         parent::__construct();
@@ -26,12 +26,12 @@ class BeforeAfterModel extends Model
     {
         $this->value -= 5;
     }
-    
+
     public function doAction($param)
     {
         $this->value += $param;
     }
-    
+
     public function add()
     {
         $this->value += 10;

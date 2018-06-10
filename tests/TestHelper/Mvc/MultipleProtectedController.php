@@ -35,7 +35,7 @@ class MultipleProtectedController extends Controller
         if ($this->authentication === false) {
             return false;
         }
-        
+
         return true;
     }
 }

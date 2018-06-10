@@ -49,7 +49,7 @@ class CalculatorModel extends Model
                 $temp = $n;
                 continue;
             }
-            
+
             switch ($operator) {
                 case '*':
                     $temp = $temp * $n;
@@ -65,7 +65,7 @@ class CalculatorModel extends Model
                     break;
             }
         }
-        
+
         return $temp;
     }
 }

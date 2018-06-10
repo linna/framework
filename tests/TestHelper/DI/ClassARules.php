@@ -19,7 +19,7 @@ class ClassARules
     private $int;
     private $array;
     private $noType;
-            
+
     public function __construct(bool $aaBool, ClassI $i, string $aaString, int $aaInt, array $aaArray, $aaNoType)
     {
         $this->bool = $aaBool;

@@ -63,7 +63,7 @@ class RoleTest extends TestCase
         $this->permissionMapper = $permissionMapper;
         $this->enhancedUserMapper = $enhancedUserMapper;
     }
-    
+
     /**
      * Test new role instance.
      */

@@ -46,7 +46,7 @@ class PasswordTest extends TestCase
     public function testPasswordHashAndFailVerify()
     {
         $hash = $this->password->hash('password');
-        
+
         $this->assertFalse($this->password->verify('otherpassword', $hash));
     }
 
@@ -66,7 +66,7 @@ class PasswordTest extends TestCase
     public function testHashThatNotNeedRehash()
     {
         $hash = $this->password->hash('password');
-        
+
         $this->assertFalse($this->password->needsRehash($hash));
     }
 
