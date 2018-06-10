@@ -6,7 +6,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/linna/framework/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/linna/framework/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/linna/framework/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/linna/framework/?branch=master)
 [![StyleCI](https://styleci.io/repos/41168432/shield?branch=master&style=flat)](https://styleci.io/repos/41168432)
-
+[![PDS Skeleton](https://img.shields.io/badge/pds-skeleton-blue.svg?style=flat-square)](https://github.com/php-pds/skeleton)
 
 ## About this framework
 Started as a project for learning the modern PHP, it has become a set of simple and elegant tools for creating web applications.
