@@ -30,7 +30,7 @@ class MultipleProtectedController extends Controller
         $this->test = true;
     }
 
-    public function ProtectedAction() : bool
+    public function ProtectedAction(): bool
     {
         if ($this->authentication === false) {
             return false;

@@ -41,7 +41,7 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
     /**
      * {@inheritdoc}
      */
-    public function fetchById(int $loginAttemptId) : DomainObjectInterface
+    public function fetchById(int $loginAttemptId): DomainObjectInterface
     {
         $pdos = $this->pdo->prepare('SELECT login_attempt_id AS objectId, user_name AS userName, session_id AS sessionId, ip, date_time AS when, last_update AS lastUpdate FROM login_attempt WHERE login_attempt_id = :id');
 
@@ -56,7 +56,7 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
     /**
      * {@inheritdoc}
      */
-    public function fetchAll() : array
+    public function fetchAll(): array
     {
         $pdos = $this->pdo->prepare('SELECT login_attempt_id AS objectId, user_name AS userName, session_id AS sessionId, ip, date_time AS when, last_update AS lastUpdate FROM login_attempt');
 
@@ -68,7 +68,7 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
     /**
      * {@inheritdoc}
      */
-    public function fetchLimit(int $offset, int $rowCount) : array
+    public function fetchLimit(int $offset, int $rowCount): array
     {
         $pdos = $this->pdo->prepare('SELECT login_attempt_id AS objectId, user_name AS userName, session_id AS sessionId, ip, date_time AS when, last_update AS lastUpdate FROM login_attempt ORDER BY date_time ASC LIMIT :offset, :rowcount');
 
@@ -86,7 +86,7 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
      * @param int    $timeInSeconds Attempts in the last specified seconds
      */
 
-    public function fetchAttemptsWithSameUser(string $userName, int $timeInSeconds) : int
+    public function fetchAttemptsWithSameUser(string $userName, int $timeInSeconds): int
     {
         $pdos = $this->pdo->prepare('SELECT count(user_name) as attempts FROM login_attempt WHERE user_name = :user_name AND date_time > :time');
 
@@ -106,7 +106,7 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
      * @param string $sessionId     Session id
      * @param int    $timeInSeconds Attempts in the last specified seconds
      */
-    public function fetchAttemptsWithSameSession(string $sessionId, int $timeInSeconds) : int
+    public function fetchAttemptsWithSameSession(string $sessionId, int $timeInSeconds): int
     {
         $pdos = $this->pdo->prepare('SELECT count(session_id) as attempts FROM login_attempt WHERE session_id = :session_id AND date_time > :time');
 
@@ -126,7 +126,7 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
      * @param string $ipAddress     Ip address
      * @param int    $timeInSeconds Attempts in the last specified seconds
      */
-    public function fetchAttemptsWithSameIp(string $ipAddress, int $timeInSeconds) : int
+    public function fetchAttemptsWithSameIp(string $ipAddress, int $timeInSeconds): int
     {
         $pdos = $this->pdo->prepare('SELECT count(ip) as attempts FROM login_attempt WHERE ip = :ip AND date_time > :time');
 
@@ -145,7 +145,7 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
      *
      * @param int $timeInSeconds
      */
-    public function deleteOldLoginAttempts(int $timeInSeconds) : bool
+    public function deleteOldLoginAttempts(int $timeInSeconds): bool
     {
         $pdos = $this->pdo->prepare('DELETE FROM login_attempt WHERE date_time < :time');
 
@@ -160,7 +160,7 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
     /**
      * {@inheritdoc}
      */
-    protected function concreteCreate() : DomainObjectInterface
+    protected function concreteCreate(): DomainObjectInterface
     {
         return new LoginAttempt();
     }
@@ -168,7 +168,7 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
     /**
      * {@inheritdoc}
      */
-    protected function concreteInsert(DomainObjectInterface $loginAttempt) : int
+    protected function concreteInsert(DomainObjectInterface $loginAttempt): int
     {
         $this->checkValidDomainObject($loginAttempt);
 

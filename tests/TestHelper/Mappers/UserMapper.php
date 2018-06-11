@@ -50,7 +50,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
     /**
      * {@inheritdoc}
      */
-    public function fetchById(int $userId) : DomainObjectInterface
+    public function fetchById(int $userId): DomainObjectInterface
     {
         $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE user_id = :id');
 
@@ -69,7 +69,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
      *
      * @return DomainObjectAbstract
      */
-    public function fetchByName(string $userName) : DomainObjectInterface
+    public function fetchByName(string $userName): DomainObjectInterface
     {
         $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE md5(name) = :name');
 
@@ -86,7 +86,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
     /**
      * {@inheritdoc}
      */
-    public function fetchAll() : array
+    public function fetchAll(): array
     {
         $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC');
 
@@ -98,7 +98,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
     /**
      * {@inheritdoc}
      */
-    public function fetchLimit(int $offset, int $rowCount) : array
+    public function fetchLimit(int $offset, int $rowCount): array
     {
         $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC LIMIT :offset, :rowcount');
 
@@ -112,7 +112,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
     /**
      * {@inheritdoc}
      */
-    protected function concreteCreate() : DomainObjectInterface
+    protected function concreteCreate(): DomainObjectInterface
     {
         return new User($this->password);
     }
@@ -120,7 +120,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
     /**
      * {@inheritdoc}
      */
-    protected function concreteInsert(DomainObjectInterface $user) : int
+    protected function concreteInsert(DomainObjectInterface $user): int
     {
         $this->checkValidDomainObject($user);
 

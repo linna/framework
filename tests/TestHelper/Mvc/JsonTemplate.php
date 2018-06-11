@@ -23,7 +23,7 @@ class JsonTemplate implements TemplateInterface
         $this->data = $data;
     }
 
-    public function getOutput() : string
+    public function getOutput(): string
     {
         return json_encode($this->data);
     }

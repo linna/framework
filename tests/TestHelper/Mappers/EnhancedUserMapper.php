@@ -46,7 +46,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function fetchById(int $userId) : DomainObjectInterface
+    public function fetchById(int $userId): DomainObjectInterface
     {
         $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE user_id = :id');
 
@@ -67,7 +67,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function fetchByName(string $userName) : DomainObjectInterface
+    public function fetchByName(string $userName): DomainObjectInterface
     {
         $hashedUserName = md5($userName);
 
@@ -90,7 +90,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function fetchAll() : array
+    public function fetchAll(): array
     {
         $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC');
 
@@ -104,7 +104,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function fetchLimit(int $offset, int $rowCount) : array
+    public function fetchLimit(int $offset, int $rowCount): array
     {
         $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC LIMIT :offset, :rowcount');
 
@@ -120,7 +120,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function fetchUserByRole(int $roleId) : array
+    public function fetchUserByRole(int $roleId): array
     {
         $pdos = $this->pdo->prepare('SELECT u.user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate
         FROM user AS u INNER JOIN user_role AS ur ON u.user_id = ur.user_id
@@ -137,7 +137,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     /**
      * {@inheritdoc}
      */
-    public function fetchUserByPermission(int $permissionId) : array
+    public function fetchUserByPermission(int $permissionId): array
     {
         return [];
     }
@@ -149,7 +149,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
      *
      * @return array
      */
-    protected function setUserPermission(array $users) : array
+    protected function setUserPermission(array $users): array
     {
         $tempArray = [];
 
@@ -200,7 +200,7 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     /**
      * {@inheritdoc}
      */
-    protected function concreteCreate() : DomainObjectInterface
+    protected function concreteCreate(): DomainObjectInterface
     {
         return new EnhancedUser($this->password);
     }
