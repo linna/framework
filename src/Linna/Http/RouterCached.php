@@ -35,6 +35,11 @@ class RouterCached extends Router
     private $cache;
 
     /**
+     * @var int Cache timeout
+     */
+    private const CACHE_TIMEOUT = 3600;
+
+    /**
      * Constructor.
      *
      * @param CacheInterface $cache   Cache resource
@@ -69,7 +74,7 @@ class RouterCached extends Router
         //if route not cached, validate, if valid cache it
         if (parent::validate($requestUri, $requestMethod)) {
             //cache validated route
-            $this->cache->set($requestUri.$requestMethod, $this->route, 3600);
+            $this->cache->set($requestUri.$requestMethod, $this->route, self::CACHE_TIMEOUT);
 
             return true;
         }

@@ -256,11 +256,11 @@ class RouterTest extends TestCase
     public function fastMapRouteProvider(): array
     {
         return [
-            ['GET', '/mapRouteTestGet', 'get', []],
-            ['POST', '/mapRouteTestPost', 'post', []],
-            ['PUT', '/mapRouteTestPut', 'put', []],
-            ['DELETE', '/mapRouteTestPatch', 'delete', []],
-            ['PATCH', '/mapRouteTestPatch', 'patch', []],
+            ['GET', '/mapRouteTestGet', 'get', ['name' => 'RouteGet']],
+            ['POST', '/mapRouteTestPost', 'post', ['name' => 'RoutePost']],
+            ['PUT', '/mapRouteTestPut', 'put', ['name' => 'RoutePut']],
+            ['DELETE', '/mapRouteTestDelete', 'delete', ['name' => 'RouteDelete']],
+            ['PATCH', '/mapRouteTestPatch', 'patch', ['name' => 'RoutePatch']],
         ];
     }
 
@@ -285,6 +285,7 @@ class RouterTest extends TestCase
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals($method, $callback($method));
+        $this->assertEquals($options['name'], $route->getName());
     }
 
     /**
@@ -308,7 +309,7 @@ class RouterTest extends TestCase
      *
      * @dataProvider fastMapRouteProviderNoOptions
      */
-    public function testMapInToRouterWithFastMapRouteWithoutOptions(string $method, string $url, string $func): void
+    public function testMapInToRouterWithFastMapRouteWithoutOptions(string $method, string $url, string $func, array $options): void
     {
         //map route with method
         $this->router->$func($url, function ($param) {
@@ -324,6 +325,7 @@ class RouterTest extends TestCase
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals($method, $callback($method));
+        $this->assertEquals($options, []);
     }
 
     /**
