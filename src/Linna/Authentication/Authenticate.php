@@ -202,7 +202,7 @@ class Authenticate
     private function refresh(): bool
     {
         //check for login data on in current session
-        if (!isset($this->session->login)) {
+        if (empty($this->session->login)) {
             return false;
         }
 

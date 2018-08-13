@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Linna\Authentication;
 
 use Linna\Shared\ClassOptionsTrait;
+use UnexpectedValueException;
 
 /**
  * Provide methods for manage password, this class use PHP password hashing function,
@@ -108,8 +109,13 @@ class Password
      */
     public function hash(string $password): string
     {
-        //generate hash from password
-        return password_hash($password, $this->options['algo'], $this->options);
+        $hash = password_hash($password, $this->options['algo'], $this->options);
+
+        if ($hash === false) {
+            throw new UnexpectedValueException('Password hashing fails.');
+        }
+
+        return $hash;
     }
 
     /**

@@ -156,7 +156,7 @@ class Autoloader
     private function loadMappedFile(string $prefix, string $relativeClass): bool
     {
         // are there any base directories for this namespace prefix?
-        if (!isset($this->prefixes[$prefix])) {
+        if (empty($this->prefixes[$prefix])) {
             return false;
         }
 

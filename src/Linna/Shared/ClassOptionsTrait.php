@@ -28,11 +28,12 @@ trait ClassOptionsTrait
      */
     public function setOption(string $key, $value): void
     {
-        if (!isset($this->options[$key])) {
-            throw new \InvalidArgumentException(__CLASS__." class does not support the {$key} option.");
+        if (isset($this->options[$key])) {
+            $this->options[$key] = $value;
+            return;
         }
 
-        $this->options[$key] = $value;
+        throw new \InvalidArgumentException(__CLASS__." class does not support the {$key} option.");
     }
 
     /**

@@ -74,11 +74,11 @@ class PasswordGenerator
      */
     public function getTopology(string $password): string
     {
-        $array = str_split($password);
+        $array = (array) str_split($password);
         $topology = [];
 
         foreach ($array as $char) {
-            $topology[] = $this->getTopologyGroup($char);
+            $topology[] = $this->getTopologyGroup((string)$char);
         }
 
         return implode($topology);
@@ -122,12 +122,12 @@ class PasswordGenerator
      */
     public function getFromTopology(string $topology): string
     {
-        $array = str_split(strtolower($topology));
+        $array = (array) str_split(strtolower($topology));
         $groups = [117 => 0, 108 => 1, 100 => 2, 115 => 3];
         $password = [];
 
         foreach ($array as $char) {
-            $int = ord($char);
+            $int = ord((string)$char);
 
             if (isset($groups[$int])) {
                 $password[] = $this->getRandomChar($this->chars[$groups[$int]]);

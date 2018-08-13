@@ -44,7 +44,7 @@ trait ArrayAccessTrait
      *
      * @param string $key
      */
-    abstract public function delete($key);
+    abstract public function delete($key): bool;
 
     /**
      * Check.

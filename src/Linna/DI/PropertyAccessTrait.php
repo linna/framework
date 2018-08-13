@@ -44,7 +44,7 @@ trait PropertyAccessTrait
      *
      * @param string $key
      */
-    abstract public function delete($key);
+    abstract public function delete($key): bool;
 
     /**
      * Set
@@ -83,9 +83,9 @@ trait PropertyAccessTrait
      *
      * @ignore
      */
-    public function __unset(string $key): bool
+    public function __unset(string $key)
     {
-        return $this->delete($key);
+        $this->delete($key);
     }
 
     /**
@@ -93,6 +93,8 @@ trait PropertyAccessTrait
      * http://php.net/manual/en/language.oop5.overloading.php.
      *
      * @param string $key
+     *
+     * @return bool
      *
      * @ignore
      */

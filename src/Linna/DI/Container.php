@@ -133,7 +133,7 @@ class Container implements ContainerInterface, \ArrayAccess
         while (true) {
 
             //initialize array if not already initialized
-            if (!isset($this->tree[$level][$class])) {
+            if (empty($this->tree[$level][$class])) {
                 $this->tree[$level][$class] = [];
             }
 

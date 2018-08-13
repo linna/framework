@@ -27,7 +27,7 @@ class Str
     public static function startsWith(string $haystack, array $needles = []): bool
     {
         foreach ($needles as $needle) {
-            if (strpos($haystack, (string) $needle) === 0) {
+            if (strpos($haystack, $needle) === 0) {
                 return true;
             }
         }
@@ -46,7 +46,7 @@ class Str
     public static function endsWith(string $haystack, array $needles = []): bool
     {
         foreach ($needles as $needle) {
-            if (strpos(strrev($haystack), (string) $needle) === 0) {
+            if (strpos(strrev($haystack), $needle) === 0) {
                 return true;
             }
         }
@@ -58,13 +58,14 @@ class Str
      * Determine if a given string starts and ends with a given substring.
      *
      * @param string $haystack
-     * @param array $needles
+     * @param array  $needles
+     *
      * @return bool
      */
     public static function startsEndsWith(string $haystack, array $needles = []): bool
     {
         foreach ($needles as $needle) {
-            if (strpos($haystack, (string) $needle) === 0 && strpos(strrev($haystack), (string) $needle) === 0) {
+            if (strpos($haystack, $needle) === 0 && strpos(strrev($haystack), $needle) === 0) {
                 return true;
             }
         }

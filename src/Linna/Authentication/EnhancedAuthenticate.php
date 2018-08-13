@@ -69,7 +69,10 @@ class EnhancedAuthenticate extends Authenticate
     {
         $attemptsLeft = $this->options['maxAttemptsForUserName'] - $this->enhancedAuthenticateMapper->fetchAttemptsWithSameUser($userName, $this->options['banTimeInSeconds']);
 
-        return max(0, $attemptsLeft);
+        //casting to int second param for avoid strange things with
+        //max return value
+        //http://php.net/manual/en/function.max.php
+        return max(0, (int) $attemptsLeft);
     }
 
     /**
@@ -83,7 +86,7 @@ class EnhancedAuthenticate extends Authenticate
     {
         $attemptsLeft = $this->options['maxAttemptsForSessionId'] - $this->enhancedAuthenticateMapper->fetchAttemptsWithSameSession($sessionId, $this->options['banTimeInSeconds']);
 
-        return max(0, $attemptsLeft);
+        return max(0, (int) $attemptsLeft);
     }
 
     /**
@@ -97,7 +100,7 @@ class EnhancedAuthenticate extends Authenticate
     {
         $attemptsLeft = $this->options['maxAttemptsForIpAddress'] - $this->enhancedAuthenticateMapper->fetchAttemptsWithSameIp($ipAddress, $this->options['banTimeInSeconds']);
 
-        return max(0, $attemptsLeft);
+        return max(0, (int) $attemptsLeft);
     }
 
     /**
