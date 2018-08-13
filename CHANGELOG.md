@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unrelased][v0.24.0](https://github.com/linna/framework/compare/v0.23.1...v0.24.0) - 2018-XX-XX
 
 ### Added
-* `Linna\Authentication\PasswordGenerator`
+* `Linna\DotEnv\DotEnv` class
+* `Linna\Authentication\PasswordGenerator` class
 * void return type to methods
 
 ### Changed
