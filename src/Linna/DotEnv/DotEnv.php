@@ -9,63 +9,68 @@
  */
 declare(strict_types = 1);
 
-namespace Linna\Helper;
-
-use Closure;
+namespace Linna\DotEnv;
 
 /**
- * Env Helper.
+ * DotEnv.
+ *
+ * Load variables from a .env file to environment.
  */
-class Env
+class DotEnv
 {
     /**
-     * @var array Matches for particula values
-     */
-    private static $valuesMatches = [
-        'true' => true,
-        '(true)' => true,
-        'false' => false,
-        '(false)' => false,
-        'empty' => '',
-        '(empty)' => '',
-        'null' => null,
-        '(null)' => null,
-    ];
-
-    /**
-     * Return value or the returned value if function is passed.
-     *
-     * @param mixed $value
-     *
-     * @return mixed
-     */
-    private static function value($value)
-    {
-        return $value instanceof Closure ? $value() : $value;
-    }
-
-    /**
-     * Gets the value of an environment variable.
+     * Get a value from environment.
      *
      * @param string $key
      * @param mixed  $default
-     *
-     * return mixed
      */
-    public static function get(string $key, $default = null)
+    public function get(string $key, $default = null)
     {
         if (($value = getenv($key)) === false) {
-            return self::value($default);
-        }
-
-        if (array_key_exists(strtolower($value), self::$valuesMatches)) {
-            return self::$valuesMatches[strtolower($value)];
-        }
-
-        if (strlen($value) > 1 && Str::startsEndsWith($value, ['"', '\''])) {
-            return substr($value, 1, -1);
+            return $default;
         }
 
         return $value;
+    }
+
+    /**
+     * Load environment variables from file.
+     *
+     * @param string $file Path to .env file
+     */
+    public function load(string $file): bool
+    {
+        if (!is_file($file)) {
+            return false;
+        }
+
+        $content = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        foreach ($content as $line) {
+            $line = rtrim(ltrim($line));
+
+            //check if the line contains a key value pair
+            if (!preg_match("/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/", $line)) {
+                continue;
+            }
+
+            [$key, $value] = explode('=', $line);
+
+            //set to empty value
+            if (strlen($value) === 0) {
+                putenv("{$key}=");
+                continue;
+            }
+
+            $edges = $value[0].$value[-1];
+
+            if ($edges === "''" || $edges === '""') {
+                $value = substr($value, 1, -1);
+            }
+
+            putenv("{$key}={$value}");
+        }
+
+        return true;
     }
 }
