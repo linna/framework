@@ -21,8 +21,8 @@ class DotEnv
     /**
      * Get a value from environment.
      *
-     * @param string $key
-     * @param mixed  $default
+     * @param string $key     Key name
+     * @param mixed  $default Default value if key not found
      */
     public function get(string $key, $default = null)
     {
