@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class Options Trait test.
  */
-class ClassOptionsTest extends TestCase
+class ClassOptionsTraitTest extends TestCase
 {
     /**
      *
