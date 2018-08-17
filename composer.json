@@ -35,8 +35,8 @@
     },
     "autoload-dev": {
         "psr-4": { 
+            "Linna\\Test\\": "tests",
             "Linna\\TestHelper\\": "tests/TestHelper/"
-        },
-        "classmap": ["tests/"]
+        }
     }
 }

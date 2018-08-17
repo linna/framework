@@ -9,10 +9,13 @@
  */
 declare(strict_types=1);
 
+namespace Linna\Tests;
+
 use Linna\Session\MysqlPdoSessionHandler;
 use Linna\Session\Session;
 use Linna\Storage\StorageFactory;
 use Linna\Storage\ExtendedPDO;
+use PDO;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -45,10 +48,10 @@ class MysqlPdoSessionHandlerTest extends TestCase
             'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
             'options'  => [
-                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
-                \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-                \PDO::ATTR_PERSISTENT         => false,
-                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_PERSISTENT         => false,
+                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
             ],
         ];
 

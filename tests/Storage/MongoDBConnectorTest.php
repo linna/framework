@@ -9,6 +9,8 @@
  */
 declare(strict_types=1);
 
+namespace Linna\Tests;
+
 use Linna\Storage\Connectors\MongoDBConnector;
 use MongoDB\Client;
 use PHPUnit\Framework\TestCase;

@@ -9,6 +9,8 @@
  */
 declare(strict_types=1);
 
+namespace Linna\Tests;
+
 use Linna\DI\Container;
 use Linna\TestHelper\DI\ClassACache;
 use PHPUnit\Framework\TestCase;

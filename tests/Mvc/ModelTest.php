@@ -9,8 +9,9 @@
  */
 declare(strict_types=1);
 
-use Linna\TestHelper\Mvc\MultipleModel;
+namespace Linna\Tests;
 
+use Linna\TestHelper\Mvc\MultipleModel;
 use PHPUnit\Framework\TestCase;
 
 /**

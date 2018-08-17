@@ -9,6 +9,8 @@
  */
 declare(strict_types=1);
 
+namespace Linna\Tests;
+
 use Linna\Session\Session;
 use PHPUnit\Framework\TestCase;
 

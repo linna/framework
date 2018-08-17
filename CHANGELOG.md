@@ -6,12 +6,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unrelased][v0.24.0](https://github.com/linna/framework/compare/v0.23.1...v0.24.0) - 2018-XX-XX
+## [Unreleased][v0.24.0](https://github.com/linna/framework/compare/v0.23.1...v0.24.0) - 2018-XX-XX
 
 ### Added
 * `Linna\DotEnv\DotEnv` class
 * `Linna\Authentication\PasswordGenerator` class
 * void return type to methods
+* Namespace for tests
 
 ### Changed
 * Minimun PHP version: 7.1

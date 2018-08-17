@@ -9,7 +9,10 @@
  */
 declare(strict_types=1);
 
+namespace Linna\Tests;
+
 use Linna\Cache\MemcachedCache;
+use Memcached;
 use PHPUnit\Framework\TestCase;
 
 class MemcachedCacheTest extends TestCase

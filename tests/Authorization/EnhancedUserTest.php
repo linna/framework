@@ -9,6 +9,8 @@
  */
 declare(strict_types=1);
 
+namespace Linna\Tests;
+
 use Linna\Authentication\Password;
 use Linna\Authorization\EnhancedUser;
 use Linna\TestHelper\Mappers\EnhancedUserMapper;

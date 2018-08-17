@@ -9,6 +9,8 @@
  */
 declare(strict_types=1);
 
+namespace Linna\Tests;
+
 use Linna\Authentication\Authenticate;
 use Linna\Authentication\Password;
 use Linna\Authorization\Authorize;

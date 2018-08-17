@@ -9,6 +9,8 @@
  */
 declare(strict_types=1);
 
+namespace Linna\Tests;
+
 use Linna\Http\Route;
 use Linna\Http\RouteCollection;
 use Linna\Http\Router;
@@ -26,7 +28,6 @@ use Linna\TestHelper\Mvc\MultipleController;
 use Linna\TestHelper\Mvc\MultipleModel;
 use Linna\TestHelper\Mvc\MultipleView;
 use Linna\TestHelper\Mvc\JsonTemplate;
-
 use PHPUnit\Framework\TestCase;
 
 /**

@@ -9,6 +9,8 @@
  */
 declare(strict_types=1);
 
+namespace Linna\Tests;
+
 use Linna\Http\NullRoute;
 use Linna\Http\Route;
 use Linna\Http\RouteCollection;

@@ -9,9 +9,12 @@
  */
 declare(strict_types=1);
 
+namespace Linna\Tests;
+
 use Linna\Cache\DiskCache;
 use Linna\Cache\CacheFactory;
 use Linna\Cache\MemcachedCache;
+use Memcached;
 use PHPUnit\Framework\TestCase;
 
 /**

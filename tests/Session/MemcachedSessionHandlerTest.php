@@ -9,8 +9,11 @@
  */
 declare(strict_types=1);
 
+namespace Linna\Tests;
+
 use Linna\Session\MemcachedSessionHandler;
 use Linna\Session\Session;
+use Memcached;
 use PHPUnit\Framework\TestCase;
 
 /**

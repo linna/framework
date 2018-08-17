@@ -9,6 +9,8 @@
  */
 declare(strict_types=1);
 
+namespace Linna\Tests;
+
 use Linna\TestHelper\Mvc\CalculatorModel;
 use Linna\TestHelper\Mvc\CalculatorView;
 use Linna\TestHelper\Mvc\BadTemplateView;

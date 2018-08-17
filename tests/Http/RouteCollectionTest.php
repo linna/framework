@@ -9,10 +9,15 @@
  */
 declare(strict_types=1);
 
+namespace Linna\Tests;
+
+use ArrayObject;
+use InvalidArgumentException;
 use Linna\Http\Route;
 use Linna\Http\RouteCollection;
 use Linna\TypedObjectArray;
 use PHPUnit\Framework\TestCase;
+use SplStack;
 
 /**
  * Route Collection test.

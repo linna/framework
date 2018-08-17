@@ -9,7 +9,10 @@
  */
 declare(strict_types=1);
 
+namespace Linna\Tests;
+
 use Linna\Storage\Connectors\MysqliConnector;
+use mysqli;
 use PHPUnit\Framework\TestCase;
 
 /**
