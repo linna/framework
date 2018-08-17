@@ -51,7 +51,7 @@ class DotEnvTest extends TestCase
      */
     public function envProvider(): array
     {
-        return [   
+        return [
             ['PHP_ENV', 'development'],
             ['BASIC', 'basic'],
             ['AFTER_LINE', 'after_line'],
