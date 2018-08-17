@@ -37,10 +37,12 @@ class DotEnv
      * Load environment variables from file.
      *
      * @param string $file Path to .env file
+     *
+     * @return bool
      */
     public function load(string $file): bool
     {
-        if (!is_file($file)) {
+        if (!file_exists($file)) {
             return false;
         }
 
