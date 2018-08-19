@@ -90,6 +90,8 @@ class PasswordGenerator
      * @param string $char
      *
      * @return string
+     *
+     * @throws InvalidArgumentException If char provided isn't inside any group
      */
     private function getTopologyGroup(string $char): string
     {
@@ -101,6 +103,8 @@ class PasswordGenerator
                 return $group;
             }
         }
+
+        throw new InvalidArgumentException('Out of group character provided');
     }
 
     /**

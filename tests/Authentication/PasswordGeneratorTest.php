@@ -121,29 +121,13 @@ class PasswordGeneratorTest extends TestCase
     }
 
     /**
-     * Bad topology provider.
-     */
-    public function badTopologyProvider(): array
-    {
-        return [
-           ['uldz'],
-           ['uld!'],
-           ['uld1'],
-           ['...'],
-           [' '],
-           ['']
-       ];
-    }
-
-    /**
-     * Test get topology.
+     * Test get topology exception.
      *
-     * @dataProvider badTopologyProvider
      * @expectedException InvalidArgumentException
      */
-    public function testGetTopologyWithBadTopology(string $topology): void
+    public function testGetTopologyException(): void
     {
-        $this->password->getFromTopology($topology);
+        $this->password->getTopology('abcdefgà');
     }
 
     /**
@@ -170,5 +154,31 @@ class PasswordGeneratorTest extends TestCase
     {
         $password = $this->password->getFromTopology($topology);
         $this->assertEquals($topology, $this->password->getTopology($password));
+    }
+
+    /**
+     * Bad topology provider.
+     */
+    public function badTopologyProvider(): array
+    {
+        return [
+           ['uldz'],
+           ['uld!'],
+           ['uld1'],
+           ['...'],
+           [' '],
+           ['']
+       ];
+    }
+
+    /**
+     * Test get topology.
+     *
+     * @dataProvider badTopologyProvider
+     * @expectedException InvalidArgumentException
+     */
+    public function testGetFromTopologyException(string $topology): void
+    {
+        $this->password->getFromTopology($topology);
     }
 }
