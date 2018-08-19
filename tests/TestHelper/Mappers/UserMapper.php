@@ -23,7 +23,6 @@ use Linna\Storage\ExtendedPDO;
 use PDO;
 use RuntimeException;
 
-
 /**
  * UserMapper.
  */
