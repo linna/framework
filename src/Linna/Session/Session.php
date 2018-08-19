@@ -99,7 +99,7 @@ class Session implements ArrayAccess
         setcookie(
             session_name(),
             session_id(),
-            (int) time() + $this->options['expire'],
+            time() + $this->options['expire'],
             $this->options['cookiePath'],
             $this->options['cookieDomain'],
             $this->options['cookieSecure'],
