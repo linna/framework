@@ -11,12 +11,15 @@ declare(strict_types=1);
 
 namespace Linna\TestHelper\Mappers;
 
+use InvalidArgumentException;
 use Linna\Authentication\EnhancedAuthenticateMapperInterface;
 use Linna\Authentication\LoginAttempt;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
 use Linna\DataMapper\NullDomainObject;
 use Linna\Storage\ExtendedPDO;
+use PDO;
+use RuntimeException;
 
 /**
  * EnhancedAuthenticateMapper.
@@ -24,7 +27,7 @@ use Linna\Storage\ExtendedPDO;
 class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthenticateMapperInterface
 {
     /**
-     * @var \PDO Database Connection
+     * @var PDO Database Connection
      */
     protected $pdo;
 
@@ -45,7 +48,7 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
     {
         $pdos = $this->pdo->prepare('SELECT login_attempt_id AS objectId, user_name AS userName, session_id AS sessionId, ip, date_time AS when, last_update AS lastUpdate FROM login_attempt WHERE login_attempt_id = :id');
 
-        $pdos->bindParam(':id', $loginAttemptId, \PDO::PARAM_INT);
+        $pdos->bindParam(':id', $loginAttemptId, PDO::PARAM_INT);
         $pdos->execute();
 
         $result = $pdos->fetchObject('\Linna\Authentication\LoginAttempt');
@@ -62,7 +65,7 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
 
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authentication\LoginAttempt');
+        return $pdos->fetchAll(PDO::FETCH_CLASS, '\Linna\Authentication\LoginAttempt');
     }
 
     /**
@@ -72,11 +75,11 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
     {
         $pdos = $this->pdo->prepare('SELECT login_attempt_id AS objectId, user_name AS userName, session_id AS sessionId, ip, date_time AS when, last_update AS lastUpdate FROM login_attempt ORDER BY date_time ASC LIMIT :offset, :rowcount');
 
-        $pdos->bindParam(':offset', $offset, \PDO::PARAM_INT);
-        $pdos->bindParam(':rowcount', $rowCount, \PDO::PARAM_INT);
+        $pdos->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $pdos->bindParam(':rowcount', $rowCount, PDO::PARAM_INT);
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authentication\LoginAttempt');
+        return $pdos->fetchAll(PDO::FETCH_CLASS, '\Linna\Authentication\LoginAttempt');
     }
 
     /**
@@ -90,14 +93,14 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
     {
         $pdos = $this->pdo->prepare('SELECT count(user_name) as attempts FROM login_attempt WHERE user_name = :user_name AND date_time > :time');
 
-        $pdos->bindParam(':user_name', $userName, \PDO::PARAM_STR);
+        $pdos->bindParam(':user_name', $userName, PDO::PARAM_STR);
 
         $time = (int) date('YmdHis', time() - $timeInSeconds);
-        $pdos->bindParam(':time', $time, \PDO::PARAM_INT);
+        $pdos->bindParam(':time', $time, PDO::PARAM_INT);
 
         $pdos->execute();
 
-        return (int) $pdos->fetch(\PDO::FETCH_LAZY)->attempts;
+        return (int) $pdos->fetch(PDO::FETCH_LAZY)->attempts;
     }
 
     /**
@@ -110,14 +113,14 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
     {
         $pdos = $this->pdo->prepare('SELECT count(session_id) as attempts FROM login_attempt WHERE session_id = :session_id AND date_time > :time');
 
-        $pdos->bindParam(':session_id', $sessionId, \PDO::PARAM_STR);
+        $pdos->bindParam(':session_id', $sessionId, PDO::PARAM_STR);
 
         $time = (int) date('YmdHis', time() - $timeInSeconds);
-        $pdos->bindParam(':time', $time, \PDO::PARAM_INT);
+        $pdos->bindParam(':time', $time, PDO::PARAM_INT);
 
         $pdos->execute();
 
-        return (int) $pdos->fetch(\PDO::FETCH_LAZY)->attempts;
+        return (int) $pdos->fetch(PDO::FETCH_LAZY)->attempts;
     }
 
     /**
@@ -130,14 +133,14 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
     {
         $pdos = $this->pdo->prepare('SELECT count(ip) as attempts FROM login_attempt WHERE ip = :ip AND date_time > :time');
 
-        $pdos->bindParam(':ip', $ipAddress, \PDO::PARAM_STR);
+        $pdos->bindParam(':ip', $ipAddress, PDO::PARAM_STR);
 
         $time = (int) date('YmdHis', time() - $timeInSeconds);
-        $pdos->bindParam(':time', $time, \PDO::PARAM_INT);
+        $pdos->bindParam(':time', $time, PDO::PARAM_INT);
 
         $pdos->execute();
 
-        return (int) $pdos->fetch(\PDO::FETCH_LAZY)->attempts;
+        return (int) $pdos->fetch(PDO::FETCH_LAZY)->attempts;
     }
 
     /**
@@ -150,7 +153,7 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
         $pdos = $this->pdo->prepare('DELETE FROM login_attempt WHERE date_time < :time');
 
         $time = (int) date('YmdHis', time() - $timeInSeconds);
-        $pdos->bindParam(':time', $time, \PDO::PARAM_INT);
+        $pdos->bindParam(':time', $time, PDO::PARAM_INT);
 
         $pdos->execute();
 
@@ -175,16 +178,16 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
         try {
             $pdos = $this->pdo->prepare('INSERT INTO login_attempt (user_name, session_id, ip, date_time) VALUES (:user_name, :session_id, :ip, :date_time)');
 
-            $pdos->bindParam(':user_name', $loginAttempt->userName, \PDO::PARAM_STR);
-            $pdos->bindParam(':session_id', $loginAttempt->sessionId, \PDO::PARAM_STR);
-            $pdos->bindParam(':ip', $loginAttempt->ipAddress, \PDO::PARAM_STR);
-            $pdos->bindParam(':date_time', $loginAttempt->when, \PDO::PARAM_STR);
+            $pdos->bindParam(':user_name', $loginAttempt->userName, PDO::PARAM_STR);
+            $pdos->bindParam(':session_id', $loginAttempt->sessionId, PDO::PARAM_STR);
+            $pdos->bindParam(':ip', $loginAttempt->ipAddress, PDO::PARAM_STR);
+            $pdos->bindParam(':date_time', $loginAttempt->when, PDO::PARAM_STR);
 
             $pdos->execute();
 
             return (int) $this->pdo->lastInsertId();
-        } catch (\RuntimeException $e) {
-            echo 'Mapper: Insert not compled, ', $e->getMessage(), "\n";
+        } catch (RuntimeException $e) {
+            echo 'Insert not compled, ', $e->getMessage(), "\n";
         }
     }
 
@@ -208,8 +211,8 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
             $pdos->bindParam(':date_time', $loginAttempt->when, \PDO::PARAM_STR);
 
             $pdos->execute();
-        } catch (\Exception $e) {
-            echo 'Mapper exception: ', $e->getMessage(), "\n";
+        } catch (RuntimeException $e) {
+            echo 'Update not compled, ', $e->getMessage(), "\n";
         }
     }
 
@@ -225,8 +228,8 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
             $pdos = $this->pdo->prepare('DELETE FROM login_attempt WHERE login_attempt_id = :login_attempt_id');
             $pdos->bindParam(':login_attempt_id', $objId, \PDO::PARAM_INT);
             $pdos->execute();
-        } catch (\Exception $e) {
-            echo 'Mapper exception: ', $e->getMessage(), "\n";
+        } catch (RuntimeException $e) {
+            echo 'Delete not compled, ', $e->getMessage(), "\n";
         }
     }
 
@@ -239,7 +242,7 @@ class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthe
     protected function checkValidDomainObject(DomainObjectInterface &$loginAttempt)
     {
         if (!($loginAttempt instanceof LoginAttempt)) {
-            throw new \InvalidArgumentException('$loginAttempt must be instance of LoginAttempt class');
+            throw new InvalidArgumentException('$loginAttempt parameter must be instance of LoginAttempt class');
         }
     }
 }

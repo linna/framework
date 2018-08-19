@@ -73,11 +73,11 @@ class ExtendedPDO extends PDO
     private function checkValue(array &$value): void
     {
         if (count($value) < 2) {
-            throw new InvalidArgumentException(__METHOD__.': Parameters array must contain at least two elements with this form: [\':name\', \'value\']');
+            throw new InvalidArgumentException('Parameters array must contain at least two elements with this form: [\':name\', \'value\']');
         }
 
         if (strpos($value[0], ':') !== 0) {
-            throw new InvalidArgumentException(__METHOD__.': Parameter name will be in the form :name');
+            throw new InvalidArgumentException('Parameter name will be in the form :name');
         }
     }
 }

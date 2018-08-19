@@ -272,7 +272,7 @@ class Router
             return;
         }
 
-        throw new BadMethodCallException(__METHOD__.": Router->{$name}() method do not exist.");
+        throw new BadMethodCallException("Router->{$name}() method do not exist");
     }
 
     /**

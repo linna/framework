@@ -112,7 +112,7 @@ class Password
         $hash = password_hash($password, $this->options['algo'], $this->options);
 
         if ($hash === false) {
-            throw new UnexpectedValueException('Password hashing fails.');
+            throw new UnexpectedValueException('Password hashing fails');
         }
 
         return $hash;

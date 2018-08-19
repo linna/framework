@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\TestHelper\Mappers;
 
+use InvalidArgumentException;
 use Linna\Authentication\Password;
 use Linna\Authentication\User;
 use Linna\Authentication\UserMapperInterface;
@@ -19,6 +20,9 @@ use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
 use Linna\DataMapper\NullDomainObject;
 use Linna\Storage\ExtendedPDO;
+use PDO;
+use RuntimeException;
+
 
 /**
  * UserMapper.
@@ -54,7 +58,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
     {
         $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE user_id = :id');
 
-        $pdos->bindParam(':id', $userId, \PDO::PARAM_INT);
+        $pdos->bindParam(':id', $userId, PDO::PARAM_INT);
         $pdos->execute();
 
         $result = $pdos->fetchObject('\Linna\Authentication\User', [$this->password]);
@@ -75,7 +79,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
 
         $hashedUserName = md5($userName);
 
-        $pdos->bindParam(':name', $hashedUserName, \PDO::PARAM_STR);
+        $pdos->bindParam(':name', $hashedUserName, PDO::PARAM_STR);
         $pdos->execute();
 
         $result = $pdos->fetchObject('\Linna\Authentication\User', [$this->password]);
@@ -92,7 +96,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
 
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authentication\User', [$this->password]);
+        return $pdos->fetchAll(PDO::FETCH_CLASS, '\Linna\Authentication\User', [$this->password]);
     }
 
     /**
@@ -102,11 +106,11 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
     {
         $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC LIMIT :offset, :rowcount');
 
-        $pdos->bindParam(':offset', $offset, \PDO::PARAM_INT);
-        $pdos->bindParam(':rowcount', $rowCount, \PDO::PARAM_INT);
+        $pdos->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $pdos->bindParam(':rowcount', $rowCount, PDO::PARAM_INT);
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authentication\User', [$this->password]);
+        return $pdos->fetchAll(PDO::FETCH_CLASS, '\Linna\Authentication\User', [$this->password]);
     }
 
     /**
@@ -127,15 +131,15 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
         try {
             $pdos = $this->pdo->prepare('INSERT INTO user (name, email, description, password, created) VALUES (:name, :email, :description, :password, NOW())');
 
-            $pdos->bindParam(':name', $user->name, \PDO::PARAM_STR);
-            $pdos->bindParam(':email', $user->email, \PDO::PARAM_STR);
-            $pdos->bindParam(':description', $user->description, \PDO::PARAM_STR);
-            $pdos->bindParam(':password', $user->password, \PDO::PARAM_STR);
+            $pdos->bindParam(':name', $user->name, PDO::PARAM_STR);
+            $pdos->bindParam(':email', $user->email, PDO::PARAM_STR);
+            $pdos->bindParam(':description', $user->description, PDO::PARAM_STR);
+            $pdos->bindParam(':password', $user->password, PDO::PARAM_STR);
             $pdos->execute();
 
             return (int) $this->pdo->lastInsertId();
-        } catch (\RuntimeException $e) {
-            echo 'Mapper: Insert not compled, ', $e->getMessage(), "\n";
+        } catch (RuntimeException $e) {
+            echo 'Insert not compled, ', $e->getMessage(), "\n";
         }
     }
 
@@ -151,17 +155,17 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
 
             $objId = $user->getId();
 
-            $pdos->bindParam(':user_id', $objId, \PDO::PARAM_INT);
+            $pdos->bindParam(':user_id', $objId, PDO::PARAM_INT);
 
-            $pdos->bindParam(':name', $user->name, \PDO::PARAM_STR);
-            $pdos->bindParam(':email', $user->email, \PDO::PARAM_STR);
-            $pdos->bindParam(':password', $user->password, \PDO::PARAM_STR);
-            $pdos->bindParam(':description', $user->description, \PDO::PARAM_STR);
-            $pdos->bindParam(':active', $user->active, \PDO::PARAM_INT);
+            $pdos->bindParam(':name', $user->name, PDO::PARAM_STR);
+            $pdos->bindParam(':email', $user->email, PDO::PARAM_STR);
+            $pdos->bindParam(':password', $user->password, PDO::PARAM_STR);
+            $pdos->bindParam(':description', $user->description, PDO::PARAM_STR);
+            $pdos->bindParam(':active', $user->active, PDO::PARAM_INT);
 
             $pdos->execute();
-        } catch (\Exception $e) {
-            echo 'Mapper exception: ', $e->getMessage(), "\n";
+        } catch (RuntimeException $e) {
+            echo 'Update not compled, ', $e->getMessage(), "\n";
         }
     }
 
@@ -175,10 +179,10 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
         try {
             $objId = $user->getId();
             $pdos = $this->pdo->prepare('DELETE FROM user WHERE user_id = :user_id');
-            $pdos->bindParam(':user_id', $objId, \PDO::PARAM_INT);
+            $pdos->bindParam(':user_id', $objId, PDO::PARAM_INT);
             $pdos->execute();
-        } catch (\Exception $e) {
-            echo 'Mapper exception: ', $e->getMessage(), "\n";
+        } catch (RuntimeException $e) {
+            echo 'Delete not compled, ', $e->getMessage(), "\n";
         }
     }
 
@@ -191,7 +195,7 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
     protected function checkValidDomainObject(DomainObjectInterface &$user)
     {
         if (!($user instanceof User)) {
-            throw new \InvalidArgumentException('$user must be instance of User class');
+            throw new InvalidArgumentException('$user parameter must be instance of User class');
         }
     }
 }

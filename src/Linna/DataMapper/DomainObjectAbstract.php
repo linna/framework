@@ -55,7 +55,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     public function setId(int $objectId): int
     {
         if ($this->objectId !== 0) {
-            throw new UnexpectedValueException(__CLASS__.': objectId is immutable');
+            throw new UnexpectedValueException('ObjectId property is immutable');
         }
 
         return $this->objectId = $objectId;
