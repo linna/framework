@@ -19,6 +19,20 @@ namespace Linna\DotEnv;
 class DotEnv
 {
     /**
+     * @var array Matches for particula values
+     */
+    private static $valuesMatches = [
+        'true' => true,
+        '(true)' => true,
+        'false' => false,
+        '(false)' => false,
+        'empty' => '',
+        '(empty)' => '',
+        'null' => null,
+        '(null)' => null,
+    ];
+
+    /**
      * Get a value from environment.
      *
      * @param string $key     Key name
@@ -57,6 +71,13 @@ class DotEnv
             }
 
             [$key, $value] = explode('=', $line);
+
+            //matches for particula values
+            if (array_key_exists(strtolower($value), self::$valuesMatches)) {
+                $value = self::$valuesMatches[strtolower($value)];
+                putenv("{$key}={$value}");
+                continue;
+            }
 
             //set to empty value
             if (strlen($value) === 0) {

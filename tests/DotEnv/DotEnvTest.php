@@ -94,4 +94,44 @@ class DotEnvTest extends TestCase
         putenv('FOO=foo');
         $this->assertSame('bar', (new DotEnv())->get('BAR', 'bar'));
     }
+
+    /**
+     * Env particular values provider.
+     *
+     * @return array
+     */
+    public function envParticularValuesProvider(): array
+    {
+        return [
+            ['FOO', 'foo'],
+            ['FOO', true],
+            ['FOO', true],
+            ['FOO', false],
+            ['FOO', false],
+            ['FOO', ''],
+            ['FOO', ''],
+            ['FOO', null],
+            ['FOO', null],
+            ['FOO', 'foo'],
+            ['FOO', 'fo'],
+            ['FOO', 'f'],
+            ['FOO', '"'],
+        ];
+    }
+
+    /**
+     * Test particular keys and values.
+     *
+     * @dataProvider envProvider
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function testParticularKeyValue(string $key, string $value): void
+    {
+        $d = new DotEnv();
+        $d->load(__DIR__.'/.env.type.test');
+
+        $this->assertSame($value, $d->get($key));
+    }
 }
