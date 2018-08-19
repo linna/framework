@@ -57,9 +57,9 @@ class Model implements \SplSubject
     /**
      * Detach an Observer class from this Subject.
      *
-     * @param \SplObserver $observer
+     * @param SplObserver $observer
      */
-    public function detach(\SplObserver $observer)
+    public function detach(SplObserver $observer)
     {
         if ($observer instanceof View) {
             $this->observers->detach($observer);
@@ -71,6 +71,7 @@ class Model implements \SplSubject
      */
     public function notify()
     {
+        /** @var View $value Attached observers. */
         foreach ($this->observers as $value) {
             $value->update($this);
         }
