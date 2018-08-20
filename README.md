@@ -1,12 +1,24 @@
-![Linna Framework](logo-framework.png)
+<div align="center">
+    <a href="#"><img src="logo-linna-96.png" alt="Linna Logo"></a>
+</div>
+
 <br/>
+
+<div align="center">
+    <a href="#"><img src="logo-framework.png" alt="Linna framework Logo"></a>
+</div>
+
 <br/>
-<br/>
+
+<div align="center">
+
 [![Build Status](https://travis-ci.org/linna/framework.svg?branch=master)](https://travis-ci.org/linna/framework)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/linna/framework/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/linna/framework/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/linna/framework/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/linna/framework/?branch=master)
 [![StyleCI](https://styleci.io/repos/41168432/shield?branch=master&style=flat)](https://styleci.io/repos/41168432)
 [![PDS Skeleton](https://img.shields.io/badge/pds-skeleton-blue.svg?style=flat)](https://github.com/php-pds/skeleton)
+
+</div>
 
 ## About this framework
 Started as a project for learning the modern PHP, it has become a set of simple and elegant tools for creating web applications.
@@ -21,6 +33,19 @@ Started as a project for learning the modern PHP, it has become a set of simple 
 ### Production environment
 At moment, code, isn't utilized in production environment, Hope in future.
 
+## Require
+
+   * PHP >= 7.1
+   * PDO extension (optional)
+   * Memcached extension (optional)
+   * Mongodb extension (optional)
+
+## Installation
+With composer:
+```
+composer require linna/framework
+```
+
 ## Features
  
    * Model View Controller
@@ -30,13 +55,6 @@ At moment, code, isn't utilized in production environment, Hope in future.
    * Dependency Injections
    * Wrappers for data base
    * Implementation for PSR-4 Autoloader, PSR-11 Container and PSR-16 Simple Cache
-
-## Require
-
-   * PHP >= 7.1
-   * PDO extension (optional)
-   * Memcached extension (optional)
-   * Mongodb extension (optional)
 
 ## Documentation 
 For more details please see the [user guide (soon)](https://linna.tools/docs/current/) or the [api (incomplete)](https://linna.tools/api/current/) and read our [licence](https://github.com/linna/framework/blob/master/LICENSE.md)

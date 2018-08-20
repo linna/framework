@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased][v0.24.0](https://github.com/linna/framework/compare/v0.23.1...v0.24.0) - 2018-XX-XX
 
 ### Added
-* `Linna\DotEnv\DotEnv` class
 * `Linna\Authentication\PasswordGenerator` class
 * void return type to methods
 * Namespace for tests
@@ -17,6 +16,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Minimun PHP version: 7.1
 * Exception messages
+
+### Removed
+* `Linna\Helper\Env` class, use instead [dotenv](https://github.com/linna/dotenv) package
+* `Linna\Helper\Str` class
+* `Linna\Http\RouterCached` class, caching will be added to [app](https://github.com/linna/app) package
 
 ## [v0.23.1](https://github.com/linna/framework/compare/v0.23.0...v0.23.1) - 2017-11-01
 
