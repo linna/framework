@@ -17,7 +17,7 @@ use Linna\DataMapper\NullDomainObject;
 /**
  * Provide methods for check permissions for authenticated user.
  */
-class Authorize
+class Authorization
 {
     /**
      * @var PermissionMapperInterface Permission Mapper
@@ -42,7 +42,7 @@ class Authorize
     /**
      * Class Constructor.
      * <pre><code class="php">use Linna\Auth\Authentication;
-     * use Linna\Auth\Authorize;
+     * use Linna\Auth\Authorization;
      * use Linna\Auth\Password;
      * use Linna\Session\Session;
      *
@@ -55,7 +55,7 @@ class Authorize
      * $authentication = new Authentication($session, $password);
      * $permissionMapper = new PermissionMapper();
      *
-     * $authorize = new Authorize($authentication, $permissionMapper);
+     * $authorization = new Authorization($authentication, $permissionMapper);
      * </code></pre>
      *
      * @param Authentication            $authentication
@@ -73,11 +73,11 @@ class Authorize
 
     /**
      * Check if authenticated user has a permission.
-     * <pre><code class="php">$authorize = new Authorize($authentication, $permissionMapper);
+     * <pre><code class="php">$authorization = new Authorization($authentication, $permissionMapper);
      *
      * //with this example, the class checks if the authenticated
      * //user has the permission 'update user'.
-     * $authorize->can('update user');
+     * $authorization->can('update user');
      * </code></pre>
      *
      * @param string $permissionName

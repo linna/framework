@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Authentication\Authenticate` renamed to `Linna\Authentication\Authentication`
 * `Linna\Authentication\EnhancedAuthenticate` renamed to `Linna\Authentication\EnhancedAuthentication`
 * `Linna\Authentication\EnhancedAuthenticateMapperInterface` renamed to `Linna\Authentication\EnhancedAuthenticationMapperInterface`
+* `Linna\Auth\Authorize` renamed to `Linna\Auth\Authorization`
 * Tests updated
 
 ### Removed

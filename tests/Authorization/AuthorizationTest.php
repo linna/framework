@@ -13,16 +13,16 @@ namespace Linna\Tests;
 
 use Linna\Authentication\Authentication;
 use Linna\Authentication\Password;
-use Linna\Authorization\Authorize;
+use Linna\Authorization\Authorization;
 use Linna\TestHelper\Mappers\PermissionMapper;
 use Linna\Session\Session;
 use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Authorize Test.
+ * Authorization Test.
  */
-class AuthorizeTest extends TestCase
+class AuthorizationTest extends TestCase
 {
     /**
      * @var Session The session class instance.
@@ -40,9 +40,9 @@ class AuthorizeTest extends TestCase
     protected $authentication;
 
     /**
-     * @var Authorize The authorize class instance.
+     * @var Authorization The authorization class instance.
      */
-    protected $authorize;
+    protected $authorization;
 
     /**
      * @var PermissionMapper The permission mapper class instance.
@@ -76,15 +76,15 @@ class AuthorizeTest extends TestCase
         $this->authentication = $authentication;
         $this->permissionMapper = $permissionMapper;
 
-        $this->authorize = new Authorize($authentication, $permissionMapper);
+        $this->authorization = new Authorization($authentication, $permissionMapper);
     }
 
     /**
-     * Test create new authorize instance.
+     * Test create new authorization instance.
      */
-    public function testNewAuthorizeInstance(): void
+    public function testNewAuthorizationInstance(): void
     {
-        $this->assertInstanceOf(Authorize::class, $this->authorize);
+        $this->assertInstanceOf(Authorization::class, $this->authorization);
     }
 
     /**
@@ -92,7 +92,7 @@ class AuthorizeTest extends TestCase
      */
     public function testCanDoActionWithoutLogin(): void
     {
-        $this->assertFalse($this->authorize->can('see users'));
+        $this->assertFalse($this->authorization->can('see users'));
     }
 
     /**
@@ -100,7 +100,7 @@ class AuthorizeTest extends TestCase
      */
     public function testCanDoActionWithNotExistentPermission(): void
     {
-        $this->assertFalse($this->authorize->can('Not Existent Permission'));
+        $this->assertFalse($this->authorization->can('Not Existent Permission'));
     }
 
     /**
@@ -124,11 +124,11 @@ class AuthorizeTest extends TestCase
         ));
 
         //pass as first argument new instance because phpunit try to serialize pdo.????? I don't know where.
-        $authorize = new Authorize(new Authentication($this->session, $this->password), $this->permissionMapper);
+        $authorization = new Authorization(new Authentication($this->session, $this->password), $this->permissionMapper);
 
         $this->assertTrue($authentication->isLogged());
-        $this->assertTrue($authorize->can('see users'));
-        $this->assertFalse($authorize->can('Not Existent Permission'));
+        $this->assertTrue($authorization->can('see users'));
+        $this->assertFalse($authorization->can('Not Existent Permission'));
 
         $this->session->destroy();
     }
