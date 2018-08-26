@@ -14,9 +14,9 @@ namespace Linna\Authentication;
 use Linna\DataMapper\MapperInterface;
 
 /**
- * Contain methods required from concrete Enhanced Authenticate Mapper.
+ * Contain methods required from concrete Enhanced Authentication Mapper.
  */
-interface EnhancedAuthenticateMapperInterface extends MapperInterface
+interface EnhancedAuthenticationMapperInterface extends MapperInterface
 {
     /**
      * Return how many login attempts did with the same user in specified time.

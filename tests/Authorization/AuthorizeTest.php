@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
-use Linna\Authentication\Authenticate;
+use Linna\Authentication\Authentication;
 use Linna\Authentication\Password;
 use Linna\Authorization\Authorize;
 use Linna\TestHelper\Mappers\PermissionMapper;
@@ -25,27 +25,27 @@ use PHPUnit\Framework\TestCase;
 class AuthorizeTest extends TestCase
 {
     /**
-     * @var Session The session class.
+     * @var Session The session class instance.
      */
     protected $session;
 
     /**
-     * @var Password The password class.
+     * @var Password The password class instance.
      */
     protected $password;
 
     /**
-     * @var Authenticate The authenticate class
+     * @var Authentication The authentication class instance.
      */
-    protected $authenticate;
+    protected $authentication;
 
     /**
-     * @var Authorize The authorize class
+     * @var Authorize The authorize class instance.
      */
     protected $authorize;
 
     /**
-     * @var PermissionMapper The permission mapper
+     * @var PermissionMapper The permission mapper class instance.
      */
     protected $permissionMapper;
 
@@ -68,15 +68,15 @@ class AuthorizeTest extends TestCase
 
         $session = new Session();
         $password = new Password();
-        $authenticate = new Authenticate($session, $password);
+        $authentication = new Authentication($session, $password);
         $permissionMapper = new PermissionMapper((new StorageFactory('pdo', $options))->get());
 
         $this->password = $password;
         $this->session = $session;
-        $this->authenticate = $authenticate;
+        $this->authentication = $authentication;
         $this->permissionMapper = $permissionMapper;
 
-        $this->authorize = new Authorize($authenticate, $permissionMapper);
+        $this->authorize = new Authorize($authentication, $permissionMapper);
     }
 
     /**
@@ -112,10 +112,10 @@ class AuthorizeTest extends TestCase
     {
         $this->session->start();
 
-        $authenticate = new Authenticate($this->session, $this->password);
+        $authentication = new Authentication($this->session, $this->password);
 
         //attemp login
-        $this->assertTrue($authenticate->login(
+        $this->assertTrue($authentication->login(
             'root',
             'password',
             'root',
@@ -124,9 +124,9 @@ class AuthorizeTest extends TestCase
         ));
 
         //pass as first argument new instance because phpunit try to serialize pdo.????? I don't know where.
-        $authorize = new Authorize(new Authenticate($this->session, $this->password), $this->permissionMapper);
+        $authorize = new Authorize(new Authentication($this->session, $this->password), $this->permissionMapper);
 
-        $this->assertTrue($authenticate->isLogged());
+        $this->assertTrue($authentication->isLogged());
         $this->assertTrue($authorize->can('see users'));
         $this->assertFalse($authorize->can('Not Existent Permission'));
 

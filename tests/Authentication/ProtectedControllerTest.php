@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
-use Linna\Authentication\Authenticate;
+use Linna\Authentication\Authentication;
 use Linna\Authentication\Password;
 use Linna\TestHelper\Mvc\MultipleModel;
 use Linna\TestHelper\Mvc\MultipleProtectedController;
@@ -24,19 +24,19 @@ use PHPUnit\Framework\TestCase;
 class ProtectedControllerTest extends TestCase
 {
     /**
-     * @var Session The session class.
+     * @var Session The session class instance.
      */
     protected $session;
 
     /**
-     * @var Password The password class.
+     * @var Password The password class instance.
      */
     protected $password;
 
     /**
-     * @var Authenticate Authenticate Instance.
+     * @var Authentication Authentication class instance.
      */
-    protected $authenticate;
+    protected $authentication;
 
     /**
      * Setup.
@@ -49,7 +49,7 @@ class ProtectedControllerTest extends TestCase
         $this->session = $session;
         $this->password = $password;
 
-        $this->authenticate = new Authenticate($session, $password);
+        $this->authentication = new Authentication($session, $password);
     }
 
     /**
@@ -62,7 +62,7 @@ class ProtectedControllerTest extends TestCase
     {
         $this->session->start();
 
-        $this->assertTrue($this->authenticate->login(
+        $this->assertTrue($this->authentication->login(
             'root',
             'password',
             'root',
@@ -70,11 +70,11 @@ class ProtectedControllerTest extends TestCase
             1
         ));
 
-        $this->assertTrue($this->authenticate->isLogged());
-        $this->assertTrue((new MultipleProtectedController(new MultipleModel(), $this->authenticate))->test);
-        $this->assertTrue((new MultipleProtectedController(new MultipleModel(), $this->authenticate))->ProtectedAction());
+        $this->assertTrue($this->authentication->isLogged());
+        $this->assertTrue((new MultipleProtectedController(new MultipleModel(), $this->authentication))->test);
+        $this->assertTrue((new MultipleProtectedController(new MultipleModel(), $this->authentication))->ProtectedAction());
 
-        $this->assertTrue($this->authenticate->logout());
+        $this->assertTrue($this->authentication->logout());
 
         $this->session->destroy();
     }
@@ -90,12 +90,12 @@ class ProtectedControllerTest extends TestCase
     {
         ob_start();
 
-        (new MultipleProtectedController(new MultipleModel(), $this->authenticate));
+        (new MultipleProtectedController(new MultipleModel(), $this->authentication));
         $headers_list = xdebug_get_headers();
 
         ob_end_clean();
 
-        $this->assertFalse($this->authenticate->isLogged());
+        $this->assertFalse($this->authentication->isLogged());
         $this->assertTrue(in_array('Location: http://localhost', $headers_list));
     }
 }

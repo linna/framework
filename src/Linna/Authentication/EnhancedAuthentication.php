@@ -17,7 +17,7 @@ use Linna\Shared\ClassOptionsTrait;
 /**
  * Extend basic user authentication system with more security checks.
  */
-class EnhancedAuthenticate extends Authenticate
+class EnhancedAuthentication extends Authentication
 {
     use ClassOptionsTrait;
 
@@ -33,27 +33,27 @@ class EnhancedAuthenticate extends Authenticate
     ];
 
     /**
-     * @var EnhancedAuthenticateMapperInterface Enhanced Authenticate Mapper
+     * @var EnhancedAuthenticationMapperInterface Enhanced Authentication Mapper
      */
-    private $enhancedAuthenticateMapper;
+    private $enhancedAuthenticationMapper;
 
     /**
      * Class Constructor
      *
      * @param Session $session
      * @param Password $password
-     * @param EnhancedAuthenticateMapperInterface $enhancedAuthenticateMapper
+     * @param EnhancedAuthenticationMapperInterface $enhancedAuthenticationMapper
      * @param array $options
      */
     public function __construct(
             Session $session,
             Password $password,
-            EnhancedAuthenticateMapperInterface $enhancedAuthenticateMapper,
+            EnhancedAuthenticationMapperInterface $enhancedAuthenticationMapper,
             array $options = []
         ) {
         parent::__construct($session, $password);
 
-        $this->enhancedAuthenticateMapper = $enhancedAuthenticateMapper;
+        $this->enhancedAuthenticationMapper = $enhancedAuthenticationMapper;
         //set options
         $this->setOptions($options);
     }
@@ -67,7 +67,7 @@ class EnhancedAuthenticate extends Authenticate
      */
     public function getAttemptsLeftWithSameUser(string $userName): int
     {
-        $attemptsLeft = $this->options['maxAttemptsForUserName'] - $this->enhancedAuthenticateMapper->fetchAttemptsWithSameUser($userName, $this->options['banTimeInSeconds']);
+        $attemptsLeft = $this->options['maxAttemptsForUserName'] - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameUser($userName, $this->options['banTimeInSeconds']);
 
         //casting to int second param for avoid strange things with
         //max return value
@@ -84,7 +84,7 @@ class EnhancedAuthenticate extends Authenticate
      */
     public function getAttemptsLeftWithSameSession(string $sessionId): int
     {
-        $attemptsLeft = $this->options['maxAttemptsForSessionId'] - $this->enhancedAuthenticateMapper->fetchAttemptsWithSameSession($sessionId, $this->options['banTimeInSeconds']);
+        $attemptsLeft = $this->options['maxAttemptsForSessionId'] - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameSession($sessionId, $this->options['banTimeInSeconds']);
 
         return max(0, (int) $attemptsLeft);
     }
@@ -98,7 +98,7 @@ class EnhancedAuthenticate extends Authenticate
      */
     public function getAttemptsLeftWithSameIp(string $ipAddress): int
     {
-        $attemptsLeft = $this->options['maxAttemptsForIpAddress'] - $this->enhancedAuthenticateMapper->fetchAttemptsWithSameIp($ipAddress, $this->options['banTimeInSeconds']);
+        $attemptsLeft = $this->options['maxAttemptsForIpAddress'] - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameIp($ipAddress, $this->options['banTimeInSeconds']);
 
         return max(0, (int) $attemptsLeft);
     }

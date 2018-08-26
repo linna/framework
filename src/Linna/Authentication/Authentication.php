@@ -17,7 +17,7 @@ use Linna\Session\Session;
  * Provide methods for manage basic user authentication system. Checks for
  * correct login cover only the user name and the password.
  */
-class Authenticate
+class Authentication
 {
     /**
      * @var array Login status.
@@ -47,7 +47,7 @@ class Authenticate
      * $session = new Session();
      * $password = new Password();
      *
-     * $auth = new Authenticate($session, $password);
+     * $auth = new Authentication($session, $password);
      * </code></pre>
      *
      * @param Session  $session  Session class instance.
@@ -63,7 +63,7 @@ class Authenticate
     /**
      * Utilize this method for check if an user in the current session,
      * is currently logged in.
-     * <pre><code class="php">$auth = new Authenticate($session, $password);
+     * <pre><code class="php">$auth = new Authentication($session, $password);
      *
      * if ($auth->isLogged()) {
      *     //do actions
@@ -82,7 +82,7 @@ class Authenticate
      *
      * Utilize this method for check if an user in the current session,
      * is currently not logged in.
-     * <pre><code class="php">$auth = new Authenticate($session, $password);
+     * <pre><code class="php">$auth = new Authentication($session, $password);
      *
      * if ($auth->isNotLogged()) {
      *     //redirect or other action
@@ -100,7 +100,7 @@ class Authenticate
 
     /**
      * Return array containing login data.
-     * <pre><code class="php">$auth = new Authenticate($session, $password);
+     * <pre><code class="php">$auth = new Authentication($session, $password);
      *
      * $data = $auth->getLoginData();
      *
@@ -136,7 +136,7 @@ class Authenticate
      * $storedPassword = ''; //password hash from stored informations
      * $storedId = ''; //user id from stored informations
      *
-     * $auth = new Authenticate($session, $password);
+     * $auth = new Authentication($session, $password);
      * $auth->login($user, $password, $storedUser, $storedPassword, $storedId);
      *
      * //other operation after login
@@ -176,7 +176,7 @@ class Authenticate
 
     /**
      * Do logout and delete login information from session.
-     * <pre><code class="php">$auth = new Authenticate($session, $password);
+     * <pre><code class="php">$auth = new Authentication($session, $password);
      * $auth->logout();
      * </code></pre>
      *

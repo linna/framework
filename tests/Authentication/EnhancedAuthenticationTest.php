@@ -11,17 +11,17 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
-use Linna\Authentication\EnhancedAuthenticate;
-use Linna\TestHelper\Mappers\EnhancedAuthenticateMapper;
+use Linna\Authentication\EnhancedAuthentication;
+use Linna\TestHelper\Mappers\EnhancedAuthenticationMapper;
 use Linna\Authentication\Password;
 use Linna\Session\Session;
 use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Enhanced Authenticate Test.
+ * Enhanced Authentication Test.
  */
-class EnhancedAuthenticateTest extends TestCase
+class EnhancedAuthenticationTest extends TestCase
 {
     /**
      * @var Session The session class.
@@ -34,13 +34,13 @@ class EnhancedAuthenticateTest extends TestCase
     protected $password;
 
     /**
-     * @var EnhancedAuthenticate The enhanced authenticate class
+     * @var EnhancedAuthentication The enhanced authentication class
      */
-    protected $enhancedAuthenticate;
+    protected $enhancedAuthentication;
 
 
     /**
-     * @var EnhancedAuthenticateMapper The enhanced authenticate mapper class
+     * @var EnhancedAuthenticationMapper The enhanced authentication mapper class
      */
     protected $eAMapper;
 
@@ -66,8 +66,8 @@ class EnhancedAuthenticateTest extends TestCase
 
         $this->password = $password;
         $this->session = $session;
-        $this->eAMapper = new EnhancedAuthenticateMapper((new StorageFactory('pdo', $options))->get());
-        $this->enhancedAuthenticate = new EnhancedAuthenticate($session, $password, $this->eAMapper);
+        $this->eAMapper = new EnhancedAuthenticationMapper((new StorageFactory('pdo', $options))->get());
+        $this->enhancedAuthentication = new EnhancedAuthentication($session, $password, $this->eAMapper);
     }
 
     /**
@@ -116,23 +116,23 @@ class EnhancedAuthenticateTest extends TestCase
      */
     public function testLogin(string $user, string $sessionId, string $ipAddress, int $awsU, int $awsS, int $awsI, bool $banU, bool $banS, bool $banI): void
     {
-        $this->assertFalse($this->enhancedAuthenticate->login($user, 'passwor', $user, '$2y$11$4IAn6SRaB0osPz8afZC5D.CmTrBGxnb5FQEygPjDirK9SWE/u8YuO', 1));
+        $this->assertFalse($this->enhancedAuthentication->login($user, 'passwor', $user, '$2y$11$4IAn6SRaB0osPz8afZC5D.CmTrBGxnb5FQEygPjDirK9SWE/u8YuO', 1));
 
         $this->storeLoginAttempt($user, $sessionId, $ipAddress);
 
         //Access with user
-        $this->assertEquals($awsU, $this->enhancedAuthenticate->getAttemptsLeftWithSameUser($user));
+        $this->assertEquals($awsU, $this->enhancedAuthentication->getAttemptsLeftWithSameUser($user));
         //Access with session
-        $this->assertEquals($awsS, $this->enhancedAuthenticate->getAttemptsLeftWithSameSession($sessionId));
+        $this->assertEquals($awsS, $this->enhancedAuthentication->getAttemptsLeftWithSameSession($sessionId));
         //Access with ip
-        $this->assertEquals($awsI, $this->enhancedAuthenticate->getAttemptsLeftWithSameIp($ipAddress));
+        $this->assertEquals($awsI, $this->enhancedAuthentication->getAttemptsLeftWithSameIp($ipAddress));
 
         //User Banned
-        $this->assertEquals($banU, $this->enhancedAuthenticate->isUserBanned($user));
+        $this->assertEquals($banU, $this->enhancedAuthentication->isUserBanned($user));
         //Session Banned
-        $this->assertEquals($banS, $this->enhancedAuthenticate->isSessionBanned($sessionId));
+        $this->assertEquals($banS, $this->enhancedAuthentication->isSessionBanned($sessionId));
         //Ip Banned
-        $this->assertEquals($banI, $this->enhancedAuthenticate->isIpBanned($ipAddress));
+        $this->assertEquals($banI, $this->enhancedAuthentication->isIpBanned($ipAddress));
     }
 
     /**
@@ -168,7 +168,7 @@ class EnhancedAuthenticateTest extends TestCase
             ],
         ];
 
-        (new EnhancedAuthenticateMapper((new StorageFactory('pdo', $options))->get()))->deleteOldLoginAttempts(-86400);
+        (new EnhancedAuthenticationMapper((new StorageFactory('pdo', $options))->get()))->deleteOldLoginAttempts(-86400);
     }
 
     /**

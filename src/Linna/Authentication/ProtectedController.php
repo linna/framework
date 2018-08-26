@@ -24,12 +24,12 @@ trait ProtectedController
     /**
      * Allow access to controller only if logged.
      *
-     * @param Authenticate $authenticate
+     * @param Authentication $authentication
      * @param string       $redirect
      */
-    private function protect(Authenticate $authenticate, string $redirect): void
+    private function protect(Authentication $authentication, string $redirect): void
     {
-        if (($this->authentication = $authenticate->isLogged()) === false) {
+        if (($this->authentication = $authentication->isLogged()) === false) {
             header('Location: '.$redirect);
         }
     }

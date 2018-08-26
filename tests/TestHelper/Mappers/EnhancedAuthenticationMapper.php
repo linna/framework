@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Linna\TestHelper\Mappers;
 
 use InvalidArgumentException;
-use Linna\Authentication\EnhancedAuthenticateMapperInterface;
+use Linna\Authentication\EnhancedAuthenticationMapperInterface;
 use Linna\Authentication\LoginAttempt;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
@@ -22,9 +22,9 @@ use PDO;
 use RuntimeException;
 
 /**
- * EnhancedAuthenticateMapper.
+ * EnhancedAuthenticationMapper.
  */
-class EnhancedAuthenticateMapper extends MapperAbstract implements EnhancedAuthenticateMapperInterface
+class EnhancedAuthenticationMapper extends MapperAbstract implements EnhancedAuthenticationMapperInterface
 {
     /**
      * @var PDO Database Connection

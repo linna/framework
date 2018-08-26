@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 * Minimun PHP version: 7.1
 * Exception messages
+* `Linna\Authentication\Authenticate` renamed to `Linna\Authentication\Authentication`
+* `Linna\Authentication\EnhancedAuthenticate` renamed to `Linna\Authentication\EnhancedAuthentication`
+* `Linna\Authentication\EnhancedAuthenticateMapperInterface` renamed to `Linna\Authentication\EnhancedAuthenticationMapperInterface`
+* Tests updated
 
 ### Removed
 * `Linna\Helper\Env` class, use instead [dotenv](https://github.com/linna/dotenv) package

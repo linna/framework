@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\TestHelper\Mvc;
 
-use Linna\Authentication\Authenticate;
+use Linna\Authentication\Authentication;
 use Linna\Authentication\ProtectedController;
 use Linna\Mvc\Controller;
 
@@ -21,7 +21,7 @@ class MultipleProtectedController extends Controller
 
     public $test = false;
 
-    public function __construct(MultipleModel $model, Authenticate $login)
+    public function __construct(MultipleModel $model, Authentication $login)
     {
         parent::__construct($model);
 
