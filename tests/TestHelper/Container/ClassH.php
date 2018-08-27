@@ -9,14 +9,11 @@
  */
 declare(strict_types=1);
 
-namespace Linna\TestHelper\DI;
+namespace Linna\TestHelper\Container;
 
-class ClassResObject
+class ClassH
 {
-    private $classB;
-
-    public function __construct(ClassB $b)
+    public function __construct()
     {
-        $this->classB = $b;
     }
 }

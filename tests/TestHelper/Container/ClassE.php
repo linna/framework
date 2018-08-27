@@ -9,14 +9,11 @@
  */
 declare(strict_types=1);
 
-namespace Linna\TestHelper\DI;
+namespace Linna\TestHelper\Container;
 
-class ClassACache
+class ClassE
 {
-    private $string;
-
-    public function __construct(string $aCacheString)
+    public function __construct()
     {
-        $this->string = $aCacheString;
     }
 }

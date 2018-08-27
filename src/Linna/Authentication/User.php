@@ -47,7 +47,7 @@ use Linna\DataMapper\DomainObjectAbstract;
 class User extends DomainObjectAbstract
 {
     /**
-     * @var string Universal unique identifier
+     * @var string Universal unique identifier.
      */
     public $uuid;
 

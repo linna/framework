@@ -11,8 +11,20 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
-use Linna\DI\Container;
-use Linna\TestHelper\DI\ClassACache;
+use Linna\Container\Container;
+use Linna\TestHelper\Container\ClassACache;
+use Linna\TestHelper\Container\ClassARules;
+use Linna\TestHelper\Container\ClassB;
+use Linna\TestHelper\Container\ClassC;
+use Linna\TestHelper\Container\ClassD;
+use Linna\TestHelper\Container\ClassE;
+use Linna\TestHelper\Container\ClassF;
+use Linna\TestHelper\Container\ClassG;
+use Linna\TestHelper\Container\ClassH;
+use Linna\TestHelper\Container\ClassI;
+use Linna\TestHelper\Container\ClassResCache;
+use Linna\TestHelper\Container\ClassResObject;
+use Linna\TestHelper\Container\ClassResRules;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -35,7 +47,7 @@ class ContainerTest extends TestCase
             ['closure', function () {
                 return 'Hello World';
             }],
-            [\Linna\TestHelper\DI\ClassACache::class, new ClassACache('Hello World')],
+            [ClassACache::class, new ClassACache('Hello World')],
         ];
     }
 
@@ -169,9 +181,7 @@ class ContainerTest extends TestCase
         $container->set($key, $value);
 
         $this->assertTrue($container->has($key));
-
         $this->assertTrue($container->delete($key));
-
         $this->assertFalse($container->has($key));
     }
 
@@ -224,7 +234,8 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
-     * @expectedException Linna\DI\Exception\NotFoundException
+     * @expectedException Linna\Container\Exception\NotFoundException
+     * @expectedExceptionMessage No entry was found for this identifier.
      */
     public function testGetUnexistingWithMethodCall(string $key, $value): void
     {
@@ -239,7 +250,8 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
-     * @expectedException Linna\DI\Exception\NotFoundException
+     * @expectedException Linna\Container\Exception\NotFoundException
+     * @expectedExceptionMessage No entry was found for this identifier.
      */
     public function testGetUnexistingWithArraySyntax(string $key, $value): void
     {
@@ -254,7 +266,8 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
-     * @expectedException Linna\DI\Exception\NotFoundException
+     * @expectedException Linna\Container\Exception\NotFoundException
+     * @expectedExceptionMessage No entry was found for this identifier.
      */
     public function testGetUnexistingWithPropertySyntax(string $key, $value): void
     {
@@ -270,15 +283,15 @@ class ContainerTest extends TestCase
     public function classProvider(): array
     {
         return [
-            [\Linna\TestHelper\DI\ClassResObject::class],
-            [\Linna\TestHelper\DI\ClassB::class],
-            [\Linna\TestHelper\DI\ClassC::class],
-            [\Linna\TestHelper\DI\ClassD::class],
-            [\Linna\TestHelper\DI\ClassE::class],
-            [\Linna\TestHelper\DI\ClassF::class],
-            [\Linna\TestHelper\DI\ClassG::class],
-            [\Linna\TestHelper\DI\ClassH::class],
-            [\Linna\TestHelper\DI\ClassI::class],
+            [ClassResObject::class],
+            [ClassB::class],
+            [ClassC::class],
+            [ClassD::class],
+            [ClassE::class],
+            [ClassF::class],
+            [ClassG::class],
+            [ClassH::class],
+            [ClassI::class],
         ];
     }
 
@@ -301,11 +314,11 @@ class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->set(\Linna\TestHelper\DI\ClassACache::class, new ClassACache('Hello World'));
+        $container->set(ClassACache::class, new ClassACache('Hello World'));
 
         $this->assertInstanceOf(
-            \Linna\TestHelper\DI\ClassResCache::class,
-            $container->resolve(\Linna\TestHelper\DI\ClassResCache::class)
+            ClassResCache::class,
+            $container->resolve(ClassResCache::class)
         );
     }
 
@@ -315,9 +328,8 @@ class ContainerTest extends TestCase
      */
     public function testResolveWithRules(): void
     {
-        $container = new Container();
-        $container->setRules([
-            \Linna\TestHelper\DI\ClassARules::class => [
+        $container = new Container([
+            ClassARules::class => [
                 0 => true,
                 2 => 'foo',
                 3 => 1,
@@ -327,8 +339,8 @@ class ContainerTest extends TestCase
         ]);
 
         $this->assertInstanceOf(
-            \Linna\TestHelper\DI\ClassResRules::class,
-            $container->resolve(\Linna\TestHelper\DI\ClassResRules::class)
+            ClassResRules::class,
+            $container->resolve(ClassResRules::class)
         );
     }
 }

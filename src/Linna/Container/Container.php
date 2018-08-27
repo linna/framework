@@ -9,76 +9,104 @@
  */
 declare(strict_types=1);
 
-namespace Linna\DI;
+namespace Linna\Container;
 
-use Linna\DI\Exception\NotFoundException;
+use ArrayAccess;
+use Linna\Container\Exception\NotFoundException;
 use Psr\Container\ContainerInterface;
+use ReflectionClass;
+use SplStack;
 
 /**
  * Dependency Injection Container and Resolver.
  */
-class Container implements ContainerInterface, \ArrayAccess
+class Container implements ContainerInterface, ArrayAccess
 {
     use PropertyAccessTrait;
     use ArrayAccessTrait;
 
     /**
-     * @var array Contains object already resolved
+     * @var array Contains object already resolved.
      */
     private $cache = [];
 
     /**
-     * @var array A map for resolve dependencies
+     * @var array Hierarchical structure of dependencies.
      */
     protected $tree = [];
 
     /**
-     * @var array For resolve scalar arguments and unexpected behavior
+     * @var array Rules for resolve scalar arguments or unexpected behaviors.
      */
     protected $rules = [];
 
     /**
-     * {@inheritdoc}
+     * Class Constructor.
+     *
+     * @param array $rules Rules for resolve scalar arguments or unexpected behaviors.
      */
-    public function get($key)
+    public function __construct(array $rules = [])
     {
-        if (isset($this->cache[$key])) {
-            return $this->cache[$key];
-        }
-
-        throw new NotFoundException('No entry was found for this identifier');
+        $this->rules = $rules;
     }
 
     /**
-     * {@inheritdoc}
+     * Finds an entry of the container by its identifier and returns it.
+     *
+     * @param string $id Identifier of the entry to look for.
+     *
+     * @throws NotFoundExceptionInterface  No entry was found for **this** identifier.
+     * @throws ContainerExceptionInterface Error while retrieving the entry.
+     *
+     * @return mixed Entry.
      */
-    public function has($key)
+    public function get($id)
     {
-        return isset($this->cache[$key]);
+        if (isset($this->cache[$id])) {
+            return $this->cache[$id];
+        }
+
+        throw new NotFoundException('No entry was found for this identifier.');
+    }
+
+    /**
+     * Returns true if the container can return an entry for the given identifier.
+     * Returns false otherwise.
+     *
+     * `has($id)` returning true does not mean that `get($id)` will not throw an exception.
+     * It does however mean that `get($id)` will not throw a `NotFoundExceptionInterface`.
+     *
+     * @param string $id Identifier of the entry to look for.
+     *
+     * @return bool
+     */
+    public function has($id)
+    {
+        return isset($this->cache[$id]);
     }
 
     /**
      * Store a value inside container.
      *
-     * @param string   $key
-     * @param mixed $value
+     * @param string $id
+     * @param mixed  $value
      */
-    public function set(string $key, $value)
+    public function set(string $id, $value): void
     {
-        $this->cache[$key] = $value;
+        $this->cache[$id] = $value;
     }
 
     /**
      * Delete value from container.
      *
-     * @param string $key
+     * @param string $id
      */
-    public function delete(string $key): bool
+    public function delete(string $id): bool
     {
-        if (array_key_exists($key, $this->cache)) {
+        if (array_key_exists($id, $this->cache)) {
 
             //delete value
-            unset($this->cache[$key]);
+            unset($this->cache[$id]);
 
             //return function result
             return true;
@@ -88,20 +116,10 @@ class Container implements ContainerInterface, \ArrayAccess
     }
 
     /**
-     * Set rules for unserolvable classes.
-     *
-     * @param array $rules
-     */
-    public function setRules(array $rules)
-    {
-        $this->rules = $rules;
-    }
-
-    /**
      * Resolve dependencies for given class.
      *
-     * @param string $class
-     * @param array  $rules
+     * @param string $class An existing class.
+     * @param array  $rules Custom rules.
      *
      * @return object|null Instance of resolved class
      */
@@ -128,7 +146,7 @@ class Container implements ContainerInterface, \ArrayAccess
     private function buildTree(string $class): void
     {
         $level = 0;
-        $stack = new \SplStack();
+        $stack = new SplStack();
 
         while (true) {
 
@@ -138,7 +156,7 @@ class Container implements ContainerInterface, \ArrayAccess
             }
 
             //get parameter from constructor
-            $parameters = (new \ReflectionClass($class))->getConstructor()->getParameters();
+            $parameters = (new ReflectionClass($class))->getConstructor()->getParameters();
 
             //loop parameter
             foreach ($parameters as $param) {
@@ -200,7 +218,7 @@ class Container implements ContainerInterface, \ArrayAccess
                     $args = $this->buildArguments($class, $arguments);
 
                     //store object with dependencies in cache
-                    $this->cache[$class] = (new \ReflectionClass($class))->newInstanceArgs($args);
+                    $this->cache[$class] = (new ReflectionClass($class))->newInstanceArgs($args);
 
                     continue;
                 }
@@ -208,7 +226,7 @@ class Container implements ContainerInterface, \ArrayAccess
                 if ($object === null) {
 
                     //store object in cache
-                    $this->cache[$class] = (new \ReflectionClass($class))->newInstance();
+                    $this->cache[$class] = (new ReflectionClass($class))->newInstance();
                 }
             }
         }

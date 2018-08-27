@@ -34,7 +34,7 @@ class AutoloaderTest extends TestCase
             ['Baz\Foo', dirname(__DIR__).'/FooClass']
         ]);
 
-        $this->assertTrue($autoloader->loadClass(\Linna\TestHelper\DI\ClassI::class));
+        $this->assertTrue($autoloader->loadClass(\Linna\TestHelper\Container\ClassI::class));
 
         $this->assertTrue($autoloader->unregister());
     }
@@ -54,7 +54,7 @@ class AutoloaderTest extends TestCase
             ['Baz\Foo', dirname(__DIR__).'/FooClass']
         ]);
 
-        $this->assertFalse($autoloader->loadClass('Linna\TestHelper\DI\NotExistClass'));
+        $this->assertFalse($autoloader->loadClass('Linna\TestHelper\Container\NotExistClass'));
 
         $this->assertTrue($autoloader->unregister());
     }
@@ -92,7 +92,7 @@ class AutoloaderTest extends TestCase
             ['Linna\TestHelper', dirname(__DIR__).'/TestHelper'],
         ]);
 
-        $this->assertTrue($autoloader->loadClass(\Linna\TestHelper\DI\ClassH::class));
+        $this->assertTrue($autoloader->loadClass(\Linna\TestHelper\Container\ClassH::class));
 
         $this->assertTrue($autoloader->unregister());
     }

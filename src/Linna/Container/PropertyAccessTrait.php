@@ -9,13 +9,13 @@
  */
 declare(strict_types=1);
 
-namespace Linna\DI;
+namespace Linna\Container;
 
 /**
- * Array Access Trait
- * Provide to DIContainer the possibility to retrive values using array notation.
+ * Magic Access Trait
+ * Provide to DIContainer the possibility to retrive values using properties.
  */
-trait ArrayAccessTrait
+trait PropertyAccessTrait
 {
     /**
      * Express Requirements by Abstract Methods.
@@ -47,7 +47,50 @@ trait ArrayAccessTrait
     abstract public function delete($key): bool;
 
     /**
-     * Check.
+     * Set
+     * http://php.net/manual/en/language.oop5.overloading.php.
+     *
+     * @param string $key
+     * @param mixed  $value
+     *
+     * @ignore
+     */
+    public function __set(string $key, $value)
+    {
+        $this->set($key, $value);
+    }
+
+    /**
+     * Get
+     * http://php.net/manual/en/language.oop5.overloading.php.
+     *
+     * @param string $key
+     *
+     * @return object|bool Element stored in container or false
+     *
+     * @ignore
+     */
+    public function __get(string $key)
+    {
+        return $this->get($key);
+    }
+
+    /**
+     * Remove
+     * http://php.net/manual/en/language.oop5.overloading.php.
+     *
+     * @param string $key
+     *
+     * @ignore
+     */
+    public function __unset(string $key)
+    {
+        $this->delete($key);
+    }
+
+    /**
+     * Check
+     * http://php.net/manual/en/language.oop5.overloading.php.
      *
      * @param string $key
      *
@@ -55,49 +98,8 @@ trait ArrayAccessTrait
      *
      * @ignore
      */
-    public function offsetExists($key)
+    public function __isset(string $key): bool
     {
         return $this->has($key);
-    }
-
-    /**
-     * Get.
-     *
-     * @param string $key
-     *
-     * @return mixed
-     *
-     * @ignore
-     */
-    public function offsetGet($key)
-    {
-        return $this->get($key);
-    }
-
-    /**
-     * Store.
-     *
-     * @param string $key
-     * @param mixed  $value
-     *
-     * @ignore
-     */
-    public function offsetSet($key, $value)
-    {
-        $this->set($key, $value);
-    }
-
-    /**
-     * Delete.
-     *
-     * @param string $key
-     *
-     * @return mixed
-     *
-     * @ignore
-     */
-    public function offsetUnset($key)
-    {
-        return $this->delete($key);
     }
 }

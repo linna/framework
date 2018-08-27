@@ -9,16 +9,14 @@
  */
 declare(strict_types=1);
 
-namespace Linna\TestHelper\DI;
+namespace Linna\TestHelper\Container;
 
-class ClassResCache
+class ClassResObject
 {
     private $classB;
-    private $classACache;
 
-    public function __construct(ClassB $b, ClassACache $aCache)
+    public function __construct(ClassB $b)
     {
         $this->classB = $b;
-        $this->classACache = $aCache;
     }
 }

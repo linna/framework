@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 * `Linna\Authentication\PasswordGenerator` class
+* `Linna\DI\Container` constructor, now rules should be passed here
 * void return type to methods
 * Namespace for tests
 
@@ -19,13 +20,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Authentication\Authenticate` renamed to `Linna\Authentication\Authentication`
 * `Linna\Authentication\EnhancedAuthenticate` renamed to `Linna\Authentication\EnhancedAuthentication`
 * `Linna\Authentication\EnhancedAuthenticateMapperInterface` renamed to `Linna\Authentication\EnhancedAuthenticationMapperInterface`
-* `Linna\Auth\Authorize` renamed to `Linna\Auth\Authorization`
+* `Linna\Authorization\Authorize` renamed to `Linna\Authorization\Authorization`
+* `Linna\DI` namespace renamed to `Linna\Container`
 * Tests updated
 
 ### Removed
 * `Linna\Helper\Env` class, use instead [dotenv](https://github.com/linna/dotenv) package
 * `Linna\Helper\Str` class
 * `Linna\Http\RouterCached` class, caching will be added to [app](https://github.com/linna/app) package
+* `Linna\DI\Container->setRules()` method
 
 ## [v0.23.1](https://github.com/linna/framework/compare/v0.23.0...v0.23.1) - 2017-11-01
 

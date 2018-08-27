@@ -9,16 +9,16 @@
  */
 declare(strict_types=1);
 
-namespace Linna\TestHelper\DI;
+namespace Linna\TestHelper\Container;
 
-class ClassB
+class ClassResRules
 {
-    private $classC;
-    private $classD;
+    private $classB;
+    private $classARules;
 
-    public function __construct(ClassC $c, ClassD $d)
+    public function __construct(ClassB $b, ClassARules $aRules)
     {
-        $this->classC = $c;
-        $this->classD = $d;
+        $this->classB = $b;
+        $this->classARules = $aRules;
     }
 }

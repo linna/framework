@@ -9,11 +9,14 @@
  */
 declare(strict_types=1);
 
-namespace Linna\TestHelper\DI;
+namespace Linna\Container\Exception;
 
-class ClassC
+use Exception;
+use Psr\Container\ContainerExceptionInterface;
+
+/**
+ * Container Exception.
+ */
+class ContainerException extends Exception implements ContainerExceptionInterface
 {
-    public function __construct()
-    {
-    }
 }

@@ -6,17 +6,17 @@
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
- * @ignore
  */
 declare(strict_types=1);
 
-namespace Linna\DI\Exception;
+namespace Linna\TestHelper\Container;
 
-use Psr\Container\NotFoundExceptionInterface;
-
-/**
- * Not Found Exception.
- */
-class NotFoundException extends \Exception implements NotFoundExceptionInterface
+class ClassACache
 {
+    private $string;
+
+    public function __construct(string $aCacheString)
+    {
+        $this->string = $aCacheString;
+    }
 }

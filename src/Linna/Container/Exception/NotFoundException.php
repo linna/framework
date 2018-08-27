@@ -6,16 +6,18 @@
  * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
+ * @ignore
  */
 declare(strict_types=1);
 
-namespace Linna\DI\Exception;
+namespace Linna\Container\Exception;
 
-use Psr\Container\ContainerExceptionInterface;
+use Exception;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
- * Container Exception.
+ * Not Found Exception.
  */
-class ContainerException extends \Exception implements ContainerExceptionInterface
+class NotFoundException extends Exception implements NotFoundExceptionInterface
 {
 }
