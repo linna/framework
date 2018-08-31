@@ -55,6 +55,7 @@ class DomainObjectTest extends TestCase
      * Test override object id.
      *
      * @expectedException UnexpectedValueException
+     * @expectedExceptionMessage ObjectId property is immutable.
      */
     public function testOverrideObjectId(): void
     {

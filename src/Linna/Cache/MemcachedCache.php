@@ -37,7 +37,7 @@ class MemcachedCache implements CacheInterface
     public function __construct(array $options)
     {
         if (!($options['resource'] instanceof Memcached)) {
-            throw new InvalidArgumentException('MemcachedCache class need instance of Memcached passed as option. [\'resource\' => $memcached]');
+            throw new InvalidArgumentException('MemcachedCache class need instance of Memcached passed as option. [\'resource\' => $memcached].');
         }
 
         $this->memcached = $options['resource'];

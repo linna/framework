@@ -56,7 +56,9 @@ class MemcachedCacheTest extends TestCase
      * Test create instance without memcachedresource
      *
      * @dataProvider invalidResourceProvider
+     *
      * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage MemcachedCache class need instance of Memcached passed as option. ['resource' => $memcached].
      */
     public function testCreateInstanceWithoutResource($resource): void
     {
@@ -83,6 +85,7 @@ class MemcachedCacheTest extends TestCase
      * Test set with invalid key.
      *
      * @dataProvider invalidKeyProvider
+     *
      * @expectedException TypeError
      */
     public function testSetWithInvalidKey($key): void
@@ -130,6 +133,7 @@ class MemcachedCacheTest extends TestCase
      * Test get with invalid key.
      *
      * @dataProvider invalidKeyProvider
+     *
      * @expectedException TypeError
      */
     public function testGetWithInvalidKey($key): void
@@ -169,6 +173,7 @@ class MemcachedCacheTest extends TestCase
      * Test delete with invalid key.
      *
      * @dataProvider invalidKeyProvider
+     *
      * @expectedException TypeError
      */
     public function testDeleteWithInvalidKey($key): void
@@ -227,6 +232,7 @@ class MemcachedCacheTest extends TestCase
      * Test get multiple elements with invalid key.
      *
      * @dataProvider invalidKeyProvider
+     *
      * @expectedException TypeError
      */
     public function testGetMultipleWithInvalidKey($key): void
@@ -354,6 +360,7 @@ class MemcachedCacheTest extends TestCase
      * Teset delete multiple elements with invalid key.
      *
      * @dataProvider invalidKeyProvider
+     *
      * @expectedException TypeError
      */
     public function testDeleteMultipleWithInvalidKey($key): void
@@ -403,6 +410,7 @@ class MemcachedCacheTest extends TestCase
      * Test has with invalid key.
      *
      * @dataProvider invalidKeyProvider
+     *
      * @expectedException TypeError
      */
     public function testHasWithInvalidKey($key): void

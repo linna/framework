@@ -105,7 +105,7 @@ class PasswordGenerator
             }
         }
 
-        throw new InvalidArgumentException('Out of group character provided');
+        throw new InvalidArgumentException('Out of group character provided.');
     }
 
     /**
@@ -141,7 +141,7 @@ class PasswordGenerator
                 continue;
             }
 
-            throw new InvalidArgumentException('Invalid pattern provided, accepted only u, l, d and s');
+            throw new InvalidArgumentException('Invalid pattern provided, accepted only u, l, d and s.');
         }
 
         return implode($password);

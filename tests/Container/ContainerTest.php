@@ -234,6 +234,7 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
+     *
      * @expectedException Linna\Container\Exception\NotFoundException
      * @expectedExceptionMessage No entry was found for this identifier.
      */
@@ -250,6 +251,7 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
+     *
      * @expectedException Linna\Container\Exception\NotFoundException
      * @expectedExceptionMessage No entry was found for this identifier.
      */
@@ -266,6 +268,7 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
+     *
      * @expectedException Linna\Container\Exception\NotFoundException
      * @expectedExceptionMessage No entry was found for this identifier.
      */

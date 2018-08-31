@@ -42,6 +42,7 @@ class ViewTest extends TestCase
      * Test view with bad template on render.
      *
      * @expectedException UnexpectedValueException
+     * @expectedExceptionMessage Template must implements Linna\Mvc\TemplateInterface.
      */
     public function testViewWithBadTemplateOnRender(): void
     {

@@ -47,6 +47,7 @@ class ClassOptionsTraitTest extends TestCase
      * Test set with wrong option.
      *
      * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Class does not support the badRout option.
      */
     public function testSetWithWrongOption(): void
     {
@@ -71,6 +72,7 @@ class ClassOptionsTraitTest extends TestCase
      * Test set with wrong options.
      *
      * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Class does not support the rewrite option.
      */
     public function testSetWithWrongOptions(): void
     {

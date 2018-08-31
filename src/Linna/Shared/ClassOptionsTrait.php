@@ -35,7 +35,7 @@ trait ClassOptionsTrait
             return;
         }
 
-        throw new InvalidArgumentException(__CLASS__." class does not support the {$key} option");
+        throw new InvalidArgumentException("Class does not support the {$key} option.");
     }
 
     /**
@@ -52,7 +52,7 @@ trait ClassOptionsTrait
         if (count($badKeys) > 0) {
             $keys = implode(', ', array_keys($badKeys));
 
-            throw new InvalidArgumentException(__CLASS__." class does not support the {$keys} option");
+            throw new InvalidArgumentException("Class does not support the {$keys} option.");
         }
 
         $this->options = array_replace_recursive($this->options, $options);

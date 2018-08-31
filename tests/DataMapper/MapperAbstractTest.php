@@ -16,6 +16,7 @@ use Linna\Authentication\User;
 use Linna\DataMapper\NullDomainObject;
 use Linna\TestHelper\Mappers\UserMapper;
 use Linna\Storage\StorageFactory;
+use PDO;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -39,10 +40,10 @@ class MapperAbstractTest extends TestCase
             'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
             'options'  => [
-                \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
-                \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-                \PDO::ATTR_PERSISTENT         => false,
-                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_PERSISTENT         => false,
+                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
             ],
         ];
 

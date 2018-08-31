@@ -124,6 +124,7 @@ class PasswordGeneratorTest extends TestCase
      * Test get topology exception.
      *
      * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Out of group character provided.
      */
     public function testGetTopologyException(): void
     {
@@ -175,7 +176,9 @@ class PasswordGeneratorTest extends TestCase
      * Test get topology.
      *
      * @dataProvider badTopologyProvider
+     *
      * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Invalid pattern provided, accepted only u, l, d and s.
      */
     public function testGetFromTopologyException(string $topology): void
     {

@@ -112,6 +112,7 @@ class RouterTest extends TestCase
      * Test new router instance with wrong arguments.
      *
      * @dataProvider WrongArgumentsForRouterProvider
+     *
      * @expectedException TypeError
      */
     public function testNewRouterInstanceWithWrongArguments($routes, $options): void
@@ -143,6 +144,7 @@ class RouterTest extends TestCase
      * Test validate route with worng arguments.
      *
      * @dataProvider WrongArgumentsForValidateRouteProvider
+     *
      * @expectedException TypeError
      */
     public function testValidateRouteWithWrongArguments($url, $method): void
@@ -334,6 +336,7 @@ class RouterTest extends TestCase
      * Test Router bad method call
      *
      * @expectedException BadMethodCallException
+     * @expectedExceptionMessage Router->foo() method do not exist.
      */
     public function testRouterBadMethodCall(): void
     {

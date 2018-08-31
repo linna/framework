@@ -63,7 +63,7 @@ abstract class AbstractStorageFactory
             return new $class($options);
         }
 
-        throw new InvalidArgumentException("[$driver] not supported");
+        throw new InvalidArgumentException("[{$driver}] not supported.");
     }
 
     /**

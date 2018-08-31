@@ -89,6 +89,7 @@ class ExtendedPDOTest extends TestCase
      * Test query with parameter with wrong parameter name.
      *
      * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Parameter name will be in the form :name.
      */
     public function testQueryWithParameterWithWrongParameterName(): void
     {
@@ -104,6 +105,7 @@ class ExtendedPDOTest extends TestCase
      * Test query with parameter with too many parameters.
      *
      * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Parameters array must contain at least two elements with this form: [':name', 'value'].
      */
     public function testQueryWithParameterWithTooManyParameters(): void
     {
