@@ -25,7 +25,7 @@ trait ProtectedController
      * Allow access to controller only if logged.
      *
      * @param Authentication $authentication
-     * @param string       $redirect
+     * @param string         $redirect
      */
     private function protect(Authentication $authentication, string $redirect): void
     {

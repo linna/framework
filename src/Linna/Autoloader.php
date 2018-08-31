@@ -119,8 +119,7 @@ class Autoloader
      *
      * @param string $class The fully-qualified class name.
      *
-     * @return bool True on success, false on
-     *              failure.
+     * @return bool True on success, false on failure.
      */
     public function loadClass(string $class): bool
     {

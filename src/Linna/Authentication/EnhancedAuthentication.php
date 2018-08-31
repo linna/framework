@@ -40,10 +40,10 @@ class EnhancedAuthentication extends Authentication
     /**
      * Class Constructor
      *
-     * @param Session $session
-     * @param Password $password
+     * @param Session                               $session
+     * @param Password                              $password
      * @param EnhancedAuthenticationMapperInterface $enhancedAuthenticationMapper
-     * @param array $options
+     * @param array                                 $options
      */
     public function __construct(
             Session $session,

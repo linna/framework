@@ -256,7 +256,7 @@ class Router
      * Fast route mapping.
      *
      * @param string $name
-     * @param array $arguments
+     * @param array  $arguments
      *
      * @return void
      *

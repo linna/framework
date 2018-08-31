@@ -26,7 +26,7 @@ trait ClassOptionsTrait
      * @param string $key
      * @param mixed  $value
      *
-     * @throws \InvalidArgumentException If provided option name (key) are not valid
+     * @throws InvalidArgumentException If provided option name (key) are not valid
      */
     public function setOption(string $key, $value): void
     {
@@ -43,7 +43,7 @@ trait ClassOptionsTrait
      *
      * @param array $options
      *
-     * @throws \InvalidArgumentException If provided option names are not valid
+     * @throws InvalidArgumentException If provided option names are not valid
      */
     public function setOptions(array $options): void
     {

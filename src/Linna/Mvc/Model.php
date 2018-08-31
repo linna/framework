@@ -13,6 +13,7 @@ namespace Linna\Mvc;
 
 use SplObserver;
 use SplObjectStorage;
+use SplSubject;
 
 /**
  * Parent class for model classes.
@@ -21,7 +22,7 @@ use SplObjectStorage;
  * https://en.wikipedia.org/wiki/Observer_pattern
  * http://php.net/manual/en/class.splsubject.php
  */
-class Model implements \SplSubject
+class Model implements SplSubject
 {
     /**
      * @var SplObjectStorage List of attached observerer

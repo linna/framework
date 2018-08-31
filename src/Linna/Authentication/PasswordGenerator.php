@@ -42,6 +42,7 @@ class PasswordGenerator
      * </code></pre>
      *
      * @param int $length Desiderated password length.
+     *
      * @return string Random password.
      */
     public function getFromRandom(int $length): string
@@ -120,6 +121,7 @@ class PasswordGenerator
      * </code></pre>
      *
      * @param string $topology Topology for generate password.
+     *
      * @return string Random password corresponding the given topology.
      *
      * @throws InvalidArgumentException If invalid pattern is provided.
@@ -149,6 +151,7 @@ class PasswordGenerator
      * Get random char between.
      *
      * @param array $interval
+     *
      * @return string
      */
     private function getRandomChar(array $interval): string

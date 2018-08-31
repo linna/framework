@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Linna\Mvc;
 
+use SplObserver;
+use SplSubject;
 use UnexpectedValueException;
 
 /**
@@ -20,7 +22,7 @@ use UnexpectedValueException;
  * https://en.wikipedia.org/wiki/Observer_pattern
  * http://php.net/manual/en/class.splobserver.php
  */
-class View implements \SplObserver
+class View implements SplObserver
 {
     /**
      * @var array Data for the dynamic view
@@ -64,9 +66,9 @@ class View implements \SplObserver
     /**
      * Update Observer data.
      *
-     * @param \SplSubject $subject
+     * @param SplSubject $subject
      */
-    public function update(\SplSubject $subject)
+    public function update(SplSubject $subject)
     {
         if ($subject instanceof Model) {
             $this->data = array_merge($this->data, $subject->get());
