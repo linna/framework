@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased] [v0.25.0](https://github.com/linna/framework/compare/v0.24.0...v0.25.0) - 20XX-XX-XX
+
+### Fixed
+* Minor issues fixed
+
 ## [v0.24.0](https://github.com/linna/framework/compare/v0.23.1...v0.24.0) - 2018-09-01
 
 ### Added

@@ -3,3 +3,4 @@ composer.lock
 clover.xml
 infection-log.txt
 vendor/
+.phan/

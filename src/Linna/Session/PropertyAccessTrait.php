@@ -23,24 +23,24 @@ trait PropertyAccessTrait
      * Magic metod
      * http://php.net/manual/en/language.oop5.overloading.php.
      *
-     * @param string $name
+     * @param string $offset
      * @param mixed  $value
      */
-    public function __set(string $name, $value)
+    public function __set(string $offset, $value)
     {
-        $this->data[$name] = $value;
+        $this->data[$offset] = $value;
     }
 
     /**
      * Magic metod
      * http://php.net/manual/en/language.oop5.overloading.php.
      *
-     * @param string $name
+     * @param string $offset
      */
-    public function __get(string $name)
+    public function __get(string $offset)
     {
-        if (isset($this->data[$name])) {
-            return $this->data[$name];
+        if (isset($this->data[$offset])) {
+            return $this->data[$offset];
         }
 
         return false;
@@ -50,21 +50,21 @@ trait PropertyAccessTrait
      * Magic metod
      * http://php.net/manual/en/language.oop5.overloading.php.
      *
-     * @param string $name
+     * @param string $offset
      */
-    public function __unset(string $name)
+    public function __unset(string $offset)
     {
-        unset($this->data[$name]);
+        unset($this->data[$offset]);
     }
 
     /**
      * Magic metod
      * http://php.net/manual/en/language.oop5.overloading.php.
      *
-     * @param string $name
+     * @param string $offset
      */
-    public function __isset(string $name)
+    public function __isset(string $offset)
     {
-        return isset($this->data[$name]);
+        return isset($this->data[$offset]);
     }
 }

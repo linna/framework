@@ -55,8 +55,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @param string $id Identifier of the entry to look for.
      *
-     * @throws NotFoundExceptionInterface  No entry was found for **this** identifier.
-     * @throws ContainerExceptionInterface Error while retrieving the entry.
+     * @throws NotFoundException No entry was found for **this** identifier.
      *
      * @return mixed Entry.
      */
@@ -247,14 +246,14 @@ class Container implements ContainerInterface, ArrayAccess
 
         //argument required from class
         foreach ($dependency as $argValue) {
-            $paramClass = null;
-
             if (class_exists((string) $argValue->getType())) {
+                //add to array of arguments
                 $paramClass = $argValue->getClass()->name;
+                $args[] = $this->cache[$paramClass];
+                continue;
             }
 
-            //add to array of arguments
-            $args[] = $this->cache[$paramClass] ?? null;
+            $args[] = null;
         }
 
         //check if there is rules for this class

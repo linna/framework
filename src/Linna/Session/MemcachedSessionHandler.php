@@ -49,14 +49,14 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      *
      * http://php.net/manual/en/sessionhandler.open.php.
      *
-     * @param string $savePath
-     * @param string $sessionName
+     * @param string $save_path
+     * @param string $session_name
      *
      * @return bool
      */
-    public function open($savePath, $sessionName)
+    public function open($save_path, $session_name)
     {
-        unset($savePath, $sessionName);
+        unset($save_path, $session_name);
 
         return true;
     }
@@ -66,13 +66,13 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      *
      * http://php.net/manual/en/sessionhandler.gc.php.
      *
-     * @param int $maxLifetime
+     * @param int $maxlifetime
      *
      * @return bool
      */
-    public function gc($maxLifetime)
+    public function gc($maxlifetime)
     {
-        unset($maxLifetime);
+        unset($maxlifetime);
 
         //this method is no needed because all object stored expire without external operation
         return true;
@@ -83,14 +83,14 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      *
      * http://php.net/manual/en/sessionhandler.read.php.
      *
-     * @param string $sessionId
+     * @param string $session_id
      *
      * @return string
      */
-    public function read($sessionId)
+    public function read($session_id)
     {
         //fix for php7
-        return (string) $this->memcached->get($sessionId);
+        return (string) $this->memcached->get($session_id);
     }
 
     /**
@@ -98,14 +98,14 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      *
      * http://php.net/manual/en/sessionhandler.write.php.
      *
-     * @param string $sessionId
-     * @param array  $data
+     * @param string $session_id
+     * @param string $session_data
      *
      * @return bool
      */
-    public function write($sessionId, $data)
+    public function write($session_id, $session_data)
     {
-        return $this->memcached->set($sessionId, $data, $this->expire);
+        return $this->memcached->set($session_id, $session_data, $this->expire);
     }
 
     /**
@@ -125,13 +125,13 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      *
      * http://php.net/manual/en/sessionhandler.destroy.php.
      *
-     * @param string $sessionId
+     * @param string $session_id
      *
      * @return bool
      */
-    public function destroy($sessionId)
+    public function destroy($session_id)
     {
-        if ($this->memcached->delete($sessionId)) {
+        if ($this->memcached->delete($session_id)) {
             return true;
         }
 

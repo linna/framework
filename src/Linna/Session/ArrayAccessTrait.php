@@ -22,26 +22,26 @@ trait ArrayAccessTrait
     /**
      * Check.
      *
-     * @param string $name
+     * @param string $offset
      *
      * @return bool
      */
-    public function offsetExists($name)
+    public function offsetExists($offset)
     {
-        return isset($this->data[$name]);
+        return isset($this->data[$offset]);
     }
 
     /**
      * Get.
      *
-     * @param string $name
+     * @param string $offset
      *
      * @return mixed
      */
-    public function offsetGet($name)
+    public function offsetGet($offset)
     {
-        if (isset($this->data[$name])) {
-            return $this->data[$name];
+        if (isset($this->data[$offset])) {
+            return $this->data[$offset];
         }
 
         return false;
@@ -50,23 +50,21 @@ trait ArrayAccessTrait
     /**
      * Store.
      *
-     * @param string $name
+     * @param string $offset
      * @param mixed  $value
      */
-    public function offsetSet($name, $value)
+    public function offsetSet($offset, $value)
     {
-        $this->data[$name] = $value;
+        $this->data[$offset] = $value;
     }
 
     /**
      * Delete.
      *
-     * @param string $name
-     *
-     * @return mixed
+     * @param string $offset
      */
-    public function offsetUnset($name)
+    public function offsetUnset($offset)
     {
-        unset($this->data[$name]);
+        unset($this->data[$offset]);
     }
 }
