@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
-use Linna\Http\Route;
-use Linna\Http\RouteCollection;
-use Linna\Http\Router;
+use Linna\Router\Route;
+use Linna\Router\RouteCollection;
+use Linna\Router\Router;
 use Linna\Mvc\Model;
 use Linna\Mvc\View;
 use Linna\Mvc\Controller;

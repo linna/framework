@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
-use Linna\Http\Router;
+use Linna\Router\Router;
 use PHPUnit\Framework\TestCase;
 
 /**

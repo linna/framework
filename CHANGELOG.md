@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] [v0.25.0](https://github.com/linna/framework/compare/v0.24.0...v0.25.0) - 20XX-XX-XX
 
+### Changed
+* `Linna\Http` namespace renamed to `Linna\Router`
+
 ### Fixed
 * Minor issues fixed
 

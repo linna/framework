@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
-use Linna\Http\NullRoute;
-use Linna\Http\Route;
-use Linna\Http\RouteCollection;
-use Linna\Http\Router;
+use Linna\Router\NullRoute;
+use Linna\Router\Route;
+use Linna\Router\RouteCollection;
+use Linna\Router\Router;
 use PHPUnit\Framework\TestCase;
 
 /**

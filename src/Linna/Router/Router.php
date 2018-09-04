@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Http;
+namespace Linna\Router;
 
 use BadMethodCallException;
 use Linna\Shared\ClassOptionsTrait;
