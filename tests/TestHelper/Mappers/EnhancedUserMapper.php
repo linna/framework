@@ -18,6 +18,7 @@ use Linna\Authorization\PermissionMapperInterface;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\NullDomainObject;
 use Linna\Storage\ExtendedPDO;
+use PDO;
 
 /**
  * EnhancedUserMapper.
@@ -48,12 +49,12 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
      */
     public function fetchById(int $userId): DomainObjectInterface
     {
-        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE user_id = :id');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, uuid, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE user_id = :id');
 
-        $pdos->bindParam(':id', $userId, \PDO::PARAM_INT);
+        $pdos->bindParam(':id', $userId, PDO::PARAM_INT);
         $pdos->execute();
 
-        $user = $pdos->fetchObject('\Linna\Authorization\EnhancedUser', [$this->password]);
+        $user = $pdos->fetchObject(EnhancedUser::class, [$this->password]);
 
         if (!($user instanceof EnhancedUser)) {
             return new NullDomainObject();
@@ -71,12 +72,12 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
     {
         $hashedUserName = md5($userName);
 
-        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE md5(name) = :name');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, uuid, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE md5(name) = :name');
 
-        $pdos->bindParam(':name', $hashedUserName, \PDO::PARAM_STR);
+        $pdos->bindParam(':name', $hashedUserName, PDO::PARAM_STR);
         $pdos->execute();
 
-        $user = $pdos->fetchObject('\Linna\Authorization\EnhancedUser', [$this->password]);
+        $user = $pdos->fetchObject(EnhancedUser::class, [$this->password]);
 
         if (!($user instanceof EnhancedUser)) {
             return new NullDomainObject();
@@ -92,11 +93,11 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
      */
     public function fetchAll(): array
     {
-        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, uuid, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC');
 
         $pdos->execute();
 
-        $users = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\EnhancedUser', [$this->password]);
+        $users = $pdos->fetchAll(PDO::FETCH_CLASS, EnhancedUser::class, [$this->password]);
 
         return $this->setUserPermission($users);
     }
@@ -106,13 +107,13 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
      */
     public function fetchLimit(int $offset, int $rowCount): array
     {
-        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC LIMIT :offset, :rowcount');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, uuid, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC LIMIT :offset, :rowcount');
 
-        $pdos->bindParam(':offset', $offset, \PDO::PARAM_INT);
-        $pdos->bindParam(':rowcount', $rowCount, \PDO::PARAM_INT);
+        $pdos->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $pdos->bindParam(':rowcount', $rowCount, PDO::PARAM_INT);
         $pdos->execute();
 
-        $users = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\EnhancedUser', [$this->password]);
+        $users = $pdos->fetchAll(PDO::FETCH_CLASS, EnhancedUser::class, [$this->password]);
 
         return $this->setUserPermission($users);
     }
@@ -122,14 +123,14 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
      */
     public function fetchUserByRole(int $roleId): array
     {
-        $pdos = $this->pdo->prepare('SELECT u.user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate
+        $pdos = $this->pdo->prepare('SELECT u.user_id AS objectId, uuid, name, email, description, password, active, created, last_update AS lastUpdate
         FROM user AS u INNER JOIN user_role AS ur ON u.user_id = ur.user_id
         WHERE role_id = :id');
 
-        $pdos->bindParam(':id', $roleId, \PDO::PARAM_INT);
+        $pdos->bindParam(':id', $roleId, PDO::PARAM_INT);
         $pdos->execute();
 
-        $users = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\EnhancedUser', [$this->password]);
+        $users = $pdos->fetchAll(PDO::FETCH_CLASS, EnhancedUser::class, [$this->password]);
 
         return $this->setUserPermission($users);
     }
@@ -171,8 +172,8 @@ class EnhancedUserMapper extends UserMapper implements EnhancedUserMapperInterfa
 
             $userId = $user->getId();
 
-            $pdos->bindParam(':user_id', $userId, \PDO::PARAM_INT);
-            $pdos->bindParam(':permission', $permission, \PDO::PARAM_STR);
+            $pdos->bindParam(':user_id', $userId, PDO::PARAM_INT);
+            $pdos->bindParam(':permission', $permission, PDO::PARAM_STR);
             $pdos->execute();
 
             $user->setPermissions($this->permissionMapper->fetchPermissionsByUser($userId));

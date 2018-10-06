@@ -21,6 +21,7 @@ use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
 use Linna\DataMapper\NullDomainObject;
 use Linna\Storage\ExtendedPDO;
+use PDO;
 
 /**
  * Role Mapper.
@@ -33,7 +34,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
     protected $password;
 
     /**
-     * @var \PDO Database Connection
+     * @var ExtendedPDO Database Connection
      */
     protected $pdo;
 
@@ -50,10 +51,10 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
     /**
      * Constructor.
      *
-     * @param ExtendedPDO $pdo
-     * @param Password $password
+     * @param ExtendedPDO                 $pdo
+     * @param Password                    $password
      * @param EnhancedUserMapperInterface $userMapper
-     * @param PermissionMapperInterface $permissionMapper
+     * @param PermissionMapperInterface   $permissionMapper
      */
     public function __construct(
             ExtendedPDO $pdo,
@@ -74,10 +75,10 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
     {
         $pdos = $this->pdo->prepare('SELECT role_id AS objectId, name, description, active, last_update AS lastUpdate FROM role WHERE role_id = :id');
 
-        $pdos->bindParam(':id', $roleId, \PDO::PARAM_INT);
+        $pdos->bindParam(':id', $roleId, PDO::PARAM_INT);
         $pdos->execute();
 
-        $role = $pdos->fetchObject('\Linna\Authorization\Role');
+        $role = $pdos->fetchObject(Role::class);
 
         if (!($role instanceof Role)) {
             return new NullDomainObject();
@@ -101,7 +102,7 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
 
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\Role');
+        return $pdos->fetchAll(PDO::FETCH_CLASS, Role::class);
     }
 
     /**
@@ -111,11 +112,11 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
     {
         $pdos = $this->pdo->prepare('SELECT role_id AS objectId, name, description, active, last_update AS lastUpdate FROM groups LIMIT :offset, :rowcount');
 
-        $pdos->bindParam(':offset', $offset, \PDO::PARAM_INT);
-        $pdos->bindParam(':rowcount', $rowCount, \PDO::PARAM_INT);
+        $pdos->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $pdos->bindParam(':rowcount', $rowCount, PDO::PARAM_INT);
         $pdos->execute();
 
-        $roles = $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\Role');
+        $roles = $pdos->fetchAll(PDO::FETCH_CLASS, Role::class);
 
         return $this->fillRolesArray($roles);
     }

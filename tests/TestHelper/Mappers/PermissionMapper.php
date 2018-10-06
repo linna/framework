@@ -17,6 +17,7 @@ use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\MapperAbstract;
 use Linna\DataMapper\NullDomainObject;
 use Linna\Storage\ExtendedPDO;
+use PDO;
 
 /**
  * PermissionMapper.
@@ -24,7 +25,7 @@ use Linna\Storage\ExtendedPDO;
 class PermissionMapper extends MapperAbstract implements PermissionMapperInterface
 {
     /**
-     * @var \PDO Database Connection
+     * @var ExtendedPDO Database Connection
      */
     protected $pdo;
 
@@ -45,10 +46,10 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     {
         $pdos = $this->pdo->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission WHERE permission_id = :id');
 
-        $pdos->bindParam(':id', $permissionId, \PDO::PARAM_INT);
+        $pdos->bindParam(':id', $permissionId, PDO::PARAM_INT);
         $pdos->execute();
 
-        $result = $pdos->fetchObject('\Linna\Authorization\Permission');
+        $result = $pdos->fetchObject(Permission::class);
 
         return ($result instanceof Permission) ? $result : new NullDomainObject();
     }
@@ -60,10 +61,10 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     {
         $pdos = $this->pdo->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission WHERE name = :name');
 
-        $pdos->bindParam(':name', $permissionName, \PDO::PARAM_STR);
+        $pdos->bindParam(':name', $permissionName, PDO::PARAM_STR);
         $pdos->execute();
 
-        $result = $pdos->fetchObject('\Linna\Authorization\Permission');
+        $result = $pdos->fetchObject(Permission::class);
 
         return ($result instanceof Permission) ? $result : new NullDomainObject();
     }
@@ -77,7 +78,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
 
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\Permission');
+        return $pdos->fetchAll(PDO::FETCH_CLASS, Permission::class);
     }
 
     /**
@@ -87,11 +88,11 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     {
         $pdos = $this->pdo->prepare('SELECT permission_id AS objectId, name, description, last_update AS lastUpdate FROM permission LIMIT :offset, :rowcount');
 
-        $pdos->bindParam(':offset', $offset, \PDO::PARAM_INT);
-        $pdos->bindParam(':rowcount', $rowCount, \PDO::PARAM_INT);
+        $pdos->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $pdos->bindParam(':rowcount', $rowCount, PDO::PARAM_INT);
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\Permission');
+        return $pdos->fetchAll(PDO::FETCH_CLASS, Permission::class);
     }
 
     /**
@@ -106,10 +107,10 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
         ON rp.permission_id = p.permission_id
         WHERE rp.role_id = :id');
 
-        $pdos->bindParam(':id', $roleId, \PDO::PARAM_INT);
+        $pdos->bindParam(':id', $roleId, PDO::PARAM_INT);
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\Permission');
+        return $pdos->fetchAll(PDO::FETCH_CLASS, Permission::class);
     }
 
     /**
@@ -124,10 +125,10 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
         ON up.permission_id = p.permission_id
         WHERE up.user_id = :id');
 
-        $pdos->bindParam(':id', $userId, \PDO::PARAM_INT);
+        $pdos->bindParam(':id', $userId, PDO::PARAM_INT);
         $pdos->execute();
 
-        return $pdos->fetchAll(\PDO::FETCH_CLASS, '\Linna\Authorization\Permission');
+        return $pdos->fetchAll(PDO::FETCH_CLASS, Permission::class);
     }
 
     /**
@@ -153,10 +154,10 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
 
         ORDER BY p_hash");
 
-        $pdos->bindParam(':id', $userId, \PDO::PARAM_INT);
+        $pdos->bindParam(':id', $userId, PDO::PARAM_INT);
         $pdos->execute();
 
-        return array_flip($pdos->fetchAll(\PDO::FETCH_COLUMN));
+        return array_flip($pdos->fetchAll(PDO::FETCH_COLUMN));
     }
 
     /**
@@ -166,7 +167,7 @@ class PermissionMapper extends MapperAbstract implements PermissionMapperInterfa
     {
         $pdos = $this->pdo->prepare('SELECT permission_id FROM permission WHERE name = :name');
 
-        $pdos->bindParam(':name', $permission, \PDO::PARAM_STR);
+        $pdos->bindParam(':name', $permission, PDO::PARAM_STR);
         $pdos->execute();
 
         return ($pdos->rowCount() > 0) ? true : false;

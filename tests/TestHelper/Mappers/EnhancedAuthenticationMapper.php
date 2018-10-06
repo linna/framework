@@ -27,7 +27,7 @@ use RuntimeException;
 class EnhancedAuthenticationMapper extends MapperAbstract implements EnhancedAuthenticationMapperInterface
 {
     /**
-     * @var PDO Database Connection
+     * @var ExtendedPDO Database Connection
      */
     protected $pdo;
 
@@ -51,7 +51,7 @@ class EnhancedAuthenticationMapper extends MapperAbstract implements EnhancedAut
         $pdos->bindParam(':id', $loginAttemptId, PDO::PARAM_INT);
         $pdos->execute();
 
-        $result = $pdos->fetchObject('\Linna\Authentication\LoginAttempt');
+        $result = $pdos->fetchObject(LoginAttempt::class);
 
         return ($result instanceof LoginAttempt) ? $result : new NullDomainObject();
     }
@@ -65,7 +65,7 @@ class EnhancedAuthenticationMapper extends MapperAbstract implements EnhancedAut
 
         $pdos->execute();
 
-        return $pdos->fetchAll(PDO::FETCH_CLASS, '\Linna\Authentication\LoginAttempt');
+        return $pdos->fetchAll(PDO::FETCH_CLASS, LoginAttempt::class);
     }
 
     /**
@@ -79,7 +79,7 @@ class EnhancedAuthenticationMapper extends MapperAbstract implements EnhancedAut
         $pdos->bindParam(':rowcount', $rowCount, PDO::PARAM_INT);
         $pdos->execute();
 
-        return $pdos->fetchAll(PDO::FETCH_CLASS, '\Linna\Authentication\LoginAttempt');
+        return $pdos->fetchAll(PDO::FETCH_CLASS, LoginAttempt::class);
     }
 
     /**
@@ -203,12 +203,12 @@ class EnhancedAuthenticationMapper extends MapperAbstract implements EnhancedAut
 
             $objId = $loginAttempt->getId();
 
-            $pdos->bindParam(':login_attempt_id', $objId, \PDO::PARAM_INT);
+            $pdos->bindParam(':login_attempt_id', $objId, PDO::PARAM_INT);
 
-            $pdos->bindParam(':user_name', $loginAttempt->userName, \PDO::PARAM_STR);
-            $pdos->bindParam(':session_id', $loginAttempt->sessionId, \PDO::PARAM_STR);
-            $pdos->bindParam(':ip', $loginAttempt->ipAddress, \PDO::PARAM_STR);
-            $pdos->bindParam(':date_time', $loginAttempt->when, \PDO::PARAM_STR);
+            $pdos->bindParam(':user_name', $loginAttempt->userName, PDO::PARAM_STR);
+            $pdos->bindParam(':session_id', $loginAttempt->sessionId, PDO::PARAM_STR);
+            $pdos->bindParam(':ip', $loginAttempt->ipAddress, PDO::PARAM_STR);
+            $pdos->bindParam(':date_time', $loginAttempt->when, PDO::PARAM_STR);
 
             $pdos->execute();
         } catch (RuntimeException $e) {
@@ -226,7 +226,7 @@ class EnhancedAuthenticationMapper extends MapperAbstract implements EnhancedAut
         try {
             $objId = $loginAttempt->getId();
             $pdos = $this->pdo->prepare('DELETE FROM login_attempt WHERE login_attempt_id = :login_attempt_id');
-            $pdos->bindParam(':login_attempt_id', $objId, \PDO::PARAM_INT);
+            $pdos->bindParam(':login_attempt_id', $objId, PDO::PARAM_INT);
             $pdos->execute();
         } catch (RuntimeException $e) {
             echo 'Delete not compled, ', $e->getMessage(), "\n";
@@ -237,7 +237,8 @@ class EnhancedAuthenticationMapper extends MapperAbstract implements EnhancedAut
      * Check for valid domain Object.
      *
      * @param DomainObjectInterface $loginAttempt
-     * @throws \InvalidArgumentException
+     *
+     * @throws InvalidArgumentException
      */
     protected function checkValidDomainObject(DomainObjectInterface &$loginAttempt)
     {

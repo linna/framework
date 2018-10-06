@@ -55,12 +55,12 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
      */
     public function fetchById(int $userId): DomainObjectInterface
     {
-        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE user_id = :id');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, uuid, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE user_id = :id');
 
         $pdos->bindParam(':id', $userId, PDO::PARAM_INT);
         $pdos->execute();
 
-        $result = $pdos->fetchObject('\Linna\Authentication\User', [$this->password]);
+        $result = $pdos->fetchObject(User::class, [$this->password]);
 
         return ($result instanceof User) ? $result : new NullDomainObject();
     }
@@ -74,14 +74,14 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
      */
     public function fetchByName(string $userName): DomainObjectInterface
     {
-        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE md5(name) = :name');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, uuid, name, email, description, password, active, created, last_update AS lastUpdate FROM user WHERE md5(name) = :name');
 
         $hashedUserName = md5($userName);
 
         $pdos->bindParam(':name', $hashedUserName, PDO::PARAM_STR);
         $pdos->execute();
 
-        $result = $pdos->fetchObject('\Linna\Authentication\User', [$this->password]);
+        $result = $pdos->fetchObject(User::class, [$this->password]);
 
         return ($result instanceof User) ? $result : new NullDomainObject();
     }
@@ -91,11 +91,11 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
      */
     public function fetchAll(): array
     {
-        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, uuid, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC');
 
         $pdos->execute();
 
-        return $pdos->fetchAll(PDO::FETCH_CLASS, '\Linna\Authentication\User', [$this->password]);
+        return $pdos->fetchAll(PDO::FETCH_CLASS, User::class, [$this->password]);
     }
 
     /**
@@ -103,13 +103,13 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
      */
     public function fetchLimit(int $offset, int $rowCount): array
     {
-        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC LIMIT :offset, :rowcount');
+        $pdos = $this->pdo->prepare('SELECT user_id AS objectId, uuid, name, email, description, password, active, created, last_update AS lastUpdate FROM user ORDER BY name ASC LIMIT :offset, :rowcount');
 
         $pdos->bindParam(':offset', $offset, PDO::PARAM_INT);
         $pdos->bindParam(':rowcount', $rowCount, PDO::PARAM_INT);
         $pdos->execute();
 
-        return $pdos->fetchAll(PDO::FETCH_CLASS, '\Linna\Authentication\User', [$this->password]);
+        return $pdos->fetchAll(PDO::FETCH_CLASS, User::class, [$this->password]);
     }
 
     /**
@@ -128,8 +128,9 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
         $this->checkValidDomainObject($user);
 
         try {
-            $pdos = $this->pdo->prepare('INSERT INTO user (name, email, description, password, created) VALUES (:name, :email, :description, :password, NOW())');
+            $pdos = $this->pdo->prepare('INSERT INTO user (uuid, name, email, description, password, created) VALUES (:uuid, :name, :email, :description, :password, NOW())');
 
+            $pdos->bindParam(':uuid', $user->uuid, PDO::PARAM_STR);
             $pdos->bindParam(':name', $user->name, PDO::PARAM_STR);
             $pdos->bindParam(':email', $user->email, PDO::PARAM_STR);
             $pdos->bindParam(':description', $user->description, PDO::PARAM_STR);
@@ -189,7 +190,8 @@ class UserMapper extends MapperAbstract implements UserMapperInterface
      * Check for valid domain Object.
      *
      * @param DomainObjectInterface $user
-     * @throws \InvalidArgumentException
+     *
+     * @throws InvalidArgumentException
      */
     protected function checkValidDomainObject(DomainObjectInterface &$user)
     {
