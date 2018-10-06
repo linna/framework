@@ -31,6 +31,7 @@ trait ProtectedController
     {
         if (($this->authentication = $authentication->isLogged()) === false) {
             header('Location: '.$redirect);
+            exit;
         }
     }
 }
