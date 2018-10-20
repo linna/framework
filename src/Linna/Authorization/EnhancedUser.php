@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Authorization;
 
+use Linna\Authentication\Password;
 use Linna\Authentication\User;
 
 /**
@@ -19,4 +20,24 @@ use Linna\Authentication\User;
 class EnhancedUser extends User
 {
     use PermissionTrait;
+
+    /**
+     * @var array Contain roles for the user
+     */
+    private $roles = [];
+
+    /**
+     * Class Constructor.
+     *
+     * @param Password $password
+     * @param array    $roles
+     * @param array    $permissions
+     */
+    public function __construct(Password $password, array $roles = [], array $permissions = [])
+    {
+        parent::__construct($password);
+
+        $this->roles = $roles;
+        $this->permission = $permissions;
+    }
 }
