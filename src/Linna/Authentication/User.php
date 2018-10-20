@@ -49,27 +49,27 @@ class User extends DomainObjectAbstract
     /**
      * @var string Universal unique identifier.
      */
-    public $uuid;
+    public $uuid = '';
 
     /**
      * @var string User name.
      */
-    public $name;
+    public $name = '';
 
     /**
      * @var string User description.
      */
-    public $description;
+    public $description = '';
 
     /**
      * @var string User e-mail.
      */
-    public $email;
+    public $email = '';
 
     /**
      * @var string User hashed password.
      */
-    public $password;
+    public $password = '';
 
     /**
      * @var int It say if user is active or not.
@@ -79,12 +79,12 @@ class User extends DomainObjectAbstract
     /**
      * @var string User creation date.
      */
-    public $created;
+    public $created = '';
 
     /**
      * @var string Last update.
      */
-    public $lastUpdate;
+    public $lastUpdate = '';
 
     /**
      * @var Password Password class for manage password.
