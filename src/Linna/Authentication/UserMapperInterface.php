@@ -11,12 +11,13 @@ declare(strict_types=1);
 
 namespace Linna\Authentication;
 
+use Linna\DataMapper\FetchByNameInterface;
 use Linna\DataMapper\MapperInterface;
 
 /**
  * Contain methods required from concrete User Mapper.
  * Actually this interface is void.
  */
-interface UserMapperInterface extends MapperInterface
+interface UserMapperInterface extends MapperInterface, FetchByNameInterface
 {
 }
