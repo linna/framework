@@ -19,27 +19,7 @@ trait PermissionTrait
     /**
      * @var array User permissions
      */
-    protected $permission;
-
-    /**
-     * Set permission.
-     *
-     * @param array $permissions
-     */
-    public function setPermissions(array $permissions): void
-    {
-        $this->permission = $permissions;
-    }
-
-    /**
-     * Get Permissions.
-     *
-     * @return array
-     */
-    public function getPermissions(): array
-    {
-        return $this->permission;
-    }
+    protected $permission = [];
 
     /**
      * Check Permission.
