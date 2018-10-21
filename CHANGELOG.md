@@ -8,11 +8,86 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] [v0.25.0](https://github.com/linna/framework/compare/v0.24.0...v0.25.0) - 20XX-XX-XX
 
+### Added
+* `Linna\Authorization\EnhancedUserMapperInterface->grantPermission()` method
+* `Linna\Authorization\EnhancedUserMapperInterface->grantPermissionById()` method
+* `Linna\Authorization\EnhancedUserMapperInterface->grantPermissionByName()` method
+* `Linna\Authorization\EnhancedUserMapperInterface->revokePermission()` method
+* `Linna\Authorization\EnhancedUserMapperInterface->revokePermissionById()` method
+* `Linna\Authorization\EnhancedUserMapperInterface->rovekePermissionByName()` method
+* `Linna\Authorization\EnhancedUserMapperInterface->addRole()` method
+* `Linna\Authorization\EnhancedUserMapperInterface->addRoleById()` method
+* `Linna\Authorization\EnhancedUserMapperInterface->addRoleByName()` method
+* `Linna\Authorization\EnhancedUserMapperInterface->removeRole()` method
+* `Linna\Authorization\EnhancedUserMapperInterface->removeRoleById()` method
+* `Linna\Authorization\EnhancedUserMapperInterface->removeRoleByName()` method
+* `Linna\Authorization\FetchByPermissionInterface` interface
+* `Linna\Authorization\FetchByRoleInterface` interface
+* `Linna\Authorization\FetchByUserInterface` interface
+* `Linna\Authorization\Permission->permissionExistById()` method
+* `Linna\Authorization\Permission->permissionExistByName()` method
+* `Linna\Authorization\RoleMapperInterface->grantPermission()` method
+* `Linna\Authorization\RoleMapperInterface->grantPermissionById()` method
+* `Linna\Authorization\RoleMapperInterface->grantPermissionByName()` method
+* `Linna\Authorization\RoleMapperInterface->revokePermission()` method
+* `Linna\Authorization\RoleMapperInterface->revokePermissionById()` method
+* `Linna\Authorization\RoleMapperInterface->revokePermissionByName()` method
+* `Linna\Authorization\RoleMapperInterface->addUser()` method
+* `Linna\Authorization\RoleMapperInterface->addUserById()` method
+* `Linna\Authorization\RoleMapperInterface->addUserByName()` method
+* `Linna\Authorization\RoleMapperInterface->removeUser()` method
+* `Linna\Authorization\RoleMapperInterface->removeUserById()` method
+* `Linna\Authorization\RoleMapperInterface->removeUserByName()` method
+* `Linna\Authorization\RoleToUserMapperInterface` interface
+* `Linna\DataMapper\FetchAllInterface` interface
+* `Linna\DataMapper\FetchByNameInterface` interface
+* `Linna\DataMapper\FetchLimitInterface` interface
+
 ### Changed
+* `Linna\Authentication\LoginAttempt` default value added to properties
+* `Linna\Authentication\User` default value added to properties
+* `Linna\Authentication\UserMapperInterface` extends `Linna\DataMapper\FetchByNameInterface`
+* `Linna\Authorization\Authorization` default value added to properties
+* `Linna\Authorization\EnhancedUser->__constructor()` added
+* `Linna\Authorization\EnhancedUserMapperInterface` extends `Linna\Authorization\FetchByPermissionInterface`
+* `Linna\Authorization\EnhancedUserMapperInterface` extends `Linna\Authorization\FetchByRoleInterface`
+* `Linna\Authorization\Permission` default value added to properties
+* `Linna\Authorization\PermissionMapperInterface` extends `Linna\DataMapper\FetchByNameInterface`
+* `Linna\Authorization\PermissionMapperInterface` extends `Linna\Authorization\FetchByRoleInterface`
+* `Linna\Authorization\PermissionMapperInterface` extends `Linna\Authorization\FetchByUserInterface`
+* `Linna\Authorization\RoleMapperInterface` extends `Linna\Authorization\FetchByPermissionInterface`
+* `Linna\Authorization\RoleMapperInterface` extends `Linna\Authorization\FetchByUserInterface`
+* `Linna\Authorizationn\PermissionTrait` default value added to properties
+* `Linna\Authorizationn\Role` default value added to properties
 * `Linna\Http` namespace renamed to `Linna\Router`
+* `Linna\Mvc\FrontController` default value added to properties
+* `Linna\Router\Router` default value added to properties
+* `Linna\Session\MemcachedSessionHandler` default value added to properties
+* `Linna\Session\Session` default value added to properties
+* `Linna\Storage\AbstractConnector` default value added to properties
+* `Linna\Storage\AbstractStorageFactory` default value added to properties
+* `Linna\Storage\ExtendedPDO` default value added to properties
 
 ### Fixed
 * Minor issues fixed
+
+### Removed
+* `Linna\Authorization\EnhancedUserMapperInterface->fetchUserByRole()` method
+* `Linna\Authorization\EnhancedUserMapperInterface->fetchUserByPermission()` method
+* `Linna\Authorization\EnhancedUserMapperInterface->grant()` method
+* `Linna\Authorization\EnhancedUserMapperInterface->revoke()` method
+* `Linna\Authorization\Permission->fetchPermissionsByRole()` method
+* `Linna\Authorization\Permission->fetchPermissionsByUser()` method
+* `Linna\Authorization\Permission->permissionExist()` method
+* `Linna\Authorization\PermissionTrait->getPermissions()` method
+* `Linna\Authorization\PermissionTrait->setPermissions()` method
+* `Linna\Authorization\Role->getUsers()` method
+* `Linna\Authorization\Role->setUsers()` method
+* `Linna\Authorization\Role->fetchUserInheritedPermissions()` method
+* `Linna\Authorization\Role->permissionGrant()` method
+* `Linna\Authorization\Role->permissionRevoke()` method
+* `Linna\Authorization\Role->userAdd()` method
+* `Linna\Authorization\Role->userRemove()` method
 
 ## [v0.24.0](https://github.com/linna/framework/compare/v0.23.1...v0.24.0) - 2018-09-01
 
