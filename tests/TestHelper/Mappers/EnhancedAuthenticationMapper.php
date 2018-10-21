@@ -171,9 +171,9 @@ class EnhancedAuthenticationMapper extends MapperAbstract implements EnhancedAut
     /**
      * {@inheritdoc}
      */
-    protected function concreteInsert(DomainObjectInterface $loginAttempt): int
+    protected function concreteInsert(DomainObjectInterface &$loginAttempt)
     {
-        $this->checkValidDomainObject($loginAttempt);
+        $this->checkDomainObjectType($loginAttempt);
 
         try {
             $pdos = $this->pdo->prepare('INSERT INTO login_attempt (user_name, session_id, ip, date_time) VALUES (:user_name, :session_id, :ip, :date_time)');
@@ -185,7 +185,8 @@ class EnhancedAuthenticationMapper extends MapperAbstract implements EnhancedAut
 
             $pdos->execute();
 
-            return (int) $this->pdo->lastInsertId();
+            $loginAttempt->setId((int)$this->pdo->lastInsertId());
+            //return (int) $this->pdo->lastInsertId();
         } catch (RuntimeException $e) {
             echo 'Insert not compled, ', $e->getMessage(), "\n";
         }
@@ -196,14 +197,14 @@ class EnhancedAuthenticationMapper extends MapperAbstract implements EnhancedAut
      */
     protected function concreteUpdate(DomainObjectInterface $loginAttempt)
     {
-        $this->checkValidDomainObject($loginAttempt);
+        $this->checkDomainObjectType($loginAttempt);
 
         try {
-            $pdos = $this->pdo->prepare('UPDATE login_attempt SET user_name = :user_name,  session_id = :session_id, ip = :ip,  date_time = :date_time WHERE login_attempt_id = :login_attempt_id');
+            $pdos = $this->pdo->prepare('UPDATE login_attempt SET user_name = :user_name,  session_id = :session_id, ip = :ip,  date_time = :date_time WHERE login_attempt_id = :id');
 
             $objId = $loginAttempt->getId();
 
-            $pdos->bindParam(':login_attempt_id', $objId, PDO::PARAM_INT);
+            $pdos->bindParam(':id', $objId, PDO::PARAM_INT);
 
             $pdos->bindParam(':user_name', $loginAttempt->userName, PDO::PARAM_STR);
             $pdos->bindParam(':session_id', $loginAttempt->sessionId, PDO::PARAM_STR);
@@ -219,31 +220,30 @@ class EnhancedAuthenticationMapper extends MapperAbstract implements EnhancedAut
     /**
      * {@inheritdoc}
      */
-    protected function concreteDelete(DomainObjectInterface $loginAttempt)
+    protected function concreteDelete(DomainObjectInterface &$loginAttempt)
     {
-        $this->checkValidDomainObject($loginAttempt);
+        $this->checkDomainObjectType($loginAttempt);
+
+        $objId = $loginAttempt->getId();
 
         try {
-            $objId = $loginAttempt->getId();
-            $pdos = $this->pdo->prepare('DELETE FROM login_attempt WHERE login_attempt_id = :login_attempt_id');
-            $pdos->bindParam(':login_attempt_id', $objId, PDO::PARAM_INT);
+            $pdos = $this->pdo->prepare('DELETE FROM login_attempt WHERE login_attempt_id = :id');
+            $pdos->bindParam(':id', $objId, PDO::PARAM_INT);
             $pdos->execute();
+
+            $loginAttempt = new NullDomainObject();
         } catch (RuntimeException $e) {
             echo 'Delete not compled, ', $e->getMessage(), "\n";
         }
     }
 
     /**
-     * Check for valid domain Object.
-     *
-     * @param DomainObjectInterface $loginAttempt
-     *
-     * @throws InvalidArgumentException
+     * {@inheritdoc}
      */
-    protected function checkValidDomainObject(DomainObjectInterface &$loginAttempt)
+    protected function checkDomainObjectType(DomainObjectInterface $domainObject)
     {
-        if (!($loginAttempt instanceof LoginAttempt)) {
-            throw new InvalidArgumentException('$loginAttempt parameter must be instance of LoginAttempt class');
+        if (!($domainObject instanceof LoginAttempt)) {
+            throw new InvalidArgumentException('Domain Object parameter must be instance of LoginAttempt class');
         }
     }
 }

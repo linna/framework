@@ -11,22 +11,18 @@ declare(strict_types=1);
 
 namespace Linna\TestHelper\Mappers;
 
-use Linna\Authorization\EnhancedUserMapperInterface;
 use Linna\Authentication\Password;
-use Linna\Authorization\PermissionMapperInterface;
+use Linna\Authorization\EnhancedUser;
 use Linna\Authorization\Role;
-use Linna\Authorization\RoleMapperInterface;
-use Linna\Authentication\User;
-use Linna\DataMapper\DomainObjectInterface;
-use Linna\DataMapper\MapperAbstract;
-use Linna\DataMapper\NullDomainObject;
+use Linna\Authorization\RoleToUserMapperInterface;
 use Linna\Storage\ExtendedPDO;
 use PDO;
 
 /**
- * Role Mapper.
+ * Role To User Mapper.
+ * Fetch only mapper utilized as helper for build Role and EnhancedUser mapper.
  */
-class RoleMapper extends MapperAbstract implements RoleMapperInterface
+class RoleToUserMapper implements RoleToUserMapperInterface
 {
     /**
      * @var Password Password util for user object
@@ -39,178 +35,107 @@ class RoleMapper extends MapperAbstract implements RoleMapperInterface
     protected $pdo;
 
     /**
-     * @var PermissionMapperInterface Permission Mapper
-     */
-    protected $permissionMapper;
-
-    /**
-     * @var EnhancedUserMapperInterface Permission Mapper
-     */
-    protected $userMapper;
-
-    /**
-     * Constructor.
+     * Class Constructor.
      *
-     * @param ExtendedPDO                 $pdo
-     * @param Password                    $password
-     * @param EnhancedUserMapperInterface $userMapper
-     * @param PermissionMapperInterface   $permissionMapper
+     * @param ExtendedPDO $pdo
+     * @param Password    $password
      */
-    public function __construct(
-            ExtendedPDO $pdo,
-            Password $password,
-            EnhancedUserMapperInterface $userMapper,
-            PermissionMapperInterface $permissionMapper
-    ) {
+    public function __construct(ExtendedPDO $pdo, Password $password)
+    {
         $this->pdo = $pdo;
         $this->password = $password;
-        $this->userMapper = $userMapper;
-        $this->permissionMapper = $permissionMapper;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function fetchById(int $roleId): DomainObjectInterface
+    public function fetchByRole(Role $role): array
     {
-        $pdos = $this->pdo->prepare('SELECT role_id AS objectId, name, description, active, last_update AS lastUpdate FROM role WHERE role_id = :id');
+        return $this->fetchByRoleId($role->getId());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchByRoleId(int $roleId): array
+    {
+        $pdos = $this->pdo->prepare('
+        SELECT u.user_id AS objectId, u.uuid, u.name, u.email, u.description, u.password, u.active, u.created, u.last_update AS lastUpdate
+        FROM user AS u
+        INNER JOIN user_role AS ur 
+        ON u.user_id = ur.user_id
+        WHERE ur.role_id = :id');
 
         $pdos->bindParam(':id', $roleId, PDO::PARAM_INT);
         $pdos->execute();
 
-        $role = $pdos->fetchObject(Role::class);
-
-        if (!($role instanceof Role)) {
-            return new NullDomainObject();
-        }
-
-        $roleUsers = $this->userMapper->fetchUserByRole($roleId);
-        $rolePermissions = $this->permissionMapper->fetchPermissionsByRole($roleId);
-
-        $role->setUsers($roleUsers);
-        $role->setPermissions($rolePermissions);
-
-        return $role;
+        return $pdos->fetchAll(PDO::FETCH_CLASS, EnhancedUser::class, [$this->password, [], []]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function fetchAll(): array
+    public function fetchByRoleName(string $roleName): array
     {
-        $pdos = $this->pdo->prepare('SELECT role_id AS objectId, name, description, active, last_update AS lastUpdate FROM role ');
+        $pdos = $this->pdo->prepare('
+        SELECT u.user_id AS objectId, u.uuid, u.name, u.email, u.description, 
+        u.password, u.active, u.created, u.last_update AS lastUpdate
+        FROM user AS u
+        INNER JOIN user_role AS ur 
+        INNER JOIN role AS r
+        ON u.user_id = ur.user_id
+        AND ur.role_id = r.role_id
+        WHERE r.name = :name');
 
+        $pdos->bindParam(':name', $roleName, PDO::PARAM_STR);
         $pdos->execute();
 
-        return $pdos->fetchAll(PDO::FETCH_CLASS, Role::class);
+        return $pdos->fetchAll(PDO::FETCH_CLASS, EnhancedUser::class, [$this->password, [], []]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function fetchLimit(int $offset, int $rowCount): array
+    public function fetchByUser(EnhancedUser $user): array
     {
-        $pdos = $this->pdo->prepare('SELECT role_id AS objectId, name, description, active, last_update AS lastUpdate FROM groups LIMIT :offset, :rowcount');
+        return $this->fetchByUserId($user->getId());
+    }
 
-        $pdos->bindParam(':offset', $offset, PDO::PARAM_INT);
-        $pdos->bindParam(':rowcount', $rowCount, PDO::PARAM_INT);
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchByUserId(int $userId): array
+    {
+        $pdos = $this->pdo->prepare('
+        SELECT r.role_id AS objectId, r.name, r.description, r.active, r.last_update AS lastUpdate
+        FROM role AS r
+        INNER JOIN user_role AS ur
+        ON r.role_id = ur.role_id
+        WHERE ur.user_id = :id');
+
+        $pdos->bindParam(':id', $userId, PDO::PARAM_INT);
         $pdos->execute();
 
-        $roles = $pdos->fetchAll(PDO::FETCH_CLASS, Role::class);
-
-        return $this->fillRolesArray($roles);
-    }
-
-    /**
-     * Set Permission and Users on every Role instance inside passed array.
-     *
-     * @param array $roles
-     *
-     * @return array
-     */
-    protected function fillRolesArray(array $roles): array
-    {
-        $arrayRoles = [];
-
-        foreach ($roles as $role) {
-            $roleId = $role->getId();
-
-            $roleUsers = $this->userMapper->fetchUserByRole($roleId);
-            $rolePermissions = $this->permissionMapper->fetchPermissionsByRole($roleId);
-
-            $role->setUsers($roleUsers);
-            $role->setPermissions($rolePermissions);
-            $arrayRoles[] = $role;
-        }
-
-        return $arrayRoles;
+        return $pdos->fetchAll(PDO::FETCH_CLASS, Role::class, [[], []]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function fetchUserInheritedPermissions(Role &$role, User $user): array
+    public function fetchByUserName(string $userName): array
     {
-        return [];
-    }
+        $pdos = $this->pdo->prepare('
+        SELECT r.role_id AS objectId, r.name, r.description, r.active, r.last_update AS lastUpdate
+        FROM role AS r
+        INNER JOIN user_role AS ur
+        INNER JOIN user AS u
+        ON r.role_id = ur.role_id
+        AND ur.user_id = u.user_id
+        WHERE u.name = :name');
 
-    /**
-     * {@inheritdoc}
-     */
-    public function permissionGrant(Role &$role, string $permission)
-    {
-    }
+        $pdos->bindParam(':name', $userName, PDO::PARAM_STR);
+        $pdos->execute();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function permissionRevoke(Role &$role, string $permission)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function userAdd(Role &$role, User $user)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function userRemove(Role &$role, User $user)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function concreteCreate(): DomainObjectInterface
-    {
-        return new Role();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function concreteInsert(DomainObjectInterface $role): string
-    {
-        return 'insert';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function concreteUpdate(DomainObjectInterface $role)
-    {
-        return 'update';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function concreteDelete(DomainObjectInterface $role)
-    {
-        return 'delete';
+        return $pdos->fetchAll(PDO::FETCH_CLASS, Role::class, [[], []]);
     }
 }
