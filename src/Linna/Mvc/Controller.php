@@ -18,9 +18,9 @@ namespace Linna\Mvc;
 class Controller
 {
     /**
-     * @var object The model object for current controller
+     * @var Model The model object for current controller
      */
-    protected $model = null;
+    protected $model;
 
     /**
      * Constructor.
