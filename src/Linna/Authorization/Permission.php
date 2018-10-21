@@ -21,17 +21,22 @@ class Permission extends DomainObjectAbstract
     /**
      * @var string Permission name
      */
-    public $name;
+    public $name = '';
 
     /**
      * @var string Permission description
      */
-    public $description;
+    public $description = '';
 
     /**
      * @var string Last update
      */
-    public $lastUpdate;
+    public $lastUpdate = '';
+
+    /**
+     * @var int Id of the group from which the permission was inherited
+     */
+    public $inherited = 0;
 
     /**
      * Class Constructor.
