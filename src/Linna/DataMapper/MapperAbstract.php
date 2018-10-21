@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Linna\DataMapper;
 
+use InvalidArgumentException;
+
 /**
  * Abstract Class for ObjectMapper.
  */
@@ -20,9 +22,9 @@ abstract class MapperAbstract
      * Create a new instance of the DomainObject that this
      * mapper is responsible for.
      *
-     * @return DomainObjectAbstract
+     * @return DomainObjectInterface
      */
-    public function create()
+    public function create(): DomainObjectInterface
     {
         return $this->concreteCreate();
     }
@@ -31,52 +33,61 @@ abstract class MapperAbstract
      * Store the DomainObject in persistent storage. Either insert
      * or update the store as required.
      *
-     * @param DomainObjectAbstract $domainObject
+     * @param DomainObjectInterface $domainObject
      */
-    public function save(DomainObjectInterface $domainObject)
+    public function save(DomainObjectInterface &$domainObject)
     {
         if ($domainObject->getId() === 0) {
-            return $this->concreteInsert($domainObject);
+            $this->concreteInsert($domainObject);
         }
 
-        return $this->concreteUpdate($domainObject);
+        $this->concreteUpdate($domainObject);
     }
 
     /**
      * Delete the DomainObject from persistent storage.
      *
-     * @param DomainObjectAbstract $domainObject
+     * @param DomainObjectInterface $domainObject
      */
-    public function delete(DomainObjectInterface $domainObject)
+    public function delete(DomainObjectInterface &$domainObject)
     {
-        return $this->concreteDelete($domainObject);
+        $this->concreteDelete($domainObject);
     }
 
     /**
      * Create a new instance of a DomainObject.
      *
-     * @return DomainObjectAbstract
+     * @return DomainObjectInterface
      */
     abstract protected function concreteCreate(): DomainObjectInterface;
 
     /**
      * Insert the DomainObject to persistent storage.
      *
-     * @param DomainObjectAbstract $domainObject
+     * @param DomainObjectInterface $domainObject
      */
-    abstract protected function concreteInsert(DomainObjectInterface $domainObject);
+    abstract protected function concreteInsert(DomainObjectInterface &$domainObject);
 
     /**
      * Update the DomainObject in persistent storage.
      *
-     * @param DomainObjectAbstract $domainObject
+     * @param DomainObjectInterface $domainObject
      */
     abstract protected function concreteUpdate(DomainObjectInterface $domainObject);
 
     /**
      * Delete the DomainObject from peristent Storage.
      *
-     * @param DomainObjectAbstract $domainObject
+     * @param DomainObjectInterface $domainObject
      */
-    abstract protected function concreteDelete(DomainObjectInterface $domainObject);
+    abstract protected function concreteDelete(DomainObjectInterface &$domainObject);
+
+    /**
+     * Check for valid domain Object.
+     *
+     * @param DomainObjectInterface $domainObject
+     *
+     * @throws InvalidArgumentException if the domain object isn't of the type required by mapper
+     */
+    abstract protected function checkDomainObjectType(DomainObjectInterface $domainObject);
 }
