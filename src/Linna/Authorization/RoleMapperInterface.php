@@ -11,27 +11,41 @@ declare(strict_types=1);
 
 namespace Linna\Authorization;
 
-use Linna\Authentication\User;
+use Linna\Authorization\Permission;
+use Linna\Authorization\Role;
 use Linna\DataMapper\MapperInterface;
 
 /**
  * Group Mapper Interface
  * Contain methods required from concrete Group Mapper.
  */
-interface RoleMapperInterface extends MapperInterface
+interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterface, FetchByUserInterface
 {
     /**
-     * Fetch permissions inherited by a user from a role
-     * From Role and User objects instances as arguments, this method must return an array containing
-     * a Permission object instance for every permission owned by the
-     * given user user and role.
+     * Grant a permission at role
+     * This method must insert new role-permission coupling in persistent
+     * storage and update Role calling Role->setPermissions() method.
+     * Remind to pass all role's permission to Role->setPermissions(),
+     * when write concrete mapper is well pass PermissionMapper as constructor
+     * dependency.
+     *
+     * @param Role       $role
+     * @param Permission $permission
+     */
+    public function grantPermission(Role &$role, Permission $permission);
+
+    /**
+     * Grant a permission at role
+     * This method must insert new role-permission coupling in persistent
+     * storage and update Role calling Role->setPermissions() method.
+     * Remind to pass all role's permission to Role->setPermissions(),
+     * when write concrete mapper is well pass PermissionMapper as constructor
+     * dependency.
      *
      * @param Role $role
-     * @param User $user
-     *
-     * @return array
+     * @param int  $permissionId
      */
-    public function fetchUserInheritedPermissions(Role &$role, User $user): array;
+    public function grantPermissionById(Role &$role, int $permissionId);
 
     /**
      * Grant a permission at role
@@ -42,9 +56,35 @@ interface RoleMapperInterface extends MapperInterface
      * dependency.
      *
      * @param Role   $role
-     * @param string $permission
+     * @param string $permissionName
      */
-    public function permissionGrant(Role &$role, string $permission);
+    public function grantPermissionByName(Role &$role, string $permissionName);
+
+    /**
+     * Revoke a permission at role
+     * This method must remove role-permission coupling in persistent
+     * storage and update Role calling Role->setPermissions() method.
+     * As previous method remind to pass all role's permission
+     * to Role->setPermissions(), when write concrete mapper is well
+     * pass PermissionMapper as constructor dependency.
+     *
+     * @param Role       $role
+     * @param Permission $permission
+     */
+    public function revokePermission(Role &$role, Permission $permission);
+
+    /**
+     * Revoke a permission at role
+     * This method must remove role-permission coupling in persistent
+     * storage and update Role calling Role->setPermissions() method.
+     * As previous method remind to pass all role's permission
+     * to Role->setPermissions(), when write concrete mapper is well
+     * pass PermissionMapper as constructor dependency.
+     *
+     * @param Role $role
+     * @param int  $permissionId
+     */
+    public function revokePermissionById(Role &$role, int $permissionId);
 
     /**
      * Revoke a permission at role
@@ -55,12 +95,25 @@ interface RoleMapperInterface extends MapperInterface
      * pass PermissionMapper as constructor dependency.
      *
      * @param Role   $role
-     * @param string $permission
+     * @param string $permissionName
      */
-    public function permissionRevoke(Role &$role, string $permission);
+    public function revokePermissionByName(Role &$role, string $permissionName);
 
     /**
-     * Add role at an user
+     * Add an user to a role
+     * This method must insert new user-role coupling in persistent
+     * storage and update Role calling Role->setUsers() method.
+     * Remind to pass all role's users to Role->setUsers(),
+     * when write concrete mapper is well pass EnhancedUserMapper as constructor
+     * dependency.
+     *
+     * @param Role         $role
+     * @param EnhancedUser $user
+     */
+    public function addUser(Role &$role, EnhancedUser $user);
+
+    /**
+     * Add an user to a role
      * This method must insert new user-role coupling in persistent
      * storage and update Role calling Role->setUsers() method.
      * Remind to pass all role's users to Role->setUsers(),
@@ -68,9 +121,35 @@ interface RoleMapperInterface extends MapperInterface
      * dependency.
      *
      * @param Role $role
-     * @param User $user
+     * @param int  $userId
      */
-    public function userAdd(Role &$role, User $user);
+    public function addUserById(Role &$role, int $userId);
+
+    /**
+     * Add an user to a role
+     * This method must insert new user-role coupling in persistent
+     * storage and update Role calling Role->setUsers() method.
+     * Remind to pass all role's users to Role->setUsers(),
+     * when write concrete mapper is well pass EnhancedUserMapper as constructor
+     * dependency.
+     *
+     * @param Role   $role
+     * @param string $userName
+     */
+    public function addUserByName(Role &$role, string $userName);
+
+    /**
+     * Remove user from a role
+     * This method must remove user-role coupling in persistent
+     * storage and update Role calling Role->setUsers() method.
+     * As previous method remind to pass all role's users to Role->setUsers(),
+     * when write concrete mapper is well pass EnhancedUserMapper as constructor
+     * dependency.
+     *
+     * @param Role         $role
+     * @param EnhancedUser $user
+     */
+    public function removeUser(Role &$role, EnhancedUser $user);
 
     /**
      * Remove user from a role
@@ -81,7 +160,20 @@ interface RoleMapperInterface extends MapperInterface
      * dependency.
      *
      * @param Role $role
-     * @param User $user
+     * @param int  $userId
      */
-    public function userRemove(Role &$role, User $user);
+    public function removeUserById(Role &$role, int $userId);
+
+    /**
+     * Remove user from a role
+     * This method must remove user-role coupling in persistent
+     * storage and update Role calling Role->setUsers() method.
+     * As previous method remind to pass all role's users to Role->setUsers(),
+     * when write concrete mapper is well pass EnhancedUserMapper as constructor
+     * dependency.
+     *
+     * @param Role   $role
+     * @param string $userName
+     */
+    public function removeUserByName(Role &$role, string $userName);
 }
