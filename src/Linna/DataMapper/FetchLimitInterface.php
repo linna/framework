@@ -12,32 +12,11 @@ declare(strict_types=1);
 namespace Linna\DataMapper;
 
 /**
- * Mapper Interface
- * Contain methods required from basic Mapper.
+ * Fetch Limit Interface
+ * Contain an optional method for basic Mapper.
  */
-interface MapperInterface
+interface FetchLimitInterface
 {
-    /**
-     * Fetch a DomainObject by id.
-     * From object id as argument, this method must return an instance
-     * of DomainObject instance or an instance of NullDomainObject.
-     *
-     * @param int $objectId
-     *
-     * @return DomainObjectInterface
-     */
-    public function fetchById(int $objectId): DomainObjectInterface;
-
-    /**
-     * Fetch all DomainObject stored in data base.
-     * This method must return an array containing
-     * a DomainObject object instance for every concrete domain object
-     * or a void array.
-     *
-     * @return array
-     */
-    public function fetchAll(): array;
-
     /**
      * Fetch DomainObject with limit.
      * This method must return an array containing

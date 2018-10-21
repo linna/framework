@@ -27,27 +27,4 @@ interface MapperInterface
      * @return DomainObjectInterface
      */
     public function fetchById(int $objectId): DomainObjectInterface;
-
-    /**
-     * Fetch all DomainObject stored in data base.
-     * This method must return an array containing
-     * a DomainObject object instance for every concrete domain object
-     * or a void array.
-     *
-     * @return array
-     */
-    public function fetchAll(): array;
-
-    /**
-     * Fetch DomainObject with limit.
-     * This method must return an array containing
-     * a DomainObject object filtered with sql limit style
-     * or a void array.
-     *
-     * @param int $offset   Offset of the first row to return
-     * @param int $rowCount Maximum number of rows to return
-     *
-     * @return array
-     */
-    public function fetchLimit(int $offset, int $rowCount): array;
 }
