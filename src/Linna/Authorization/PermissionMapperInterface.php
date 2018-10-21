@@ -11,50 +11,15 @@ declare(strict_types=1);
 
 namespace Linna\Authorization;
 
-use Linna\DataMapper\DomainObjectInterface;
+use Linna\DataMapper\FetchByNameInterface;
 use Linna\DataMapper\MapperInterface;
 
 /**
  * Permission Mapper Interface
  * Contain methods required from concrete Permission Mapper.
  */
-interface PermissionMapperInterface extends MapperInterface
+interface PermissionMapperInterface extends MapperInterface, FetchByNameInterface, FetchByUserInterface, FetchByRoleInterface
 {
-    /**
-     * Fetch a premission by name.
-     * From permission name as argument, this method must return an instance
-     * of Permission class or an instance of NullDomainObject class.
-     *
-     * @param string $permissionName
-     *
-     * @return DomainObjectInterface
-     */
-    public function fetchByName(string $permissionName): DomainObjectInterface;
-
-    /**
-     * Fetch permissions for a role
-     * From role id as argument, this method must return an array containing
-     * a Permission object instance for every permission owned by the
-     * given role.
-     *
-     * @param int $roleId
-     *
-     * @return array
-     */
-    public function fetchPermissionsByRole(int $roleId): array;
-
-    /**
-     * Fetch permissions for a user
-     * From user id as argument, this method must return an array containing
-     * a Permission object instance for every permission owned by the
-     * given user.
-     *
-     * @param int $userId
-     *
-     * @return array
-     */
-    public function fetchPermissionsByUser(int $userId): array;
-
     /**
      * Combine al users-roles-permissions in storage for
      * passed user id.
@@ -75,9 +40,18 @@ interface PermissionMapperInterface extends MapperInterface
     /**
      * Check if a permission exist.
      *
-     * @param string $permission
+     * @param int $permissionId
      *
      * @return bool
      */
-    public function permissionExist(string $permission): bool;
+    public function permissionExistById(int $permissionId): bool;
+
+    /**
+     * Check if a permission exist.
+     *
+     * @param string $permissionName
+     *
+     * @return bool
+     */
+    public function permissionExistByName(string $permissionName): bool;
 }
