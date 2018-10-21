@@ -30,7 +30,7 @@ class MemcachedSessionHandler implements SessionHandlerInterface
     /**
      * @var int Expire time in seconds for stored sessions
      */
-    private $expire;
+    private $expire = 0;
 
     /**
      * Constructor.

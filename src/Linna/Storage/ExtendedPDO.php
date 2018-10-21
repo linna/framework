@@ -23,7 +23,7 @@ class ExtendedPDO extends PDO
     /**
      * @var bool Status for last operation.
      */
-    private $lastOperationStatus;
+    private $lastOperationStatus = false;
 
     /**
      * Executes an SQL statement with parameters,

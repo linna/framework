@@ -44,22 +44,22 @@ class Session implements ArrayAccess
     /**
      * @var array Session data reference property
      */
-    private $data;
+    private $data = [];
 
     /**
      * @var string Session id
      */
-    public $id;
+    public $id = '';
 
     /**
      * @var string Session name
      */
-    public $name;
+    public $name = '';
 
     /**
      * @var int session_status function result
      */
-    public $status;
+    public $status = 0;
 
     /**
      * Constructor.

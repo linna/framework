@@ -34,12 +34,12 @@ class FrontController
     /**
      * @var string Contain Controller and View action name
      */
-    private $routeAction;
+    private $routeAction = '';
 
     /**
      * @var array Paremeter passed to Controller
      */
-    private $routeParam;
+    private $routeParam = [];
 
     /**
      * Constructor.

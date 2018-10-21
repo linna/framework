@@ -37,7 +37,7 @@ class Authorization
     /**
      * @var array User/Permission hash table
      */
-    protected $hashTable;
+    protected $hashTable = [];
 
     /**
      * Class Constructor.
