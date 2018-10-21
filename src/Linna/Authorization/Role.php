@@ -23,12 +23,12 @@ class Role extends DomainObjectAbstract
     /**
      * @var string Group name
      */
-    public $name;
+    public $name = '';
 
     /**
      * @var string Group description
      */
-    public $description;
+    public $description = '';
 
     /**
      * @var int It say if group is active or not
@@ -38,41 +38,24 @@ class Role extends DomainObjectAbstract
     /**
      * @var array Contain users in group
      */
-    private $users;
+    private $users = [];
 
     /**
      * @var string Last update
      */
-    public $lastUpdate;
+    public $lastUpdate = '';
 
     /**
      * Constructor.
      */
-    public function __construct()
+    public function __construct(array $users = [], array $permissions = [])
     {
+        $this->users = $users;
+        $this->permission = $permissions;
+
         //set required type
         settype($this->objectId, 'integer');
         settype($this->active, 'integer');
-    }
-
-    /**
-     * Set users in role.
-     *
-     * @param array $users
-     */
-    public function setUsers(array $users): void
-    {
-        $this->users = $users;
-    }
-
-    /**
-     * Get users in role.
-     *
-     * @return array
-     */
-    public function getUsers(): array
-    {
-        return $this->users;
     }
 
     /**
