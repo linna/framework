@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Linna\Tests;
 
 use Linna\Authentication\EnhancedAuthentication;
-use Linna\TestHelper\Mappers\EnhancedAuthenticationMapper;
+use Linna\Authentication\EnhancedAuthenticationMapper;
 use Linna\Authentication\Password;
 use Linna\Session\Session;
 use Linna\Storage\StorageFactory;

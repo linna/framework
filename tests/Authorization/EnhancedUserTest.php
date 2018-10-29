@@ -13,9 +13,9 @@ namespace Linna\Tests;
 
 use Linna\Authentication\Password;
 use Linna\Authorization\EnhancedUser;
-use Linna\TestHelper\Mappers\EnhancedUserMapper;
-use Linna\TestHelper\Mappers\PermissionMapper;
-use Linna\TestHelper\Mappers\RoleToUserMapper;
+use Linna\Authorization\EnhancedUserMapper;
+use Linna\Authorization\PermissionMapper;
+use Linna\Authorization\RoleToUserMapper;
 use Linna\Storage\StorageFactory;
 use PDO;
 use PHPUnit\Framework\TestCase;

@@ -12,12 +12,12 @@ declare(strict_types=1);
 namespace Linna\Tests;
 
 use Linna\Authentication\Password;
+use Linna\Authentication\UserMapper;
 use Linna\Authorization\Role;
-use Linna\TestHelper\Mappers\EnhancedUserMapper;
-use Linna\TestHelper\Mappers\PermissionMapper;
-use Linna\TestHelper\Mappers\RoleMapper;
-use Linna\TestHelper\Mappers\RoleToUserMapper;
-use Linna\TestHelper\Mappers\UserMapper;
+use Linna\Authorization\EnhancedUserMapper;
+use Linna\Authorization\PermissionMapper;
+use Linna\Authorization\RoleMapper;
+use Linna\Authorization\RoleToUserMapper;
 use Linna\Storage\StorageFactory;
 use PDO;
 use PHPUnit\Framework\TestCase;

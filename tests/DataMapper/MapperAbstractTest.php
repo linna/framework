@@ -13,8 +13,8 @@ namespace Linna\Tests;
 
 use Linna\Authentication\Password;
 use Linna\Authentication\User;
+use Linna\Authentication\UserMapper;
 use Linna\DataMapper\NullDomainObject;
-use Linna\TestHelper\Mappers\UserMapper;
 use Linna\Storage\StorageFactory;
 use PDO;
 use PHPUnit\Framework\TestCase;

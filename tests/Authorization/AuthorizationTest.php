@@ -14,7 +14,7 @@ namespace Linna\Tests;
 use Linna\Authentication\Authentication;
 use Linna\Authentication\Password;
 use Linna\Authorization\Authorization;
-use Linna\TestHelper\Mappers\PermissionMapper;
+use Linna\Authorization\PermissionMapper;
 use Linna\Session\Session;
 use Linna\Storage\StorageFactory;
 use PDO;
