@@ -107,6 +107,7 @@ class User extends DomainObjectAbstract
 
         //set required type
         //do type conversion because PDO doesn't return any original type from db :(.
+        settype($this->rId, 'integer');
         settype($this->objectId, 'integer');
         settype($this->active, 'integer');
     }

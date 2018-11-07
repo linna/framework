@@ -40,4 +40,48 @@ class EnhancedUser extends User
         $this->roles = $roles;
         $this->permission = $permissions;
     }
+
+    /**
+     * Check if an user has a role, use Role instance.
+     *
+     * @param Role $role
+     *
+     * @return bool
+     */
+    public function hasRole(Role $role): bool
+    {
+        return $this->hasRoleById($role->getId());
+    }
+
+    /**
+     * Check if an user has a role, use role Id.
+     *
+     * @param int $roleId
+     *
+     * @return bool
+     */
+    public function hasRoleById(int $roleId): bool
+    {
+        if (isset($this->roles[$roleId])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if an user has a role, use role name.
+     *
+     * @param string $roleName
+     *
+     * @return bool
+     */
+    public function hasRoleByName(string $roleName): bool
+    {
+        if (in_array($roleName, array_column($this->roles, 'name'), true)) {
+            return true;
+        }
+
+        return false;
+    }
 }

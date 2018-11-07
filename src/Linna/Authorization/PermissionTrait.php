@@ -22,18 +22,44 @@ trait PermissionTrait
     protected $permission = [];
 
     /**
-     * Check Permission.
+     * Check if a Permission is owned, use Permission instance.
      *
-     * @param string $permission
+     * @param Permission $permission
      *
      * @return bool
      */
-    public function can(string $permission): bool
+    public function can(Permission $permission): bool
     {
-        foreach ($this->permission as $ownPermission) {
-            if ($ownPermission->name === $permission) {
-                return true;
-            }
+        return $this->canById($permission->getId());
+    }
+
+    /**
+     * Check if a Permission is owned, use permission Id.
+     *
+     * @param int $permissionId
+     *
+     * @return bool
+     */
+    public function canById(int $permissionId): bool
+    {
+        if (isset($this->permission[$permissionId])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if a Permission is owned, use permission name.
+     *
+     * @param string $permissionName
+     *
+     * @return bool
+     */
+    public function canByName(string $permissionName): bool
+    {
+        if (in_array($permissionName, array_column($this->permission, 'name'), true)) {
+            return true;
         }
 
         return false;
