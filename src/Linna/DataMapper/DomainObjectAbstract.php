@@ -19,6 +19,11 @@ use UnexpectedValueException;
 abstract class DomainObjectAbstract implements DomainObjectInterface
 {
     /**
+     * @var int Read only objectId
+     */
+    public $rId = 0;
+
+    /**
      * @var int Object id, same of db record
      */
     protected $objectId = 0;
