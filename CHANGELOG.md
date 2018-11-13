@@ -57,6 +57,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Authentication\User` default value added to properties
 * `Linna\Authentication\UserMapperInterface` extends `Linna\DataMapper\FetchByNameInterface`
 * `Linna\Authorization\Authorization` default value added to properties
+* `Linna\Authorization\Authorization->can` now accept Permission instance, permission id as integer or permission name as string
 * `Linna\Authorization\EnhancedUserMapperInterface` extends `Linna\Authorization\FetchByPermissionInterface`
 * `Linna\Authorization\EnhancedUserMapperInterface` extends `Linna\Authorization\FetchByRoleInterface`
 * `Linna\Authorization\Permission` default value added to properties
@@ -88,6 +89,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Authorization\EnhancedUserMapperInterface->revoke()` method
 * `Linna\Authorization\PermissionMapperInterface->fetchPermissionsByRole()` method
 * `Linna\Authorization\PermissionMapperInterface->fetchPermissionsByUser()` method
+* `Linna\Authorization\PermissionMapperInterface->fetchUserPermissionHashTable()` method
 * `Linna\Authorization\PermissionMapperInterface->permissionExist()` method
 * `Linna\Authorization\PermissionTrait->getPermissions()` method
 * `Linna\Authorization\PermissionTrait->setPermissions()` method
