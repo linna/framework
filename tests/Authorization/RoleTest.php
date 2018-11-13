@@ -11,11 +11,13 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
+use Linna\Storage\ExtendedPDO;
 use Linna\Authentication\Password;
 use Linna\Authentication\UserMapper;
-use Linna\Authorization\Role;
+use Linna\Authorization\EnhancedUser;
 use Linna\Authorization\EnhancedUserMapper;
 use Linna\Authorization\PermissionMapper;
+use Linna\Authorization\Role;
 use Linna\Authorization\RoleMapper;
 use Linna\Authorization\RoleToUserMapper;
 use Linna\Storage\StorageFactory;
@@ -38,6 +40,11 @@ class RoleTest extends TestCase
      * @var RoleMapper The role mapper
      */
     protected $roleMapper;
+
+    /**
+     * @var ExtendedPDO Database connection.
+     */
+    protected $pdo;
 
     /**
      * Setup.
@@ -66,11 +73,23 @@ class RoleTest extends TestCase
 
         $enhancedUserMapper = new EnhancedUserMapper($pdo, $password, $permissionMapper, $roleToUserMapper);
 
+        $this->pdo = $pdo;
         $this->roleMapper = new RoleMapper($pdo, $permissionMapper, $userMapper, $roleToUserMapper);
         $this->permissionMapper = $permissionMapper;
         $this->enhancedUserMapper = $enhancedUserMapper;
 
         unset($pdo, $password, $permissionMapper, $userMapper, $roleToUserMapper, $enhancedUserMapper);
+    }
+
+    /**
+     * Tear Down.
+     */
+    public function tearDown()
+    {
+        //closing PDO connection
+        $this->pdo = null;
+
+        unset($this->pdo, $this->roleMapper, $this->permissionMapper, $this->enhancedUserMapper);
     }
 
     /**
@@ -82,59 +101,149 @@ class RoleTest extends TestCase
     }
 
     /**
-     * Test role set and get users.
+     * User Role data provider.
+     *
+     * @return array
      */
-    /*public function testRoleSetAndGetUsers(): void
+    public function userRoleProvider(): array
     {
-        $users = $this->enhancedUserMapper->fetchAll();
-
-        /** @var Role Role Class. */
-    //$role = $this->roleMapper->create();
-    //$role->setUsers($users);
-
-    //$this->assertEquals($users, $role->getUsers());
-    //}
-
-    /**
-     * Test is user in role.
-     */
-    public function testIsUserInRole(): void
-    {
-        /** @var Role Role Class. */
-        /*$role = $this->roleMapper->create();
-        $role->setUsers($this->enhancedUserMapper->fetchAll());
-
-        $this->assertTrue($role->isUserInRole('root'));
-        $this->assertFalse($role->isUserInRole('foo_root'));*/
-
-        $this->assertTrue(true);
+        return [
+            [1, 1, true],
+            [1, 2, false],
+            [1, 3, false],
+            [1, 4, false],
+            [1, 5, false],
+            [1, 6, false],
+            [1, 7, false],
+            [2, 1, false],
+            [2, 2, true],
+            [2, 3, true],
+            [2, 4, false],
+            [2, 5, false],
+            [2, 6, false],
+            [2, 7, false],
+            [3, 1, false],
+            [3, 2, false],
+            [3, 3, false],
+            [3, 4, true],
+            [3, 5, true],
+            [3, 6, true],
+            [3, 7, true],
+        ];
     }
 
     /**
-     * Test role set and get permission.
+     * Test is user in role.
+     *
+     * @dataProvider userRoleProvider
      */
-    /*public function testRoleSetAndGetPermission(): void
+    public function testIsUserInRole($roleId, $userId, $result): void
     {
-        $permission = $this->permissionMapper->fetchAll();
-
         /** @var Role Role Class. */
-    //$role = $this->roleMapper->create();
-    //$role->setPermissions($permission);
+        $role = $this->roleMapper->fetchById($roleId);
 
-    //$this->assertEquals($permission, $role->getPermissions());
-    //}*/
+        /** @var EnhancedUser Enhanced User Class. */
+        $user = $this->enhancedUserMapper->fetchById($userId);
+        $this->assertEquals($result, $role->isUserInRole($user));
+    }
 
     /**
-     * Test role can do action.
+     * Test is user in role by id.
+     *
+     * @dataProvider userRoleProvider
      */
-    public function testRoleCanDoAction(): void
+    public function testIsUserInRoleById($roleId, $userId, $result): void
     {
         /** @var Role Role Class. */
-        //$role = $this->roleMapper->create();
-        //$role->setPermissions($this->permissionMapper->fetchAll());
+        $role = $this->roleMapper->fetchById($roleId);
 
-        //$this->assertTrue($role->can('see users'));
-        //$this->assertFalse($role->can('other permission'));
-        $this->assertTrue(true);
+        $this->assertEquals($result, $role->isUserInRoleById($userId));
+    }
+
+    /**
+     * Test is user in role by name.
+     *
+     * @dataProvider userRoleProvider
+     */
+    public function testIsUserInRoleByName($roleId, $userId, $result): void
+    {
+        /** @var Role Role Class. */
+        $role = $this->roleMapper->fetchById($roleId);
+
+        /** @var EnhancedUser Enhanced User Class. */
+        $user = $this->enhancedUserMapper->fetchById($userId);
+        $this->assertEquals($result, $role->isUserInRoleByName($user->name));
+    }
+
+    /**
+     * Role Permission data provider.
+     *
+     * @return array
+     */
+    public function rolePermissionProvider(): array
+    {
+        return [
+            [1, 1, true],
+            [1, 2, true],
+            [1, 3, true],
+            [1, 4, true],
+            [1, 5, true],
+            [1, 6, true],
+            [2, 1, true],
+            [2, 2, true],
+            [2, 3, false],
+            [2, 4, false],
+            [2, 5, true],
+            [2, 6, true],
+            [3, 1, true],
+            [3, 2, false],
+            [3, 3, false],
+            [3, 4, false],
+            [3, 5, false],
+            [3, 6, false],
+        ];
+    }
+
+    /**
+     * Test role can.
+     *
+     * @dataProvider rolePermissionProvider
+     */
+    public function testRoleCan($roleId, $permissionId, $result): void
+    {
+        /** @var Role Role Class. */
+        $role = $this->roleMapper->fetchById($roleId);
+
+        /** @var Permission Permission Class. */
+        $permission = $this->permissionMapper->fetchById($permissionId);
+        $this->assertEquals($result, $role->can($permission));
+    }
+
+    /**
+     * Test role can by id.
+     *
+     * @dataProvider rolePermissionProvider
+     */
+    public function testRoleCanById($roleId, $permissionId, $result): void
+    {
+        /** @var Role Role Class. */
+        $role = $this->roleMapper->fetchById($roleId);
+
+        $this->assertEquals($result, $role->canById($permissionId));
+    }
+
+    /**
+     * Test role can by name.
+     *
+     * @dataProvider rolePermissionProvider
+     */
+    public function testRoleCanByName($roleId, $permissionId, $result): void
+    {
+        /** @var Role Role Class. */
+        $role = $this->roleMapper->fetchById($roleId);
+
+        /** @var Permission Permission Class. */
+        $permission = $this->permissionMapper->fetchById($permissionId);
+        $this->assertEquals($result, $role->canByName($permission->name));
     }
 }
