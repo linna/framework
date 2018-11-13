@@ -171,7 +171,7 @@ CREATE TABLE `user` (
   `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `uuid_UNIQUE` (`uuid`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,7 +202,7 @@ CREATE TABLE `user_permission` (
   KEY `index_permission` (`permission_id`) USING BTREE,
   CONSTRAINT `fk_user_permission_permission` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`permission_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_user_permission_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,6 +211,7 @@ CREATE TABLE `user_permission` (
 
 LOCK TABLES `user_permission` WRITE;
 /*!40000 ALTER TABLE `user_permission` DISABLE KEYS */;
+INSERT INTO `user_permission` VALUES (3,4,5,'2018-11-13 18:34:54'),(4,4,6,'2018-11-13 18:34:54'),(5,5,3,'2018-11-13 18:34:54'),(6,5,4,'2018-11-13 18:34:54'),(7,5,5,'2018-11-13 18:34:54'),(8,5,6,'2018-11-13 18:34:54');
 /*!40000 ALTER TABLE `user_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,4 +255,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-13 12:15:28
+-- Dump completed on 2018-11-13 20:26:26
