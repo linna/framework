@@ -45,5 +45,6 @@ class Permission extends DomainObjectAbstract
     {
         settype($this->rId, 'integer');
         settype($this->objectId, 'integer');
+        settype($this->inherited, 'integer');
     }
 }
