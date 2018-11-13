@@ -12,9 +12,11 @@ declare(strict_types=1);
 namespace Linna\Tests;
 
 use Linna\Authentication\Password;
+use Linna\Authentication\UserMapper;
 use Linna\Authorization\EnhancedUser;
 use Linna\Authorization\EnhancedUserMapper;
 use Linna\Authorization\PermissionMapper;
+use Linna\Authorization\RoleMapper;
 use Linna\Authorization\RoleToUserMapper;
 use Linna\Storage\StorageFactory;
 use PDO;
@@ -34,6 +36,16 @@ class EnhancedUserTest extends TestCase
      * @var EnhancedUserMapper The enhanced user mapper
      */
     protected $enhancedUserMapper;
+
+    /**
+     * @var RoleMapper The role mapper
+     */
+    protected $roleMapper;
+
+    /**
+     * @var ExtendedPDO Database connection.
+     */
+    protected $pdo;
 
     /**
      * Setup.
@@ -57,13 +69,28 @@ class EnhancedUserTest extends TestCase
         $password = new Password();
 
         $permissionMapper = new PermissionMapper($pdo);
-
+        $userMapper = new UserMapper($pdo, $password);
         $roleToUserMapper = new RoleToUserMapper($pdo, $password);
 
-        $this->permissionMapper = $permissionMapper;
-        $this->enhancedUserMapper = new EnhancedUserMapper($pdo, $password, $permissionMapper, $roleToUserMapper);
+        $enhancedUserMapper = new EnhancedUserMapper($pdo, $password, $permissionMapper, $roleToUserMapper);
 
-        unset($password, $permissionMapper, $roleToUserMapper);
+        $this->pdo = $pdo;
+        $this->roleMapper = new RoleMapper($pdo, $permissionMapper, $userMapper, $roleToUserMapper);
+        $this->permissionMapper = $permissionMapper;
+        $this->enhancedUserMapper = $enhancedUserMapper;
+
+        unset($pdo, $password, $permissionMapper, $userMapper, $roleToUserMapper, $enhancedUserMapper);
+    }
+
+    /**
+     * Tear Down.
+     */
+    public function tearDown()
+    {
+        //closing PDO connection
+        $this->pdo = null;
+
+        unset($this->pdo, $this->roleMapper, $this->permissionMapper, $this->enhancedUserMapper);
     }
 
     /**
@@ -75,31 +102,138 @@ class EnhancedUserTest extends TestCase
     }
 
     /**
-     * Test enhanced user set and get permission.
+     * User Permission data provider.
+     *
+     * @return array
      */
-    /*public function testEnhancedUserSetAndGetPermission()
+    public function userPermissionProvider(): array
     {
-        $permission = $this->permissionMapper->fetchAll();
-
-        /** @var EnhancedUser User Class. */
-    //$user = $this->enhancedUserMapper->create();
-    //$user->setPermissions($permission);
-
-    //$this->assertEquals($permission, $user->getPermissions());
-    //}
+        return [
+            [4, 1, true], //permission inherited from role
+            [4, 2, false],
+            [4, 3, false],
+            [4, 4, false],
+            [4, 5, true],
+            [4, 6, true],
+            [5, 1, true], //permission inherited from role
+            [5, 2, false],
+            [5, 3, true],
+            [5, 4, true],
+            [5, 5, true],
+            [5, 6, true]
+        ];
+    }
 
     /**
-     * Test enanched user can do action
+     * Test user can.
+     *
+     * @dataProvider userPermissionProvider
      */
-    public function testEnhancedUserCanDoAction()
+    public function testUserCan($userId, $permissionId, $result): void
     {
-        /** @var EnhancedUser User Class. */
-        //$user = $this->enhancedUserMapper->create();
+        /** @var EnhancedUserMapper Enhanced user mapper Class. */
+        $user = $this->enhancedUserMapper->fetchById($userId);
 
-        //$user->setPermissions($this->permissionMapper->fetchAll());
+        /** @var Permission Permission Class. */
+        $permission = $this->permissionMapper->fetchById($permissionId);
+        $this->assertEquals($result, $user->can($permission));
+    }
 
-        //$this->assertTrue($user->can('see users'));
-        //$this->assertFalse($user->can('other permission'));
-        $this->assertTrue(true);
+    /**
+     * Test user can by id.
+     *
+     * @dataProvider userPermissionProvider
+     */
+    public function testUserCanById($userId, $permissionId, $result): void
+    {
+        /** @var EnhancedUserMapper Enhanced user mapper Class. */
+        $user = $this->enhancedUserMapper->fetchById($userId);
+
+        $this->assertEquals($result, $user->canById($permissionId));
+    }
+
+    /**
+     * Test user can by name.
+     *
+     * @dataProvider userPermissionProvider
+     */
+    public function testUserCanByName($userId, $permissionId, $result): void
+    {
+        /** @var EnhancedUserMapper Enhanced user mapper Class. */
+        $user = $this->enhancedUserMapper->fetchById($userId);
+
+        /** @var Permission Permission Class. */
+        $permission = $this->permissionMapper->fetchById($permissionId);
+        $this->assertEquals($result, $user->canByName($permission->name));
+    }
+
+    /**
+     * User Role data provider.
+     *
+     * @return array
+     */
+    public function userRoleProvider(): array
+    {
+        return [
+            [1, 1, true],
+            [1, 2, false],
+            [1, 3, false],
+            [1, 4, false],
+            [1, 5, false],
+            [1, 6, false],
+            [1, 7, false],
+            [2, 1, false],
+            [2, 2, true],
+            [2, 3, true],
+            [2, 4, false],
+            [2, 5, false],
+            [2, 6, false],
+            [2, 7, false],
+            [3, 1, false],
+            [3, 2, false],
+            [3, 3, false],
+            [3, 4, true],
+            [3, 5, true],
+            [3, 6, true],
+            [3, 7, true],
+        ];
+    }
+
+    /**
+     * Test user has role.
+     *
+     * @dataProvider userRoleProvider
+     */
+    public function testUserHasRole($roleId, $userId, $result): void
+    {
+        $user = $this->enhancedUserMapper->fetchById($userId);
+
+        $role = $this->roleMapper->fetchById($roleId);
+        $this->assertEquals($result, $user->hasRole($role));
+    }
+
+    /**
+     * Test user has role by id.
+     *
+     * @dataProvider userRoleProvider
+     */
+    public function testUserHasRoleById($roleId, $userId, $result): void
+    {
+        $user = $this->enhancedUserMapper->fetchById($userId);
+
+        $this->assertEquals($result, $user->hasRoleById($roleId));
+    }
+
+    /**
+     * Test user has role by name.
+     *
+     * @dataProvider userRoleProvider
+     */
+    public function testUserHasRoleByName($roleId, $userId, $result): void
+    {
+        $user = $this->enhancedUserMapper->fetchById($userId);
+
+        $role = $this->roleMapper->fetchById($roleId);
+        $this->assertEquals($result, $user->hasRoleByName($role->name));
     }
 }

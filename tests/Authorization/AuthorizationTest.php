@@ -15,6 +15,7 @@ use Linna\Authentication\Authentication;
 use Linna\Authentication\Password;
 use Linna\Authorization\Authorization;
 use Linna\Authorization\PermissionMapper;
+use Linna\DataMapper\NullDomainObject;
 use Linna\Session\Session;
 use Linna\Storage\StorageFactory;
 use PDO;
@@ -81,6 +82,14 @@ class AuthorizationTest extends TestCase
     }
 
     /**
+     * Tear Down.
+     */
+    public function tearDown()
+    {
+        unset($this->password, $this->session, $this->authentication, $this->permissionMapper);
+    }
+
+    /**
      * Test create new authorization instance.
      */
     public function testNewAuthorizationInstance(): void
@@ -93,15 +102,20 @@ class AuthorizationTest extends TestCase
      */
     public function testCanDoActionWithoutLogin(): void
     {
+        $permission = $this->permissionMapper->fetchById(1);
+
+        $this->assertFalse($this->authorization->can(new NullDomainObject));
+        $this->assertFalse($this->authorization->can($permission));
+        $this->assertFalse($this->authorization->can(1));
         $this->assertFalse($this->authorization->can('see users'));
     }
 
     /**
-     * Test can do an action with not existent permission.
+     * Test can do an action with invalid permission.
      */
-    public function testCanDoActionWithNotExistentPermission(): void
+    public function testCanDoActionWithInvalidPermission(): void
     {
-        $this->assertFalse($this->authorization->can('Not Existent Permission'));
+        $this->assertFalse($this->authorization->can(new Password()));
     }
 
     /**
@@ -126,10 +140,14 @@ class AuthorizationTest extends TestCase
 
         //pass as first argument new instance because phpunit try to serialize pdo.????? I don't know where.
         $authorization = new Authorization(new Authentication($this->session, $this->password), $this->permissionMapper);
+        $permission = $this->permissionMapper->fetchById(1);
+
+        $this->assertFalse($authorization->can(new NullDomainObject));
 
         $this->assertTrue($authentication->isLogged());
+        $this->assertTrue($authorization->can($permission));
+        $this->assertTrue($authorization->can(1));
         $this->assertTrue($authorization->can('see users'));
-        $this->assertFalse($authorization->can('Not Existent Permission'));
 
         $this->session->destroy();
     }
