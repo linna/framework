@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Linna\Authorization;
 
 use Linna\Authentication\Authentication;
+use Linna\Authorization\Permission;
 use Linna\DataMapper\NullDomainObject;
 
 /**
@@ -19,25 +20,14 @@ use Linna\DataMapper\NullDomainObject;
  */
 class Authorization
 {
-    /**
-     * @var PermissionMapperInterface Permission Mapper
-     */
-    protected $permissionMapper;
-
-    /**
-     * @var Authentication Current authentication status
-     */
-    protected $authentication;
+    use PermissionTrait {
+        PermissionTrait::can as canByObject;
+    }
 
     /**
      * @var int User id
      */
     protected $userId = 0;
-
-    /**
-     * @var array User/Permission hash table
-     */
-    protected $hashTable = [];
 
     /**
      * Class Constructor.
@@ -63,12 +53,8 @@ class Authorization
      */
     public function __construct(Authentication $authentication, PermissionMapperInterface $permissionMapper)
     {
-        $this->authentication = $authentication;
-        $this->permissionMapper = $permissionMapper;
-
         $this->userId = $authentication->getLoginData()['user_id'] ?? 0;
-
-        $this->hashTable = $permissionMapper->fetchUserPermissionHashTable($this->userId);
+        $this->permission = $permissionMapper->fetchByUserId($this->userId);
     }
 
     /**
@@ -76,32 +62,42 @@ class Authorization
      * <pre><code class="php">$authorization = new Authorization($authentication, $permissionMapper);
      *
      * //with this example, the class checks if the authenticated
-     * //user has the permission 'update user'.
-     * $authorization->can('update user');
+     * //user has the permission with the permission object.
+     *
+     * $permission = $permissionMapper->fetchById(1);
+     * $authorization->can($permission);
+     *
+     * //with this example, the class checks if the authenticated
+     * //user has the permission with the permission id 1.
+     * $authorization->can(1);
+     *
+     * //with this example, the class checks if the authenticated
+     * //user has the permission 'see users'.
+     * $authorization->can('see users');
      * </code></pre>
      *
-     * @param string $permissionName
+     * @param Permission|int|string $permission
      *
      * @return bool
      */
-    public function can(string $permissionName): bool
+    public function can($permission): bool
     {
-        //get permission
-        $permission = $this->permissionMapper->fetchByName($permissionName);
-
-        //permission not exist
         if ($permission instanceof NullDomainObject) {
             return false;
         }
 
-        //check if there is user logged
-        if (!$this->userId) {
-            return false;
+        if ($permission instanceof Permission) {
+            return $this->canByObject($permission);
         }
 
-        //make hash for hash table check
-        $hash = hash('sha256', $this->userId.'.'.$permission->getId());
+        if (is_int($permission)) {
+            return $this->canById($permission);
+        }
 
-        return isset($this->hashTable[$hash]);
+        if (is_string($permission)) {
+            return $this->canByName($permission);
+        }
+
+        return false;
     }
 }
