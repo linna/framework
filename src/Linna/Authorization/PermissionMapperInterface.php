@@ -21,23 +21,6 @@ use Linna\DataMapper\MapperInterface;
 interface PermissionMapperInterface extends MapperInterface, FetchByNameInterface, FetchByUserInterface, FetchByRoleInterface
 {
     /**
-     * Combine al users-roles-permissions in storage for
-     * passed user id.
-     * Return an array containing a sha256 hash of
-     * user_id.permission_id string.
-     *
-     * Example
-     * Hash will be match with below code sample
-     *      <?php
-     *      $hash = hash('sha256', $userId.'.'.$permissionId);
-     *
-     * @param int $userId
-     *
-     * @return array
-     */
-    public function fetchUserPermissionHashTable(int $userId): array;
-
-    /**
      * Check if a permission exist.
      *
      * @param int $permissionId
