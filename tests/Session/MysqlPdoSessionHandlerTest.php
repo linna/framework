@@ -70,6 +70,17 @@ class MysqlPdoSessionHandlerTest extends TestCase
     }
 
     /**
+     * Tear Down.
+     */
+    public function tearDown()
+    {
+        //closing PDO connection
+        $this->pdo = null;
+
+        unset($this->pdo, $this->handler, $this->session);
+    }
+
+    /**
      * Test Session Start.
      *
      * @runInSeparateProcess

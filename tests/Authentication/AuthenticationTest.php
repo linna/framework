@@ -50,6 +50,14 @@ class AuthenticationTest extends TestCase
     }
 
     /**
+     * Tear Down.
+     */
+    public function tearDown()
+    {
+        unset($this->password, $this->session, $this->authentication);
+    }
+
+    /**
      * Test login.
      *
      * @runInSeparateProcess
