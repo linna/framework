@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] [v0.25.0](https://github.com/linna/framework/compare/v0.24.0...v0.25.0) - 20XX-XX-XX
 
 ### Added
+* `Linna\Authentication\ProtectedController->protectWithRedirect()` method
+* `Linna\Authentication\Exception\AuthenticationException` exception
 * `Linna\Authorization\EnhancedUser->__constructor()`
 * `Linna\Authorization\EnhancedUser->hasRole()` method
 * `Linna\Authorization\EnhancedUser->hasRoleById()` method
@@ -54,6 +56,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 * `Linna\Authentication\LoginAttempt` default value added to properties
+* `Linna\Authentication\ProtectedController` now throw `AuthenticationException` when try to access to protected resource without authentication
+* `Linna\Authentication\ProtectedController->protect()` metod now accept as argument `Authentication` instance and http status code as `int`
 * `Linna\Authentication\User` default value added to properties
 * `Linna\Authentication\UserMapperInterface` extends `Linna\DataMapper\FetchByNameInterface`
 * `Linna\Authorization\Authorization` default value added to properties

@@ -14,23 +14,24 @@ namespace Linna\TestHelper\Mvc;
 use Linna\Authentication\Authentication;
 use Linna\Authentication\ProtectedController;
 use Linna\Mvc\Controller;
+use Linna\Mvc\Model;
 
-class MultipleProtectedController extends Controller
+class ProtectedControllerWithRedirect extends Controller
 {
     use ProtectedController;
 
     public $test = false;
 
-    public function __construct(MultipleModel $model, Authentication $login)
+    public function __construct(Model $model, Authentication $authentication)
     {
         parent::__construct($model);
 
-        $this->protect($login, 'http://localhost');
+        $this->protectWithRedirect($authentication, 'http://localhost');
 
         $this->test = true;
     }
 
-    public function ProtectedAction(): bool
+    public function action(): bool
     {
         if ($this->authentication === false) {
             return false;

@@ -13,8 +13,10 @@ namespace Linna\Tests;
 
 use Linna\Authentication\Authentication;
 use Linna\Authentication\Password;
-use Linna\TestHelper\Mvc\MultipleModel;
-use Linna\TestHelper\Mvc\MultipleProtectedController;
+use Linna\Mvc\Model;
+use Linna\TestHelper\Mvc\ProtectedController;
+use Linna\TestHelper\Mvc\ProtectedControllerWithRedirect;
+use Linna\TestHelper\Mvc\ProtectedMethodController;
 use Linna\Session\Session;
 use PHPUnit\Framework\TestCase;
 
@@ -53,6 +55,14 @@ class ProtectedControllerTest extends TestCase
     }
 
     /**
+     * Tear Down.
+     */
+    public function tearDown(): void
+    {
+        unset($this->session, $this->password, $this->authentication);
+    }
+
+    /**
      * Test access to protected controller with login.
      *
      * @runInSeparateProcess
@@ -71,8 +81,8 @@ class ProtectedControllerTest extends TestCase
         ));
 
         $this->assertTrue($this->authentication->isLogged());
-        $this->assertTrue((new MultipleProtectedController(new MultipleModel(), $this->authentication))->test);
-        $this->assertTrue((new MultipleProtectedController(new MultipleModel(), $this->authentication))->ProtectedAction());
+        $this->assertTrue((new ProtectedController(new Model(), $this->authentication))->test);
+        $this->assertTrue((new ProtectedController(new Model(), $this->authentication))->action());
 
         $this->assertTrue($this->authentication->logout());
 
@@ -82,20 +92,52 @@ class ProtectedControllerTest extends TestCase
     /**
      * Test acces to protected controller without login.
      *
-     * @requires extension xdebug
+     * @expectedException Linna\Authentication\Exception\AuthenticationException
      * @runInSeparateProcess
-     * @outputBuffering disabled
      */
     public function testAccessProtectedControllerWithoutLogin(): void
     {
-        ob_start();
-
-        (new MultipleProtectedController(new MultipleModel(), $this->authentication));
-        $headers_list = xdebug_get_headers();
-
-        ob_end_clean();
-
         $this->assertFalse($this->authentication->isLogged());
-        $this->assertTrue(in_array('Location: http://localhost', $headers_list));
+
+        (new ProtectedController(new Model(), $this->authentication));
+    }
+
+    /**
+     * Test acces to protected controller with redirect without login.
+     *
+     * @expectedException Linna\Authentication\Exception\AuthenticationException
+     * @runInSeparateProcess
+     */
+    public function testAccessProtectedControllerWithRedirectWithoutLogin(): void
+    {
+        $this->assertFalse($this->authentication->isLogged());
+
+        (new ProtectedControllerWithRedirect(new Model(), $this->authentication));
+    }
+
+    /**
+     * Test acces to protected method without login.
+     *
+     * @expectedException Linna\Authentication\Exception\AuthenticationException
+     * @runInSeparateProcess
+     */
+    public function testAccessProtectedMethodWithoutLogin(): void
+    {
+        $this->assertFalse($this->authentication->isLogged());
+
+        (new ProtectedMethodController(new Model(), $this->authentication))->ProtectedAction();
+    }
+
+    /**
+     * Test acces to protected method with redirect without login.
+     *
+     * @expectedException Linna\Authentication\Exception\AuthenticationException
+     * @runInSeparateProcess
+     */
+    public function testAccessProtectedMethodWithRedirectWithoutLogin(): void
+    {
+        $this->assertFalse($this->authentication->isLogged());
+
+        (new ProtectedMethodController(new Model(), $this->authentication))->ProtectedActionWithRedirect();
     }
 }

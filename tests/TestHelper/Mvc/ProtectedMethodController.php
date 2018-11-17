@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * Linna Framework.
+ *
+ * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
+ * @copyright (c) 2018, Sebastian Rapetti
+ * @license http://opensource.org/licenses/MIT MIT License
+ */
+declare(strict_types=1);
+
+namespace Linna\TestHelper\Mvc;
+
+use Linna\Authentication\Authentication;
+use Linna\Authentication\ProtectedController;
+use Linna\Mvc\Controller;
+use Linna\Mvc\Model;
+
+class ProtectedMethodController extends Controller
+{
+    use ProtectedController;
+
+    private $auth;
+
+    public $test = false;
+
+    public function __construct(Model $model, Authentication $authentication)
+    {
+        parent::__construct($model);
+
+        $this->auth = $authentication;
+    }
+
+    public function ProtectedAction(): bool
+    {
+        $this->protect($this->auth, 403);
+
+        $this->test = true;
+
+        return true;
+    }
+
+    public function ProtectedActionWithRedirect(): bool
+    {
+        $this->protectWithRedirect($this->auth, 'http://localhost');
+
+        $this->test = true;
+
+        return true;
+    }
+}
