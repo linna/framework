@@ -70,26 +70,26 @@ class FrontControllerTest extends TestCase
                 'name'       => 'Calculator',
                 'method'     => 'POST',
                 'url'        => '/calculator/(multiply|divide|add|sub)',
-                'model'      => 'CalculatorModel',
-                'view'       => 'CalculatorView',
-                'controller' => 'CalculatorController',
+                'model'      =>  CalculatorModel::class,
+                'view'       =>  CalculatorView::class,
+                'controller' =>  CalculatorController::class,
             ]),
             new Route([
                 'name'       => 'BeforeAfter',
                 'method'     => 'GET',
                 'url'        => '/before/after/[value]',
-                'model'      => 'BeforeAfterModel',
-                'view'       => 'BeforeAfterView',
-                'controller' => 'BeforeAfterController',
+                'model'      => BeforeAfterModel::class,
+                'view'       => BeforeAfterView::class,
+                'controller' => BeforeAfterController::class,
                 'action'     => 'Action'
             ]),
             new Route([
                 'name'       => 'MultiParam',
                 'method'     => 'GET',
                 'url'        => '/multi/param/[year]/[month]/[day]',
-                'model'      => 'MultiModel',
-                'view'       => 'MultiView',
-                'controller' => 'MultiController',
+                'model'      => MultipleModel::class,
+                'view'       => MultipleView::class,
+                'controller' => MultipleController::class,
                 'action'     => 'SomeParam'
             ])
         ]))->toArray();

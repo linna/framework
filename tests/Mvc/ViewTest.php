@@ -32,20 +32,11 @@ class ViewTest extends TestCase
 
     /**
      * Test view with bad template.
+     *
+     * @expectedException TypeError
      */
     public function testViewWithBadTemplate(): void
     {
         $this->assertInstanceOf(BadTemplateView::class, new BadTemplateView(new CalculatorModel(), 'badTemplate'));
-    }
-
-    /**
-     * Test view with bad template on render.
-     *
-     * @expectedException UnexpectedValueException
-     * @expectedExceptionMessage Template must implements Linna\Mvc\TemplateInterface.
-     */
-    public function testViewWithBadTemplateOnRender(): void
-    {
-        (new BadTemplateView(new CalculatorModel(), 'badTemplate'))->render();
     }
 }

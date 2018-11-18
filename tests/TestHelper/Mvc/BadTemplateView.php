@@ -15,12 +15,8 @@ use Linna\Mvc\View;
 
 class BadTemplateView extends View
 {
-    protected $template;
-
     public function __construct(CalculatorModel $model, $template)
     {
-        parent::__construct($model);
-
-        $this->template = $template;
+        parent::__construct($model, $template);
     }
 }

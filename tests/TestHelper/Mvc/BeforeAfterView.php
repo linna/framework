@@ -15,13 +15,9 @@ use Linna\Mvc\View;
 
 class BeforeAfterView extends View
 {
-    protected $template;
-
     public function __construct(BeforeAfterModel $model, JsonTemplate $template)
     {
-        parent::__construct($model);
-
-        $this->template = $template;
+        parent::__construct($model, $template);
     }
 
     public function Action()
