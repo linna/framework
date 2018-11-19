@@ -58,6 +58,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Authentication\LoginAttempt` default value added to properties
 * `Linna\Authentication\ProtectedController` now throw `AuthenticationException` when try to access to protected resource without authentication
 * `Linna\Authentication\ProtectedController->protect()` metod now accept as argument `Authentication` instance and http status code as `int`
+* `Linna\Authentication\ProtectedController` renamed to `Linna\Authentication\ProtectedControllerTrait`
 * `Linna\Authentication\User` default value added to properties
 * `Linna\Authentication\UserMapperInterface` extends `Linna\DataMapper\FetchByNameInterface`
 * `Linna\Authorization\Authorization` default value added to properties

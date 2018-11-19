@@ -23,7 +23,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Protected Controller Test.
  */
-class ProtectedControllerTest extends TestCase
+class ProtectedControllerTraitTest extends TestCase
 {
     /**
      * @var Session The session class instance.

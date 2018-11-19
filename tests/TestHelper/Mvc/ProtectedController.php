@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Linna\TestHelper\Mvc;
 
 use Linna\Authentication\Authentication;
-use Linna\Authentication\ProtectedController as ProtectedControllerTrait;
+use Linna\Authentication\ProtectedControllerTrait;
 use Linna\Mvc\Controller;
 use Linna\Mvc\Model;
 

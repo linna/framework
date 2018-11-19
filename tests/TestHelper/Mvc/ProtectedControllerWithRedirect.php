@@ -12,13 +12,13 @@ declare(strict_types=1);
 namespace Linna\TestHelper\Mvc;
 
 use Linna\Authentication\Authentication;
-use Linna\Authentication\ProtectedController;
+use Linna\Authentication\ProtectedControllerTrait;
 use Linna\Mvc\Controller;
 use Linna\Mvc\Model;
 
 class ProtectedControllerWithRedirect extends Controller
 {
-    use ProtectedController;
+    use ProtectedControllerTrait;
 
     public $test = false;
 

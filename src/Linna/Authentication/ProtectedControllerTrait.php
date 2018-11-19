@@ -16,7 +16,7 @@ use Linna\Authentication\Exception\AuthenticationException;
 /**
  * Help protect a controller with login.
  */
-trait ProtectedController
+trait ProtectedControllerTrait
 {
     /**
      * @var bool Contain login status
