@@ -12,18 +12,18 @@ declare(strict_types=1);
 namespace Linna\TestHelper\Mvc;
 
 use Linna\Mvc\Controller;
+use Linna\TestHelper\Mvc\MultipleModel;
 
 /**
  * Multiple Controller.
  *
- * @property \Linna\TestHelper\Mvc\MultipleModel $model Multiple Model.
  */
 class MultipleController extends Controller
 {
     /**
      * Class Contructor.
      *
-     * @param \Linna\TestHelper\Mvc\MultipleModel $model
+     * @param MultipleModel $model
      */
     public function __construct(MultipleModel $model)
     {
