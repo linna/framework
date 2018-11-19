@@ -124,6 +124,9 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function resolve(string $class, array $rules = [])
     {
+        //reset tree;
+        $this->tree = [];
+
         //merge rules passed as parameter with general rules
         $this->rules = array_merge($this->rules, $rules);
 
@@ -155,6 +158,7 @@ class Container implements ContainerInterface, ArrayAccess
             }
 
             //get parameter from constructor
+            //can return error when constructor not declared
             $parameters = (new ReflectionClass($class))->getConstructor()->getParameters();
 
             //loop parameter
