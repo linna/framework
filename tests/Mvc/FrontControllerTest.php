@@ -92,9 +92,9 @@ class FrontControllerTest extends TestCase
                 'controller' => MultipleController::class,
                 'action'     => 'SomeParam'
             ])
-        ]))->toArray();
+        ]));
 
-        $this->router = new Router($routes, [
+        $this->router = new Router($routes->toArray(), [
             'badRoute'    => 'E404',
             'rewriteMode' => true,
         ]);
@@ -106,6 +106,8 @@ class FrontControllerTest extends TestCase
         $this->model = $model;
         $this->view = $view;
         $this->controller = $controller;
+
+        $this->routes = $routes;
     }
 
     /**
@@ -113,7 +115,7 @@ class FrontControllerTest extends TestCase
      */
     public function testNewFrontControllerInstance(): void
     {
-        $this->assertInstanceOf(FrontController::class, new FrontController($this->model, $this->view, $this->controller, '', []));
+        $this->assertInstanceOf(FrontController::class, new FrontController($this->model, $this->view, $this->controller, $this->routes[0]));
     }
 
     /**
@@ -126,25 +128,30 @@ class FrontControllerTest extends TestCase
         $model = $this->model;
         $view = $this->view;
         $controller = $this->controller;
+        $route = $this->routes[0];
 
         return [
-            [false, $view, $controller, 'index', []],
-            [$model, false, $controller, 'index', []],
-            [$model, $view, false, 'index', []],
-            [$model, $view, $controller, false, []],
-            [$model, $view, $controller, 'index', false]
+            [false, $view, $controller, $route],
+            [$model, false, $controller, $route],
+            [$model, $view, false, $route],
+            [$model, $view, $controller, false]
         ];
     }
 
     /**
      * Test new front controller instance with wrong arguments.
      *
+     * @param Model $model
+     * @param View $view
+     * @param Controller $controller
+     * @param Route $route
+     *
      * @dataProvider frontControllerArgProvider
      * @expectedException TypeError
      */
-    public function testNewFrontControllerWithWrongArguments($model, $view, $controller, $action, $param): void
+    public function testNewFrontControllerWithWrongArguments($model, $view, $controller, $route): void
     {
-        (new FrontController($model, $view, $controller, $action, $param));
+        (new FrontController($model, $view, $controller, $route));
     }
 
     /**
@@ -163,7 +170,11 @@ class FrontControllerTest extends TestCase
     }
 
     /**
-     * Test run front controller
+     * Test run front controller.
+     *
+     * @param string $route
+     * @param array $parameter
+     * @param int $result
      *
      * @dataProvider calculatorProvider
      */
@@ -173,10 +184,7 @@ class FrontControllerTest extends TestCase
 
         $this->router->validate($route, 'POST');
 
-        $routeArray = $this->router->getRoute()->toArray();
-
-        $frontController = new FrontController($this->model, $this->view, $this->controller, $routeArray['action'], $routeArray['param']);
-
+        $frontController = new FrontController($this->model, $this->view, $this->controller, $this->router->getRoute());
         $frontController->run();
 
         $this->assertEquals($result, json_decode($frontController->response())->result);
@@ -201,20 +209,20 @@ class FrontControllerTest extends TestCase
     /**
      * Test run front controller with param.
      *
+     * @param string $route
+     * @param string $result
+     *
      * @dataProvider someParamProvider
      */
     public function testRunFrontControllerWithSomeParam(string $route, string $result): void
     {
         $this->router->validate($route, 'GET');
 
-        $route = $this->router->getRoute()->toArray();
-
         $model = new MultipleModel();
         $view = new MultipleView($model, new JsonTemplate());
         $controller = new MultipleController($model);
 
-        $frontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
-
+        $frontController = new FrontController($model, $view, $controller, $this->router->getRoute());
         $frontController->run();
 
         $this->assertEquals($result, json_decode($frontController->response())->result);
@@ -279,14 +287,11 @@ class FrontControllerTest extends TestCase
     {
         $this->router->validate('/before/after/'.$input, 'GET');
 
-        $route = $this->router->getRoute()->toArray();
-
         $model = new BeforeAfterModel();
         $controller = new BeforeAfterController($model);
         $view = new BeforeAfterView($model, new JsonTemplate());
 
-        $frontController = new FrontController($model, $view, $controller, $route['action'], $route['param']);
-
+        $frontController = new FrontController($model, $view, $controller, $this->router->getRoute());
         $frontController->run();
 
         $this->assertEquals($result, json_decode($frontController->response())->result);

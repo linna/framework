@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Linna\Mvc;
 
+use Linna\Router\Route;
+
 /**
  * FrontController.
  */
@@ -47,13 +49,14 @@ class FrontController
      * @param Model      $model
      * @param View       $view
      * @param Controller $controller
-     * @param string     $action
-     * @param array      $param
+     * @param Route      $route
      */
-    public function __construct(Model $model, View $view, Controller $controller, string $action, array $param)
+    public function __construct(Model $model, View $view, Controller $controller, Route $route)
     {
-        $this->routeAction = $action;
-        $this->routeParam = $param;
+        $routeArray = $route->toArray();
+
+        $this->routeAction = $routeArray['action'];
+        $this->routeParam = $routeArray['param'];
 
         $this->model = $model;
         $this->view = $view;
