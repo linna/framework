@@ -77,7 +77,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Linna\DataMapper\DomainObjectAbstract->rId` public property added
 * `Linna\Http` namespace renamed to `Linna\Router`
 * `Linna\Mvc\FrontController` default value added to properties
-* `Linna\Mvc\FrontController->__constructor()` now accept `Route` instance as last argument instead of `$action` and `$param`
+* `Linna\Mvc\FrontController->__constructor()` now accept `RouteInterface` instance as last argument instead of `$action` and `$param`
 * `Linna\Mvc\View->__constructor()` now need `Model` and `TemplateInterface` as arguments
 * `Linna\Router\Router` default value added to properties
 * `Linna\Session\MemcachedSessionHandler` default value added to properties
