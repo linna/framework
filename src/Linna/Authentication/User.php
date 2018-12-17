@@ -123,6 +123,8 @@ class User extends DomainObjectAbstract
      * </code></pre>
      *
      * @param string $newPassword
+     *
+     * @return void
      */
     public function setPassword(string $newPassword): void
     {

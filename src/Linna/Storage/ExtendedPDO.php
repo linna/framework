@@ -69,6 +69,8 @@ class ExtendedPDO extends PDO
      *
      * @param array $value
      *
+     * @return void
+     *
      * @throws InvalidArgumentException
      */
     private function checkValue(array &$value): void

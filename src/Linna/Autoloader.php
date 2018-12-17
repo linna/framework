@@ -97,6 +97,8 @@ class Autoloader
      * Utilize this for prevente multiple addNamespace() calls.
      *
      * @param array $namespaces The namespace prefix array.
+     *
+     * @return void
      */
     public function addNamespaces(array $namespaces): void
     {

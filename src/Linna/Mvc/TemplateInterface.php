@@ -25,6 +25,8 @@ interface TemplateInterface
 
     /**
      * Return output for specific template.
+     *
+     * @return string
      */
     public function getOutput(): string;
 }

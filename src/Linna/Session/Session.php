@@ -100,6 +100,8 @@ class Session implements ArrayAccess
 
     /**
      * Regenerate session_id without double cookie problem.
+     *
+     * @return void
      */
     public function regenerate(): void
     {
@@ -115,6 +117,8 @@ class Session implements ArrayAccess
 
     /**
      * Set cookie.
+     *
+     * @return void
      */
     private function setCookie(): void
     {
@@ -131,6 +135,8 @@ class Session implements ArrayAccess
 
     /**
      * Start session.
+     *
+     * @return void
      */
     public function start(): void
     {
@@ -154,6 +160,8 @@ class Session implements ArrayAccess
 
     /**
      * Set session options before start.
+     *
+     * @return void
      */
     private function prepare(): void
     {
@@ -172,6 +180,8 @@ class Session implements ArrayAccess
 
     /**
      * Refresh session.
+     *
+     * @return void
      */
     private function refresh(): void
     {
@@ -193,6 +203,8 @@ class Session implements ArrayAccess
      * Set Session Data.
      *
      * @param int $time
+     *
+     * @return void
      */
     private function setSessionData(int $time): void
     {
@@ -206,6 +218,8 @@ class Session implements ArrayAccess
      * Set session handler for new instance.
      *
      * @param SessionHandlerInterface $handler
+     *
+     * @return void
      */
     public function setSessionHandler(SessionHandlerInterface $handler): void
     {
@@ -215,6 +229,8 @@ class Session implements ArrayAccess
 
     /**
      * Destroy session.
+     *
+     * @return void
      */
     public function destroy(): void
     {
@@ -231,6 +247,8 @@ class Session implements ArrayAccess
 
     /**
      * Write session data and end session.
+     *
+     * @return void
      */
     public function commit(): void
     {

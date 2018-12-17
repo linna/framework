@@ -148,7 +148,7 @@ class Authentication
      * @param string $storedPassword Password from persistent storage.
      * @param int    $storedId       User id from persistent storage.
      *
-     * @return bool
+     * @return bool True for successful login, false if login fails.
      */
     public function login(string $userName, string $password, string $storedUserName = '', string $storedPassword = '', int $storedId): bool
     {

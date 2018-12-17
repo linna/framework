@@ -76,7 +76,7 @@ class Authorization
      * $authorization->can('see users');
      * </code></pre>
      *
-     * @param Permission|int|string $permission
+     * @param NullDomainObject|Permission|int|string $permission
      *
      * @return bool
      */

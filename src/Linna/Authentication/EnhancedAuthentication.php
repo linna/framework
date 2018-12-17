@@ -86,7 +86,7 @@ class EnhancedAuthentication extends Authentication
      *
      * @param string $userName
      *
-     * @return int
+     * @return int Number of attempts with same user.
      */
     public function getAttemptsLeftWithSameUser(string $userName): int
     {
@@ -103,7 +103,7 @@ class EnhancedAuthentication extends Authentication
      *
      * @param string $sessionId
      *
-     * @return int
+     * @return int Number of attempts with same session.
      */
     public function getAttemptsLeftWithSameSession(string $sessionId): int
     {
@@ -117,7 +117,7 @@ class EnhancedAuthentication extends Authentication
      *
      * @param string $ipAddress
      *
-     * @return int
+     * @return int Number of attempts with same ip.
      */
     public function getAttemptsLeftWithSameIp(string $ipAddress): int
     {

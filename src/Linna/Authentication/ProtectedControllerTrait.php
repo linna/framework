@@ -29,6 +29,10 @@ trait ProtectedControllerTrait
      *
      * @param Authentication $authentication
      * @param int            $httpResponseCode
+     *
+     * @return void
+     *
+     * @throws AuthenticationException if not authenticated.
      */
     private function protect(Authentication $authentication, int $httpResponseCode = 403): void
     {
@@ -44,6 +48,10 @@ trait ProtectedControllerTrait
      *
      * @param Authentication $authentication
      * @param string         $location
+     *
+     * @return void
+     *
+     * @throws AuthenticationException
      */
     private function protectWithRedirect(Authentication $authentication, string $location): void
     {

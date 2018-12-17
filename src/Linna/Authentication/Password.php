@@ -91,7 +91,7 @@ class Password
      *
      * @param string $password
      *
-     * @return string
+     * @return string Hashed password.
      */
     public function hash(string $password): string
     {

@@ -18,6 +18,8 @@ interface DomainObjectInterface
 {
     /**
      * Get the ID of this object (unique to the object type).
+     *
+     * @return int
      */
     public function getId(): int;
 
@@ -25,6 +27,8 @@ interface DomainObjectInterface
      * Set the id for this object.
      *
      * @param int $objectId
+     *
+     * @return int
      */
     public function setId(int $objectId): int;
 }

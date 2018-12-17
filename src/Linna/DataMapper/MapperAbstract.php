@@ -34,8 +34,10 @@ abstract class MapperAbstract
      * or update the store as required.
      *
      * @param DomainObjectInterface $domainObject
+     *
+     * @return void
      */
-    public function save(DomainObjectInterface &$domainObject)
+    public function save(DomainObjectInterface &$domainObject): void
     {
         if ($domainObject->getId() === 0) {
             $this->concreteInsert($domainObject);
@@ -48,8 +50,10 @@ abstract class MapperAbstract
      * Delete the DomainObject from persistent storage.
      *
      * @param DomainObjectInterface $domainObject
+     *
+     * @return void
      */
-    public function delete(DomainObjectInterface &$domainObject)
+    public function delete(DomainObjectInterface &$domainObject): void
     {
         $this->concreteDelete($domainObject);
     }

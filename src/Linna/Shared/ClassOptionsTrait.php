@@ -26,6 +26,8 @@ trait ClassOptionsTrait
      * @param string $key
      * @param mixed  $value
      *
+     * @return void
+     *
      * @throws InvalidArgumentException If provided option name (key) are not valid
      */
     public function setOption(string $key, $value): void
@@ -42,6 +44,8 @@ trait ClassOptionsTrait
      * Set one or more options.
      *
      * @param array $options
+     *
+     * @return void
      *
      * @throws InvalidArgumentException If provided option names are not valid
      */

@@ -36,7 +36,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      * $object->getId();
      * </code></pre>
      *
-     * @return int Current object id
+     * @return int Current object id.
      */
     public function getId(): int
     {
@@ -51,11 +51,11 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      * $object->setId(5);
      * </code></pre>
      *
-     * @param int $objectId New object id
+     * @param int $objectId New object id.
      *
-     * @throws UnexpectedValueException If the id on the object is already set
+     * @throws UnexpectedValueException If the id on the object is already set.
      *
-     * @return int New object id
+     * @return int New object id.
      */
     public function setId(int $objectId): int
     {

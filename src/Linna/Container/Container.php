@@ -144,6 +144,8 @@ class Container implements ContainerInterface, ArrayAccess
      * Create a dependencies map for a class.
      *
      * @param string $class
+     *
+     * @return void
      */
     private function buildTree(string $class): void
     {
@@ -202,6 +204,8 @@ class Container implements ContainerInterface, ArrayAccess
 
     /**
      * Build objects from dependencyTree.
+     *
+     * @return void
      */
     private function buildObjects(): void
     {

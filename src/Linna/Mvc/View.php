@@ -53,6 +53,8 @@ class View implements SplObserver
 
     /**
      * Render a template.
+     *
+     * @return string
      */
     public function render(): string
     {
