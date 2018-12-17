@@ -31,14 +31,19 @@ use Psr\SimpleCache\CacheInterface;
 class DiskCache implements CacheInterface
 {
     use ActionMultipleTrait;
-    use ClassOptionsTrait;
+    //use ClassOptionsTrait;
 
     /**
      * @var array Config options for class
      */
-    protected $options = [
+    /*protected $options = [
         'dir' => '/tmp',
-    ];
+    ];*/
+
+    /**
+     * @var string Directory for cache storage.
+     */
+    protected $dir = '/tmp';
 
     /**
      * Constructor.
@@ -47,7 +52,9 @@ class DiskCache implements CacheInterface
      */
     public function __construct(array $options = [])
     {
-        $this->setOptions($options);
+        //$this->setOptions($options);
+
+        ['dir' => $this->dir] = array_replace_recursive(['dir' => '/tmp'], $options);
     }
 
     /**
@@ -56,7 +63,7 @@ class DiskCache implements CacheInterface
     public function get(string $key, $default = null)
     {
         //create file name
-        $file = $this->options['dir'].'/'.sha1($key).'.php';
+        $file = $this->dir.'/'.sha1($key).'.php';
 
         if ($this->doesFileChecksFailed($file)) {
             return $default;
@@ -112,7 +119,7 @@ class DiskCache implements CacheInterface
         $content = "<?php return {$content};";
 
         //write file
-        file_put_contents($this->options['dir'].'/'.sha1($key).'.php', $content);
+        file_put_contents($this->dir.'/'.sha1($key).'.php', $content);
 
         return true;
     }
@@ -140,7 +147,7 @@ class DiskCache implements CacheInterface
     public function delete(string $key): bool
     {
         //create file name
-        $file = $this->options['dir'].'/'.sha1($key).'.php';
+        $file = $this->dir.'/'.sha1($key).'.php';
 
         //chek if file exist and delete
         if (file_exists($file)) {
@@ -157,7 +164,7 @@ class DiskCache implements CacheInterface
      */
     public function clear(): bool
     {
-        array_map('unlink', glob($this->options['dir'].'/*.php'));
+        array_map('unlink', glob($this->dir.'/*.php'));
 
         return true;
     }
@@ -167,6 +174,6 @@ class DiskCache implements CacheInterface
      */
     public function has(string $key): bool
     {
-        return !$this->doesFileChecksFailed($this->options['dir'].'/'.sha1($key).'.php');
+        return !$this->doesFileChecksFailed($this->dir.'/'.sha1($key).'.php');
     }
 }

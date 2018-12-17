@@ -23,6 +23,8 @@ interface EnhancedAuthenticationMapperInterface extends MapperInterface
      *
      * @param string $userName      User name
      * @param int    $timeInSeconds Attempts in the last specified seconds
+     *
+     * @return int
      */
     public function fetchAttemptsWithSameUser(string $userName, int $timeInSeconds): int;
 
@@ -31,6 +33,8 @@ interface EnhancedAuthenticationMapperInterface extends MapperInterface
      *
      * @param string $sessionId     Session id
      * @param int    $timeInSeconds Attempts in the last specified seconds
+     *
+     * @return int
      */
     public function fetchAttemptsWithSameSession(string $sessionId, int $timeInSeconds): int;
 
@@ -39,6 +43,8 @@ interface EnhancedAuthenticationMapperInterface extends MapperInterface
      *
      * @param string $ipAddress     Ip address
      * @param int    $timeInSeconds Attempts in the last specified seconds
+     *
+     * @return int
      */
     public function fetchAttemptsWithSameIp(string $ipAddress, int $timeInSeconds): int;
 
@@ -46,6 +52,8 @@ interface EnhancedAuthenticationMapperInterface extends MapperInterface
      * Remove old login attempts
      *
      * @param int $timeInSeconds
+     *
+     * @return bool
      */
     public function deleteOldLoginAttempts(int $timeInSeconds): bool;
 }

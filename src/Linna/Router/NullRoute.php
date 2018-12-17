@@ -25,14 +25,4 @@ class NullRoute implements RouteInterface
     {
         unset($route);
     }
-
-    /**
-     * Return route array.
-     *
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return [];
-    }
 }

@@ -60,7 +60,7 @@ composer require linna/framework
    * Implementation for PSR-4 Autoloader, PSR-11 Container and PSR-16 Simple Cache
 
 # Documentation 
-For more details please see the [user guide (soon)](https://linna.tools/docs/current/) or the [api (incomplete)](https://linna.tools/api/current/) and read our [licence](https://github.com/linna/framework/blob/master/LICENSE.md)
+For more details please see the [user guide (soon)](https://linna.tools/docs/en/framework/v0.25.0/) or the [api (incomplete)](https://linna.tools/api/en/framework/v0.25.0/) and read [licence](https://github.com/linna/framework/blob/master/LICENSE.md)
 
 # Contributing
 Please see [CONTRIBUTING.md](https://github.com/linna/framework/blob/master/CONTRIBUTING.md).

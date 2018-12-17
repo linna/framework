@@ -76,7 +76,7 @@ class RouterTest extends TestCase
                 'view'       => 'UserView',
                 'controller' => 'UserController',
             ])
-        ]))->toArray();
+        ]))->getArrayCopy();
 
         $this->routes = $routes;
 
@@ -188,15 +188,13 @@ class RouterTest extends TestCase
 
         $route = $this->router->getRoute();
 
-        $array = $route->toArray();
-
         $this->assertInstanceOf(Route::class, $route);
 
-        $this->assertEquals($returneRoute[0], $array['model']);
-        $this->assertEquals($returneRoute[1], $array['view']);
-        $this->assertEquals($returneRoute[2], $array['controller']);
-        $this->assertEquals($returneRoute[3], $array['action']);
-        $this->assertEquals($returneRoute[4], $array['param']);
+        $this->assertEquals($returneRoute[0], $route->model);
+        $this->assertEquals($returneRoute[1], $route->view);
+        $this->assertEquals($returneRoute[2], $route->controller);
+        $this->assertEquals($returneRoute[3], $route->action);
+        $this->assertEquals($returneRoute[4], $route->param);
     }
 
     /**
@@ -206,20 +204,23 @@ class RouterTest extends TestCase
      */
     public function testRoutesWithOtherBasePath(string $url, string $method, array $returneRoute, bool $validate): void
     {
-        $this->router->setOption('basePath', '/other_dir');
+        $router = new Router($this->routes, [
+            'basePath'    => '/other_dir',
+            'badRoute'    => 'E404',
+            'rewriteMode' => true,
+        ]);
 
-        $this->assertEquals($validate, $this->router->validate('/other_dir'.$url, $method));
+        $this->assertEquals($validate, $router->validate('/other_dir'.$url, $method));
 
-        $route = $this->router->getRoute();
-
-        $array = $route->toArray();
+        $route = $router->getRoute();
 
         $this->assertInstanceOf(Route::class, $route);
-        $this->assertEquals($returneRoute[0], $array['model']);
-        $this->assertEquals($returneRoute[1], $array['view']);
-        $this->assertEquals($returneRoute[2], $array['controller']);
-        $this->assertEquals($returneRoute[3], $array['action']);
-        $this->assertEquals($returneRoute[4], $array['param']);
+
+        $this->assertEquals($returneRoute[0], $route->model);
+        $this->assertEquals($returneRoute[1], $route->view);
+        $this->assertEquals($returneRoute[2], $route->controller);
+        $this->assertEquals($returneRoute[3], $route->action);
+        $this->assertEquals($returneRoute[4], $route->param);
     }
 
     /**
@@ -245,7 +246,7 @@ class RouterTest extends TestCase
      */
     public function testMapInToRouterWithMapMethod(string $method, string $url): void
     {
-        $this->router->map(['method' => $method, 'url' => $url]);
+        $this->router->map(new Route(['method' => $method, 'url' => $url]));
 
         $this->assertTrue($this->router->validate($url, $method));
 
@@ -282,7 +283,6 @@ class RouterTest extends TestCase
 
         $this->assertTrue($this->router->validate($url, $method));
 
-        /** @var Route Route Class. */
         $route = $this->router->getRoute();
 
         $callback = $route->getCallback();
@@ -322,7 +322,6 @@ class RouterTest extends TestCase
 
         $this->assertTrue($this->router->validate($url, $method));
 
-        /** @var Route Route Class. */
         $route = $this->router->getRoute();
 
         $callback = $route->getCallback();
@@ -349,14 +348,14 @@ class RouterTest extends TestCase
     public function testValidateRouteWithNoBadRouteDeclared(): void
     {
         //using a worng bad route for overwrite previous setting
-        $this->router->setOptions([
+        $router = new Router($this->routes, [
             'badRoute'    => 'E40',
             'rewriteMode' => true,
         ]);
 
-        $this->assertFalse($this->router->validate('/badroute', 'GET'));
+        $this->assertFalse($router->validate('/badroute', 'GET'));
 
-        $this->assertInstanceOf(NullRoute::class, $this->router->getRoute());
+        $this->assertInstanceOf(NullRoute::class, $router->getRoute());
     }
 
     /**
@@ -364,23 +363,21 @@ class RouterTest extends TestCase
      */
     public function testValidateWithRewriteModeOff(): void
     {
-        $this->router->setOptions([
+        $router = new Router($this->routes, [
             'badRoute'    => 'E404',
             'rewriteMode' => false,
         ]);
 
-        $this->assertTrue($this->router->validate('/index.php?/user/5/enable', 'GET'));
+        $this->assertTrue($router->validate('/index.php?/user/5/enable', 'GET'));
 
-        $route = $this->router->getRoute();
-
-        $array = $route->toArray();
+        $route = $router->getRoute();
 
         $this->assertInstanceOf(Route::class, $route);
-        $this->assertEquals('UserModel', $array['model']);
-        $this->assertEquals('UserView', $array['view']);
-        $this->assertEquals('UserController', $array['controller']);
-        $this->assertEquals('enable', $array['action']);
-        $this->assertEquals(['id'=>'5'], $array['param']);
+        $this->assertEquals('UserModel', $route->model);
+        $this->assertEquals('UserView', $route->view);
+        $this->assertEquals('UserController', $route->controller);
+        $this->assertEquals('enable', $route->action);
+        $this->assertEquals(['id'=>'5'], $route->param);
     }
 
     /**
@@ -388,26 +385,24 @@ class RouterTest extends TestCase
      */
     public function testValidateWithRewriteModeOffWithAndOtherBasePath(): void
     {
-        $this->router->setOptions([
+        $router = new Router($this->routes, [
             'basePath'    => '/other_dir',
             'badRoute'    => 'E404',
             'rewriteMode' => false,
         ]);
 
         //evaluate request uri
-        $this->assertTrue($this->router->validate('/other_dir/index.php?/user/5/enable', 'GET'));
+        $this->assertTrue($router->validate('/other_dir/index.php?/user/5/enable', 'GET'));
 
         //get route
-        $route = $this->router->getRoute();
-
-        $array = $route->toArray();
+        $route = $router->getRoute();
 
         $this->assertInstanceOf(Route::class, $route);
-        $this->assertEquals('UserModel', $array['model']);
-        $this->assertEquals('UserView', $array['view']);
-        $this->assertEquals('UserController', $array['controller']);
-        $this->assertEquals('enable', $array['action']);
-        $this->assertEquals(['id'=>'5'], $array['param']);
+        $this->assertEquals('UserModel', $route->model);
+        $this->assertEquals('UserView', $route->view);
+        $this->assertEquals('UserController', $route->controller);
+        $this->assertEquals('enable', $route->action);
+        $this->assertEquals(['id'=>'5'], $route->param);
     }
 
     /**
@@ -469,7 +464,7 @@ class RouterTest extends TestCase
                 'view'       => 'UserDeleteView',
                 'controller' => 'UserDeleteController',
             ])
-        ]))->toArray();
+        ]))->getArrayCopy();
 
         $router = new Router($restRoutes, [
             'badRoute'    => 'E404',
@@ -481,12 +476,10 @@ class RouterTest extends TestCase
         //get route
         $route = $router->getRoute();
 
-        $array = $route->toArray();
-
         $this->assertInstanceOf(Route::class, $route);
-        $this->assertEquals('User'.$action.'Model', $array['model']);
-        $this->assertEquals('User'.$action.'View', $array['view']);
-        $this->assertEquals('User'.$action.'Controller', $array['controller']);
+        $this->assertEquals('User'.$action.'Model', $route->model);
+        $this->assertEquals('User'.$action.'View', $route->view);
+        $this->assertEquals('User'.$action.'Controller', $route->controller);
     }
 
     /**
@@ -511,7 +504,7 @@ class RouterTest extends TestCase
                 'view'       => 'User1View',
                 'controller' => 'User1Controller',
             ])
-        ]))->toArray();
+        ]))->getArrayCopy();
 
         $router = new Router($routes, [
             'basePath'    => '/',
@@ -523,12 +516,10 @@ class RouterTest extends TestCase
         //get route
         $route = $router->getRoute();
 
-        $array = $route->toArray();
-
         $this->assertInstanceOf(Route::class, $route);
-        $this->assertEquals('UserModel', $array['model']);
-        $this->assertEquals('UserView', $array['view']);
-        $this->assertEquals('UserController', $array['controller']);
+        $this->assertEquals('UserModel', $route->model);
+        $this->assertEquals('UserView', $route->view);
+        $this->assertEquals('UserController', $route->controller);
     }
 
     /**
@@ -553,7 +544,7 @@ class RouterTest extends TestCase
                 'view'       => 'ErrorView',
                 'controller' => 'ErrorController',
             ])
-        ]))->toArray();
+        ]))->getArrayCopy();
 
         $router = new Router($routes, [
             'basePath'    => '/',

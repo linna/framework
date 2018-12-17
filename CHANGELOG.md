@@ -9,9 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] [v0.25.0](https://github.com/linna/framework/compare/v0.24.0...v0.25.0) - 20XX-XX-XX
 
 ### Added
+
+#### Authentication
 * `Linna\Authentication\ProtectedController->protectWithRedirect()` method
 * `Linna\Authentication\Exception\AuthenticationException` exception
-* `Linna\Authorization\EnhancedUser->__constructor()`
+
+#### Authorization
+* `Linna\Authorization\EnhancedUser->__construct()`
 * `Linna\Authorization\EnhancedUser->hasRole()` method
 * `Linna\Authorization\EnhancedUser->hasRoleById()` method
 * `Linna\Authorization\EnhancedUser->hasRoleByName()` method
@@ -50,17 +54,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Authorization\RoleMapperInterface->removeUserById()` method
 * `Linna\Authorization\RoleMapperInterface->removeUserByName()` method
 * `Linna\Authorization\RoleToUserMapperInterface` interface
+
+#### Data Mapper
 * `Linna\DataMapper\FetchAllInterface` interface
 * `Linna\DataMapper\FetchByNameInterface` interface
 * `Linna\DataMapper\FetchLimitInterface` interface
 
 ### Changed
+
+#### Authentication
 * `Linna\Authentication\LoginAttempt` default value added to properties
+* `Linna\Authentication\Password->__construct()` now accept as agument `int $algo` and `array $options`
 * `Linna\Authentication\ProtectedController` now throw `AuthenticationException` when try to access to protected resource without authentication
 * `Linna\Authentication\ProtectedController->protect()` metod now accept as argument `Authentication` instance and http status code as `int`
 * `Linna\Authentication\ProtectedController` renamed to `Linna\Authentication\ProtectedControllerTrait`
 * `Linna\Authentication\User` default value added to properties
 * `Linna\Authentication\UserMapperInterface` extends `Linna\DataMapper\FetchByNameInterface`
+
+#### Authorization
 * `Linna\Authorization\Authorization` default value added to properties
 * `Linna\Authorization\Authorization->can` now accept Permission instance, permission id as integer or permission name as string
 * `Linna\Authorization\EnhancedUserMapperInterface` extends `Linna\Authorization\FetchByPermissionInterface`
@@ -74,14 +85,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Authorization\RoleMapperInterface` extends `Linna\Authorization\FetchByUserInterface`
 * `Linna\Authorizationn\PermissionTrait` default value added to properties
 * `Linna\Authorizationn\Role` default value added to properties
+
+#### Data Mapper
 * `Linna\Linna\DataMapper\DomainObjectAbstract->rId` public property added
+
+#### Router
 * `Linna\Http` namespace renamed to `Linna\Router`
-* `Linna\Mvc\FrontController` default value added to properties
-* `Linna\Mvc\FrontController->__constructor()` now accept `RouteInterface` instance as last argument instead of `$action` and `$param`
-* `Linna\Mvc\View->__constructor()` now need `Model` and `TemplateInterface` as arguments
+* `Linna\Router\Route` memory usage improvement
+* `Linna\Router\Route` all properties now are public
 * `Linna\Router\Router` default value added to properties
+* `Linna\Router\Router` memory usage improvement
+* `Linna\Router\Router->map()` now accept as argument instance of `RouteInterface` instead of `array`
+
+#### Mvc
+* `Linna\Mvc\FrontController` default value added to properties
+* `Linna\Mvc\FrontController->__construct()` now accept `RouteInterface` instance as last argument instead of `$action` and `$param`
+* `Linna\Mvc\View->__construct()` now need `Model` and `TemplateInterface` as arguments
+
+#### Session
 * `Linna\Session\MemcachedSessionHandler` default value added to properties
 * `Linna\Session\Session` default value added to properties
+* `Linna\Session\Session` memory usage improvement
+
+#### Storage
 * `Linna\Storage\AbstractConnector` default value added to properties
 * `Linna\Storage\AbstractStorageFactory` default value added to properties
 * `Linna\Storage\ExtendedPDO` default value added to properties
@@ -90,6 +116,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * Minor issues fixed
 
 ### Removed
+
+#### Authorization
 * `Linna\Authorization\EnhancedUserMapperInterface->fetchUserByRole()` method
 * `Linna\Authorization\EnhancedUserMapperInterface->fetchUserByPermission()` method
 * `Linna\Authorization\EnhancedUserMapperInterface->grant()` method
@@ -107,6 +135,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Authorization\RoleMapperInterface->permissionRevoke()` method
 * `Linna\Authorization\RoleMapperInterface->userAdd()` method
 * `Linna\Authorization\RoleMapperInterface->userRemove()` method
+
+#### Router
+* `Linna\Router\NullRoute->toArray()` method
+* `Linna\Router\RouteCollection->toArray()` method, use `->getArrayCopy()` instead
+* `Linna\Router\RouteInterface->toArray()` method
+
 
 ## [v0.24.0](https://github.com/linna/framework/compare/v0.23.1...v0.24.0) - 2018-09-01
 
@@ -132,10 +166,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Http\RouterCached` class, caching will be added to [app](https://github.com/linna/app) package
 * `Linna\DI\Container->setRules()` method
 
+
 ## [v0.23.1](https://github.com/linna/framework/compare/v0.23.0...v0.23.1) - 2017-11-01
 
 ### Fixed
 * `Linna\Mvc\FrontController` view don't call default method
+
 
 ## [v0.23.0](https://github.com/linna/framework/compare/v0.22.0...v0.23.0) - 2017-11-01
 
@@ -166,6 +202,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 * `Linna\Http\FastMapTrait`
 
+
 ## [v0.22.0](https://github.com/linna/framework/compare/v0.21.0...v0.22.0) - 2017-10-24
 
 ### Added
@@ -192,6 +229,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Auth\RoleMapperInterface` moved under namespace `Linna\Authorization`
 * Tests updated
 
+
 ## [v0.21.0](https://github.com/linna/framework/compare/v0.20.2...v0.21.0) - 2017-10-04
 
 ### Added
@@ -213,6 +251,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Cache\MemcachedCache->set()` double cast to int
 * `Linna\DataMapper\DomaninObjectAbstract->setId()` double cast to int
 
+
 ## [v0.20.2](https://github.com/linna/framework/compare/v0.20.1...v0.20.2) - 2017-07-25
 
 ### Added
@@ -222,10 +261,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Http\Router` when work in write mode off
 * tests updated
 
+
 ## [v0.20.1](https://github.com/linna/framework/compare/v0.20.0...v0.20.1) - 2017-07-17
 
 ### Fixed
 * file permissions
+
 
 ## [v0.20.0](https://github.com/linna/framework/compare/v0.19.0...v0.20.0) - 2017-07-16
 
@@ -238,6 +279,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 * `CHANGELOG.md` links url
+
 
 ## [v0.19.0](https://github.com/linna/framework/compare/v0.18.0...v0.19.0) - 2017-06-24
 
@@ -256,6 +298,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Auth\PermissionTrait->showPermissions()` method, use `getPermissions()` instead
 * `Linna\Auth\Role->showUsers()` method, use `getUsers()` instead
 
+
 ## [v0.18.0](https://github.com/linna/framework/compare/v0.17.0...v0.18.0) - 2017-05-30
 
 ### Added
@@ -269,6 +312,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Mvc\TemplateInterface->output()` return type added `:string`
 * `Linna\Mvc\View->render()` return type added `:string`
 * `Linna\Mvc\TemplateInterface->output()` changed name to `Linna\Mvc\TemplateInterface->getOutput()`
+
 
 ## [v0.17.0](https://github.com/linna/framework/compare/v0.16.0...v0.17.0) - 2017-05-05
 
@@ -288,6 +332,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Storage\MysqliObject` changed name to `Linna\Storage\MysqliStorage`
 * `Linna\Storage\MongoDbOject` changed name to `Linna\Storage\MongoDbStorage`
 * `Linna\Storage\StorageObjectInterface` changed name to `Linna\Storage\StorageInterface`
+
 
 ## [v0.16.0](https://github.com/linna/framework/compare/v0.15.0...v0.16.0) - 2017-04-20
 
@@ -343,6 +388,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 * Deprecated property `private $expire` in `Linna\Auth\Login`
 
+
 ## [v0.14.0](https://github.com/linna/framework/compare/v0.13.0...v0.14.0) - 2017-02-27
 
 ### Added
@@ -361,6 +407,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Http\RouterCached` now require `CacheInterface` instead of `Memcached`
 * `Linna\DI\DIContainer` changed name to `Linna\DI\Container`
 * `Linna\DI\DIResolver` changed name to `Linna\DI\Resolver`
+
 
 ## [v0.13.0](https://github.com/linna/framework/compare/v0.12.0...v0.13.0) - 2017-02-19
 
@@ -387,6 +434,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Autoloader` now not throw exceptions
 * `Linna\Autoloader` tests updated
 
+
 ## [v0.11.0](https://github.com/linna/framework/compare/v0.10.0...v0.11.0) - 2017-02-11
 
 ### Added
@@ -398,6 +446,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\DI\DIContainer` tests updated
 * `Linna\DI\DIResolver` now implements `Interop\Container\ContainerInterface`
 * `Linna\DI\DIResolver` now possible access data with array syntax or with methods
+
 
 ## [v0.10.0](https://github.com/linna/framework/compare/v0.9.1...v0.10.0) - 2017-02-03
 

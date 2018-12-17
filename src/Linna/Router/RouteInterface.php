@@ -21,11 +21,4 @@ interface RouteInterface
      * @param array $route
      */
     public function __construct(array $route);
-
-    /**
-     * Return route array.
-     *
-     * @return array
-     */
-    public function toArray(): array;
 }

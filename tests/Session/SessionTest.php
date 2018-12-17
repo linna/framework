@@ -325,6 +325,7 @@ class SessionTest extends TestCase
      *
      * @param int $time
      * @param array $cookieArray
+     *
      * @return bool
      */
     public function checkCookieTime(int $time, array $cookieArray): bool

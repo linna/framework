@@ -102,7 +102,7 @@ class RouteCollectionTest extends TestCase
     /**
      * Test route to array.
      */
-    public function testRouteCollectionToArray(): void
+    /*public function testRouteCollectionToArray(): void
     {
         $routes = new RouteCollection([
             new Route([
@@ -124,5 +124,5 @@ class RouteCollectionTest extends TestCase
             'param'      => [],
             'callback'   => false,
         ]], $routes->toArray());
-    }
+    }*/
 }

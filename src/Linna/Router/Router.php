@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Linna\Router;
 
 use BadMethodCallException;
-use Linna\Shared\ClassOptionsTrait;
 
 /**
  * Router.
@@ -22,17 +21,25 @@ use Linna\Shared\ClassOptionsTrait;
  */
 class Router
 {
-    use ClassOptionsTrait;
+    /**
+     * @var string Base path for route evaluation.
+     */
+    protected $basePath = '/';
 
     /**
-     * @var array Config options for class
+     * @var bool|string Fallback route name for 404 errors.
      */
-    protected $options = [
-        'basePath'             => '/',
-        'badRoute'             => false,
-        'rewriteMode'          => false,
-        'rewriteModeOffRouter' => '/index.php?',
-    ];
+    protected $badRoute = false;
+
+    /**
+     * @var boot Use of url rewriting.
+     */
+    protected $rewriteMode = false;
+
+    /**
+     * @var string Router access point without rewrite engine.
+     */
+    protected $rewriteModeOffRouter = '/index.php?';
 
     /**
      * @var RouteInterface Utilized for return the most recently parsed route
@@ -65,10 +72,19 @@ class Router
      * @param array $routes
      * @param array $options
      */
-    public function __construct(array $routes = [], array $options = [])
+    public function __construct(array $routes, array $options = [])
     {
-        //set options
-        $this->setOptions($options);
+        [
+            'basePath'             => $this->basePath,
+            'badRoute'             => $this->badRoute,
+            'rewriteMode'          => $this->rewriteMode,
+            'rewriteModeOffRouter' => $this->rewriteModeOffRouter
+        ] = array_replace_recursive([
+            'basePath'             => '/',
+            'badRoute'             => false,
+            'rewriteMode'          => false,
+            'rewriteModeOffRouter' => '/index.php?'
+        ], $options);
 
         //set routes
         $this->routes = $routes;
@@ -86,15 +102,14 @@ class Router
     {
         $route = $this->findRoute($this->filterUri($requestUri), $requestMethod);
 
-        if ($route) {
-            $this->buildValidRoute($route);
-
-            return true;
+        if ($route instanceof NullRoute) {
+            $this->buildErrorRoute();
+            return false;
         }
 
-        $this->buildErrorRoute();
+        $this->buildValidRoute($route);
 
-        return false;
+        return true;
     }
 
     /**
@@ -103,20 +118,20 @@ class Router
      * @param string $uri
      * @param string $method
      *
-     * @return array
+     * @return RouteInterface
      */
-    private function findRoute(string $uri, string $method): array
+    private function findRoute(string $uri, string $method): RouteInterface
     {
         $matches = [];
-        $route = [];
+        $route = new NullRoute();
 
         foreach ($this->routes as $value) {
-            $urlMatch = preg_match('`^'.preg_replace($this->matchTypes, $this->types, $value['url']).'/?$`', $uri, $matches);
-            $methodMatch = strpos($value['method'], $method);
+            $urlMatch = preg_match('`^'.preg_replace($this->matchTypes, $this->types, $value->url).'/?$`', $uri, $matches);
+            $methodMatch = strpos($value->method, $method);
 
             if ($urlMatch && $methodMatch !== false) {
                 $route = $value;
-                $route['matches'] = $matches;
+                $route->matches = $matches;
                 break;
             }
         }
@@ -129,26 +144,26 @@ class Router
      *
      * @param array $route
      */
-    private function buildValidRoute(array $route): void
+    private function buildValidRoute($route): void
     {
         //add to route array the passed uri for param check when call
-        $matches = $route['matches'];
+        $matches = $route->matches;
 
         //route match and there is a subpattern with action
         if (count($matches) > 1) {
             //assume that subpattern rapresent action
-            $route['action'] = $matches[1];
+            $route->action = $matches[1];
 
             //url clean
-            $route['url'] = preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $route['url']);
+            $route->url = preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $route->url);
         }
 
-        $route['param'] = $this->buildParam($route);
+        $route->param = $this->buildParam($route);
 
         //delete matches key because not required inside route object
-        unset($route['matches']);
+        unset($route->matches);
 
-        $this->route = new Route($route);
+        $this->route = $route;
     }
 
     /**
@@ -158,12 +173,12 @@ class Router
      *
      * @return array
      */
-    private function buildParam(array $route): array
+    private function buildParam($route): array
     {
         $param = [];
 
-        $url = explode('/', $route['url']);
-        $matches = explode('/', $route['matches'][0]);
+        $url = explode('/', $route->url);
+        $matches = explode('/', $route->matches[0]);
 
         $rawParam = array_diff($matches, $url);
 
@@ -183,17 +198,14 @@ class Router
     private function buildErrorRoute(): void
     {
         //check if there is a declared route for errors, if no exit with false
-        if (($key = array_search($this->options['badRoute'], array_column($this->routes, 'name'), true)) === false) {
+        if (($key = array_search($this->badRoute, array_column($this->routes, 'name'), true)) === false) {
             $this->route = new NullRoute();
 
             return;
         }
 
-        //pick route for errors
-        $route = $this->routes[$key];
-
         //build and store route for errors
-        $this->route = new Route($route);
+        $this->route = $this->routes[$key];
     }
 
     /**
@@ -220,10 +232,10 @@ class Router
         $url = filter_var($passedUri, FILTER_SANITIZE_URL);
 
         //check for rewrite mode
-        $url = str_replace($this->options['rewriteModeOffRouter'], '', $url);
+        $url = str_replace($this->rewriteModeOffRouter, '', $url);
 
         //remove basepath
-        $url = substr($url, strlen($this->options['basePath']));
+        $url = substr($url, strlen($this->basePath));
 
         //remove doubled slash
         $url = str_replace('//', '/', $url);
@@ -232,22 +244,11 @@ class Router
     }
 
     /**
-     * @var array Allowed Http methods for fast route mapping.
-     */
-    private $fastMapMethods = [
-        'GET' => true,
-        'POST' => true,
-        'PUT' => true,
-        'PATCH' => true,
-        'DELETE' => true,
-    ];
-
-    /**
      * Map a route.
      *
-     * @param array $route
+     * @param RouteInterface $route
      */
-    public function map(array $route): void
+    public function map(RouteInterface $route): void
     {
         array_push($this->routes, $route);
     }
@@ -266,35 +267,18 @@ class Router
     {
         $method = strtoupper($name);
 
-        if (isset($this->fastMapMethods[$method])) {
-            $this->map($this->createRouteArray($method, $arguments[0], $arguments[1], $arguments[2] ?? []));
+        if (in_array($method, ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])) {
+            $this->map(
+                new Route(array_merge($arguments[2] ?? [], [
+                    'method'   => $method,
+                    'url'      => $arguments[0],
+                    'callback' => $arguments[1]
+                ]))
+            );
 
             return;
         }
 
         throw new BadMethodCallException("Router->{$name}() method do not exist.");
-    }
-
-    /**
-     * Create route array for previous methods.
-     *
-     * @param string   $method
-     * @param string   $url
-     * @param callable $callback
-     * @param array    $options
-     *
-     * @return array
-     */
-    private function createRouteArray(string $method, string $url, callable $callback, array $options): array
-    {
-        $routeArray = (new Route([
-            'method'   => $method,
-            'url'      => $url,
-            'callback' => $callback,
-        ]))->toArray();
-
-        $route = array_replace_recursive($routeArray, $options);
-
-        return $route;
     }
 }

@@ -12,25 +12,36 @@ declare(strict_types=1);
 namespace Linna\Authentication;
 
 use Linna\Session\Session;
-use Linna\Shared\ClassOptionsTrait;
 
 /**
  * Extend basic user authentication system with more security checks.
  */
 class EnhancedAuthentication extends Authentication
 {
-    use ClassOptionsTrait;
+    /**
+     * @var int Max attempts for user name.
+     */
+    protected $maxAttemptsForUserName = 5;
 
     /**
-     * @var array An associative array containing options
+     * @var int Max attempts for session id.
      */
-    protected $options = [
-        'maxAttemptsForUserName' => 5,
-        'maxAttemptsForSessionId' => 10,
-        'maxAttemptsForIpAddress' => 20,
-        'maxAttemptsForSecond' => 40,
-        'banTimeInSeconds' => 900 //15 minutes
-    ];
+    protected $maxAttemptsForSessionId = 10;
+
+    /**
+     * @var int Max attempts for ip address.
+     */
+    protected $maxAttemptsForIpAddress = 20;
+
+    /**
+     * @var int Max attempts for second.
+     */
+    protected $maxAttemptsForSecond = 40;
+
+    /**
+     * @var int Ban time in seconds.
+     */
+    protected $banTimeInSeconds = 900;
 
     /**
      * @var EnhancedAuthenticationMapperInterface Enhanced Authentication Mapper
@@ -54,8 +65,20 @@ class EnhancedAuthentication extends Authentication
         parent::__construct($session, $password);
 
         $this->enhancedAuthenticationMapper = $enhancedAuthenticationMapper;
-        //set options
-        $this->setOptions($options);
+
+        [
+            'maxAttemptsForUserName'  => $this->maxAttemptsForUserName,
+            'maxAttemptsForSessionId' => $this->maxAttemptsForSessionId,
+            'maxAttemptsForIpAddress' => $this->maxAttemptsForIpAddress,
+            'maxAttemptsForSecond'    => $this->maxAttemptsForSecond,
+            'banTimeInSeconds'        => $this->banTimeInSeconds
+        ] = array_replace_recursive([
+            'maxAttemptsForUserName'  => 5,
+            'maxAttemptsForSessionId' => 10,
+            'maxAttemptsForIpAddress' => 20,
+            'maxAttemptsForSecond'    => 40,
+            'banTimeInSeconds'        => 900
+        ], $options);
     }
 
     /**
@@ -67,7 +90,7 @@ class EnhancedAuthentication extends Authentication
      */
     public function getAttemptsLeftWithSameUser(string $userName): int
     {
-        $attemptsLeft = $this->options['maxAttemptsForUserName'] - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameUser($userName, $this->options['banTimeInSeconds']);
+        $attemptsLeft = $this->maxAttemptsForUserName - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameUser($userName, $this->banTimeInSeconds);
 
         //casting to int second param for avoid strange things with
         //max return value
@@ -84,7 +107,7 @@ class EnhancedAuthentication extends Authentication
      */
     public function getAttemptsLeftWithSameSession(string $sessionId): int
     {
-        $attemptsLeft = $this->options['maxAttemptsForSessionId'] - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameSession($sessionId, $this->options['banTimeInSeconds']);
+        $attemptsLeft = $this->maxAttemptsForSessionId - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameSession($sessionId, $this->banTimeInSeconds);
 
         return max(0, (int) $attemptsLeft);
     }
@@ -98,7 +121,7 @@ class EnhancedAuthentication extends Authentication
      */
     public function getAttemptsLeftWithSameIp(string $ipAddress): int
     {
-        $attemptsLeft = $this->options['maxAttemptsForIpAddress'] - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameIp($ipAddress, $this->options['banTimeInSeconds']);
+        $attemptsLeft = $this->maxAttemptsForIpAddress - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameIp($ipAddress, $this->banTimeInSeconds);
 
         return max(0, (int) $attemptsLeft);
     }

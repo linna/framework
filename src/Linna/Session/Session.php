@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Linna\Session;
 
 use ArrayAccess;
-use Linna\Shared\ClassOptionsTrait;
 use SessionHandlerInterface;
 
 /**
@@ -27,19 +26,31 @@ class Session implements ArrayAccess
 {
     use PropertyAccessTrait;
     use ArrayAccessTrait;
-    use ClassOptionsTrait;
 
     /**
-     * @var array Config options for class
+     * @var int Session expire time in seconds.
      */
-    protected $options = [
-        'expire'         => 1800,
-        'name'           => 'linna_session',
-        'cookieDomain'   => '/',
-        'cookiePath'     => '/',
-        'cookieSecure'   => false,
-        'cookieHttpOnly' => true,
-    ];
+    private $expire = 1800;
+
+    /**
+     * @var string Cookie domain.
+     */
+    private $cookieDomain = '/';
+
+    /**
+     * @var string Coockie path.
+     */
+    private $cookiePath = '/';
+
+    /**
+     * @var bool Cookie transmitted over https only?.
+     */
+    private $cookieSecure = false;
+
+    /**
+     * @var bool Cookie accessible only through http?.
+     */
+    private $cookieHttpOnly = true;
 
     /**
      * @var array Session data reference property
@@ -68,10 +79,21 @@ class Session implements ArrayAccess
      */
     public function __construct(array $options = [])
     {
-        //set options
-        $this->setOptions($options);
-
-        $this->name = $options['name'] ?? $this->options['name'];
+        [
+            'expire'         => $this->expire,
+            'name'           => $this->name,
+            'cookieDomain'   => $this->cookieDomain,
+            'cookiePath'     => $this->cookiePath,
+            'cookieSecure'   => $this->cookieSecure,
+            'cookieHttpOnly' => $this->cookieHttpOnly,
+        ] = array_replace_recursive([
+            'expire'         => 1800,
+            'name'           => 'linna_session',
+            'cookieDomain'   => '/',
+            'cookiePath'     => '/',
+            'cookieSecure'   => false,
+            'cookieHttpOnly' => true,
+        ], $options);
 
         $this->status = session_status();
     }
@@ -99,11 +121,11 @@ class Session implements ArrayAccess
         setcookie(
             session_name(),
             session_id(),
-            time() + $this->options['expire'],
-            $this->options['cookiePath'],
-            $this->options['cookieDomain'],
-            $this->options['cookieSecure'],
-            $this->options['cookieHttpOnly']
+            time() + $this->expire,
+            $this->cookiePath,
+            $this->cookieDomain,
+            $this->cookieSecure,
+            $this->cookieHttpOnly
         );
     }
 
@@ -136,18 +158,15 @@ class Session implements ArrayAccess
     private function prepare(): void
     {
         //setting session name
-        session_name($this->options['name']);
-
-        //overwrite session name
-        $this->name = $this->options['name'];
+        session_name($this->name);
 
         //standard cookie param
         session_set_cookie_params(
-                $this->options['expire'],
-                $this->options['cookiePath'],
-                $this->options['cookieDomain'],
-                $this->options['cookieSecure'],
-                $this->options['cookieHttpOnly']
+            $this->expire,
+            $this->cookiePath,
+            $this->cookieDomain,
+            $this->cookieSecure,
+            $this->cookieHttpOnly
         );
     }
 
@@ -158,7 +177,7 @@ class Session implements ArrayAccess
     {
         $time = time();
 
-        if (isset($this->data['time']) && $this->data['time'] <= ($time - $this->options['expire'])) {
+        if (isset($this->data['time']) && $this->data['time'] <= ($time - $this->expire)) {
 
             //delete session data
             $this->data = [];
@@ -179,7 +198,7 @@ class Session implements ArrayAccess
     {
         $this->id = session_id();
         $this->data['time'] = $time;
-        $this->data['expire'] = $this->options['expire'];
+        $this->data['expire'] = $this->expire;
         $this->status = session_status();
     }
 

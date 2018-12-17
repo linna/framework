@@ -17,20 +17,54 @@ namespace Linna\Router;
 class Route implements RouteInterface
 {
     /**
-     * @var array Route default vales
+     * @var string Route name.
      */
-    protected $route = [
-        'name'       => '',
-        'method'     => '',
-        'url'        => '',
-        'model'      => '',
-        'view'       => '',
-        'controller' => '',
-        'action'     => '',
-        'default'    => false,
-        'param'      => [],
-        'callback'   => false,
-    ];
+    public $name = '';
+
+    /**
+     * @var string Route method.
+     */
+    public $method = '';
+
+    /**
+     * @var string Route url.
+     */
+    public $url = '';
+
+    /**
+     * @var string Route model.
+     */
+    public $model = '';
+
+    /**
+     * @var string Route view.
+     */
+    public $view = '';
+
+    /**
+     * @var string Route controller.
+     */
+    public $controller = '';
+
+    /**
+     * @var string Route action.
+     */
+    public $action = '';
+
+    /**
+     * @var bool Route default.
+     */
+    public $default = false;
+
+    /**
+     * @var array Route parameters.
+     */
+    public $param = [];
+
+    /**
+     * @var mixed Route callback.
+     */
+    public $callback;
 
     /**
      * Constructor.
@@ -39,7 +73,29 @@ class Route implements RouteInterface
      */
     public function __construct(array $route = [])
     {
-        $this->route = array_replace_recursive($this->route, $route);
+        [
+            'name'       => $this->name,
+            'method'     => $this->method,
+            'url'        => $this->url,
+            'model'      => $this->model,
+            'view'       => $this->view,
+            'controller' => $this->controller,
+            'action'     => $this->action,
+            'default'    => $this->default,
+            'param'      => $this->param,
+            'callback'   => $this->callback
+        ] = array_replace_recursive([
+            'name'       => '',
+            'method'     => '',
+            'url'        => '',
+            'model'      => '',
+            'view'       => '',
+            'controller' => '',
+            'action'     => '',
+            'default'    => false,
+            'param'      => [],
+            'callback'   => null,
+        ], $route);
     }
 
     /**
@@ -49,7 +105,7 @@ class Route implements RouteInterface
      */
     public function getName(): string
     {
-        return $this->route['name'];
+        return $this->name;
     }
 
     /**
@@ -59,7 +115,7 @@ class Route implements RouteInterface
      */
     public function getMethod(): string
     {
-        return $this->route['method'];
+        return $this->method;
     }
 
     /**
@@ -69,7 +125,7 @@ class Route implements RouteInterface
      */
     public function getUrl(): string
     {
-        return $this->route['url'];
+        return $this->url;
     }
 
     /**
@@ -79,7 +135,7 @@ class Route implements RouteInterface
      */
     public function getModel(): string
     {
-        return $this->route['model'];
+        return $this->model;
     }
 
     /**
@@ -89,7 +145,7 @@ class Route implements RouteInterface
      */
     public function getView(): string
     {
-        return $this->route['view'];
+        return $this->view;
     }
 
     /**
@@ -99,7 +155,7 @@ class Route implements RouteInterface
      */
     public function getController(): string
     {
-        return $this->route['controller'];
+        return $this->controller;
     }
 
     /**
@@ -109,7 +165,7 @@ class Route implements RouteInterface
      */
     public function getAction(): string
     {
-        return $this->route['action'];
+        return $this->action;
     }
 
     /**
@@ -119,7 +175,7 @@ class Route implements RouteInterface
      */
     public function getParam(): array
     {
-        return $this->route['param'];
+        return $this->param;
     }
 
     /**
@@ -129,7 +185,7 @@ class Route implements RouteInterface
      */
     public function isDefault(): bool
     {
-        return $this->route['default'];
+        return $this->default;
     }
 
     /**
@@ -139,8 +195,8 @@ class Route implements RouteInterface
      */
     public function getCallback(): callable
     {
-        if (is_callable($this->route['callback'])) {
-            return $this->route['callback'];
+        if (is_callable($this->callback)) {
+            return $this->callback;
         }
 
         return function () {
@@ -154,6 +210,17 @@ class Route implements RouteInterface
      */
     public function toArray(): array
     {
-        return $this->route;
+        return [
+            'name' => $this->name,
+            'method' => $this->method,
+            'url' => $this->url,
+            'model' => $this->model,
+            'view' => $this->view,
+            'controller' => $this->controller,
+            'action' => $this->action,
+            'default' => $this->default,
+            'param' => $this->param,
+            'callback' => $this->callback
+        ];
     }
 }

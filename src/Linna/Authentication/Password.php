@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Linna\Authentication;
 
-use Linna\Shared\ClassOptionsTrait;
 use UnexpectedValueException;
 
 /**
@@ -21,55 +20,42 @@ use UnexpectedValueException;
  */
 class Password
 {
-    use ClassOptionsTrait;
-
     /**
      * @var array An associative array containing options
      *
-     * http://php.net/manual/en/password.constants.php
+     * http://php.net/manual/en/function.password-hash.php
      */
     protected $options = [
-        'cost' => 11,
-        'algo' => PASSWORD_DEFAULT,
+        1 => ['cost' => 11],
+        2 => [
+            'memory_cost' => 1024,
+            'time_cost' => 2,
+            'threads' => 2
+        ]
     ];
 
     /**
+     * @var int Password default algorithm
+     */
+    protected $algo = 1;
+
+    /**
      * Class constructor.
-     * <p><b>$options valid keys:</b></p>
-     * <table class="parameter">
-     * <thead>
-     * <tr>
-     * <th>Name</th>
-     * <th>Default</th>
-     * <th>Description</th>
-     * </tr>
-     * </thead>
-     * <tbody>
-     * <tr>
-     * <td>cost</td>
-     * <td>11</td>
-     * <td>indicating key expansion rounds</td>
-     * </tr>
-     * <tr>
-     * <td>algo</td>
-     * <td>PASSWORD_DEFAULT</td>
-     * <td>password algorithm denoting the algorithm to use when hashing the password</td>
-     * </tr>
-     * </tbody>
-     * </table>
      * <p>For password algorithm constants see <a href="http://php.net/manual/en/password.constants.php">Password Constants</a>.</p>
      * <pre><code class="php">//Options passed to class constructor as ['key' => 'value'] array.
-     * $password = new Password([
-     *     'cost' => 11,
-     *     'algo' => PASSWORD_DEFAULT,
+     * $password = new Password(PASSWORD_DEFAULT, [
+     *     'cost' => 11
      * ]);
      * </code></pre>
      *
+     * @param int   $algo
      * @param array $options
      */
-    public function __construct(array $options = [])
+    public function __construct(int $algo = 1, array $options = [])
     {
-        $this->setOptions($options);
+        $this->algo = $algo;
+
+        $this->options[$algo] = array_replace_recursive($this->options[$algo], $options);
     }
 
     /**
@@ -109,7 +95,7 @@ class Password
      */
     public function hash(string $password): string
     {
-        $hash = password_hash($password, $this->options['algo'], $this->options);
+        $hash = password_hash($password, $this->algo, $this->options[$this->algo]);
 
         if ($hash === false) {
             throw new UnexpectedValueException('Password hashing fails.');
@@ -134,7 +120,7 @@ class Password
      */
     public function needsRehash(string $hash): bool
     {
-        return password_needs_rehash($hash, $this->options['algo'], $this->options);
+        return password_needs_rehash($hash, $this->algo, $this->options[$this->algo]);
     }
 
     /**

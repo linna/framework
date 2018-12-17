@@ -53,10 +53,8 @@ class FrontController
      */
     public function __construct(Model $model, View $view, Controller $controller, RouteInterface $route)
     {
-        $routeArray = $route->toArray();
-
-        $this->routeAction = $routeArray['action'] ?? '';
-        $this->routeParam = $routeArray['param'] ?? [];
+        $this->routeAction = $route->action;
+        $this->routeParam = $route->param;
 
         $this->model = $model;
         $this->view = $view;
@@ -65,6 +63,8 @@ class FrontController
 
     /**
      * Run mvc pattern.
+     *
+     * @return void
      */
     public function run(): void
     {
@@ -93,6 +93,8 @@ class FrontController
      * Run action before or after controller action execution.
      *
      * @param string $when
+     *
+     * @return void
      */
     private function beforeAfterControllerAction(string $when): void
     {
@@ -107,8 +109,10 @@ class FrontController
      * Run action before or after controller execution.
      *
      * @param string $when
+     *
+     * @return void
      */
-    private function beforeAfterController(string $when)
+    private function beforeAfterController(string $when): void
     {
         if (method_exists($this->controller, $when)) {
             call_user_func([$this->controller, $when]);
@@ -117,6 +121,8 @@ class FrontController
 
     /**
      * Run controller.
+     *
+     * @return void
      */
     private function runController(): void
     {
@@ -138,6 +144,8 @@ class FrontController
 
     /**
      * Run view.
+     *
+     * @return void
      */
     private function runView(): void
     {
@@ -148,6 +156,8 @@ class FrontController
 
     /**
      * Return view data.
+     *
+     * @return string
      */
     public function response(): string
     {
