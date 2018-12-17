@@ -210,9 +210,7 @@ class Session implements ArrayAccess
     public function setSessionHandler(SessionHandlerInterface $handler): void
     {
         //setting a different save handler if passed
-        if ($handler instanceof SessionHandlerInterface) {
-            session_set_save_handler($handler, true);
-        }
+        session_set_save_handler($handler, true);
     }
 
     /**
