@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Linna\Cache;
 
-use Linna\Shared\ClassOptionsTrait;
 use Psr\SimpleCache\CacheInterface;
 
 /**
@@ -31,14 +30,6 @@ use Psr\SimpleCache\CacheInterface;
 class DiskCache implements CacheInterface
 {
     use ActionMultipleTrait;
-    //use ClassOptionsTrait;
-
-    /**
-     * @var array Config options for class
-     */
-    /*protected $options = [
-        'dir' => '/tmp',
-    ];*/
 
     /**
      * @var string Directory for cache storage.
@@ -52,8 +43,6 @@ class DiskCache implements CacheInterface
      */
     public function __construct(array $options = [])
     {
-        //$this->setOptions($options);
-
         ['dir' => $this->dir] = array_replace_recursive(['dir' => '/tmp'], $options);
     }
 

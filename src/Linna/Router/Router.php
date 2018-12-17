@@ -32,7 +32,7 @@ class Router
     protected $badRoute = false;
 
     /**
-     * @var boot Use of url rewriting.
+     * @var bool Use of url rewriting.
      */
     protected $rewriteMode = false;
 
@@ -64,6 +64,11 @@ class Router
     private $types = [
         '[0-9A-Za-z]++',
     ];
+
+    /**
+     * @var array preg match result for route.
+     */
+    private $routeMatches = [];
 
     /**
      * Constructor.
@@ -107,9 +112,12 @@ class Router
             return false;
         }
 
-        $this->buildValidRoute($route);
+        if ($route instanceof Route) {
+            $this->buildValidRoute($route);
+            return true;
+        }
 
-        return true;
+        return false;
     }
 
     /**
@@ -131,7 +139,7 @@ class Router
 
             if ($urlMatch && $methodMatch !== false) {
                 $route = $value;
-                $route->matches = $matches;
+                $this->routeMatches = $matches;
                 break;
             }
         }
@@ -142,12 +150,14 @@ class Router
     /**
      * Build a valid route.
      *
-     * @param array $route
+     * @param Route $route
+     *
+     * @return void
      */
-    private function buildValidRoute($route): void
+    private function buildValidRoute(Route $route): void
     {
         //add to route array the passed uri for param check when call
-        $matches = $route->matches;
+        $matches = $this->routeMatches;
 
         //route match and there is a subpattern with action
         if (count($matches) > 1) {
@@ -160,25 +170,22 @@ class Router
 
         $route->param = $this->buildParam($route);
 
-        //delete matches key because not required inside route object
-        unset($route->matches);
-
         $this->route = $route;
     }
 
     /**
      * Try to find parameters in a valid route and return it.
      *
-     * @param array $route
+     * @param Route $route
      *
      * @return array
      */
-    private function buildParam($route): array
+    private function buildParam(Route $route): array
     {
         $param = [];
 
         $url = explode('/', $route->url);
-        $matches = explode('/', $route->matches[0]);
+        $matches = explode('/', $this->routeMatches[0]);
 
         $rawParam = array_diff($matches, $url);
 
@@ -247,6 +254,8 @@ class Router
      * Map a route.
      *
      * @param RouteInterface $route
+     *
+     * @return void
      */
     public function map(RouteInterface $route): void
     {

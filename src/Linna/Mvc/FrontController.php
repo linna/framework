@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Mvc;
 
+use Linna\Router\Route;
 use Linna\Router\RouteInterface;
 
 /**
@@ -53,8 +54,10 @@ class FrontController
      */
     public function __construct(Model $model, View $view, Controller $controller, RouteInterface $route)
     {
-        $this->routeAction = $route->action;
-        $this->routeParam = $route->param;
+        if ($route instanceof Route) {
+            $this->routeAction = $route->action;
+            $this->routeParam = $route->param;
+        }
 
         $this->model = $model;
         $this->view = $view;
@@ -131,7 +134,7 @@ class FrontController
         $param = $this->routeParam;
 
         //action - call controller passing params
-        if ($param) {
+        if (!empty($param)) {
             call_user_func_array([$this->controller, $action], $param);
             return;
         }
