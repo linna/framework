@@ -63,6 +63,9 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
             throw new UnexpectedValueException('ObjectId property is immutable.');
         }
 
-        return $this->objectId = $objectId;
+        $this->objectId = $objectId;
+        $this->rId = $objectId;
+
+        return $objectId;
     }
 }
