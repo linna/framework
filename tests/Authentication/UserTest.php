@@ -26,12 +26,14 @@ class UserTest extends TestCase
     /**
      * @var UserMapper The user mapper
      */
-    protected $userMapper;
+    protected static $userMapper;
 
     /**
-     * Setup.
+     * Set up before class.
+     *
+     * @return void
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -45,27 +47,41 @@ class UserTest extends TestCase
             ],
         ];
 
-        $this->userMapper = new UserMapper(
+        self::$userMapper = new UserMapper(
             (new StorageFactory('pdo', $options))->get(),
             new Password()
         );
     }
 
     /**
+     * Tear down after class.
+     *
+     * @return void
+     */
+    public static function tearDownAfterClass(): void
+    {
+        self::$userMapper = null;
+    }
+
+    /**
      * Test new user instance.
+     *
+     * @return void
      */
     public function testNewUserInstance(): void
     {
-        $this->assertInstanceOf(User::class, $this->userMapper->create());
+        $this->assertInstanceOf(User::class, self::$userMapper->create());
     }
 
     /**
      * Test set user password.
+     *
+     * @return void
      */
     public function testSetUserPassword(): void
     {
         /** @var User User Class. */
-        $user = $this->userMapper->create();
+        $user = self::$userMapper->create();
 
         $user->setPassword('password');
 
@@ -76,11 +92,13 @@ class UserTest extends TestCase
 
     /**
      * Test change user password.
+     *
+     * @return void
      */
     public function testChangeUserPassword(): void
     {
         /** @var User User Class. */
-        $user = $this->userMapper->create();
+        $user = self::$userMapper->create();
 
         $user->setPassword('old_password');
 

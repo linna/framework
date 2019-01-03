@@ -28,38 +28,43 @@ class ProtectedControllerTraitTest extends TestCase
     /**
      * @var Session The session class instance.
      */
-    protected $session;
+    protected static $session;
 
     /**
      * @var Password The password class instance.
      */
-    protected $password;
+    protected static $password;
 
     /**
      * @var Authentication Authentication class instance.
      */
-    protected $authentication;
+    protected static $authentication;
 
     /**
-     * Setup.
+     * Set up before class.
+     *
+     * @return void
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
         $session = new Session();
         $password = new Password();
 
-        $this->session = $session;
-        $this->password = $password;
-
-        $this->authentication = new Authentication($session, $password);
+        self::$session = $session;
+        self::$password = $password;
+        self::$authentication = new Authentication($session, $password);
     }
 
     /**
-     * Tear Down.
+     * Tear down after class.
+     *
+     * @return void
      */
-    public function tearDown(): void
+    public static function tearDownAfterClass(): void
     {
-        unset($this->session, $this->password, $this->authentication);
+        self::$session = null;
+        self::$password = null;
+        self::$authentication = null;
     }
 
     /**
@@ -67,26 +72,28 @@ class ProtectedControllerTraitTest extends TestCase
      *
      * @runInSeparateProcess
      * @outputBuffering disabled
+     *
+     * @return void
      */
     public function testAccessProtectedControllerWithLogin(): void
     {
-        $this->session->start();
+        self::$session->start();
 
-        $this->assertTrue($this->authentication->login(
+        $this->assertTrue(self::$authentication->login(
             'root',
             'password',
             'root',
-            $this->password->hash('password'),
+            self::$password->hash('password'),
             1
         ));
 
-        $this->assertTrue($this->authentication->isLogged());
-        $this->assertTrue((new ProtectedController(new Model(), $this->authentication))->test);
-        $this->assertTrue((new ProtectedController(new Model(), $this->authentication))->action());
+        $this->assertTrue(self::$authentication->isLogged());
+        $this->assertTrue((new ProtectedController(new Model(), self::$authentication))->test);
+        $this->assertTrue((new ProtectedController(new Model(), self::$authentication))->action());
 
-        $this->assertTrue($this->authentication->logout());
+        $this->assertTrue(self::$authentication->logout());
 
-        $this->session->destroy();
+        self::$session->destroy();
     }
 
     /**
@@ -94,12 +101,14 @@ class ProtectedControllerTraitTest extends TestCase
      *
      * @expectedException Linna\Authentication\Exception\AuthenticationException
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testAccessProtectedControllerWithoutLogin(): void
     {
-        $this->assertFalse($this->authentication->isLogged());
+        $this->assertFalse(self::$authentication->isLogged());
 
-        (new ProtectedController(new Model(), $this->authentication));
+        (new ProtectedController(new Model(), self::$authentication));
     }
 
     /**
@@ -107,12 +116,14 @@ class ProtectedControllerTraitTest extends TestCase
      *
      * @expectedException Linna\Authentication\Exception\AuthenticationException
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testAccessProtectedControllerWithRedirectWithoutLogin(): void
     {
-        $this->assertFalse($this->authentication->isLogged());
+        $this->assertFalse(self::$authentication->isLogged());
 
-        (new ProtectedControllerWithRedirect(new Model(), $this->authentication));
+        (new ProtectedControllerWithRedirect(new Model(), self::$authentication));
     }
 
     /**
@@ -120,12 +131,14 @@ class ProtectedControllerTraitTest extends TestCase
      *
      * @expectedException Linna\Authentication\Exception\AuthenticationException
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testAccessProtectedMethodWithoutLogin(): void
     {
-        $this->assertFalse($this->authentication->isLogged());
+        $this->assertFalse(self::$authentication->isLogged());
 
-        (new ProtectedMethodController(new Model(), $this->authentication))->ProtectedAction();
+        (new ProtectedMethodController(new Model(), self::$authentication))->ProtectedAction();
     }
 
     /**
@@ -133,11 +146,13 @@ class ProtectedControllerTraitTest extends TestCase
      *
      * @expectedException Linna\Authentication\Exception\AuthenticationException
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testAccessProtectedMethodWithRedirectWithoutLogin(): void
     {
-        $this->assertFalse($this->authentication->isLogged());
+        $this->assertFalse(self::$authentication->isLogged());
 
-        (new ProtectedMethodController(new Model(), $this->authentication))->ProtectedActionWithRedirect();
+        (new ProtectedMethodController(new Model(), self::$authentication))->ProtectedActionWithRedirect();
     }
 }

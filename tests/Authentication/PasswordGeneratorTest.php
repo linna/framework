@@ -22,18 +22,32 @@ class PasswordGeneratorTest extends TestCase
     /**
      * @var PasswordGenerator The password class.
      */
-    protected $password;
+    protected static $passwordGenerator;
 
     /**
-     * Setup.
+     * Set up before class.
+     *
+     * @return void
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->password = new PasswordGenerator();
+        self::$passwordGenerator = new PasswordGenerator();
+    }
+
+    /**
+     * Tear down after class.
+     *
+     * @return void
+     */
+    public static function tearDownAfterClass(): void
+    {
+        self::$passwordGenerator = null;
     }
 
     /**
      * String length provider.
+     *
+     * @return array
      */
     public function stringLengthProvider(): array
     {
@@ -49,10 +63,12 @@ class PasswordGeneratorTest extends TestCase
      * Test get from random.
      *
      * @dataProvider stringLengthProvider
+     *
+     * @return void
      */
     public function testGetFromRandom(int $strLen): void
     {
-        $password = $this->password->getFromRandom($strLen);
+        $password = self::$passwordGenerator->getFromRandom($strLen);
 
         $this->assertEquals($strLen, strlen($password));
     }
@@ -61,13 +77,15 @@ class PasswordGeneratorTest extends TestCase
      * Test get from random.
      *
      * @dataProvider stringLengthProvider
+     *
+     * @return void
      */
     public function testCheckRandomTopology(int $strLen): void
     {
         $topology = '';
 
         while (true) {
-            $topology = $this->password->getTopology($this->password->getFromRandom($strLen));
+            $topology = self::$passwordGenerator->getTopology(self::$passwordGenerator->getFromRandom($strLen));
 
             $presU = strpos($topology, 'u');
             $presL = strpos($topology, 'l');
@@ -87,14 +105,18 @@ class PasswordGeneratorTest extends TestCase
 
     /**
      * Test in range edges.
+     *
+     * @return void
      */
     public function testCheckRangesEdges(): void
     {
-        $this->assertEquals('ssddssuussllss', (new PasswordGenerator())->getTopology('!/09:@AZ[`az{~'));
+        $this->assertEquals('ssddssuussllss', self::$passwordGenerator->getTopology('!/09:@AZ[`az{~'));
     }
 
     /**
      * Topology and passwords provider.
+     *
+     * @return array
      */
     public function topologyAndPasswordProvider(): array
     {
@@ -114,10 +136,12 @@ class PasswordGeneratorTest extends TestCase
      * Test get topology.
      *
      * @dataProvider topologyAndPasswordProvider
+     *
+     * @return void
      */
     public function testGetTopology(string $password, string $topology): void
     {
-        $this->assertEquals($topology, $this->password->getTopology($password));
+        $this->assertEquals($topology, self::$passwordGenerator->getTopology($password));
     }
 
     /**
@@ -125,14 +149,18 @@ class PasswordGeneratorTest extends TestCase
      *
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Out of group character provided.
+     *
+     * @return void
      */
     public function testGetTopologyException(): void
     {
-        $this->password->getTopology('abcdefgà');
+        self::$passwordGenerator->getTopology('abcdefgà');
     }
 
     /**
      * Topology provider.
+     *
+     * @return array
      */
     public function topologyProvider(): array
     {
@@ -150,15 +178,19 @@ class PasswordGeneratorTest extends TestCase
      * Test get topology.
      *
      * @dataProvider topologyProvider
+     *
+     * @return void
      */
     public function testGetFromTopology(string $topology): void
     {
-        $password = $this->password->getFromTopology($topology);
-        $this->assertEquals($topology, $this->password->getTopology($password));
+        $password = self::$passwordGenerator->getFromTopology($topology);
+        $this->assertEquals($topology, self::$passwordGenerator->getTopology($password));
     }
 
     /**
      * Bad topology provider.
+     *
+     * @return array
      */
     public function badTopologyProvider(): array
     {
@@ -179,9 +211,11 @@ class PasswordGeneratorTest extends TestCase
      *
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Invalid pattern provided, accepted only u, l, d and s.
+     *
+     * @return void
      */
     public function testGetFromTopologyException(string $topology): void
     {
-        $this->password->getFromTopology($topology);
+        self::$passwordGenerator->getFromTopology($topology);
     }
 }

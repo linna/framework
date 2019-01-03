@@ -15,6 +15,7 @@ use Linna\Authentication\EnhancedAuthentication;
 use Linna\Authentication\EnhancedAuthenticationMapper;
 use Linna\Authentication\Password;
 use Linna\Session\Session;
+use Linna\Storage\ExtendedPDO;
 use Linna\Storage\StorageFactory;
 use PDO;
 use PHPUnit\Framework\TestCase;
@@ -25,30 +26,36 @@ use PHPUnit\Framework\TestCase;
 class EnhancedAuthenticationTest extends TestCase
 {
     /**
+     * @var ExtendedPDO Persistent storage connection.
+     */
+    protected static $pdo;
+
+    /**
      * @var Session The session class.
      */
-    protected $session;
+    protected static $session;
 
     /**
      * @var Password The password class.
      */
-    protected $password;
+    protected static $password;
 
     /**
      * @var EnhancedAuthentication The enhanced authentication class
      */
-    protected $enhancedAuthentication;
-
+    protected static $enhancedAuthentication;
 
     /**
      * @var EnhancedAuthenticationMapper The enhanced authentication mapper class
      */
-    protected $eAMapper;
+    protected static $enhancedAuthenticationMapper;
 
     /**
-     * Setup.
+     * Set up before class.
+     *
+     * @return void
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -64,11 +71,42 @@ class EnhancedAuthenticationTest extends TestCase
 
         $session = new Session();
         $password = new Password();
+        $pdo = (new StorageFactory('pdo', $options))->get();
+        $enhancedAuthenticationMapper = new EnhancedAuthenticationMapper($pdo);
 
-        $this->password = $password;
-        $this->session = $session;
-        $this->eAMapper = new EnhancedAuthenticationMapper((new StorageFactory('pdo', $options))->get());
-        $this->enhancedAuthentication = new EnhancedAuthentication($session, $password, $this->eAMapper);
+        self::$pdo = $pdo;
+        self::$password = $password;
+        self::$session = $session;
+        self::$enhancedAuthenticationMapper = $enhancedAuthenticationMapper;
+        self::$enhancedAuthentication = new EnhancedAuthentication($session, $password, $enhancedAuthenticationMapper);
+
+        self::loginClean();
+    }
+
+    /**
+     * Tear down after class.
+     *
+     * @return void
+     */
+    public static function tearDownAfterClass(): void
+    {
+        self::loginClean();
+
+        self::$pdo = null;
+        self::$password = null;
+        self::$session = null;
+        self::$enhancedAuthenticationMapper = null;
+        self::$enhancedAuthentication = null;
+    }
+
+    /**
+     * Remove record from login_attemp table.
+     *
+     * @return void
+     */
+    protected static function loginClean(): void
+    {
+        self::$enhancedAuthenticationMapper->deleteOldLoginAttempts(-86400);
     }
 
     /**
@@ -114,62 +152,28 @@ class EnhancedAuthenticationTest extends TestCase
      * Test login.
      *
      * @dataProvider wrongCredentialProvider
+     *
+     * @return void
      */
     public function testLogin(string $user, string $sessionId, string $ipAddress, int $awsU, int $awsS, int $awsI, bool $banU, bool $banS, bool $banI): void
     {
-        $this->assertFalse($this->enhancedAuthentication->login($user, 'passwor', $user, '$2y$11$4IAn6SRaB0osPz8afZC5D.CmTrBGxnb5FQEygPjDirK9SWE/u8YuO', 1));
+        $this->assertFalse(self::$enhancedAuthentication->login($user, 'passwor', $user, '$2y$11$4IAn6SRaB0osPz8afZC5D.CmTrBGxnb5FQEygPjDirK9SWE/u8YuO', 1));
 
         $this->storeLoginAttempt($user, $sessionId, $ipAddress);
 
         //Access with user
-        $this->assertEquals($awsU, $this->enhancedAuthentication->getAttemptsLeftWithSameUser($user));
+        $this->assertEquals($awsU, self::$enhancedAuthentication->getAttemptsLeftWithSameUser($user));
         //Access with session
-        $this->assertEquals($awsS, $this->enhancedAuthentication->getAttemptsLeftWithSameSession($sessionId));
+        $this->assertEquals($awsS, self::$enhancedAuthentication->getAttemptsLeftWithSameSession($sessionId));
         //Access with ip
-        $this->assertEquals($awsI, $this->enhancedAuthentication->getAttemptsLeftWithSameIp($ipAddress));
+        $this->assertEquals($awsI, self::$enhancedAuthentication->getAttemptsLeftWithSameIp($ipAddress));
 
         //User Banned
-        $this->assertEquals($banU, $this->enhancedAuthentication->isUserBanned($user));
+        $this->assertEquals($banU, self::$enhancedAuthentication->isUserBanned($user));
         //Session Banned
-        $this->assertEquals($banS, $this->enhancedAuthentication->isSessionBanned($sessionId));
+        $this->assertEquals($banS, self::$enhancedAuthentication->isSessionBanned($sessionId));
         //Ip Banned
-        $this->assertEquals($banI, $this->enhancedAuthentication->isIpBanned($ipAddress));
-    }
-
-    /**
-     * Set up before class.
-     */
-    public static function setUpBeforeClass(): void
-    {
-        self::loginClean();
-    }
-
-    /**
-     * Tear down After Class.
-     */
-    public static function tearDownAfterClass(): void
-    {
-        self::loginClean();
-    }
-
-    /**
-     * Remove record from login_attemp table.
-     */
-    protected static function loginClean(): void
-    {
-        $options = [
-            'dsn'      => $GLOBALS['pdo_mysql_dsn'],
-            'user'     => $GLOBALS['pdo_mysql_user'],
-            'password' => $GLOBALS['pdo_mysql_password'],
-            'options'  => [
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_PERSISTENT         => false,
-                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
-            ],
-        ];
-
-        (new EnhancedAuthenticationMapper((new StorageFactory('pdo', $options))->get()))->deleteOldLoginAttempts(-86400);
+        $this->assertEquals($banI, self::$enhancedAuthentication->isIpBanned($ipAddress));
     }
 
     /**
@@ -178,16 +182,18 @@ class EnhancedAuthenticationTest extends TestCase
      * @param string $user
      * @param string $sessionId
      * @param string $ipAddress
+     *
+     * @return void
      */
     protected function storeLoginAttempt(string &$user, string &$sessionId, string &$ipAddress): void
     {
         /** @var \Linna\Authentication\LoginAttempt Login Attempt. */
-        $loginAttempt = $this->eAMapper->create();
+        $loginAttempt = self::$enhancedAuthenticationMapper->create();
         $loginAttempt->userName = $user;
         $loginAttempt->sessionId = $sessionId;
         $loginAttempt->ipAddress = $ipAddress;
         $loginAttempt->when = date('YmdHis', time());
 
-        $this->eAMapper->save($loginAttempt);
+        self::$enhancedAuthenticationMapper->save($loginAttempt);
     }
 }
