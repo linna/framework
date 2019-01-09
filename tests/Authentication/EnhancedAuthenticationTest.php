@@ -110,6 +110,25 @@ class EnhancedAuthenticationTest extends TestCase
     }
 
     /**
+     * Test new instance.
+     *
+     * @return void
+     */
+    public function testNewInstance(): void
+    {
+        $this->assertInstanceOf(
+            EnhancedAuthentication::class,
+            (
+            new EnhancedAuthentication(
+                    self::$session,
+                    self::$password,
+                    self::$enhancedAuthenticationMapper
+                )
+            )
+        );
+    }
+
+    /**
      * Wrong arguments router class provider.
      *
      * @return array

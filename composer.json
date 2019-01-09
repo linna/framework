@@ -24,7 +24,7 @@
     },
     "require-dev": {
         "infection/infection": "^0.11",
-        "linna/auth-mapper-mysql": "dev-master",
+        "linna/auth-mapper-mysql": "^0.1",
         "mongodb/mongodb": "^1.2",
         "phpstan/phpstan": "^0.10",
         "phpunit/phpunit": "^7.0"

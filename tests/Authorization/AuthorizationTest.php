@@ -29,32 +29,34 @@ class AuthorizationTest extends TestCase
     /**
      * @var Session The session class instance.
      */
-    protected $session;
+    protected static $session;
 
     /**
      * @var Password The password class instance.
      */
-    protected $password;
+    protected static $password;
 
     /**
      * @var Authentication The authentication class instance.
      */
-    protected $authentication;
+    protected static $authentication;
 
     /**
      * @var Authorization The authorization class instance.
      */
-    protected $authorization;
+    protected static $authorization;
 
     /**
      * @var PermissionMapper The permission mapper class instance.
      */
-    protected $permissionMapper;
+    protected static $permissionMapper;
 
     /**
-     * Setup.
+     * Set up before class.
+     *
+     * @return void
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -73,20 +75,25 @@ class AuthorizationTest extends TestCase
         $authentication = new Authentication($session, $password);
         $permissionMapper = new PermissionMapper((new StorageFactory('pdo', $options))->get());
 
-        $this->password = $password;
-        $this->session = $session;
-        $this->authentication = $authentication;
-        $this->permissionMapper = $permissionMapper;
+        self::$password = $password;
+        self::$session = $session;
+        self::$authentication = $authentication;
+        self::$permissionMapper = $permissionMapper;
 
-        $this->authorization = new Authorization($authentication, $permissionMapper);
+        self::$authorization = new Authorization($authentication, $permissionMapper);
     }
 
     /**
-     * Tear Down.
+     * Tear down after class.
+     *
+     * @return void
      */
-    public function tearDown()
+    public static function tearDownAfterClass(): void
     {
-        unset($this->password, $this->session, $this->authentication, $this->permissionMapper);
+        self::$password = null;
+        self::$session = null;
+        self::$authentication = null;
+        self::$permissionMapper = null;
     }
 
     /**
@@ -94,7 +101,7 @@ class AuthorizationTest extends TestCase
      */
     public function testNewAuthorizationInstance(): void
     {
-        $this->assertInstanceOf(Authorization::class, $this->authorization);
+        $this->assertInstanceOf(Authorization::class, self::$authorization);
     }
 
     /**
@@ -102,45 +109,49 @@ class AuthorizationTest extends TestCase
      */
     public function testCanDoActionWithoutLogin(): void
     {
-        $permission = $this->permissionMapper->fetchById(1);
+        $permission = self::$permissionMapper->fetchById(1);
 
-        $this->assertFalse($this->authorization->can(new NullDomainObject));
-        $this->assertFalse($this->authorization->can($permission));
-        $this->assertFalse($this->authorization->can(1));
-        $this->assertFalse($this->authorization->can('see users'));
+        $this->assertFalse(self::$authorization->can(new NullDomainObject));
+        $this->assertFalse(self::$authorization->can($permission));
+        $this->assertFalse(self::$authorization->can(1));
+        $this->assertFalse(self::$authorization->can('see users'));
     }
 
     /**
      * Test can do an action with invalid permission.
+     *
+     * @return void
      */
     public function testCanDoActionWithInvalidPermission(): void
     {
-        $this->assertFalse($this->authorization->can(new Password()));
+        $this->assertFalse(self::$authorization->can(new Password()));
     }
 
     /**
      * Test can do an action with login.
      *
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testCanDoActionWithLogin(): void
     {
-        $this->session->start();
+        self::$session->start();
 
-        $authentication = new Authentication($this->session, $this->password);
+        $authentication = new Authentication(self::$session, self::$password);
 
         //attemp login
         $this->assertTrue($authentication->login(
             'root',
             'password',
             'root',
-            $this->password->hash('password'),
+            self::$password->hash('password'),
             1
         ));
 
         //pass as first argument new instance because phpunit try to serialize pdo.????? I don't know where.
-        $authorization = new Authorization(new Authentication($this->session, $this->password), $this->permissionMapper);
-        $permission = $this->permissionMapper->fetchById(1);
+        $authorization = new Authorization(new Authentication(self::$session, self::$password), self::$permissionMapper);
+        $permission = self::$permissionMapper->fetchById(1);
 
         $this->assertFalse($authorization->can(new NullDomainObject));
 
@@ -149,6 +160,6 @@ class AuthorizationTest extends TestCase
         $this->assertTrue($authorization->can(1));
         $this->assertTrue($authorization->can('see users'));
 
-        $this->session->destroy();
+        self::$session->destroy();
     }
 }
