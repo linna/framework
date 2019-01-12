@@ -141,6 +141,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Router\RouteCollection->toArray()` method, use `->getArrayCopy()` instead
 * `Linna\Router\RouteInterface->toArray()` method
 
+#### Shared
+* `Linna\Shared\ClassOptionsTrait` trait
+
 
 ## [v0.24.0](https://github.com/linna/framework/compare/v0.23.1...v0.24.0) - 2018-09-01
 
