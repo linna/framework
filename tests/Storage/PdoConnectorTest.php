@@ -22,7 +22,7 @@ class PdoConnectorTest extends TestCase
 {
     /**
      * Test connection.
-     * 
+     *
      * @return void
      */
     public function testConnection(): void
@@ -61,7 +61,7 @@ class PdoConnectorTest extends TestCase
      *
      * @dataProvider connectionDataProvider
      * @expectedException PDOException
-     * 
+     *
      * @return void
      */
     public function testFailConnection(string $dsn, string $user, string $password): void

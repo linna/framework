@@ -76,7 +76,7 @@ class ExtendedPDOTest extends TestCase
      * Test query with parameters.
      *
      * @dataProvider correctParametersProvider
-     * 
+     *
      * @return void
      */
     public function testQueryWithParameters(string $query, array $param): void
@@ -96,7 +96,7 @@ class ExtendedPDOTest extends TestCase
      *
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Parameter name will be in the form :name.
-     * 
+     *
      * @return void
      */
     public function testQueryWithParameterWithWrongParameterName(): void
@@ -114,7 +114,7 @@ class ExtendedPDOTest extends TestCase
      *
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Parameters array must contain at least two elements with this form: [':name', 'value'].
-     * 
+     *
      * @return void
      */
     public function testQueryWithParameterWithTooManyParameters(): void
@@ -131,7 +131,7 @@ class ExtendedPDOTest extends TestCase
      * Test query with parameter with too many parameters.
      *
      * @expectedException PDOException
-     * 
+     *
      * @return void
      */
     public function testQueryWithParameterWithoutParameters(): void
@@ -148,7 +148,7 @@ class ExtendedPDOTest extends TestCase
      * Test query status.
      *
      * @dataProvider correctParametersProvider
-     * 
+     *
      * @return void
      */
     public function testQueryStatus(string $query, array $param): void
