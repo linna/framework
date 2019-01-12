@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Linna\Storage;
 
 use PDO;
+use PDOException;
 use PDOStatement;
 use InvalidArgumentException;
 
@@ -36,7 +37,7 @@ class ExtendedPDO extends PDO
      */
     public function queryWithParam(string $query, array $param): PDOStatement
     {
-        $statment = $this->prepare($query);
+        $statement = $this->prepare($query);
 
         foreach ($param as $value) {
             $this->checkValue($value);
@@ -46,12 +47,12 @@ class ExtendedPDO extends PDO
             $ref = $value;
             $ref[1] = &$value[1];
 
-            call_user_func_array([$statment, "bindParam"], $ref);
+            call_user_func_array([$statement, "bindParam"], $ref);
         }
 
-        $this->lastOperationStatus = $statment->execute();
+        $this->lastOperationStatus = $statement->execute();
 
-        return $statment;
+        return $statement;
     }
 
     /**

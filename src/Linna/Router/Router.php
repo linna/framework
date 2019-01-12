@@ -107,15 +107,12 @@ class Router
     {
         $route = $this->findRoute($this->filterUri($requestUri), $requestMethod);
 
-        if ($route instanceof NullRoute) {
-            $this->buildErrorRoute();
-            return false;
-        }
-
         if ($route instanceof Route) {
             $this->buildValidRoute($route);
             return true;
         }
+
+        $this->buildErrorRoute();
 
         return false;
     }

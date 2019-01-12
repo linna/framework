@@ -76,16 +76,12 @@ class Authorization
      * $authorization->can('see users');
      * </code></pre>
      *
-     * @param NullDomainObject|Permission|int|string $permission
+     * @param mixed $permission
      *
      * @return bool
      */
     public function can($permission): bool
     {
-        if ($permission instanceof NullDomainObject) {
-            return false;
-        }
-
         if ($permission instanceof Permission) {
             return $this->canByObject($permission);
         }
