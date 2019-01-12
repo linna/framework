@@ -85,7 +85,7 @@ class Model implements SplSubject
      */
     public function set(array $data): void
     {
-        $this->updates = array_merge_recursive($this->updates, $data);
+        $this->updates = array_merge/*_recursive*/($this->updates, $data);
     }
 
     /**

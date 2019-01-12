@@ -138,7 +138,7 @@ class Router
             $methodMatch = strpos($value->method, $method);
 
             if ($urlMatch && $methodMatch !== false) {
-                $route = $value;
+                $route = clone $value;
                 $this->routeMatches = $matches;
                 break;
             }
