@@ -23,32 +23,48 @@ class DomainObjectTest extends TestCase
     /**
      * @var User The user class.
      */
-    protected $user;
+    protected static $user;
 
     /**
-     * Setup.
+     * Set up before class.
+     *
+     * @return void
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->user = new User(new Password());
+        self::$user = new User(new Password());
+    }
+
+    /**
+     * Tear down after class.
+     *
+     * @return void
+     */
+    public static function tearDownAfterClass(): void
+    {
+        self::$user = null;
     }
 
     /**
      * Test create new object instance.
+     *
+     * @return void
      */
     public function testNewObjectInstance(): void
     {
-        $this->assertInstanceOf(User::class, $this->user);
+        $this->assertInstanceOf(User::class, self::$user);
     }
 
     /**
      * Test set object id.
+     *
+     * @return void
      */
     public function testSetObjectId(): void
     {
-        $this->user->setId(1);
+        self::$user->setId(1);
 
-        $this->assertEquals(1, $this->user->getId());
+        $this->assertEquals(1, self::$user->getId());
     }
 
     /**
@@ -56,10 +72,12 @@ class DomainObjectTest extends TestCase
      *
      * @expectedException UnexpectedValueException
      * @expectedExceptionMessage ObjectId property is immutable.
+     *
+     * @return void
      */
     public function testOverrideObjectId(): void
     {
-        $this->user->setId(1);
-        $this->user->setId(2);
+        self::$user->setId(1);
+        self::$user->setId(2);
     }
 }

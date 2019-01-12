@@ -24,6 +24,8 @@ class CacheFactoryTest extends TestCase
 {
     /**
      * Test create disk cache resource.
+     *
+     * @return void
      */
     public function testCreateDiskCache(): void
     {
@@ -34,6 +36,8 @@ class CacheFactoryTest extends TestCase
      * Test create memcached cache resource
      *
      * @requires extension memcached
+     *
+     * @return void
      */
     public function testCreateMemcachedCache(): void
     {
@@ -47,6 +51,8 @@ class CacheFactoryTest extends TestCase
      * Test unsupported cache resource.
      *
      * @expectedException InvalidArgumentException
+     *
+     * @return void
      */
     public function testUnsupportedCache(): void
     {

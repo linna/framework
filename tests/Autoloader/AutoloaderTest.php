@@ -21,6 +21,8 @@ class AutoloaderTest extends TestCase
 {
     /**
      * Test load mapped file.
+     *
+     * @return void
      */
     public function testLoadMappedFileTrue(): void
     {
@@ -41,6 +43,8 @@ class AutoloaderTest extends TestCase
 
     /**
     * Test load mapped file fail.
+     *
+     * @return void
     */
     public function testLoadMappedFileFalse(): void
     {
@@ -61,6 +65,8 @@ class AutoloaderTest extends TestCase
 
     /**
      * Test load mapped file no prefix.
+     *
+     * @return void
      */
     public function testLoadMappedFileNoPrefix(): void
     {
@@ -81,6 +87,8 @@ class AutoloaderTest extends TestCase
 
     /**
      * Test load mapped file with one namespace.
+     *
+     * @return void
      */
     public function testLoadMappedFileTrueWithOneNamespace(): void
     {
@@ -99,6 +107,8 @@ class AutoloaderTest extends TestCase
 
     /**
      * Test load mapped file fail with one namespace.
+     *
+     * @return void
      */
     public function testLoadMappedFileFalseWithOneNamespace(): void
     {
@@ -117,6 +127,8 @@ class AutoloaderTest extends TestCase
 
     /**
      * Test load mapped file no prefix with one namespace.
+     *
+     * @return void
      */
     public function testLoadMappedFileNoPrefixWithOneNamespace(): void
     {

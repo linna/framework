@@ -58,6 +58,8 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
+     *
+     * @return void
      */
     public function testSetAndGetWithMethodCall(string $key, $value): void
     {
@@ -75,6 +77,8 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
+     *
+     * @return void
      */
     public function testSetAndGetWithArraySyntax(string $key, $value): void
     {
@@ -92,6 +96,8 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
+     *
+     * @return void
      */
     public function testSetAndGetWithPropertySyntax(string $key, $value): void
     {
@@ -109,6 +115,8 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
+     *
+     * @return void
      */
     public function testHasWithMethodCall(string $key, $value): void
     {
@@ -126,6 +134,8 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
+     *
+     * @return void
      */
     public function testHasWithArraySyntax(string $key, $value): void
     {
@@ -143,6 +153,8 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
+     *
+     * @return void
      */
     public function testHasWithWithPropertySyntax(string $key, $value): void
     {
@@ -160,6 +172,8 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
+     *
+     * @return void
      */
     public function testDeleteUnexisting(string $key, $value): void
     {
@@ -173,6 +187,8 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
+     *
+     * @return void
      */
     public function testDeleteWithMethodCall(string $key, $value): void
     {
@@ -192,6 +208,8 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
+     *
+     * @return void
      */
     public function testDeleteWithArraySyntax(string $key, $value): void
     {
@@ -213,6 +231,8 @@ class ContainerTest extends TestCase
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
+     *
+     * @return void
      */
     public function testDeleteWithPropertySyntax(string $key, $value): void
     {
@@ -237,6 +257,8 @@ class ContainerTest extends TestCase
      *
      * @expectedException Linna\Container\Exception\NotFoundException
      * @expectedExceptionMessage No entry was found for this identifier.
+     *
+     * @return void
      */
     public function testGetUnexistingWithMethodCall(string $key, $value): void
     {
@@ -254,6 +276,8 @@ class ContainerTest extends TestCase
      *
      * @expectedException Linna\Container\Exception\NotFoundException
      * @expectedExceptionMessage No entry was found for this identifier.
+     *
+     * @return void
      */
     public function testGetUnexistingWithArraySyntax(string $key, $value): void
     {
@@ -271,6 +295,8 @@ class ContainerTest extends TestCase
      *
      * @expectedException Linna\Container\Exception\NotFoundException
      * @expectedExceptionMessage No entry was found for this identifier.
+     *
+     * @return void
      */
     public function testGetUnexistingWithPropertySyntax(string $key, $value): void
     {
@@ -304,6 +330,8 @@ class ContainerTest extends TestCase
      * @dataProvider classProvider
      *
      * @param string $class
+     *
+     * @return void
      */
     public function testResolve(string $class): void
     {
@@ -312,6 +340,8 @@ class ContainerTest extends TestCase
 
     /**
      * Test resolving class with pre cached dependencies.
+     *
+     * @return void
      */
     public function testResolveWithCache(): void
     {
@@ -328,6 +358,8 @@ class ContainerTest extends TestCase
     /**
      * Test resolving class with rules
      * for unsolvable arguments.
+     *
+     * @return void
      */
     public function testResolveWithRules(): void
     {

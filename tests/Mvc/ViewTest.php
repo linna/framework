@@ -24,6 +24,8 @@ class ViewTest extends TestCase
 {
     /**
      * Test new view instance.
+     *
+     * @return void
      */
     public function testNewViewInstance(): void
     {
@@ -34,6 +36,8 @@ class ViewTest extends TestCase
      * Test view with bad template.
      *
      * @expectedException TypeError
+     *
+     * return void
      */
     public function testViewWithBadTemplate(): void
     {

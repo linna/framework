@@ -22,6 +22,8 @@ class MongoDBConnectorTest extends TestCase
 {
     /**
      * Test connection.
+     * 
+     * @return void
      */
     public function testConnection(): void
     {
@@ -38,6 +40,8 @@ class MongoDBConnectorTest extends TestCase
      * Test fail connenction.
      *
      * @expectedException InvalidArgumentException
+     * 
+     * @return void
      */
     public function testFailConnection(): void
     {

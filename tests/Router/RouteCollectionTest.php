@@ -26,6 +26,8 @@ class RouteCollectionTest extends TestCase
 {
     /**
      * Test new instance.
+     *
+     * @return void
      */
     public function testCreateInstance(): void
     {
@@ -34,6 +36,8 @@ class RouteCollectionTest extends TestCase
 
     /**
      * Test new instance passing right typed array to constructor.
+     *
+     * @return void
      */
     public function testCreateInstanceWithRightTypedArray(): void
     {
@@ -58,6 +62,8 @@ class RouteCollectionTest extends TestCase
      * Test new instance passing array with invalid element to constructor.
      *
      * @expectedException InvalidArgumentException
+     *
+     * @return void
      */
     public function testCreateInstanceWithWrongTypedArray(): void
     {
@@ -75,6 +81,8 @@ class RouteCollectionTest extends TestCase
 
     /**
      * Test assign to array a right typed value.
+     *
+     * @return void
      */
     public function testAssignrRightTypedValueToArray(): void
     {
@@ -92,37 +100,12 @@ class RouteCollectionTest extends TestCase
      * Test assign to array a wrong typed value.
      *
      * @expectedException InvalidArgumentException
+     *
+     * @return void
      */
     public function testAssignWrongTypedValueToArray(): void
     {
         $routes = new RouteCollection();
         $routes[] = new SplStack();
     }
-
-    /**
-     * Test route to array.
-     */
-    /*public function testRouteCollectionToArray(): void
-    {
-        $routes = new RouteCollection([
-            new Route([
-                'name'       => 'Home',
-                'method'     => 'GET',
-                'url'        => '/',
-            ])
-        ]);
-
-        $this->assertEquals([[
-            'name'       => 'Home',
-            'method'     => 'GET',
-            'url'        => '/',
-            'model'      => '',
-            'view'       => '',
-            'controller' => '',
-            'action'     => '',
-            'default'    => false,
-            'param'      => [],
-            'callback'   => false,
-        ]], $routes->toArray());
-    }*/
 }

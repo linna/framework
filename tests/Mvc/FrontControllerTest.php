@@ -38,32 +38,34 @@ class FrontControllerTest extends TestCase
     /**
      * @var array Routes for test.
      */
-    protected $routes;
+    protected static $routes;
 
     /**
      * @var Router The router object.
      */
-    protected $router;
+    protected static $router;
 
     /**
      * @var Model The model object.
      */
-    protected $model;
+    protected static $model;
 
     /**
      * @var View The view object.
      */
-    protected $view;
+    protected static $view;
 
     /**
      * @var Controller The controller object.
      */
-    protected $controller;
+    protected static $controller;
 
     /**
-     * Setup.
+     * Set up before class.
+     *
+     * @return void
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
         $routes = (new RouteCollection([
             new Route([
@@ -94,28 +96,46 @@ class FrontControllerTest extends TestCase
             ])
         ]));
 
-        $this->router = new Router($routes->getArrayCopy(), [
+        self::$router = new Router($routes->getArrayCopy(), [
             'badRoute'    => 'E404',
             'rewriteMode' => true,
         ]);
+
+        //var_dump(self::$router);
 
         $model = new CalculatorModel();
         $view = new CalculatorView($model, new JsonTemplate());
         $controller = new CalculatorController($model);
 
-        $this->model = $model;
-        $this->view = $view;
-        $this->controller = $controller;
+        self::$model = $model;
+        self::$view = $view;
+        self::$controller = $controller;
 
-        $this->routes = $routes;
+        self::$routes = $routes;
+    }
+
+    /**
+     * Tear down after class.
+     *
+     * @return void
+     */
+    public static function tearDownAfterClass(): void
+    {
+        self::$router = null;
+        self::$model = null;
+        self::$view = null;
+        self::$controller = null;
+        self::$routes = null;
     }
 
     /**
      * Test new fron controller instance.
+     *
+     * @return void
      */
     public function testNewFrontControllerInstance(): void
     {
-        $this->assertInstanceOf(FrontController::class, new FrontController($this->model, $this->view, $this->controller, $this->routes[0]));
+        $this->assertInstanceOf(FrontController::class, new FrontController(self::$model, self::$view, self::$controller, self::$routes[0]));
     }
 
     /**
@@ -125,10 +145,10 @@ class FrontControllerTest extends TestCase
      */
     public function frontControllerArgProvider(): array
     {
-        $model = $this->model;
-        $view = $this->view;
-        $controller = $this->controller;
-        $route = $this->routes[0];
+        $model = self::$model;
+        $view = self::$view;
+        $controller = self::$controller;
+        $route = self::$routes[0];
 
         return [
             [false, $view, $controller, $route],
@@ -148,6 +168,8 @@ class FrontControllerTest extends TestCase
      *
      * @dataProvider frontControllerArgProvider
      * @expectedException TypeError
+     *
+     * @return void
      */
     public function testNewFrontControllerWithWrongArguments($model, $view, $controller, $route): void
     {
@@ -177,14 +199,16 @@ class FrontControllerTest extends TestCase
      * @param int $result
      *
      * @dataProvider calculatorProvider
+     *
+     * @return void
      */
     public function testRunFrontController(string $route, array $parameter, int $result): void
     {
         $_POST['numbers'] = $parameter;
 
-        $this->router->validate($route, 'POST');
+        self::$router->validate($route, 'POST');
 
-        $frontController = new FrontController($this->model, $this->view, $this->controller, $this->router->getRoute());
+        $frontController = new FrontController(self::$model, self::$view, self::$controller, self::$router->getRoute());
         $frontController->run();
 
         $this->assertEquals($result, json_decode($frontController->response())->result);
@@ -213,16 +237,18 @@ class FrontControllerTest extends TestCase
      * @param string $result
      *
      * @dataProvider someParamProvider
+     *
+     * @return void
      */
     public function testRunFrontControllerWithSomeParam(string $route, string $result): void
     {
-        $this->router->validate($route, 'GET');
+        self::$router->validate($route, 'GET');
 
         $model = new MultipleModel();
         $view = new MultipleView($model, new JsonTemplate());
         $controller = new MultipleController($model);
 
-        $frontController = new FrontController($model, $view, $controller, $this->router->getRoute());
+        $frontController = new FrontController($model, $view, $controller, self::$router->getRoute());
         $frontController->run();
 
         $this->assertEquals($result, json_decode($frontController->response())->result);
@@ -230,13 +256,14 @@ class FrontControllerTest extends TestCase
 
     /**
      * Test model detach.
+     *
+     * @return void
      */
     public function testModelDetach(): void
     {
-        $this->router->validate('/multi/param/2017/1/1', 'GET');
+        self::$router->validate('/multi/param/2017/1/1', 'GET');
 
-        /** @var Route */
-        $route = $this->router->getRoute();
+        $route = self::$router->getRoute();
 
         $model = new MultipleModel();
         $view = new MultipleView($model, new JsonTemplate());
@@ -282,16 +309,18 @@ class FrontControllerTest extends TestCase
      * Test run front controller before after.
      *
      * @dataProvider beforeAfterProvider
+     *
+     * @return void
      */
     public function testRunFrontControllerBeforeAfter(int $input, int $result): void
     {
-        $this->router->validate('/before/after/'.$input, 'GET');
+        self::$router->validate('/before/after/'.$input, 'GET');
 
         $model = new BeforeAfterModel();
         $controller = new BeforeAfterController($model);
         $view = new BeforeAfterView($model, new JsonTemplate());
 
-        $frontController = new FrontController($model, $view, $controller, $this->router->getRoute());
+        $frontController = new FrontController($model, $view, $controller, self::$router->getRoute());
         $frontController->run();
 
         $this->assertEquals($result, json_decode($frontController->response())->result);

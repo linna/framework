@@ -23,14 +23,28 @@ class SessionTest extends TestCase
     /**
      * @var Session The session class.
      */
-    protected $session;
+    protected static $session;
 
     /**
-     * Setup.
+     * Set up before class.
+     *
+     * @requires extension memcached
+     *
+     * @return void
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->session = new Session(['expire' => 1800]);
+        self::$session = new Session(['expire' => 1800]);
+    }
+
+    /**
+     * Tear down after class.
+     *
+     * @return void
+     */
+    public static function tearDownAfterClass(): void
+    {
+        self::$session = null;
     }
 
     /**
@@ -38,10 +52,12 @@ class SessionTest extends TestCase
      *
      * @requires extension xdebug
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionStart(): void
     {
-        $session = $this->session;
+        $session = self::$session;
 
         $this->assertEquals(1, $session->status);
 
@@ -58,10 +74,12 @@ class SessionTest extends TestCase
      *
      * @requires extension xdebug
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionCommit(): void
     {
-        $session = $this->session;
+        $session = self::$session;
         $session->start();
 
         $this->assertTrue($this->checkCookieTime(60, $this->getCookieValues()));
@@ -85,10 +103,12 @@ class SessionTest extends TestCase
      *
      * @requires extension xdebug
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionDestroy(): void
     {
-        $session = $this->session;
+        $session = self::$session;
 
         $session->start();
         $this->assertTrue($this->checkCookieTime(60, $this->getCookieValues()));
@@ -111,10 +131,12 @@ class SessionTest extends TestCase
      *
      * @requires extension xdebug
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionRegenerate(): void
     {
-        $session = $this->session;
+        $session = self::$session;
 
         $session->start();
         $this->assertTrue($this->checkCookieTime(60, $this->getCookieValues()));
@@ -166,10 +188,12 @@ class SessionTest extends TestCase
      * @dataProvider sessionTimeProvider
      * @requires extension xdebug
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionExpired(int $time, bool $equals): void
     {
-        $session = $this->session;
+        $session = self::$session;
 
         $session->start();
         $this->assertTrue($this->checkCookieTime(60, $this->getCookieValues()));
@@ -203,92 +227,111 @@ class SessionTest extends TestCase
     /**
      * Test create and get with property access.
      *
+     * @return void
      */
     public function testCreateAndGetWithPropertyAccess(): void
     {
-        $this->session->testData = 'foo';
+        self::$session->testData = 'foo';
 
-        $this->assertEquals($this->session->testData, 'foo');
+        $this->assertEquals(self::$session->testData, 'foo');
     }
 
     /**
      * Test delete and isset with property access.
+     *
+     * @return void
      */
     public function testDeleteAndIssetWithPropertyAccess(): void
     {
-        unset($this->session->testData);
+        unset(self::$session->testData);
 
-        $this->assertFalse(isset($this->session->testData));
+        $this->assertFalse(isset(self::$session->testData));
     }
 
     /**
      * Test get unstored value with property access.
+     *
+     * @return void
      */
     public function testGetUnstoredValueWithPropertyAccess(): void
     {
-        $this->assertFalse($this->session->testData);
+        $this->assertFalse(self::$session->testData);
     }
 
     /**
      * Test create and get with array access.
+     *
+     * @return void
      */
     public function testCreateAndGetWithArrayAccess(): void
     {
-        $this->session['testData'] = 'foo';
+        self::$session['testData'] = 'foo';
 
-        $this->assertEquals($this->session['testData'], 'foo');
+        $this->assertEquals(self::$session['testData'], 'foo');
     }
 
     /**
      * Test delete and isset with array access.
+     *
+     * @return void
      */
     public function testDeleteAndIssetWithArrayAccess(): void
     {
-        unset($this->session['testData']);
+        unset(self::$session['testData']);
 
-        $this->assertFalse(isset($this->session['testData']));
+        $this->assertFalse(isset(self::$session['testData']));
     }
 
     /**
      * Test get unstored value with array access.
+     *
+     * @return void
      */
     public function testGetUnstoredValueWithArrayAccess(): void
     {
-        $this->assertFalse($this->session['testData']);
+        $this->assertFalse(self::$session['testData']);
     }
 
     /**
      * Test create and get with array access trait method.
+     *
+     * @return void
      */
     public function testCreateAndGetWithTraitMethod(): void
     {
-        $this->session->offsetSet('testData', 'foo');
+        self::$session->offsetSet('testData', 'foo');
 
-        $this->assertEquals($this->session->offsetGet('testData'), 'foo');
+        $this->assertEquals(self::$session->offsetGet('testData'), 'foo');
     }
 
     /**
      * Test delete and isset with array access trait method.
+     *
+     * @return void
      */
     public function testDeleteAndIssetWithTraitMethod(): void
     {
-        $this->session->offsetUnset('testData');
+        self::$session->offsetUnset('testData');
 
-        $this->assertFalse($this->session->offsetExists('testData'));
+        $this->assertFalse(self::$session->offsetExists('testData'));
     }
 
     /**
      * Test get unstored value with array access trait method.
+     *
+     * @return void
      */
     public function testGetUnstoredValueWithTraitMethod(): void
     {
-        $this->assertFalse($this->session->offsetGet('testData'));
+        $this->assertFalse(self::$session->offsetGet('testData'));
     }
 
     /**
      * Get session cookie set values.
      *
      * @requires extension xdebug
+     *
+     * @return void
      */
     public function getCookieValues(): array
     {
@@ -345,6 +388,8 @@ class SessionTest extends TestCase
      * Get the cookie value;
      *
      * @param array $cookieArray
+     *
+     * @return void
      */
     public function getCookieValue(array $cookieArray): string
     {

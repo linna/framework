@@ -21,6 +21,8 @@ class ModelTest extends TestCase
 {
     /**
      * Test new view instance.
+     *
+     * @return void
      */
     public function testNewModelInstance(): void
     {
@@ -29,6 +31,8 @@ class ModelTest extends TestCase
 
     /*
      * Test model get and set.
+     *
+     * @return void
      */
     public function testModelGetAndSet(): void
     {

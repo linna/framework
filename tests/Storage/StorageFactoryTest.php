@@ -23,6 +23,8 @@ class StorageFactoryTest extends TestCase
 {
     /**
      * Test create pdo storage.
+     * 
+     * @return void
      */
     public function testCreatePdo(): void
     {
@@ -45,6 +47,8 @@ class StorageFactoryTest extends TestCase
 
     /**
      * Test create mysqli storage.
+     * 
+     * @return void
      */
     public function testCreateMysqlI(): void
     {
@@ -63,6 +67,8 @@ class StorageFactoryTest extends TestCase
 
     /**
      * Test create mongodb storage.
+     * 
+     * @return void
      */
     public function testCreateMongoDb(): void
     {
@@ -82,6 +88,8 @@ class StorageFactoryTest extends TestCase
      *
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage [] not supported.
+     * 
+     * @return void
      */
     public function testUnsupportedAdapter(): void
     {

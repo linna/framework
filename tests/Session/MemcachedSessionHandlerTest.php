@@ -24,47 +24,86 @@ class MemcachedSessionHandlerTest extends TestCase
     /**
      * @var Session The session class.
      */
-    protected $session;
+    protected static $session;
 
     /**
      * @var MemcachedSessionHandler The session handler class.
      */
-    protected $handler;
+    protected static $handler;
 
     /**
      * @var Memcached The memcached class.
      */
-    protected $memcached;
+    protected static $memcached;
+
+    /**
+     * Set up before class.
+     *
+     * @requires extension memcached
+     *
+     * @return void
+     */
+    public static function setUpBeforeClass(): void
+    {
+        $memcached = new Memcached();
+        $memcached->addServer($GLOBALS['mem_host'], (int) $GLOBALS['mem_port']);
+
+        self::$handler = new MemcachedSessionHandler($memcached, 5);
+        self::$session = new Session(['expire' => 10]);
+    }
+
+    /**
+     * Tear down after class.
+     *
+     * @return void
+     */
+    public static function tearDownAfterClass(): void
+    {
+        self::$handler = null;
+        self::$session = null;
+    }
 
     /**
      * Setup.
      *
      * @requires extension memcached
+     *
+     * @return void
      */
     public function setUp(): void
     {
-        $memcached = new Memcached();
+        self::$session->setSessionHandler(self::$handler);
+    }
 
-        $memcached->addServer($GLOBALS['mem_host'], (int) $GLOBALS['mem_port']);
 
-        $handler = new MemcachedSessionHandler($memcached, 5);
-        $session = new Session(['expire' => 10]);
+    /**
+     * Test set session handler.
+     *
+     * @requires extension memcached
+     *
+     * @runInSeparateProcess
+     *
+     * @return void
+     */
+    public function testSetSessionHandler(): void
+    {
+        self::$session->setSessionHandler(self::$handler);
 
-        $session->setSessionHandler($handler);
-
-        $this->handler = $handler;
-
-        $this->session = $session;
+        $this->assertInstanceOf(MemcachedSessionHandler::class, self::$handler);
     }
 
     /**
      * Test Session Start.
      *
+     * @requires extension memcached
+     *
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionStart(): void
     {
-        $session = $this->session;
+        $session = self::$session;
 
         $this->assertEquals(1, $session->status);
 
@@ -78,11 +117,15 @@ class MemcachedSessionHandlerTest extends TestCase
     /**
      * Test session commit.
      *
+     * @requires extension memcached
+     *
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionCommit(): void
     {
-        $session = $this->session;
+        $session = self::$session;
         $session->start();
 
         $this->assertEquals($session->id, session_id());
@@ -102,11 +145,15 @@ class MemcachedSessionHandlerTest extends TestCase
     /**
      * Test session destroy.
      *
+     * @requires extension memcached
+     *
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionDestroy(): void
     {
-        $session = $this->session;
+        $session = self::$session;
 
         $session->start();
         $session['fooData'] = 'fooData';
@@ -125,11 +172,15 @@ class MemcachedSessionHandlerTest extends TestCase
     /**
      * Test session regenerate.
      *
+     * @requires extension memcached
+     *
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionRegenerate(): void
     {
-        $session = $this->session;
+        $session = self::$session;
 
         $session->start();
         $session['fooData'] = 'fooData';
@@ -155,11 +206,15 @@ class MemcachedSessionHandlerTest extends TestCase
     /**
      * Test session expired.
      *
+     * @requires extension memcached
+     *
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionExpired(): void
     {
-        $session = $this->session;
+        $session = self::$session;
 
         $session->start();
 
@@ -169,7 +224,7 @@ class MemcachedSessionHandlerTest extends TestCase
 
         $session->commit();
 
-        $session->setSessionHandler($this->handler);
+        $session->setSessionHandler(self::$handler);
 
         $session->start();
 
@@ -185,10 +240,13 @@ class MemcachedSessionHandlerTest extends TestCase
      * Test garbage.
      *
      * @requires extension memcached
+     *
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testGc(): void
     {
-        $this->assertTrue($this->handler->gc(0));
+        $this->assertTrue(self::$handler->gc(0));
     }
 }

@@ -26,22 +26,26 @@ class MysqlPdoSessionHandlerTest extends TestCase
     /**
      * @var Session The session class.
      */
-    protected $session;
+    protected static $session;
 
     /**
      * @var MysqlPdoSessionHandler The session handler class.
      */
-    protected $handler;
+    protected static $handler;
 
     /**
      * @var ExtendedPDO The pdo class.
      */
-    protected $pdo;
+    protected static $pdo;
 
     /**
-     * Setup.
+     * Set up before class.
+     *
+     * @requires extension memcached
+     *
+     * @return void
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -57,37 +61,44 @@ class MysqlPdoSessionHandlerTest extends TestCase
 
         $pdo = (new StorageFactory('pdo', $options))->get();
 
-        $handler = new MysqlPdoSessionHandler($pdo);
-        $session = new Session(['expire' => 10]);
-
-        $session->setSessionHandler($handler);
-
-        $this->pdo = $pdo;
-
-        $this->handler = $handler;
-
-        $this->session = $session;
+        self::$handler = new MysqlPdoSessionHandler($pdo);
+        self::$session = new Session(['expire' => 10]);
+        self::$pdo = $pdo;
     }
 
     /**
-     * Tear Down.
+     * Tear down after class.
+     *
+     * @return void
      */
-    public function tearDown()
+    public static function tearDownAfterClass(): void
     {
         //closing PDO connection
-        $this->pdo = null;
+        self::$pdo = null;
+        self::$handler = null;
+        self::$session = null;
+    }
 
-        unset($this->pdo, $this->handler, $this->session);
+    /**
+     * Setup.
+     *
+     * @return void
+     */
+    public function setUp(): void
+    {
+        self::$session->setSessionHandler(self::$handler);
     }
 
     /**
      * Test Session Start.
      *
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionStart(): void
     {
-        $session = $this->session;
+        $session = self::$session;
 
         $this->assertEquals(1, $session->status);
 
@@ -102,10 +113,12 @@ class MysqlPdoSessionHandlerTest extends TestCase
      * Test session commit.
      *
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionCommit(): void
     {
-        $session = $this->session;
+        $session = self::$session;
         $session->start();
 
         $this->assertEquals($session->id, session_id());
@@ -126,10 +139,12 @@ class MysqlPdoSessionHandlerTest extends TestCase
      * Test session destroy.
      *
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionDestroy(): void
     {
-        $session = $this->session;
+        $session = self::$session;
 
         $session->start();
         $session['fooData'] = 'fooData';
@@ -149,10 +164,12 @@ class MysqlPdoSessionHandlerTest extends TestCase
      * Test session regenerate.
      *
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionRegenerate(): void
     {
-        $session = $this->session;
+        $session = self::$session;
 
         $session->start();
         $session['fooData'] = 'fooData';
@@ -179,10 +196,12 @@ class MysqlPdoSessionHandlerTest extends TestCase
      * Test session expired.
      *
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testSessionExpired(): void
     {
-        $session = $this->session;
+        $session = self::$session;
 
         $session->start();
 
@@ -192,7 +211,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
 
         $session->commit();
 
-        $session->setSessionHandler($this->handler);
+        $session->setSessionHandler(self::$handler);
 
         $session->start();
 
@@ -208,12 +227,14 @@ class MysqlPdoSessionHandlerTest extends TestCase
      * Test garbage.
      *
      * @runInSeparateProcess
+     *
+     * @return void
      */
     public function testGc(): void
     {
-        $this->pdo->query('DELETE FROM session');
+        self::$pdo->query('DELETE FROM session');
 
-        $pdos = $this->pdo->prepare('INSERT INTO session (session_id, session_data) VALUES (:session_id, :session_data)');
+        $pdos = self::$pdo->prepare('INSERT INTO session (session_id, session_data) VALUES (:session_id, :session_data)');
 
         for ($i = 0; $i < 10; $i++) {
             $sessionId = md5((string) $i);
@@ -225,9 +246,9 @@ class MysqlPdoSessionHandlerTest extends TestCase
             $pdos->execute();
         }
 
-        $this->handler->gc(-1);
+        self::$handler->gc(-1);
 
-        $pdos = $this->pdo->prepare('SELECT * FROM session');
+        $pdos = self::$pdo->prepare('SELECT * FROM session');
         $pdos->execute();
 
         $this->assertEquals(0, $pdos->rowCount());

@@ -22,6 +22,8 @@ class MysqliConnectorTest extends TestCase
 {
     /**
      * Test connection.
+     * 
+     * @return void
      */
     public function testConnection(): void
     {
@@ -57,6 +59,8 @@ class MysqliConnectorTest extends TestCase
      *
      * @dataProvider connectionDataProvider
      * @expectedException mysqli_sql_exception
+     * 
+     * @return void
      */
     public function testFailConnection(
             string $host,

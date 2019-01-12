@@ -21,17 +21,11 @@ class NullRouteTest extends TestCase
 {
     /**
      * Test new null route instance.
+     *
+     * @return void
      */
     public function testNewNullRouteInstance(): void
     {
         $this->assertInstanceOf(NullRoute::class, new NullRoute());
     }
-
-    /**
-     * Test null route to array.
-     */
-    //public function testNullRouteToArray(): void
-    //{
-    //    $this->assertEquals([], (new NullRoute())->toArray());
-    //}
 }

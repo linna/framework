@@ -24,14 +24,18 @@ class ExtendedPDOTest extends TestCase
     /**
      * @var array Connection options.
      */
-    protected $options = [];
+    protected static $options = [];
 
     /**
-     * Setup.
+     * Set up before class.
+     *
+     * @requires extension memcached
+     *
+     * @return void
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->options = [
+        self::$options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
             'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
@@ -72,10 +76,12 @@ class ExtendedPDOTest extends TestCase
      * Test query with parameters.
      *
      * @dataProvider correctParametersProvider
+     * 
+     * @return void
      */
     public function testQueryWithParameters(string $query, array $param): void
     {
-        $user = (new PdoConnector($this->options))
+        $user = (new PdoConnector(self::$options))
             ->getResource()
             ->queryWithParam(
                 $query,
@@ -90,10 +96,12 @@ class ExtendedPDOTest extends TestCase
      *
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Parameter name will be in the form :name.
+     * 
+     * @return void
      */
     public function testQueryWithParameterWithWrongParameterName(): void
     {
-        (new PdoConnector($this->options))
+        (new PdoConnector(self::$options))
             ->getResource()
             ->queryWithParam(
                 'SELECT user_id, name, email FROM user WHERE name = :name',
@@ -106,10 +114,12 @@ class ExtendedPDOTest extends TestCase
      *
      * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Parameters array must contain at least two elements with this form: [':name', 'value'].
+     * 
+     * @return void
      */
     public function testQueryWithParameterWithTooManyParameters(): void
     {
-        (new PdoConnector($this->options))
+        (new PdoConnector(self::$options))
             ->getResource()
             ->queryWithParam(
                 'SELECT user_id, name, email FROM user WHERE name = :name',
@@ -121,10 +131,12 @@ class ExtendedPDOTest extends TestCase
      * Test query with parameter with too many parameters.
      *
      * @expectedException PDOException
+     * 
+     * @return void
      */
     public function testQueryWithParameterWithoutParameters(): void
     {
-        (new PdoConnector($this->options))
+        (new PdoConnector(self::$options))
             ->getResource()
             ->queryWithParam(
                 'SELECT user_id, name, email FROM user WHERE name = :name',
@@ -136,10 +148,12 @@ class ExtendedPDOTest extends TestCase
      * Test query status.
      *
      * @dataProvider correctParametersProvider
+     * 
+     * @return void
      */
     public function testQueryStatus(string $query, array $param): void
     {
-        $pdo = (new PdoConnector($this->options))->getResource();
+        $pdo = (new PdoConnector(self::$options))->getResource();
 
         $user = $pdo->queryWithParam(
             $query,

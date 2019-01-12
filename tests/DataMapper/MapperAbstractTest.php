@@ -28,12 +28,14 @@ class MapperAbstractTest extends TestCase
     /**
      * @var UserMapper The user mapper
      */
-    protected $mapper;
+    protected static $userMapper;
 
     /**
-     * Setup.
+     * Set up before class.
+     *
+     * @return void
      */
-    public function setUp(): void
+    public static function setUpBeforeClass(): void
     {
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
@@ -47,98 +49,118 @@ class MapperAbstractTest extends TestCase
             ],
         ];
 
-        $this->mapper = new UserMapper(
+        self::$userMapper = new UserMapper(
             (new StorageFactory('pdo', $options))->get(),
             new Password()
         );
     }
 
     /**
+     * Tear down after class.
+     *
+     * @return void
+     */
+    public static function tearDownAfterClass(): void
+    {
+        self::$userMapper = null;
+    }
+
+    /**
      * Test create new object instance.
+     *
+     * @return void
      */
     public function testNewObjectInstance(): void
     {
-        $this->assertInstanceOf(UserMapper::class, $this->mapper);
+        $this->assertInstanceOf(UserMapper::class, self::$userMapper);
     }
 
     /**
      * Test create new domain object with mapper.
+     *
+     * @return void
      */
     public function testCreateDomainObjectWithMapper(): void
     {
-        $this->assertInstanceOf(User::class, $this->mapper->create());
+        $this->assertInstanceOf(User::class, self::$userMapper->create());
     }
 
     /**
      * Test save domain object with mapper.
+     *
+     * @return void
      */
     public function testSaveDomainObjectWithMapper(): void
     {
         /** @var User User Class. */
-        $user = $this->mapper->create();
+        $user = self::$userMapper->create();
         $user->name = 'test_user_create';
         $user->setPassword('password');
 
-        $this->mapper->save($user);
+        self::$userMapper->save($user);
 
         /** @var User User Class. */
-        $newUser = $this->mapper->fetchByName('test_user_create');
+        $newUser = self::$userMapper->fetchByName('test_user_create');
 
         $this->assertEquals('test_user_create', $newUser->name);
 
-        $this->mapper->delete($newUser);
+        self::$userMapper->delete($newUser);
     }
 
     /**
      * Test update domain object with mapper.
+     *
+     * @return void
      */
     public function testUpdateDomainObjectWithMapper(): void
     {
         /** @var User User Class. */
-        $user = $this->mapper->create();
+        $user = self::$userMapper->create();
         $user->name = 'test_user_update';
         $user->setPassword('password');
 
-        $this->mapper->save($user);
+        self::$userMapper->save($user);
 
         /** @var User User Class. */
-        $newUser = $this->mapper->fetchByName('test_user_update');
+        $newUser = self::$userMapper->fetchByName('test_user_update');
         $newUserId = $newUser->getId();
 
         $this->assertEquals('test_user_update', $newUser->name);
 
         $newUser->name = 'test_user_updated';
-        $this->mapper->save($newUser);
+        self::$userMapper->save($newUser);
 
         /** @var User User Class. */
-        $newUserUpdated = $this->mapper->fetchById($newUserId);
+        $newUserUpdated = self::$userMapper->fetchById($newUserId);
 
         $this->assertEquals('test_user_updated', $newUserUpdated->name);
 
-        $this->mapper->delete($newUser);
+        self::$userMapper->delete($newUser);
     }
 
     /**
      * Test delete domain object with mapper.
+     *
+     * @return void
      */
     public function testDeleteDomainObjectWithMapper(): void
     {
         /** @var User User Class. */
-        $user = $this->mapper->create();
+        $user = self::$userMapper->create();
         $user->name = 'test_user_delete';
         $user->setPassword('password');
 
-        $this->mapper->save($user);
+        self::$userMapper->save($user);
 
         /** @var User User Class. */
-        $newUser = $this->mapper->fetchByName('test_user_delete');
+        $newUser = self::$userMapper->fetchByName('test_user_delete');
 
         $this->assertEquals('test_user_delete', $newUser->name);
 
-        $this->mapper->delete($newUser);
+        self::$userMapper->delete($newUser);
 
         /** @var User User Class. */
-        $nullUser = $this->mapper->fetchByName('test_user_delete');
+        $nullUser = self::$userMapper->fetchByName('test_user_delete');
 
         $this->assertInstanceOf(NullDomainObject::class, $nullUser);
     }
