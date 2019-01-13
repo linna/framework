@@ -13,7 +13,6 @@ namespace Linna\Authorization;
 
 use Linna\Authentication\Authentication;
 use Linna\Authorization\Permission;
-use Linna\DataMapper\NullDomainObject;
 
 /**
  * Provide methods for check permissions for authenticated user.
