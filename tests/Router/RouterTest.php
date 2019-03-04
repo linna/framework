@@ -11,11 +11,13 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
+use BadMethodCallException;
 use Linna\Router\NullRoute;
 use Linna\Router\Route;
 use Linna\Router\RouteCollection;
 use Linna\Router\Router;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 /**
  * Router Test.
@@ -78,7 +80,7 @@ class RouterTest extends TestCase
                 'view'       => 'UserView',
                 'controller' => 'UserController',
             ])
-        ]))->getArrayCopy();
+        ]));
 
         self::$routes = $routes;
 
@@ -125,12 +127,12 @@ class RouterTest extends TestCase
      *
      * @dataProvider WrongArgumentsForRouterProvider
      *
-     * @expectedException TypeError
-     *
      * @return void
      */
     public function testNewRouterInstanceWithWrongArguments($routes, $options): void
     {
+        $this->expectException(TypeError::class);
+
         (new Router($routes, $options));
     }
 
@@ -159,12 +161,12 @@ class RouterTest extends TestCase
      *
      * @dataProvider WrongArgumentsForValidateRouteProvider
      *
-     * @expectedException TypeError
-     *
      * @return void
      */
     public function testValidateRouteWithWrongArguments($url, $method): void
     {
+        $this->expectException(TypeError::class);
+
         self::$router->validate($url, $method);
     }
 
@@ -362,13 +364,13 @@ class RouterTest extends TestCase
     /**
      * Test Router bad method call.
      *
-     * @expectedException BadMethodCallException
-     * @expectedExceptionMessage Router->foo() method do not exist.
-     *
      * @return void
      */
     public function testRouterBadMethodCall(): void
     {
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage("Router->foo() method do not exist.");
+        
         self::$router->foo();
     }
 
@@ -502,7 +504,7 @@ class RouterTest extends TestCase
                 'view'       => 'UserDeleteView',
                 'controller' => 'UserDeleteController',
             ])
-        ]))->getArrayCopy();
+        ]));
 
         $router = new Router($restRoutes, [
             'badRoute'    => 'E404',
@@ -544,7 +546,7 @@ class RouterTest extends TestCase
                 'view'       => 'User1View',
                 'controller' => 'User1Controller',
             ])
-        ]))->getArrayCopy();
+        ]));
 
         $router = new Router($routes, [
             'basePath'    => '/',
@@ -586,7 +588,7 @@ class RouterTest extends TestCase
                 'view'       => 'ErrorView',
                 'controller' => 'ErrorController',
             ])
-        ]))->getArrayCopy();
+        ]));
 
         $router = new Router($routes, [
             'basePath'    => '/',

@@ -57,10 +57,10 @@ class EnhancedAuthentication extends Authentication
      * @param array                                 $options
      */
     public function __construct(
-            Session $session,
-            Password $password,
-            EnhancedAuthenticationMapperInterface $enhancedAuthenticationMapper,
-            array $options = []
+        Session $session,
+        Password $password,
+        EnhancedAuthenticationMapperInterface $enhancedAuthenticationMapper,
+        array $options = []
         ) {
         parent::__construct($session, $password);
 

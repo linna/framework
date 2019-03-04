@@ -61,12 +61,12 @@ class RouteCollectionTest extends TestCase
     /**
      * Test new instance passing array with invalid element to constructor.
      *
-     * @expectedException InvalidArgumentException
-     *
      * @return void
      */
     public function testCreateInstanceWithWrongTypedArray(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        
         $this->assertInstanceOf(
             TypedObjectArray::class,
             (
@@ -99,12 +99,12 @@ class RouteCollectionTest extends TestCase
     /**
      * Test assign to array a wrong typed value.
      *
-     * @expectedException InvalidArgumentException
-     *
      * @return void
      */
     public function testAssignWrongTypedValueToArray(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        
         $routes = new RouteCollection();
         $routes[] = new SplStack();
     }

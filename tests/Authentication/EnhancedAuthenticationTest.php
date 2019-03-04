@@ -120,9 +120,9 @@ class EnhancedAuthenticationTest extends TestCase
             EnhancedAuthentication::class,
             (
             new EnhancedAuthentication(
-                    self::$session,
-                    self::$password,
-                    self::$enhancedAuthenticationMapper
+                self::$session,
+                self::$password,
+                self::$enhancedAuthenticationMapper
                 )
             )
         );

@@ -63,11 +63,11 @@ class MysqliConnectorTest extends TestCase
      * @return void
      */
     public function testFailConnection(
-            string $host,
-            string $user,
-            string $password,
-            string $database,
-            int $port
+        string $host,
+        string $user,
+        string $password,
+        string $database,
+        int $port
             ): void {
         $options = [
             'host'     => $host,
