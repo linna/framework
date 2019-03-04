@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v0.26.0](https://github.com/linna/framework/compare/v0.25.0...v0.26.0) - 2019-XX-XX
+
+### Changed
+* minimum php version 7.2
+
+#### Router
+* `Linna\Router\Router->__construct()` now require a `Linna\Router\RouteCollection` as first argument
+
 ## [v0.25.0](https://github.com/linna/framework/compare/v0.24.0...v0.25.0) - 2019-01-13
 
 ### Added
