@@ -96,7 +96,7 @@ class FrontControllerTest extends TestCase
             ])
         ]));
 
-        self::$router = new Router($routes->getArrayCopy(), [
+        self::$router = new Router($routes/*->getArrayCopy()*/, [
             'badRoute'    => 'E404',
             'rewriteMode' => true,
         ]);
