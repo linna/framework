@@ -72,12 +72,12 @@ class Router
 
     /**
      * Constructor.
-     * Accept as parameter a list routes and options.
+     * Accept as parameter a RouteCollection object and an array options.
      *
-     * @param array $routes
-     * @param array $options
+     * @param RouteCollection $routes
+     * @param array           $options
      */
-    public function __construct(array $routes, array $options = [])
+    public function __construct(RouteCollection $routes, array $options = [])
     {
         [
             'basePath'             => $this->basePath,
@@ -202,7 +202,7 @@ class Router
     private function buildErrorRoute(): void
     {
         //check if there is a declared route for errors, if no exit with false
-        if (($key = array_search($this->badRoute, array_column($this->routes, 'name'), true)) === false) {
+        if (($key = array_search($this->badRoute, array_column($this->routes->getArrayCopy(), 'name'), true)) === false) {
             $this->route = new NullRoute();
 
             return;
@@ -224,7 +224,7 @@ class Router
     }
 
     /**
-     * Analize $_SERVER['REQUEST_URI'] for current uri, sanitize and return it.
+     * Analize current uri, sanitize and return it.
      *
      * @param string $passedUri
      *
@@ -256,7 +256,7 @@ class Router
      */
     public function map(RouteInterface $route): void
     {
-        array_push($this->routes, $route);
+        $this->routes[] = $route;
     }
 
     /**
