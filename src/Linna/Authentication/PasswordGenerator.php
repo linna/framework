@@ -20,13 +20,13 @@ use InvalidArgumentException;
 class PasswordGenerator
 {
     /**
-     * @var array Characters intervall utf8 dec rappresentation
+     * @var array Characters intervall
      */
     private $chars = [
-        [[65, 90]], //u 117
-        [[97, 122]], //l 108
-        [[48, 57]], //d 100
-        [[33, 47], [58, 64], [91, 96], [123, 126]], //s 115
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZ', //u 117
+        'abcdefghijklmnopqrstuvwxyz', //l 108
+        '0123456789', //d 100
+        '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~' //s 115
     ];
 
     /**
@@ -75,11 +75,11 @@ class PasswordGenerator
      */
     public function getTopology(string $password): string
     {
-        $array = (array) str_split($password);
+        $array = str_split($password);
         $topology = [];
 
         foreach ($array as $char) {
-            $topology[] = $this->getTopologyGroup((string)$char);
+            $topology[] = $this->getTopologyGroup($char);
         }
 
         return implode($topology);
@@ -96,13 +96,22 @@ class PasswordGenerator
      */
     private function getTopologyGroup(string $char): string
     {
-        $int = ord($char);
-        $groups = ['u', 'l', 'd', 's'];
+        $groups = $this->chars;
 
-        foreach ($groups as $key => $group) {
-            if ($this->inRanges($int, $this->chars[$key])) {
-                return $group;
-            }
+        if (strpos($groups[0], $char) !== false) {
+            return 'u';
+        }
+
+        if (strpos($groups[1], $char) !== false) {
+            return 'l';
+        }
+
+        if (strpos($groups[2], $char) !== false) {
+            return 'd';
+        }
+
+        if (strpos($groups[3], $char) !== false) {
+            return 's';
         }
 
         throw new InvalidArgumentException('Out of group character provided.');
@@ -128,12 +137,12 @@ class PasswordGenerator
      */
     public function getFromTopology(string $topology): string
     {
-        $array = (array) str_split(strtolower($topology));
+        $array = str_split(strtolower($topology));
         $groups = [117 => 0, 108 => 1, 100 => 2, 115 => 3];
         $password = [];
 
         foreach ($array as $char) {
-            $int = ord((string)$char);
+            $int = ord($char);
 
             if (isset($groups[$int])) {
                 $password[] = $this->getRandomChar($this->chars[$groups[$int]]);
@@ -150,38 +159,15 @@ class PasswordGenerator
     /**
      * Get random char between.
      *
-     * @param array $interval
+     * @param string $interval
      *
      * @return string
      */
-    private function getRandomChar(array $interval): string
+    private function getRandomChar(string $interval): string
     {
-        do {
-            $int = random_int(33, 122);
-            if ($this->inRanges($int, $interval)) {
-                break;
-            }
-        } while (true);
+        $size = strlen($interval) - 1;
+        $int = random_int(0, $size);
 
-        return chr($int);
-    }
-
-    /**
-     * Check if value is between given range.
-     *
-     * @param mixed $value
-     * @param array $ranges
-     *
-     * @return bool
-     */
-    private function inRanges($value, array $ranges): bool
-    {
-        foreach ($ranges as $range) {
-            if ($value >= $range[0] && $value <= $range[1]) {
-                return true;
-            }
-        }
-
-        return false;
+        return $interval[$int];
     }
 }

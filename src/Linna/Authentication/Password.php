@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace Linna\Authentication;
 
-use UnexpectedValueException;
-
 /**
  * Provide methods for manage password, this class use PHP password hashing function,
  * see php documentation for more information.
@@ -51,7 +49,7 @@ class Password
      * @param int   $algo
      * @param array $options
      */
-    public function __construct(int $algo = 1, array $options = [])
+    public function __construct(int $algo = PASSWORD_DEFAULT, array $options = [])
     {
         $this->algo = $algo;
 
@@ -96,10 +94,6 @@ class Password
     public function hash(string $password): string
     {
         $hash = password_hash($password, $this->algo, $this->options[$this->algo]);
-
-        if ($hash === false) {
-            throw new UnexpectedValueException('Password hashing fails.');
-        }
 
         return $hash;
     }

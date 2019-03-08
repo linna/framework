@@ -13,6 +13,7 @@ namespace Linna\Tests;
 
 use Linna\Authentication\Authentication;
 use Linna\Authentication\Password;
+use Linna\Authentication\Exception\AuthenticationException;
 use Linna\Mvc\Model;
 use Linna\TestHelper\Mvc\ProtectedController;
 use Linna\TestHelper\Mvc\ProtectedControllerWithRedirect;
@@ -99,7 +100,6 @@ class ProtectedControllerTraitTest extends TestCase
     /**
      * Test acces to protected controller without login.
      *
-     * @expectedException Linna\Authentication\Exception\AuthenticationException
      * @runInSeparateProcess
      *
      * @return void
@@ -108,13 +108,14 @@ class ProtectedControllerTraitTest extends TestCase
     {
         $this->assertFalse(self::$authentication->isLogged());
 
+        $this->expectException(AuthenticationException::class);
+
         (new ProtectedController(new Model(), self::$authentication));
     }
 
     /**
      * Test acces to protected controller with redirect without login.
      *
-     * @expectedException Linna\Authentication\Exception\AuthenticationException
      * @runInSeparateProcess
      *
      * @return void
@@ -123,13 +124,14 @@ class ProtectedControllerTraitTest extends TestCase
     {
         $this->assertFalse(self::$authentication->isLogged());
 
+        $this->expectException(AuthenticationException::class);
+
         (new ProtectedControllerWithRedirect(new Model(), self::$authentication));
     }
 
     /**
      * Test acces to protected method without login.
      *
-     * @expectedException Linna\Authentication\Exception\AuthenticationException
      * @runInSeparateProcess
      *
      * @return void
@@ -138,13 +140,16 @@ class ProtectedControllerTraitTest extends TestCase
     {
         $this->assertFalse(self::$authentication->isLogged());
 
-        (new ProtectedMethodController(new Model(), self::$authentication))->ProtectedAction();
+        try {
+            (new ProtectedMethodController(new Model(), self::$authentication))->ProtectedAction();
+        } catch (AuthenticationException $e) {
+            $this->assertSame(403, http_response_code());
+        }
     }
 
     /**
      * Test acces to protected method with redirect without login.
      *
-     * @expectedException Linna\Authentication\Exception\AuthenticationException
      * @runInSeparateProcess
      *
      * @return void
@@ -153,6 +158,20 @@ class ProtectedControllerTraitTest extends TestCase
     {
         $this->assertFalse(self::$authentication->isLogged());
 
-        (new ProtectedMethodController(new Model(), self::$authentication))->ProtectedActionWithRedirect();
+        //$this->expectException(AuthenticationException::class);
+
+        try {
+            (new ProtectedMethodController(new Model(), self::$authentication))->ProtectedActionWithRedirect();
+        } catch (AuthenticationException $e) {
+            $headers = xdebug_get_headers();
+
+            foreach ($headers as $value) {
+                if (strstr($value, 'Location:') !== false) {
+                    $location = str_replace('Location: ', '', $value);
+                }
+            }
+
+            $this->assertSame('http://localhost', $location);
+        }
     }
 }

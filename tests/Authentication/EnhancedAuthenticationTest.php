@@ -196,6 +196,41 @@ class EnhancedAuthenticationTest extends TestCase
     }
 
     /**
+     * Test login with misconfigured options.
+     *
+     * @return void
+     */
+    public function testLoginWithMisconfiguredOptions()
+    {
+        self::loginClean();
+
+        $user = 'root';
+        $sessionId = 'mbvi2lgdpcj6vp3qemh2estei2';
+        $ipAddress = '192.168.1.2';
+
+        $options = [
+            'maxAttemptsForUserName'  => 'a',
+            'maxAttemptsForSessionId' => 'a',
+            'maxAttemptsForIpAddress' => 'a',
+            'maxAttemptsForSecond'    => 40,
+            'banTimeInSeconds'        => 900
+        ];
+
+        $enhancedAuthentication = new EnhancedAuthentication(self::$session, self::$password, self::$enhancedAuthenticationMapper, $options);
+
+        $this->assertFalse($enhancedAuthentication->login($user, 'passwor', $user, '$2y$11$4IAn6SRaB0osPz8afZC5D.CmTrBGxnb5FQEygPjDirK9SWE/u8YuO', 1));
+
+        $this->storeLoginAttempt($user, $sessionId, $ipAddress);
+
+        //Access with user
+        $this->assertEquals(0, $enhancedAuthentication->getAttemptsLeftWithSameUser($user));
+        //Access with session
+        $this->assertEquals(0, $enhancedAuthentication->getAttemptsLeftWithSameSession($sessionId));
+        //Access with ip
+        $this->assertEquals(0, $enhancedAuthentication->getAttemptsLeftWithSameIp($ipAddress));
+    }
+
+    /**
      * Store login attempts.
      *
      * @param string $user

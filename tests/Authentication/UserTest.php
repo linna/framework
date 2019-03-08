@@ -74,6 +74,23 @@ class UserTest extends TestCase
     }
 
     /**
+     * Test constructor type casting.
+     *
+     * @return void
+     */
+    public function testConstructorTypeCasting(): void
+    {
+        $user = self::$userMapper->fetchByName('root');
+
+        $this->assertIsInt($user->getId());
+        $this->assertIsInt($user->rId);
+        $this->assertIsInt($user->active);
+
+        $this->assertGreaterThan(0, $user->getId());
+        $this->assertGreaterThan(0, $user->rId);
+    }
+
+    /**
      * Test set user password.
      *
      * @return void

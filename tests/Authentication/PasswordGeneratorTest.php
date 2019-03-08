@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
+use InvalidArgumentException;
 use Linna\Authentication\PasswordGenerator;
 use PHPUnit\Framework\TestCase;
 
@@ -147,13 +148,13 @@ class PasswordGeneratorTest extends TestCase
     /**
      * Test get topology exception.
      *
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Out of group character provided.
-     *
      * @return void
      */
     public function testGetTopologyException(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Out of group character provided.");
+
         self::$passwordGenerator->getTopology('abcdefgà');
     }
 
@@ -209,13 +210,13 @@ class PasswordGeneratorTest extends TestCase
      *
      * @dataProvider badTopologyProvider
      *
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Invalid pattern provided, accepted only u, l, d and s.
-     *
      * @return void
      */
     public function testGetFromTopologyException(string $topology): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid pattern provided, accepted only u, l, d and s.");
+
         self::$passwordGenerator->getFromTopology($topology);
     }
 }

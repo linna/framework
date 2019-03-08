@@ -73,11 +73,11 @@ class EnhancedAuthentication extends Authentication
             'maxAttemptsForSecond'    => $this->maxAttemptsForSecond,
             'banTimeInSeconds'        => $this->banTimeInSeconds
         ] = array_replace_recursive([
-            'maxAttemptsForUserName'  => 5,
-            'maxAttemptsForSessionId' => 10,
-            'maxAttemptsForIpAddress' => 20,
-            'maxAttemptsForSecond'    => 40,
-            'banTimeInSeconds'        => 900
+            'maxAttemptsForUserName'  => $this->maxAttemptsForUserName,
+            'maxAttemptsForSessionId' => $this->maxAttemptsForSessionId,
+            'maxAttemptsForIpAddress' => $this->maxAttemptsForIpAddress,
+            'maxAttemptsForSecond'    => $this->maxAttemptsForSecond,
+            'banTimeInSeconds'        => $this->banTimeInSeconds
         ], $options);
     }
 
@@ -90,12 +90,9 @@ class EnhancedAuthentication extends Authentication
      */
     public function getAttemptsLeftWithSameUser(string $userName): int
     {
-        $attemptsLeft = $this->maxAttemptsForUserName - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameUser($userName, $this->banTimeInSeconds);
+        $attemptsLeft = ((int) $this->maxAttemptsForUserName) - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameUser($userName, $this->banTimeInSeconds);
 
-        //casting to int second param for avoid strange things with
-        //max return value
-        //http://php.net/manual/en/function.max.php
-        return max(0, (int) $attemptsLeft);
+        return max(0, $attemptsLeft);
     }
 
     /**
@@ -107,9 +104,9 @@ class EnhancedAuthentication extends Authentication
      */
     public function getAttemptsLeftWithSameSession(string $sessionId): int
     {
-        $attemptsLeft = $this->maxAttemptsForSessionId - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameSession($sessionId, $this->banTimeInSeconds);
+        $attemptsLeft = ((int) $this->maxAttemptsForSessionId) - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameSession($sessionId, $this->banTimeInSeconds);
 
-        return max(0, (int) $attemptsLeft);
+        return max(0, $attemptsLeft);
     }
 
     /**
@@ -121,9 +118,9 @@ class EnhancedAuthentication extends Authentication
      */
     public function getAttemptsLeftWithSameIp(string $ipAddress): int
     {
-        $attemptsLeft = $this->maxAttemptsForIpAddress - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameIp($ipAddress, $this->banTimeInSeconds);
+        $attemptsLeft = ((int) $this->maxAttemptsForIpAddress) - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameIp($ipAddress, $this->banTimeInSeconds);
 
-        return max(0, (int) $attemptsLeft);
+        return max(0, $attemptsLeft);
     }
 
     /**
