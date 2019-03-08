@@ -370,7 +370,7 @@ class RouterTest extends TestCase
     {
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage("Router->foo() method do not exist.");
-        
+
         self::$router->foo();
     }
 

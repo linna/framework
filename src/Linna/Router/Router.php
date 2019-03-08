@@ -47,9 +47,9 @@ class Router
     protected $route;
 
     /**
-     * @var array Passed from constructor, is the list of registerd routes for the app
+     * @var RouteCollection Passed from constructor, is the list of registerd routes for the app
      */
-    private $routes = [];
+    private $routes;
 
     /**
      * @var array List of regex for find parameter inside passed routes

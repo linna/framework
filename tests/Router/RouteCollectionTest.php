@@ -66,7 +66,7 @@ class RouteCollectionTest extends TestCase
     public function testCreateInstanceWithWrongTypedArray(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         $this->assertInstanceOf(
             TypedObjectArray::class,
             (
@@ -104,7 +104,7 @@ class RouteCollectionTest extends TestCase
     public function testAssignWrongTypedValueToArray(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         $routes = new RouteCollection();
         $routes[] = new SplStack();
     }
