@@ -17,7 +17,7 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/linna/framework/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/linna/framework/?branch=master)
 [![StyleCI](https://styleci.io/repos/41168432/shield?branch=master&style=flat)](https://styleci.io/repos/41168432)
 [![PDS Skeleton](https://img.shields.io/badge/pds-skeleton-blue.svg?style=flat)](https://github.com/php-pds/skeleton)
-[![PHP 7.1](https://img.shields.io/badge/PHP-7.1-8892BF.svg)](http://php.net)
+[![PHP 7.2](https://img.shields.io/badge/PHP-7.2-8892BF.svg)](http://php.net)
 
 </div>
 
@@ -38,7 +38,7 @@ At moment, code, isn't utilized in production environment, Hope in future.
 
 # Require
 
-   * PHP >= 7.1
+   * PHP >= 7.2
    * PDO extension (optional)
    * Memcached extension (optional)
    * Mongodb extension (optional)
@@ -60,7 +60,7 @@ composer require linna/framework
    * Implementation for PSR-4 Autoloader, PSR-11 Container and PSR-16 Simple Cache
 
 # Documentation 
-For more details please see the [user guide (soon)](https://linna.tools/docs/en/framework/v0.25.0/) or the [api (incomplete)](https://linna.tools/api/en/framework/v0.25.0/) and read [licence](https://github.com/linna/framework/blob/master/LICENSE.md)
+For more details please see the [user guide (soon)](https://linna.tools/docs/en/framework/v0.26.0/) or the [api (incomplete)](https://linna.tools/api/en/framework/v0.26.0/) and read [licence](https://github.com/linna/framework/blob/master/LICENSE.md)
 
 # Contributing
 Please see [CONTRIBUTING.md](https://github.com/linna/framework/blob/master/CONTRIBUTING.md).
