@@ -45,7 +45,7 @@ class MongoDBConnectorTest extends TestCase
     public function testFailConnection(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        
+
         $options = [
             'uri'           => 'mongodb:/localhost:27017',
             'uriOptions'    => [],

@@ -93,7 +93,7 @@ class StorageFactoryTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("[] not supported.");
-        
+
         (new StorageFactory('', []))->get();
     }
 }

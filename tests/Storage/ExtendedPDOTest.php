@@ -101,7 +101,7 @@ class ExtendedPDOTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Parameter name will be in the form :name.");
-        
+
         (new PdoConnector(self::$options))
             ->getResource()
             ->queryWithParam(
@@ -119,7 +119,7 @@ class ExtendedPDOTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Parameters array must contain at least two elements with this form: [':name', 'value'].");
-        
+
         (new PdoConnector(self::$options))
             ->getResource()
             ->queryWithParam(
@@ -136,7 +136,7 @@ class ExtendedPDOTest extends TestCase
     public function testQueryWithParameterWithoutParameters(): void
     {
         $this->expectException(PDOException::class);
-        
+
         (new PdoConnector(self::$options))
             ->getResource()
             ->queryWithParam(

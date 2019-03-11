@@ -69,9 +69,8 @@ class MysqliConnectorTest extends TestCase
         string $database,
         int $port
             ): void {
-        
         $this->expectException(mysqli_sql_exception::class);
-        
+
         $options = [
             'host'     => $host,
             'user'     => $user,

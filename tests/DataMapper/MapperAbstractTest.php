@@ -169,7 +169,7 @@ class MapperAbstractTest extends TestCase
 
         $this->assertInstanceOf(NullDomainObject::class, $nullUser);
     }
-    
+
     /**
      * Generate a UUID v4.
      * https://en.wikipedia.org/wiki/Universally_unique_identifier

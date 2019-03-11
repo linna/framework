@@ -67,7 +67,7 @@ class PdoConnectorTest extends TestCase
     public function testFailConnection(string $dsn, string $user, string $password): void
     {
         $this->expectException(PDOException::class);
-        
+
         $options = [
             'dsn'      => $dsn,
             'user'     => $user,
