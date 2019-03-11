@@ -11,9 +11,11 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
+use InvalidArgumentException;
 use Linna\Cache\MemcachedCache;
 use Memcached;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 class MemcachedCacheTest extends TestCase
 {
@@ -76,17 +78,17 @@ class MemcachedCacheTest extends TestCase
     }
 
     /**
-     * Test create instance without memcachedresource
+     * Test create instance without memcached resource.
      *
      * @dataProvider invalidResourceProvider
-     *
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage MemcachedCache class need instance of Memcached passed as option. ['resource' => $memcached].
      *
      * @return void
      */
     public function testCreateInstanceWithoutResource($resource): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("MemcachedCache class need instance of Memcached passed as option. ['resource' => \$memcached].");
+
         (new MemcachedCache(['resource' => $resource]));
     }
 
@@ -111,12 +113,12 @@ class MemcachedCacheTest extends TestCase
      *
      * @dataProvider invalidKeyProvider
      *
-     * @expectedException TypeError
-     *
      * @return void
      */
     public function testSetWithInvalidKey($key): void
     {
+        $this->expectException(TypeError::class);
+
         self::$cache->set($key, [0, 1, 2, 3, 4]);
     }
 
@@ -167,12 +169,12 @@ class MemcachedCacheTest extends TestCase
      *
      * @dataProvider invalidKeyProvider
      *
-     * @expectedException TypeError
-     *
      * @return void
      */
     public function testGetWithInvalidKey($key): void
     {
+        $this->expectException(TypeError::class);
+
         self::$cache->get($key);
     }
 
@@ -215,12 +217,12 @@ class MemcachedCacheTest extends TestCase
      *
      * @dataProvider invalidKeyProvider
      *
-     * @expectedException TypeError
-     *
      * @return void
      */
     public function testDeleteWithInvalidKey($key): void
     {
+        $this->expectException(TypeError::class);
+
         self::$cache->delete($key);
     }
 
@@ -282,12 +284,12 @@ class MemcachedCacheTest extends TestCase
      *
      * @dataProvider invalidKeyProvider
      *
-     * @expectedException TypeError
-     *
      * @return void
      */
     public function testGetMultipleWithInvalidKey($key): void
     {
+        $this->expectException(TypeError::class);
+
         self::$cache->getMultiple($key);
     }
 
@@ -334,12 +336,12 @@ class MemcachedCacheTest extends TestCase
      *
      * @dataProvider invalidKeyProvider
      *
-     * @expectedException TypeError
-     *
      * @return void
      */
     public function testSetMultipleWithInvalidKey($key): void
     {
+        $this->expectException(TypeError::class);
+
         self::$cache->setMultiple($key);
     }
 
@@ -421,12 +423,12 @@ class MemcachedCacheTest extends TestCase
      *
      * @dataProvider invalidKeyProvider
      *
-     * @expectedException TypeError
-     *
      * @return void
      */
     public function testDeleteMultipleWithInvalidKey($key): void
     {
+        $this->expectException(TypeError::class);
+
         self::$cache->deleteMultiple($key);
     }
 
@@ -475,12 +477,12 @@ class MemcachedCacheTest extends TestCase
      *
      * @dataProvider invalidKeyProvider
      *
-     * @expectedException TypeError
-     *
      * @return void
      */
     public function testHasWithInvalidKey($key): void
     {
+        $this->expectException(TypeError::class);
+
         self::$cache->has($key);
     }
 

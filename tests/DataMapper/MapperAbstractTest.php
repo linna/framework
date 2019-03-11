@@ -95,7 +95,10 @@ class MapperAbstractTest extends TestCase
         /** @var User User Class. */
         $user = self::$userMapper->create();
         $user->name = 'test_user_create';
+        $user->uuid = $this->v4();
         $user->setPassword('password');
+
+        //var_dump($user);
 
         self::$userMapper->save($user);
 
@@ -117,6 +120,7 @@ class MapperAbstractTest extends TestCase
         /** @var User User Class. */
         $user = self::$userMapper->create();
         $user->name = 'test_user_update';
+        $user->uuid = $this->v4();
         $user->setPassword('password');
 
         self::$userMapper->save($user);
@@ -148,6 +152,7 @@ class MapperAbstractTest extends TestCase
         /** @var User User Class. */
         $user = self::$userMapper->create();
         $user->name = 'test_user_delete';
+        $user->uuid = $this->v4();
         $user->setPassword('password');
 
         self::$userMapper->save($user);
@@ -163,5 +168,28 @@ class MapperAbstractTest extends TestCase
         $nullUser = self::$userMapper->fetchByName('test_user_delete');
 
         $this->assertInstanceOf(NullDomainObject::class, $nullUser);
+    }
+    
+    /**
+     * Generate a UUID v4.
+     * https://en.wikipedia.org/wiki/Universally_unique_identifier
+     *
+     * @return string
+     */
+    public function v4(): string
+    {
+        return sprintf(
+            '%s-%s-%04x-%04x-%s',
+            // 8 hex characters
+            bin2hex(random_bytes(4)),
+            // 4 hex characters
+            bin2hex(random_bytes(2)),
+            // "4" for the UUID version + 3 hex characters
+            mt_rand(0, 0x0fff) | 0x4000,
+            // (8, 9, a, or b) for the UUID variant + 3 hex characters
+            mt_rand(0, 0x3fff) | 0x8000,
+            // 12 hex characters
+            bin2hex(random_bytes(6))
+        );
     }
 }

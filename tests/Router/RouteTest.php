@@ -38,7 +38,7 @@ class RouteTest extends TestCase
             'model'      => 'HomeModel',
             'view'       => 'HomeView',
             'controller' => 'HomeController',
-            'action'     => '',
+            'action'     => 'Login',
         ]);
     }
 
@@ -129,7 +129,7 @@ class RouteTest extends TestCase
      */
     public function testGetAction(): void
     {
-        $this->assertEquals('', self::$route->getAction());
+        $this->assertEquals('Login', self::$route->getAction());
     }
 
     /**
@@ -177,7 +177,7 @@ class RouteTest extends TestCase
             'model'      => 'HomeModel',
             'view'       => 'HomeView',
             'controller' => 'HomeController',
-            'action'     => '',
+            'action'     => 'Login',
             'default'    => false,
             'param'      => [],
             'callback'   => false,

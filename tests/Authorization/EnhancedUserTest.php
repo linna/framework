@@ -105,6 +105,23 @@ class EnhancedUserTest extends TestCase
     }
 
     /**
+     * Test constructor type casting.
+     *
+     * @return void
+     */
+    public function testConstructorTypeCasting(): void
+    {
+        $user = self::$enhancedUserMapper->fetchByName('root');
+
+        $this->assertIsInt($user->getId());
+        $this->assertIsInt($user->rId);
+        $this->assertIsInt($user->active);
+
+        $this->assertGreaterThan(0, $user->getId());
+        $this->assertGreaterThan(0, $user->rId);
+    }
+
+    /**
      * User Permission data provider.
      *
      * @return array

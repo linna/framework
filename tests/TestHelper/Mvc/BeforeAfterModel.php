@@ -15,11 +15,16 @@ use Linna\Mvc\Model;
 
 class BeforeAfterModel extends Model
 {
-    protected $value = 0;
+    protected $value = -5;
 
     public function __construct()
     {
         parent::__construct();
+    }
+
+    public function before()
+    {
+        $this->value = 0;
     }
 
     public function sub()

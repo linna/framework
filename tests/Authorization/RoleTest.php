@@ -104,6 +104,23 @@ class RoleTest extends TestCase
     }
 
     /**
+     * Test constructor type casting.
+     *
+     * @return void
+     */
+    public function testConstructorTypeCasting(): void
+    {
+        $role = self::$roleMapper->fetchById(1);
+
+        $this->assertIsInt($role->getId());
+        $this->assertIsInt($role->rId);
+        $this->assertIsInt($role->active);
+
+        $this->assertGreaterThan(0, $role->getId());
+        $this->assertGreaterThan(0, $role->rId);
+    }
+
+    /**
      * User Role data provider.
      *
      * @return array

@@ -85,10 +85,10 @@ class Router
             'rewriteMode'          => $this->rewriteMode,
             'rewriteModeOffRouter' => $this->rewriteModeOffRouter
         ] = array_replace_recursive([
-            'basePath'             => '/',
-            'badRoute'             => false,
-            'rewriteMode'          => false,
-            'rewriteModeOffRouter' => '/index.php?'
+            'basePath'             => $this->basePath,
+            'badRoute'             => $this->badRoute,
+            'rewriteMode'          => $this->rewriteMode,
+            'rewriteModeOffRouter' => $this->rewriteModeOffRouter
         ], $options);
 
         //set routes

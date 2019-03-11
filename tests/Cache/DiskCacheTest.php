@@ -13,6 +13,7 @@ namespace Linna\Tests;
 
 use Linna\Cache\DiskCache;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 /**
  * Disk Cache Driver test.
@@ -74,12 +75,13 @@ class DiskCacheTest extends TestCase
      * Test set with invalid key.
      *
      * @dataProvider invalidKeyProvider
-     * @expectedException TypeError
      *
      * @return void
      */
     public function testSetWithInvalidKey($key): void
     {
+        $this->expectException(TypeError::class);
+
         self::$cache->set($key, [0, 1, 2, 3, 4]);
     }
 
@@ -129,12 +131,13 @@ class DiskCacheTest extends TestCase
      * Test get with invalid key.
      *
      * @dataProvider invalidKeyProvider
-     * @expectedException TypeError
      *
      * @return void
      */
     public function testGetWithInvalidKey($key): void
     {
+        $this->expectException(TypeError::class);
+
         self::$cache->get($key);
     }
 
@@ -158,6 +161,8 @@ class DiskCacheTest extends TestCase
     public function testGetWithDefault(): void
     {
         $this->assertNull(self::$cache->get('foo_not_exist'));
+
+        $this->assertFileNotExists('/tmp/'.sha1('foo_not_exist').'.php');
     }
 
     /**
@@ -170,18 +175,21 @@ class DiskCacheTest extends TestCase
         $this->assertTrue(self::$cache->set('foo', [0, 1, 2, 3, 4], -10));
 
         $this->assertNull(self::$cache->get('foo'));
+
+        $this->assertFileNotExists('/tmp/'.sha1('foo').'.php');
     }
 
     /**
      * Test delete with invalid key.
      *
      * @dataProvider invalidKeyProvider
-     * @expectedException TypeError
      *
      * @return void
      */
     public function testDeleteWithInvalidKey($key): void
     {
+        $this->expectException(TypeError::class);
+
         self::$cache->delete($key);
     }
 
@@ -242,12 +250,13 @@ class DiskCacheTest extends TestCase
      * Test get multiple elements with invalid key.
      *
      * @dataProvider invalidKeyProvider
-     * @expectedException TypeError
      *
      * @return void
      */
     public function testGetMultipleWithInvalidKey($key): void
     {
+        $this->expectException(TypeError::class);
+
         self::$cache->getMultiple($key);
     }
 
@@ -293,12 +302,13 @@ class DiskCacheTest extends TestCase
      * Test set multiple elements with invalid key.
      *
      * @dataProvider invalidKeyProvider
-     * @expectedException TypeError
      *
      * @return void
      */
     public function testSetMultipleWithInvalidKey($key): void
     {
+        $this->expectException(TypeError::class);
+
         self::$cache->setMultiple($key);
     }
 
@@ -373,18 +383,26 @@ class DiskCacheTest extends TestCase
         $this->assertNull(self::$cache->get('foo_3'));
         $this->assertNull(self::$cache->get('foo_4'));
         $this->assertNull(self::$cache->get('foo_5'));
+
+        $this->assertFileNotExists('/tmp/'.sha1('foo_0').'.php');
+        $this->assertFileNotExists('/tmp/'.sha1('foo_1').'.php');
+        $this->assertFileNotExists('/tmp/'.sha1('foo_2').'.php');
+        $this->assertFileNotExists('/tmp/'.sha1('foo_3').'.php');
+        $this->assertFileNotExists('/tmp/'.sha1('foo_4').'.php');
+        $this->assertFileNotExists('/tmp/'.sha1('foo_5').'.php');
     }
 
     /**
      * Teset delete multiple elements with invalid key.
      *
      * @dataProvider invalidKeyProvider
-     * @expectedException TypeError
      *
      * @return void
      */
     public function testDeleteMultipleWithInvalidKey($key): void
     {
+        $this->expectException(TypeError::class);
+
         self::$cache->deleteMultiple($key);
     }
 
@@ -432,12 +450,13 @@ class DiskCacheTest extends TestCase
      * Test has with invalid key.
      *
      * @dataProvider invalidKeyProvider
-     * @expectedException TypeError
      *
      * @return void
      */
     public function testHasWithInvalidKey($key): void
     {
+        $this->expectException(TypeError::class);
+
         self::$cache->has($key);
     }
 

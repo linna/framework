@@ -34,7 +34,12 @@ class SessionTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        self::$session = new Session(['expire' => 1800]);
+        self::$session = new Session([
+            'expire'         => 1800,
+            'cookieDomain'   => 'https://linna.tools',
+            'cookiePath'     => '/app',
+            'cookieSecure'   => true
+        ]);
     }
 
     /**
@@ -48,7 +53,7 @@ class SessionTest extends TestCase
     }
 
     /**
-     * Test Session Start.
+     * Test session start.
      *
      * @requires extension xdebug
      * @runInSeparateProcess
@@ -59,12 +64,60 @@ class SessionTest extends TestCase
     {
         $session = self::$session;
 
-        $this->assertEquals(1, $session->status);
+        $this->assertSame(1, $session->status);
 
         $session->start();
-        $this->assertTrue($this->checkCookieTime(60, $this->getCookieValues()));
 
-        $this->assertEquals(2, $session->status);
+        $this->assertSame(2, $session->status);
+
+        //check for session parameters
+        $this->assertSame('linna_session', session_name());
+
+        $cookieParams = session_get_cookie_params();
+
+        $this->assertIsInt($cookieParams['lifetime']);
+        $this->assertSame(1800, $cookieParams['lifetime']);
+
+        $this->assertIsString($cookieParams['path']);
+        $this->assertSame('/app', $cookieParams['path']);
+
+        $this->assertIsString($cookieParams['domain']);
+        $this->assertSame('https://linna.tools', $cookieParams['domain']);
+
+        $this->assertIsBool($cookieParams['secure']);
+        $this->assertTrue($cookieParams['secure']);
+
+        $this->assertIsBool($cookieParams['httponly']);
+        $this->assertTrue($cookieParams['httponly']);
+
+        $this->cookieCheck($this->getCookieValues()[0], $session);
+
+        //$session->destroy();
+    }
+
+    /**
+     * Test session start with already started session.
+     *
+     * @requires extension xdebug
+     * @runInSeparateProcess
+     *
+     * @return void
+     */
+    public function testSessionStartWithAlreadyStartedSession(): void
+    {
+        $session = self::$session;
+
+        $this->assertSame(1, $session->status);
+
+        $session->start();
+
+        $this->assertSame(2, $session->status);
+
+        $this->cookieCheck($this->getCookieValues()[0], $session);
+
+        $session->start();
+
+        $this->cookieCheck($this->getCookieValues()[0], $session);
 
         $session->destroy();
     }
@@ -80,20 +133,27 @@ class SessionTest extends TestCase
     public function testSessionCommit(): void
     {
         $session = self::$session;
+
+        $this->assertSame(1, $session->status);
+
         $session->start();
 
-        $this->assertTrue($this->checkCookieTime(60, $this->getCookieValues()));
-        $this->assertEquals($session->id, session_id());
+        $this->assertSame(2, $session->status);
+        $this->assertSame($session->id, session_id());
+        $this->cookieCheck($this->getCookieValues()[0], $session);
 
         $session['fooData'] = 'fooData';
 
         $session->commit();
 
-        $session->start();
-        $this->assertTrue($this->checkCookieTime(60, $this->getCookieValues()));
+        $this->assertSame(1, $session->status);
 
-        $this->assertEquals($session->id, session_id());
-        $this->assertEquals('fooData', $session['fooData']);
+        $session->start();
+
+        $this->assertSame(2, $session->status);
+        $this->assertSame($session->id, session_id());
+        $this->assertSame('fooData', $session['fooData']);
+        $this->cookieCheck($this->getCookieValues()[0], $session);
 
         $session->destroy();
     }
@@ -109,20 +169,33 @@ class SessionTest extends TestCase
     public function testSessionDestroy(): void
     {
         $session = self::$session;
+        $this->assertSame(1, $session->status);
 
         $session->start();
-        $this->assertTrue($this->checkCookieTime(60, $this->getCookieValues()));
+
+        $this->assertSame(2, $session->status);
+
+        $this->cookieCheck($this->getCookieValues()[0], $session);
 
         $session['fooData'] = 'fooData';
 
-        $this->assertEquals(2, $session->status);
-        $this->assertEquals(session_id(), $session->id);
-        $this->assertEquals('fooData', $session['fooData']);
+        $this->assertSame(session_id(), $session->id);
+        $this->assertSame('fooData', $session['fooData']);
 
         $session->destroy();
 
-        $this->assertEquals(1, $session->status);
-        $this->assertEquals('', $session->id);
+        $cookie = $this->getCookieValues()[1];
+
+        $this->assertSame($cookie['linna_session'], 'NothingToSeeHere.');
+
+        $cookieExpires = strtotime($cookie['expires']);
+        $resultExpires = strtotime(date(DATE_COOKIE, time()));
+
+        $this->assertSame($cookieExpires, $resultExpires);
+        $this->assertSame($cookie['Max-Age'], '0');
+
+        $this->assertSame(1, $session->status);
+        $this->assertSame('', $session->id);
         $this->assertFalse($session['fooData']);
     }
 
@@ -138,29 +211,35 @@ class SessionTest extends TestCase
     {
         $session = self::$session;
 
+        $this->assertSame(1, $session->status);
+
         $session->start();
-        $this->assertTrue($this->checkCookieTime(60, $this->getCookieValues()));
-        $cookieNameBefore = $this->getCookieValue($this->getCookieValues());
+
+        $this->assertSame(2, $session->status);
+
+        $this->cookieCheck($this->getCookieValues()[0], $session);
+
+        $cookieValueBefore = $this->getCookieValue($this->getCookieValues());
 
         $session['fooData'] = 'fooData';
 
         $sessionIdBefore = session_id();
 
-        $this->assertEquals(2, $session->status);
-        $this->assertEquals($sessionIdBefore, $session->id);
-        $this->assertEquals('fooData', $session['fooData']);
+        $this->assertSame(2, $session->status);
+        $this->assertSame($sessionIdBefore, $session->id);
+        $this->assertSame('fooData', $session['fooData']);
 
         $session->regenerate();
-        $this->assertTrue($this->checkCookieTime(60, $this->getCookieValues()));
-        $cookieNameAfter = $this->getCookieValue($this->getCookieValues());
 
-        $sessionIdAfter = session_id();
+        $this->cookieCheck($this->getCookieValues()[1], $session);
 
-        $this->assertEquals(2, $session->status);
-        $this->assertEquals($sessionIdAfter, $session->id);
-        $this->assertNotEquals($sessionIdAfter, $sessionIdBefore);
-        $this->assertNotEquals($cookieNameBefore, $cookieNameAfter);
-        $this->assertEquals('fooData', $session['fooData']);
+        $cookieValueAfter = $this->getCookieValue($this->getCookieValues());
+
+        $this->assertSame(2, $session->status);
+        $this->assertSame(session_id(), $session->id);
+        $this->assertNotEquals(session_id(), $sessionIdBefore);
+        $this->assertNotEquals($cookieValueBefore, $cookieValueAfter);
+        $this->assertSame('fooData', $session['fooData']);
 
         $session->destroy();
     }
@@ -195,9 +274,15 @@ class SessionTest extends TestCase
     {
         $session = self::$session;
 
+        $this->assertSame(1, $session->status);
+
         $session->start();
-        $this->assertTrue($this->checkCookieTime(60, $this->getCookieValues()));
-        $cookieNameBefore = $this->getCookieValue($this->getCookieValues());
+
+        $this->assertSame(2, $session->status);
+
+        $this->cookieCheck($this->getCookieValues()[0], $session);
+
+        $cookieValueBefore = $this->getCookieValue($this->getCookieValues());
 
         $session_id = $session->id;
 
@@ -205,21 +290,29 @@ class SessionTest extends TestCase
 
         $session->commit();
 
+        $this->assertSame(1, $session->status);
+
         $session->start();
-        $this->assertTrue($this->checkCookieTime(60, $this->getCookieValues()));
-        $cookieNameAfter = $this->getCookieValue($this->getCookieValues());
+
+        $this->assertSame(2, $session->status);
+
+        $cookieValueAfter = $this->getCookieValue($this->getCookieValues());
 
         $session2_id = $session->id;
 
         if ($equals) {
-            $this->assertEquals($session_id, $session2_id);
-            $this->assertEquals($cookieNameBefore, $cookieNameAfter);
+            $this->cookieCheck($this->getCookieValues()[1], $session);
+
+            $this->assertSame($session_id, $session2_id);
+            $this->assertSame($cookieValueBefore, $cookieValueAfter);
         } else {
+            $this->cookieCheck($this->getCookieValues()[2], $session);
+
             $this->assertNotEquals($session_id, $session2_id);
-            $this->assertNotEquals($cookieNameBefore, $cookieNameAfter);
+            $this->assertNotEquals($cookieValueBefore, $cookieValueAfter);
         }
 
-        $this->assertEquals(2, $session->status);
+        $this->assertSame(2, $session->status);
 
         $session->destroy();
     }
@@ -233,7 +326,7 @@ class SessionTest extends TestCase
     {
         self::$session->testData = 'foo';
 
-        $this->assertEquals(self::$session->testData, 'foo');
+        $this->assertSame(self::$session->testData, 'foo');
     }
 
     /**
@@ -267,7 +360,7 @@ class SessionTest extends TestCase
     {
         self::$session['testData'] = 'foo';
 
-        $this->assertEquals(self::$session['testData'], 'foo');
+        $this->assertSame(self::$session['testData'], 'foo');
     }
 
     /**
@@ -301,7 +394,7 @@ class SessionTest extends TestCase
     {
         self::$session->offsetSet('testData', 'foo');
 
-        $this->assertEquals(self::$session->offsetGet('testData'), 'foo');
+        $this->assertSame(self::$session->offsetGet('testData'), 'foo');
     }
 
     /**
@@ -364,27 +457,6 @@ class SessionTest extends TestCase
     }
 
     /**
-     * Check if cookie is valid for the passed time.
-     *
-     * @param int $time
-     * @param array $cookieArray
-     *
-     * @return bool
-     */
-    public function checkCookieTime(int $time, array $cookieArray): bool
-    {
-        $last = count($cookieArray) -1;
-
-        $cookieTime = strtotime($cookieArray[$last]['expires']);
-
-        if ($cookieTime > time() + $time) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * Get the cookie value;
      *
      * @param array $cookieArray
@@ -398,5 +470,27 @@ class SessionTest extends TestCase
         $sessionName = session_name();
 
         return $cookieArray[$last][$sessionName];
+    }
+
+    /**
+     * Test for cookie compliance.
+     *
+     * @param array   $cookie
+     * @param Session $session
+     *
+     * @return void
+     */
+    public function cookieCheck(array $cookie, Session $session): void
+    {
+        $this->assertSame($cookie['linna_session'], $session->id);
+
+        $cookieExpires = strtotime($cookie['expires']);
+        $resultExpires = strtotime(date(DATE_COOKIE, time() + 1800));
+
+        $this->assertSame($cookieExpires, $resultExpires);
+        $this->assertSame($cookie['Max-Age'], '1800');
+        $this->assertSame($cookie['path'], '/app');
+        $this->assertSame($cookie['domain'], 'https://linna.tools');
+        $this->assertNull($cookie['HttpOnly']);
     }
 }

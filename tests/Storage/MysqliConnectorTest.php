@@ -13,6 +13,7 @@ namespace Linna\Tests;
 
 use Linna\Storage\Connectors\MysqliConnector;
 use mysqli;
+use mysqli_sql_exception;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -58,7 +59,6 @@ class MysqliConnectorTest extends TestCase
      * Test fail connection.
      *
      * @dataProvider connectionDataProvider
-     * @expectedException mysqli_sql_exception
      *
      * @return void
      */
@@ -69,6 +69,9 @@ class MysqliConnectorTest extends TestCase
         string $database,
         int $port
             ): void {
+        
+        $this->expectException(mysqli_sql_exception::class);
+        
         $options = [
             'host'     => $host,
             'user'     => $user,

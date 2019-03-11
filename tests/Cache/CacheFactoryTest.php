@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
+use InvalidArgumentException;
 use Linna\Cache\DiskCache;
 use Linna\Cache\CacheFactory;
 use Linna\Cache\MemcachedCache;
@@ -50,12 +51,12 @@ class CacheFactoryTest extends TestCase
     /**
      * Test unsupported cache resource.
      *
-     * @expectedException InvalidArgumentException
-     *
      * @return void
      */
     public function testUnsupportedCache(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+
         (new CacheFactory('', []))->get();
     }
 }

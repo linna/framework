@@ -14,6 +14,7 @@ namespace Linna\Tests;
 use InvalidArgumentException;
 use Linna\Storage\Connectors\PdoConnector;
 use PDO;
+use PDOException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -94,13 +95,13 @@ class ExtendedPDOTest extends TestCase
     /**
      * Test query with parameter with wrong parameter name.
      *
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Parameter name will be in the form :name.
-     *
      * @return void
      */
     public function testQueryWithParameterWithWrongParameterName(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Parameter name will be in the form :name.");
+        
         (new PdoConnector(self::$options))
             ->getResource()
             ->queryWithParam(
@@ -112,13 +113,13 @@ class ExtendedPDOTest extends TestCase
     /**
      * Test query with parameter with too many parameters.
      *
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Parameters array must contain at least two elements with this form: [':name', 'value'].
-     *
      * @return void
      */
     public function testQueryWithParameterWithTooManyParameters(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Parameters array must contain at least two elements with this form: [':name', 'value'].");
+        
         (new PdoConnector(self::$options))
             ->getResource()
             ->queryWithParam(
@@ -130,12 +131,12 @@ class ExtendedPDOTest extends TestCase
     /**
      * Test query with parameter with too many parameters.
      *
-     * @expectedException PDOException
-     *
      * @return void
      */
     public function testQueryWithParameterWithoutParameters(): void
     {
+        $this->expectException(PDOException::class);
+        
         (new PdoConnector(self::$options))
             ->getResource()
             ->queryWithParam(

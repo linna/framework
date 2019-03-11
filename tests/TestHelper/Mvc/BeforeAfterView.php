@@ -22,5 +22,6 @@ class BeforeAfterView extends View
 
     public function Action()
     {
+        $this->data['view'] = true;
     }
 }

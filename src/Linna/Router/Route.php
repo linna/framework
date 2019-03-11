@@ -62,7 +62,7 @@ class Route implements RouteInterface
     public $param = [];
 
     /**
-     * @var mixed Route callback.
+     * @var callable Route callback.
      */
     public $callback;
 
@@ -85,16 +85,16 @@ class Route implements RouteInterface
             'param'      => $this->param,
             'callback'   => $this->callback
         ] = array_replace_recursive([
-            'name'       => '',
-            'method'     => '',
-            'url'        => '',
-            'model'      => '',
-            'view'       => '',
-            'controller' => '',
-            'action'     => '',
-            'default'    => false,
-            'param'      => [],
-            'callback'   => null,
+            'name'       => $this->name,
+            'method'     => $this->method,
+            'url'        => $this->url,
+            'model'      => $this->model,
+            'view'       => $this->view,
+            'controller' => $this->controller,
+            'action'     => $this->action,
+            'default'    => $this->default,
+            'param'      => $this->param,
+            'callback'   => $this->callback,
         ], $route);
     }
 

@@ -16,6 +16,7 @@ use Linna\TestHelper\Mvc\CalculatorView;
 use Linna\TestHelper\Mvc\BadTemplateView;
 use Linna\TestHelper\Mvc\JsonTemplate;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 /**
  * View Test
@@ -35,12 +36,12 @@ class ViewTest extends TestCase
     /**
      * Test view with bad template.
      *
-     * @expectedException TypeError
-     *
      * return void
      */
     public function testViewWithBadTemplate(): void
     {
+        $this->expectException(TypeError::class);
+
         $this->assertInstanceOf(BadTemplateView::class, new BadTemplateView(new CalculatorModel(), 'badTemplate'));
     }
 }

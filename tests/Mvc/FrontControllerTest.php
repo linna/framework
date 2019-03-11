@@ -29,6 +29,7 @@ use Linna\TestHelper\Mvc\MultipleModel;
 use Linna\TestHelper\Mvc\MultipleView;
 use Linna\TestHelper\Mvc\JsonTemplate;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 /**
  * Front Controller Test.
@@ -167,12 +168,13 @@ class FrontControllerTest extends TestCase
      * @param Route $route
      *
      * @dataProvider frontControllerArgProvider
-     * @expectedException TypeError
      *
      * @return void
      */
     public function testNewFrontControllerWithWrongArguments($model, $view, $controller, $route): void
     {
+        $this->expectException(TypeError::class);
+
         (new FrontController($model, $view, $controller, $route));
     }
 
@@ -323,6 +325,9 @@ class FrontControllerTest extends TestCase
         $frontController = new FrontController($model, $view, $controller, self::$router->getRoute());
         $frontController->run();
 
-        $this->assertEquals($result, json_decode($frontController->response())->result);
+        $reponse = $frontController->response();
+
+        $this->assertEquals($result, json_decode($reponse)->result);
+        $this->assertTrue(json_decode($reponse)->view);
     }
 }

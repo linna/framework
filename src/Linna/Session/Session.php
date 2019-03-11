@@ -65,7 +65,7 @@ class Session implements ArrayAccess
     /**
      * @var string Session name
      */
-    public $name = '';
+    public $name = 'linna_session';
 
     /**
      * @var int session_status function result
@@ -85,14 +85,14 @@ class Session implements ArrayAccess
             'cookieDomain'   => $this->cookieDomain,
             'cookiePath'     => $this->cookiePath,
             'cookieSecure'   => $this->cookieSecure,
-            'cookieHttpOnly' => $this->cookieHttpOnly,
+            'cookieHttpOnly' => $this->cookieHttpOnly
         ] = array_replace_recursive([
-            'expire'         => 1800,
-            'name'           => 'linna_session',
-            'cookieDomain'   => '/',
-            'cookiePath'     => '/',
-            'cookieSecure'   => false,
-            'cookieHttpOnly' => true,
+            'expire'         => $this->expire,
+            'name'           => $this->name,
+            'cookieDomain'   => $this->cookieDomain,
+            'cookiePath'     => $this->cookiePath,
+            'cookieSecure'   => $this->cookieSecure,
+            'cookieHttpOnly' => $this->cookieHttpOnly
         ], $options);
 
         $this->status = session_status();
@@ -105,32 +105,11 @@ class Session implements ArrayAccess
      */
     public function regenerate(): void
     {
-        //invalidate cookie
-        setcookie(session_name(), '', time());
         //regenerate session id
         session_regenerate_id();
-        //set new cookie
-        $this->setCookie();
+
         //store new session data
         $this->setSessionData(time());
-    }
-
-    /**
-     * Set cookie.
-     *
-     * @return void
-     */
-    private function setCookie(): void
-    {
-        setcookie(
-            session_name(),
-            session_id(),
-            time() + $this->expire,
-            $this->cookiePath,
-            $this->cookieDomain,
-            $this->cookieSecure,
-            $this->cookieHttpOnly
-        );
     }
 
     /**
@@ -140,42 +119,26 @@ class Session implements ArrayAccess
      */
     public function start(): void
     {
-        if (session_status() !== 2) {
-            //prepare session start
-            $this->prepare();
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+
+            //prepare the session start
+            session_name($this->name);
 
             //start session
-            session_start();
+            session_start([
+                'cookie_path'      => $this->cookiePath,
+                'cookie_domain'    => $this->cookieDomain,
+                'cookie_lifetime'  => $this->expire,
+                'cookie_secure'    => $this->cookieSecure,
+                'cookie_httponly'  => $this->cookieHttpOnly
+            ]);
 
             //link session super global to $data property
             $this->data = &$_SESSION;
         }
 
-        //set new cookie
-        $this->setCookie();
-
         //refresh session
         $this->refresh();
-    }
-
-    /**
-     * Set session options before start.
-     *
-     * @return void
-     */
-    private function prepare(): void
-    {
-        //setting session name
-        session_name($this->name);
-
-        //standard cookie param
-        session_set_cookie_params(
-            $this->expire,
-            $this->cookiePath,
-            $this->cookieDomain,
-            $this->cookieSecure,
-            $this->cookieHttpOnly
-        );
     }
 
     /**
@@ -237,6 +200,9 @@ class Session implements ArrayAccess
         //delete session data
         $this->data = [];
         $this->id = '';
+
+        //destroy cookie
+        setcookie($this->name, 'NothingToSeeHere.', time());
 
         //call session destroy
         session_destroy();

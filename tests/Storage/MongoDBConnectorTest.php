@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
+use InvalidArgumentException;
 use Linna\Storage\Connectors\MongoDBConnector;
 use MongoDB\Client;
 use PHPUnit\Framework\TestCase;
@@ -39,12 +40,12 @@ class MongoDBConnectorTest extends TestCase
     /**
      * Test fail connenction.
      *
-     * @expectedException InvalidArgumentException
-     *
      * @return void
      */
     public function testFailConnection(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        
         $options = [
             'uri'           => 'mongodb:/localhost:27017',
             'uriOptions'    => [],

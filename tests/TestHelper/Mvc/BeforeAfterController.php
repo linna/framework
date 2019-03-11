@@ -61,7 +61,7 @@ class BeforeAfterController extends Controller
      */
     public function before()
     {
-        //do nothing
+        $this->model->before();
     }
 
     /**

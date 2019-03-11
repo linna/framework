@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
+use InvalidArgumentException;
 use Linna\Storage\StorageFactory;
 use MongoDB\Client;
 use PDO;
@@ -86,13 +87,13 @@ class StorageFactoryTest extends TestCase
     /**
      * Test unsupported storage.
      *
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage [] not supported.
-     *
      * @return void
      */
     public function testUnsupportedAdapter(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("[] not supported.");
+        
         (new StorageFactory('', []))->get();
     }
 }

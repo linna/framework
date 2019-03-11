@@ -14,6 +14,7 @@ namespace Linna\Tests;
 use Linna\Authentication\Password;
 use Linna\Authentication\User;
 use PHPUnit\Framework\TestCase;
+use UnexpectedValueException;
 
 /**
  * Domain Object Test
@@ -70,13 +71,13 @@ class DomainObjectTest extends TestCase
     /**
      * Test override object id.
      *
-     * @expectedException UnexpectedValueException
-     * @expectedExceptionMessage ObjectId property is immutable.
-     *
      * @return void
      */
     public function testOverrideObjectId(): void
     {
+        $this->expectException(UnexpectedValueException::class);
+        $this->expectExceptionMessage("ObjectId property is immutable.");
+
         self::$user->setId(1);
         self::$user->setId(2);
     }

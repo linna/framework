@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Linna\Tests;
 
 use Linna\Container\Container;
+use Linna\Container\Exception\NotFoundException;
 use Linna\TestHelper\Container\ClassACache;
 use Linna\TestHelper\Container\ClassARules;
 use Linna\TestHelper\Container\ClassB;
@@ -255,13 +256,13 @@ class ContainerTest extends TestCase
      *
      * @dataProvider valuesProvider
      *
-     * @expectedException Linna\Container\Exception\NotFoundException
-     * @expectedExceptionMessage No entry was found for this identifier.
-     *
      * @return void
      */
     public function testGetUnexistingWithMethodCall(string $key, $value): void
     {
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage("No entry was found for this identifier.");
+
         $container = new Container();
         $container->get($key);
     }
@@ -274,32 +275,32 @@ class ContainerTest extends TestCase
      *
      * @dataProvider valuesProvider
      *
-     * @expectedException Linna\Container\Exception\NotFoundException
-     * @expectedExceptionMessage No entry was found for this identifier.
-     *
      * @return void
      */
     public function testGetUnexistingWithArraySyntax(string $key, $value): void
     {
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage("No entry was found for this identifier.");
+
         $container = new Container();
         $foo = $container[$key];
     }
 
     /**
-     * Test get unexisting utilizing property sntax.
+     * Test get unexisting utilizing property syntax.
      *
      * @param string $key
      * @param mixed  $value
      *
      * @dataProvider valuesProvider
      *
-     * @expectedException Linna\Container\Exception\NotFoundException
-     * @expectedExceptionMessage No entry was found for this identifier.
-     *
      * @return void
      */
     public function testGetUnexistingWithPropertySyntax(string $key, $value): void
     {
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage("No entry was found for this identifier.");
+
         $container = new Container();
         $foo = $container->$key;
     }
