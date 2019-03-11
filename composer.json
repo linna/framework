@@ -1,6 +1,6 @@
 {
     "name": "linna/framework",
-    "description": "Simple and elegant basic tools for build web application.",
+    "description": "Simple and elegant tools for build web application.",
     "keywords": [
         "best-pratices",
         "framework",
@@ -13,7 +13,7 @@
     "authors": [
         {
             "name": "Sebastian Rapetti",
-            "email": "sebastian.rapetti@alice.it"
+            "email": "sebastian.rapetti@tim.it"
         }
     ],
     "require": {
