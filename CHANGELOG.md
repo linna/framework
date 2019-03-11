@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 * minimum php version 7.2
+* tests updated
 
 #### Router
 * `Linna\Router\Router->__construct()` now require a `Linna\Router\RouteCollection` as first argument
