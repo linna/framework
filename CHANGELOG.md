@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [v0.26.0](https://github.com/linna/framework/compare/v0.25.0...v0.26.0) - 2019-XX-XX
 
+### Added
+
+#### Data Mapper
+* `Linna\DataMapper\UUID4` class
+
 ### Changed
 * minimum php version 7.2
 * tests updated

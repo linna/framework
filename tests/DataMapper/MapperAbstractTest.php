@@ -15,6 +15,7 @@ use Linna\Authentication\Password;
 use Linna\Authentication\User;
 use Linna\Authentication\UserMapper;
 use Linna\DataMapper\NullDomainObject;
+use Linna\DataMapper\UUID4;
 use Linna\Storage\StorageFactory;
 use PDO;
 use PHPUnit\Framework\TestCase;
@@ -49,10 +50,10 @@ class MapperAbstractTest extends TestCase
             ],
         ];
 
-        self::$userMapper = new UserMapper(
-            (new StorageFactory('pdo', $options))->get(),
-            new Password()
-        );
+        $pdo = (new StorageFactory('pdo', $options))->get();
+        $pdo->exec("DELETE FROM user WHERE name LIKE '%test_user_%'");
+
+        self::$userMapper = new UserMapper($pdo, new Password());
     }
 
     /**
@@ -95,7 +96,7 @@ class MapperAbstractTest extends TestCase
         /** @var User User Class. */
         $user = self::$userMapper->create();
         $user->name = 'test_user_create';
-        $user->uuid = $this->v4();
+        $user->uuid = (new UUID4())->getHex();
         $user->setPassword('password');
 
         //var_dump($user);
@@ -120,7 +121,7 @@ class MapperAbstractTest extends TestCase
         /** @var User User Class. */
         $user = self::$userMapper->create();
         $user->name = 'test_user_update';
-        $user->uuid = $this->v4();
+        $user->uuid = (new UUID4())->getHex();
         $user->setPassword('password');
 
         self::$userMapper->save($user);
@@ -152,7 +153,7 @@ class MapperAbstractTest extends TestCase
         /** @var User User Class. */
         $user = self::$userMapper->create();
         $user->name = 'test_user_delete';
-        $user->uuid = $this->v4();
+        $user->uuid = (new UUID4())->getHex();
         $user->setPassword('password');
 
         self::$userMapper->save($user);
@@ -168,28 +169,5 @@ class MapperAbstractTest extends TestCase
         $nullUser = self::$userMapper->fetchByName('test_user_delete');
 
         $this->assertInstanceOf(NullDomainObject::class, $nullUser);
-    }
-
-    /**
-     * Generate a UUID v4.
-     * https://en.wikipedia.org/wiki/Universally_unique_identifier
-     *
-     * @return string
-     */
-    public function v4(): string
-    {
-        return sprintf(
-            '%s-%s-%04x-%04x-%s',
-            // 8 hex characters
-            bin2hex(random_bytes(4)),
-            // 4 hex characters
-            bin2hex(random_bytes(2)),
-            // "4" for the UUID version + 3 hex characters
-            mt_rand(0, 0x0fff) | 0x4000,
-            // (8, 9, a, or b) for the UUID variant + 3 hex characters
-            mt_rand(0, 0x3fff) | 0x8000,
-            // 12 hex characters
-            bin2hex(random_bytes(6))
-        );
     }
 }
