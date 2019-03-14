@@ -111,12 +111,12 @@ class UUID4
             // 4 hex characters
             bin2hex(random_bytes(2)),
             // "4" for the UUID version + 3 hex characters
-            // 0x4000 -> 16384
-            // 0x4fff -> 20479
+            // 0x4000 is 16384 in int
+            // 0x4fff is 20479 in int
             dechex(random_int(16384, 20479)),
             // (8, 9, a, or b) for the UUID variant 1 plus 3 hex characters
-            //  0x8000 -> 32768
-            //  0xbfff -> 49151
+            //  0x8000 is 32768 in int
+            //  0xbfff is 49151 in int
             dechex(random_int(32768, 49151)),
             // 12 hex characters
             bin2hex(random_bytes(6))
