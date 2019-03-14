@@ -23,9 +23,9 @@ class PdoConnector extends AbstractConnector implements ConnectorInterface
     /**
      * Get Resource.
      *
-     * @return ExtendedPDO
+     * @return object
      */
-    public function getResource()
+    public function getResource(): object
     {
         return new ExtendedPDO(
             $this->options['dsn'],

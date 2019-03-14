@@ -23,9 +23,9 @@ class MysqliConnector extends AbstractConnector implements ConnectorInterface
     /**
      * Get Resource.
      *
-     * @return mysqli
+     * @return object
      */
-    public function getResource()
+    public function getResource(): object
     {
         mysqli_report(MYSQLI_REPORT_ALL);
 

@@ -23,9 +23,9 @@ class MongoDBConnector extends AbstractConnector implements ConnectorInterface
     /**
      * Get Resource.
      *
-     * @return Client
+     * @return object
      */
-    public function getResource()
+    public function getResource(): object
     {
         return new Client(
             $this->options['uri'],

@@ -32,9 +32,9 @@ class StorageFactory extends AbstractStorageFactory
     /**
      * Return Storage Resource.
      *
-     * @return mixed
+     * @return object
      */
-    public function get()
+    public function get(): object
     {
         return $this->returnStorageObject()->getResource();
     }

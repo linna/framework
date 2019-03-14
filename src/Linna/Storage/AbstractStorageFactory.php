@@ -69,7 +69,7 @@ abstract class AbstractStorageFactory
     /**
      * Get storage object.
      *
-     * @return object
+     * @return mixed
      */
     abstract public function get();
 }
