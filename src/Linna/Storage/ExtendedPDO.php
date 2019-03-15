@@ -46,7 +46,7 @@ class ExtendedPDO extends PDO
             $ref = $value;
             $ref[1] = &$value[1];
 
-            call_user_func_array([$statement, "bindParam"], $ref);
+            \call_user_func_array([$statement, "bindParam"], $ref);
         }
 
         $this->lastOperationStatus = $statement->execute();
@@ -75,11 +75,11 @@ class ExtendedPDO extends PDO
      */
     private function checkValue(array &$value): void
     {
-        if (count($value) < 2) {
+        if (\count($value) < 2) {
             throw new InvalidArgumentException('Parameters array must contain at least two elements with this form: [\':name\', \'value\'].');
         }
 
-        if (strpos($value[0], ':') !== 0) {
+        if (\strpos($value[0], ':') !== 0) {
             throw new InvalidArgumentException('Parameter name will be in the form :name.');
         }
     }

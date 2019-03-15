@@ -213,7 +213,7 @@ class FrontControllerTest extends TestCase
         $frontController = new FrontController(self::$model, self::$view, self::$controller, self::$router->getRoute());
         $frontController->run();
 
-        $this->assertEquals($result, json_decode($frontController->response())->result);
+        $this->assertEquals($result, \json_decode($frontController->response())->result);
     }
 
     /**
@@ -253,7 +253,7 @@ class FrontControllerTest extends TestCase
         $frontController = new FrontController($model, $view, $controller, self::$router->getRoute());
         $frontController->run();
 
-        $this->assertEquals($result, json_decode($frontController->response())->result);
+        $this->assertEquals($result, \json_decode($frontController->response())->result);
     }
 
     /**
@@ -275,20 +275,20 @@ class FrontControllerTest extends TestCase
         $model->attach($view);
         $model->detach($view);
 
-        call_user_func_array([$controller, $route->getAction()], $route->getParam());
+        \call_user_func_array([$controller, $route->getAction()], $route->getParam());
 
         $model->notify();
 
-        $this->assertFalse(isset(json_decode($view->render())->result));
+        $this->assertFalse(isset(\json_decode($view->render())->result));
 
         //attach
         $model->attach($view);
 
-        call_user_func_array([$controller, $route->getAction()], $route->getParam());
+        \call_user_func_array([$controller, $route->getAction()], $route->getParam());
 
         $model->notify();
 
-        $this->assertTrue(isset(json_decode($view->render())->result));
+        $this->assertTrue(isset(\json_decode($view->render())->result));
     }
 
     /**
@@ -327,7 +327,7 @@ class FrontControllerTest extends TestCase
 
         $reponse = $frontController->response();
 
-        $this->assertEquals($result, json_decode($reponse)->result);
-        $this->assertTrue(json_decode($reponse)->view);
+        $this->assertEquals($result, \json_decode($reponse)->result);
+        $this->assertTrue(\json_decode($reponse)->view);
     }
 }

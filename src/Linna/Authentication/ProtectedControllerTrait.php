@@ -37,7 +37,7 @@ trait ProtectedControllerTrait
     private function protect(Authentication $authentication, int $httpResponseCode = 403): void
     {
         if (($this->authentication = $authentication->isLogged()) === false) {
-            http_response_code($httpResponseCode);
+            \http_response_code($httpResponseCode);
             throw new AuthenticationException('');
         }
     }
@@ -56,7 +56,7 @@ trait ProtectedControllerTrait
     private function protectWithRedirect(Authentication $authentication, string $location): void
     {
         if (($this->authentication = $authentication->isLogged()) === false) {
-            header('Location: '.$location);
+            \header('Location: '.$location);
             throw new AuthenticationException('');
         }
     }

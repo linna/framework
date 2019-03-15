@@ -48,7 +48,7 @@ class LoginAttempt extends DomainObjectAbstract
      */
     public function __construct()
     {
-        settype($this->rId, 'integer');
-        settype($this->objectId, 'integer');
+        \settype($this->rId, 'integer');
+        \settype($this->objectId, 'integer');
     }
 }

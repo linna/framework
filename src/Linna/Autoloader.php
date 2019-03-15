@@ -79,7 +79,7 @@ class Autoloader
      */
     public function register(): bool
     {
-        return spl_autoload_register([$this, 'loadClass']);
+        return \spl_autoload_register([$this, 'loadClass']);
     }
 
     /**
@@ -89,7 +89,7 @@ class Autoloader
      */
     public function unregister(): bool
     {
-        return spl_autoload_unregister([$this, 'loadClass']);
+        return \spl_autoload_unregister([$this, 'loadClass']);
     }
 
     /**
@@ -106,10 +106,10 @@ class Autoloader
         foreach ($namespaces as $namespace) {
 
             // normalize namespace prefix
-            $prefix = trim($namespace[0], '\\');
+            $prefix = \trim($namespace[0], '\\');
 
             // normalize the base directory with a trailing separator
-            $baseDir = rtrim($namespace[1], DIRECTORY_SEPARATOR).'/';
+            $baseDir = \rtrim($namespace[1], DIRECTORY_SEPARATOR).'/';
 
             //add namespace
             $this->prefixes[$prefix] = $baseDir;
@@ -125,15 +125,15 @@ class Autoloader
      */
     public function loadClass(string $class): bool
     {
-        $arrayClass = explode('\\', $class);
+        $arrayClass = \explode('\\', $class);
 
         $arrayPrefix = [];
 
-        while (count($arrayClass)) {
-            $arrayPrefix[] = array_shift($arrayClass);
+        while (\count($arrayClass)) {
+            $arrayPrefix[] = \array_shift($arrayClass);
 
-            $prefix = implode('\\', $arrayPrefix);
-            $relativeClass = implode('\\', $arrayClass);
+            $prefix = \implode('\\', $arrayPrefix);
+            $relativeClass = \implode('\\', $arrayClass);
 
             // try to load a mapped file for the prefix and relative class
             if ($this->loadMappedFile($prefix, $relativeClass)) {
@@ -163,10 +163,10 @@ class Autoloader
 
         // replace namespace separators with directory separators
         // in the relative class name, append with .php
-        $file = $this->prefixes[$prefix].str_replace('\\', '/', $relativeClass).'.php';
+        $file = $this->prefixes[$prefix].\str_replace('\\', '/', $relativeClass).'.php';
 
         // if the mapped file exists, require it
-        if (file_exists($file)) {
+        if (\file_exists($file)) {
             require $file;
 
             // yes, we're done

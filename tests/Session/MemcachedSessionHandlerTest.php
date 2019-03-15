@@ -128,7 +128,7 @@ class MemcachedSessionHandlerTest extends TestCase
         $session = self::$session;
         $session->start();
 
-        $this->assertEquals($session->id, session_id());
+        $this->assertEquals($session->id, \session_id());
 
         $session['fooData'] = 'fooData';
 
@@ -136,7 +136,7 @@ class MemcachedSessionHandlerTest extends TestCase
 
         $session->start();
 
-        $this->assertEquals($session->id, session_id());
+        $this->assertEquals($session->id, \session_id());
         $this->assertEquals('fooData', $session['fooData']);
 
         $session->destroy();
@@ -159,7 +159,7 @@ class MemcachedSessionHandlerTest extends TestCase
         $session['fooData'] = 'fooData';
 
         $this->assertEquals(2, $session->status);
-        $this->assertEquals(session_id(), $session->id);
+        $this->assertEquals(\session_id(), $session->id);
         $this->assertEquals('fooData', $session['fooData']);
 
         $session->destroy();
@@ -185,7 +185,7 @@ class MemcachedSessionHandlerTest extends TestCase
         $session->start();
         $session['fooData'] = 'fooData';
 
-        $sessionIdBefore = session_id();
+        $sessionIdBefore = \session_id();
 
         $this->assertEquals(2, $session->status);
         $this->assertEquals($sessionIdBefore, $session->id);
@@ -193,7 +193,7 @@ class MemcachedSessionHandlerTest extends TestCase
 
         $session->regenerate();
 
-        $sessionIdAfter = session_id();
+        $sessionIdAfter = \session_id();
 
         $this->assertEquals(2, $session->status);
         $this->assertEquals($sessionIdAfter, $session->id);

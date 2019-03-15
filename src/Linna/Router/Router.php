@@ -84,7 +84,7 @@ class Router
             'badRoute'             => $this->badRoute,
             'rewriteMode'          => $this->rewriteMode,
             'rewriteModeOffRouter' => $this->rewriteModeOffRouter
-        ] = array_replace_recursive([
+        ] = \array_replace_recursive([
             'basePath'             => $this->basePath,
             'badRoute'             => $this->badRoute,
             'rewriteMode'          => $this->rewriteMode,
@@ -131,8 +131,8 @@ class Router
         $route = new NullRoute();
 
         foreach ($this->routes as $value) {
-            $urlMatch = preg_match('`^'.preg_replace($this->matchTypes, $this->types, $value->url).'/?$`', $uri, $matches);
-            $methodMatch = strpos($value->method, $method);
+            $urlMatch = \preg_match('`^'.\preg_replace($this->matchTypes, $this->types, $value->url).'/?$`', $uri, $matches);
+            $methodMatch = \strpos($value->method, $method);
 
             if ($urlMatch && $methodMatch !== false) {
                 $route = clone $value;
@@ -157,12 +157,12 @@ class Router
         $matches = $this->routeMatches;
 
         //route match and there is a subpattern with action
-        if (count($matches) > 1) {
+        if (\count($matches) > 1) {
             //assume that subpattern rapresent action
             $route->action = $matches[1];
 
             //url clean
-            $route->url = preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $route->url);
+            $route->url = \preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $route->url);
         }
 
         $route->param = $this->buildParam($route);
@@ -181,13 +181,13 @@ class Router
     {
         $param = [];
 
-        $url = explode('/', $route->url);
-        $matches = explode('/', $this->routeMatches[0]);
+        $url = \explode('/', $route->url);
+        $matches = \explode('/', $this->routeMatches[0]);
 
-        $rawParam = array_diff($matches, $url);
+        $rawParam = \array_diff($matches, $url);
 
         foreach ($rawParam as $key => $value) {
-            $paramName = strtr($url[$key], ['[' => '', ']' => '']);
+            $paramName = \strtr($url[$key], ['[' => '', ']' => '']);
             $param[$paramName] = $value;
         }
 
@@ -202,7 +202,7 @@ class Router
     private function buildErrorRoute(): void
     {
         //check if there is a declared route for errors, if no exit with false
-        if (($key = array_search($this->badRoute, array_column($this->routes->getArrayCopy(), 'name'), true)) === false) {
+        if (($key = \array_search($this->badRoute, \array_column($this->routes->getArrayCopy(), 'name'), true)) === false) {
             $this->route = new NullRoute();
 
             return;
@@ -233,18 +233,18 @@ class Router
     private function filterUri(string $passedUri): string
     {
         //sanitize url
-        $url = filter_var($passedUri, FILTER_SANITIZE_URL);
+        $url = \filter_var($passedUri, FILTER_SANITIZE_URL);
 
         //check for rewrite mode
-        $url = str_replace($this->rewriteModeOffRouter, '', $url);
+        $url = \str_replace($this->rewriteModeOffRouter, '', $url);
 
         //remove basepath
-        $url = substr($url, strlen($this->basePath));
+        $url = \substr($url, \strlen($this->basePath));
 
         //remove doubled slash
-        $url = str_replace('//', '/', $url);
+        $url = \str_replace('//', '/', $url);
 
-        return (substr($url, 0, 1) === '/') ? $url : '/'.$url;
+        return (\substr($url, 0, 1) === '/') ? $url : '/'.$url;
     }
 
     /**
@@ -271,11 +271,11 @@ class Router
      */
     public function __call(string $name, array $arguments)
     {
-        $method = strtoupper($name);
+        $method = \strtoupper($name);
 
-        if (in_array($method, ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])) {
+        if (\in_array($method, ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])) {
             $this->map(
-                new Route(array_merge($arguments[2] ?? [], [
+                new Route(\array_merge($arguments[2] ?? [], [
                     'method'   => $method,
                     'url'      => $arguments[0],
                     'callback' => $arguments[1]

@@ -154,7 +154,7 @@ class Authentication
     {
         if ($userName === $storedUserName && $this->password->verify($password, $storedPassword)) {
             //write valid login on session
-            $this->session->loginTime = time();
+            $this->session->loginTime = \time();
             $this->session->login = [
                 'login'     => true,
                 'user_id'   => $storedId,
@@ -207,7 +207,7 @@ class Authentication
         }
 
         //take time
-        $time = time();
+        $time = \time();
 
         //check if login expired
         if (($this->session->loginTime + $this->session->expire) < $time) {

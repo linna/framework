@@ -75,7 +75,7 @@ class PasswordTest extends TestCase
      */
     public function testHashThatNeedRehash(): void
     {
-        $hash = password_hash('password', PASSWORD_DEFAULT, ['cost' => 9]);
+        $hash = \password_hash('password', PASSWORD_DEFAULT, ['cost' => 9]);
 
         $this->assertTrue(self::$password->needsRehash($hash));
     }
@@ -103,7 +103,7 @@ class PasswordTest extends TestCase
 
         $info = self::$password->getInfo($hash);
 
-        $this->assertEquals('array', gettype($info));
+        $this->assertEquals('array', \gettype($info));
         $this->assertEquals(1, $info['algo']);
     }
 
@@ -118,7 +118,7 @@ class PasswordTest extends TestCase
 
         $info = self::$password->getInfo($hash);
 
-        $this->assertEquals('array', gettype($info));
+        $this->assertEquals('array', \gettype($info));
         $this->assertEquals(0, $info['algo']);
     }
 }

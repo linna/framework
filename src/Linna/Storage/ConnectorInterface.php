@@ -26,5 +26,5 @@ interface ConnectorInterface
     /**
      * Return resource to Database class.
      */
-    public function getResource() : object;
+    public function getResource(): object;
 }

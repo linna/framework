@@ -89,7 +89,7 @@ class ExtendedPDOTest extends TestCase
                 $param
             )->fetchAll(PDO::FETCH_ASSOC);
 
-        $this->assertEquals(1, count($user));
+        $this->assertEquals(1, \count($user));
     }
 
     /**
@@ -161,7 +161,7 @@ class ExtendedPDOTest extends TestCase
             $param
         )->fetchAll(PDO::FETCH_ASSOC);
 
-        $this->assertEquals(1, count($user));
+        $this->assertEquals(1, \count($user));
         $this->assertTrue($pdo->getLastOperationStatus());
     }
 }

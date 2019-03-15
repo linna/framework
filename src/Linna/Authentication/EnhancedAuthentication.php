@@ -72,7 +72,7 @@ class EnhancedAuthentication extends Authentication
             'maxAttemptsForIpAddress' => $this->maxAttemptsForIpAddress,
             'maxAttemptsForSecond'    => $this->maxAttemptsForSecond,
             'banTimeInSeconds'        => $this->banTimeInSeconds
-        ] = array_replace_recursive([
+        ] = \array_replace_recursive([
             'maxAttemptsForUserName'  => $this->maxAttemptsForUserName,
             'maxAttemptsForSessionId' => $this->maxAttemptsForSessionId,
             'maxAttemptsForIpAddress' => $this->maxAttemptsForIpAddress,
@@ -92,7 +92,7 @@ class EnhancedAuthentication extends Authentication
     {
         $attemptsLeft = ((int) $this->maxAttemptsForUserName) - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameUser($userName, $this->banTimeInSeconds);
 
-        return max(0, $attemptsLeft);
+        return \max(0, $attemptsLeft);
     }
 
     /**
@@ -106,7 +106,7 @@ class EnhancedAuthentication extends Authentication
     {
         $attemptsLeft = ((int) $this->maxAttemptsForSessionId) - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameSession($sessionId, $this->banTimeInSeconds);
 
-        return max(0, $attemptsLeft);
+        return \max(0, $attemptsLeft);
     }
 
     /**
@@ -120,7 +120,7 @@ class EnhancedAuthentication extends Authentication
     {
         $attemptsLeft = ((int) $this->maxAttemptsForIpAddress) - $this->enhancedAuthenticationMapper->fetchAttemptsWithSameIp($ipAddress, $this->banTimeInSeconds);
 
-        return max(0, $attemptsLeft);
+        return \max(0, $attemptsLeft);
     }
 
     /**

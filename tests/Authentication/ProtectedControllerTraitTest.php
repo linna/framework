@@ -143,7 +143,7 @@ class ProtectedControllerTraitTest extends TestCase
         try {
             (new ProtectedMethodController(new Model(), self::$authentication))->ProtectedAction();
         } catch (AuthenticationException $e) {
-            $this->assertSame(403, http_response_code());
+            $this->assertSame(403, \http_response_code());
         }
     }
 
@@ -166,8 +166,8 @@ class ProtectedControllerTraitTest extends TestCase
             $headers = xdebug_get_headers();
 
             foreach ($headers as $value) {
-                if (strstr($value, 'Location:') !== false) {
-                    $location = str_replace('Location: ', '', $value);
+                if (\strstr($value, 'Location:') !== false) {
+                    $location = \str_replace('Location: ', '', $value);
                 }
             }
 

@@ -131,7 +131,7 @@ class MemcachedCacheTest extends TestCase
     {
         $this->assertTrue(self::$cache->set('foo', [0, 1, 2, 3, 4]));
 
-        usleep(2000100);
+        \usleep(2000100);
 
         $this->assertTrue(self::$cache->has('foo'));
     }
@@ -145,7 +145,7 @@ class MemcachedCacheTest extends TestCase
     {
         $this->assertTrue(self::$cache->set('foo_ttl', [0, 1, 2, 3, 4], 0));
 
-        usleep(1000100);
+        \usleep(1000100);
 
         $this->assertTrue(self::$cache->has('foo_ttl'));
     }
@@ -159,7 +159,7 @@ class MemcachedCacheTest extends TestCase
     {
         $this->assertTrue(self::$cache->set('foo_ttl', [0, 1, 2, 3, 4], 1));
 
-        usleep(1000100);
+        \usleep(1000100);
 
         $this->assertNull(self::$cache->get('foo_ttl'));
     }
@@ -408,7 +408,7 @@ class MemcachedCacheTest extends TestCase
         $this->assertTrue(self::$cache->has('foo_4'));
         $this->assertTrue(self::$cache->has('foo_5'));
 
-        usleep(1000100);
+        \usleep(1000100);
 
         $this->assertNull(self::$cache->get('foo_0'));
         $this->assertNull(self::$cache->get('foo_1'));

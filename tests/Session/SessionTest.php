@@ -71,9 +71,9 @@ class SessionTest extends TestCase
         $this->assertSame(2, $session->status);
 
         //check for session parameters
-        $this->assertSame('linna_session', session_name());
+        $this->assertSame('linna_session', \session_name());
 
-        $cookieParams = session_get_cookie_params();
+        $cookieParams = \session_get_cookie_params();
 
         $this->assertIsInt($cookieParams['lifetime']);
         $this->assertSame(1800, $cookieParams['lifetime']);
@@ -139,7 +139,7 @@ class SessionTest extends TestCase
         $session->start();
 
         $this->assertSame(2, $session->status);
-        $this->assertSame($session->id, session_id());
+        $this->assertSame($session->id, \session_id());
         $this->cookieCheck($this->getCookieValues()[0], $session);
 
         $session['fooData'] = 'fooData';
@@ -151,7 +151,7 @@ class SessionTest extends TestCase
         $session->start();
 
         $this->assertSame(2, $session->status);
-        $this->assertSame($session->id, session_id());
+        $this->assertSame($session->id, \session_id());
         $this->assertSame('fooData', $session['fooData']);
         $this->cookieCheck($this->getCookieValues()[0], $session);
 
@@ -179,7 +179,7 @@ class SessionTest extends TestCase
 
         $session['fooData'] = 'fooData';
 
-        $this->assertSame(session_id(), $session->id);
+        $this->assertSame(\session_id(), $session->id);
         $this->assertSame('fooData', $session['fooData']);
 
         $session->destroy();
@@ -188,8 +188,8 @@ class SessionTest extends TestCase
 
         $this->assertSame($cookie['linna_session'], 'NothingToSeeHere.');
 
-        $cookieExpires = strtotime($cookie['expires']);
-        $resultExpires = strtotime(date(DATE_COOKIE, time()));
+        $cookieExpires = \strtotime($cookie['expires']);
+        $resultExpires = \strtotime(\date(DATE_COOKIE, \time()));
 
         $this->assertSame($cookieExpires, $resultExpires);
         $this->assertSame($cookie['Max-Age'], '0');
@@ -223,7 +223,7 @@ class SessionTest extends TestCase
 
         $session['fooData'] = 'fooData';
 
-        $sessionIdBefore = session_id();
+        $sessionIdBefore = \session_id();
 
         $this->assertSame(2, $session->status);
         $this->assertSame($sessionIdBefore, $session->id);
@@ -236,8 +236,8 @@ class SessionTest extends TestCase
         $cookieValueAfter = $this->getCookieValue($this->getCookieValues());
 
         $this->assertSame(2, $session->status);
-        $this->assertSame(session_id(), $session->id);
-        $this->assertNotEquals(session_id(), $sessionIdBefore);
+        $this->assertSame(\session_id(), $session->id);
+        $this->assertNotEquals(\session_id(), $sessionIdBefore);
         $this->assertNotEquals($cookieValueBefore, $cookieValueAfter);
         $this->assertSame('fooData', $session['fooData']);
 
@@ -432,8 +432,8 @@ class SessionTest extends TestCase
         $cookie = [];
 
         foreach ($headers as $value) {
-            if (strstr($value, 'Set-Cookie:') !== false) {
-                $cookie[] = explode(';', str_replace('Set-Cookie: ', "", $value));
+            if (\strstr($value, 'Set-Cookie:') !== false) {
+                $cookie[] = \explode(';', \str_replace('Set-Cookie: ', "", $value));
             }
         }
 
@@ -443,9 +443,9 @@ class SessionTest extends TestCase
             $tmpCookie = [];
 
             foreach ($values as $value) {
-                $explode = explode('=', ltrim(rtrim($value)));
+                $explode = \explode('=', \ltrim(\rtrim($value)));
 
-                $name = ltrim(rtrim($explode[0]));
+                $name = \ltrim(\rtrim($explode[0]));
 
                 $tmpCookie[$name] = (isset($explode[1])) ? $explode[1] : null;
             }
@@ -465,9 +465,9 @@ class SessionTest extends TestCase
      */
     public function getCookieValue(array $cookieArray): string
     {
-        $last = count($cookieArray) -1;
+        $last = \count($cookieArray) -1;
 
-        $sessionName = session_name();
+        $sessionName = \session_name();
 
         return $cookieArray[$last][$sessionName];
     }
@@ -484,10 +484,15 @@ class SessionTest extends TestCase
     {
         $this->assertSame($cookie['linna_session'], $session->id);
 
-        $cookieExpires = strtotime($cookie['expires']);
-        $resultExpires = strtotime(date(DATE_COOKIE, time() + 1800));
+        $cookieExpires = \strtotime($cookie['expires']);
+        $resultExpires = \strtotime(\date(DATE_COOKIE, \time() + 1800));
 
-        $this->assertSame($cookieExpires, $resultExpires);
+        $timeDifference = $resultExpires - $cookieExpires;
+        $timeDifference = \abs($timeDifference);
+
+        $this->assertLessThanOrEqual(1, $timeDifference);
+        $this->assertGreaterThanOrEqual(0, $timeDifference);
+
         $this->assertSame($cookie['Max-Age'], '1800');
         $this->assertSame($cookie['path'], '/app');
         $this->assertSame($cookie['domain'], 'https://linna.tools');

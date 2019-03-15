@@ -85,11 +85,11 @@ class Authorization
             return $this->canByObject($permission);
         }
 
-        if (is_int($permission)) {
+        if (\is_int($permission)) {
             return $this->canById($permission);
         }
 
-        if (is_string($permission)) {
+        if (\is_string($permission)) {
             return $this->canByName($permission);
         }
 

@@ -27,7 +27,7 @@ class MysqliConnector extends AbstractConnector implements ConnectorInterface
      */
     public function getResource(): object
     {
-        mysqli_report(MYSQLI_REPORT_ALL);
+        \mysqli_report(MYSQLI_REPORT_ALL);
 
         return new mysqli(
             $this->options['host'],

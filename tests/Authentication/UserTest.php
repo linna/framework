@@ -104,7 +104,7 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(User::class, $user);
 
-        $this->assertTrue(password_verify('password', $user->password));
+        $this->assertTrue(\password_verify('password', $user->password));
     }
 
     /**

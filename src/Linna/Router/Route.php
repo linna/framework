@@ -84,7 +84,7 @@ class Route implements RouteInterface
             'default'    => $this->default,
             'param'      => $this->param,
             'callback'   => $this->callback
-        ] = array_replace_recursive([
+        ] = \array_replace_recursive([
             'name'       => $this->name,
             'method'     => $this->method,
             'url'        => $this->url,
@@ -195,7 +195,7 @@ class Route implements RouteInterface
      */
     public function getCallback(): callable
     {
-        if (is_callable($this->callback)) {
+        if (\is_callable($this->callback)) {
             return $this->callback;
         }
 

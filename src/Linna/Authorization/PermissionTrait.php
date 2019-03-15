@@ -58,7 +58,7 @@ trait PermissionTrait
      */
     public function canByName(string $permissionName): bool
     {
-        if (in_array($permissionName, array_column($this->permission, 'name'), true)) {
+        if (\in_array($permissionName, \array_column($this->permission, 'name'), true)) {
             return true;
         }
 

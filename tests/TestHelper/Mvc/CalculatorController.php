@@ -80,7 +80,7 @@ class CalculatorController extends Controller
     public function filter(array $numbers)
     {
         foreach ($numbers as $key => $number) {
-            switch (gettype($number)) {
+            switch (\gettype($number)) {
                 case 'string':
                     $number[$key] = (int) $number;
                     break;

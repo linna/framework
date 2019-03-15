@@ -121,7 +121,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
         $session = self::$session;
         $session->start();
 
-        $this->assertEquals($session->id, session_id());
+        $this->assertEquals($session->id, \session_id());
 
         $session['fooData'] = 'fooData';
 
@@ -129,7 +129,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
 
         $session->start();
 
-        $this->assertEquals($session->id, session_id());
+        $this->assertEquals($session->id, \session_id());
         $this->assertEquals('fooData', $session['fooData']);
 
         $session->destroy();
@@ -150,7 +150,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
         $session['fooData'] = 'fooData';
 
         $this->assertEquals(2, $session->status);
-        $this->assertEquals(session_id(), $session->id);
+        $this->assertEquals(\session_id(), $session->id);
         $this->assertEquals('fooData', $session['fooData']);
 
         $oldSessionId = $session->id;
@@ -201,7 +201,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
         $session->start();
         $session['fooData'] = 'fooData';
 
-        $sessionIdBefore = session_id();
+        $sessionIdBefore = \session_id();
 
         $this->assertEquals(2, $session->status);
         $this->assertEquals($sessionIdBefore, $session->id);
@@ -209,7 +209,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
 
         $session->regenerate();
 
-        $sessionIdAfter = session_id();
+        $sessionIdAfter = \session_id();
 
         $this->assertEquals(2, $session->status);
         $this->assertEquals($sessionIdAfter, $session->id);
@@ -264,8 +264,8 @@ class MysqlPdoSessionHandlerTest extends TestCase
         $pdos = self::$pdo->prepare('INSERT INTO session (session_id, session_data) VALUES (:session_id, :session_data)');
 
         for ($i = 0; $i < 10; $i++) {
-            $sessionId = md5((string) $i);
-            $time = time() - $i;
+            $sessionId = \md5((string) $i);
+            $time = \time() - $i;
             $data = 'time|i:'.$time.';';
 
             $pdos->bindParam(':session_id', $sessionId, PDO::PARAM_STR);

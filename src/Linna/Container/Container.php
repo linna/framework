@@ -102,7 +102,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public function delete(string $id): bool
     {
-        if (array_key_exists($id, $this->cache)) {
+        if (\array_key_exists($id, $this->cache)) {
 
             //delete value
             unset($this->cache[$id]);
@@ -128,7 +128,7 @@ class Container implements ContainerInterface, ArrayAccess
         $this->tree = [];
 
         //merge rules passed as parameter with general rules
-        $this->rules = array_merge($this->rules, $rules);
+        $this->rules = \array_merge($this->rules, $rules);
 
         //build dependency tree
         $this->buildTree($class);
@@ -167,10 +167,10 @@ class Container implements ContainerInterface, ArrayAccess
             foreach ($parameters as $param) {
 
                 //check if argument is already stored
-                $notAlreadyStored = !in_array($param, $this->tree[$level][$class]);
+                $notAlreadyStored = !\in_array($param, $this->tree[$level][$class]);
 
                 //if there is parameter with callable type
-                if (class_exists((string) $param->getType()) && $notAlreadyStored) {
+                if (\class_exists((string) $param->getType()) && $notAlreadyStored) {
 
                     //push values in stack for simulate later recursive function
                     $stack->push([$level, $class]);
@@ -210,7 +210,7 @@ class Container implements ContainerInterface, ArrayAccess
     private function buildObjects(): void
     {
         //deep dependency level, start to array end for not use array_reverse
-        for ($i = count($this->tree) - 1; $i >= 0; $i--) {
+        for ($i = \count($this->tree) - 1; $i >= 0; $i--) {
 
             //class
             foreach ($this->tree[$i] as $class => $arguments) {
@@ -219,7 +219,7 @@ class Container implements ContainerInterface, ArrayAccess
                 $object = $this->cache[$class] ?? null;
 
                 //if object is not in cache and need arguments try to build
-                if ($object === null && count($arguments)) {
+                if ($object === null && \count($arguments)) {
 
                     //build arguments
                     $args = $this->buildArguments($class, $arguments);
@@ -254,7 +254,7 @@ class Container implements ContainerInterface, ArrayAccess
 
         //argument required from class
         foreach ($dependency as $argValue) {
-            if (class_exists((string) $argValue->getType())) {
+            if (\class_exists((string) $argValue->getType())) {
                 //add to array of arguments
                 $paramClass = $argValue->getClass()->name;
                 $args[] = $this->cache[$paramClass];
@@ -267,7 +267,7 @@ class Container implements ContainerInterface, ArrayAccess
         //check if there is rules for this class
         if (isset($this->rules[$class])) {
             //merge arguments
-            $args = array_replace($args, $this->rules[$class]);
+            $args = \array_replace($args, $this->rules[$class]);
         }
 
         return $args;

@@ -86,7 +86,7 @@ class Session implements ArrayAccess
             'cookiePath'     => $this->cookiePath,
             'cookieSecure'   => $this->cookieSecure,
             'cookieHttpOnly' => $this->cookieHttpOnly
-        ] = array_replace_recursive([
+        ] = \array_replace_recursive([
             'expire'         => $this->expire,
             'name'           => $this->name,
             'cookieDomain'   => $this->cookieDomain,
@@ -95,7 +95,7 @@ class Session implements ArrayAccess
             'cookieHttpOnly' => $this->cookieHttpOnly
         ], $options);
 
-        $this->status = session_status();
+        $this->status = \session_status();
     }
 
     /**
@@ -106,10 +106,10 @@ class Session implements ArrayAccess
     public function regenerate(): void
     {
         //regenerate session id
-        session_regenerate_id();
+        \session_regenerate_id();
 
         //store new session data
-        $this->setSessionData(time());
+        $this->setSessionData(\time());
     }
 
     /**
@@ -119,13 +119,13 @@ class Session implements ArrayAccess
      */
     public function start(): void
     {
-        if (session_status() !== PHP_SESSION_ACTIVE) {
+        if (\session_status() !== PHP_SESSION_ACTIVE) {
 
             //prepare the session start
-            session_name($this->name);
+            \session_name($this->name);
 
             //start session
-            session_start([
+            \session_start([
                 'cookie_path'      => $this->cookiePath,
                 'cookie_domain'    => $this->cookieDomain,
                 'cookie_lifetime'  => $this->expire,
@@ -148,7 +148,7 @@ class Session implements ArrayAccess
      */
     private function refresh(): void
     {
-        $time = time();
+        $time = \time();
 
         if (isset($this->data['time']) && $this->data['time'] <= ($time - $this->expire)) {
 
@@ -171,10 +171,10 @@ class Session implements ArrayAccess
      */
     private function setSessionData(int $time): void
     {
-        $this->id = session_id();
+        $this->id = \session_id();
         $this->data['time'] = $time;
         $this->data['expire'] = $this->expire;
-        $this->status = session_status();
+        $this->status = \session_status();
     }
 
     /**
@@ -187,7 +187,7 @@ class Session implements ArrayAccess
     public function setSessionHandler(SessionHandlerInterface $handler): void
     {
         //setting a different save handler if passed
-        session_set_save_handler($handler, true);
+        \session_set_save_handler($handler, true);
     }
 
     /**
@@ -202,13 +202,13 @@ class Session implements ArrayAccess
         $this->id = '';
 
         //destroy cookie
-        setcookie($this->name, 'NothingToSeeHere.', time());
+        \setcookie($this->name, 'NothingToSeeHere.', \time());
 
         //call session destroy
-        session_destroy();
+        \session_destroy();
 
         //update status
-        $this->status = session_status();
+        $this->status = \session_status();
     }
 
     /**
@@ -218,9 +218,9 @@ class Session implements ArrayAccess
      */
     public function commit(): void
     {
-        session_write_close();
+        \session_write_close();
 
         //update status
-        $this->status = session_status();
+        $this->status = \session_status();
     }
 }

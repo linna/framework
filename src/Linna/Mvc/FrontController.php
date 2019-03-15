@@ -101,10 +101,10 @@ class FrontController
      */
     private function beforeAfterControllerAction(string $when): void
     {
-        $method = $when.ucfirst($this->routeAction);
+        $method = $when.\ucfirst($this->routeAction);
 
-        if (method_exists($this->controller, $method) && $method !== $when) {
-            call_user_func([$this->controller, $method]);
+        if (\method_exists($this->controller, $method) && $method !== $when) {
+            \call_user_func([$this->controller, $method]);
         }
     }
 
@@ -117,8 +117,8 @@ class FrontController
      */
     private function beforeAfterController(string $when): void
     {
-        if (method_exists($this->controller, $when)) {
-            call_user_func([$this->controller, $when]);
+        if (\method_exists($this->controller, $when)) {
+            \call_user_func([$this->controller, $when]);
         }
     }
 
@@ -135,13 +135,13 @@ class FrontController
 
         //action - call controller passing params
         if (!empty($param)) {
-            call_user_func_array([$this->controller, $action], $param);
+            \call_user_func_array([$this->controller, $action], $param);
             return;
         }
 
         //action - call controller
         if ($action) {
-            call_user_func([$this->controller, $action]);
+            \call_user_func([$this->controller, $action]);
         }
     }
 
@@ -154,7 +154,7 @@ class FrontController
     {
         $action = ($this->routeAction) ? $this->routeAction : 'index';
 
-        call_user_func([$this->view, $action]);
+        \call_user_func([$this->view, $action]);
     }
 
     /**
