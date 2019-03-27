@@ -17,7 +17,14 @@ before_script:
 - mysql -u root linna_db < tests/linna_db_mysql.sql
 - composer install
 
+addons:
+  sonarcloud:
+    organization: "linna"
+    token:
+      secure: SONAR_TOKEN
+
 script:
 #- ./vendor/bin/phpstan analyse --level 7 src
 - ./vendor/bin/phpunit
+- sonar-scanner
 #- ./vendor/bin/infection --min-msi=75 --min-covered-msi=75
