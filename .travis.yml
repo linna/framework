@@ -25,7 +25,6 @@ git:
   depth: false
 
 script:
-#- ./vendor/bin/phpstan analyse --level 7 src
 - ./vendor/bin/phpunit --coverage-clover=coverage-report.clover --log-junit=test-report.xml
+- ./vendor/bin/infection --min-msi=75 --min-covered-msi=75
 - sonar-scanner
-#- ./vendor/bin/infection --min-msi=75 --min-covered-msi=75
