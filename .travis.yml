@@ -20,11 +20,12 @@ before_script:
 addons:
   sonarcloud:
     organization: "linna"
-    token:
-      secure: SONAR_TOKEN
+
+git:
+  depth: false
 
 script:
 #- ./vendor/bin/phpstan analyse --level 7 src
-- ./vendor/bin/phpunit
+- ./vendor/bin/phpunit --coverage-clover=coverage-report.clover --log-junit=test-report.xml
 - sonar-scanner
 #- ./vendor/bin/infection --min-msi=75 --min-covered-msi=75
