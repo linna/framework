@@ -121,8 +121,8 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(User::class, $user);
 
-        $this->assertTrue($user->chagePassword('new_password', 'old_password'));
-        $this->assertTrue($user->chagePassword('other_new_password', 'new_password'));
-        $this->assertFalse($user->chagePassword('password', 'wrong_password'));
+        $this->assertTrue($user->changePassword('new_password', 'old_password'));
+        $this->assertTrue($user->changePassword('other_new_password', 'new_password'));
+        $this->assertFalse($user->changePassword('password', 'wrong_password'));
     }
 }

@@ -139,7 +139,7 @@ class User extends DomainObjectAbstract
      *
      * $user = new User($password);
      *
-     * $user->chagePassword('newPassword', 'oldPassword');
+     * $user->changePassword('newPassword', 'oldPassword');
      * </code></pre>
      *
      * @param string $newPassword
@@ -147,7 +147,7 @@ class User extends DomainObjectAbstract
      *
      * @return bool
      */
-    public function chagePassword(string $newPassword, string $oldPassword): bool
+    public function changePassword(string $newPassword, string $oldPassword): bool
     {
         //verfy password match
         if ($this->passwordUtility->verify($oldPassword, $this->password)) {

@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * minimum php version 7.2
 * tests updated
 
+### Fixed
+* `Linna\Authentication\User->changePassword()` typo error in method name
+
 #### Router
 * `Linna\Router\Router->__construct()` now require a `Linna\Router\RouteCollection` as first argument
 
