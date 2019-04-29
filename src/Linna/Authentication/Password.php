@@ -33,6 +33,15 @@ class Password
     ];
 
     /**
+     * @var array An associate array containing algorithm constants
+     */
+    protected $algoLists = [
+        PASSWORD_BCRYPT,
+        PASSWORD_ARGON2I,
+        PASSWORD_DEFAULT,
+    ];
+
+    /**
      * @var int Password default algorithm
      */
     protected $algo = 1;
@@ -48,9 +57,19 @@ class Password
      *
      * @param int   $algo
      * @param array $options
+     *
+     * @throws \InvalidArgumentException
      */
     public function __construct(int $algo = PASSWORD_DEFAULT, array $options = [])
     {
+        if (\defined('PASSWORD_ARGON2ID')) {
+            $this->algoLists[] = PASSWORD_ARGON2ID;
+        }
+
+        if (empty($this->algoLists[$algo])) {
+            throw new \InvalidArgumentException('The password algorithm name is invalid');
+        }
+
         $this->algo = $algo;
 
         $this->options[$algo] = \array_replace_recursive($this->options[$algo], $options);
