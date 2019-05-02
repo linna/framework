@@ -121,4 +121,15 @@ class PasswordTest extends TestCase
         $this->assertEquals('array', \gettype($info));
         $this->assertEquals(0, $info['algo']);
     }
+
+    /**
+     * Test constructor with invalid password algorithm name
+     */
+    public function testConstructorWithInvalidPasswordAlgorithmConstant()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The password algorithm name is invalid');
+
+        new Password(10000);
+    }
 }
