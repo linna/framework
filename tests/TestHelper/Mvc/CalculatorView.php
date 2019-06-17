@@ -20,6 +20,10 @@ class CalculatorView extends View
         parent::__construct($model, $template);
     }
 
+    public function index()
+    {
+    }
+
     public function multiply()
     {
     }
@@ -29,10 +33,6 @@ class CalculatorView extends View
     }
 
     public function add()
-    {
-    }
-
-    public function sub()
     {
     }
 }

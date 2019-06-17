@@ -152,9 +152,11 @@ class FrontController
      */
     private function runView(): void
     {
-        $action = ($this->routeAction) ? $this->routeAction : 'index';
+        $action = ($this->routeAction) ?: 'index';
 
-        \call_user_func([$this->view, $action]);
+        if (\method_exists($this->view, $action)) {
+            \call_user_func([$this->view, $action]);
+        }
     }
 
     /**

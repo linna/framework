@@ -17,9 +17,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * minimum php version 7.2
 * tests updated
 
-### Fixed
-* `Linna\Authentication\User->changePassword()` typo error in method name
-
 #### Router
 * `Linna\Router\Router->__construct()` now require a `Linna\Router\RouteCollection` as first argument
 
@@ -28,6 +25,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Storage\Connectors\PdoConnector->getResource()` now has return type `object`
 * `Linna\Storage\Connectors\MysqliConnector->getResource()` now has return type `object`
 * `Linna\Storage\Connectors\MongoDBConnector->getResource()` now has return type `object`
+
+### Fixed
+* `Linna\Authentication\User->changePassword()` typo error in method name
+* `Linna\Mvc\FrontController->runView()` error when `$this->routeAction` value called as method and not declared on view class
 
 ## [v0.25.0](https://github.com/linna/framework/compare/v0.24.0...v0.25.0) - 2019-01-13
 
