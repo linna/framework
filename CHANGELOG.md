@@ -13,14 +13,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 #### Data Mapper
 * `Linna\DataMapper\UUID4` class
 
+#### Router
+* `Linna\Router\Route->allowed` property
+* `Linna\Router\Route->getAllowed()` method
+* `Linna\Router\Exception` namespace
+* `Linna\Router\Exception\RedirectException` exception
+
 ### Changed
 * minimum php version 7.2
 * tests updated
 
 #### Router
 * `Linna\Router\Router->__construct()` now require a `Linna\Router\RouteCollection` as first argument
-* `Linna\Router\Exception` namespace
-* `Linna\Router\Exception\RedirectException` exception
 
 #### Storage
 * `Linna\Storage\ConnectorsInterface->getResource()` now has return type `object`

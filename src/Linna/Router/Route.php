@@ -67,6 +67,12 @@ class Route implements RouteInterface
     public $callback;
 
     /**
+     * @var string Ip address from which the route is callable, ip address
+     *             format is intentionally not specified.
+     */
+    public $allowed = '*';
+
+    /**
      * Constructor.
      *
      * @param array $route
@@ -201,6 +207,16 @@ class Route implements RouteInterface
 
         return function () {
         };
+    }
+
+    /**
+     * Return Ip addresses from which the route is callable.
+     *
+     * @return string
+     */
+    public function getAllowed(): string
+    {
+        return $this->allowed;
     }
 
     /**
