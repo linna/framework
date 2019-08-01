@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 #### Router
 * `Linna\Router\Router->__construct()` now require a `Linna\Router\RouteCollection` as first argument
+* `Linna\Router\Exception` namespace
+* `Linna\Router\Exception\RedirectException` exception
 
 #### Storage
 * `Linna\Storage\ConnectorsInterface->getResource()` now has return type `object`
