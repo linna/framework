@@ -27,6 +27,18 @@ class RedirectException extends Exception
     private $path = '';
 
     /**
+     * Class Constructor.
+     *
+     * @param string $path Path on which to be redirected.
+     */
+    public function __construct(string $path = '')
+    {
+        parent::__construct();
+
+        $this->path = $path;
+    }
+
+    /**
      * Set path.
      *
      * @param string $path Path on which to be redirected.

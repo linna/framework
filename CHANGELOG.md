@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 #### Router
 * `Linna\Router\Route->allowed` property
 * `Linna\Router\Route->getAllowed()` method
+* `Linna\Router\Router` chars accepted in route params now are 0-9 A-Z a-z ._-
 * `Linna\Router\Exception` namespace
 * `Linna\Router\Exception\RedirectException` exception
 

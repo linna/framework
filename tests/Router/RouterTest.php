@@ -79,6 +79,13 @@ class RouterTest extends TestCase
                 'model'      => 'UserModel',
                 'view'       => 'UserView',
                 'controller' => 'UserController',
+            ]),
+            new Route([
+                'method'     => 'GET',
+                'url'        => '/paramTest/[test]',
+                'model'      => 'ParamModel',
+                'view'       => 'ParamView',
+                'controller' => 'ParamController',
             ])
         ]));
 
@@ -127,6 +134,9 @@ class RouterTest extends TestCase
      *
      * @dataProvider WrongArgumentsForRouterProvider
      *
+     * @param mixed $routes
+     * @param mixed $options
+     *
      * @return void
      */
     public function testNewRouterInstanceWithWrongArguments($routes, $options): void
@@ -160,6 +170,9 @@ class RouterTest extends TestCase
      * Test validate route with worng arguments.
      *
      * @dataProvider WrongArgumentsForValidateRouteProvider
+     *
+     * @param mixed $url
+     * @param mixed $method
      *
      * @return void
      */
@@ -202,6 +215,11 @@ class RouterTest extends TestCase
      *
      * @dataProvider routeProvider
      *
+     * @param string $url
+     * @param string $method
+     * @param array  $returneRoute
+     * @param bool   $validate
+     *
      * @return void
      */
     public function testRoutes(string $url, string $method, array $returneRoute, bool $validate): void
@@ -223,6 +241,11 @@ class RouterTest extends TestCase
      * Test routes with other base path.
      *
      * @dataProvider routeProvider
+     *
+     * @param string $url
+     * @param string $method
+     * @param array  $returneRoute
+     * @param bool   $validate
      *
      * @return void
      */
@@ -268,6 +291,9 @@ class RouterTest extends TestCase
      *
      * @dataProvider mapMethodRouteProvider
      *
+     * @param string $method
+     * @param string $url
+     *
      * @return void
      */
     public function testMapInToRouterWithMapMethod(string $method, string $url): void
@@ -299,6 +325,11 @@ class RouterTest extends TestCase
      * Test map route into wouter with fast map methods.
      *
      * @dataProvider fastMapRouteProvider
+     *
+     * @param string $method
+     * @param string $url
+     * @param string $func
+     * @param array  $options
      *
      * @return void
      */
@@ -340,6 +371,11 @@ class RouterTest extends TestCase
      * Test map route into wouter with fast map methods.
      *
      * @dataProvider fastMapRouteProviderNoOptions
+     *
+     * @param string $method
+     * @param string $url
+     * @param string $func
+     * @param array $options
      *
      * @return void
      */
@@ -464,9 +500,13 @@ class RouterTest extends TestCase
      *
      * @dataProvider restRouteProvider
      *
+     * @param string $uri
+     * @param string $method
+     * @param string $action
+     *
      * @return void
      */
-    public function testRESTRouting($uri, $method, $action): void
+    public function testRESTRouting(string $uri, string $method, string $action): void
     {
         $restRoutes = (new RouteCollection([
             new Route([
@@ -598,5 +638,38 @@ class RouterTest extends TestCase
 
         $this->assertFalse($router->validate('/user/bad', 'GET'));
         $this->assertInstanceOf(NullRoute::class, $router->getRoute());
+    }
+
+    /**
+     * Route with param provider.
+     *
+     * @return array
+     */
+    public function routeWithParamProvider(): array
+    {
+        return [
+            ['/paramTest/az', 'az'],
+            ['/paramTest/aZ', 'aZ'],
+            ['/paramTest/a9', 'a9'],
+            ['/paramTest/a9.', 'a9.'],
+            ['/paramTest/a9-', 'a9-'],
+            ['/paramTest/._-', '._-'],
+        ];
+    }
+
+    /**
+     * Test allowed chars in route param.
+     *
+     * @dataProvider routeWithParamProvider
+     *
+     * @return void
+     */
+    public function testAllowedCharsInRouteParam(string $uri, string $result): void
+    {
+        self::$router->validate($uri, 'GET');
+
+        $route = self::$router->getRoute();
+
+        $this->assertEquals($result, $route->param['test']);
     }
 }

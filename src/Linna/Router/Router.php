@@ -55,14 +55,14 @@ class Router
      * @var array List of regex for find parameter inside passed routes
      */
     private $matchTypes = [
-        '`\[[0-9A-Za-z]+\]`',
+        '`\[[0-9A-Za-z._-]+\]`',
     ];
 
     /**
      * @var array List of regex for find type of parameter inside passed routes
      */
     private $types = [
-        '[0-9A-Za-z]++',
+        '[0-9A-Za-z._-]++',
     ];
 
     /**
