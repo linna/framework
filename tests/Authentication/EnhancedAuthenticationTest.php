@@ -123,7 +123,7 @@ class EnhancedAuthenticationTest extends TestCase
                 self::$session,
                 self::$password,
                 self::$enhancedAuthenticationMapper
-                )
+            )
             )
         );
     }

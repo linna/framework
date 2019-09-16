@@ -61,7 +61,7 @@ class EnhancedAuthentication extends Authentication
         Password $password,
         EnhancedAuthenticationMapperInterface $enhancedAuthenticationMapper,
         array $options = []
-        ) {
+    ) {
         parent::__construct($session, $password);
 
         $this->enhancedAuthenticationMapper = $enhancedAuthenticationMapper;
