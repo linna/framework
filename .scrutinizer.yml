@@ -31,12 +31,12 @@ build:
             before:
                 - mysql -e "CREATE DATABASE linna_db"
                 - mysql -u root linna_db < tests/linna_db_mysql.sql
-                - sed -i 's/pgsql:dbname=linna_db;host=localhost/pgsql:dbname=scrutinizer;host=localhost;port=5435/g' phpunit.xml
+                - sed -i 's/pgsql:dbname=linna_db;host=localhost/pgsql:dbname=scrutinizer;host=localhost/g' phpunit.xml
                 - sed -i 's/name="pdo_pgsql_user" value="postgres"/name="pdo_pgsql_user" value="scrutinizer"/g' phpunit.xml
                 - sed -i 's/name="pdo_pgsql_password" value=""/name="pdo_pgsql_password" value="scrutinizer"/g' phpunit.xml
-                - cat phpunit.xml
                 - sed -i 's/DROP DATABASE linna_db;/DROP DATABASE scrutinizer;/g' tests/linna_db_pgsql.sql
                 - sed -i 's/CREATE DATABASE scrutinizer/CREATE DATABASE scrutinizer/g' tests/linna_db_pgsql.sql
                 - sed -i 's/ALTER DATABASE linna_db OWNER TO postgres;/ALTER DATABASE scrutinizer OWNER TO scrutinizer;/g' tests/linna_db_pgsql.sql
                 - sed -i 's/connect linna_db/connect scrutinizer/g' tests/linna_db_pgsql.sql
+                - sed -i 's/SET idle_in_transaction_session_timeout = 0;/-- SET idle_in_transaction_session_timeout = 0;/g' tests/linna_db_pgsql.sql
                 - PGPASSWORD=scrutinizer psql -U scrutinizer -a -f tests/linna_db_pgsql.sql
