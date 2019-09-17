@@ -14,8 +14,9 @@ tools:
 
 build:
     environment:
-       php: 7.2
+       php: 7.3
        mysql: 5.5
+       postgresql: true
        memcached: true
        mongodb: true
     tests:
