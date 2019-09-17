@@ -16,7 +16,7 @@ build:
     environment:
        php: 7.2
        mysql: 5.7
-       postgresql: true
+       postgresql: 10
        memcached: true
        mongodb: true
     tests:
