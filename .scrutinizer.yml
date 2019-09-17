@@ -34,9 +34,10 @@ build:
                 - sed -i 's/pgsql:dbname=linna_db;host=localhost/pgsql:dbname=scrutinizer;host=localhost/g' phpunit.xml
                 - sed -i 's/name="pdo_pgsql_user" value="postgres"/name="pdo_pgsql_user" value="scrutinizer"/g' phpunit.xml
                 - sed -i 's/name="pdo_pgsql_password" value=""/name="pdo_pgsql_password" value="scrutinizer"/g' phpunit.xml
-                - sed -i 's/DROP DATABASE linna_db;/DROP DATABASE scrutinizer;/g' tests/linna_db_pgsql.sql
-                - sed -i 's/CREATE DATABASE scrutinizer/CREATE DATABASE scrutinizer/g' tests/linna_db_pgsql.sql
-                - sed -i 's/ALTER DATABASE linna_db OWNER TO postgres;/ALTER DATABASE scrutinizer OWNER TO scrutinizer;/g' tests/linna_db_pgsql.sql
+                - sed -i 's/DROP DATABASE linna_db;/-- DROP DATABASE linna_db;/g' tests/linna_db_pgsql.sql
+                - sed -i 's/CREATE DATABASE linna_db/-- CREATE DATABASE linna_db/g' tests/linna_db_pgsql.sql
+                - sed -i 's/ALTER DATABASE linna_db OWNER TO postgres;/-- ALTER DATABASE linna_db OWNER TO postgres;/g' tests/linna_db_pgsql.sql
                 - sed -i 's/connect linna_db/connect scrutinizer/g' tests/linna_db_pgsql.sql
-                - sed -i 's/SET idle_in_transaction_session_timeout = 0;/-- SET idle_in_transaction_session_timeout = 0;/g' tests/linna_db_pgsql.sql
+                - sed -i 's/SELECT pg_catalog.set_config/-- SELECT pg_catalog.set_config/g' tests/linna_db_pgsql.sql
+                - sed -i 's/SET/-- SET/g' tests/linna_db_pgsql.sql
                 - PGPASSWORD=scrutinizer psql -U scrutinizer -a -f tests/linna_db_pgsql.sql
