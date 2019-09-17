@@ -31,7 +31,7 @@ build:
             before:
                 - mysql -e "CREATE DATABASE linna_db"
                 - mysql -u root linna_db < tests/linna_db_mysql.sql
-                - sed -i 's/pgsql:dbname=linna_db;host=localhost/pgsql:dbname=scrutinizer;host=localhost/g' phpunit.xml
+                - sed -i 's/pgsql:dbname=linna_db;host=localhost/pgsql:dbname=scrutinizer;host=localhost;port=5435/g' phpunit.xml
                 - sed -i 's/name="pdo_pgsql_user" value="postgres"/name="pdo_pgsql_user" value="scrutinizer"/g' phpunit.xml
                 - sed -i 's/name="pdo_pgsql_password" value=""/name="pdo_pgsql_password" value="scrutinizer"/g' phpunit.xml
                 - cat phpunit.xml
