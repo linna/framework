@@ -16,6 +16,7 @@ before_install:
 before_script:
 - mysql -e 'create database linna_db;'
 - mysql -u root linna_db < tests/linna_db_mysql.sql
+- psql -U postgres -a -f tests/linna_db_pgsql.sql
 - composer install
 
 addons:
