@@ -45,7 +45,7 @@ class Router
      * @var boor Parse query string when rewrite mode is on.
      */
     protected $parseQueryStringOnRewriteModeOn = false;
-    
+
     /**
      * @var RouteInterface Utilized for return the most recently parsed route
      */
@@ -215,27 +215,24 @@ class Router
 
     /**
      * Create an array from query string params.
-     * 
+     *
      * @param string $queryString
-     * 
+     *
      * @return void
      */
     private function buildParamFromQueryString(string $queryString): void
     {
-        $param = \array_map(function($value){
-
+        $param = \array_map(function ($value) {
             $tmp = \explode('=', $value);
             $value = [];
-            $value[$tmp[0]] = urldecode($tmp[1]);
+            $value[$tmp[0]] = \urldecode($tmp[1]);
 
             return $value;
-
         }, \explode('&', $queryString));
-        
+
         $temp = [];
 
         foreach ($param as $value) {
-
             if (\is_array($value)) {
                 $temp = \array_merge($temp, $value);
                 continue;
@@ -298,7 +295,7 @@ class Router
         $url = \str_replace('//', '/', $url);
 
         //check for query string parameters
-        if (strpos($url, '?') !== false) {
+        if (\strpos($url, '?') !== false) {
             $queryString = \strstr($url, '?');
             $queryString = \substr($queryString, 1);
             $url = \strstr($url, '?', true);
