@@ -134,7 +134,7 @@ class FrontController
         $param = $this->routeParam;
 
         //action - call controller passing params
-        if (!empty($param)) {
+        if (!empty($param) && $action) {
             \call_user_func_array([$this->controller, $action], $param);
             return;
         }

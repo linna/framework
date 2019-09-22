@@ -42,6 +42,11 @@ class Router
     protected $rewriteModeOffRouter = '/index.php?';
 
     /**
+     * @var boor Parse query string when rewrite mode is on.
+     */
+    protected $parseQueryStringOnRewriteModeOn = false;
+    
+    /**
      * @var RouteInterface Utilized for return the most recently parsed route
      */
     protected $route;
@@ -66,9 +71,14 @@ class Router
     ];
 
     /**
-     * @var array preg match result for route.
+     * @var array preg_match result for route.
      */
     private $routeMatches = [];
+
+    /**
+     * @var array Array with parameters from query string.
+     */
+    private $queryParam = [];
 
     /**
      * Constructor.
@@ -83,12 +93,14 @@ class Router
             'basePath'             => $this->basePath,
             'badRoute'             => $this->badRoute,
             'rewriteMode'          => $this->rewriteMode,
-            'rewriteModeOffRouter' => $this->rewriteModeOffRouter
+            'rewriteModeOffRouter' => $this->rewriteModeOffRouter,
+            'parseQueryStringOnRewriteModeOn' => $this->parseQueryStringOnRewriteModeOn
         ] = \array_replace_recursive([
             'basePath'             => $this->basePath,
             'badRoute'             => $this->badRoute,
             'rewriteMode'          => $this->rewriteMode,
-            'rewriteModeOffRouter' => $this->rewriteModeOffRouter
+            'rewriteModeOffRouter' => $this->rewriteModeOffRouter,
+            'parseQueryStringOnRewriteModeOn' => $this->parseQueryStringOnRewriteModeOn
         ], $options);
 
         //set routes
@@ -165,7 +177,14 @@ class Router
             $route->url = \preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $route->url);
         }
 
-        $route->param = $this->buildParam($route);
+        $queryParam = [];
+
+        if ($this->parseQueryStringOnRewriteModeOn) {
+            $queryParam = $this->queryParam;
+        }
+
+        //array union operator :)
+        $route->param = $this->buildParam($route) + $queryParam;
 
         $this->route = $route;
     }
@@ -192,6 +211,40 @@ class Router
         }
 
         return $param;
+    }
+
+    /**
+     * Create an array from query string params.
+     * 
+     * @param string $queryString
+     * 
+     * @return void
+     */
+    private function buildParamFromQueryString(string $queryString): void
+    {
+        $param = \array_map(function($value){
+
+            $tmp = \explode('=', $value);
+            $value = [];
+            $value[$tmp[0]] = urldecode($tmp[1]);
+
+            return $value;
+
+        }, \explode('&', $queryString));
+        
+        $temp = [];
+
+        foreach ($param as $value) {
+
+            if (\is_array($value)) {
+                $temp = \array_merge($temp, $value);
+                continue;
+            }
+
+            $temp[] = $value;
+        }
+
+        $this->queryParam = $temp;
     }
 
     /**
@@ -243,6 +296,14 @@ class Router
 
         //remove doubled slash
         $url = \str_replace('//', '/', $url);
+
+        //check for query string parameters
+        if (strpos($url, '?') !== false) {
+            $queryString = \strstr($url, '?');
+            $queryString = \substr($queryString, 1);
+            $url = \strstr($url, '?', true);
+            $this->buildParamFromQueryString($queryString);
+        }
 
         return (\substr($url, 0, 1) === '/') ? $url : '/'.$url;
     }
