@@ -55,7 +55,7 @@ SET default_with_oids = false;
 CREATE TABLE public.login_attempt (
     login_attempt_id serial NOT NULL,
     user_name character varying(64) NOT NULL,
-    session_id character(255) NOT NULL,
+    session_id character varying(255) NOT NULL,
     ip inet NOT NULL,
     date_time timestamp without time zone NOT NULL,
     last_update timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
@@ -115,7 +115,7 @@ ALTER TABLE public.role_permission OWNER TO postgres;
 --
 
 CREATE TABLE public.session (
-    session_id character(255) NOT NULL,
+    session_id character varying(255) NOT NULL,
     session_data character varying(4096) NOT NULL,
     last_update timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -133,8 +133,8 @@ CREATE TABLE public."user" (
     uuid uuid NOT NULL,
     name character varying(32) NOT NULL,
     description text,
-    email character(64) DEFAULT NULL::bpchar,
-    password character(255) NOT NULL,
+    email character varying(64) DEFAULT NULL::bpchar,
+    password character varying(255) NOT NULL,
     active boolean DEFAULT false NOT NULL,
     created timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     last_update timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
