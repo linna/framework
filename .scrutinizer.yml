@@ -22,7 +22,7 @@ build:
     tests:
             override:
                 -
-                    command: './vendor/bin/phpunit --coverage-clover=clover.xml'
+                    command: './vendor/bin/phpunit --coverage-clover=clover.xml -c ./phpunit.scrutinizer.xml'
                     coverage:
                         file: 'clover.xml'
                         format: 'clover'
@@ -30,14 +30,5 @@ build:
     project_setup:
             before:
                 - mysql -e "CREATE DATABASE linna_db"
-                - mysql -u root linna_db < tests/linna_db_mysql.sql
-                - sed -i 's/pgsql:dbname=linna_db;host=localhost/pgsql:dbname=scrutinizer;host=localhost;port=5435/g' phpunit.xml
-                - sed -i 's/name="pdo_pgsql_user" value="postgres"/name="pdo_pgsql_user" value="scrutinizer"/g' phpunit.xml
-                - sed -i 's/name="pdo_pgsql_password" value=""/name="pdo_pgsql_password" value="scrutinizer"/g' phpunit.xml
-                - sed -i 's/DROP DATABASE linna_db;/-- DROP DATABASE linna_db;/g' tests/linna_db_pgsql.sql
-                - sed -i 's/CREATE DATABASE linna_db/-- CREATE DATABASE linna_db/g' tests/linna_db_pgsql.sql
-                - sed -i 's/ALTER DATABASE linna_db OWNER TO postgres;/-- ALTER DATABASE linna_db OWNER TO postgres;/g' tests/linna_db_pgsql.sql
-                - sed -i 's/connect linna_db/connect scrutinizer/g' tests/linna_db_pgsql.sql
-                - sed -i 's/SELECT pg_catalog.set_config/-- SELECT pg_catalog.set_config/g' tests/linna_db_pgsql.sql
-                - sed -i 's/SET/-- SET/g' tests/linna_db_pgsql.sql
-                - PGPASSWORD=scrutinizer psql -U scrutinizer -p 5435 -a -f tests/linna_db_pgsql.sql
+                - mysql -u root linna_db < vendor/linna/db-dumps/src/linna_db_mysql_test.sql
+                - PGPASSWORD=scrutinizer psql -U scrutinizer -p 5435 -a -f vendor/linna/db-dumps/src/linna_db_pgsql_test_scrutinizer.sql

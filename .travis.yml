@@ -12,12 +12,17 @@ services:
 before_install:
 - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+- sudo apt-get update
+- sudo apt-get --yes remove postgresql\*
+- sudo apt-get install -y postgresql-11 postgresql-client-11
+- sudo cp /etc/postgresql/{9.6,11}/main/pg_hba.conf
+- sudo service postgresql restart 11 
 
 before_script:
-- mysql -e 'create database linna_db;'
-- mysql -u root linna_db < tests/linna_db_mysql.sql
-- psql -U postgres -a -f tests/linna_db_pgsql.sql
 - composer install
+- psql -U postgres -a -f vendor/linna/db-dumps/src/linna_db_pgsql_test.sql
+- mysql -e 'create database linna_db;'
+- mysql -u root linna_db < vendor/linna/db-dumps/src/linna_db_mysql_test.sql
 
 addons:
   sonarcloud:
@@ -29,4 +34,3 @@ git:
 script:
 - ./vendor/bin/phpunit --coverage-clover=coverage-report.clover --log-junit=test-report.xml
 - ./vendor/bin/infection --min-msi=75 --min-covered-msi=75
-#- sonar-scanner
