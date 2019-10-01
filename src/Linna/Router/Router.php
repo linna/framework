@@ -222,12 +222,19 @@ class Router
      */
     private function buildParamFromQueryString(string $queryString): void
     {
-        $param = \array_map(function ($value) {
-            $tmp = \explode('=', $value);
-            $value = [];
-            $value[$tmp[0]] = \urldecode($tmp[1]);
+        $param = \array_map(function ($array_value) {
+            $tmp = \explode('=', $array_value);
+            $array_value = [];
+            $key = $tmp[0];
+            $value = '';
 
-            return $value;
+            if (isset($tmp[1])) {
+                $value = \urldecode($tmp[1]);
+            }
+
+            $array_value[$key] = $value;
+
+            return $array_value;
         }, \explode('&', $queryString));
 
         $temp = [];

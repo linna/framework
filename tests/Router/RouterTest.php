@@ -605,11 +605,11 @@ class RouterTest extends TestCase
     }
 
     /**
-     * Test return first matching route.
+     * Test not equal route name.
      *
      * @return void
      */
-    public function testEqualRouteName(): void
+    public function testNotEqualRouteName(): void
     {
         $routes = (new RouteCollection([
             new Route([
@@ -671,5 +671,61 @@ class RouterTest extends TestCase
         $route = self::$router->getRoute();
 
         $this->assertEquals($result, $route->param['test']);
+    }
+
+    /**
+     * Route with query string provider.
+     *
+     * @return array
+     */
+    public function routeWithQueryStringProvider(): array
+    {
+        return [
+            ['/user?id=1', 'id', '1'],
+            ['/user?id= 1', 'id', '1'],
+            ['/user?id=%201', 'id', ' 1'],
+            ['/user?id=', 'id', ''],
+            ['/user?id==', 'id', '']
+        ];
+    }
+
+    /**
+     * Test query strin on rewrite mode on.
+     *
+     * @dataProvider routeWithQueryStringProvider
+     *
+     * @return void
+     */
+    public function testQueryStringOnRewriteModeOn(string $uri, string $key, string $value): void
+    {
+        $routes = (new RouteCollection([
+            new Route([
+                'name'       => 'User',
+                'method'     => 'GET',
+                'url'        => '/user',
+                'model'      => 'UserModel',
+                'view'       => 'UserView',
+                'controller' => 'UserController',
+            ])
+        ]));
+
+        $router = new Router($routes, [
+            'basePath'    => '/',
+            'badRoute'    => '404',
+            'rewriteMode' => true,
+            'parseQueryStringOnRewriteModeOn' => true
+        ]);
+
+        $this->assertTrue($router->validate($uri, 'GET'));
+
+        $route = $router->getRoute();
+
+        $this->assertInstanceOf(Route::class, $router->getRoute());
+
+        $params = $route->param;
+
+        $this->assertCount(1, $params);
+        $this->assertArrayHasKey($key, $params);
+        $this->assertSame($params[$key], $value);
     }
 }
