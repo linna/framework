@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+#### Data Mapper
+* `Linna\DataMapper\UuidDomainObjectAbstract` class
+* `Linna\DataMapper\UuidDomainObjectInterface` interface
+* `Linna\DataMapper\UuidMapperAbstract` class
+* `Linna\DataMapper\UuidMapperInterface` interface
+
 #### Session
 * `Linna\Session\PgsqlSessionHandler` class
 
