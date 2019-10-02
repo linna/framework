@@ -41,6 +41,7 @@ abstract class MapperAbstract
     {
         if ($domainObject->getId() === 0) {
             $this->concreteInsert($domainObject);
+            return;
         }
 
         $this->concreteUpdate($domainObject);

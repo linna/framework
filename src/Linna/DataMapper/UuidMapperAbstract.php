@@ -41,6 +41,7 @@ abstract class UuidMapperAbstract
     {
         if ($domainObject->getId() === '') {
             $this->concreteInsert($domainObject);
+            return;
         }
 
         $this->concreteUpdate($domainObject);
