@@ -24,12 +24,7 @@ class Password
      * http://php.net/manual/en/function.password-hash.php
      */
     protected $options = [
-        1 => ['cost' => 11],
-        2 => [
-            'memory_cost' => 1024,
-            'time_cost' => 2,
-            'threads' => 2
-        ]
+        PASSWORD_DEFAULT => ['cost' => 11],
     ];
 
     /**
@@ -43,7 +38,7 @@ class Password
     /**
      * @var int Password default algorithm
      */
-    protected $algo = 1;
+    protected $algo = PASSWORD_DEFAULT;
 
     /**
      * Class constructor.
@@ -65,9 +60,20 @@ class Password
         //PASSWORD_ARGON2ID const only present since 7.3 PHP version
         if (\defined('PASSWORD_ARGON2I')) {
             $this->algoLists[] = PASSWORD_ARGON2I;
+            $this->options[PASSWORD_ARGON2I] = [
+                'memory_cost' => PASSWORD_ARGON2_DEFAULT_MEMORY_COST,
+                'time_cost' => PASSWORD_ARGON2_DEFAULT_TIME_COST,
+                'threads' => PASSWORD_ARGON2_DEFAULT_THREADS
+            ];
         }
+
         if (\defined('PASSWORD_ARGON2ID')) {
             $this->algoLists[] = PASSWORD_ARGON2ID;
+            $this->options[PASSWORD_ARGON2ID] = [
+                'memory_cost' => PASSWORD_ARGON2_DEFAULT_MEMORY_COST,
+                'time_cost' => PASSWORD_ARGON2_DEFAULT_TIME_COST,
+                'threads' => PASSWORD_ARGON2_DEFAULT_THREADS
+            ];
         }
 
         if (empty($this->algoLists[$algo])) {
@@ -116,9 +122,7 @@ class Password
      */
     public function hash(string $password): string
     {
-        $hash = \password_hash($password, $this->algo, $this->options[$this->algo]);
-
-        return $hash;
+        return \password_hash($password, $this->algo, $this->options[$this->algo]);
     }
 
     /**
