@@ -79,12 +79,12 @@ class Password
             ];
         }
 
-        if (\in_array($algo, $this->algoLists, true)) {
-            $this->algo = $algo;
-            $this->options[$algo] = \array_replace_recursive($this->options[$algo], $options);
+        if (!\in_array($algo, $this->algoLists, true)) {
+            throw new \InvalidArgumentException("The password algorithm {$algo} is invalid");
         }
 
-        throw new \InvalidArgumentException("The password algorithm {$algo} is invalid");
+        $this->algo = $algo;
+        $this->options[$algo] = \array_replace_recursive($this->options[$algo], $options);
     }
 
     /**

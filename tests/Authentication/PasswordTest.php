@@ -128,8 +128,8 @@ class PasswordTest extends TestCase
     public function testConstructorWithInvalidPasswordAlgorithmConstant()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The password algorithm name is invalid');
+        $this->expectExceptionMessage('The password algorithm invalid_algo is invalid');
 
-        new Password(10000);
+        new Password('invalid_algo');
     }
 }
