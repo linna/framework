@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+#### Authentication
+* `Linna\Authentication\Exception\AuthenticationException` now extend `Linna\Router\Exception\RedirectException`
+
+#### Authorization
+* `Linna\Authorization\Exception` namespace
+* `Linna\Authorization\Exception\AuthorizationException` exception
+
 #### Data Mapper
 * `Linna\DataMapper\NullUuidDomainObject` interface
 * `Linna\DataMapper\UuidDomainObjectAbstract` class
@@ -22,6 +29,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 #### Router
 * `Linna\Router\Router->parseQueryStringOnRewriteModeOn` protected property
+
+### Changed
+
+#### Authentication
+* `Linna\Authentication\Exception\AuthenticationException` now extend `Linna\Router\Exception\RedirectException`
 
 ### Fixed
 * `Linna\DataMapper\MapperAbstract->save()` update after insert
