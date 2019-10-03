@@ -79,8 +79,8 @@ class Password
             ];
         }
 
-        if (empty($this->algoLists[$algo])) {
-            throw new \InvalidArgumentException('The password algorithm name is invalid');
+        if (!isset($this->algoLists[$algo])) {
+            throw new \InvalidArgumentException("The password algorithm {$algo} is invalid");
         }
 
         $this->algo = $algo;
