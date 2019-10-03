@@ -36,7 +36,7 @@ class Password
     ];
 
     /**
-     * @var int Password default algorithm
+     * @var int|string Password default algorithm
      */
     protected $algo = PASSWORD_BCRYPT;
 
@@ -79,13 +79,12 @@ class Password
             ];
         }
 
-        if (!isset($this->algoLists[$algo])) {
-            throw new \InvalidArgumentException("The password algorithm {$algo} is invalid");
+        if (\in_array($algo, $this->algoLists, true)) {
+            $this->algo = $algo;
+            $this->options[$algo] = \array_replace_recursive($this->options[$algo], $options);
         }
 
-        $this->algo = $algo;
-
-        $this->options[$algo] = \array_replace_recursive($this->options[$algo], $options);
+        throw new \InvalidArgumentException("The password algorithm {$algo} is invalid");
     }
 
     /**
