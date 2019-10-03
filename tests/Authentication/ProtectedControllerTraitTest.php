@@ -150,6 +150,7 @@ class ProtectedControllerTraitTest extends TestCase
     /**
      * Test acces to protected method with redirect without login.
      *
+     * @requires extension xdebug
      * @runInSeparateProcess
      *
      * @return void
@@ -163,7 +164,7 @@ class ProtectedControllerTraitTest extends TestCase
         try {
             (new ProtectedMethodController(new Model(), self::$authentication))->ProtectedActionWithRedirect();
         } catch (AuthenticationException $e) {
-            $headers = xdebug_get_headers();
+            $headers = \xdebug_get_headers();
 
             foreach ($headers as $value) {
                 if (\strstr($value, 'Location:') !== false) {

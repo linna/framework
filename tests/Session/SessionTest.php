@@ -428,7 +428,7 @@ class SessionTest extends TestCase
      */
     public function getCookieValues(): array
     {
-        $headers = xdebug_get_headers();
+        $headers = \xdebug_get_headers();
         $cookie = [];
 
         foreach ($headers as $value) {

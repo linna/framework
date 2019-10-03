@@ -169,8 +169,16 @@ class Container implements ContainerInterface, ArrayAccess
                 //check if argument is already stored
                 $notAlreadyStored = !\in_array($param, $this->tree[$level][$class]);
 
+                //Function ReflectionType::__toString() is deprecated
+                //FROM https://github.com/php/php-src/blob/php-7.4.0RC2/UPGRADING
+                //Calls to ReflectionType::__toString() now generate a deprecation notice.
+                //This method has been deprecated in favor of ReflectionNamedType::getName()
+                //in the documentation since PHP 7.1, but did not throw a deprecation notice
+                //for technical reasons.
+                $type = ($param->getType() !== null) ? $param->getType()->getName() : 'NO_TYPE';
+
                 //if there is parameter with callable type
-                if (\class_exists((string) $param->getType()) && $notAlreadyStored) {
+                if (\class_exists(/*(string) $param->getType()*/$type) && $notAlreadyStored) {
 
                     //push values in stack for simulate later recursive function
                     $stack->push([$level, $class]);
