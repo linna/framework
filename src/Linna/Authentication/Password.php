@@ -24,7 +24,7 @@ class Password
      * http://php.net/manual/en/function.password-hash.php
      */
     protected $options = [
-        PASSWORD_DEFAULT => ['cost' => 11],
+        PASSWORD_BCRYPT => ['cost' => 11],
     ];
 
     /**
@@ -32,13 +32,13 @@ class Password
      */
     protected $algoLists = [
         PASSWORD_BCRYPT,
-        PASSWORD_DEFAULT
+        //PASSWORD_DEFAULT
     ];
 
     /**
      * @var int Password default algorithm
      */
-    protected $algo = PASSWORD_DEFAULT;
+    protected $algo = PASSWORD_BCRYPT;
 
     /**
      * Class constructor.
@@ -49,12 +49,15 @@ class Password
      * ]);
      * </code></pre>
      *
-     * @param int   $algo
-     * @param array $options
+     * Strict typing removed for $algo because on php 7.4 password hashing
+     * algorithm identifiers are nullable strings rather than integers.
+     *
+     * @param int|string   $algo
+     * @param array        $options
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(int $algo = PASSWORD_DEFAULT, array $options = [])
+    public function __construct($algo = PASSWORD_BCRYPT, array $options = [])
     {
         //necessary for avoid errors if Argon2 library not enabled
         //PASSWORD_ARGON2ID const only present since 7.3 PHP version
