@@ -9,13 +9,13 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Authentication\Exception;
+namespace Linna\Authorization\Exception;
 
 use Linna\Router\Exception\RedirectException;
 
 /**
- * Authentication Exception.
+ * Authorization Exception.
  */
-class AuthenticationException extends RedirectException
+class AuthorizationException extends RedirectException
 {
 }
