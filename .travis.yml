@@ -29,13 +29,9 @@ before_script:
 - mysql -e 'create database linna_db;'
 - mysql -u root linna_db < vendor/linna/db-dumps/src/linna_db_mysql_test.sql
 
-addons:
-  sonarcloud:
-    organization: "linna"
-
 git:
   depth: false
 
 script:
 - ./vendor/bin/phpunit --coverage-clover=coverage-report.clover --log-junit=test-report.xml
-- ./vendor/bin/infection --min-msi=75 --min-covered-msi=75
+- ./vendor/bin/infection --min-msi=75 --min-covered-msi=75 --coverage=coverage-report.clover

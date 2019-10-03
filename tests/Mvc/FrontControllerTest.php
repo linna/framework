@@ -146,10 +146,17 @@ class FrontControllerTest extends TestCase
      */
     public function frontControllerArgProvider(): array
     {
-        $model = self::$model;
-        $view = self::$view;
-        $controller = self::$controller;
-        $route = self::$routes[0];
+        $model = new CalculatorModel();
+        $view = new CalculatorView($model, new JsonTemplate());
+        $controller = new CalculatorController($model);
+        $route = new Route([
+            'name'       => 'Calculator',
+            'method'     => 'POST',
+            'url'        => '/calculator/(multiply|divide|add|sub)',
+            'model'      =>  CalculatorModel::class,
+            'view'       =>  CalculatorView::class,
+            'controller' =>  CalculatorController::class,
+        ]);
 
         return [
             [false, $view, $controller, $route],
