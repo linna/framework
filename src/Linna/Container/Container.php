@@ -262,7 +262,9 @@ class Container implements ContainerInterface, ArrayAccess
 
         //argument required from class
         foreach ($dependency as $argValue) {
-            if (\class_exists((string) $argValue->getType())) {
+            $argType = ($argValue->getType() !== null) ? $argValue->getType()->getName() : 'NO_TYPE';
+
+            if (\class_exists(/*(string) $argValue->getType()*/$argType)) {
                 //add to array of arguments
                 $paramClass = $argValue->getClass()->name;
                 $args[] = $this->cache[$paramClass];
