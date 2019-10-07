@@ -27,11 +27,6 @@ class Router
     protected $basePath = '/';
 
     /**
-     * @var bool|string Fallback route name for 404 errors.
-     */
-    protected $badRoute = false;
-
-    /**
      * @var bool Use of url rewriting.
      */
     protected $rewriteMode = false;
@@ -42,7 +37,7 @@ class Router
     protected $rewriteModeOffRouter = '/index.php?';
 
     /**
-     * @var boor Parse query string when rewrite mode is on.
+     * @var bool Parse query string when rewrite mode is on.
      */
     protected $parseQueryStringOnRewriteModeOn = false;
 
@@ -91,13 +86,11 @@ class Router
     {
         [
             'basePath'             => $this->basePath,
-            'badRoute'             => $this->badRoute,
             'rewriteMode'          => $this->rewriteMode,
             'rewriteModeOffRouter' => $this->rewriteModeOffRouter,
             'parseQueryStringOnRewriteModeOn' => $this->parseQueryStringOnRewriteModeOn
         ] = \array_replace_recursive([
             'basePath'             => $this->basePath,
-            'badRoute'             => $this->badRoute,
             'rewriteMode'          => $this->rewriteMode,
             'rewriteModeOffRouter' => $this->rewriteModeOffRouter,
             'parseQueryStringOnRewriteModeOn' => $this->parseQueryStringOnRewriteModeOn
@@ -120,11 +113,11 @@ class Router
         $route = $this->findRoute($this->filterUri($requestUri), $requestMethod);
 
         if ($route instanceof Route) {
-            $this->buildValidRoute($route);
+            $this->buildRoute($route);
             return true;
         }
 
-        $this->buildErrorRoute();
+        $this->route = $route;
 
         return false;
     }
@@ -163,7 +156,7 @@ class Router
      *
      * @return void
      */
-    private function buildValidRoute(Route $route): void
+    private function buildRoute(Route $route): void
     {
         //add to route array the passed uri for param check when call
         $matches = $this->routeMatches;
@@ -252,24 +245,6 @@ class Router
     }
 
     /**
-     * Actions for error route.
-     *
-     * @return void
-     */
-    private function buildErrorRoute(): void
-    {
-        //check if there is a declared route for errors, if no exit with false
-        if (($key = \array_search($this->badRoute, \array_column($this->routes->getArrayCopy(), 'name'), true)) === false) {
-            $this->route = new NullRoute();
-
-            return;
-        }
-
-        //build and store route for errors
-        $this->route = $this->routes[$key];
-    }
-
-    /**
      * Check if a route is valid and
      * return the route object else return a bad route object.
      *
@@ -295,8 +270,10 @@ class Router
         //check for rewrite mode
         $url = \str_replace($this->rewriteModeOffRouter, '', $url);
 
-        //remove basepath
-        $url = \substr($url, \strlen($this->basePath));
+        //remove basepath, if present
+        if (\strpos($url, $this->basePath) === 0) {
+            $url = \substr($url, \strlen($this->basePath));
+        }
 
         //remove doubled slash
         $url = \str_replace('//', '/', $url);

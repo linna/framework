@@ -23,7 +23,7 @@
         "s3b4stian/simple-cache": "^1.0"
     },
     "require-dev": {
-        "infection/infection": "^0.12",
+        "infection/infection": "^0.14",
         "linna/auth-mapper-mysql": "^0.1",
         "linna/db-dumps": "dev-master",
         "mongodb/mongodb": "^1.2",

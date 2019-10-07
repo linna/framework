@@ -29,14 +29,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 #### Router
 * `Linna\Router\Router->parseQueryStringOnRewriteModeOn` protected property
+* `parseQueryStringOnRewriteModeOn` as valid option for constructor
 
 ### Changed
 
 #### Authentication
 * `Linna\Authentication\Exception\AuthenticationException` now extend `Linna\Router\Exception\RedirectException`
 
+#### Router
+* `badRoute` it is no longer a valid option for constructor
+
 ### Fixed
 * `Linna\DataMapper\MapperAbstract->save()` update after insert
+
+### Removed
+
+#### Router
+* `Linna\Router\Router->badRoute` protected property
 
 ## [v0.26.0](https://github.com/linna/framework/compare/v0.25.0...v0.26.0) - 2019-08-05
 
