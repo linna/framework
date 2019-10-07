@@ -272,7 +272,7 @@ class PgsqlPdoSessionHandlerTest extends TestCase
             $pdos->execute();
         }
 
-        self::$handler->gc(-1);
+        self::$handler->gc(-10);
 
         $pdos = self::$pdo->prepare('SELECT * FROM public.session');
         $pdos->execute();
