@@ -28,17 +28,16 @@ trait ProtectedControllerTrait
      * Return a status code, useful with AJAX requests.
      *
      * @param Authentication $authentication
-     * @param int            $httpResponseCode
+     * @param string         $route
      *
      * @return void
      *
      * @throws AuthenticationException if not authenticated.
      */
-    private function protect(Authentication $authentication, int $httpResponseCode = 403): void
+    private function protect(Authentication $authentication, string $route): void
     {
         if (($this->authentication = $authentication->isLogged()) === false) {
-            \http_response_code($httpResponseCode);
-            throw new AuthenticationException('');
+            throw new AuthenticationException($route);
         }
     }
 

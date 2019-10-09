@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 #### Authentication
 * `Linna\Authentication\Exception\AuthenticationException` now extend `Linna\Router\Exception\RedirectException`
+* `Linna\Authentication\ProtectedControllerTrait->protect()` now have as second argument `string $route` instead of `int $httpResponseCode = 403`
 
 #### Router
 * `badRoute` it is no longer a valid option for constructor

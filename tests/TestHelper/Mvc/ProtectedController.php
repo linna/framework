@@ -26,7 +26,7 @@ class ProtectedController extends Controller
     {
         parent::__construct($model);
 
-        $this->protect($authentication, 403);
+        $this->protect($authentication, '/error');
 
         $this->test = true;
     }

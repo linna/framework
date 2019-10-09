@@ -143,7 +143,7 @@ class ProtectedControllerTraitTest extends TestCase
         try {
             (new ProtectedMethodController(new Model(), self::$authentication))->ProtectedAction();
         } catch (AuthenticationException $e) {
-            $this->assertSame(403, \http_response_code());
+            $this->assertSame('/error', $e->getPath());
         }
     }
 
@@ -159,8 +159,6 @@ class ProtectedControllerTraitTest extends TestCase
     {
         $this->assertFalse(self::$authentication->isLogged());
 
-        //$this->expectException(AuthenticationException::class);
-
         try {
             (new ProtectedMethodController(new Model(), self::$authentication))->ProtectedActionWithRedirect();
         } catch (AuthenticationException $e) {
@@ -172,6 +170,7 @@ class ProtectedControllerTraitTest extends TestCase
                 }
             }
 
+            $this->assertSame('', $e->getPath());
             $this->assertSame('http://localhost', $location);
         }
     }

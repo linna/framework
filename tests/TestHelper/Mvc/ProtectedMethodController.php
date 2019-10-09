@@ -33,7 +33,7 @@ class ProtectedMethodController extends Controller
 
     public function ProtectedAction(): bool
     {
-        $this->protect($this->auth, 403);
+        $this->protect($this->auth, '/error');
 
         $this->test = true;
 
