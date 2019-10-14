@@ -26,7 +26,7 @@ class ProtectedControllerWithRedirect extends Controller
     {
         parent::__construct($model);
 
-        $this->protectWithRedirect($authentication, 'http://localhost');
+        $this->protectWithRedirect($authentication, 'http://localhost', '/');
 
         $this->test = true;
     }

@@ -42,7 +42,7 @@ class ProtectedMethodController extends Controller
 
     public function ProtectedActionWithRedirect(): bool
     {
-        $this->protectWithRedirect($this->auth, 'http://localhost');
+        $this->protectWithRedirect($this->auth, 'http://localhost', '/');
 
         $this->test = true;
 

@@ -170,7 +170,7 @@ class ProtectedControllerTraitTest extends TestCase
                 }
             }
 
-            $this->assertSame('', $e->getPath());
+            $this->assertSame('/', $e->getPath());
             $this->assertSame('http://localhost', $location);
         }
     }
