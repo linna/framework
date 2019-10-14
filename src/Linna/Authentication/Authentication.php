@@ -41,6 +41,7 @@ class Authentication
 
     /**
      * Class constructor.
+     *
      * <pre><code class="php">use Linna\Session\Session;
      * use Linna\Auth\Password;
      *
@@ -63,9 +64,8 @@ class Authentication
     /**
      * Utilize this method for check if an user in the current session,
      * is currently logged in.
-     * <pre><code class="php">$auth = new Authentication($session, $password);
      *
-     * if ($auth->isLogged()) {
+     * <pre><code class="php">if ($auth->isLogged()) {
      *     //do actions
      * }
      * </code></pre>
@@ -82,9 +82,8 @@ class Authentication
      *
      * Utilize this method for check if an user in the current session,
      * is currently not logged in.
-     * <pre><code class="php">$auth = new Authentication($session, $password);
      *
-     * if ($auth->isNotLogged()) {
+     * <pre><code class="php">if ($auth->isNotLogged()) {
      *     //redirect or other action
      * }
      *
@@ -100,9 +99,8 @@ class Authentication
 
     /**
      * Return array containing login data.
-     * <pre><code class="php">$auth = new Authentication($session, $password);
      *
-     * $data = $auth->getLoginData();
+     * <pre><code class="php">$data = $auth->getLoginData();
      *
      * //var_dump result
      * //after session start and login, session data appear like below array:
@@ -136,7 +134,6 @@ class Authentication
      * $storedPassword = ''; //password hash from stored informations
      * $storedId = ''; //user id from stored informations
      *
-     * $auth = new Authentication($session, $password);
      * $auth->login($user, $password, $storedUser, $storedPassword, $storedId);
      *
      * //other operation after login
@@ -176,9 +173,8 @@ class Authentication
 
     /**
      * Do logout and delete login information from session.
-     * <pre><code class="php">$auth = new Authentication($session, $password);
-     * $auth->logout();
-     * </code></pre>
+     *
+     * <pre><code class="php">$auth->logout();</code></pre>
      *
      * @return bool True if logout is done.
      */
@@ -196,6 +192,8 @@ class Authentication
 
     /**
      * Check if user is logged, get login data from session and update it.
+     *
+     * <pre><code class="php">$auth->refresh();</code></pre>
      *
      * @return bool True if refresh is done false if no.
      */

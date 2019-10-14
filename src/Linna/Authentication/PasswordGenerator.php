@@ -30,11 +30,23 @@ class PasswordGenerator
     ];
 
     /**
-     * Generate a random password.
+     * Class constructor.
+     *
+     * In this class constructor do nothing, is present only for compatibility with Container.
+     *
      * <pre><code class="php">use Linna\Auth\PasswordGenerator;
      *
      * $passwordGenerator = new PasswordGenerator();
-     * $random = $passwordGenerator->getFromRandom(20);
+     * </code></pre>
+     */
+    public function __construct()
+    {
+    }
+
+    /**
+     * Generate a random password.
+     *
+     * <pre><code class="php">$random = $passwordGenerator->getFromRandom(20);
      *
      * //var_dump result
      * //r4Q,1J*tM7D_99q0u>61
@@ -60,16 +72,15 @@ class PasswordGenerator
 
     /**
      * Return topology for given password.
-     * <pre><code class="php">use Linna\Auth\PasswordGenerator;
      *
-     * $passwordGenerator = new PasswordGenerator();
-     * $topology = $passwordGenerator->getTopology('r4Q,1J*tM7D_99q0u>61');
+     * <pre><code class="php">$topology = $passwordGenerator->getTopology('r4Q,1J*tM7D_99q0u>61');
      *
      * //var_dump result
      * //ldusdusludusddldlsdd
      * var_dump($topology);
      * </code></pre>
-     * @param string $password Password.
+     *
+     * @param string $password Password for which get topology.
      *
      * @return string Topology for the argument passed password.
      */
@@ -119,10 +130,8 @@ class PasswordGenerator
 
     /**
      * Generate a random password corresponding at the given topology.
-     * <pre><code class="php">use Linna\Auth\PasswordGenerator;
      *
-     * $passwordGenerator = new PasswordGenerator();
-     * $random = $passwordGenerator->getFromTopology('ldusdusludusddldlsdd');
+     * <pre><code class="php">$random = $passwordGenerator->getFromTopology('ldusdusludusddldlsdd');
      *
      * //var_dump result
      * //r4Q,1J*tM7D_99q0u>61

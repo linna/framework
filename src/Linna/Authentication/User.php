@@ -99,7 +99,7 @@ class User extends DomainObjectAbstract
      * $user = new User($password);
      * </code></pre>
      *
-     * @param Password $password
+     * @param Password $password Password class instance.
      */
     public function __construct(Password $password)
     {
@@ -115,14 +115,9 @@ class User extends DomainObjectAbstract
     /**
      * Set new user password without do any check.
      *
-     * <pre><code class="php">$password = new Password();
+     * <pre><code class="php">$user->setPassword('newPassword');</code></pre>
      *
-     * $user = new User($password);
-     *
-     * $user->setPassword('newPassword');
-     * </code></pre>
-     *
-     * @param string $newPassword
+     * @param string $newPassword User new password.
      *
      * @return void
      */
@@ -135,15 +130,10 @@ class User extends DomainObjectAbstract
     /**
      * Change user password only after check old password.
      *
-     * <pre><code class="php">$password = new Password();
+     * <pre><code class="php">$user->changePassword('newPassword', 'oldPassword');</code></pre>
      *
-     * $user = new User($password);
-     *
-     * $user->changePassword('newPassword', 'oldPassword');
-     * </code></pre>
-     *
-     * @param string $newPassword
-     * @param string $oldPassword
+     * @param string $newPassword   User new password.
+     * @param string $oldPassword   User old password.
      *
      * @return bool
      */

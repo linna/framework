@@ -42,8 +42,10 @@ class Password
 
     /**
      * Class constructor.
+     *
      * <p>For password algorithm constants see <a href="http://php.net/manual/en/password.constants.php">Password Constants</a>.</p>
-     * <pre><code class="php">//Options passed to class constructor as ['key' => 'value'] array.
+     * <pre><code class="php">use Linna\Authentication\Password;
+     *
      * $password = new Password(PASSWORD_DEFAULT, [
      *     'cost' => 11
      * ]);
@@ -52,8 +54,8 @@ class Password
      * Strict typing removed for $algo because on php 7.4 password hashing
      * algorithm identifiers are nullable strings rather than integers.
      *
-     * @param int|string   $algo
-     * @param array        $options
+     * @param int|string   $algo        Algorithm used for hash passwords.
+     * @param array        $options     Options for algoas ['key' => 'value'] array.
      *
      * @throws \InvalidArgumentException
      */
@@ -89,16 +91,15 @@ class Password
 
     /**
      * Verifies if a password matches an hash and return the result as boolean.
-     * <pre><code class="php">$password = new Password();
      *
-     * $storedHash = '$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6';
+     * <pre><code class="php">$storedHash = '$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6';
      * $password = 'FooPassword';
      *
      * $verified = $password->verify($password, $storedHash);
      * </code></pre>
      *
-     * @param string $password
-     * @param string $hash
+     * @param string $password  Plaintext password to be compared.
+     * @param string $hash      Hashed password.
      *
      * @return bool True if password match, false if not.
      */
@@ -109,16 +110,15 @@ class Password
 
     /**
      * Create password hash from the given string and return it.
-     * <pre><code class="php">$password = new Password();
      *
-     * $hash = $password->hash('FooPassword');
+     * <pre><code class="php">$hash = $password->hash('FooPassword');
      *
      * //var_dump result
      * //$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6
      * var_dump($hash)
      * </code></pre>
      *
-     * @param string $password
+     * @param string $password Plaintext password to be hashed.
      *
      * @return string Hashed password.
      */
@@ -129,15 +129,14 @@ class Password
 
     /**
      * Checks if the given hash matches the algorithm and the options provided.
-     * <pre><code class="php">$password = new Password();
      *
-     * $hash = '$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6';
+     * <pre><code class="php">$hash = '$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6';
      *
      * //true if rehash is needed, false if no
      * $rehashCheck = $password->needsRehash($hash);
      * </code></pre>
      *
-     * @param string $hash
+     * @param string $hash Hash to be checked
      *
      * @return bool
      */
@@ -148,9 +147,8 @@ class Password
 
     /**
      * Returns information about the given hash.
-     * <pre><code class="php">$password = new Password();
      *
-     * $hash = '$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6';
+     * <pre><code class="php">$hash = '$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6';
      *
      * $info = $password->getInfo($hash);
      *
@@ -165,7 +163,7 @@ class Password
      * var_dump($info);
      * </code></pre>
      *
-     * @param string $hash
+     * @param string $hash Hash for wich get info.
      *
      * @return array
      */

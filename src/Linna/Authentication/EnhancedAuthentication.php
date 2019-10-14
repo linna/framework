@@ -49,12 +49,27 @@ class EnhancedAuthentication extends Authentication
     private $enhancedAuthenticationMapper;
 
     /**
-     * Class Constructor
+     * Class Constructor.
      *
-     * @param Session                               $session
-     * @param Password                              $password
-     * @param EnhancedAuthenticationMapperInterface $enhancedAuthenticationMapper
-     * @param array                                 $options
+     * <pre><code class="php">use Linna\Authentication\EnhancedAuthentication;
+     * use Linna\Authentication\EnhancedAuthenticationMapper;
+     * use Linna\Authentication\Password;
+     * use Linna\Session\Session;
+     * use Linna\Storage\ExtendedPDO;
+     * use Linna\Storage\StorageFactory;
+     *
+     * $session = new Session();
+     * $password = new Password();
+     * $pdo = (new StorageFactory('pdo', $options))->get();
+     * $enhancedAuthenticationMapper = new EnhancedAuthenticationMapper($pdo);
+     *
+     * $enhancedAuthentication = new EnhancedAuthentication($session, $password, $enhancedAuthenticationMapper);
+     * </code></pre>
+     *
+     * @param Session                               $session                        Session class instance.
+     * @param Password                              $password                       Password class instance.
+     * @param EnhancedAuthenticationMapperInterface $enhancedAuthenticationMapper   Implementation of EnhancedAuthenticationMapper.
+     * @param array                                 $options                        Class options.
      */
     public function __construct(
         Session $session,
@@ -84,7 +99,11 @@ class EnhancedAuthentication extends Authentication
     /**
      * Return how many attemps are left for incorrect password.
      *
-     * @param string $userName
+     * <pre><code class="php">$userName = 'root';
+     * $enhancedAuthentication->getAttemptsLeftWithSameUser($userName);
+     * </code></pre>
+     *
+     * @param string $userName User for which to retrieve login attempts.
      *
      * @return int Number of attempts with same user.
      */
@@ -98,7 +117,11 @@ class EnhancedAuthentication extends Authentication
     /**
      * Return how many attemps are left for same session id.
      *
-     * @param string $sessionId
+     * <pre><code class="php">$sessionId = '47u2hrm1n79u2ae1992vmhgpat';
+     * $enhancedAuthentication->getAttemptsLeftWithSameSession($sessionId);
+     * </code></pre>
+     *
+     * @param string $sessionId Session id for which to retrieve login attempts.
      *
      * @return int Number of attempts with same session.
      */
@@ -112,7 +135,11 @@ class EnhancedAuthentication extends Authentication
     /**
      * Return how many attemps are left for same ip.
      *
-     * @param string $ipAddress
+     * <pre><code class="php">$ipAddress = '192.168.0.15';
+     * $enhancedAuthentication->getAttemptsLeftWithSameIp($ipAddress);
+     * </code></pre>
+     *
+     * @param string $ipAddress Ip address for which to retrieve login attempts.
      *
      * @return int Number of attempts with same ip.
      */
@@ -126,7 +153,11 @@ class EnhancedAuthentication extends Authentication
     /**
      * Check if an user is banned from do login.
      *
-     * @param string $userName
+     * <pre><code class="php">$userName = 'root';
+     * $enhancedAuthentication->isUserBanned($userName);
+     * </code></pre>
+     *
+     * @param string $userName User for which check if is banned.
      *
      * @return bool
      */
@@ -138,7 +169,11 @@ class EnhancedAuthentication extends Authentication
     /**
      * Check if a session id is banned from do login.
      *
-     * @param string $sessionId
+     * <pre><code class="php">$sessionId = '47u2hrm1n79u2ae1992vmhgpat';
+     * $enhancedAuthentication->isSessionBanned($sessionId);
+     * </code></pre>
+     *
+     * @param string $sessionId Session id for wich check if is banned.
      *
      * @return bool
      */
@@ -150,7 +185,11 @@ class EnhancedAuthentication extends Authentication
     /**
      * Check if an ip address is banned from do login.
      *
-     * @param string $ipAddress
+     * <pre><code class="php">$ipAddress = '192.168.0.15';
+     * $enhancedAuthentication->isIpBanned($ipAddress);
+     * </code></pre>
+     *
+     * @param string $ipAddress Ip address for wich check if is banned.
      *
      * @return bool
      */
