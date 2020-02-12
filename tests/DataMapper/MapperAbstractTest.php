@@ -52,6 +52,7 @@ class MapperAbstractTest extends TestCase
 
         $pdo = (new StorageFactory('pdo', $options))->get();
         $pdo->exec("DELETE FROM user WHERE name LIKE '%test_user_%'");
+        $pdo->exec("ALTER TABLE linna_db.user AUTO_INCREMENT = 1");
 
         self::$userMapper = new UserMapper($pdo, new Password());
     }
@@ -98,8 +99,6 @@ class MapperAbstractTest extends TestCase
         $user->name = 'test_user_create';
         $user->uuid = (new UUID4())->getHex();
         $user->setPassword('password');
-
-        //var_dump($user);
 
         self::$userMapper->save($user);
 

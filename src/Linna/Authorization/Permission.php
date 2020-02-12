@@ -21,30 +21,25 @@ class Permission extends DomainObjectAbstract
     /**
      * @var string Permission name
      */
-    public $name = '';
+    public string $name = '';
 
     /**
      * @var string Permission description
      */
-    public $description = '';
-
-    /**
-     * @var string Last update
-     */
-    public $lastUpdate = '';
+    public string $description = '';
 
     /**
      * @var int Id of the group from which the permission was inherited
      */
-    public $inherited = 0;
+    public int $inherited = 0;
 
     /**
      * Class Constructor.
      */
     public function __construct()
     {
-        \settype($this->rId, 'integer');
-        \settype($this->objectId, 'integer');
+        \settype($this->id, 'integer');
+        //\settype($this->objectId, 'integer');
         \settype($this->inherited, 'integer');
     }
 }

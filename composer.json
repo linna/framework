@@ -18,13 +18,13 @@
     ],
     "require": {
         "linna/typed-array" :  "^1.0",
-        "php": "^7.2",
+        "php": "^7.4",
         "psr/container": "^1.0",
         "s3b4stian/simple-cache": "^1.0"
     },
     "require-dev": {
         "infection/infection": "^0.14",
-        "linna/auth-mapper-mysql": "^0.1",
+        "linna/auth-mapper-mysql": "dev-master",
         "linna/db-dumps": "dev-master",
         "mongodb/mongodb": "^1.2",
         "phpstan/phpstan": "^0.11",

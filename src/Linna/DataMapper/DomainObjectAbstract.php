@@ -19,17 +19,22 @@ use UnexpectedValueException;
 abstract class DomainObjectAbstract implements DomainObjectInterface
 {
     /**
-     * @var int Read only objectId
+     * @var int Read only object id on persistent storage.
      */
-    public $rId = 0;
+    protected int $id = 0;
 
     /**
-     * @var int Object id, same of db record
+     * @var string Read only insertion date on persistent storage.
      */
-    protected $objectId = 0;
+    public string $created = '';
 
     /**
-     * Get the ID of the object (unique to the object type).
+     * @var string Read only last update date on persistento storage.
+     */
+    public string $lastUpdate = '';
+
+    /**
+     * Get the id of the object (unique to the object type).
      *
      * <pre><code class="php">$object = new DomainObject($dependencies);
      *
@@ -40,7 +45,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      */
     public function getId(): int
     {
-        return $this->objectId;
+        return $this->id;
     }
 
     /**
@@ -51,21 +56,50 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      * $object->setId(5);
      * </code></pre>
      *
-     * @param int $objectId New object id.
+     * @param int $id New object id.
      *
      * @throws UnexpectedValueException If the id on the object is already set.
      *
      * @return int New object id.
      */
-    public function setId(int $objectId): int
+    public function setId(int $id): int
     {
-        if ($this->objectId !== 0) {
+        if ($this->id !== 0) {
             throw new UnexpectedValueException('ObjectId property is immutable.');
         }
 
-        $this->objectId = $objectId;
-        $this->rId = $objectId;
+        $this->id = $id;
 
-        return $objectId;
+        return $id;
+    }
+
+    /**
+     * Return the value of a private or protected property.
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function __get(string $name)
+    {
+        if ($name === 'id') {
+            return $this->id;
+        }
+    }
+
+    /**
+     * Return if a private or protected property exists.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function __isset(string $name)
+    {
+        if ($name === 'id') {
+            return true;
+        }
+
+        return false;
     }
 }

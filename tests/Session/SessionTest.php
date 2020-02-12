@@ -90,9 +90,7 @@ class SessionTest extends TestCase
         $this->assertIsBool($cookieParams['httponly']);
         $this->assertTrue($cookieParams['httponly']);
 
-        $this->cookieCheck($this->getCookieValues()[0], $session);
-
-        //$session->destroy();
+        $this->cookieCheck($this->getCookieValues(), $session);
     }
 
     /**
@@ -113,11 +111,11 @@ class SessionTest extends TestCase
 
         $this->assertSame(2, $session->status);
 
-        $this->cookieCheck($this->getCookieValues()[0], $session);
+        $this->cookieCheck($this->getCookieValues(), $session);
 
         $session->start();
 
-        $this->cookieCheck($this->getCookieValues()[0], $session);
+        $this->cookieCheck($this->getCookieValues(), $session);
 
         $session->destroy();
     }
@@ -140,7 +138,7 @@ class SessionTest extends TestCase
 
         $this->assertSame(2, $session->status);
         $this->assertSame($session->id, \session_id());
-        $this->cookieCheck($this->getCookieValues()[0], $session);
+        $this->cookieCheck($this->getCookieValues(), $session);
 
         $session['fooData'] = 'fooData';
 
@@ -153,7 +151,7 @@ class SessionTest extends TestCase
         $this->assertSame(2, $session->status);
         $this->assertSame($session->id, \session_id());
         $this->assertSame('fooData', $session['fooData']);
-        $this->cookieCheck($this->getCookieValues()[0], $session);
+        $this->cookieCheck($this->getCookieValues(), $session);
 
         $session->destroy();
     }
@@ -175,7 +173,7 @@ class SessionTest extends TestCase
 
         $this->assertSame(2, $session->status);
 
-        $this->cookieCheck($this->getCookieValues()[0], $session);
+        $this->cookieCheck($this->getCookieValues(), $session);
 
         $session['fooData'] = 'fooData';
 
@@ -184,7 +182,7 @@ class SessionTest extends TestCase
 
         $session->destroy();
 
-        $cookie = $this->getCookieValues()[1];
+        $cookie = $this->getCookieValues();
 
         $this->assertSame($cookie['linna_session'], 'NothingToSeeHere.');
 
@@ -217,7 +215,7 @@ class SessionTest extends TestCase
 
         $this->assertSame(2, $session->status);
 
-        $this->cookieCheck($this->getCookieValues()[0], $session);
+        $this->cookieCheck($this->getCookieValues(), $session);
 
         $cookieValueBefore = $this->getCookieValue($this->getCookieValues());
 
@@ -231,7 +229,7 @@ class SessionTest extends TestCase
 
         $session->regenerate();
 
-        $this->cookieCheck($this->getCookieValues()[1], $session);
+        $this->cookieCheck($this->getCookieValues(), $session);
 
         $cookieValueAfter = $this->getCookieValue($this->getCookieValues());
 
@@ -280,7 +278,7 @@ class SessionTest extends TestCase
 
         $this->assertSame(2, $session->status);
 
-        $this->cookieCheck($this->getCookieValues()[0], $session);
+        $this->cookieCheck($this->getCookieValues(), $session);
 
         $cookieValueBefore = $this->getCookieValue($this->getCookieValues());
 
@@ -301,12 +299,12 @@ class SessionTest extends TestCase
         $session2_id = $session->id;
 
         if ($equals) {
-            $this->cookieCheck($this->getCookieValues()[1], $session);
+            $this->cookieCheck($this->getCookieValues(), $session);
 
             $this->assertSame($session_id, $session2_id);
             $this->assertSame($cookieValueBefore, $cookieValueAfter);
         } else {
-            $this->cookieCheck($this->getCookieValues()[2], $session);
+            $this->cookieCheck($this->getCookieValues(), $session);
 
             $this->assertNotEquals($session_id, $session2_id);
             $this->assertNotEquals($cookieValueBefore, $cookieValueAfter);
@@ -453,6 +451,17 @@ class SessionTest extends TestCase
             $cleanedCookie[] = $tmpCookie;
         }
 
+        //var_dump($cleanedCookie);
+
+
+        if (\count($cleanedCookie) > 0) {
+            $key = \array_key_last($cleanedCookie);
+
+            //var_dump($cleanedCookie[$key]);
+            return $cleanedCookie[$key];
+        }
+        //$key = array_key_last($cleanedCookie);
+
         return $cleanedCookie;
     }
 
@@ -465,11 +474,11 @@ class SessionTest extends TestCase
      */
     public function getCookieValue(array $cookieArray): string
     {
-        $last = \count($cookieArray) -1;
+        //$last = \count($cookieArray) -1;
 
         $sessionName = \session_name();
 
-        return $cookieArray[$last][$sessionName];
+        return $cookieArray/*[$last]*/[$sessionName];
     }
 
     /**

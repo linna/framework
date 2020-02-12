@@ -86,10 +86,10 @@ class PermissionTest extends TestCase
         $permission = self::$permissionMapper->fetchById(1);
 
         $this->assertIsInt($permission->getId());
-        $this->assertIsInt($permission->rId);
+        $this->assertIsInt($permission->id);
         $this->assertIsInt($permission->inherited);
 
         $this->assertGreaterThan(0, $permission->getId());
-        $this->assertGreaterThan(0, $permission->rId);
+        $this->assertGreaterThan(0, $permission->id);
     }
 }

@@ -53,6 +53,12 @@ class Session implements ArrayAccess
     private $cookieHttpOnly = true;
 
     /**
+     *
+     * @var string Cookie same site for cross site requests.
+     */
+    private $cookieSameSite = 'lax';
+
+    /**
      * @var array Session data reference property
      */
     private $data = [];
@@ -123,16 +129,17 @@ class Session implements ArrayAccess
 
             //prepare the session start
             \session_name($this->name);
-
+            //var_Dump(\xdebug_get_headers());
             //start session
             \session_start([
                 'cookie_path'      => $this->cookiePath,
                 'cookie_domain'    => $this->cookieDomain,
-                'cookie_lifetime'  => $this->expire,
+                'cookie_lifetime'  => $this->expire,//($this->expire > 0) ? time() + $this->expire : 0,
                 'cookie_secure'    => $this->cookieSecure,
-                'cookie_httponly'  => $this->cookieHttpOnly
+                'cookie_httponly'  => $this->cookieHttpOnly,
+                'cookie_samesite'  => $this->cookieSameSite
             ]);
-
+            //var_Dump(\xdebug_get_headers());
             //link session super global to $data property
             $this->data = &$_SESSION;
         }
@@ -160,6 +167,30 @@ class Session implements ArrayAccess
         }
 
         $this->setSessionData($time);
+
+        //it fix the behavior of session that die because it does not refresh
+        //expiration time, also if present user interaction, with browser.
+
+        //PHP 7.2 version
+        /*\setcookie($this->name, $this->id,
+            $this->expire, //($this->expire > 0) ? time() + $this->expire : 0, //expire
+            //($time + $this->expire),    //expire
+            $this->cookiePath,          //path
+            $this->cookieDomain,        //domain
+            $this->cookieSecure,        //secure
+            $this->cookieHttpOnly       //http only
+        );*/
+
+        //PHP 7.3 version
+        //https://www.php.net/manual/en/migration73.other-changes.php
+        \setcookie($this->name, $this->id, [
+            'path'      => $this->cookiePath,
+            'domain'    => $this->cookieDomain,
+            'expires'   => $time + $this->expire,
+            'secure'    => $this->cookieSecure,
+            'httponly'  => $this->cookieHttpOnly,
+            'samesite'  => $this->cookieSameSite    //must be implemented, 'lax' or 'strict'  possible values
+        ]);
     }
 
     /**
@@ -174,6 +205,7 @@ class Session implements ArrayAccess
         $this->id = \session_id();
         $this->data['time'] = $time;
         $this->data['expire'] = $this->expire;
+        $this->data['server'] = $_SERVER;
         $this->status = \session_status();
     }
 

@@ -21,32 +21,32 @@ class EnhancedAuthentication extends Authentication
     /**
      * @var int Max attempts for user name.
      */
-    protected $maxAttemptsForUserName = 5;
+    protected int $maxAttemptsForUserName = 5;
 
     /**
      * @var int Max attempts for session id.
      */
-    protected $maxAttemptsForSessionId = 10;
+    protected int $maxAttemptsForSessionId = 10;
 
     /**
      * @var int Max attempts for ip address.
      */
-    protected $maxAttemptsForIpAddress = 20;
+    protected int $maxAttemptsForIpAddress = 20;
 
     /**
      * @var int Max attempts for second.
      */
-    protected $maxAttemptsForSecond = 40;
+    protected int $maxAttemptsForSecond = 40;
 
     /**
      * @var int Ban time in seconds.
      */
-    protected $banTimeInSeconds = 900;
+    protected int $banTimeInSeconds = 900;
 
     /**
      * @var EnhancedAuthenticationMapperInterface Enhanced Authentication Mapper
      */
-    private $enhancedAuthenticationMapper;
+    private EnhancedAuthenticationMapperInterface $enhancedAuthenticationMapper;
 
     /**
      * Class Constructor.

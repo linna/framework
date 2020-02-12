@@ -99,24 +99,17 @@ class LoginAttemptTest extends TestCase
         $loginAttempt->when = \date('YmdHis', \time());
 
         $this->assertSame(0, $loginAttempt->getId());
-        $this->assertSame(0, $loginAttempt->rId);
 
         self::$enhancedAuthenticationMapper->save($loginAttempt);
 
         $this->assertIsInt($loginAttempt->getId());
-        $this->assertIsInt($loginAttempt->rId);
-
         $this->assertGreaterThan(0, $loginAttempt->getId());
-        $this->assertGreaterThan(0, $loginAttempt->rId);
 
-        $loginAttemptFromDB = self::$enhancedAuthenticationMapper->fetchById($loginAttempt->rId);
+        $loginAttemptFromDB = self::$enhancedAuthenticationMapper->fetchById($loginAttempt->getId());
 
         $this->assertInstanceOf(LoginAttempt::class, $loginAttemptFromDB);
 
         $this->assertIsInt($loginAttemptFromDB->getId());
-        $this->assertIsInt($loginAttemptFromDB->rId);
-
         $this->assertGreaterThan(0, $loginAttemptFromDB->getId());
-        $this->assertGreaterThan(0, $loginAttemptFromDB->rId);
     }
 }

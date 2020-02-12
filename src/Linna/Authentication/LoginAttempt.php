@@ -21,34 +21,28 @@ class LoginAttempt extends DomainObjectAbstract
     /**
      * @var string User name.
      */
-    public $userName = '';
+    public string $userName = '';
 
     /**
      * @var string Session id.
      */
-    public $sessionId = '';
+    public string $sessionId = '';
 
     /**
      * @var string Remote IP address.
      */
-    public $ipAddress = '';
+    public string $ipAddress = '';
 
     /**
      * @var string Show when login attempted.
      */
-    public $when = '';
-
-    /**
-     * @var string Last update.
-     */
-    public $lastUpdate = '';
+    public string $when = '';
 
     /**
      * Class Constructor.
      */
     public function __construct()
     {
-        \settype($this->rId, 'integer');
-        \settype($this->objectId, 'integer');
+        \settype($this->id, 'integer');
     }
 }

@@ -74,7 +74,7 @@ class PgsqlPdoSessionHandler implements SessionHandlerInterface
      */
     public function gc($maxlifetime)
     {
-        $timestamp = \date(DATE_ATOM, \time() - $maxlifetime);
+        $timestamp = \date(DATE_ISO8601, \time() - $maxlifetime);
 
         $this->pdo->queryWithParam(
             'DELETE FROM public.session WHERE last_update < :maxlifetime',
@@ -116,7 +116,7 @@ class PgsqlPdoSessionHandler implements SessionHandlerInterface
     public function write($session_id, $session_data)
     {
         $this->pdo->queryWithParam(
-            'INSERT INTO public.session(session_id, session_data) VALUES (:session_id, :session_data) ON CONFLICT (session_id) DO UPDATE SET session_data = :session_data, last_update = NOW()',
+            'INSERT INTO public.session(session_id, session_data) VALUES (:session_id, :session_data) ON CONFLICT (session_id) DO UPDATE SET session_data = :session_data, last_update = now()',
             [
                 [':session_id', $session_id, \PDO::PARAM_STR],
                 [':session_data', $session_data, \PDO::PARAM_STR]

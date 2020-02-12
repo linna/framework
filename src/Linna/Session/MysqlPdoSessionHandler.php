@@ -22,19 +22,20 @@ use SessionHandlerInterface;
  *
  * Before use create table session on DB.
  *
- * CREATE TABLE `session` (
- *  `session_id` char(128) NOT NULL,
- *  `session_data` varchar(3096) NOT NULL,
- *  `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- *  PRIMARY KEY (`session_id`)
- * ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ *   CREATE TABLE `session` (
+ *     `session_id` char(128) NOT NULL,
+ *     `session_data` varchar(3096) NOT NULL,
+ *     `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ *     `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ *     PRIMARY KEY (`session_id`)
+ *   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
  */
 class MysqlPdoSessionHandler implements SessionHandlerInterface
 {
     /**
      * @var ExtendedPDO Database Connection
      */
-    private $pdo;
+    protected $pdo;
 
     /**
      * Constructor.

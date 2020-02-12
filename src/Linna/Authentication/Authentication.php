@@ -22,22 +22,22 @@ class Authentication
     /**
      * @var array Login status.
      */
-    private $data = ['user_name'=>''];
+    private array $data = ['user_name'=>''];
 
     /**
      * @var bool Indicate login status, true or false.
      */
-    private $logged = false;
+    private bool $logged = false;
 
     /**
      * @var Password Password class.
      */
-    private $password;
+    private Password $password;
 
     /**
      * @var Session Session class.
      */
-    protected $session;
+    protected Session $session;
 
     /**
      * Class constructor.

@@ -24,27 +24,22 @@ class Role extends DomainObjectAbstract
     /**
      * @var string Group name
      */
-    public $name = '';
+    public string $name = '';
 
     /**
      * @var string Group description
      */
-    public $description = '';
+    public string $description = '';
 
     /**
      * @var int It say if group is active or not
      */
-    public $active = 0;
+    public int $active = 0;
 
     /**
      * @var array Contain users in group
      */
-    private $users = [];
-
-    /**
-     * @var string Last update
-     */
-    public $lastUpdate = '';
+    private array $users = [];
 
     /**
      * Constructor.
@@ -55,8 +50,8 @@ class Role extends DomainObjectAbstract
         $this->permission = $permissions;
 
         //set required type
-        \settype($this->rId, 'integer');
-        \settype($this->objectId, 'integer');
+        \settype($this->id, 'integer');
+        //\settype($this->objectId, 'integer');
         \settype($this->active, 'integer');
     }
 

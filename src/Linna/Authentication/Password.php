@@ -23,22 +23,23 @@ class Password
      *
      * http://php.net/manual/en/function.password-hash.php
      */
-    protected $options = [
+    protected array $options = [
         PASSWORD_BCRYPT => ['cost' => 11],
+        PASSWORD_DEFAULT => ['cost' => 11]
     ];
 
     /**
      * @var array An associate array containing algorithm constants
      */
-    protected $algoLists = [
+    protected array $algoLists = [
         PASSWORD_BCRYPT,
-        //PASSWORD_DEFAULT
+        PASSWORD_DEFAULT
     ];
 
     /**
      * @var int|string Password default algorithm
      */
-    protected $algo = PASSWORD_BCRYPT;
+    protected ?string $algo = PASSWORD_BCRYPT;
 
     /**
      * Class constructor.

@@ -49,47 +49,37 @@ class User extends DomainObjectAbstract
     /**
      * @var string Universal unique identifier.
      */
-    public $uuid = '';
+    public string $uuid = '';
 
     /**
      * @var string User name.
      */
-    public $name = '';
+    public string $name = '';
 
     /**
      * @var string User description.
      */
-    public $description = '';
+    public ?string $description = '';
 
     /**
      * @var string User e-mail.
      */
-    public $email = '';
+    public ?string $email = '';
 
     /**
      * @var string User hashed password.
      */
-    public $password = '';
+    public string $password = '';
 
     /**
      * @var int It say if user is active or not.
      */
-    public $active = 0;
-
-    /**
-     * @var string User creation date.
-     */
-    public $created = '';
-
-    /**
-     * @var string Last update.
-     */
-    public $lastUpdate = '';
+    public int $active = 0;
 
     /**
      * @var Password Password class for manage password.
      */
-    private $passwordUtility;
+    private Password $passwordUtility;
 
     /**
      * Class Constructor.
@@ -107,9 +97,10 @@ class User extends DomainObjectAbstract
 
         //set required type
         //do type conversion because PDO doesn't return any original type from db :(.
-        \settype($this->rId, 'integer');
-        \settype($this->objectId, 'integer');
+        \settype($this->id, 'integer');
         \settype($this->active, 'integer');
+        \settype($this->email, 'string');
+        \settype($this->description, 'string');
     }
 
     /**

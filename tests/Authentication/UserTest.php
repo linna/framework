@@ -83,11 +83,9 @@ class UserTest extends TestCase
         $user = self::$userMapper->fetchByName('root');
 
         $this->assertIsInt($user->getId());
-        $this->assertIsInt($user->rId);
         $this->assertIsInt($user->active);
 
         $this->assertGreaterThan(0, $user->getId());
-        $this->assertGreaterThan(0, $user->rId);
     }
 
     /**

@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased][v0.27.0](https://github.com/linna/framework/compare/v0.26.0...v0.27.0) - 2019-XX-XX
+## [Unreleased][v0.27.0](https://github.com/linna/framework/compare/v0.26.0...v0.27.0)
 
 ### Added
 
@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\DataMapper\UuidDomainObjectInterface` interface
 * `Linna\DataMapper\UuidMapperAbstract` class
 * `Linna\DataMapper\UuidMapperInterface` interface
+* `Linna\DataMapper\DomainObjectAbstract->created` public property
+* `Linna\DataMapper\DomainObjectAbstract->lastUpdate` public property
+* `Linna\DataMapper\DomainObjectAbstract->id` protected property accessible via `__get()` method
 
 #### Session
 * `Linna\Session\PgsqlSessionHandler` class
@@ -33,6 +36,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+* PHP 7.4 required
+
 #### Authentication
 * `Linna\Authentication\Exception\AuthenticationException` now extend `Linna\Router\Exception\RedirectException`
 * `Linna\Authentication\ProtectedControllerTrait->protect()` now have as second argument `string $route` instead of `int $httpResponseCode = 403`
@@ -42,7 +47,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `badRoute` it is no longer a valid option for constructor
 
 ### Fixed
+
+#### Data Mapper
 * `Linna\DataMapper\MapperAbstract->save()` update after insert
+* `Linna\DataMapper\DomainObjectAbstract->setId` argument renamed `objectId` to `id`
+* `Linna\DataMapper\DomainObjectAbstract->rId` public property renamed to `id`
+* `Linna\DataMapper\DomainObjectAbstract->objectId` protected property renamed to `protectedId`
+
+#### Session
+* `Linna\Session\Session` session die because it does not refresh expiration time on client, also if present user interaction, with browser.
 
 ### Removed
 

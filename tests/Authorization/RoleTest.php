@@ -113,11 +113,11 @@ class RoleTest extends TestCase
         $role = self::$roleMapper->fetchById(1);
 
         $this->assertIsInt($role->getId());
-        $this->assertIsInt($role->rId);
+        $this->assertIsInt($role->id);
         $this->assertIsInt($role->active);
 
         $this->assertGreaterThan(0, $role->getId());
-        $this->assertGreaterThan(0, $role->rId);
+        $this->assertGreaterThan(0, $role->id);
     }
 
     /**

@@ -19,6 +19,7 @@ use Linna\Storage\ExtendedPDO;
 use Linna\Storage\StorageFactory;
 use PDO;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 /**
  * Enhanced Authentication Test.
@@ -198,10 +199,13 @@ class EnhancedAuthenticationTest extends TestCase
     /**
      * Test login with misconfigured options.
      *
+     * @
      * @return void
      */
     public function testLoginWithMisconfiguredOptions()
     {
+        $this->expectException(TypeError::class);
+
         self::loginClean();
 
         $user = 'root';
