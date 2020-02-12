@@ -17,7 +17,7 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/linna/framework/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/linna/framework/?branch=master)
 [![StyleCI](https://styleci.io/repos/41168432/shield?branch=master&style=flat)](https://styleci.io/repos/41168432)
 [![PDS Skeleton](https://img.shields.io/badge/pds-skeleton-blue.svg?style=flat)](https://github.com/php-pds/skeleton)
-[![PHP 7.2](https://img.shields.io/badge/PHP-7.2-8892BF.svg)](http://php.net)
+[![PHP 7.4](https://img.shields.io/badge/PHP-7.4-8892BF.svg)](http://php.net)
 
 </div>
 
@@ -38,7 +38,7 @@ At moment, code, isn't utilized in production environment, Hope in future.
 
 # Require
 
-   * PHP >= 7.2
+   * PHP >= 7.4
    * PDO extension (optional)
    * Memcached extension (optional)
    * Mongodb extension (optional)

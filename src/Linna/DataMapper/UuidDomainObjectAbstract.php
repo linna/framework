@@ -102,7 +102,7 @@ abstract class UuidDomainObjectAbstract implements UuidDomainObjectInterface
 
         $this->lastUpdate = $date;
     }
-    
+
     /**
      * Return the value of a private or protected property.
      *

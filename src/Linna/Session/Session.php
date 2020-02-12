@@ -129,7 +129,7 @@ class Session implements ArrayAccess
 
             //prepare the session start
             \session_name($this->name);
-            
+
             //start session
             \session_start([
                 'cookie_path'      => $this->cookiePath,
@@ -139,7 +139,7 @@ class Session implements ArrayAccess
                 'cookie_httponly'  => $this->cookieHttpOnly,
                 'cookie_samesite'  => $this->cookieSameSite
             ]);
-            
+
             //link session super global to $data property
             $this->data = &$_SESSION;
         }
