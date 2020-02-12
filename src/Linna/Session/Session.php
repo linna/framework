@@ -129,7 +129,7 @@ class Session implements ArrayAccess
 
             //prepare the session start
             \session_name($this->name);
-            //var_Dump(\xdebug_get_headers());
+            
             //start session
             \session_start([
                 'cookie_path'      => $this->cookiePath,
@@ -139,7 +139,7 @@ class Session implements ArrayAccess
                 'cookie_httponly'  => $this->cookieHttpOnly,
                 'cookie_samesite'  => $this->cookieSameSite
             ]);
-            //var_Dump(\xdebug_get_headers());
+            
             //link session super global to $data property
             $this->data = &$_SESSION;
         }
@@ -189,7 +189,7 @@ class Session implements ArrayAccess
             'expires'   => $time + $this->expire,
             'secure'    => $this->cookieSecure,
             'httponly'  => $this->cookieHttpOnly,
-            'samesite'  => $this->cookieSameSite    //must be implemented, 'lax' or 'strict'  possible values
+            'samesite'  => $this->cookieSameSite
         ]);
     }
 
@@ -205,7 +205,7 @@ class Session implements ArrayAccess
         $this->id = \session_id();
         $this->data['time'] = $time;
         $this->data['expire'] = $this->expire;
-        $this->data['server'] = $_SERVER;
+        //$this->data['server'] = $_SERVER;
         $this->status = \session_status();
     }
 
