@@ -23,13 +23,14 @@
         "s3b4stian/simple-cache": "^1.0"
     },
     "require-dev": {
-        "infection/infection": "^0.14",
+        "infection/infection": "^0.15",
+        "linna/auth-mapper-pgsql": "dev-master",
         "linna/auth-mapper-mysql": "dev-master",
         "linna/db-dumps": "dev-master",
-        "mongodb/mongodb": "^1.2",
+        "mongodb/mongodb": "^1.5",
         "phpstan/phpstan": "^0.11",
         "phpstan/phpstan-strict-rules": "^0.11",
-        "phpunit/phpunit": "^8.0"
+        "phpunit/phpunit": "^9.0"
     },
     "autoload": {
         "psr-4": {
@@ -38,7 +39,7 @@
     },
     "autoload-dev": {
         "psr-4": { 
-            "Linna\\Test\\": "tests",
+            "Linna\\Tests\\": "tests",
             "Linna\\TestHelper\\": "tests/TestHelper/"
         }
     }
