@@ -246,7 +246,7 @@ class EnhancedUserTest extends TestCase
      * @param int  $roleId
      * @param int  $userId
      * @param bool $result
-     * 
+     *
      * @return void
      */
     public function testUserHasRole(int $roleId, int $userId, bool $result): void

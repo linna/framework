@@ -181,7 +181,7 @@ class RoleTest extends TestCase
      * @param int  $roleId
      * @param int  $userId
      * @param bool $result
-     * 
+     *
      * @return void
      */
     public function testIsUserInRoleById(int $roleId, int $userId, bool $result): void
