@@ -38,7 +38,7 @@
     },
     "autoload-dev": {
         "psr-4": { 
-            "Linna\\Tests\\": "tests",
+            "Linna\\Tests\\":  ["tests/", "tests/Cache", "tests/Session"],
             "Linna\\TestHelper\\": "tests/TestHelper/"
         }
     }
