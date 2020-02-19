@@ -21,17 +21,17 @@ abstract class AbstractStorageFactory
     /**
      * @var string One of supported drivers
      */
-    protected $driver = '';
+    protected string $driver = '';
 
     /**
      * @var array Factory supported driver
      */
-    protected $supportedDriver = [];
+    protected array $supportedDriver = [];
 
     /**
      * @var array Options for the driver
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Constructor.

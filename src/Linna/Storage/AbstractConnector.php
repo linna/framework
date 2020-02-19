@@ -19,7 +19,7 @@ class AbstractConnector
     /**
      * @var array Connection options
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Constructor.

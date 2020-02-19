@@ -22,7 +22,7 @@ class PasswordGenerator
     /**
      * @var array Characters intervall
      */
-    private $chars = [
+    private array $chars = [
         'ABCDEFGHIJKLMNOPQRSTUVWXYZ', //u 117
         'abcdefghijklmnopqrstuvwxyz', //l 108
         '0123456789', //d 100

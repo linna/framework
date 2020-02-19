@@ -34,7 +34,7 @@ class PgsqlPdoSessionHandler implements SessionHandlerInterface
     /**
      * @var ExtendedPDO Database Connection
      */
-    private $pdo;
+    private ExtendedPDO $pdo;
 
     /**
      * Constructor.

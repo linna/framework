@@ -55,7 +55,7 @@ trait ProtectedControllerTrait
     /**
      * @var bool Contain login status.
      */
-    private $authentication = false;
+    private bool $authentication = false;
 
     /**
      * Allow access to controller class or methods only if logged.

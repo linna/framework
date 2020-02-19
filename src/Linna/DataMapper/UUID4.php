@@ -24,12 +24,12 @@ class UUID4
     /**
      * @var string UUID in hex form.
      */
-    private $hexUUID = '';
+    private string $hexUUID = '';
 
     /**
      * @var string UUID in bin form.
      */
-    private $binUUID = '';
+    private string $binUUID = '';
 
     /**
      * Constructor.

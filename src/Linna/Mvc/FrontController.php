@@ -22,27 +22,27 @@ class FrontController
     /**
      * @var View Contain view object for render
      */
-    private $view;
+    private View $view;
 
     /**
      * @var Model Contain model object
      */
-    private $model;
+    private Model $model;
 
     /**
      * @var Controller Contain controller object
      */
-    private $controller;
+    private Controller $controller;
 
     /**
      * @var string Contain Controller and View action name
      */
-    private $routeAction = '';
+    private string $routeAction = '';
 
     /**
      * @var array Paremeter passed to Controller
      */
-    private $routeParam = [];
+    private array $routeParam = [];
 
     /**
      * Constructor.

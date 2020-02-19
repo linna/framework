@@ -25,12 +25,12 @@ class MemcachedSessionHandler implements SessionHandlerInterface
     /**
      * @var Memcached Memcached instance
      */
-    private $memcached;
+    private Memcached $memcached;
 
     /**
      * @var int Expire time in seconds for stored sessions
      */
-    private $expire = 0;
+    private int $expire = 0;
 
     /**
      * Constructor.

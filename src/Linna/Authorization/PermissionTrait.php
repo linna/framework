@@ -19,7 +19,7 @@ trait PermissionTrait
     /**
      * @var array User permissions
      */
-    protected $permission = [];
+    protected array $permission = [];
 
     /**
      * Check if a Permission is owned, use Permission instance.

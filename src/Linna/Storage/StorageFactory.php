@@ -23,7 +23,7 @@ class StorageFactory extends AbstractStorageFactory
     /**
      * @var array Factory supported driver
      */
-    protected $supportedDriver = [
+    protected array $supportedDriver = [
         'pdo'     => PdoConnector::class,
         'mongodb' => MongoDBConnector::class,
         'mysqli'  => MysqliConnector::class,

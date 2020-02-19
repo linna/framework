@@ -27,12 +27,12 @@ class Model implements SplSubject
     /**
      * @var SplObjectStorage List of attached observerer
      */
-    private $observers;
+    private SplObjectStorage $observers;
 
     /**
      * @var array Data for notify to observerer
      */
-    private $updates = [];
+    private array $updates = [];
 
     /**
      * Constructor.

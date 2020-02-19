@@ -28,17 +28,17 @@ class View implements SplObserver
     /**
      * @var array Data for the dynamic view
      */
-    protected $data = [];
+    protected array $data = [];
 
     /**
      * @var TemplateInterface Template utilized for render data
      */
-    protected $template;
+    protected TemplateInterface $template;
 
     /**
      * @var Model Model for access data
      */
-    protected $model;
+    protected Model $model;
 
     /**
      * Constructor.

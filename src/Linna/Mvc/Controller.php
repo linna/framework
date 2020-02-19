@@ -20,7 +20,7 @@ class Controller
     /**
      * @var Model The model object for current controller
      */
-    protected $model;
+    protected Model $model;
 
     /**
      * Constructor.

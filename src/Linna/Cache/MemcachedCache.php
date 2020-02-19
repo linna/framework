@@ -25,7 +25,7 @@ class MemcachedCache implements CacheInterface
     /**
      * @var Memcached Memcached instance
      */
-    private $memcached;
+    private Memcached $memcached;
 
     /**
      * Constructor.

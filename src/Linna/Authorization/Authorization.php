@@ -26,7 +26,7 @@ class Authorization
     /**
      * @var int User id
      */
-    protected $userId = 0;
+    protected int $userId = 0;
 
     /**
      * Class Constructor.

@@ -19,47 +19,47 @@ class Route implements RouteInterface
     /**
      * @var string Route name.
      */
-    public $name = '';
+    public string $name = '';
 
     /**
      * @var string Route method.
      */
-    public $method = '';
+    public string $method = '';
 
     /**
      * @var string Route url.
      */
-    public $url = '';
+    public string $url = '';
 
     /**
      * @var string Route model.
      */
-    public $model = '';
+    public string $model = '';
 
     /**
      * @var string Route view.
      */
-    public $view = '';
+    public string $view = '';
 
     /**
      * @var string Route controller.
      */
-    public $controller = '';
+    public string $controller = '';
 
     /**
      * @var string Route action.
      */
-    public $action = '';
+    public string $action = '';
 
     /**
      * @var bool Route default.
      */
-    public $default = false;
+    public bool $default = false;
 
     /**
      * @var array Route parameters.
      */
-    public $param = [];
+    public array $param = [];
 
     /**
      * @var callable Route callback.
@@ -70,7 +70,7 @@ class Route implements RouteInterface
      * @var string Ip address from which the route is callable, ip address
      *             format is intentionally not specified.
      */
-    public $allowed = '*';
+    public string $allowed = '*';
 
     /**
      * Constructor.

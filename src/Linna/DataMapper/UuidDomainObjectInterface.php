@@ -24,7 +24,7 @@ interface UuidDomainObjectInterface
     public function getId(): string;
 
     /**
-     * Set the uuid for this object.
+     * Set the UUID for this object.
      *
      * @param string $objectId
      *

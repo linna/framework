@@ -30,53 +30,53 @@ class Session implements ArrayAccess
     /**
      * @var int Session expire time in seconds.
      */
-    private $expire = 1800;
+    private int $expire = 1800;
 
     /**
      * @var string Cookie domain.
      */
-    private $cookieDomain = '/';
+    private string $cookieDomain = '/';
 
     /**
      * @var string Coockie path.
      */
-    private $cookiePath = '/';
+    private string $cookiePath = '/';
 
     /**
      * @var bool Cookie transmitted over https only?.
      */
-    private $cookieSecure = false;
+    private bool $cookieSecure = false;
 
     /**
      * @var bool Cookie accessible only through http?.
      */
-    private $cookieHttpOnly = true;
+    private bool $cookieHttpOnly = true;
 
     /**
      *
      * @var string Cookie same site for cross site requests.
      */
-    private $cookieSameSite = 'lax';
+    private string $cookieSameSite = 'lax';
 
     /**
      * @var array Session data reference property
      */
-    private $data = [];
+    private array $data = [];
 
     /**
      * @var string Session id
      */
-    public $id = '';
+    public string $id = '';
 
     /**
      * @var string Session name
      */
-    public $name = 'linna_session';
+    public string $name = 'linna_session';
 
     /**
      * @var int session_status function result
      */
-    public $status = 0;
+    public int $status = 0;
 
     /**
      * Constructor.

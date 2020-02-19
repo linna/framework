@@ -34,7 +34,7 @@ class DiskCache implements CacheInterface
     /**
      * @var string Directory for cache storage.
      */
-    protected $dir = '/tmp';
+    protected string $dir = '/tmp';
 
     /**
      * Constructor.

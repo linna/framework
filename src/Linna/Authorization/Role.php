@@ -51,7 +51,6 @@ class Role extends DomainObjectAbstract
 
         //set required type
         \settype($this->id, 'integer');
-        //\settype($this->objectId, 'integer');
         \settype($this->active, 'integer');
     }
 

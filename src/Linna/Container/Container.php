@@ -28,17 +28,17 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * @var array Contains object already resolved.
      */
-    private $cache = [];
+    private array $cache = [];
 
     /**
      * @var array Hierarchical structure of dependencies.
      */
-    protected $tree = [];
+    protected array $tree = [];
 
     /**
      * @var array Rules for resolve scalar arguments or unexpected behaviors.
      */
-    protected $rules = [];
+    protected array $rules = [];
 
     /**
      * Class Constructor.

@@ -22,7 +22,7 @@ class CacheFactory extends AbstractStorageFactory
     /**
      * @var array Factory supported driver
      */
-    protected $supportedDriver = [
+    protected array $supportedDriver = [
         'disk'       => DiskCache::class,
         'memcached'  => MemcachedCache::class,
     ];

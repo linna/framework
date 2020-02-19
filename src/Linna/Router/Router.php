@@ -24,56 +24,56 @@ class Router
     /**
      * @var string Base path for route evaluation.
      */
-    protected $basePath = '/';
+    protected string $basePath = '/';
 
     /**
      * @var bool Use of url rewriting.
      */
-    protected $rewriteMode = false;
+    protected bool $rewriteMode = false;
 
     /**
      * @var string Router access point without rewrite engine.
      */
-    protected $rewriteModeOffRouter = '/index.php?';
+    protected string $rewriteModeOffRouter = '/index.php?';
 
     /**
      * @var bool Parse query string when rewrite mode is on.
      */
-    protected $parseQueryStringOnRewriteModeOn = false;
+    protected bool $parseQueryStringOnRewriteModeOn = false;
 
     /**
      * @var RouteInterface Utilized for return the most recently parsed route
      */
-    protected $route;
+    protected RouteInterface $route;
 
     /**
      * @var RouteCollection Passed from constructor, is the list of registerd routes for the app
      */
-    private $routes;
+    private RouteCollection $routes;
 
     /**
      * @var array List of regex for find parameter inside passed routes
      */
-    private $matchTypes = [
+    private array $matchTypes = [
         '`\[[0-9A-Za-z._-]+\]`',
     ];
 
     /**
      * @var array List of regex for find type of parameter inside passed routes
      */
-    private $types = [
+    private array $types = [
         '[0-9A-Za-z._-]++',
     ];
 
     /**
      * @var array preg_match result for route.
      */
-    private $routeMatches = [];
+    private array $routeMatches = [];
 
     /**
      * @var array Array with parameters from query string.
      */
-    private $queryParam = [];
+    private array $queryParam = [];
 
     /**
      * Constructor.

@@ -35,7 +35,7 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
     /**
      * @var ExtendedPDO Database Connection
      */
-    protected $pdo;
+    protected ExtendedPDO $pdo;
 
     /**
      * Constructor.

@@ -24,7 +24,7 @@ class EnhancedUser extends User
     /**
      * @var array Contain roles for the user
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
      * Class Constructor.

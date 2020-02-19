@@ -70,7 +70,7 @@ class Autoloader
      *
      * @var array
      */
-    protected $prefixes = [];
+    protected array $prefixes = [];
 
     /**
      * Register loader with SPL autoloader stack.

@@ -39,7 +39,6 @@ class Permission extends DomainObjectAbstract
     public function __construct()
     {
         \settype($this->id, 'integer');
-        //\settype($this->objectId, 'integer');
         \settype($this->inherited, 'integer');
     }
 }
