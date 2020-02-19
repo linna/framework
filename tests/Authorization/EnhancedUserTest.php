@@ -18,6 +18,7 @@ use Linna\Authorization\EnhancedUserMapper;
 use Linna\Authorization\PermissionMapper;
 use Linna\Authorization\RoleMapper;
 use Linna\Authorization\RoleToUserMapper;
+use Linna\Storage\ExtendedPDO;
 use Linna\Storage\StorageFactory;
 use PDO;
 use PHPUnit\Framework\TestCase;
@@ -30,22 +31,22 @@ class EnhancedUserTest extends TestCase
     /**
      * @var PermissionMapper The permission mapper
      */
-    protected static $permissionMapper;
+    protected static PermissionMapper $permissionMapper;
 
     /**
      * @var EnhancedUserMapper The enhanced user mapper
      */
-    protected static $enhancedUserMapper;
+    protected static EnhancedUserMapper $enhancedUserMapper;
 
     /**
      * @var RoleMapper The role mapper
      */
-    protected static $roleMapper;
+    protected static RoleMapper $roleMapper;
 
     /**
      * @var ExtendedPDO Database connection.
      */
-    protected static $pdo;
+    protected static ExtendedPDO $pdo;
 
     /**
      * Set up before class.
@@ -88,10 +89,10 @@ class EnhancedUserTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$pdo = null;
-        self::$roleMapper = null;
-        self::$permissionMapper = null;
-        self::$enhancedUserMapper = null;
+        //self::$pdo = null;
+        //self::$roleMapper = null;
+        //self::$permissionMapper = null;
+        //self::$enhancedUserMapper = null;
     }
 
     /**
@@ -149,9 +150,13 @@ class EnhancedUserTest extends TestCase
      *
      * @dataProvider userPermissionProvider
      *
+     * @param int  $userId
+     * @param int  $permissionId
+     * @param bool $result
+     *
      * @return void
      */
-    public function testUserCan($userId, $permissionId, $result): void
+    public function testUserCan(int $userId, int $permissionId, bool $result): void
     {
         /** @var EnhancedUserMapper Enhanced user mapper Class. */
         $user = self::$enhancedUserMapper->fetchById($userId);
@@ -166,9 +171,13 @@ class EnhancedUserTest extends TestCase
      *
      * @dataProvider userPermissionProvider
      *
+     * @param int  $userId
+     * @param int  $permissionId
+     * @param bool $result
+     *
      * @return void
      */
-    public function testUserCanById($userId, $permissionId, $result): void
+    public function testUserCanById(int $userId, int $permissionId, bool $result): void
     {
         /** @var EnhancedUserMapper Enhanced user mapper Class. */
         $user = self::$enhancedUserMapper->fetchById($userId);
@@ -181,9 +190,13 @@ class EnhancedUserTest extends TestCase
      *
      * @dataProvider userPermissionProvider
      *
+     * @param int  $userId
+     * @param int  $permissionId
+     * @param bool $result
+     *
      * @return void
      */
-    public function testUserCanByName($userId, $permissionId, $result): void
+    public function testUserCanByName(int $userId, int $permissionId, bool $result): void
     {
         /** @var EnhancedUserMapper Enhanced user mapper Class. */
         $user = self::$enhancedUserMapper->fetchById($userId);
@@ -230,9 +243,13 @@ class EnhancedUserTest extends TestCase
      *
      * @dataProvider userRoleProvider
      *
+     * @param int  $roleId
+     * @param int  $userId
+     * @param bool $result
+     * 
      * @return void
      */
-    public function testUserHasRole($roleId, $userId, $result): void
+    public function testUserHasRole(int $roleId, int $userId, bool $result): void
     {
         $user = self::$enhancedUserMapper->fetchById($userId);
 
@@ -245,9 +262,13 @@ class EnhancedUserTest extends TestCase
      *
      * @dataProvider userRoleProvider
      *
+     * @param int  $roleId
+     * @param int  $userId
+     * @param bool $result
+     *
      * @return void
      */
-    public function testUserHasRoleById($roleId, $userId, $result): void
+    public function testUserHasRoleById(int $roleId, int $userId, bool $result): void
     {
         $user = self::$enhancedUserMapper->fetchById($userId);
 
@@ -259,9 +280,13 @@ class EnhancedUserTest extends TestCase
      *
      * @dataProvider userRoleProvider
      *
+     * @param int  $roleId
+     * @param int  $userId
+     * @param bool $result
+     *
      * @return void
      */
-    public function testUserHasRoleByName($roleId, $userId, $result): void
+    public function testUserHasRoleByName(int $roleId, int $userId, bool $result): void
     {
         $user = self::$enhancedUserMapper->fetchById($userId);
 

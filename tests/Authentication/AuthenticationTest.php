@@ -24,17 +24,17 @@ class AuthenticationTest extends TestCase
     /**
      * @var Session The session class.
      */
-    protected static $session;
+    protected static Session $session;
 
     /**
      * @var Password The password class.
      */
-    protected static $password;
+    protected static Password $password;
 
     /**
      * @var Authentication The authentication class
      */
-    protected static $authentication;
+    protected static Authentication $authentication;
 
     /**
      * Set up before class.
@@ -58,9 +58,9 @@ class AuthenticationTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$authentication = null;
-        self::$password = null;
-        self::$session = null;
+        //self::$authentication = null;
+        //self::$password = null;
+        //self::$session = null;
     }
 
     /**
@@ -239,6 +239,9 @@ class AuthenticationTest extends TestCase
      *
      * @dataProvider loginTimeProvider
      * @runInSeparateProcess
+     *
+     * @param int  $time
+     * @param bool $loginPass
      *
      * @return void
      */

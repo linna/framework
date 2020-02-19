@@ -29,17 +29,17 @@ class ProtectedControllerTraitTest extends TestCase
     /**
      * @var Session The session class instance.
      */
-    protected static $session;
+    protected static Session $session;
 
     /**
      * @var Password The password class instance.
      */
-    protected static $password;
+    protected static Password $password;
 
     /**
      * @var Authentication Authentication class instance.
      */
-    protected static $authentication;
+    protected static Authentication $authentication;
 
     /**
      * Set up before class.
@@ -63,9 +63,9 @@ class ProtectedControllerTraitTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$session = null;
-        self::$password = null;
-        self::$authentication = null;
+        //self::$session = null;
+        //self::$password = null;
+        //self::$authentication = null;
     }
 
     /**

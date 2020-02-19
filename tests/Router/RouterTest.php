@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Linna\Tests;
 
 use BadMethodCallException;
-use Linna\Router\NullRoute;
 use Linna\Router\Route;
 use Linna\Router\RouteCollection;
 use Linna\Router\Router;
@@ -25,14 +24,14 @@ use TypeError;
 class RouterTest extends TestCase
 {
     /**
-     * @var array Routes for test.
+     * @var RouteCollection Routes for test.
      */
-    protected static $routes;
+    protected static RouteCollection $routes;
 
     /**
      * @var Router The router object.
      */
-    protected static $router;
+    protected static Router $router;
 
     /**
      * Set up before class.
@@ -93,7 +92,6 @@ class RouterTest extends TestCase
 
         self::$router = new Router($routes, [
             'basePath'    => '/',
-            //'badRoute'    => 'E404',
             'rewriteMode' => true,
         ]);
     }
@@ -105,8 +103,8 @@ class RouterTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$routes = null;
-        self::$router = null;
+        //self::$routes = null;
+        //self::$router = null;
     }
 
     /**
@@ -203,8 +201,6 @@ class RouterTest extends TestCase
     public function routeProvider(): array
     {
         return [
-            //['/user', 'POST', ['E404Model', 'E404View', 'E404Controller', null, []], false], //test not allowed http method
-            //['/badroute', 'GET', ['E404Model', 'E404View', 'E404Controller', null, []], false], //test bad uri
             ['/user/5/enable', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']], true], //test param route
             ['/userOther/enable/5', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']], true], //test inverse param route
         ];
@@ -253,7 +249,6 @@ class RouterTest extends TestCase
     {
         $router = new Router(self::$routes, [
             'basePath'    => '/other_dir',
-            //'badRoute'    => 'E404',
             'rewriteMode' => true,
         ]);
 
@@ -411,24 +406,6 @@ class RouterTest extends TestCase
     }
 
     /**
-     * Test validate a route with no bad route options declared.
-     *
-     * @return void
-     */
-    /*public function testValidateRouteWithNoBadRouteDeclared(): void
-    {
-        //using a worng bad route for overwrite previous setting
-        $router = new Router(self::$routes, [
-            'badRoute'    => 'E40',
-            'rewriteMode' => true,
-        ]);
-
-        $this->assertFalse($router->validate('/badroute', 'GET'));
-
-        $this->assertInstanceOf(NullRoute::class, $router->getRoute());
-    }*/
-
-    /**
      * Test validate with rewrite mode off.
      *
      * @return void
@@ -436,7 +413,6 @@ class RouterTest extends TestCase
     public function testValidateWithRewriteModeOff(): void
     {
         $router = new Router(self::$routes, [
-            //'badRoute'    => 'E404',
             'rewriteMode' => false,
         ]);
 
@@ -547,7 +523,6 @@ class RouterTest extends TestCase
         ]));
 
         $router = new Router($restRoutes, [
-            //'badRoute'    => 'E404',
             'rewriteMode' => true,
         ]);
 
@@ -605,42 +580,6 @@ class RouterTest extends TestCase
     }
 
     /**
-     * Test not equal route name.
-     *
-     * @return void
-     */
-    /*public function testNotEqualRouteName(): void
-    {
-        $routes = (new RouteCollection([
-            new Route([
-                'name'       => 'User',
-                'method'     => 'GET',
-                'url'        => '/user',
-                'model'      => 'UserModel',
-                'view'       => 'UserView',
-                'controller' => 'UserController',
-            ]),
-            new Route([
-                'name'       => 404,
-                'method'     => 'GET',
-                'url'        => '/error',
-                'model'      => 'ErrorModel',
-                'view'       => 'ErrorView',
-                'controller' => 'ErrorController',
-            ])
-        ]));
-
-        $router = new Router($routes, [
-            'basePath'    => '/',
-            'badRoute'    => '404',
-            'rewriteMode' => true,
-        ]);
-
-        $this->assertFalse($router->validate('/user/bad', 'GET'));
-        $this->assertInstanceOf(NullRoute::class, $router->getRoute());
-    }*/
-
-    /**
      * Route with param provider.
      *
      * @return array
@@ -661,6 +600,9 @@ class RouterTest extends TestCase
      * Test allowed chars in route param.
      *
      * @dataProvider routeWithParamProvider
+     *
+     * @param string $uri
+     * @param string $result
      *
      * @return void
      */
@@ -694,6 +636,10 @@ class RouterTest extends TestCase
      *
      * @dataProvider routeWithQueryStringProvider
      *
+     * @param string $uri
+     * @param string $key
+     * @param string $value
+     *
      * @return void
      */
     public function testQueryStringOnRewriteModeOn(string $uri, string $key, string $value): void
@@ -711,7 +657,6 @@ class RouterTest extends TestCase
 
         $router = new Router($routes, [
             'basePath'    => '/',
-            //'badRoute'    => '404',
             'rewriteMode' => true,
             'parseQueryStringOnRewriteModeOn' => true
         ]);

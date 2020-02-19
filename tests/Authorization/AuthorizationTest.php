@@ -29,27 +29,27 @@ class AuthorizationTest extends TestCase
     /**
      * @var Session The session class instance.
      */
-    protected static $session;
+    protected static Session $session;
 
     /**
      * @var Password The password class instance.
      */
-    protected static $password;
+    protected static Password $password;
 
     /**
      * @var Authentication The authentication class instance.
      */
-    protected static $authentication;
+    protected static Authentication $authentication;
 
     /**
      * @var Authorization The authorization class instance.
      */
-    protected static $authorization;
+    protected static Authorization $authorization;
 
     /**
      * @var PermissionMapper The permission mapper class instance.
      */
-    protected static $permissionMapper;
+    protected static PermissionMapper $permissionMapper;
 
     /**
      * Set up before class.
@@ -90,10 +90,10 @@ class AuthorizationTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$password = null;
-        self::$session = null;
-        self::$authentication = null;
-        self::$permissionMapper = null;
+        //self::$password = null;
+        //self::$session = null;
+        //self::$authentication = null;
+        //self::$permissionMapper = null;
     }
 
     /**

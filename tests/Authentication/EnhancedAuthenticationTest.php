@@ -29,27 +29,27 @@ class EnhancedAuthenticationTest extends TestCase
     /**
      * @var ExtendedPDO Persistent storage connection.
      */
-    protected static $pdo;
+    protected static ExtendedPDO $pdo;
 
     /**
      * @var Session The session class.
      */
-    protected static $session;
+    protected static Session $session;
 
     /**
      * @var Password The password class.
      */
-    protected static $password;
+    protected static Password $password;
 
     /**
      * @var EnhancedAuthentication The enhanced authentication class
      */
-    protected static $enhancedAuthentication;
+    protected static EnhancedAuthentication $enhancedAuthentication;
 
     /**
      * @var EnhancedAuthenticationMapper The enhanced authentication mapper class
      */
-    protected static $enhancedAuthenticationMapper;
+    protected static EnhancedAuthenticationMapper $enhancedAuthenticationMapper;
 
     /**
      * Set up before class.
@@ -93,11 +93,11 @@ class EnhancedAuthenticationTest extends TestCase
     {
         self::loginClean();
 
-        self::$pdo = null;
-        self::$password = null;
-        self::$session = null;
-        self::$enhancedAuthenticationMapper = null;
-        self::$enhancedAuthentication = null;
+        //self::$pdo = null;
+        //self::$password = null;
+        //self::$session = null;
+        //self::$enhancedAuthenticationMapper = null;
+        //self::$enhancedAuthentication = null;
     }
 
     /**
@@ -173,6 +173,16 @@ class EnhancedAuthenticationTest extends TestCase
      *
      * @dataProvider wrongCredentialProvider
      *
+     * @param string $user      User name.
+     * @param string $sessionId Session id.
+     * @param string $ipAddress Ip address.
+     * @param int    $awsU      Attempts with same user.
+     * @param int    $awsS      Attempts with same session id.
+     * @param int    $awsI      Attempts with same ip
+     * @param bool   $banU      Is user banned?.
+     * @param bool   $banS      Is session id banned?.
+     * @param bool   $banI      Is ip banned?.
+     *
      * @return void
      */
     public function testLogin(string $user, string $sessionId, string $ipAddress, int $awsU, int $awsS, int $awsI, bool $banU, bool $banS, bool $banI): void
@@ -199,10 +209,9 @@ class EnhancedAuthenticationTest extends TestCase
     /**
      * Test login with misconfigured options.
      *
-     * @
      * @return void
      */
-    public function testLoginWithMisconfiguredOptions()
+    public function testLoginWithMisconfiguredOptions(): void
     {
         $this->expectException(TypeError::class);
 

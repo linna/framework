@@ -24,7 +24,6 @@
     },
     "require-dev": {
         "infection/infection": "^0.15",
-        "linna/auth-mapper-pgsql": "dev-master",
         "linna/auth-mapper-mysql": "dev-master",
         "linna/db-dumps": "dev-master",
         "mongodb/mongodb": "^1.5",

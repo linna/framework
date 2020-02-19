@@ -23,7 +23,7 @@ class SessionTest extends TestCase
     /**
      * @var Session The session class.
      */
-    protected static $session;
+    protected static Session $session;
 
     /**
      * Set up before class.
@@ -49,7 +49,7 @@ class SessionTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$session = null;
+        //self::$session = null;
     }
 
     /**
@@ -266,6 +266,9 @@ class SessionTest extends TestCase
      * @requires extension xdebug
      * @runInSeparateProcess
      *
+     * @param int  $time
+     * @param bool $equals
+     *
      * @return void
      */
     public function testSessionExpired(int $time, bool $equals): void
@@ -451,16 +454,11 @@ class SessionTest extends TestCase
             $cleanedCookie[] = $tmpCookie;
         }
 
-        //var_dump($cleanedCookie);
-
-
         if (\count($cleanedCookie) > 0) {
             $key = \array_key_last($cleanedCookie);
 
-            //var_dump($cleanedCookie[$key]);
             return $cleanedCookie[$key];
         }
-        //$key = array_key_last($cleanedCookie);
 
         return $cleanedCookie;
     }
@@ -474,11 +472,9 @@ class SessionTest extends TestCase
      */
     public function getCookieValue(array $cookieArray): string
     {
-        //$last = \count($cookieArray) -1;
-
         $sessionName = \session_name();
 
-        return $cookieArray/*[$last]*/[$sessionName];
+        return $cookieArray[$sessionName];
     }
 
     /**

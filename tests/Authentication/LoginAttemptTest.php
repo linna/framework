@@ -26,12 +26,12 @@ class LoginAttemptTest extends TestCase
     /**
      * @var ExtendedPDO Persistent storage connection.
      */
-    protected static $pdo;
+    protected static ExtendedPDO $pdo;
 
     /**
      * @var EnhancedAuthenticationMapper The enhanced authentication mapper class
      */
-    protected static $enhancedAuthenticationMapper;
+    protected static EnhancedAuthenticationMapper $enhancedAuthenticationMapper;
 
     /**
      * Set up before class.
@@ -70,8 +70,8 @@ class LoginAttemptTest extends TestCase
     {
         self::loginClean();
 
-        self::$pdo = null;
-        self::$enhancedAuthenticationMapper = null;
+        //self::$pdo = null;
+        //self::$enhancedAuthenticationMapper = null;
     }
 
     /**

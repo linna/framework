@@ -37,29 +37,29 @@ use TypeError;
 class FrontControllerTest extends TestCase
 {
     /**
-     * @var array Routes for test.
+     * @var RouteCollection Routes for test.
      */
-    protected static $routes;
+    protected static RouteCollection $routes;
 
     /**
      * @var Router The router object.
      */
-    protected static $router;
+    protected static Router $router;
 
     /**
      * @var Model The model object.
      */
-    protected static $model;
+    protected static Model $model;
 
     /**
      * @var View The view object.
      */
-    protected static $view;
+    protected static View $view;
 
     /**
      * @var Controller The controller object.
      */
-    protected static $controller;
+    protected static Controller $controller;
 
     /**
      * Set up before class.
@@ -102,8 +102,6 @@ class FrontControllerTest extends TestCase
             'rewriteMode' => true,
         ]);
 
-        //var_dump(self::$router);
-
         $model = new CalculatorModel();
         $view = new CalculatorView($model, new JsonTemplate());
         $controller = new CalculatorController($model);
@@ -122,11 +120,11 @@ class FrontControllerTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$router = null;
-        self::$model = null;
-        self::$view = null;
-        self::$controller = null;
-        self::$routes = null;
+        //self::$router = null;
+        //self::$model = null;
+        //self::$view = null;
+        //self::$controller = null;
+        //self::$routes = null;
     }
 
     /**
@@ -169,10 +167,10 @@ class FrontControllerTest extends TestCase
     /**
      * Test new front controller instance with wrong arguments.
      *
-     * @param Model $model
-     * @param View $view
+     * @param Model      $model
+     * @param View       $view
      * @param Controller $controller
-     * @param Route $route
+     * @param Route      $route
      *
      * @dataProvider frontControllerArgProvider
      *
@@ -204,8 +202,8 @@ class FrontControllerTest extends TestCase
      * Test run front controller.
      *
      * @param string $route
-     * @param array $parameter
-     * @param int $result
+     * @param array  $parameter
+     * @param int    $result
      *
      * @dataProvider calculatorProvider
      *
@@ -318,6 +316,9 @@ class FrontControllerTest extends TestCase
      * Test run front controller before after.
      *
      * @dataProvider beforeAfterProvider
+     *
+     * @param int $input
+     * @param int $result
      *
      * @return void
      */

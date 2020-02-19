@@ -23,7 +23,7 @@ class PasswordGeneratorTest extends TestCase
     /**
      * @var PasswordGenerator The password class.
      */
-    protected static $passwordGenerator;
+    protected static PasswordGenerator $passwordGenerator;
 
     /**
      * Set up before class.
@@ -42,7 +42,7 @@ class PasswordGeneratorTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$passwordGenerator = null;
+        //self::$passwordGenerator = null;
     }
 
     /**
@@ -65,6 +65,8 @@ class PasswordGeneratorTest extends TestCase
      *
      * @dataProvider stringLengthProvider
      *
+     * @param int $strLen
+     *
      * @return void
      */
     public function testGetFromRandom(int $strLen): void
@@ -78,6 +80,8 @@ class PasswordGeneratorTest extends TestCase
      * Test get from random.
      *
      * @dataProvider stringLengthProvider
+     *
+     * @param int $strLen
      *
      * @return void
      */
@@ -138,6 +142,9 @@ class PasswordGeneratorTest extends TestCase
      *
      * @dataProvider topologyAndPasswordProvider
      *
+     * @param string $password
+     * @param string $topology
+     *
      * @return void
      */
     public function testGetTopology(string $password, string $topology): void
@@ -180,6 +187,8 @@ class PasswordGeneratorTest extends TestCase
      *
      * @dataProvider topologyProvider
      *
+     * @param string $topology
+     *
      * @return void
      */
     public function testGetFromTopology(string $topology): void
@@ -209,6 +218,8 @@ class PasswordGeneratorTest extends TestCase
      * Test get topology.
      *
      * @dataProvider badTopologyProvider
+     *
+     * @param string $topology
      *
      * @return void
      */

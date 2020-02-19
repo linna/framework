@@ -22,7 +22,7 @@ class PasswordTest extends TestCase
     /**
      * @var Password The password class.
      */
-    protected static $password;
+    protected static Password $password;
 
     /**
      * Set up before class.
@@ -41,7 +41,7 @@ class PasswordTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$password = null;
+        //self::$password = null;
     }
 
     /**

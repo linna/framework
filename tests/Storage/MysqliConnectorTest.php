@@ -60,6 +60,12 @@ class MysqliConnectorTest extends TestCase
      *
      * @dataProvider connectionDataProvider
      *
+     * @param string $host
+     * @param string $user
+     * @param string $password
+     * @param string $database
+     * @param int    $port
+     *
      * @return void
      */
     public function testFailConnection(

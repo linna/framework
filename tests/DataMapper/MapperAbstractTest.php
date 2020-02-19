@@ -29,7 +29,7 @@ class MapperAbstractTest extends TestCase
     /**
      * @var UserMapper The user mapper
      */
-    protected static $userMapper;
+    protected static UserMapper $userMapper;
 
     /**
      * Set up before class.
@@ -64,7 +64,7 @@ class MapperAbstractTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$userMapper = null;
+        //self::$userMapper = null;
     }
 
     /**

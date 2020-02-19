@@ -24,7 +24,7 @@ class DomainObjectTest extends TestCase
     /**
      * @var User The user class.
      */
-    protected static $user;
+    protected static User $user;
 
     /**
      * Set up before class.
@@ -43,7 +43,7 @@ class DomainObjectTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$user = null;
+        //self::$user = null;
     }
 
     /**

@@ -22,7 +22,7 @@ class RouteTest extends TestCase
     /**
      * @var Route The route object.
      */
-    public static $route;
+    public static Route $route;
 
     /**
      * Set up before class.
@@ -49,7 +49,7 @@ class RouteTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$route = null;
+        // self::$route = null;
     }
 
     /**

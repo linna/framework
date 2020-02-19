@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
-use Linna\Storage\ExtendedPDO;
-use Linna\Authorization\PermissionMapper;
 use Linna\Authorization\Permission;
+use Linna\Authorization\PermissionMapper;
+use Linna\Storage\ExtendedPDO;
 use Linna\Storage\StorageFactory;
 use PDO;
 use PHPUnit\Framework\TestCase;
@@ -23,12 +23,12 @@ class PermissionTest extends TestCase
     /**
      * @var PermissionMapper The permission mapper
      */
-    protected static $permissionMapper;
+    protected static PermissionMapper $permissionMapper;
 
     /**
      * @var ExtendedPDO Database connection.
      */
-    protected static $pdo;
+    protected static ExtendedPDO $pdo;
 
     /**
      * Set up before class.
@@ -62,8 +62,8 @@ class PermissionTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$pdo = null;
-        self::$permissionMapper = null;
+        //self::$pdo = null;
+        //self::$permissionMapper = null;
     }
 
     /**

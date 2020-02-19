@@ -25,7 +25,7 @@ class ExtendedPDOTest extends TestCase
     /**
      * @var array Connection options.
      */
-    protected static $options = [];
+    protected static array $options = [];
 
     /**
      * Set up before class.
@@ -77,6 +77,9 @@ class ExtendedPDOTest extends TestCase
      * Test query with parameters.
      *
      * @dataProvider correctParametersProvider
+     *
+     * @param string $query
+     * @param array  $param
      *
      * @return void
      */
@@ -149,6 +152,9 @@ class ExtendedPDOTest extends TestCase
      * Test query status.
      *
      * @dataProvider correctParametersProvider
+     *
+     * @param string $query
+     * @param array  $param
      *
      * @return void
      */

@@ -62,6 +62,10 @@ class PdoConnectorTest extends TestCase
      *
      * @dataProvider connectionDataProvider
      *
+     * @param string $dsn
+     * @param string $user
+     * @param string $password
+     *
      * @return void
      */
     public function testFailConnection(string $dsn, string $user, string $password): void
