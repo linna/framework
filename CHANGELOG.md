@@ -43,6 +43,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Authentication\ProtectedControllerTrait->protect()` now have as second argument `string $route` instead of `int $httpResponseCode = 403`
 * `Linna\Authentication\ProtectedControllerTrait->protectWithRedirect()` now have a third argument `string $route`
 
+#### Data Mapper
+* `Linna\DataMapper\MapperAbstract->save()` update after insert
+* `Linna\DataMapper\DomainObjectAbstract->setId` argument renamed `objectId` to `id`
+* `Linna\DataMapper\DomainObjectAbstract->rId` public property removed
+* `Linna\DataMapper\DomainObjectAbstract->objectId` protected property renamed to `id`
+
 #### Router
 * `badRoute` it is no longer a valid option for constructor
 
@@ -50,9 +56,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 #### Data Mapper
 * `Linna\DataMapper\MapperAbstract->save()` update after insert
-* `Linna\DataMapper\DomainObjectAbstract->setId` argument renamed `objectId` to `id`
-* `Linna\DataMapper\DomainObjectAbstract->rId` public property renamed to `id`
-* `Linna\DataMapper\DomainObjectAbstract->objectId` protected property renamed to `protectedId`
+* `Linna\DataMapper\UuidDomainObjectAbstract->$uuid` type fixed
 
 #### Session
 * `Linna\Session\Session` session die because it does not refresh expiration time on client, also if present user interaction, with browser.

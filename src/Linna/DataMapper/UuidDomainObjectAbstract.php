@@ -19,9 +19,9 @@ use UnexpectedValueException;
 abstract class UuidDomainObjectAbstract implements UuidDomainObjectInterface
 {
     /**
-     * @var int Read only object id on persistent storage.
+     * @var string Read only object id on persistent storage.
      */
-    protected int $uuid = 0;
+    protected string $uuid = '';
 
     /**
      * @var string Insertion date on persistent storage.
@@ -35,6 +35,7 @@ abstract class UuidDomainObjectAbstract implements UuidDomainObjectInterface
 
     /**
      * Get the UUID of the object (unique to the object type).
+     * Alias of $this->getId();
      *
      * <pre><code class="php">$object = new DomainObject($dependencies);
      *
@@ -44,6 +45,21 @@ abstract class UuidDomainObjectAbstract implements UuidDomainObjectInterface
      * @return string Current object uuid.
      */
     public function getUuid(): string
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * Get the id of the object (unique to the object type).
+     *
+     * <pre><code class="php">$object = new DomainObject($dependencies);
+     *
+     * $object->getId();
+     * </code></pre>
+     *
+     * @return int Current object id.
+     */
+    public function getId(): string
     {
         return $this->uuid;
     }
