@@ -15,8 +15,9 @@ before_install:
 - sudo apt-get --yes remove postgresql\*
 - sudo apt-get install -y postgresql-11 postgresql-client-11
 - sudo cp /etc/postgresql/{9.6,11}/main/pg_hba.conf
-- sudo service postgresql restart 11
+- sudo sed -i 's/5433/5432/g' /etc/postgresql/11/main/postgresql.conf
 - sudo cat /etc/postgresql/11/main/postgresql.conf
+- sudo service postgresql restart 11
 - sudo cat /var/log/postgresql/postgresql-11-main.log
 
 before_script:
