@@ -14,9 +14,9 @@ before_install:
 - sudo apt-get update
 - sudo apt-get --yes remove postgresql\*
 - sudo apt-get install -y postgresql-11 postgresql-client-11
-- sudo ls /etc/postgresql
-- sudo cp /etc/postgresql/{10,11}/main/pg_hba.conf
+- sudo cp /etc/postgresql/{9.6,11}/main/pg_hba.conf
 - sudo service postgresql restart 11
+- sudo cat /var/log/postgresql/postgresql-11-main.log
 
 before_script:
 - composer install
