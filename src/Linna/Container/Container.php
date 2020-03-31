@@ -89,6 +89,8 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @param string $id
      * @param mixed  $value
+     *
+     * @return void
      */
     public function set(string $id, $value): void
     {
@@ -99,6 +101,8 @@ class Container implements ContainerInterface, ArrayAccess
      * Delete value from container.
      *
      * @param string $id
+     *
+     * @return bool
      */
     public function delete(string $id): bool
     {
@@ -155,9 +159,7 @@ class Container implements ContainerInterface, ArrayAccess
         while (true) {
 
             //initialize array if not already initialized
-            if (empty($this->tree[$level][$class])) {
-                $this->tree[$level][$class] = [];
-            }
+            $this->tree[$level][$class] ??= [];
 
             //get parameter from constructor
             //can return error when constructor not declared
@@ -178,7 +180,7 @@ class Container implements ContainerInterface, ArrayAccess
                 $type = ($param->getType() !== null) ? $param->getType()->getName() : 'NO_TYPE';
 
                 //if there is parameter with callable type
-                if (\class_exists(/*(string) $param->getType()*/$type) && $notAlreadyStored) {
+                if (\class_exists($type) && $notAlreadyStored) {
 
                     //push values in stack for simulate later recursive function
                     $stack->push([$level, $class]);
@@ -264,7 +266,7 @@ class Container implements ContainerInterface, ArrayAccess
         foreach ($dependency as $argValue) {
             $argType = ($argValue->getType() !== null) ? $argValue->getType()->getName() : 'NO_TYPE';
 
-            if (\class_exists(/*(string) $argValue->getType()*/$argType)) {
+            if (\class_exists($argType)) {
                 //add to array of arguments
                 $paramClass = $argValue->getClass()->name;
                 $args[] = $this->cache[$paramClass];

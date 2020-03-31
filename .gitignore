@@ -5,3 +5,4 @@ infection-log.txt
 vendor/
 .phan/
 .phpunit.result.cache
+phpunit.local.xml
