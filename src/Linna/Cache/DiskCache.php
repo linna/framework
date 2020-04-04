@@ -39,7 +39,7 @@ class DiskCache implements CacheInterface
     /**
      * Constructor.
      *
-     * @param array $options
+     * @param array<mixed> $options
      */
     public function __construct(array $options = [])
     {
@@ -172,7 +172,7 @@ class DiskCache implements CacheInterface
      */
     public function clear(): bool
     {
-        \array_map('unlink', \glob($this->dir.'/*.php'));
+        \array_map('unlink', (array) \glob($this->dir.'/*.php'));
 
         return true;
     }

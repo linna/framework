@@ -11,35 +11,19 @@ declare(strict_types=1);
 
 namespace Linna\TestHelper\Mvc;
 
-use Linna\Mvc\Model;
-
-class CalculatorModel extends Model
+/**
+ * Provide a math operation service for Calculator.
+ */
+trait CalculatorOperationTrait
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    public function multiply(array $numbers)
-    {
-        $this->set(['result' => $this->operation('*', $numbers)]);
-    }
-
-    public function divide(array $numbers)
-    {
-        $this->set(['result' => $this->operation('/', $numbers)]);
-    }
-
-    public function sub(array $numbers)
-    {
-        $this->set(['result' => $this->operation('-', $numbers)]);
-    }
-
-    public function add(array $numbers)
-    {
-        $this->set(['result' => $this->operation('+', $numbers)]);
-    }
-
+    /**
+     * Perform mathematical operation.
+     *
+     * @param string $operator
+     * @param array  $numbers
+     *
+     * @return mixed
+     */
     private function operation(string $operator, array $numbers)
     {
         $temp = null;

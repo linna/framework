@@ -19,7 +19,9 @@ interface TemplateInterface
     /**
      * Data for template.
      *
-     * @param array $data
+     * @param array<mixed> $data
+     *
+     * @return void
      */
     public function setData(array $data);
 

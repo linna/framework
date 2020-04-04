@@ -47,31 +47,31 @@ class Router
     protected RouteInterface $route;
 
     /**
-     * @var RouteCollection Passed from constructor, is the list of registerd routes for the app
+     * @var RouteCollection<Route> Passed from constructor, is the list of registerd routes for the app
      */
     private RouteCollection $routes;
 
     /**
-     * @var array List of regex for find parameter inside passed routes
+     * @var array<string> List of regex for find parameter inside passed routes
      */
     private array $matchTypes = [
         '`\[[0-9A-Za-z._-]+\]`',
     ];
 
     /**
-     * @var array List of regex for find type of parameter inside passed routes
+     * @var array<string> List of regex for find type of parameter inside passed routes
      */
     private array $types = [
         '[0-9A-Za-z._-]++',
     ];
 
     /**
-     * @var array preg_match result for route.
+     * @var array<mixed> preg_match result for route.
      */
     private array $routeMatches = [];
 
     /**
-     * @var array Array with parameters from query string.
+     * @var array<mixed> Array with parameters from query string.
      */
     private array $queryParam = [];
 
@@ -79,8 +79,8 @@ class Router
      * Constructor.
      * Accept as parameter a RouteCollection object and an array options.
      *
-     * @param RouteCollection $routes
-     * @param array           $options
+     * @param RouteCollection<Route> $routes
+     * @param array<mixed>           $options
      */
     public function __construct(RouteCollection $routes, array $options = [])
     {
@@ -187,7 +187,7 @@ class Router
      *
      * @param Route $route
      *
-     * @return array
+     * @return array<mixed>
      */
     private function buildParam(Route $route): array
     {
@@ -304,8 +304,8 @@ class Router
     /**
      * Fast route mapping.
      *
-     * @param string $name
-     * @param array  $arguments
+     * @param string       $name
+     * @param array<mixed> $arguments
      *
      * @return void
      *

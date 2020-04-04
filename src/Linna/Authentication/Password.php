@@ -19,7 +19,7 @@ namespace Linna\Authentication;
 class Password
 {
     /**
-     * @var array An associative array containing options
+     * @var array<mixed> An associative array containing options
      *
      * http://php.net/manual/en/function.password-hash.php
      */
@@ -29,7 +29,7 @@ class Password
     ];
 
     /**
-     * @var array An associate array containing algorithm constants
+     * @var array<mixed> An associate array containing algorithm constants
      */
     protected array $algoLists = [
         PASSWORD_BCRYPT,
@@ -37,7 +37,7 @@ class Password
     ];
 
     /**
-     * @var int|string Password default algorithm
+     * @var string|null Password default algorithm
      */
     protected ?string $algo = PASSWORD_BCRYPT;
 
@@ -55,8 +55,8 @@ class Password
      * Strict typing removed for $algo because on php 7.4 password hashing
      * algorithm identifiers are nullable strings rather than integers.
      *
-     * @param int|string   $algo        Algorithm used for hash passwords.
-     * @param array        $options     Options for algoas ['key' => 'value'] array.
+     * @param string|null   $algo        Algorithm used for hash passwords.
+     * @param array<mixed>  $options     Options for algoas ['key' => 'value'] array.
      *
      * @throws \InvalidArgumentException
      */
@@ -166,7 +166,7 @@ class Password
      *
      * @param string $hash Hash for wich get info.
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getInfo(string $hash): array
     {

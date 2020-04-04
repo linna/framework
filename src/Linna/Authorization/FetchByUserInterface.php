@@ -27,7 +27,7 @@ interface FetchByUserInterface
      *
      * @param EnhancedUser $user
      *
-     * @return array
+     * @return array<mixed>
      */
     public function fetchByUser(EnhancedUser $user): array;
 
@@ -39,7 +39,7 @@ interface FetchByUserInterface
      *
      * @param int $userId
      *
-     * @return array
+     * @return array<mixed>
      */
     public function fetchByUserId(int $userId): array;
 
@@ -51,7 +51,7 @@ interface FetchByUserInterface
      *
      * @param string $userName
      *
-     * @return array
+     * @return array<mixed>
      */
     public function fetchByUserName(string $userName): array;
 }

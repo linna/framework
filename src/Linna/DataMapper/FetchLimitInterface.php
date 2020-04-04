@@ -26,7 +26,7 @@ interface FetchLimitInterface
      * @param int $offset   Offset of the first row to return
      * @param int $rowCount Maximum number of rows to return
      *
-     * @return array
+     * @return array<mixed>
      */
     public function fetchLimit(int $offset, int $rowCount): array;
 }

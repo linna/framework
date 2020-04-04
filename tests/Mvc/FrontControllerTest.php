@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
+use Linna\Container\Container;
 use Linna\Router\Route;
 use Linna\Router\RouteCollection;
 use Linna\Router\Router;
@@ -21,9 +22,23 @@ use Linna\Mvc\FrontController;
 use Linna\TestHelper\Mvc\BeforeAfterController;
 use Linna\TestHelper\Mvc\BeforeAfterModel;
 use Linna\TestHelper\Mvc\BeforeAfterView;
-use Linna\TestHelper\Mvc\CalculatorController;
-use Linna\TestHelper\Mvc\CalculatorModel;
-use Linna\TestHelper\Mvc\CalculatorView;
+use Linna\TestHelper\Mvc\CalculatorMultiController;
+use Linna\TestHelper\Mvc\CalculatorMultiModel;
+use Linna\TestHelper\Mvc\CalculatorMultiView;
+
+use Linna\TestHelper\Mvc\CalculatorSingleAddModel;
+use Linna\TestHelper\Mvc\CalculatorSingleAddView;
+use Linna\TestHelper\Mvc\CalculatorSingleAddController;
+use Linna\TestHelper\Mvc\CalculatorSingleDivideModel;
+use Linna\TestHelper\Mvc\CalculatorSingleDivideView;
+use Linna\TestHelper\Mvc\CalculatorSingleDivideController;
+use Linna\TestHelper\Mvc\CalculatorSingleMultiplyModel;
+use Linna\TestHelper\Mvc\CalculatorSingleMultiplyView;
+use Linna\TestHelper\Mvc\CalculatorSingleMultiplyController;
+use Linna\TestHelper\Mvc\CalculatorSingleSubModel;
+use Linna\TestHelper\Mvc\CalculatorSingleSubView;
+use Linna\TestHelper\Mvc\CalculatorSingleSubController;
+
 use Linna\TestHelper\Mvc\MultipleController;
 use Linna\TestHelper\Mvc\MultipleModel;
 use Linna\TestHelper\Mvc\MultipleView;
@@ -70,12 +85,41 @@ class FrontControllerTest extends TestCase
     {
         $routes = (new RouteCollection([
             new Route([
-                'name'       => 'Calculator',
+                'name'       => 'Calculator Single Add',
                 'method'     => 'POST',
-                'url'        => '/calculator/(multiply|divide|add|sub)',
-                'model'      =>  CalculatorModel::class,
-                'view'       =>  CalculatorView::class,
-                'controller' =>  CalculatorController::class,
+                'url'        => '/calculator/single/add',
+                'model'      =>  CalculatorSingleAddModel::class,
+                'view'       =>  CalculatorSingleAddView::class,
+                'controller' =>  CalculatorSingleAddController::class,
+            ]),new Route([
+                'name'       => 'Calculator Single Divide',
+                'method'     => 'POST',
+                'url'        => '/calculator/single/divide',
+                'model'      =>  CalculatorSingleDivideModel::class,
+                'view'       =>  CalculatorSingleDivideView::class,
+                'controller' =>  CalculatorSingleDivideController::class,
+            ]),new Route([
+                'name'       => 'Calculator Single Multiply',
+                'method'     => 'POST',
+                'url'        => '/calculator/single/multiply',
+                'model'      =>  CalculatorSingleMultiplyModel::class,
+                'view'       =>  CalculatorSingleMultiplyView::class,
+                'controller' =>  CalculatorSingleMultiplyController::class,
+            ]),new Route([
+                'name'       => 'Calculator Single Sub',
+                'method'     => 'POST',
+                'url'        => '/calculator/single/sub',
+                'model'      =>  CalculatorSingleSubModel::class,
+                'view'       =>  CalculatorSingleSubView::class,
+                'controller' =>  CalculatorSingleSubController::class,
+            ]),
+            new Route([
+                'name'       => 'Calculator Multi',
+                'method'     => 'POST',
+                'url'        => '/calculator/multi/(multiply|divide|add|sub)',
+                'model'      =>  CalculatorMultiModel::class,
+                'view'       =>  CalculatorMultiView::class,
+                'controller' =>  CalculatorMultiController::class,
             ]),
             new Route([
                 'name'       => 'BeforeAfter',
@@ -97,14 +141,14 @@ class FrontControllerTest extends TestCase
             ])
         ]));
 
-        self::$router = new Router($routes/*->getArrayCopy()*/, [
+        self::$router = new Router($routes, [
             'badRoute'    => 'E404',
             'rewriteMode' => true,
         ]);
 
-        $model = new CalculatorModel();
-        $view = new CalculatorView($model, new JsonTemplate());
-        $controller = new CalculatorController($model);
+        $model = new CalculatorMultiModel();
+        $view = new CalculatorMultiView($model, new JsonTemplate());
+        $controller = new CalculatorMultiController($model);
 
         self::$model = $model;
         self::$view = $view;
@@ -142,18 +186,18 @@ class FrontControllerTest extends TestCase
      *
      * @return array
      */
-    public function frontControllerArgProvider(): array
+    public function frontControllerWrongArgProvider(): array
     {
-        $model = new CalculatorModel();
-        $view = new CalculatorView($model, new JsonTemplate());
-        $controller = new CalculatorController($model);
+        $model = new CalculatorMultiModel();
+        $view = new CalculatorMultiView($model, new JsonTemplate());
+        $controller = new CalculatorMultiController($model);
         $route = new Route([
             'name'       => 'Calculator',
             'method'     => 'POST',
             'url'        => '/calculator/(multiply|divide|add|sub)',
-            'model'      =>  CalculatorModel::class,
-            'view'       =>  CalculatorView::class,
-            'controller' =>  CalculatorController::class,
+            'model'      =>  CalculatorMultiModel::class,
+            'view'       =>  CalculatorMultiView::class,
+            'controller' =>  CalculatorMultiController::class,
         ]);
 
         return [
@@ -172,7 +216,7 @@ class FrontControllerTest extends TestCase
      * @param Controller $controller
      * @param Route      $route
      *
-     * @dataProvider frontControllerArgProvider
+     * @dataProvider frontControllerWrongArgProvider
      *
      * @return void
      */
@@ -184,38 +228,86 @@ class FrontControllerTest extends TestCase
     }
 
     /**
-     * Calculator provider.
+     * Calculator multi provider.
      *
      * @return array
      */
-    public function calculatorProvider(): array
+    public function calculatorMultiProvider(): array
     {
         return [
-            ['/calculator/multiply',[2,2,2],8],
-            ['/calculator/divide',[16,2,2],4],
-            ['/calculator/add',[2,2,2],6],
-            ['/calculator/sub',[16,2,2],12]
+            ['/calculator/multi/multiply',[2,2,2],'Multiply: 8'],
+            ['/calculator/multi/divide',[16,2,2],'Divide: 4'],
+            ['/calculator/multi/add',[2,2,2],'Add: 6'],
+            ['/calculator/multi/sub',[16,2,2],'Sub: 12']
         ];
     }
 
     /**
-     * Test run front controller.
+     * Test run front controller with multiple action model controller and view.
      *
      * @param string $route
      * @param array  $parameter
      * @param int    $result
      *
-     * @dataProvider calculatorProvider
+     * @dataProvider calculatorMultiProvider
      *
      * @return void
      */
-    public function testRunFrontController(string $route, array $parameter, int $result): void
+    public function testRunWithMultiActionMVC(string $route, array $parameter, string $result): void
     {
         $_POST['numbers'] = $parameter;
 
         self::$router->validate($route, 'POST');
 
         $frontController = new FrontController(self::$model, self::$view, self::$controller, self::$router->getRoute());
+        $frontController->run();
+
+        $this->assertEquals($result, \json_decode($frontController->response())->result);
+    }
+
+    /**
+     * Calculator single provider.
+     *
+     * @return array
+     */
+    public function calculatorSingleProvider(): array
+    {
+        return [
+            ['/calculator/single/multiply',[2,2,2],'Multiply: 8'],
+            ['/calculator/single/divide',[16,2,2],'Divide: 4'],
+            ['/calculator/single/add',[2,2,2],'Add: 6'],
+            ['/calculator/single/sub',[16,2,2],'Sub: 12']
+        ];
+    }
+
+    /**
+     * Test run front controller with multiple action model controller and view.
+     *
+     * @param string $route
+     * @param array  $parameter
+     * @param int    $result
+     *
+     * @dataProvider calculatorSingleProvider
+     *
+     * @return void
+     */
+    public function testRunWithSingleActionMVC(string $route, array $parameter, string $result): void
+    {
+        $_POST['numbers'] = $parameter;
+
+        self::$router->validate($route, 'POST');
+
+        $routeValidated = self::$router->getRoute();
+
+        $container = new Container();
+
+        $model = $container->resolve($routeValidated->model);
+        $view = $container->resolve($routeValidated->view);
+        $controller = $container->resolve($routeValidated->controller);
+
+        //var_dump($routeValidated->controller);
+
+        $frontController = new FrontController($model, $view, $controller, $routeValidated);
         $frontController->run();
 
         $this->assertEquals($result, \json_decode($frontController->response())->result);

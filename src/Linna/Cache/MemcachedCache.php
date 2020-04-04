@@ -30,7 +30,7 @@ class MemcachedCache implements CacheInterface
     /**
      * Constructor.
      *
-     * @param array $options
+     * @param array<mixed> $options
      *
      * @throws InvalidArgumentException if options not contain memcached resource
      */

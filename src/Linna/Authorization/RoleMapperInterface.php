@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Authorization;
 
+use Linna\Authorization\EnhancedUser;
 use Linna\Authorization\Permission;
 use Linna\Authorization\Role;
 use Linna\DataMapper\MapperInterface;
@@ -29,8 +30,10 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * when write concrete mapper is well pass PermissionMapper as constructor
      * dependency.
      *
-     * @param Role       $role
-     * @param Permission $permission
+     * @param Role          $role
+     * @param Permission    $permission
+     *
+     * @return void
      */
     public function grantPermission(Role &$role, Permission $permission);
 
@@ -42,8 +45,10 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * when write concrete mapper is well pass PermissionMapper as constructor
      * dependency.
      *
-     * @param Role $role
-     * @param int  $permissionId
+     * @param Role  $role
+     * @param int   $permissionId
+     *
+     * @return void
      */
     public function grantPermissionById(Role &$role, int $permissionId);
 
@@ -55,8 +60,10 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * when write concrete mapper is well pass PermissionMapper as constructor
      * dependency.
      *
-     * @param Role   $role
-     * @param string $permissionName
+     * @param Role      $role
+     * @param string    $permissionName
+     *
+     * @return void
      */
     public function grantPermissionByName(Role &$role, string $permissionName);
 
@@ -68,8 +75,10 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * to Role->setPermissions(), when write concrete mapper is well
      * pass PermissionMapper as constructor dependency.
      *
-     * @param Role       $role
-     * @param Permission $permission
+     * @param Role          $role
+     * @param Permission    $permission
+     *
+     * @return void
      */
     public function revokePermission(Role &$role, Permission $permission);
 
@@ -81,8 +90,10 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * to Role->setPermissions(), when write concrete mapper is well
      * pass PermissionMapper as constructor dependency.
      *
-     * @param Role $role
-     * @param int  $permissionId
+     * @param Role  $role
+     * @param int   $permissionId
+     *
+     * @return void
      */
     public function revokePermissionById(Role &$role, int $permissionId);
 
@@ -94,8 +105,10 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * to Role->setPermissions(), when write concrete mapper is well
      * pass PermissionMapper as constructor dependency.
      *
-     * @param Role   $role
-     * @param string $permissionName
+     * @param Role      $role
+     * @param string    $permissionName
+     *
+     * @return void
      */
     public function revokePermissionByName(Role &$role, string $permissionName);
 
@@ -107,8 +120,10 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * when write concrete mapper is well pass EnhancedUserMapper as constructor
      * dependency.
      *
-     * @param Role         $role
-     * @param EnhancedUser $user
+     * @param Role          $role
+     * @param EnhancedUser  $user
+     *
+     * @return void
      */
     public function addUser(Role &$role, EnhancedUser $user);
 
@@ -120,8 +135,10 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * when write concrete mapper is well pass EnhancedUserMapper as constructor
      * dependency.
      *
-     * @param Role $role
-     * @param int  $userId
+     * @param Role  $role
+     * @param int   $userId
+     *
+     * @return void
      */
     public function addUserById(Role &$role, int $userId);
 
@@ -133,8 +150,10 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * when write concrete mapper is well pass EnhancedUserMapper as constructor
      * dependency.
      *
-     * @param Role   $role
-     * @param string $userName
+     * @param Role      $role
+     * @param string    $userName
+     *
+     * @return void
      */
     public function addUserByName(Role &$role, string $userName);
 
@@ -146,8 +165,10 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * when write concrete mapper is well pass EnhancedUserMapper as constructor
      * dependency.
      *
-     * @param Role         $role
-     * @param EnhancedUser $user
+     * @param Role          $role
+     * @param EnhancedUser  $user
+     *
+     * @return void
      */
     public function removeUser(Role &$role, EnhancedUser $user);
 
@@ -159,8 +180,10 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * when write concrete mapper is well pass EnhancedUserMapper as constructor
      * dependency.
      *
-     * @param Role $role
-     * @param int  $userId
+     * @param Role  $role
+     * @param int   $userId
+     *
+     * @return void
      */
     public function removeUserById(Role &$role, int $userId);
 
@@ -172,8 +195,10 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * when write concrete mapper is well pass EnhancedUserMapper as constructor
      * dependency.
      *
-     * @param Role   $role
-     * @param string $userName
+     * @param Role      $role
+     * @param string    $userName
+     *
+     * @return void
      */
     public function removeUserByName(Role &$role, string $userName);
 }

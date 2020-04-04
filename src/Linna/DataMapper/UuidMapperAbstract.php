@@ -70,6 +70,8 @@ abstract class UuidMapperAbstract
      * Insert the DomainObject to persistent storage.
      *
      * @param UuidDomainObjectInterface $domainObject
+     *
+     * @return void
      */
     abstract protected function concreteInsert(UuidDomainObjectInterface &$domainObject);
 
@@ -77,6 +79,8 @@ abstract class UuidMapperAbstract
      * Update the DomainObject in persistent storage.
      *
      * @param UuidDomainObjectInterface $domainObject
+     *
+     * @return void
      */
     abstract protected function concreteUpdate(UuidDomainObjectInterface $domainObject);
 
@@ -84,6 +88,8 @@ abstract class UuidMapperAbstract
      * Delete the DomainObject from peristent Storage.
      *
      * @param UuidDomainObjectInterface $domainObject
+     *
+     * @return void
      */
     abstract protected function concreteDelete(UuidDomainObjectInterface &$domainObject);
 
@@ -91,6 +97,8 @@ abstract class UuidMapperAbstract
      * Check for valid domain Object.
      *
      * @param UuidDomainObjectInterface $domainObject
+     *
+     * @return void
      *
      * @throws InvalidArgumentException if the domain object isn't of the type required by mapper
      */

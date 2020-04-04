@@ -19,12 +19,14 @@ interface ConnectorInterface
     /**
      * Constructor.
      *
-     * @param array $options Connection options
+     * @param array<mixed> $options Connection options
      */
     public function __construct(array $options);
 
     /**
      * Return resource to Database class.
+     *
+     * @return object
      */
     public function getResource(): object;
 }

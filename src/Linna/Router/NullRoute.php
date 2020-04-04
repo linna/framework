@@ -12,14 +12,14 @@ declare(strict_types=1);
 namespace Linna\Router;
 
 /**
- * Describe null routes.
+ * Describes null routes.
  */
 class NullRoute implements RouteInterface
 {
     /**
      * Constructor.
      *
-     * @param array $route
+     * @param array<mixed> $route
      */
     public function __construct(array $route = [])
     {

@@ -21,7 +21,7 @@ use Linna\Storage\Connectors\MysqliConnector;
 class StorageFactory extends AbstractStorageFactory
 {
     /**
-     * @var array Factory supported driver
+     * @var array<string> Factory supported driver
      */
     protected array $supportedDriver = [
         'pdo'     => PdoConnector::class,

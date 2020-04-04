@@ -27,7 +27,7 @@ interface FetchByRoleInterface
      *
      * @param Role $role
      *
-     * @return array
+     * @return array<mixed>
      */
     public function fetchByRole(Role $role): array;
 
@@ -39,7 +39,7 @@ interface FetchByRoleInterface
      *
      * @param int $roleId
      *
-     * @return array
+     * @return array<mixed>
      */
     public function fetchByRoleId(int $roleId): array;
 
@@ -51,7 +51,7 @@ interface FetchByRoleInterface
      *
      * @param string $roleName
      *
-     * @return array
+     * @return array<mixed>
      */
     public function fetchByRoleName(string $roleName): array;
 }

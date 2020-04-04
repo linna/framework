@@ -57,7 +57,7 @@ abstract class UuidDomainObjectAbstract implements UuidDomainObjectInterface
      * $object->getId();
      * </code></pre>
      *
-     * @return int Current object id.
+     * @return string Current object id.
      */
     public function getId(): string
     {

@@ -23,7 +23,7 @@ interface FetchAllInterface
      * a DomainObject object instance for every concrete domain object
      * or a void array.
      *
-     * @return array
+     * @return array<mixed>
      */
     public function fetchAll(): array;
 }

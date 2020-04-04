@@ -25,6 +25,8 @@ trait PropertyAccessTrait
      *
      * @param string $offset
      * @param mixed  $value
+     *
+     * @return void
      */
     public function __set(string $offset, $value)
     {
@@ -36,6 +38,8 @@ trait PropertyAccessTrait
      * http://php.net/manual/en/language.oop5.overloading.php.
      *
      * @param string $offset
+     *
+     * @return mixed
      */
     public function __get(string $offset)
     {

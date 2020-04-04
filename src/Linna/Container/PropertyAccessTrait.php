@@ -36,6 +36,8 @@ trait PropertyAccessTrait
      *
      * @param string $key
      * @param mixed  $value
+     *
+     * @return void
      */
     abstract public function set($key, $value);
 
@@ -52,6 +54,8 @@ trait PropertyAccessTrait
      *
      * @param string $key
      * @param mixed  $value
+     *
+     * @return void
      *
      * @ignore
      */

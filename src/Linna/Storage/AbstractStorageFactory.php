@@ -24,20 +24,20 @@ abstract class AbstractStorageFactory
     protected string $driver = '';
 
     /**
-     * @var array Factory supported driver
+     * @var array<string> Factory supported driver
      */
     protected array $supportedDriver = [];
 
     /**
-     * @var array Options for the driver
+     * @var array<mixed> Options for the driver
      */
     protected array $options = [];
 
     /**
      * Constructor.
      *
-     * @param string $driver
-     * @param array  $options
+     * @param string       $driver
+     * @param array<mixed> $options
      */
     public function __construct(string $driver, array $options)
     {

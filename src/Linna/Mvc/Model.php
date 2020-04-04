@@ -30,7 +30,7 @@ class Model implements SplSubject
     private SplObjectStorage $observers;
 
     /**
-     * @var array Data for notify to observerer
+     * @var array<mixed> Data for notify to observerer
      */
     private array $updates = [];
 
@@ -47,6 +47,8 @@ class Model implements SplSubject
      * when occour a subject state change.
      *
      * @param SplObserver $observer
+     *
+     * @return void
      */
     public function attach(SplObserver $observer)
     {
@@ -59,6 +61,8 @@ class Model implements SplSubject
      * Detach an Observer class from this Subject.
      *
      * @param SplObserver $observer
+     *
+     * @return void
      */
     public function detach(SplObserver $observer)
     {
@@ -69,6 +73,8 @@ class Model implements SplSubject
 
     /**
      * Notify a state change of Subject to all registered Observeres.
+     *
+     * @return void
      */
     public function notify()
     {
@@ -81,7 +87,7 @@ class Model implements SplSubject
     /**
      * Set the data to notify to all registered Observeres.
      *
-     * @param array $data
+     * @param array<mixed> $data
      */
     public function set(array $data): void
     {
@@ -91,7 +97,7 @@ class Model implements SplSubject
     /**
      * Get the data to notify to all registered Observeres.
      *
-     * @return array
+     * @return array<mixed>
      */
     public function get(): array
     {

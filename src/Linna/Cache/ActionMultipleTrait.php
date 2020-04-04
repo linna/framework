@@ -56,10 +56,10 @@ trait ActionMultipleTrait
     /**
      * Obtains multiple cache items by their unique keys.
      *
-     * @param array $keys    A list of keys that can obtained in a single operation.
-     * @param mixed $default Default value to return for keys that do not exist.
+     * @param array<mixed> $keys    A list of keys that can obtained in a single operation.
+     * @param mixed        $default Default value to return for keys that do not exist.
      *
-     * @return array A list of key => value pairs. Cache keys that do not exist or are stale will have $default as value.
+     * @return array<mixed> A list of key => value pairs. Cache keys that do not exist or are stale will have $default as value.
      */
     public function getMultiple(array $keys, $default = null): array
     {
@@ -75,10 +75,10 @@ trait ActionMultipleTrait
     /**
      * Persists a set of key => value pairs in the cache, with an optional TTL.
      *
-     * @param array $values A list of key => value pairs for a multiple-set operation.
-     * @param int   $ttl    Optional. The TTL (time to live) value in seconds of this item.
-     *                      If no value is sent and the driver supports TTL then the
-     *                      library may set a default value for it or let the driver take care of that.
+     * @param array<mixed> $values A list of key => value pairs for a multiple-set operation.
+     * @param int          $ttl    Optional. The TTL (time to live) value in seconds of this item.
+     *                             If no value is sent and the driver supports TTL then the
+     *                             library may set a default value for it or let the driver take care of that.
      *
      * @return bool True on success and false on failure.
      */
@@ -94,7 +94,7 @@ trait ActionMultipleTrait
     /**
      * Deletes multiple cache items in a single operation.
      *
-     * @param array $keys A list of string-based keys to be deleted.
+     * @param array<mixed> $keys A list of string-based keys to be deleted.
      *
      * @return bool True if the items were successfully removed. False if there was an error.
      */

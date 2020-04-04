@@ -26,24 +26,24 @@ class Container implements ContainerInterface, ArrayAccess
     use ArrayAccessTrait;
 
     /**
-     * @var array Contains object already resolved.
+     * @var array<mixed> Contains object already resolved.
      */
     private array $cache = [];
 
     /**
-     * @var array Hierarchical structure of dependencies.
+     * @var array<mixed> Hierarchical structure of dependencies.
      */
     protected array $tree = [];
 
     /**
-     * @var array Rules for resolve scalar arguments or unexpected behaviors.
+     * @var array<mixed> Rules for resolve scalar arguments or unexpected behaviors.
      */
     protected array $rules = [];
 
     /**
      * Class Constructor.
      *
-     * @param array $rules Rules for resolve scalar arguments or unexpected behaviors.
+     * @param array<mixed> $rules Rules for resolve scalar arguments or unexpected behaviors.
      */
     public function __construct(array $rules = [])
     {
@@ -121,12 +121,12 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * Resolve dependencies for given class.
      *
-     * @param string $class An existing class.
-     * @param array  $rules Custom rules.
+     * @param string       $class An existing class.
+     * @param array<mixed> $rules Custom rules.
      *
      * @return object|null Instance of resolved class
      */
-    public function resolve(string $class, array $rules = [])
+    public function resolve(string $class, array $rules = []): ?object
     {
         //reset tree;
         $this->tree = [];
@@ -252,10 +252,10 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * Build dependency for a object.
      *
-     * @param string $class
-     * @param array  $dependency
+     * @param string       $class
+     * @param array<mixed> $dependency
      *
-     * @return array
+     * @return array<mixed>
      */
     private function buildArguments(string $class, array $dependency): array
     {

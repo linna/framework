@@ -14,9 +14,17 @@ namespace Linna\TestHelper\Mvc;
 
 use Linna\Mvc\TemplateInterface;
 
+/**
+ * Json Template.
+ */
 class JsonTemplate implements TemplateInterface
 {
-    public $data = null;
+    public $data;
+
+    public function __construct()
+    {
+        $this->data = null;
+    }
 
     public function setData(array $data)
     {

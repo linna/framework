@@ -29,10 +29,10 @@ class ExtendedPDO extends PDO
      * Executes an SQL statement with parameters,
      * returning a result set as a PDOStatement object
      *
-     * @param string $query SQL statement
-     * @param array  $param Parameter as array as PDOStatement::bindParam
+     * @param string       $query SQL statement
+     * @param array<mixed> $param Parameter as array as PDOStatement::bindParam
      *
-     * @return PDOStatement
+     * @return PDOStatement<mixed>
      */
     public function queryWithParam(string $query, array $param): PDOStatement
     {
@@ -67,7 +67,7 @@ class ExtendedPDO extends PDO
     /**
      * Check values passed to queryWithParam.
      *
-     * @param array $value
+     * @param array<mixed> $value
      *
      * @return void
      *

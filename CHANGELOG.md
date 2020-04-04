@@ -49,6 +49,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\DataMapper\DomainObjectAbstract->rId` public property removed
 * `Linna\DataMapper\DomainObjectAbstract->objectId` protected property renamed to `id`
 
+### Mvc
+* `Linna\Mvc\FrontController` now search for default `entryPoint` method instead of `index` if `$route` has not `action` set
+
 #### Router
 * `badRoute` it is no longer a valid option for constructor
 

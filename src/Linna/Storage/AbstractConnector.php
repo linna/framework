@@ -17,14 +17,14 @@ namespace Linna\Storage;
 class AbstractConnector
 {
     /**
-     * @var array Connection options
+     * @var array<mixed> Connection options
      */
     protected array $options = [];
 
     /**
      * Constructor.
      *
-     * @param array $options
+     * @param array<mixed> $options
      */
     public function __construct(array $options)
     {

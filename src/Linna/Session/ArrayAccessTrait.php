@@ -52,6 +52,8 @@ trait ArrayAccessTrait
      *
      * @param string $offset
      * @param mixed  $value
+     *
+     * @return void
      */
     public function offsetSet($offset, $value)
     {
@@ -62,6 +64,8 @@ trait ArrayAccessTrait
      * Delete.
      *
      * @param string $offset
+     *
+     * @return void
      */
     public function offsetUnset($offset)
     {

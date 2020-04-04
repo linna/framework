@@ -57,7 +57,7 @@ class Route implements RouteInterface
     public bool $default = false;
 
     /**
-     * @var array Route parameters.
+     * @var array<mixed> Route parameters.
      */
     public array $param = [];
 
@@ -75,7 +75,7 @@ class Route implements RouteInterface
     /**
      * Constructor.
      *
-     * @param array $route
+     * @param array<mixed> $route
      */
     public function __construct(array $route = [])
     {
@@ -177,7 +177,7 @@ class Route implements RouteInterface
     /**
      * Return parameters.
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getParam(): array
     {
@@ -222,7 +222,7 @@ class Route implements RouteInterface
     /**
      * Return route array.
      *
-     * @return array
+     * @return array<mixed>
      */
     public function toArray(): array
     {

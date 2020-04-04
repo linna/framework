@@ -37,12 +37,15 @@ class Role extends DomainObjectAbstract
     public int $active = 0;
 
     /**
-     * @var array Contain users in group
+     * @var array<mixed> Contain users in group
      */
     private array $users = [];
 
     /**
      * Constructor.
+     *
+     * @param array<mixed> $users
+     * @param array<mixed> $permissions
      */
     public function __construct(array $users = [], array $permissions = [])
     {

@@ -22,16 +22,16 @@ class EnhancedUser extends User
     use PermissionTrait;
 
     /**
-     * @var array Contain roles for the user
+     * @var array<int> Contain roles for the user
      */
     private array $roles = [];
 
     /**
      * Class Constructor.
      *
-     * @param Password $password
-     * @param array    $roles
-     * @param array    $permissions
+     * @param Password      $password
+     * @param array<mixed>  $roles
+     * @param array<mixed>  $permissions
      */
     public function __construct(Password $password, array $roles = [], array $permissions = [])
     {

@@ -17,7 +17,7 @@ namespace Linna\Authorization;
 trait PermissionTrait
 {
     /**
-     * @var array User permissions
+     * @var array<mixed> User permissions
      */
     protected array $permission = [];
 

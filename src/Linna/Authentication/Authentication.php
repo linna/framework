@@ -20,7 +20,7 @@ use Linna\Session\Session;
 class Authentication
 {
     /**
-     * @var array Login status.
+     * @var array<mixed> Login status.
      */
     private array $data = ['user_name'=>''];
 
@@ -117,7 +117,7 @@ class Authentication
      * var_dump($data);
      * </code></pre>
      *
-     * @return array Login data.
+     * @return array<mixed> Login data.
      */
     public function getLoginData(): array
     {

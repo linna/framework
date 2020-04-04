@@ -23,8 +23,4 @@ class MultipleView extends View
     public function SomeParam()
     {
     }
-
-    public function index()
-    {
-    }
 }

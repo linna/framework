@@ -40,7 +40,7 @@ class FrontController
     private string $routeAction = '';
 
     /**
-     * @var array Paremeter passed to Controller
+     * @var array<mixed> Paremeters passed to Controller
      */
     private array $routeParam = [];
 
@@ -55,7 +55,7 @@ class FrontController
     public function __construct(Model $model, View $view, Controller $controller, RouteInterface $route)
     {
         if ($route instanceof Route) {
-            $this->routeAction = $route->action;
+            $this->routeAction = ($route->action) ?: 'entryPoint';
             $this->routeParam = $route->param;
         }
 
@@ -152,7 +152,8 @@ class FrontController
      */
     private function runView(): void
     {
-        $action = ($this->routeAction) ?: 'index';
+        //get route information
+        $action = $this->routeAction;
 
         if (\method_exists($this->view, $action)) {
             \call_user_func([$this->view, $action]);

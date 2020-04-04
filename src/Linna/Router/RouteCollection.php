@@ -21,7 +21,7 @@ class RouteCollection extends TypedObjectArray
     /**
      * Contructor.
      *
-     * @param array $array
+     * @param array<Route> $array
      */
     public function __construct(array $array = [])
     {

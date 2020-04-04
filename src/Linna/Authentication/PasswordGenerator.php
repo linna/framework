@@ -20,7 +20,7 @@ use InvalidArgumentException;
 class PasswordGenerator
 {
     /**
-     * @var array Characters intervall
+     * @var array<string> Characters intervall
      */
     private array $chars = [
         'ABCDEFGHIJKLMNOPQRSTUVWXYZ', //u 117

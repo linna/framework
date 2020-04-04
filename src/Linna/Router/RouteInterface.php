@@ -18,7 +18,7 @@ interface RouteInterface
     /**
      * Constructor.
      *
-     * @param array $route
+     * @param array<mixed> $route
      */
     public function __construct(array $route);
 }

@@ -88,7 +88,7 @@ class UUID4
     /**
      * Return UUID in 16 byte binary format.
      *
-     * @return string
+     * @return void
      */
     private function makeBin(): void
     {
@@ -100,7 +100,7 @@ class UUID4
      *
      * @codeCoverageIgnore
      *
-     * @return string
+     * @return void
      */
     private function generate(): void
     {

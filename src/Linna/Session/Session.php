@@ -59,7 +59,7 @@ class Session implements ArrayAccess
     private string $cookieSameSite = 'lax';
 
     /**
-     * @var array Session data reference property
+     * @var array<mixed> Session data reference property
      */
     private array $data = [];
 
@@ -81,7 +81,7 @@ class Session implements ArrayAccess
     /**
      * Constructor.
      *
-     * @param array $options
+     * @param array<mixed> $options
      */
     public function __construct(array $options = [])
     {

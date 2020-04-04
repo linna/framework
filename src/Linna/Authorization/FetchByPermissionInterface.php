@@ -27,7 +27,7 @@ interface FetchByPermissionInterface
      *
      * @param Permission $permission
      *
-     * @return array
+     * @return array<mixed>
      */
     public function fetchByPermission(Permission $permission): array;
 
@@ -39,7 +39,7 @@ interface FetchByPermissionInterface
      *
      * @param int $permissionId
      *
-     * @return array
+     * @return array<mixed>
      */
     public function fetchByPermissionId(int $permissionId): array;
 
@@ -51,7 +51,7 @@ interface FetchByPermissionInterface
      *
      * @param string $permissionName
      *
-     * @return array
+     * @return array<mixed>
      */
     public function fetchByPermissionName(string $permissionName): array;
 }

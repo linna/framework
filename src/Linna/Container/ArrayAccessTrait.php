@@ -80,6 +80,8 @@ trait ArrayAccessTrait
      * @param string $key
      * @param mixed  $value
      *
+     * @return void
+     *
      * @ignore
      */
     public function offsetSet($key, $value)

@@ -26,7 +26,7 @@ use SplSubject;
 class View implements SplObserver
 {
     /**
-     * @var array Data for the dynamic view
+     * @var array<mixed> Data for the dynamic view
      */
     protected array $data = [];
 
@@ -67,6 +67,8 @@ class View implements SplObserver
      * Update Observer data.
      *
      * @param SplSubject $subject
+     *
+     * @return void
      */
     public function update(SplSubject $subject)
     {
