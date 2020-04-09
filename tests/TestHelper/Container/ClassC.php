@@ -13,7 +13,8 @@ namespace Linna\TestHelper\Container;
 
 class ClassC
 {
-    public function __construct()
+    public function helloMethod(string $name)
     {
+        return "Hello {$name}";
     }
 }

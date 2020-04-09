@@ -57,6 +57,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+#### Container
+* `Linna\Container\Container` error when a class without `__construct` method is encountered
+
 #### Data Mapper
 * `Linna\DataMapper\MapperAbstract->save()` update after insert
 * `Linna\DataMapper\UuidDomainObjectAbstract->$uuid` type fixed

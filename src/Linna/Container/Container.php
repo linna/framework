@@ -163,7 +163,9 @@ class Container implements ContainerInterface, ArrayAccess
 
             //get parameter from constructor
             //can return error when constructor not declared
-            $parameters = (new ReflectionClass($class))->getConstructor()->getParameters();
+            $constructor = (new ReflectionClass($class))->getConstructor();//->getParameters();
+            //this should be resolve the error of when a class without constructor is encountered
+            $parameters = \is_null($constructor) ? [] : $constructor->getParameters();
 
             //loop parameter
             foreach ($parameters as $param) {
