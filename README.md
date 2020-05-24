@@ -22,7 +22,6 @@
 </div>
 
 # About this framework
-
 Started as a project for learning the modern PHP, it has become a set of simple and elegant tools for creating web applications.
 
 ## Quality
