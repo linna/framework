@@ -32,3 +32,4 @@ git:
 script:
 - ./vendor/bin/phpunit --coverage-clover=coverage-report.clover --log-junit=test-report.xml
 #- ./vendor/bin/infection --min-msi=75 --min-covered-msi=75
+- sonar-scanner
