@@ -25,42 +25,49 @@
 Started as a project for learning the modern PHP, it has become a set of simple and elegant tools for creating web applications.
 
 ## Quality
+
 The development of Framework is done trying to get PHP best pratices always in mind.<br/>If you wish deepen PHP best pratices you can start from [phptherightway](http://www.phptherightway.com/)
 
 ### All code is:
-   * Tested with [phpunit](https://github.com/sebastianbergmann/phpunit) and [infection](https://github.com/infection/infection)
-   * Analyzed with [phpstan](https://github.com/phpstan/phpstan) and [phan](https://github.com/phan/phan/)
-   * Commented, ready for [phpDocumentor](https://www.phpdoc.org/)
-   * Written applying the five [SOLID](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)) principles
+
+- Tested with [phpunit](https://github.com/sebastianbergmann/phpunit) and [infection](https://github.com/infection/infection)
+- Analyzed with [phpstan](https://github.com/phpstan/phpstan) and [phan](https://github.com/phan/phan/)
+- Commented, ready for [phpDocumentor](https://www.phpdoc.org/)
+- Written applying the five [SOLID](<https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)>) principles
 
 ## Production environment
+
 At moment, code, isn't utilized in production environment, Hope in future.
 
 # Require
 
-   * PHP >= 7.4
-   * PDO extension (optional)
-   * Memcached extension (optional)
-   * Mongodb extension (optional)
+- PHP >= 7.4
+- PDO extension (optional)
+- Memcached extension (optional)
+- Mongodb extension (optional)
 
 # Installation
+
 With composer:
+
 ```
 composer require linna/framework
 ```
 
 # Features
- 
-   * Model View Controller
-   * Session Management
-   * Login and User/Permission access control
-   * Rest Router
-   * Dependency Injections
-   * Wrappers for data base
-   * Implementation for PSR-4 Autoloader, PSR-11 Container and PSR-16 Simple Cache
 
-# Documentation 
-For more details please see the [user guide (soon)](https://linna.tools/docs/en/framework/v0.26.0/) or the [api (incomplete)](https://linna.tools/api/en/framework/v0.26.0/) and read [licence](https://github.com/linna/framework/blob/master/LICENSE.md)
+- Model View Controller
+- Session Management
+- Login and User/Permission access control
+- Rest Router
+- Dependency Injections
+- Wrappers for data base
+- Implementation for PSR-4 Autoloader, PSR-11 Container and PSR-16 Simple Cache
+
+# Documentation
+
+For more details please see the [user guide (soon)](https://linna.tools/docs/current/) or the [api (incomplete)](https://linna.tools/docs/current/) and read [licence](https://github.com/linna/framework/blob/master/LICENSE.md)
 
 # Contributing
+
 Please see [CONTRIBUTING.md](https://github.com/linna/framework/blob/master/CONTRIBUTING.md).
