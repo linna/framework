@@ -9,8 +9,10 @@ services:
 - postgresql
 
 before_install:
+## Add php extensions
 - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+## Update postgresql
 - sudo apt-get update
 - sudo apt-get --yes remove postgresql\*
 - sudo apt-get install -y postgresql-11 postgresql-client-11 unzip
@@ -19,6 +21,7 @@ before_install:
 - sudo cat /etc/postgresql/11/main/postgresql.conf
 - sudo service postgresql restart 11
 - sudo cat /var/log/postgresql/postgresql-11-main.log
+## Update sonar-scanner
 - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.4.0.2170.zip
 - unzip sonar-scanner-cli-4.4.0.2170.zip -d /tmp
 
@@ -38,5 +41,4 @@ git:
 script:
 - ./vendor/bin/phpunit --coverage-clover=coverage-report.clover --log-junit=test-report.xml
 #- ./vendor/bin/infection --min-msi=75 --min-covered-msi=75
-#- sonar-scanner
 - /tmp/sonar-scanner-4.4.0.2170/bin/sonar-scanner
