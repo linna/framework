@@ -133,6 +133,12 @@ class FrontController
         $action = $this->routeAction;
         $param = $this->routeParam;
 
+        //if controller does not have the method named entryPoint
+        //this avoid problems
+        if (!\method_exists($this->controller, $action)) {
+            return;
+        }
+
         //action - call controller passing params
         if (!empty($param) && $action) {
             \call_user_func_array([$this->controller, $action], $param);
@@ -140,9 +146,7 @@ class FrontController
         }
 
         //action - call controller
-        if ($action) {
-            \call_user_func([$this->controller, $action]);
-        }
+        \call_user_func([$this->controller, $action]);
     }
 
     /**
