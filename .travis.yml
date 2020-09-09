@@ -19,8 +19,8 @@ before_install:
 - sudo cat /etc/postgresql/11/main/postgresql.conf
 - sudo service postgresql restart 11
 - sudo cat /var/log/postgresql/postgresql-11-main.log
-- wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.4.0.2170.zip -O ./sonar-scanner.zip
-- unzip sonar-scanner.zip -d /tmp
+- wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.4.0.2170.zip
+- unzip sonar-scanner-cli-4.4.0.2170.zip -d /tmp
 
 before_script:
 - composer install
@@ -39,4 +39,4 @@ script:
 - ./vendor/bin/phpunit --coverage-clover=coverage-report.clover --log-junit=test-report.xml
 #- ./vendor/bin/infection --min-msi=75 --min-covered-msi=75
 #- sonar-scanner
-- /tmp/sonar-scanner/bin/sonar-scanner
+- /tmp/sonar-scanner-cli-4.4.0.2170/bin/sonar-scanner
