@@ -69,6 +69,47 @@ class DomainObjectTest extends TestCase
     }
 
     /**
+     * Test get object id with method.
+     *
+     * @return void
+     */
+    public function testGetObjectIdWithMethod(): void
+    {
+        $this->assertEquals(1, self::$user->getId());
+    }
+
+    /**
+     * Test get object id with property.
+     *
+     * @return void
+     */
+    public function testGetObjectIdWithProperty(): void
+    {
+        $this->assertEquals(1, self::$user->id);
+    }
+
+    /**
+     * Test get unknown property.
+     *
+     * @return void
+     */
+    public function testGetUnknownProperty(): void
+    {
+        $this->assertEquals(null, self::$user->unknown);
+    }
+
+    /**
+     * Test isset property.
+     *
+     * @return void
+     */
+    public function testIssetProperty(): void
+    {
+        $this->assertTrue(isset(self::$user->id));
+        $this->assertFalse(isset(self::$user->unknown));
+    }
+
+    /**
      * Test override object id.
      *
      * @return void
