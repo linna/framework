@@ -13,12 +13,14 @@ before_install:
 - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - sudo apt-get update
 - sudo apt-get --yes remove postgresql\*
-- sudo apt-get install -y postgresql-11 postgresql-client-11
+- sudo apt-get install -y postgresql-11 postgresql-client-11 unzip
 - sudo cp /etc/postgresql/{9.6,11}/main/pg_hba.conf
 - sudo sed -i 's/5433/5432/g' /etc/postgresql/11/main/postgresql.conf
 - sudo cat /etc/postgresql/11/main/postgresql.conf
 - sudo service postgresql restart 11
 - sudo cat /var/log/postgresql/postgresql-11-main.log
+- wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.4.0.2170.zip -P ./sonar-scanner.zip
+- unzip sonar-scanner.zip -d /tmp
 
 before_script:
 - composer install
@@ -36,4 +38,5 @@ git:
 script:
 - ./vendor/bin/phpunit --coverage-clover=coverage-report.clover --log-junit=test-report.xml
 #- ./vendor/bin/infection --min-msi=75 --min-covered-msi=75
-- sonar-scanner
+#- sonar-scanner
+- /tmp/sonar-scanner/bin/sonar-scanner
