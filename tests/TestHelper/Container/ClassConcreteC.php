@@ -11,9 +11,16 @@ declare(strict_types=1);
 
 namespace Linna\TestHelper\Container;
 
-class ClassI
+class ClassConcreteC implements ClassInterface
 {
+    private $object = 'ClassConcreteC';
+
     public function __construct()
     {
+    }
+
+    public function inheritedMethod()
+    {
+        return $this->object;
     }
 }

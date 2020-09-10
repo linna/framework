@@ -11,9 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\TestHelper\Container;
 
-class ClassI
+interface ClassInterface
 {
-    public function __construct()
-    {
-    }
+    public function inheritedMethod();
 }

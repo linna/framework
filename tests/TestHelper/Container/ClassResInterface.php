@@ -11,12 +11,17 @@ declare(strict_types=1);
 
 namespace Linna\TestHelper\Container;
 
-class ClassResObject
+class ClassResInterface
 {
-    private $classB;
+    private $class;
 
-    public function __construct(ClassB $b)
+    public function __construct(ClassInterface $object)
     {
-        $this->classB = $b;
+        $this->class = $object;
+    }
+
+    public function getClass()
+    {
+        return $this->class->inheritedMethod();
     }
 }
