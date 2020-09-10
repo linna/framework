@@ -26,6 +26,11 @@ class Container implements ContainerInterface, ArrayAccess
     use ArrayAccessTrait;
 
     /**
+     * @const string
+     */
+    private const NO_TYPE = 'NO_TYPE';
+
+    /**
      * @var array<mixed> Contains object already resolved.
      */
     private array $cache = [];
@@ -164,7 +169,7 @@ class Container implements ContainerInterface, ArrayAccess
             //get parameter from constructor
             //can return error when constructor not declared
             $constructor = (new ReflectionClass($class))->getConstructor();//->getParameters();
-            //this should be resolve the error of when a class without constructor is encountered
+            //this should resolve the error when a class without constructor is encountered
             $parameters = \is_null($constructor) ? [] : $constructor->getParameters();
 
             //loop parameter
@@ -174,12 +179,12 @@ class Container implements ContainerInterface, ArrayAccess
                 $notAlreadyStored = !\in_array($param, $this->tree[$level][$class]);
 
                 //Function ReflectionType::__toString() is deprecated
-                //FROM https://github.com/php/php-src/blob/php-7.4.0RC2/UPGRADING
+                //FROM https://www.php.net/manual/en/migration74.deprecated.php
                 //Calls to ReflectionType::__toString() now generate a deprecation notice.
                 //This method has been deprecated in favor of ReflectionNamedType::getName()
                 //in the documentation since PHP 7.1, but did not throw a deprecation notice
                 //for technical reasons.
-                $type = ($param->getType() !== null) ? $param->getType()->getName() : 'NO_TYPE';
+                $type = ($param->getType() !== null) ? $param->getType()->getName() : self::NO_TYPE;
 
                 //if there is parameter with callable type
                 if (\class_exists($type) && $notAlreadyStored) {
@@ -266,7 +271,7 @@ class Container implements ContainerInterface, ArrayAccess
 
         //argument required from class
         foreach ($dependency as $argValue) {
-            $argType = ($argValue->getType() !== null) ? $argValue->getType()->getName() : 'NO_TYPE';
+            $argType = ($argValue->getType() !== null) ? $argValue->getType()->getName() : self::NO_TYPE;
 
             if (\class_exists($argType)) {
                 //add to array of arguments
