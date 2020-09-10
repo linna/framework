@@ -142,14 +142,14 @@ class Authentication
      * @param string $userName       User name from browser input.
      * @param string $password       Password from browser input.
      * @param string $storedUserName User name from persistent storage.
-     * @param string $storedPassword Password from persistent storage.
+     * @param string $storedPassword Password hash from persistent storage.
      * @param int    $storedId       User id from persistent storage.
      *
      * @return bool True for successful login, false if login fails.
      */
-    public function login(string $userName, string $password, string $storedUserName = '', string $storedPassword = '', int $storedId): bool
+    public function login(string $userName, string $password, string $storedUserName, string $storedPassword, int $storedId): bool
     {
-        if ($userName === $storedUserName && $this->password->verify($password, $storedPassword)) {
+        if (\hash_equals($userName, $storedUserName) && $this->password->verify($password, $storedPassword)) {
             //write valid login on session
             $this->session->loginTime = \time();
             $this->session->login = [
