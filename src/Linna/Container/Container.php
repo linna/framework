@@ -140,7 +140,8 @@ class Container implements ContainerInterface, ArrayAccess
         $this->rules = \array_merge($this->rules, $rules);
 
         //build dependency tree
-        $this->buildTree($class);
+        $this->buildTreeRecursive($class);
+        //$this->buildTree($class);
 
         //build objects
         $this->buildObjects();
@@ -150,11 +151,62 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
+     * Create a map of dependencies for a class
+     *
+     * @param string    $class Class wich tree will build
+     * @param int       $level Level for dependency
+     *
+     * @return void
+     */
+    private function buildTreeRecursive(string $class, int $level = 0): void
+    {
+        //initialize array if not already initialized
+        $this->tree[$level][$class] = [];
+
+        //get parameter from constructor
+        //can return error when constructor not declared
+        $constructor = (new ReflectionClass($class))->getConstructor();//->getParameters();
+        //this should resolve the error when a class without constructor is encountered
+        $parameters = \is_null($constructor) ? [] : $constructor->getParameters();
+
+        //loop parameter
+        foreach ($parameters as $param) {
+
+            //Function ReflectionType::__toString() is deprecated
+            //FROM https://www.php.net/manual/en/migration74.deprecated.php
+            //Calls to ReflectionType::__toString() now generate a deprecation notice.
+            //This method has been deprecated in favor of ReflectionNamedType::getName()
+            //in the documentation since PHP 7.1, but did not throw a deprecation notice
+            //for technical reasons.
+            //Get the data type of the parameter
+            $type = \is_null($param->getType()) ? self::NO_TYPE : $param->getType()->getName();
+
+            //if there is parameter with callable type
+            if (\class_exists($type)) {
+
+                //store dependency
+                $this->tree[$level][$class][] = $param;
+
+                //call recursive, head recursion
+                $this->buildTreeRecursive($type, $level + 1);
+
+                //continue
+                continue;
+            }
+
+            $this->tree[$level][$class][] = $param;
+        }
+    }
+
+    /**
      * Create a dependencies map for a class.
      *
      * @param string $class
      *
      * @return void
+     *
+     * @deprecated since version 0.27.0 Return to recursive build of the tree
+     *                                  because is 1.5x time fast.
      */
     private function buildTree(string $class): void
     {
@@ -233,10 +285,13 @@ class Container implements ContainerInterface, ArrayAccess
             foreach ($this->tree[$i] as $class => $arguments) {
 
                 //try to find object in class
-                $object = $this->cache[$class] ?? null;
+                if (isset($this->cache[$class])) {
+                    // no build need
+                    continue;
+                }
 
-                //if object is not in cache and need arguments try to build
-                if ($object === null && \count($arguments)) {
+                //object is not in cache and need arguments try to build
+                if (\count($arguments)) {
 
                     //build arguments
                     $args = $this->buildArguments($class, $arguments);
@@ -247,11 +302,8 @@ class Container implements ContainerInterface, ArrayAccess
                     continue;
                 }
 
-                if ($object === null) {
-
-                    //store object in cache
-                    $this->cache[$class] = (new ReflectionClass($class))->newInstance();
-                }
+                //store object in cache
+                $this->cache[$class] = (new ReflectionClass($class))->newInstance();
             }
         }
     }
@@ -271,7 +323,7 @@ class Container implements ContainerInterface, ArrayAccess
 
         //argument required from class
         foreach ($dependency as $argValue) {
-            $argType = ($argValue->getType() !== null) ? $argValue->getType()->getName() : self::NO_TYPE;
+            $argType = \is_null($argValue->getType()) ? self::NO_TYPE : $argValue->getType()->getName();
 
             if (\class_exists($argType)) {
                 //add to array of arguments
