@@ -13,15 +13,17 @@ namespace Linna\TestHelper\Container;
 
 class ClassResInterface
 {
-    private $class;
+    private $implementation;
+    private $b;
 
-    public function __construct(ClassInterface $object)
+    public function __construct(ClassInterface $object, ClassB $b)
     {
-        $this->class = $object;
+        $this->implementation = $object;
+        $this->b = $b;
     }
 
     public function getClass()
     {
-        return $this->class->inheritedMethod();
+        return $this->implementation->inheritedMethod();
     }
 }

@@ -160,7 +160,7 @@ class Container implements ContainerInterface, ArrayAccess
      */
     private function buildTreeRecursive(string $class, int $level = 0): void
     {
-        //initialize array if not already initialized
+        //initialize array
         $this->tree[$level][$class] = [];
 
         //get parameter from constructor
@@ -181,7 +181,16 @@ class Container implements ContainerInterface, ArrayAccess
             //Get the data type of the parameter
             $type = \is_null($param->getType()) ? self::NO_TYPE : $param->getType()->getName();
 
-            //if there is parameter with callable type
+            //if parameter is an interface
+            //check rules for an implementation and
+            //replace interface with implementation
+            if (\interface_exists($type)) {
+                //override type with interface implamentation
+                //declared in rules
+                $type = $this->rules[$type];
+            }
+
+            //if there is a parameter with callable type
             if (\class_exists($type)) {
 
                 //store dependency
@@ -290,7 +299,7 @@ class Container implements ContainerInterface, ArrayAccess
                     continue;
                 }
 
-                //object is not in cache and need arguments try to build
+                //object is not in cache and need arguments try to build it
                 if (\count($arguments)) {
 
                     //build arguments
@@ -325,10 +334,15 @@ class Container implements ContainerInterface, ArrayAccess
         foreach ($dependency as $argValue) {
             $argType = \is_null($argValue->getType()) ? self::NO_TYPE : $argValue->getType()->getName();
 
+            if (\interface_exists($argType)) {
+                //retrive concrete class bound to inteface in rules
+                $args[] = $this->cache[$this->rules[$argType]];
+                continue;
+            }
+
             if (\class_exists($argType)) {
                 //add to array of arguments
-                $paramClass = $argValue->getClass()->name;
-                $args[] = $this->cache[$paramClass];
+                $args[] = $this->cache[$argType];
                 continue;
             }
 

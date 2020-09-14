@@ -17,13 +17,18 @@ use Linna\TestHelper\Container\ClassACache;
 use Linna\TestHelper\Container\ClassARules;
 use Linna\TestHelper\Container\ClassB;
 use Linna\TestHelper\Container\ClassC;
+use Linna\TestHelper\Container\ClassConcreteA;
+use Linna\TestHelper\Container\ClassConcreteB;
+use Linna\TestHelper\Container\ClassConcreteC;
 use Linna\TestHelper\Container\ClassD;
 use Linna\TestHelper\Container\ClassE;
 use Linna\TestHelper\Container\ClassF;
 use Linna\TestHelper\Container\ClassG;
 use Linna\TestHelper\Container\ClassH;
 use Linna\TestHelper\Container\ClassI;
+use Linna\TestHelper\Container\ClassInterface;
 use Linna\TestHelper\Container\ClassResCache;
+use Linna\TestHelper\Container\ClassResInterface;
 use Linna\TestHelper\Container\ClassResObject;
 use Linna\TestHelper\Container\ClassResRules;
 use PHPUnit\Framework\TestCase;
@@ -377,6 +382,45 @@ class ContainerTest extends TestCase
         $this->assertInstanceOf(
             ClassResRules::class,
             $container->resolve(ClassResRules::class)
+        );
+    }
+
+    /**
+     * Implementation Provider.
+     *
+     * @return array
+     */
+    public function implementationProvider(): array
+    {
+        return [
+            [[ClassInterface::class => ClassConcreteA::class], 'ClassConcreteA'],
+            [[ClassInterface::class => ClassConcreteB::class], 'ClassConcreteB'],
+            [[ClassInterface::class => ClassConcreteC::class], 'ClassConcreteC'],
+        ];
+    }
+
+    /**
+     * Test resolving class with interface as argument.
+     *
+     * @dataProvider implementationProvider
+     *
+     * @param array  $rule
+     * @param string $result
+     *
+     * @return void
+     */
+    public function testResolveWithInterface(array $rule, string $result): void
+    {
+        $container = new Container($rule);
+
+        $this->assertInstanceOf(
+            ClassResInterface::class,
+            $container->resolve(ClassResInterface::class)
+        );
+
+        $this->assertEquals(
+            $result,
+            ($container->resolve(ClassResInterface::class))->getClass()
         );
     }
 }
