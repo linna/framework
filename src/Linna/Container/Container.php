@@ -209,6 +209,7 @@ class Container implements ContainerInterface, ArrayAccess
 
     /**
      * Create a dependencies map for a class.
+     * !!!This method will be removed!!!
      *
      * @param string $class
      *
@@ -217,7 +218,7 @@ class Container implements ContainerInterface, ArrayAccess
      * @deprecated since version 0.27.0 Return to recursive build of the tree
      *                                  because is 1.5x time fast.
      */
-    private function buildTree(string $class): void
+    /*private function buildTree(string $class): void
     {
         $level = 0;
         $stack = new SplStack();
@@ -278,7 +279,7 @@ class Container implements ContainerInterface, ArrayAccess
             //get last value pushed into stack;
             list($level, $class) = $stack->pop();
         }
-    }
+    }*/
 
     /**
      * Build objects from dependencyTree.
