@@ -370,14 +370,14 @@ class ContainerTest extends TestCase
     public function testResolveWithRules(): void
     {
         $container = new Container([
-            ClassARules::class => [
-                0 => true,
-                2 => 'foo',
-                3 => 1,
-                4 => ['foo'],
-                5 => 'foo',
-            ],
-        ]);
+            Container::RULE_ARGUMENT => [
+                ClassARules::class => [
+                    0 => true,
+                    2 => 'foo',
+                    3 => 1,
+                    4 => ['foo'],
+                    5 => 'foo',
+        ]]]);
 
         $this->assertInstanceOf(
             ClassResRules::class,
@@ -393,9 +393,9 @@ class ContainerTest extends TestCase
     public function implementationProvider(): array
     {
         return [
-            [[ClassInterface::class => ClassConcreteA::class], 'ClassConcreteA'],
-            [[ClassInterface::class => ClassConcreteB::class], 'ClassConcreteB'],
-            [[ClassInterface::class => ClassConcreteC::class], 'ClassConcreteC'],
+            [[Container::RULE_INTERFACE => [ClassResInterface::class => [0 => ClassConcreteA::class]]], 'ClassConcreteA'],
+            [[Container::RULE_INTERFACE => [ClassResInterface::class => [0 => ClassConcreteB::class]]], 'ClassConcreteB'],
+            [[Container::RULE_INTERFACE => [ClassResInterface::class => [0 => ClassConcreteC::class]]], 'ClassConcreteC'],
         ];
     }
 

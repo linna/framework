@@ -15,7 +15,6 @@ use ArrayAccess;
 use Linna\Container\Exception\NotFoundException;
 use Psr\Container\ContainerInterface;
 use ReflectionClass;
-use SplStack;
 
 /**
  * Dependency Injection Container and Resolver.
@@ -29,6 +28,16 @@ class Container implements ContainerInterface, ArrayAccess
      * @const string
      */
     private const NO_TYPE = 'NO_TYPE';
+
+    /**
+     * @const string
+     */
+    public const RULE_INTERFACE = 'interfaces';
+
+    /**
+     * @const string
+     */
+    public const RULE_ARGUMENT = 'arguments';
 
     /**
      * @var array<mixed> Contains object already resolved.
@@ -185,9 +194,11 @@ class Container implements ContainerInterface, ArrayAccess
             //check rules for an implementation and
             //replace interface with implementation
             if (\interface_exists($type)) {
+                //get the position of the current parameter for resolve the rule
+                $position = $param->getPosition();
                 //override type with interface implamentation
                 //declared in rules
-                $type = $this->rules[$type];
+                $type = $this->rules[self::RULE_INTERFACE][$class][$position];
             }
 
             //if there is a parameter with callable type
@@ -336,8 +347,10 @@ class Container implements ContainerInterface, ArrayAccess
             $argType = \is_null($argValue->getType()) ? self::NO_TYPE : $argValue->getType()->getName();
 
             if (\interface_exists($argType)) {
+                //get the position of the current parameter for resolve the rule
+                $position = $argValue->getPosition();
                 //retrive concrete class bound to inteface in rules
-                $args[] = $this->cache[$this->rules[$argType]];
+                $args[] = $this->cache[$this->rules[self::RULE_INTERFACE][$class][$position]];
                 continue;
             }
 
@@ -351,9 +364,9 @@ class Container implements ContainerInterface, ArrayAccess
         }
 
         //check if there is rules for this class
-        if (isset($this->rules[$class])) {
+        if (isset($this->rules['arguments'][$class])) {
             //merge arguments
-            $args = \array_replace($args, $this->rules[$class]);
+            $args = \array_replace($args, $this->rules[self::RULE_ARGUMENT][$class]);
         }
 
         return $args;
