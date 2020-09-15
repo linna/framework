@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Authorization\Exception` namespace
 * `Linna\Authorization\Exception\AuthorizationException` exception
 
+#### Container
+* `Linna\Container\Container::RULE_INTERFACE` public constant, use it in rules for resolve interfaces
+* `Linna\Container\Container::RULE_ARGUMENT` public constant, use it in rules for resolve other arguments
+
 #### Data Mapper
 * `Linna\DataMapper\NullUuidDomainObject` interface
 * `Linna\DataMapper\UuidDomainObjectAbstract` class
@@ -42,6 +46,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Authentication\Exception\AuthenticationException` now extend `Linna\Router\Exception\RedirectException`
 * `Linna\Authentication\ProtectedControllerTrait->protect()` now have as second argument `string $route` instead of `int $httpResponseCode = 403`
 * `Linna\Authentication\ProtectedControllerTrait->protectWithRedirect()` now have a third argument `string $route`
+
+#### Container
+* `Linna\Container\Container` now it is possible resolve classes with interface as parameter
+* `Linna\Container\Container` minor code optimizations
 
 #### Data Mapper
 * `Linna\DataMapper\MapperAbstract->save()` update after insert
