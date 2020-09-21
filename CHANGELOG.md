@@ -53,6 +53,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 #### Data Mapper
 * `Linna\DataMapper\MapperAbstract->save()` update after insert
+* `Linna\DataMapper\DomainObjectAbstract->id` when not set has value `-1` instead of `0`
 * `Linna\DataMapper\DomainObjectAbstract->setId` argument renamed `objectId` to `id`
 * `Linna\DataMapper\DomainObjectAbstract->rId` public property removed
 * `Linna\DataMapper\DomainObjectAbstract->objectId` protected property renamed to `id`

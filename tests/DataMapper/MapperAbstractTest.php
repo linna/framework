@@ -11,13 +11,9 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
-use Linna\Authentication\Password;
-use Linna\Authentication\User;
-use Linna\Authentication\UserMapper;
 use Linna\DataMapper\NullDomainObject;
-use Linna\DataMapper\UUID4;
-use Linna\Storage\StorageFactory;
-use PDO;
+use Linna\TestHelper\DataMapper\MapperMock;
+use Linna\TestHelper\DataMapper\DomainObjectMock;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -27,9 +23,9 @@ use PHPUnit\Framework\TestCase;
 class MapperAbstractTest extends TestCase
 {
     /**
-     * @var UserMapper The user mapper
+     * @var MapperMock The mapper mock
      */
-    protected static UserMapper $userMapper;
+    protected static MapperMock $mapperMock;
 
     /**
      * Set up before class.
@@ -38,33 +34,7 @@ class MapperAbstractTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        $options = [
-            'dsn'      => $GLOBALS['pdo_mysql_dsn'],
-            'user'     => $GLOBALS['pdo_mysql_user'],
-            'password' => $GLOBALS['pdo_mysql_password'],
-            'options'  => [
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_PERSISTENT         => false,
-                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
-            ],
-        ];
-
-        $pdo = (new StorageFactory('pdo', $options))->get();
-        $pdo->exec("DELETE FROM user WHERE name LIKE '%test_user_%'");
-        $pdo->exec("ALTER TABLE linna_db.user AUTO_INCREMENT = 1");
-
-        self::$userMapper = new UserMapper($pdo, new Password());
-    }
-
-    /**
-     * Tear down after class.
-     *
-     * @return void
-     */
-    public static function tearDownAfterClass(): void
-    {
-        //self::$userMapper = null;
+        self::$mapperMock = new MapperMock();
     }
 
     /**
@@ -74,7 +44,7 @@ class MapperAbstractTest extends TestCase
      */
     public function testNewObjectInstance(): void
     {
-        $this->assertInstanceOf(UserMapper::class, self::$userMapper);
+        $this->assertInstanceOf(MapperMock::class, self::$mapperMock);
     }
 
     /**
@@ -84,7 +54,7 @@ class MapperAbstractTest extends TestCase
      */
     public function testCreateDomainObjectWithMapper(): void
     {
-        $this->assertInstanceOf(User::class, self::$userMapper->create());
+        $this->assertInstanceOf(DomainObjectMock::class, self::$mapperMock->create());
     }
 
     /**
@@ -94,20 +64,36 @@ class MapperAbstractTest extends TestCase
      */
     public function testSaveDomainObjectWithMapper(): void
     {
-        /** @var User User Class. */
-        $user = self::$userMapper->create();
-        $user->name = 'test_user_create';
-        $user->uuid = (new UUID4())->getHex();
-        $user->setPassword('password');
+        //create a new object
+        /** @var DomainObjectMock Domain object mock class. */
+        $domainObject = self::$mapperMock->create();
+        $domainObject->name = 'FooName';
+        $domainObject->propertyOne = 'Foo';
+        $domainObject->propertyTwo = 'Bar';
+        $domainObject->propertyThree = 'Baz';
 
-        self::$userMapper->save($user);
+        //check for effective new object
+        $this->assertSame(-1, $domainObject->id);
+        
+        //save object
+        self::$mapperMock->save($domainObject);
+        
+        //check for effective insertion in storage
+        $this->assertSame(1, $domainObject->id);
+        
+        //retrive object
+        /** @var DomainObjectMock Domain object mock class. */
+        $savedDomainObject = self::$mapperMock->fetchByName('FooName');
 
-        /** @var User User Class. */
-        $newUser = self::$userMapper->fetchByName('test_user_create');
+        //check if the object is the same
+        $this->assertSame(1, $savedDomainObject->id);
+        $this->assertSame('FooName', $savedDomainObject->name);
 
-        $this->assertEquals('test_user_create', $newUser->name);
-
-        self::$userMapper->delete($newUser);
+        //cleaning
+        self::$mapperMock->delete($savedDomainObject);
+        
+        //check cleaning
+        $this->assertInstanceOf(NullDomainObject::class, $savedDomainObject);
     }
 
     /**
@@ -117,29 +103,50 @@ class MapperAbstractTest extends TestCase
      */
     public function testUpdateDomainObjectWithMapper(): void
     {
-        /** @var User User Class. */
-        $user = self::$userMapper->create();
-        $user->name = 'test_user_update';
-        $user->uuid = (new UUID4())->getHex();
-        $user->setPassword('password');
+        //create a new object
+        /** @var DomainObjectMock Domain object mock class. */
+        $domainObject = self::$mapperMock->create();
+        $domainObject->name = 'FooName';
+        $domainObject->propertyOne = 'Foo';
+        $domainObject->propertyTwo = 'Bar';
+        $domainObject->propertyThree = 'Baz';
 
-        self::$userMapper->save($user);
+        //check for effective new object
+        $this->assertSame(-1, $domainObject->id);
+        
+        //save object
+        self::$mapperMock->save($domainObject);
+        
+        //check for effective insertion in storage
+        $this->assertSame(1, $domainObject->id);
+        
+        //retrive object
+        /** @var DomainObjectMock Domain object mock class. */
+        $savedDomainObject = self::$mapperMock->fetchByName('FooName');
 
-        /** @var User User Class. */
-        $newUser = self::$userMapper->fetchByName('test_user_update');
-        $newUserId = $newUser->getId();
-
-        $this->assertEquals('test_user_update', $newUser->name);
-
-        $newUser->name = 'test_user_updated';
-        self::$userMapper->save($newUser);
-
-        /** @var User User Class. */
-        $newUserUpdated = self::$userMapper->fetchById($newUserId);
-
-        $this->assertEquals('test_user_updated', $newUserUpdated->name);
-
-        self::$userMapper->delete($newUser);
+        //check if the object is the same
+        $this->assertSame(1, $savedDomainObject->id);
+        $this->assertSame('FooName', $savedDomainObject->name);
+        
+        //update object property
+        $savedDomainObject->name = 'UpdatedFooName';
+        
+        //update object
+        self::$mapperMock->save($savedDomainObject);
+        
+        //retrive updated object
+        /** @var DomainObjectMock Domain object mock class. */
+        $updatedDomainObject = self::$mapperMock->fetchByName('UpdatedFooName');
+        
+        //check if the object is the same
+        $this->assertSame(1, $updatedDomainObject->id);
+        $this->assertSame('UpdatedFooName', $updatedDomainObject->name);
+        
+        //cleaning
+        self::$mapperMock->delete($updatedDomainObject);
+        
+        //check cleaning
+        $this->assertInstanceOf(NullDomainObject::class, $updatedDomainObject);
     }
 
     /**
@@ -149,24 +156,38 @@ class MapperAbstractTest extends TestCase
      */
     public function testDeleteDomainObjectWithMapper(): void
     {
-        /** @var User User Class. */
-        $user = self::$userMapper->create();
-        $user->name = 'test_user_delete';
-        $user->uuid = (new UUID4())->getHex();
-        $user->setPassword('password');
+        //create a new object
+        /** @var DomainObjectMock Domain object mock class. */
+        $domainObject = self::$mapperMock->create();
+        $domainObject->name = 'FooName';
+        $domainObject->propertyOne = 'Foo';
+        $domainObject->propertyTwo = 'Bar';
+        $domainObject->propertyThree = 'Baz';
 
-        self::$userMapper->save($user);
+        //check for effective new object
+        $this->assertSame(-1, $domainObject->id);
+        
+        //save object
+        self::$mapperMock->save($domainObject);
+        
+        //check for effective insertion in storage
+        $this->assertSame(1, $domainObject->id);
+        
+        //retrive object
+        /** @var DomainObjectMock Domain object mock class. */
+        $savedDomainObject = self::$mapperMock->fetchByName('FooName');
 
-        /** @var User User Class. */
-        $newUser = self::$userMapper->fetchByName('test_user_delete');
+        //check if the object is the same
+        $this->assertSame(1, $savedDomainObject->id);
+        $this->assertSame('FooName', $savedDomainObject->name);
 
-        $this->assertEquals('test_user_delete', $newUser->name);
+        //cleaning
+        self::$mapperMock->delete($savedDomainObject);
+        
+        //check cleaning
+        $this->assertInstanceOf(NullDomainObject::class, $savedDomainObject);
+        $this->assertInstanceOf(NullDomainObject::class, self::$mapperMock->fetchByName('FooName'));
+        $this->assertInstanceOf(NullDomainObject::class, self::$mapperMock->fetchById(1));
 
-        self::$userMapper->delete($newUser);
-
-        /** @var User User Class. */
-        $nullUser = self::$userMapper->fetchByName('test_user_delete');
-
-        $this->assertInstanceOf(NullDomainObject::class, $nullUser);
     }
 }

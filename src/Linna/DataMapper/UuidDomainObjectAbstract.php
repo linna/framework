@@ -142,7 +142,7 @@ abstract class UuidDomainObjectAbstract implements UuidDomainObjectInterface
      */
     public function __isset(string $name)
     {
-        if ($name === 'uuid') {
+        if ($name === 'uuid' || $name === 'id') {
             return true;
         }
 

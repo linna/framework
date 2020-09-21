@@ -20,8 +20,10 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
 {
     /**
      * @var int Read only object id on persistent storage.
+     * 
+     * -1 means that the id is not set!
      */
-    protected int $id = 0;
+    protected int $id = -1;
 
     /**
      * @var string Read only insertion date on persistent storage.
@@ -64,7 +66,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      */
     public function setId(int $id): int
     {
-        if ($this->id !== 0) {
+        if ($this->id !== -1) {
             throw new UnexpectedValueException('ObjectId property is immutable.');
         }
 

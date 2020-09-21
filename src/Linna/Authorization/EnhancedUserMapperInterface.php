@@ -77,6 +77,8 @@ interface EnhancedUserMapperInterface extends MapperInterface, FetchByPermission
      *
      * @param EnhancedUser $user
      * @param Permission   $permission
+     * 
+     * @return void
      */
     public function revokePermission(EnhancedUser &$user, Permission $permission);
 

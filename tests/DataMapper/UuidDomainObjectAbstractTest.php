@@ -11,20 +11,19 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
-use Linna\Authentication\Password;
-use Linna\Authentication\User;
+use Linna\TestHelper\DataMapper\UuidDomainObjectMock;
 use PHPUnit\Framework\TestCase;
 use UnexpectedValueException;
 
 /**
  * Domain Object Test
  */
-class DomainObjectTest extends TestCase
+class UuidDomainObjectAbstractTest extends TestCase
 {
     /**
-     * @var User The user class.
+     * @var UuidDomainObjectMock The domain object class.
      */
-    protected static User $user;
+    protected static UuidDomainObjectMock $domainObject;
 
     /**
      * Set up before class.
@@ -33,7 +32,7 @@ class DomainObjectTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        self::$user = new User(new Password());
+        self::$domainObject = new UuidDomainObjectMock();
     }
 
     /**
@@ -53,7 +52,7 @@ class DomainObjectTest extends TestCase
      */
     public function testNewObjectInstance(): void
     {
-        $this->assertInstanceOf(User::class, self::$user);
+        $this->assertInstanceOf(UuidDomainObjectMock::class, self::$domainObject);
     }
 
     /**
@@ -63,9 +62,9 @@ class DomainObjectTest extends TestCase
      */
     public function testSetObjectId(): void
     {
-        self::$user->setId(1);
+        self::$domainObject->setId('a93a806d-f66f-4a23-a8d6-00e3f0ab20be');
 
-        $this->assertEquals(1, self::$user->getId());
+        $this->assertEquals('a93a806d-f66f-4a23-a8d6-00e3f0ab20be', self::$domainObject->getId());
     }
 
     /**
@@ -75,7 +74,8 @@ class DomainObjectTest extends TestCase
      */
     public function testGetObjectIdWithMethod(): void
     {
-        $this->assertEquals(1, self::$user->getId());
+        $this->assertEquals('a93a806d-f66f-4a23-a8d6-00e3f0ab20be', self::$domainObject->getId());
+        $this->assertEquals('a93a806d-f66f-4a23-a8d6-00e3f0ab20be', self::$domainObject->getUuid());
     }
 
     /**
@@ -85,7 +85,8 @@ class DomainObjectTest extends TestCase
      */
     public function testGetObjectIdWithProperty(): void
     {
-        $this->assertEquals(1, self::$user->id);
+        $this->assertEquals('a93a806d-f66f-4a23-a8d6-00e3f0ab20be', self::$domainObject->id);
+        $this->assertEquals('a93a806d-f66f-4a23-a8d6-00e3f0ab20be', self::$domainObject->uuid);
     }
 
     /**
@@ -95,7 +96,7 @@ class DomainObjectTest extends TestCase
      */
     public function testGetUnknownProperty(): void
     {
-        $this->assertEquals(null, self::$user->unknown);
+        $this->assertEquals(null, self::$domainObject->unknown);
     }
 
     /**
@@ -105,8 +106,9 @@ class DomainObjectTest extends TestCase
      */
     public function testIssetProperty(): void
     {
-        $this->assertTrue(isset(self::$user->id));
-        $this->assertFalse(isset(self::$user->unknown));
+        $this->assertTrue(isset(self::$domainObject->id));
+        $this->assertTrue(isset(self::$domainObject->uuid));
+        $this->assertFalse(isset(self::$domainObject->unknown));
     }
 
     /**
@@ -119,7 +121,7 @@ class DomainObjectTest extends TestCase
         $this->expectException(UnexpectedValueException::class);
         $this->expectExceptionMessage("ObjectId property is immutable.");
 
-        self::$user->setId(1);
-        self::$user->setId(2);
+        self::$domainObject->setId('a93a806d-f66f-4a23-a8d6-00e3f0ab20be');
+        self::$domainObject->setId('cb116b04-dad1-4d6d-b3fe-5f97373ab868');
     }
 }
