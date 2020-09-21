@@ -63,7 +63,7 @@ class DomainObjectAbstratcTest extends TestCase
     public function testSetObjectId(): void
     {
         $this->assertEquals(-1, self::$domainObject->getId());
-        
+
         self::$domainObject->setId(1);
 
         $this->assertEquals(1, self::$domainObject->getId());

@@ -21,6 +21,7 @@ use Linna\DataMapper\FetchLimitInterface;
 use Linna\DataMapper\MapperAbstract;
 use Linna\DataMapper\MapperInterface;
 use Linna\DataMapper\NullDomainObject;
+
 //use Linna\Storage\ExtendedPDO;
 //use PDO;
 //use RuntimeException;
@@ -34,7 +35,7 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
      * @var array Mock storage
      */
     private $storage = [];
-    
+
     /**
      * Constructor.
      */
@@ -69,7 +70,7 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
                 return $this->storage[$key];
             }
         }
-        
+
         return new NullDomainObject();
     }
 
@@ -93,7 +94,6 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
      */
     public function fetchLimit(int $offset, int $rowCount): array
     {
-
     }
 
     /**
@@ -117,7 +117,7 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
     {
         $this->checkDomainObjectType($domainObjectMock);
 
-        $id = array_key_last($this->storage);
+        $id = \array_key_last($this->storage);
 
         if (\is_null($id)) {
             $id = 0;
@@ -156,7 +156,7 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
         $id = $domainObjectMock->getId();
 
         unset($this->storage[$id]);
-        
+
         $domainObjectMock = new NullDomainObject;
     }
 

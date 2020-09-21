@@ -74,13 +74,13 @@ class MapperAbstractTest extends TestCase
 
         //check for effective new object
         $this->assertSame(-1, $domainObject->id);
-        
+
         //save object
         self::$mapperMock->save($domainObject);
-        
+
         //check for effective insertion in storage
         $this->assertSame(1, $domainObject->id);
-        
+
         //retrive object
         /** @var DomainObjectMock Domain object mock class. */
         $savedDomainObject = self::$mapperMock->fetchByName('FooName');
@@ -91,7 +91,7 @@ class MapperAbstractTest extends TestCase
 
         //cleaning
         self::$mapperMock->delete($savedDomainObject);
-        
+
         //check cleaning
         $this->assertInstanceOf(NullDomainObject::class, $savedDomainObject);
     }
@@ -113,13 +113,13 @@ class MapperAbstractTest extends TestCase
 
         //check for effective new object
         $this->assertSame(-1, $domainObject->id);
-        
+
         //save object
         self::$mapperMock->save($domainObject);
-        
+
         //check for effective insertion in storage
         $this->assertSame(1, $domainObject->id);
-        
+
         //retrive object
         /** @var DomainObjectMock Domain object mock class. */
         $savedDomainObject = self::$mapperMock->fetchByName('FooName');
@@ -127,24 +127,24 @@ class MapperAbstractTest extends TestCase
         //check if the object is the same
         $this->assertSame(1, $savedDomainObject->id);
         $this->assertSame('FooName', $savedDomainObject->name);
-        
+
         //update object property
         $savedDomainObject->name = 'UpdatedFooName';
-        
+
         //update object
         self::$mapperMock->save($savedDomainObject);
-        
+
         //retrive updated object
         /** @var DomainObjectMock Domain object mock class. */
         $updatedDomainObject = self::$mapperMock->fetchByName('UpdatedFooName');
-        
+
         //check if the object is the same
         $this->assertSame(1, $updatedDomainObject->id);
         $this->assertSame('UpdatedFooName', $updatedDomainObject->name);
-        
+
         //cleaning
         self::$mapperMock->delete($updatedDomainObject);
-        
+
         //check cleaning
         $this->assertInstanceOf(NullDomainObject::class, $updatedDomainObject);
     }
@@ -166,13 +166,13 @@ class MapperAbstractTest extends TestCase
 
         //check for effective new object
         $this->assertSame(-1, $domainObject->id);
-        
+
         //save object
         self::$mapperMock->save($domainObject);
-        
+
         //check for effective insertion in storage
         $this->assertSame(1, $domainObject->id);
-        
+
         //retrive object
         /** @var DomainObjectMock Domain object mock class. */
         $savedDomainObject = self::$mapperMock->fetchByName('FooName');
@@ -183,11 +183,10 @@ class MapperAbstractTest extends TestCase
 
         //cleaning
         self::$mapperMock->delete($savedDomainObject);
-        
+
         //check cleaning
         $this->assertInstanceOf(NullDomainObject::class, $savedDomainObject);
         $this->assertInstanceOf(NullDomainObject::class, self::$mapperMock->fetchByName('FooName'));
         $this->assertInstanceOf(NullDomainObject::class, self::$mapperMock->fetchById(1));
-
     }
 }

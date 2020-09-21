@@ -16,7 +16,7 @@ use Linna\DataMapper\DomainObjectAbstract;
 class DomainObjectMock extends DomainObjectAbstract
 {
     public string $name = '';
-    
+
     public string $propertyOne = '';
 
     public string $propertyTwo = '';
@@ -25,6 +25,5 @@ class DomainObjectMock extends DomainObjectAbstract
 
     public function __construct()
     {
-
     }
 }

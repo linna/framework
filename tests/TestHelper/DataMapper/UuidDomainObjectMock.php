@@ -23,6 +23,5 @@ class UuidDomainObjectMock extends UuidDomainObjectAbstract
 
     public function __construct()
     {
-
     }
 }

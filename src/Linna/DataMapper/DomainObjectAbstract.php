@@ -20,7 +20,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
 {
     /**
      * @var int Read only object id on persistent storage.
-     * 
+     *
      * -1 means that the id is not set!
      */
     protected int $id = -1;
