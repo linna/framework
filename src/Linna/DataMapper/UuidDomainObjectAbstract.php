@@ -18,20 +18,12 @@ use UnexpectedValueException;
  */
 abstract class UuidDomainObjectAbstract implements UuidDomainObjectInterface
 {
+    use DomainObjectTimeTrait;
+
     /**
      * @var string Read only object id on persistent storage.
      */
     protected string $uuid = '';
-
-    /**
-     * @var string Insertion date on persistent storage.
-     */
-    public string $created = '';
-
-    /**
-     * @var string Last update date on persistento storage.
-     */
-    public string $lastUpdate = '';
 
     /**
      * Get the UUID of the object (unique to the object type).
@@ -87,36 +79,6 @@ abstract class UuidDomainObjectAbstract implements UuidDomainObjectInterface
         $this->uuid = $uuid;
 
         return $uuid;
-    }
-
-    /**
-     * Set the creation date for the object.
-     *
-     * @return void
-     *
-     * @throws UnexpectedValueException If the creation date on the object is already set.
-     */
-    public function setCreated(): void
-    {
-        $date = \date(DATE_ATOM);
-
-        if ($this->created !== '') {
-            throw new UnexpectedValueException('Creation date property is immutable.');
-        }
-
-        $this->created = $date;
-    }
-
-    /**
-     * Set the time for the last object changes.
-     *
-     * @return void
-     */
-    public function setLastUpdate(): void
-    {
-        $date = \date(DATE_ATOM);
-
-        $this->lastUpdate = $date;
     }
 
     /**

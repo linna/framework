@@ -15,13 +15,11 @@ use Linna\DataMapper\UuidDomainObjectAbstract;
 
 class UuidDomainObjectMock extends UuidDomainObjectAbstract
 {
+    public string $name = '';
+
     public string $propertyOne = '';
 
     public string $propertyTwo = '';
 
     public string $propertyThree = '';
-
-    public function __construct()
-    {
-    }
 }

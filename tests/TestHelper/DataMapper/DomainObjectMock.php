@@ -22,8 +22,4 @@ class DomainObjectMock extends DomainObjectAbstract
     public string $propertyTwo = '';
 
     public string $propertyThree = '';
-
-    public function __construct()
-    {
-    }
 }

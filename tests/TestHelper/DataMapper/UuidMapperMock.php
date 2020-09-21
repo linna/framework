@@ -12,19 +12,19 @@ declare(strict_types=1);
 namespace Linna\TestHelper\DataMapper;
 
 use InvalidArgumentException;
-use Linna\DataMapper\DomainObjectAbstract;
-use Linna\DataMapper\DomainObjectInterface;
+use Linna\DataMapper\UUID4;
+use Linna\DataMapper\UuidDomainObjectInterface;
 use Linna\DataMapper\FetchByNameInterface;
 use Linna\DataMapper\FetchAllInterface;
 use Linna\DataMapper\FetchLimitInterface;
-use Linna\DataMapper\MapperAbstract;
-use Linna\DataMapper\MapperInterface;
-use Linna\DataMapper\NullDomainObject;
+use Linna\DataMapper\UuidMapperAbstract;
+use Linna\DataMapper\UuidMapperInterface;
+use Linna\DataMapper\NullUuidDomainObject;
 
 /**
  * MapperMock.
  */
-class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameInterface, FetchAllInterface, FetchLimitInterface
+class UuidMapperMock extends UuidMapperAbstract implements UuidMapperInterface, FetchByNameInterface, FetchAllInterface, FetchLimitInterface
 {
     /**
      * @var array Mock storage
@@ -44,11 +44,11 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
      *
      * @param int $objectId
      *
-     * @return DomainObjectInterface
+     * @return UuidDomainObjectInterface
      */
-    public function fetchById(int $objectId): DomainObjectInterface
+    public function fetchById(string $objectId): UuidDomainObjectInterface
     {
-        return $this->storage[$objectId] ?? new NullDomainObject();
+        return $this->storage[$objectId] ?? new NullUuidDomainObject();
     }
 
     /**
@@ -56,9 +56,9 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
      *
      * @param string $objectName
      *
-     * @return DomainObjectInterface
+     * @return UuidDomainObjectInterface
      */
-    public function fetchByName(string $objectName): DomainObjectInterface
+    public function fetchByName(string $objectName): UuidDomainObjectInterface
     {
         foreach ($this->storage as $key => $object) {
             if ($object->name === $objectName) {
@@ -66,7 +66,7 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
             }
         }
 
-        return new NullDomainObject();
+        return new NullUuidDomainObject();
     }
 
     /**
@@ -94,11 +94,11 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
     /**
      * Create a new instance of a domain object.
      *
-     * @return DomainObjectInterface
+     * @return UuidDomainObjectInterface
      */
-    protected function concreteCreate(): DomainObjectInterface
+    protected function concreteCreate(): UuidDomainObjectInterface
     {
-        return new DomainObjectMock();
+        return new UuidDomainObjectMock();
     }
 
     /**
@@ -106,19 +106,15 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
      * Domain object passed as reference, gain the id of the persistent
      * storage record.
      *
-     * @param DomainObjectInterface $domainObjectMock
+     * @param UuidDomainObjectInterface $domainObjectMock
      */
-    protected function concreteInsert(DomainObjectInterface &$domainObjectMock)
+    protected function concreteInsert(UuidDomainObjectInterface &$domainObjectMock)
     {
         $this->checkDomainObjectType($domainObjectMock);
 
-        $id = \array_key_last($this->storage);
+        $id = (new UUID4())->getHex();
 
-        if (\is_null($id)) {
-            $id = 0;
-        }
-
-        $domainObjectMock->setId(++$id);
+        $domainObjectMock->setId($id);
 
         $this->storage[$id] = $domainObjectMock;
     }
@@ -126,9 +122,9 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
     /**
      * Update a domain object in persistent storage.
      *
-     * @param DomainObjectInterface $domainObjectMock
+     * @param UuidDomainObjectInterface $domainObjectMock
      */
-    protected function concreteUpdate(DomainObjectInterface $domainObjectMock)
+    protected function concreteUpdate(UuidDomainObjectInterface $domainObjectMock)
     {
         $this->checkDomainObjectType($domainObjectMock);
 
@@ -142,9 +138,9 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
      * Domain object passed as reference, become NullDomainObject after
      * deletion.
      *
-     * @param DomainObjectInterface $domainObject
+     * @param UuidDomainObjectInterface $domainObject
      */
-    protected function concreteDelete(DomainObjectInterface &$domainObjectMock)
+    protected function concreteDelete(UuidDomainObjectInterface &$domainObjectMock)
     {
         $this->checkDomainObjectType($domainObjectMock);
 
@@ -152,20 +148,20 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
 
         unset($this->storage[$id]);
 
-        $domainObjectMock = new NullDomainObject();
+        $domainObjectMock = new NullUuidDomainObject();
     }
 
     /**
      * Check for valid domain Object.
      *
-     * @param DomainObjectInterface $domainObject
+     * @param UuidDomainObjectInterface $domainObject
      *
      * @throws InvalidArgumentException if the domain object isn't of the type required by mapper
      */
-    protected function checkDomainObjectType(DomainObjectInterface $domainObject)
+    protected function checkDomainObjectType(UuidDomainObjectInterface $domainObject)
     {
-        if (!($domainObject instanceof DomainObjectMock)) {
-            throw new InvalidArgumentException('Domain Object parameter must be instance of DomainObjectMock class');
+        if (!($domainObject instanceof UuidDomainObjectMock)) {
+            throw new InvalidArgumentException('Domain Object parameter must be instance of UuidDomainObjectMock class');
         }
     }
 }

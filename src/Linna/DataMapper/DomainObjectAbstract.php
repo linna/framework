@@ -18,22 +18,14 @@ use UnexpectedValueException;
  */
 abstract class DomainObjectAbstract implements DomainObjectInterface
 {
+    use DomainObjectTimeTrait;
+
     /**
      * @var int Read only object id on persistent storage.
      *
      * -1 means that the id is not set!
      */
     protected int $id = -1;
-
-    /**
-     * @var string Read only insertion date on persistent storage.
-     */
-    public string $created = '';
-
-    /**
-     * @var string Read only last update date on persistento storage.
-     */
-    public string $lastUpdate = '';
 
     /**
      * Get the id of the object (unique to the object type).
