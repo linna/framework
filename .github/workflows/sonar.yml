@@ -1,0 +1,52 @@
+name: SonarCloud
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8
+          tools: composer:v2
+          coverage: xdebug
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Execute tests
+        run: vendor/bin/phpunit --coverage-clover=coverage-report.clover --log-junit=test-report.xml
+
+      - name: Fix code coverage paths
+        run: sed -i 's/\/home\/runner\/work\/framework\/framework\//\/github\/workspace\//g' coverage-report.clover
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.sources=src
+            -Dsonar.tests=tests
+            -Dsonar.language=php
+            -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.php.coverage.reportPaths=coverage-report.clover
+            -Dsonar.php.tests.reportPath=test-report.xml
