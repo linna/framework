@@ -105,8 +105,8 @@ class PasswordTest extends TestCase
 
         $this->assertEquals('array', \gettype($info));
 
-        //fix for php 7.4
-        if (PHP_MINOR_VERSION === 4) {
+        //fix for php >= 7.4
+        if (PHP_MINOR_VERSION === 4 || PHP_MAJOR_VERSION >= 7) {
             $this->assertEquals('2y', $info['algo']);
             return;
         }

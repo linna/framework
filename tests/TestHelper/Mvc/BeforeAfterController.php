@@ -41,11 +41,11 @@ class BeforeAfterController extends Controller
     /**
      * Action.
      *
-     * @param mixed $param
+     * @param mixed $value
      */
-    public function Action($param)
+    public function Action($value)
     {
-        $this->model->doAction($param);
+        $this->model->doAction($value);
     }
 
     /**

@@ -106,7 +106,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @return void
      */
-    public function set(string $id, $value): void
+    public function set($id, $value): void
     {
         $this->cache[$id] = $value;
     }
@@ -118,7 +118,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @return bool
      */
-    public function delete(string $id): bool
+    public function delete($id): bool
     {
         if (\array_key_exists($id, $this->cache)) {
 

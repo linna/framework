@@ -141,6 +141,8 @@ class FrontController
 
         //action - call controller passing params
         if (!empty($param) && $action) {
+            //PHP 8, an associative array is passed as named arguments,
+            //pay attention on route declaring and to controller method arguments
             \call_user_func_array([$this->controller, $action], $param);
             return;
         }
