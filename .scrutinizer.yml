@@ -19,7 +19,7 @@ build:
             pecl_extensions:
                 - mongodb
                 - memcached
-        mysql: 8.0
+        mysql: 5.7
         postgresql: true
         memcached: true
         mongodb: true
