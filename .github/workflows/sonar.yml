@@ -12,6 +12,34 @@ jobs:
     name: SonarCloud
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306:3306
+        options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      mongodb:
+        image: mongo
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: password
+        ports:
+          - 27017:27017
+      memcached:
+        image: memcached
+        ports:
+          - 11211:11211
+
     strategy:
       fail-fast: true
 
@@ -30,6 +58,12 @@ jobs:
 
       - name: Install dependencies
         run: composer install
+
+      - name: Load Mysql database
+        run: mysql -uroot -h0.0.0.0 -ppassword < vendor/linna/db-dumps/src/linna_db_mysql_test.sql
+
+      - name: Load Postgres database
+        run: PGPASSWORD=password psql -U postgres -h0.0.0.0 -a -f vendor/linna/db-dumps/src/linna_db_pgsql.sql
 
       - name: Execute tests
         run: vendor/bin/phpunit --coverage-clover=coverage-report.clover --log-junit=test-report.xml

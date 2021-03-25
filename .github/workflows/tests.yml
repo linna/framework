@@ -41,24 +41,11 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        #php: [7.4, 8.0]
-        php: [8.0]
+        php: [7.4, 8.0]
 
     name: PHP ${{ matrix.php }}
 
     steps:
-      #- name: Check docker
-      #  run: docker ps
-        
-      #- name: Check ports
-      #  run: netstat -antpud
-        
-      #- name: Check Mysql version
-      #  run: mysql -uroot -h0.0.0.0 -ppassword -e 'SELECT version()'
-        
-      #- name: Check Postgres version
-      #  run: PGPASSWORD=password psql -U postgres -h0.0.0.0 -c 'SELECT version()'
-        
       - name: Checkout
         uses: actions/checkout@v2
 
