@@ -15,11 +15,11 @@ tools:
 build:
     environment:
         php:
-            version: 7.4
+            version: 8.0
             pecl_extensions:
                 - mongodb
                 - memcached
-        mysql: 5.7
+        mysql: 8.0
         postgresql: true
         memcached: true
         mongodb: true

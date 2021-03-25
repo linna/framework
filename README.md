@@ -12,7 +12,8 @@
 
 <div align="center">
 
-[![Build Status](https://travis-ci.org/linna/framework.svg?branch=master)](https://travis-ci.org/linna/framework)
+[![Tests](https://github.com/linna/framework/actions/workflows/tests.yml/badge.svg)](https://github.com/linna/framework/actions/workflows/tests.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=linna_framework&metric=alert_status)](https://sonarcloud.io/dashboard?id=linna_framework)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/linna/framework/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/linna/framework/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/linna/framework/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/linna/framework/?branch=master)
 [![StyleCI](https://styleci.io/repos/41168432/shield?branch=master&style=flat)](https://styleci.io/repos/41168432)
