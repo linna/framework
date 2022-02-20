@@ -93,7 +93,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @return bool
      */
-    public function has($id)
+    public function has($id): bool
     {
         return isset($this->cache[$id]);
     }

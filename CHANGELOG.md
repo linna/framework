@@ -40,12 +40,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-* PHP 7.4 required
+* PHP 8.0 required
 
 #### Authentication
 * `Linna\Authentication\Exception\AuthenticationException` now extend `Linna\Router\Exception\RedirectException`
 * `Linna\Authentication\ProtectedControllerTrait->protect()` now have as second argument `string $route` instead of `int $httpResponseCode = 403`
 * `Linna\Authentication\ProtectedControllerTrait->protectWithRedirect()` now have a third argument `string $route`
+
+#### Cache
+* Now drivers use [Psr\SimpleCache](https://github.com/php-fig/simple-cache/releases/tag/3.0.0) instead of my typed verion
 
 #### Container
 * `Linna\Container\Container` now it is possible resolve classes with interface as parameter
