@@ -89,16 +89,16 @@ class MemcachedCache implements CacheInterface
 
     /**
      * Handle ttl parameter.
-     * 
+     *
      * @param null|int|\DateInterval $ttl   Optional. The TTL value of this item. If no value is sent and
      *                                      the driver supports TTL then the library may set a default value
      *                                      for it or let the driver take care of that.
-     * 
+     *
      * @return int Ttl in seconds.
      */
     private function handleTtl(DateInterval|int|null $ttl): int
     {
-        if ($ttl == null){
+        if ($ttl == null) {
             return 0;
         }
         if (is_int($ttl)) {
@@ -110,7 +110,7 @@ class MemcachedCache implements CacheInterface
             return (int) $now->format('U');
         }
     }
-    
+
     /**
      * Delete an item from the cache by its unique key.
      *

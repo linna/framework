@@ -117,7 +117,7 @@ class DiskCache implements CacheInterface
     public function set(string $key, mixed $value, DateInterval|int|null $ttl = null): bool
     {
         $vTtl = $this->handleTtl($ttl);
-        
+
         //create cache array
         $cache = [
             'key'     => $key,
@@ -138,16 +138,16 @@ class DiskCache implements CacheInterface
 
     /**
      * Handle ttl parameter.
-     * 
+     *
      * @param null|int|\DateInterval $ttl   Optional. The TTL value of this item. If no value is sent and
      *                                      the driver supports TTL then the library may set a default value
      *                                      for it or let the driver take care of that.
-     * 
+     *
      * @return int Ttl in seconds.
      */
     private function handleTtl(DateInterval|int|null $ttl): int
     {
-        if ($ttl == null){
+        if ($ttl == null) {
             return 0;
         }
         if (is_int($ttl)) {
@@ -159,7 +159,7 @@ class DiskCache implements CacheInterface
             return (int) $now->format('U');
         }
     }
-    
+
     /**
      * Calculate ttl for cache file.
      *
