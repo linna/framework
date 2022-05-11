@@ -70,7 +70,7 @@ class View implements SplObserver
      *
      * @return void
      */
-    public function update(SplSubject $subject)
+    public function update(SplSubject $subject): void
     {
         if ($subject instanceof Model) {
             $this->data = \array_merge($this->data, $subject->get());

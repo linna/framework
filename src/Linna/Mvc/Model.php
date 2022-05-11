@@ -50,7 +50,7 @@ class Model implements SplSubject
      *
      * @return void
      */
-    public function attach(SplObserver $observer)
+    public function attach(SplObserver $observer): void
     {
         if ($observer instanceof View) {
             $this->observers->attach($observer);
@@ -64,7 +64,7 @@ class Model implements SplSubject
      *
      * @return void
      */
-    public function detach(SplObserver $observer)
+    public function detach(SplObserver $observer): void
     {
         if ($observer instanceof View) {
             $this->observers->detach($observer);
@@ -76,7 +76,7 @@ class Model implements SplSubject
      *
      * @return void
      */
-    public function notify()
+    public function notify(): void
     {
         /** @var View $value Attached observers. */
         foreach ($this->observers as $value) {
