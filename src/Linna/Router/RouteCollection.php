@@ -11,12 +11,12 @@ declare(strict_types=1);
 
 namespace Linna\Router;
 
-use Linna\TypedArrayObject\ClassArrayObject;
+use Linna\TypedArrayObject\ArrayOfClasses;
 
 /**
  * Route Collection
  */
-class RouteCollection extends ClassArrayObject
+class RouteCollection extends ArrayOfClasses
 {
     /**
      * Class Contructor.
