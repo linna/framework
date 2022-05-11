@@ -84,67 +84,67 @@ class ModelViewControllerTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         $routes = (new RouteCollection([
-            new Route([
-                'name'       => 'Calculator Single Add',
-                'method'     => 'POST',
-                'url'        => '/calculator/single/add',
-                'model'      =>  CalculatorSingleAddModel::class,
-                'view'       =>  CalculatorSingleAddView::class,
-                'controller' =>  CalculatorSingleAddController::class,
-            ]),new Route([
-                'name'       => 'Calculator Single Divide',
-                'method'     => 'POST',
-                'url'        => '/calculator/single/divide',
-                'model'      =>  CalculatorSingleDivideModel::class,
-                'view'       =>  CalculatorSingleDivideView::class,
-                'controller' =>  CalculatorSingleDivideController::class,
-            ]),new Route([
-                'name'       => 'Calculator Single Multiply',
-                'method'     => 'POST',
-                'url'        => '/calculator/single/multiply',
-                'model'      =>  CalculatorSingleMultiplyModel::class,
-                'view'       =>  CalculatorSingleMultiplyView::class,
-                'controller' =>  CalculatorSingleMultiplyController::class,
-            ]),new Route([
-                'name'       => 'Calculator Single Sub',
-                'method'     => 'POST',
-                'url'        => '/calculator/single/sub',
-                'model'      =>  CalculatorSingleSubModel::class,
-                'view'       =>  CalculatorSingleSubView::class,
-                'controller' =>  CalculatorSingleSubController::class,
-            ]),
-            new Route([
-                'name'       => 'Calculator Multi',
-                'method'     => 'POST',
-                'url'        => '/calculator/multi/(multiply|divide|add|sub)',
-                'model'      =>  CalculatorMultiModel::class,
-                'view'       =>  CalculatorMultiView::class,
-                'controller' =>  CalculatorMultiController::class,
-            ]),
-            new Route([
-                'name'       => 'BeforeAfter',
-                'method'     => 'GET',
-                'url'        => '/before/after/[value]',
-                'model'      => BeforeAfterModel::class,
-                'view'       => BeforeAfterView::class,
-                'controller' => BeforeAfterController::class,
-                'action'     => 'Action'
-            ]),
-            new Route([
-                'name'       => 'MultiParam',
-                'method'     => 'GET',
-                'url'        => '/multi/param/[year]/[month]/[day]',
-                'model'      => MultipleModel::class,
-                'view'       => MultipleView::class,
-                'controller' => MultipleController::class,
-                'action'     => 'SomeParam'
-            ])
+            new Route(
+                name:       'Calculator Single Add',
+                method:     'POST',
+                path:       '/calculator/single/add',
+                model:      CalculatorSingleAddModel::class,
+                view:       CalculatorSingleAddView::class,
+                controller: CalculatorSingleAddController::class
+            ),new Route(
+                name:       'Calculator Single Divide',
+                method:     'POST',
+                path:        '/calculator/single/divide',
+                model:      CalculatorSingleDivideModel::class,
+                view:       CalculatorSingleDivideView::class,
+                controller: CalculatorSingleDivideController::class
+            ),new Route(
+                name:       'Calculator Single Multiply',
+                method:     'POST',
+                path:        '/calculator/single/multiply',
+                model:      CalculatorSingleMultiplyModel::class,
+                view:       CalculatorSingleMultiplyView::class,
+                controller: CalculatorSingleMultiplyController::class,
+            ),new Route(
+                name:       'Calculator Single Sub',
+                method:     'POST',
+                path:        '/calculator/single/sub',
+                model:      CalculatorSingleSubModel::class,
+                view:       CalculatorSingleSubView::class,
+                controller: CalculatorSingleSubController::class
+            ),
+            new Route(
+                name:       'Calculator Multi',
+                method:     'POST',
+                path:        '/calculator/multi/(multiply|divide|add|sub)',
+                model:      CalculatorMultiModel::class,
+                view:       CalculatorMultiView::class,
+                controller: CalculatorMultiController::class
+            ),
+            new Route(
+                name:       'BeforeAfter',
+                method:     'GET',
+                path:        '/before/after/[value]',
+                model:      BeforeAfterModel::class,
+                view:       BeforeAfterView::class,
+                controller: BeforeAfterController::class,
+                action:     'Action'
+            ),
+            new Route(
+                name:       'MultiParam',
+                method:     'GET',
+                path:        '/multi/param/[year]/[month]/[day]',
+                model:      MultipleModel::class,
+                view:       MultipleView::class,
+                controller: MultipleController::class,
+                action:     'SomeParam'
+            )
         ]));
 
-        self::$router = new Router($routes, [
-            'badRoute'    => 'E404',
-            'rewriteMode' => true,
-        ]);
+        self::$router = new Router(
+            $routes,
+            rewriteMode: true,
+        );
 
         $model = new CalculatorMultiModel();
         $view = new CalculatorMultiView($model, new JsonTemplate());
@@ -191,14 +191,14 @@ class ModelViewControllerTest extends TestCase
         $model = new CalculatorMultiModel();
         $view = new CalculatorMultiView($model, new JsonTemplate());
         $controller = new CalculatorMultiController($model);
-        $route = new Route([
-            'name'       => 'Calculator',
-            'method'     => 'POST',
-            'url'        => '/calculator/(multiply|divide|add|sub)',
-            'model'      =>  CalculatorMultiModel::class,
-            'view'       =>  CalculatorMultiView::class,
-            'controller' =>  CalculatorMultiController::class,
-        ]);
+        $route = new Route(
+            name:       'Calculator',
+            method:     'POST',
+            path:        '/calculator/(multiply|divide|add|sub)',
+            model:      CalculatorMultiModel::class,
+            view:       CalculatorMultiView::class,
+            controller: CalculatorMultiController::class,
+        );
 
         return [
             [false, $view, $controller, $route],
@@ -372,7 +372,7 @@ class ModelViewControllerTest extends TestCase
         $model->attach($view);
         $model->detach($view);
 
-        \call_user_func_array([$controller, $route->getAction()], $route->getParam());
+        \call_user_func_array([$controller, $route->action], $route->param);
 
         $model->notify();
 
@@ -381,7 +381,7 @@ class ModelViewControllerTest extends TestCase
         //attach
         $model->attach($view);
 
-        \call_user_func_array([$controller, $route->getAction()], $route->getParam());
+        \call_user_func_array([$controller, $route->action], $route->param);
 
         $model->notify();
 
