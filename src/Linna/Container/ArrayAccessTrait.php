@@ -49,13 +49,13 @@ trait ArrayAccessTrait
     /**
      * Check.
      *
-     * @param string $key
+     * @param mixed $key
      *
      * @return bool
      *
      * @ignore
      */
-    public function offsetExists($key)
+    public function offsetExists(mixed $key): bool
     {
         return $this->has($key);
     }
@@ -63,13 +63,13 @@ trait ArrayAccessTrait
     /**
      * Get.
      *
-     * @param string $key
+     * @param mixed $key
      *
      * @return mixed
      *
      * @ignore
      */
-    public function offsetGet($key)
+    public function offsetGet(mixed $key): mixed
     {
         return $this->get($key);
     }
@@ -77,14 +77,14 @@ trait ArrayAccessTrait
     /**
      * Store.
      *
-     * @param string $key
+     * @param mixed $key
      * @param mixed  $value
      *
      * @return void
      *
      * @ignore
      */
-    public function offsetSet($key, $value)
+    public function offsetSet(mixed $key, mixed $value): void
     {
         $this->set($key, $value);
     }
@@ -92,14 +92,14 @@ trait ArrayAccessTrait
     /**
      * Delete.
      *
-     * @param string $key
+     * @param mixed $offset
      *
-     * @return mixed
+     * @return void
      *
      * @ignore
      */
-    public function offsetUnset($key)
+    public function offsetUnset(mixed $offset): void
     {
-        return $this->delete($key);
+        $this->delete($offset);
     }
 }

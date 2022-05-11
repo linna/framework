@@ -52,14 +52,14 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
      *
      * http://php.net/manual/en/sessionhandler.open.php.
      *
-     * @param string $save_path
-     * @param string $session_name
+     * @param string $path
+     * @param string $name
      *
      * @return bool
      */
-    public function open($save_path, $session_name)
+    public function open(string $path, string $name): bool
     {
-        unset($save_path, $session_name);
+        unset($path, $name);
 
         return true;
     }
@@ -69,18 +69,19 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
      *
      * http://php.net/manual/en/sessionhandler.gc.php.
      *
-     * @param int $maxlifetime
+     * @param int $max_lifetime
      *
-     * @return bool
+     * @return int|false
      */
-    public function gc($maxlifetime)
+    public function gc(int $max_lifetime): int|false
     {
         $this->pdo->queryWithParam(
             'DELETE FROM session WHERE last_update < DATE_SUB(NOW(), INTERVAL :maxlifetime SECOND)',
-            [[':maxlifetime', $maxlifetime, \PDO::PARAM_INT]]
+            [[':maxlifetime', $max_lifetime, \PDO::PARAM_INT]]
         );
 
-        return $this->pdo->getLastOperationStatus();
+        // need a review to renurn number of records affected by operation
+        return (int) $this->pdo->getLastOperationStatus();
     }
 
     /**
@@ -88,17 +89,17 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
      *
      * http://php.net/manual/en/sessionhandler.read.php.
      *
-     * @param string $session_id
+     * @param string $id
      *
-     * @return string
+     * @return string|false
      */
-    public function read($session_id)
+    public function read(string $id): string|false
     {
         //string casting is a fix for PHP 7
         //when strict type are enable
         return (string) $this->pdo->queryWithParam(
             'SELECT session_data FROM session WHERE session_id = :session_id',
-            [[':session_id', $session_id, \PDO::PARAM_STR]]
+            [[':session_id', $id, \PDO::PARAM_STR]]
         )->fetchColumn();
     }
 
@@ -107,18 +108,18 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
      *
      * http://php.net/manual/en/sessionhandler.write.php.
      *
-     * @param string $session_id
-     * @param string $session_data
+     * @param string $id
+     * @param string $data
      *
      * @return bool
      */
-    public function write($session_id, $session_data)
+    public function write(string $id, string $data): bool
     {
         $this->pdo->queryWithParam(
             'INSERT INTO session SET session_id = :session_id, session_data = :session_data ON DUPLICATE KEY UPDATE session_data = :session_data',
             [
-                [':session_id', $session_id, \PDO::PARAM_STR],
-                [':session_data', $session_data, \PDO::PARAM_STR]
+                [':session_id', $id, \PDO::PARAM_STR],
+                [':session_data', $data, \PDO::PARAM_STR]
             ]
         );
 
@@ -132,7 +133,7 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function close()
+    public function close(): bool
     {
         return true;
     }
@@ -142,15 +143,15 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
      *
      * http://php.net/manual/en/sessionhandler.destroy.php.
      *
-     * @param string $session_id
+     * @param string $id
      *
      * @return bool
      */
-    public function destroy($session_id)
+    public function destroy(string $id): bool
     {
         $this->pdo->queryWithParam(
             'DELETE FROM session WHERE session_id = :session_id',
-            [[':session_id', $session_id, \PDO::PARAM_STR]]
+            [[':session_id', $id, \PDO::PARAM_STR]]
         );
 
         return $this->pdo->getLastOperationStatus();
