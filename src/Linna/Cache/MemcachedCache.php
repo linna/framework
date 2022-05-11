@@ -101,7 +101,7 @@ class MemcachedCache implements CacheInterface
         if ($ttl == null) {
             return 0;
         }
-        if (is_int($ttl)) {
+        if (\is_int($ttl)) {
             return $ttl;
         }
         if ($ttl instanceof DateInterval) {

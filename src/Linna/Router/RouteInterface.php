@@ -15,10 +15,4 @@ namespace Linna\Router;
  */
 interface RouteInterface
 {
-    /**
-     * Constructor.
-     *
-     * @param array<mixed> $route
-     */
-    public function __construct(array $route);
 }

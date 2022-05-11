@@ -18,7 +18,7 @@ use Linna\Router\Router;
 use Linna\Mvc\Model;
 use Linna\Mvc\View;
 use Linna\Mvc\Controller;
-use Linna\Mvc\FrontController;
+use Linna\Mvc\ModelViewController;
 use Linna\TestHelper\Mvc\BeforeAfterController;
 use Linna\TestHelper\Mvc\BeforeAfterModel;
 use Linna\TestHelper\Mvc\BeforeAfterView;
@@ -47,9 +47,9 @@ use PHPUnit\Framework\TestCase;
 use TypeError;
 
 /**
- * Front Controller Test.
+ * Model View Controller Test.
  */
-class FrontControllerTest extends TestCase
+class ModelViewControllerTest extends TestCase
 {
     /**
      * @var RouteCollection Routes for test.
@@ -176,9 +176,9 @@ class FrontControllerTest extends TestCase
      *
      * @return void
      */
-    public function testNewFrontControllerInstance(): void
+    public function testNewModelViewControllerInstance(): void
     {
-        $this->assertInstanceOf(FrontController::class, new FrontController(self::$model, self::$view, self::$controller, self::$routes[0]));
+        $this->assertInstanceOf(ModelViewController::class, new ModelViewController(self::$model, self::$view, self::$controller, self::$routes[0]));
     }
 
     /**
@@ -186,7 +186,7 @@ class FrontControllerTest extends TestCase
      *
      * @return array
      */
-    public function frontControllerWrongArgProvider(): array
+    public function ModelViewControllerWrongArgProvider(): array
     {
         $model = new CalculatorMultiModel();
         $view = new CalculatorMultiView($model, new JsonTemplate());
@@ -216,15 +216,15 @@ class FrontControllerTest extends TestCase
      * @param Controller $controller
      * @param Route      $route
      *
-     * @dataProvider frontControllerWrongArgProvider
+     * @dataProvider ModelViewControllerWrongArgProvider
      *
      * @return void
      */
-    public function testNewFrontControllerWithWrongArguments($model, $view, $controller, $route): void
+    public function testNewModelViewControllerWithWrongArguments($model, $view, $controller, $route): void
     {
         $this->expectException(TypeError::class);
 
-        (new FrontController($model, $view, $controller, $route));
+        (new ModelViewController($model, $view, $controller, $route));
     }
 
     /**
@@ -259,10 +259,10 @@ class FrontControllerTest extends TestCase
 
         self::$router->validate($route, 'POST');
 
-        $frontController = new FrontController(self::$model, self::$view, self::$controller, self::$router->getRoute());
-        $frontController->run();
+        $ModelViewController = new ModelViewController(self::$model, self::$view, self::$controller, self::$router->getRoute());
+        $ModelViewController->run();
 
-        $this->assertEquals($result, \json_decode($frontController->response())->result);
+        $this->assertEquals($result, \json_decode($ModelViewController->response())->result);
     }
 
     /**
@@ -307,10 +307,10 @@ class FrontControllerTest extends TestCase
 
         //var_dump($routeValidated->controller);
 
-        $frontController = new FrontController($model, $view, $controller, $routeValidated);
-        $frontController->run();
+        $ModelViewController = new ModelViewController($model, $view, $controller, $routeValidated);
+        $ModelViewController->run();
 
-        $this->assertEquals($result, \json_decode($frontController->response())->result);
+        $this->assertEquals($result, \json_decode($ModelViewController->response())->result);
     }
 
     /**
@@ -339,7 +339,7 @@ class FrontControllerTest extends TestCase
      *
      * @return void
      */
-    public function testRunFrontControllerWithSomeParam(string $route, string $result): void
+    public function testRunModelViewControllerWithSomeParam(string $route, string $result): void
     {
         self::$router->validate($route, 'GET');
 
@@ -347,10 +347,10 @@ class FrontControllerTest extends TestCase
         $view = new MultipleView($model, new JsonTemplate());
         $controller = new MultipleController($model);
 
-        $frontController = new FrontController($model, $view, $controller, self::$router->getRoute());
-        $frontController->run();
+        $ModelViewController = new ModelViewController($model, $view, $controller, self::$router->getRoute());
+        $ModelViewController->run();
 
-        $this->assertEquals($result, \json_decode($frontController->response())->result);
+        $this->assertEquals($result, \json_decode($ModelViewController->response())->result);
     }
 
     /**
@@ -414,7 +414,7 @@ class FrontControllerTest extends TestCase
      *
      * @return void
      */
-    public function testRunFrontControllerBeforeAfter(int $input, int $result): void
+    public function testRunModelViewControllerBeforeAfter(int $input, int $result): void
     {
         self::$router->validate('/before/after/'.$input, 'GET');
 
@@ -422,10 +422,10 @@ class FrontControllerTest extends TestCase
         $controller = new BeforeAfterController($model);
         $view = new BeforeAfterView($model, new JsonTemplate());
 
-        $frontController = new FrontController($model, $view, $controller, self::$router->getRoute());
-        $frontController->run();
+        $ModelViewController = new ModelViewController($model, $view, $controller, self::$router->getRoute());
+        $ModelViewController->run();
 
-        $reponse = $frontController->response();
+        $reponse = $ModelViewController->response();
 
         $this->assertEquals($result, \json_decode($reponse)->result);
         $this->assertTrue(\json_decode($reponse)->view);

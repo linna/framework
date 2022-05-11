@@ -22,34 +22,9 @@ use BadMethodCallException;
 class Router
 {
     /**
-     * @var string Base path for route evaluation.
-     */
-    protected string $basePath = '/';
-
-    /**
-     * @var bool Use of url rewriting.
-     */
-    protected bool $rewriteMode = false;
-
-    /**
-     * @var string Router access point without rewrite engine.
-     */
-    protected string $rewriteModeOffRouter = '/index.php?';
-
-    /**
-     * @var bool Parse query string when rewrite mode is on.
-     */
-    protected bool $parseQueryStringOnRewriteModeOn = false;
-
-    /**
      * @var RouteInterface Utilized for return the most recently parsed route
      */
     protected RouteInterface $route;
-
-    /**
-     * @var RouteCollection<Route> Passed from constructor, is the list of registerd routes for the app
-     */
-    private RouteCollection $routes;
 
     /**
      * @var array<string> List of regex for find parameter inside passed routes
@@ -76,28 +51,21 @@ class Router
     private array $queryParam = [];
 
     /**
-     * Constructor.
-     * Accept as parameter a RouteCollection object and an array options.
+     * Class Constructor.
      *
-     * @param RouteCollection<Route> $routes
-     * @param array<mixed>           $options
+     * @param RouteCollection<Route>    $routes
+     * @param string                    $basePath
+     * @param bool                      $rewriteMode
+     * @param string                    $rewriteModeFalseEntryPoint
+     * @param bool                      $parseQueryStringRewriteModeTrue
      */
-    public function __construct(RouteCollection $routes, array $options = [])
-    {
-        [
-            'basePath'             => $this->basePath,
-            'rewriteMode'          => $this->rewriteMode,
-            'rewriteModeOffRouter' => $this->rewriteModeOffRouter,
-            'parseQueryStringOnRewriteModeOn' => $this->parseQueryStringOnRewriteModeOn
-        ] = \array_replace_recursive([
-            'basePath'             => $this->basePath,
-            'rewriteMode'          => $this->rewriteMode,
-            'rewriteModeOffRouter' => $this->rewriteModeOffRouter,
-            'parseQueryStringOnRewriteModeOn' => $this->parseQueryStringOnRewriteModeOn
-        ], $options);
-
-        //set routes
-        $this->routes = $routes;
+    public function __construct(
+        protected RouteCollection $routes,
+        protected string $basePath = '/',
+        protected bool $rewriteMode = false,
+        protected string $rewriteModeFalseEntryPoint = '/index.php?',
+        protected bool $parseQueryStringRewriteModeTrue = false
+    ) {
     }
 
     /**
@@ -113,7 +81,7 @@ class Router
         $route = $this->findRoute($this->filterUri($requestUri), $requestMethod);
 
         if ($route instanceof Route) {
-            $this->buildRoute($route);
+            $this->route = $this->buildRoute($route);
             return true;
         }
 
@@ -125,21 +93,21 @@ class Router
     /**
      * Find if provided route match with one of registered routes.
      *
-     * @param string $uri
+     * @param string $path
      * @param string $method
      *
      * @return RouteInterface
      */
-    private function findRoute(string $uri, string $method): RouteInterface
+    private function findRoute(string $path, string $method): RouteInterface
     {
         $matches = [];
         $route = new NullRoute();
 
         foreach ($this->routes as $value) {
-            $urlMatch = \preg_match('`^'.\preg_replace($this->matchTypes, $this->types, $value->url).'/?$`', $uri, $matches);
+            $pathMatch = \preg_match('`^'.\preg_replace($this->matchTypes, $this->types, $value->path).'/?$`', $path, $matches);
             $methodMatch = \strpos($value->method, $method);
 
-            if ($urlMatch && $methodMatch !== false) {
+            if ($pathMatch && $methodMatch !== false) {
                 $route = clone $value;
                 $this->routeMatches = $matches;
                 break;
@@ -150,57 +118,67 @@ class Router
     }
 
     /**
-     * Build a valid route.
+     * Build a valid route instance starting from registered route.
      *
      * @param Route $route
      *
-     * @return void
+     * @return RouteInterface
      */
-    private function buildRoute(Route $route): void
+    private function buildRoute(Route $route): RouteInterface
     {
         //add to route array the passed uri for param check when call
         $matches = $this->routeMatches;
 
+        $rAction = $route->action;
+        $rPath = $route->path;
+
         //route match and there is a subpattern with action
         if (\count($matches) > 1) {
             //assume that subpattern rapresent action
-            $route->action = $matches[1];
+            $rAction = $matches[1];
 
             //url clean
-            $route->url = \preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $route->url);
+            $rPath = \preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $route->path);
         }
 
-        $queryParam = [];
-
-        if ($this->parseQueryStringOnRewriteModeOn) {
-            $queryParam = $this->queryParam;
-        }
-
-        //array union operator :)
-        $route->param = $this->buildParam($route) + $queryParam;
-
-        $this->route = $route;
+        return new Route(
+            $route->method,
+            $rPath,
+            callback:   $route->callback,
+            model:      $route->model,
+            view:       $route->view,
+            controller: $route->controller,
+            name:       $route->name,
+            action:     $rAction,
+            default:    $route->default,
+            param:      $this->buildParam($rPath),
+            allowedIps: $route->allowedIps
+        );
     }
 
     /**
      * Try to find parameters in a valid route and return it.
      *
-     * @param Route $route
+     * @param string $path
      *
      * @return array<mixed>
      */
-    private function buildParam(Route $route): array
+    private function buildParam(string $path): array
     {
         $param = [];
 
-        $url = \explode('/', $route->url);
+        $explodedPath = \explode('/', $path);
         $matches = \explode('/', $this->routeMatches[0]);
 
-        $rawParam = \array_diff($matches, $url);
+        $rawParam = \array_diff($matches, $explodedPath);
 
         foreach ($rawParam as $key => $value) {
-            $paramName = \strtr($url[$key], ['[' => '', ']' => '']);
+            $paramName = \strtr($explodedPath[$key], ['[' => '', ']' => '']);
             $param[$paramName] = $value;
+        }
+
+        if ($this->parseQueryStringRewriteModeTrue) {
+            return $param + $this->queryParam;
         }
 
         return $param;
@@ -268,7 +246,7 @@ class Router
         $url = \filter_var($passedUri, FILTER_SANITIZE_URL);
 
         //check for rewrite mode
-        $url = \str_replace($this->rewriteModeOffRouter, '', $url);
+        $url = \str_replace($this->rewriteModeFalseEntryPoint, '', $url);
 
         //remove basepath, if present
         if (\strpos($url, $this->basePath) === 0) {
@@ -280,9 +258,9 @@ class Router
 
         //check for query string parameters
         if (\strpos($url, '?') !== false) {
-            $queryString = \strstr($url, '?');
-            $queryString = \substr($queryString, 1);
+            $queryString = \substr(\strstr($url, '?'), 1);
             $url = \strstr($url, '?', true);
+
             $this->buildParamFromQueryString($queryString);
         }
 
@@ -311,13 +289,13 @@ class Router
      *
      * @throws BadMethodCallException
      */
-    public function __call(string $name, array $arguments)
+    /*public function __call(string $name, array $arguments)
     {
-        $method = \strtoupper($name);
+        $method = strtoupper($name);
 
         if (\in_array($method, ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])) {
             $this->map(
-                new Route(\array_merge($arguments[2] ?? [], [
+                new Route(array_merge($arguments[2] ?? [], [
                     'method'   => $method,
                     'url'      => $arguments[0],
                     'callback' => $arguments[1]
@@ -328,5 +306,5 @@ class Router
         }
 
         throw new BadMethodCallException("Router->{$name}() method do not exist.");
-    }
+    }*/
 }

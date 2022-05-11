@@ -44,16 +44,22 @@ class RouteCollectionTest extends TestCase
         $this->assertInstanceOf(
             RouteCollection::class,
             (new RouteCollection([
-                new Route([
-                    'name'       => 'Home',
-                    'method'     => 'GET',
-                    'url'        => '/',
-                ]),
-                new Route([
-                    'name'       => 'E404',
-                    'method'     => 'GET',
-                    'url'        => '/error',
-                ])
+                new Route(
+                    name:       'Home',
+                    method:     'GET',
+                    path:        '/',
+                    model:      'HomeModel',
+                    view:       'HomeView',
+                    controller: 'HomeController',
+                ),
+                new Route(
+                    name:       'E404',
+                    method:     'GET',
+                    path:        '/error',
+                    model:      'ErrorModel',
+                    view:       'ErrorView',
+                    controller: 'ErrorController',
+                )
             ]))
         );
     }
@@ -87,11 +93,14 @@ class RouteCollectionTest extends TestCase
     public function testAssignrRightTypedValueToArray(): void
     {
         $routes = new RouteCollection();
-        $routes[] = new Route([
-            'name'       => 'E404',
-            'method'     => 'GET',
-            'url'        => '/error',
-        ]);
+        $routes[] = new Route(
+            name:       'E404',
+            method:     'GET',
+            path:        '/error',
+            model:      'ErrorModel',
+            view:       'ErrorView',
+            controller: 'ErrorController'
+        );
 
         $this->assertEquals(1, $routes->count());
     }

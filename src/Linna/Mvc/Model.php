@@ -35,7 +35,7 @@ class Model implements SplSubject
     private array $updates = [];
 
     /**
-     * Constructor.
+     * Class Constructor.
      */
     public function __construct()
     {

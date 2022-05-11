@@ -31,15 +31,15 @@ class RouteTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        self::$route = new Route([
-            'name'       => 'Home',
-            'method'     => 'GET',
-            'url'        => '/',
-            'model'      => 'HomeModel',
-            'view'       => 'HomeView',
-            'controller' => 'HomeController',
-            'action'     => 'Login',
-        ]);
+        self::$route = new Route(
+            name:        'Home',
+            method:      'GET',
+            path:         '/',
+            model:       'HomeModel',
+            view:        'HomeView',
+            controller:  'HomeController',
+            action:      'Login',
+        );
     }
 
     /**
@@ -69,7 +69,7 @@ class RouteTest extends TestCase
      */
     public function testGetName(): void
     {
-        $this->assertEquals('Home', self::$route->getName());
+        $this->assertEquals('Home', self::$route->name);
     }
 
     /**
@@ -79,7 +79,7 @@ class RouteTest extends TestCase
      */
     public function testGetMethod(): void
     {
-        $this->assertEquals('GET', self::$route->getMethod());
+        $this->assertEquals('GET', self::$route->method);
     }
 
     /**
@@ -87,9 +87,9 @@ class RouteTest extends TestCase
      *
      * @return void
      */
-    public function testGetUrl(): void
+    public function testGetPath(): void
     {
-        $this->assertEquals('/', self::$route->getUrl());
+        $this->assertEquals('/', self::$route->path);
     }
 
     /**
@@ -99,7 +99,7 @@ class RouteTest extends TestCase
      */
     public function testGetModel(): void
     {
-        $this->assertEquals('HomeModel', self::$route->getModel());
+        $this->assertEquals('HomeModel', self::$route->model);
     }
 
     /**
@@ -109,7 +109,7 @@ class RouteTest extends TestCase
      */
     public function testGetView(): void
     {
-        $this->assertEquals('HomeView', self::$route->getView());
+        $this->assertEquals('HomeView', self::$route->view);
     }
 
     /**
@@ -119,7 +119,7 @@ class RouteTest extends TestCase
      */
     public function testGetController(): void
     {
-        $this->assertEquals('HomeController', self::$route->getController());
+        $this->assertEquals('HomeController', self::$route->controller);
     }
 
     /**
@@ -129,7 +129,7 @@ class RouteTest extends TestCase
      */
     public function testGetAction(): void
     {
-        $this->assertEquals('Login', self::$route->getAction());
+        $this->assertEquals('Login', self::$route->action);
     }
 
     /**
@@ -137,38 +137,38 @@ class RouteTest extends TestCase
      *
      * @return void
      */
-    public function testGetParam(): void
+    /*public function testGetParam(): void
     {
         $this->assertEquals([], self::$route->getParam());
-    }
+    }*/
 
     /**
      * Test is default route.
      *
      * @return void
      */
-    public function testIsDefaultRoute(): void
+    /*public function testIsDefaultRoute(): void
     {
         $this->assertFalse(self::$route->isDefault());
-    }
+    }*/
 
     /**
      * Test get callback.
      *
      * @return void
      */
-    public function testGetCallback(): void
+    /*public function testGetCallback(): void
     {
         $this->assertEquals(function () {
         }, self::$route->getCallback());
-    }
+    }*/
 
     /**
      * Test route to array.
      *
      * @return void
      */
-    public function testRouteToArray(): void
+    /*public function testRouteToArray(): void
     {
         $route = [
             'name'       => 'Home',
@@ -184,5 +184,5 @@ class RouteTest extends TestCase
         ];
 
         $this->assertEquals($route, self::$route->toArray());
-    }
+    }*/
 }

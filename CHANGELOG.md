@@ -40,7 +40,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
-* PHP 8.0 required
+* PHP 8.1 required
 
 #### Authentication
 * `Linna\Authentication\Exception\AuthenticationException` now extend `Linna\Router\Exception\RedirectException`
@@ -63,9 +63,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Mvc
 * `Linna\Mvc\FrontController` now search for default `entryPoint` method instead of `index` if `$route` has not `action` set
+* `Linna\Mvc\FrontController` renamed as `Linna\Mvc\ModelViewController`
 
 #### Router
 * `badRoute` it is no longer a valid option for constructor
+* `Linna\Router\Route` as data-transfer object, all properties are read-only, all methods removed
+* `Linna\Router\Route` now used named arguments in constructor, array options no longer supported
+* `Linna\Router\Router` now used named arguments in constructor, array options no longer supported
 
 ### Fixed
 

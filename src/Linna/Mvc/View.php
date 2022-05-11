@@ -41,7 +41,7 @@ class View implements SplObserver
     protected Model $model;
 
     /**
-     * Constructor.
+     * Class Constructor.
      *
      * @param Model $model
      */

@@ -111,7 +111,7 @@ class AuthorizationTest extends TestCase
     {
         $permission = self::$permissionMapper->fetchById(1);
 
-        $this->assertFalse(self::$authorization->can(new NullDomainObject));
+        $this->assertFalse(self::$authorization->can(new NullDomainObject()));
         $this->assertFalse(self::$authorization->can($permission));
         $this->assertFalse(self::$authorization->can(1));
         $this->assertFalse(self::$authorization->can('see users'));
@@ -153,7 +153,7 @@ class AuthorizationTest extends TestCase
         $authorization = new Authorization(new Authentication(self::$session, self::$password), self::$permissionMapper);
         $permission = self::$permissionMapper->fetchById(1);
 
-        $this->assertFalse($authorization->can(new NullDomainObject));
+        $this->assertFalse($authorization->can(new NullDomainObject()));
 
         $this->assertTrue($authentication->isLogged());
         $this->assertTrue($authorization->can($permission));

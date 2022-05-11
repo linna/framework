@@ -23,7 +23,7 @@ class Controller
     protected Model $model;
 
     /**
-     * Constructor.
+     * Class Constructor.
      *
      * @param Model $model
      */

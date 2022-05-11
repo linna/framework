@@ -9,7 +9,6 @@
  */
 declare(strict_types=1);
 
-
 namespace Linna\Cache;
 
 use DateInterval;
@@ -150,7 +149,7 @@ class DiskCache implements CacheInterface
         if ($ttl == null) {
             return 0;
         }
-        if (is_int($ttl)) {
+        if (\is_int($ttl)) {
             return $ttl;
         }
         if ($ttl instanceof DateInterval) {

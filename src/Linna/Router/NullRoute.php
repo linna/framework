@@ -13,16 +13,8 @@ namespace Linna\Router;
 
 /**
  * Describes null routes.
+ * Void class
  */
 class NullRoute implements RouteInterface
 {
-    /**
-     * Constructor.
-     *
-     * @param array<mixed> $route
-     */
-    public function __construct(array $route = [])
-    {
-        unset($route);
-    }
 }

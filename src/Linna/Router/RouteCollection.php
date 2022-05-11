@@ -19,7 +19,7 @@ use Linna\TypedArrayObject\ClassArrayObject;
 class RouteCollection extends ClassArrayObject
 {
     /**
-     * Contructor.
+     * Class Contructor.
      *
      * @param array<Route> $array
      */

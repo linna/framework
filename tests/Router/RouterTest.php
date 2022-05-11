@@ -11,7 +11,8 @@ declare(strict_types=1);
 
 namespace Linna\Tests;
 
-use BadMethodCallException;
+//use BadMethodCallException;
+use Linna\Router\NullRoute;
 use Linna\Router\Route;
 use Linna\Router\RouteCollection;
 use Linna\Router\Router;
@@ -41,107 +42,60 @@ class RouterTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         $routes = (new RouteCollection([
-            new Route([
-                'name'       => 'Home',
-                'method'     => 'GET',
-                'url'        => '/',
-                'model'      => 'HomeModel',
-                'view'       => 'HomeView',
-                'controller' => 'HomeController',
-            ]),
-            new Route([
-                'name'       => 'E404',
-                'method'     => 'GET',
-                'url'        => '/error',
-                'model'      => 'E404Model',
-                'view'       => 'E404View',
-                'controller' => 'E404Controller',
-            ]),
-            new Route([
-                'name'       => 'User',
-                'method'     => 'GET',
-                'url'        => '/user',
-                'model'      => 'UserModel',
-                'view'       => 'UserView',
-                'controller' => 'UserController',
-            ]),
-            new Route([
-                'method'     => 'GET',
-                'url'        => '/user/[id]/(disable|enable|delete|changePassword|modify)',
-                'model'      => 'UserModel',
-                'view'       => 'UserView',
-                'controller' => 'UserController',
-            ]),
-            new Route([
-                'method'     => 'GET',
-                'url'        => '/userOther/(disable|enable|delete|changePassword|modify)/[id]',
-                'model'      => 'UserModel',
-                'view'       => 'UserView',
-                'controller' => 'UserController',
-            ]),
-            new Route([
-                'method'     => 'GET',
-                'url'        => '/paramTest/[test]',
-                'model'      => 'ParamModel',
-                'view'       => 'ParamView',
-                'controller' => 'ParamController',
-            ])
+            new Route(
+                name:       'Home',
+                method:     'GET',
+                path:       '/',
+                model:      'HomeModel',
+                view:       'HomeView',
+                controller: 'HomeController',
+                default:    true
+            ),
+            new Route(
+                name:       'E404',
+                method:     'GET',
+                path:       '/error',
+                model:      'E404Model',
+                view:       'E404View',
+                controller: 'E404Controller'
+            ),
+            new Route(
+                name:       'User',
+                method:     'GET',
+                path:       '/user',
+                model:      'UserModel',
+                view:       'UserView',
+                controller: 'UserController'
+            ),
+            new Route(
+                method:     'GET',
+                path:       '/user/[id]/(disable|enable|delete|changePassword|modify)',
+                model:      'UserModel',
+                view:       'UserView',
+                controller: 'UserController'
+            ),
+            new Route(
+                method:     'GET',
+                path:       '/userOther/(disable|enable|delete|changePassword|modify)/[id]',
+                model:      'UserModel',
+                view:       'UserView',
+                controller: 'UserController'
+            ),
+            new Route(
+                method:     'GET',
+                path:       '/paramTest/[test]',
+                model:      'ParamModel',
+                view:       'ParamView',
+                controller: 'ParamController'
+            )
         ]));
 
         self::$routes = $routes;
 
-        self::$router = new Router($routes, [
-            'basePath'    => '/',
-            'rewriteMode' => true,
-        ]);
-    }
-
-    /**
-     * Tear down after class.
-     *
-     * @return void
-     */
-    public static function tearDownAfterClass(): void
-    {
-        //self::$routes = null;
-        //self::$router = null;
-    }
-
-    /**
-     * Wrong arguments router class provider.
-     *
-     * @return array
-     */
-    public function WrongArgumentsForRouterProvider(): array
-    {
-        return [
-            [null, null],
-            [true, false],
-            [1, 1],
-            [1.1, 1.1],
-            ['foo', 'foo'],
-            [(object) [1], (object) [1]],
-            [function () {
-            }, function () {
-            }],
-        ];
-    }
-
-    /**
-     * Test new router instance with wrong arguments.
-     *
-     * @dataProvider WrongArgumentsForRouterProvider
-     *
-     * @param mixed $routes
-     * @param mixed $options
-     *
-     * @return void
-     */
-    public function testNewRouterInstanceWithWrongArguments($routes, $options): void
-    {
-        $this->expectException(TypeError::class);
-
-        (new Router($routes, $options));
+        self::$router = new Router(
+            $routes,
+            rewriteMode: true
+        );
     }
 
     /**
@@ -189,8 +143,18 @@ class RouterTest extends TestCase
     public function testGetRoute(): void
     {
         $this->assertTrue(self::$router->validate('/user', 'GET'));
-
         $this->assertInstanceOf(Route::class, self::$router->getRoute());
+    }
+
+    /**
+     * Test get unknown route.
+     *
+     * @return void
+     */
+    public function testGetUnknownRoute(): void
+    {
+        $this->assertFalse(self::$router->validate('/userFoo', 'GET'));
+        $this->assertInstanceOf(NullRoute::class, self::$router->getRoute());
     }
 
     /**
@@ -247,10 +211,11 @@ class RouterTest extends TestCase
      */
     public function testRoutesWithOtherBasePath(string $url, string $method, array $returneRoute, bool $validate): void
     {
-        $router = new Router(self::$routes, [
-            'basePath'    => '/other_dir',
-            'rewriteMode' => true,
-        ]);
+        $router = new Router(
+            self::$routes,
+            basePath:    '/other_dir',
+            rewriteMode: true
+        );
 
         $this->assertEquals($validate, $router->validate('/other_dir'.$url, $method));
 
@@ -287,15 +252,15 @@ class RouterTest extends TestCase
      * @dataProvider mapMethodRouteProvider
      *
      * @param string $method
-     * @param string $url
+     * @param string $path
      *
      * @return void
      */
-    public function testMapInToRouterWithMapMethod(string $method, string $url): void
+    public function testMapRouteWithMapMethod(string $method, string $path): void
     {
-        self::$router->map(new Route(['method' => $method, 'url' => $url]));
+        self::$router->map(new Route(method: $method, path: $path));
 
-        $this->assertTrue(self::$router->validate($url, $method));
+        $this->assertTrue(self::$router->validate($path, $method));
 
         $this->assertInstanceOf(Route::class, self::$router->getRoute());
     }
@@ -305,7 +270,7 @@ class RouterTest extends TestCase
      *
      * @return array
      */
-    public function fastMapRouteProvider(): array
+    /*public function fastMapRouteProvider(): array
     {
         return [
             ['GET', '/fastMapRouteTestGet', 'get', ['name' => 'RouteGet']],
@@ -314,7 +279,7 @@ class RouterTest extends TestCase
             ['DELETE', '/fastMapRouteTestDelete', 'delete', ['name' => 'RouteDelete']],
             ['PATCH', '/fastMapRouteTestPatch', 'patch', ['name' => 'RoutePatch']],
         ];
-    }
+    }*/
 
     /**
      * Test map route into wouter with fast map methods.
@@ -328,7 +293,7 @@ class RouterTest extends TestCase
      *
      * @return void
      */
-    public function testMapInToRouterWithFastMapRoute(string $method, string $url, string $func, array $options): void
+    /*public function testMapInToRouterWithFastMapRoute(string $method, string $url, string $func, array $options): void
     {
         //map route with method
         self::$router->$func($url, function ($param) {
@@ -343,15 +308,15 @@ class RouterTest extends TestCase
 
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals($method, $callback($method));
-        $this->assertEquals($options['name'], $route->getName());
-    }
+        $this->assertEquals($options['name'], $route->name);
+    }*/
 
     /**
      * Fast map route provider without options.
      *
      * @return array
      */
-    public function fastMapRouteProviderNoOptions(): array
+    /*public function fastMapRouteProviderNoOptions(): array
     {
         return [
             ['GET', '/fastMapRouteTestNoOptGet', 'get', []],
@@ -360,7 +325,7 @@ class RouterTest extends TestCase
             ['DELETE', '/fastMapRouteTestNoOptPatch', 'delete', []],
             ['PATCH', '/fastMapRouteTestNoOptPatch', 'patch', []],
         ];
-    }
+    }*/
 
     /**
      * Test map route into wouter with fast map methods.
@@ -374,7 +339,7 @@ class RouterTest extends TestCase
      *
      * @return void
      */
-    public function testMapInToRouterWithFastMapRouteWithoutOptions(string $method, string $url, string $func, array $options): void
+    /*public function testMapInToRouterWithFastMapRouteWithoutOptions(string $method, string $url, string $func, array $options): void
     {
         //map route with method
         self::$router->$func($url, function ($param) {
@@ -390,20 +355,20 @@ class RouterTest extends TestCase
         $this->assertInstanceOf(Route::class, $route);
         $this->assertEquals($method, $callback($method));
         $this->assertEquals($options, []);
-    }
+    }*/
 
     /**
      * Test Router bad method call.
      *
      * @return void
      */
-    public function testRouterBadMethodCall(): void
+    /*public function testRouterBadMethodCall(): void
     {
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage("Router->foo() method do not exist.");
 
         self::$router->foo();
-    }
+    }*/
 
     /**
      * Test validate with rewrite mode off.
@@ -412,9 +377,8 @@ class RouterTest extends TestCase
      */
     public function testValidateWithRewriteModeOff(): void
     {
-        $router = new Router(self::$routes, [
-            'rewriteMode' => false,
-        ]);
+        // rewriteMode default is false
+        $router = new Router(self::$routes);
 
         $this->assertTrue($router->validate('/index.php?/user/5/enable', 'GET'));
 
@@ -435,11 +399,10 @@ class RouterTest extends TestCase
      */
     public function testValidateWithRewriteModeOffWithAndOtherBasePath(): void
     {
-        $router = new Router(self::$routes, [
-            'basePath'    => '/other_dir',
-            //'badRoute'    => 'E404',
-            'rewriteMode' => false,
-        ]);
+        $router = new Router(
+            self::$routes,
+            basePath: '/other_dir'
+        );
 
         //evaluate request uri
         $this->assertTrue($router->validate('/other_dir/index.php?/user/5/enable', 'GET'));
@@ -485,46 +448,44 @@ class RouterTest extends TestCase
     public function testRESTRouting(string $uri, string $method, string $action): void
     {
         $restRoutes = (new RouteCollection([
-            new Route([
-                'method'     => 'GET',
-                'url'        => '/user/[id]',
-                'model'      => 'UserShowModel',
-                'view'       => 'UserShowView',
-                'controller' => 'UserShowController',
-            ]),
-            new Route([
-                'method'     => 'PUT',
-                'url'        => '/user/[id]',
-                'model'      => 'UserCreateModel',
-                'view'       => 'UserCreateView',
-                'controller' => 'UserCreateController',
-            ]),
-            new Route([
-                'method'     => 'POST',
-                'url'        => '/user/[id]',
-                'model'      => 'UserUpdateModel',
-                'view'       => 'UserUpdateView',
-                'controller' => 'UserUpdateController',
-            ]),
-            new Route([
-                'method'     => 'PATCH',
-                'url'        => '/user/[id]',
-                'model'      => 'UserUpdateModel',
-                'view'       => 'UserUpdateView',
-                'controller' => 'UserUpdateController',
-            ]),
-            new Route([
-                'method'     => 'DELETE',
-                'url'        => '/user/[id]',
-                'model'      => 'UserDeleteModel',
-                'view'       => 'UserDeleteView',
-                'controller' => 'UserDeleteController',
-            ])
+            new Route(
+                method:     'GET',
+                path:       '/user/[id]',
+                model:      'UserShowModel',
+                view:       'UserShowView',
+                controller: 'UserShowController'
+            ),
+            new Route(
+                method:     'PUT',
+                path:       '/user/[id]',
+                model:      'UserCreateModel',
+                view:       'UserCreateView',
+                controller: 'UserCreateController'
+            ),
+            new Route(
+                method:     'POST',
+                path:        '/user/[id]',
+                model:      'UserUpdateModel',
+                view:       'UserUpdateView',
+                controller: 'UserUpdateController'
+            ),
+            new Route(
+                method:     'PATCH',
+                path:        '/user/[id]',
+                model:      'UserUpdateModel',
+                view:       'UserUpdateView',
+                controller: 'UserUpdateController'
+            ),
+            new Route(
+                method:     'DELETE',
+                path:       '/user/[id]',
+                model:      'UserDeleteModel',
+                view:       'UserDeleteView',
+                controller: 'UserDeleteController'
+            )
         ]));
 
-        $router = new Router($restRoutes, [
-            'rewriteMode' => true,
-        ]);
+        $router = new Router($restRoutes, rewriteMode: true);
 
         $this->assertTrue($router->validate($uri, $method));
 
@@ -532,9 +493,9 @@ class RouterTest extends TestCase
         $route = $router->getRoute();
 
         $this->assertInstanceOf(Route::class, $route);
-        $this->assertEquals('User'.$action.'Model', $route->model);
-        $this->assertEquals('User'.$action.'View', $route->view);
-        $this->assertEquals('User'.$action.'Controller', $route->controller);
+        $this->assertEquals("User{$action}Model", $route->model);
+        $this->assertEquals("User{$action}View", $route->view);
+        $this->assertEquals("User{$action}Controller", $route->controller);
     }
 
     /**
@@ -545,28 +506,25 @@ class RouterTest extends TestCase
     public function testReturnFirstMatchingRoute(): void
     {
         $routes = (new RouteCollection([
-            new Route([
-                'name'       => 'User',
-                'method'     => 'GET',
-                'url'        => '/user',
-                'model'      => 'UserModel',
-                'view'       => 'UserView',
-                'controller' => 'UserController',
-            ]),
-            new Route([
-                'name'       => 'User',
-                'method'     => 'GET',
-                'url'        => '/user',
-                'model'      => 'User1Model',
-                'view'       => 'User1View',
-                'controller' => 'User1Controller',
-            ])
+            new Route(
+                name:       'User',
+                method:     'GET',
+                path:        '/user',
+                model:      'UserModel',
+                view:       'UserView',
+                controller: 'UserController'
+            ),
+            new Route(
+                name:       'User',
+                method:     'GET',
+                path:        '/user',
+                model:      'User1Model',
+                view:       'User1View',
+                controller: 'User1Controller'
+            )
         ]));
 
-        $router = new Router($routes, [
-            'basePath'    => '/',
-            'rewriteMode' => true,
-        ]);
+        $router = new Router($routes, rewriteMode: true);
 
         $this->assertTrue($router->validate('/user', 'GET'));
 
@@ -642,24 +600,24 @@ class RouterTest extends TestCase
      *
      * @return void
      */
-    public function testQueryStringOnRewriteModeOn(string $uri, string $key, string $value): void
+    public function testParseQueryStringRewriteModeTrue(string $uri, string $key, string $value): void
     {
         $routes = (new RouteCollection([
-            new Route([
-                'name'       => 'User',
-                'method'     => 'GET',
-                'url'        => '/user',
-                'model'      => 'UserModel',
-                'view'       => 'UserView',
-                'controller' => 'UserController',
-            ])
+            new Route(
+                name:       'User',
+                method:     'GET',
+                path:        '/user',
+                model:      'User1Model',
+                view:       'User1View',
+                controller: 'User1Controller'
+            )
         ]));
 
-        $router = new Router($routes, [
-            'basePath'    => '/',
-            'rewriteMode' => true,
-            'parseQueryStringOnRewriteModeOn' => true
-        ]);
+        $router = new Router(
+            $routes,
+            rewriteMode: true,
+            parseQueryStringRewriteModeTrue: true
+        );
 
         $this->assertTrue($router->validate($uri, 'GET'));
 

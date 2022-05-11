@@ -4,5 +4,6 @@ clover.xml
 infection-log.txt
 vendor/
 .phan/
+.php-cs-fixer.cache
 .phpunit.result.cache
 phpunit.local.xml

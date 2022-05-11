@@ -15,9 +15,11 @@ use Linna\Router\Route;
 use Linna\Router\RouteInterface;
 
 /**
- * FrontController.
+ * ModelViewController.
+ *
+ * It behaviors as alloy of Model, View and Controller
  */
-class FrontController
+class ModelViewController
 {
     /**
      * @var View Contain view object for render
@@ -45,7 +47,7 @@ class FrontController
     private array $routeParam = [];
 
     /**
-     * Constructor.
+     * Class Constructor.
      *
      * @param Model          $model
      * @param View           $view
