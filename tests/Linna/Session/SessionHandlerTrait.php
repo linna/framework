@@ -66,11 +66,11 @@ trait SessionHandlerTrait
     {
         $session = self::$session;
 
-        $this->assertEquals(1, $session->status);
+        $this->assertEquals(1, $session->getStatus());
 
         $session->start();
 
-        $this->assertEquals(2, $session->status);
+        $this->assertEquals(2, $session->getStatus());
 
         $session->destroy();
     }
@@ -87,7 +87,7 @@ trait SessionHandlerTrait
         $session = self::$session;
         $session->start();
 
-        $this->assertEquals($session->id, \session_id());
+        $this->assertEquals($session->getSessionId(), \session_id());
 
         $session['fooData'] = 'fooData';
 
@@ -95,7 +95,7 @@ trait SessionHandlerTrait
 
         $session->start();
 
-        $this->assertEquals($session->id, \session_id());
+        $this->assertEquals($session->getSessionId(), \session_id());
         $this->assertEquals('fooData', $session['fooData']);
 
         $session->destroy();
@@ -117,16 +117,16 @@ trait SessionHandlerTrait
 
         $sessionIdBefore = \session_id();
 
-        $this->assertEquals(2, $session->status);
-        $this->assertEquals($sessionIdBefore, $session->id);
+        $this->assertEquals(2, $session->getStatus());
+        $this->assertEquals($sessionIdBefore, $session->getSessionId());
         $this->assertEquals('fooData', $session['fooData']);
 
         $session->regenerate();
 
         $sessionIdAfter = \session_id();
 
-        $this->assertEquals(2, $session->status);
-        $this->assertEquals($sessionIdAfter, $session->id);
+        $this->assertEquals(2, $session->getStatus());
+        $this->assertEquals($sessionIdAfter, $session->getSessionId());
         $this->assertNotEquals($sessionIdAfter, $sessionIdBefore);
         $this->assertEquals('fooData', $session['fooData']);
 
@@ -146,7 +146,7 @@ trait SessionHandlerTrait
 
         $session->start();
 
-        $session_id = $session->id;
+        $session_id = $session->getSessionId();
 
         $session->time = $session->time - 1800;
 
@@ -159,7 +159,7 @@ trait SessionHandlerTrait
         $session2_id = $session->id;
 
         $this->assertNotEquals($session_id, $session2_id);
-        $this->assertEquals(2, $session->status);
+        $this->assertEquals(2, $session->getStatus());
 
         $session->destroy();
     }

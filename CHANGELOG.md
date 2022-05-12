@@ -31,16 +31,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\DataMapper\DomainObjectAbstract->lastUpdate` public property
 * `Linna\DataMapper\DomainObjectAbstract->id` protected property accessible via `__get()` method
 
-#### Session
-* `Linna\Session\PgsqlSessionHandler` class
-
 #### Router
 * `Linna\Router\Router->parseQueryStringOnRewriteModeOn` protected property
 * `parseQueryStringOnRewriteModeOn` as valid option for constructor
 
+#### Session
+* `Linna\Session\PgsqlSessionHandler` class
+* `Linna\Session\Session->getSessionName()` method
+* `Linna\Session\Session->getSessionId()` method
+* `Linna\Session\Session->getStatus()` method
+
+#### Shared
+* `Linna\Shared\AbstractAccessTrait` trait
+* `Linna\Shared\ArrayAccessTrait` trait
+* `Linna\Shared\PropertyAccessTrait` trait
+
 ### Changed
 
 * PHP 8.1 required
+* Constructor property promotion used when possible
+* Readonly properties used when possible
 
 #### Authentication
 * `Linna\Authentication\Exception\AuthenticationException` now extend `Linna\Router\Exception\RedirectException`
@@ -70,6 +80,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Router\Route` as data-transfer object, all properties are read-only, all methods removed
 * `Linna\Router\Route` now used named arguments in constructor, array options no longer supported
 * `Linna\Router\Router` now used named arguments in constructor, array options no longer supported
+
+#### Session
+* All properties now are `private`, class more incapsulated
 
 ### Fixed
 

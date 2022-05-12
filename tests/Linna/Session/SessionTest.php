@@ -34,12 +34,12 @@ class SessionTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        self::$session = new Session([
-            'expire'         => 1800,
-            'cookieDomain'   => 'https://linna.tools',
-            'cookiePath'     => '/app',
-            'cookieSecure'   => true
-        ]);
+        self::$session = new Session(
+            expire:       1800,
+            cookieDomain: 'https://linna.tools',
+            cookiePath:   '/app',
+            cookieSecure: true
+        );
     }
 
     /**
@@ -64,11 +64,11 @@ class SessionTest extends TestCase
     {
         $session = self::$session;
 
-        $this->assertSame(1, $session->status);
+        $this->assertSame(1, $session->getStatus());
 
         $session->start();
 
-        $this->assertSame(2, $session->status);
+        $this->assertSame(2, $session->getStatus());
 
         //check for session parameters
         $this->assertSame('linna_session', \session_name());
@@ -105,11 +105,11 @@ class SessionTest extends TestCase
     {
         $session = self::$session;
 
-        $this->assertSame(1, $session->status);
+        $this->assertSame(1, $session->getStatus());
 
         $session->start();
 
-        $this->assertSame(2, $session->status);
+        $this->assertSame(2, $session->getStatus());
 
         $this->cookieCheck($this->getCookieValues(), $session);
 
@@ -132,24 +132,24 @@ class SessionTest extends TestCase
     {
         $session = self::$session;
 
-        $this->assertSame(1, $session->status);
+        $this->assertSame(1, $session->getStatus());
 
         $session->start();
 
-        $this->assertSame(2, $session->status);
-        $this->assertSame($session->id, \session_id());
+        $this->assertSame(2, $session->getStatus());
+        $this->assertSame($session->getSessionId(), \session_id());
         $this->cookieCheck($this->getCookieValues(), $session);
 
         $session['fooData'] = 'fooData';
 
         $session->commit();
 
-        $this->assertSame(1, $session->status);
+        $this->assertSame(1, $session->getStatus());
 
         $session->start();
 
-        $this->assertSame(2, $session->status);
-        $this->assertSame($session->id, \session_id());
+        $this->assertSame(2, $session->getStatus());
+        $this->assertSame($session->getSessionId(), \session_id());
         $this->assertSame('fooData', $session['fooData']);
         $this->cookieCheck($this->getCookieValues(), $session);
 
@@ -167,17 +167,17 @@ class SessionTest extends TestCase
     public function testSessionDestroy(): void
     {
         $session = self::$session;
-        $this->assertSame(1, $session->status);
+        $this->assertSame(1, $session->getStatus());
 
         $session->start();
 
-        $this->assertSame(2, $session->status);
+        $this->assertSame(2, $session->getStatus());
 
         $this->cookieCheck($this->getCookieValues(), $session);
 
         $session['fooData'] = 'fooData';
 
-        $this->assertSame(\session_id(), $session->id);
+        $this->assertSame(\session_id(), $session->getSessionId());
         $this->assertSame('fooData', $session['fooData']);
 
         $session->destroy();
@@ -192,8 +192,8 @@ class SessionTest extends TestCase
         $this->assertSame($cookieExpires, $resultExpires);
         $this->assertSame($cookie['Max-Age'], '0');
 
-        $this->assertSame(1, $session->status);
-        $this->assertSame('', $session->id);
+        $this->assertSame(1, $session->getStatus());
+        $this->assertSame('', $session->getSessionId());
         $this->assertNull($session['fooData']);
     }
 
@@ -209,11 +209,11 @@ class SessionTest extends TestCase
     {
         $session = self::$session;
 
-        $this->assertSame(1, $session->status);
+        $this->assertSame(1, $session->getStatus());
 
         $session->start();
 
-        $this->assertSame(2, $session->status);
+        $this->assertSame(2, $session->getStatus());
 
         $this->cookieCheck($this->getCookieValues(), $session);
 
@@ -223,8 +223,8 @@ class SessionTest extends TestCase
 
         $sessionIdBefore = \session_id();
 
-        $this->assertSame(2, $session->status);
-        $this->assertSame($sessionIdBefore, $session->id);
+        $this->assertSame(2, $session->getStatus());
+        $this->assertSame($sessionIdBefore, $session->getSessionId());
         $this->assertSame('fooData', $session['fooData']);
 
         $session->regenerate();
@@ -233,8 +233,8 @@ class SessionTest extends TestCase
 
         $cookieValueAfter = $this->getCookieValue($this->getCookieValues());
 
-        $this->assertSame(2, $session->status);
-        $this->assertSame(\session_id(), $session->id);
+        $this->assertSame(2, $session->getStatus());
+        $this->assertSame(\session_id(), $session->getSessionId());
         $this->assertNotEquals(\session_id(), $sessionIdBefore);
         $this->assertNotEquals($cookieValueBefore, $cookieValueAfter);
         $this->assertSame('fooData', $session['fooData']);
@@ -275,31 +275,31 @@ class SessionTest extends TestCase
     {
         $session = self::$session;
 
-        $this->assertSame(1, $session->status);
+        $this->assertSame(1, $session->getStatus());
 
         $session->start();
 
-        $this->assertSame(2, $session->status);
+        $this->assertSame(2, $session->getStatus());
 
         $this->cookieCheck($this->getCookieValues(), $session);
 
         $cookieValueBefore = $this->getCookieValue($this->getCookieValues());
 
-        $session_id = $session->id;
+        $session_id = $session->getSessionId();
 
         $session->time = $session->time - $time;
 
         $session->commit();
 
-        $this->assertSame(1, $session->status);
+        $this->assertSame(1, $session->getStatus());
 
         $session->start();
 
-        $this->assertSame(2, $session->status);
+        $this->assertSame(2, $session->getStatus());
 
         $cookieValueAfter = $this->getCookieValue($this->getCookieValues());
 
-        $session2_id = $session->id;
+        $session2_id = $session->getSessionId();
 
         if ($equals) {
             $this->cookieCheck($this->getCookieValues(), $session);
@@ -313,7 +313,7 @@ class SessionTest extends TestCase
             $this->assertNotEquals($cookieValueBefore, $cookieValueAfter);
         }
 
-        $this->assertSame(2, $session->status);
+        $this->assertSame(2, $session->getStatus());
 
         $session->destroy();
     }
@@ -487,7 +487,7 @@ class SessionTest extends TestCase
      */
     public function cookieCheck(array $cookie, Session $session): void
     {
-        $this->assertSame($cookie['linna_session'], $session->id);
+        $this->assertSame($cookie['linna_session'], $session->getSessionId());
 
         $cookieExpires = \strtotime($cookie['expires']);
         $resultExpires = \strtotime(\date(DATE_COOKIE, \time() + 1800));

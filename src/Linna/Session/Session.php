@@ -18,47 +18,11 @@ use SessionHandlerInterface;
 
 /**
  * Manage session lifetime and session data.
- *
- * @property int   $time      Time of session
- * @property array $login     Login information set by Login class
- * @property int   $loginTime Login time set by Login class
- * @property int   $expire    Login time set for Login class
  */
 class Session implements ArrayAccess
 {
     use PropertyAccessTrait;
     use ArrayAccessTrait;
-
-    /**
-     * @var int Session expire time in seconds.
-     */
-    private int $expire = 1800;
-
-    /**
-     * @var string Cookie domain.
-     */
-    private string $cookieDomain = '/';
-
-    /**
-     * @var string Coockie path.
-     */
-    private string $cookiePath = '/';
-
-    /**
-     * @var bool Cookie transmitted over https only?.
-     */
-    private bool $cookieSecure = false;
-
-    /**
-     * @var bool Cookie accessible only through http?.
-     */
-    private bool $cookieHttpOnly = true;
-
-    /**
-     *
-     * @var string Cookie same site for cross site requests.
-     */
-    private string $cookieSameSite = 'lax';
 
     /**
      * @var array<mixed> Session data reference property
@@ -68,42 +32,65 @@ class Session implements ArrayAccess
     /**
      * @var string Session id
      */
-    public string $id = '';
-
-    /**
-     * @var string Session name
-     */
-    public string $name = 'linna_session';
+    private string $id;
 
     /**
      * @var int session_status function result
      */
-    public int $status = 0;
+    private int $status;
 
     /**
-     * Constructor.
+     * Class Constructor.
      *
-     * @param array<mixed> $options
+     * @param string    $name
+     * @param int       $expire
+     * @param string    $cookieDomain
+     * @param string    $cookiePath
+     * @param bool      $cookieSecure
+     * @param bool      $cookieHttpOnly
+     * @param string    $cookieSameSite
      */
-    public function __construct(array $options = [])
-    {
-        [
-            'expire'         => $this->expire,
-            'name'           => $this->name,
-            'cookieDomain'   => $this->cookieDomain,
-            'cookiePath'     => $this->cookiePath,
-            'cookieSecure'   => $this->cookieSecure,
-            'cookieHttpOnly' => $this->cookieHttpOnly
-        ] = \array_replace_recursive([
-            'expire'         => $this->expire,
-            'name'           => $this->name,
-            'cookieDomain'   => $this->cookieDomain,
-            'cookiePath'     => $this->cookiePath,
-            'cookieSecure'   => $this->cookieSecure,
-            'cookieHttpOnly' => $this->cookieHttpOnly
-        ], $options);
-
+    public function __construct(
+        private string $name = 'linna_session',
+        private int $expire = 1800,
+        // cookie options
+        private string $cookieDomain = '',
+        private string $cookiePath = '/',
+        private bool $cookieSecure = false,
+        private bool $cookieHttpOnly = true,
+        private string $cookieSameSite = 'lax',
+    ) {
         $this->status = \session_status();
+    }
+
+    /**
+     * Get current session name.
+     *
+     * @return string
+     */
+    public function getSessionName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get current session id.
+     *
+     * @return string
+     */
+    public function getSessionId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get session status.
+     *
+     * @return int
+     */
+    public function getStatus(): int
+    {
+        return $this->status;
     }
 
     /**
@@ -136,7 +123,7 @@ class Session implements ArrayAccess
             \session_start([
                 'cookie_path'      => $this->cookiePath,
                 'cookie_domain'    => $this->cookieDomain,
-                'cookie_lifetime'  => $this->expire,//($this->expire > 0) ? time() + $this->expire : 0,
+                'cookie_lifetime'  => $this->expire,
                 'cookie_secure'    => $this->cookieSecure,
                 'cookie_httponly'  => $this->cookieHttpOnly,
                 'cookie_samesite'  => $this->cookieSameSite

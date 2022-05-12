@@ -36,7 +36,7 @@ class MemcachedSessionHandlerTest extends TestCase
         $memcached->addServer($GLOBALS['mem_host'], (int) $GLOBALS['mem_port']);
 
         self::$handler = new MemcachedSessionHandler($memcached, 5);
-        self::$session = new Session(['expire' => 10]);
+        self::$session = new Session(expire: 10);
     }
 
     /**
@@ -55,14 +55,14 @@ class MemcachedSessionHandlerTest extends TestCase
         $session->start();
         $session['fooData'] = 'fooData';
 
-        $this->assertEquals(2, $session->status);
-        $this->assertEquals(\session_id(), $session->id);
+        $this->assertEquals(2, $session->getStatus());
+        $this->assertEquals(\session_id(), $session->getSessionId());
         $this->assertEquals('fooData', $session['fooData']);
 
         $session->destroy();
 
-        $this->assertEquals(1, $session->status);
-        $this->assertEquals('', $session->id);
+        $this->assertEquals(1, $session->getStatus());
+        $this->assertEquals('', $session->getSessionId());
         $this->assertNull($session['fooData']);
     }
 

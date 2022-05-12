@@ -54,7 +54,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
         $pdo = (new StorageFactory('pdo', $options))->get();
 
         self::$handler = new MysqlPdoSessionHandler($pdo);
-        self::$session = new Session(['expire' => 1800]);
+        self::$session = new Session(expire: 1800);
         self::$pdo = $pdo;
     }
 
@@ -72,11 +72,11 @@ class MysqlPdoSessionHandlerTest extends TestCase
         $session->start();
         $session['fooData'] = 'fooData';
 
-        $this->assertEquals(2, $session->status);
-        $this->assertEquals(\session_id(), $session->id);
+        $this->assertEquals(2, $session->getStatus());
+        $this->assertEquals(\session_id(), $session->getSessionId());
         $this->assertEquals('fooData', $session['fooData']);
 
-        $oldSessionId = $session->id;
+        $oldSessionId = $session->getSessionId();
 
         $session->commit();
 
@@ -90,8 +90,8 @@ class MysqlPdoSessionHandlerTest extends TestCase
 
         $session->start();
 
-        $this->assertEquals(2, $session->status);
-        $this->assertEquals($oldSessionId, $session->id);
+        $this->assertEquals(2, $session->getStatus());
+        $this->assertEquals($oldSessionId, $session->getSessionId());
 
         $session->destroy();
 
@@ -105,8 +105,8 @@ class MysqlPdoSessionHandlerTest extends TestCase
 
         $this->assertEquals(0, $pdos->rowCount());
 
-        $this->assertEquals(1, $session->status);
-        $this->assertEquals('', $session->id);
+        $this->assertEquals(1, $session->getStatus());
+        $this->assertEquals('', $session->getSessionId());
         $this->assertNull($session['fooData']);
     }
 
