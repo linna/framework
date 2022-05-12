@@ -77,6 +77,6 @@ class MemcachedSessionHandlerTest extends TestCase
      */
     public function testGc(): void
     {
-        $this->assertTrue(self::$handler->gc(0));
+        $this->assertEquals(0, self::$handler->gc(0));
     }
 }
