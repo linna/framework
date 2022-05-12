@@ -3,7 +3,7 @@
 /**
  * Linna Framework.
  *
- * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
+ * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
@@ -63,7 +63,7 @@ class MemcachedSessionHandlerTest extends TestCase
 
         $this->assertEquals(1, $session->status);
         $this->assertEquals('', $session->id);
-        $this->assertFalse($session['fooData']);
+        $this->assertNull($session['fooData']);
     }
 
     /**

@@ -3,7 +3,7 @@
 /**
  * Linna Framework.
  *
- * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
+ * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
@@ -181,9 +181,9 @@ class ContainerTest extends TestCase
      *
      * @return void
      */
-    public function testDeleteUnexisting(string $key, $value): void
+    public function testDeleteUnexisting(string $key): void
     {
-        $this->assertFalse((new Container())->delete($key));
+        $this->assertNull((new Container())->delete($key));
     }
 
     /**
@@ -203,7 +203,7 @@ class ContainerTest extends TestCase
         $container->set($key, $value);
 
         $this->assertTrue($container->has($key));
-        $this->assertTrue($container->delete($key));
+        $this->assertNull($container->delete($key));
         $this->assertFalse($container->has($key));
     }
 

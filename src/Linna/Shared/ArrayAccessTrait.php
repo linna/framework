@@ -3,22 +3,22 @@
 /**
  * Linna Framework.
  *
- * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
+ * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
 declare(strict_types=1);
 
-namespace Linna\Session;
+namespace Linna\Shared;
 
 /**
  * Array Access Trait
- * Provide to Session the possibility to retrive values using array notation.
- *
- * @property mixed $data Session Data
+ * Provide the possibility to retrive values using array notation.
  */
 trait ArrayAccessTrait
 {
+    use AbstractAccessTrait;
+
     /**
      * Check.
      *
@@ -28,7 +28,7 @@ trait ArrayAccessTrait
      */
     public function offsetExists(mixed $offset): bool
     {
-        return isset($this->data[$offset]);
+        return $this->has($offset);
     }
 
     /**
@@ -40,11 +40,7 @@ trait ArrayAccessTrait
      */
     public function offsetGet(mixed $offset): mixed
     {
-        if (isset($this->data[$offset])) {
-            return $this->data[$offset];
-        }
-
-        return false;
+        return $this->get($offset);
     }
 
     /**
@@ -57,7 +53,7 @@ trait ArrayAccessTrait
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        $this->data[$offset] = $value;
+        $this->set($offset, $value);
     }
 
     /**
@@ -69,6 +65,6 @@ trait ArrayAccessTrait
      */
     public function offsetUnset(mixed $offset): void
     {
-        unset($this->data[$offset]);
+        $this->delete($offset);
     }
 }

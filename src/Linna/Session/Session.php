@@ -3,7 +3,7 @@
 /**
  * Linna Framework.
  *
- * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
+ * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Linna\Session;
 
+use Linna\Shared\ArrayAccessTrait;
+use Linna\Shared\PropertyAccessTrait;
 use ArrayAccess;
 use SessionHandlerInterface;
 
@@ -205,7 +207,6 @@ class Session implements ArrayAccess
         $this->id = \session_id();
         $this->data['time'] = $time;
         $this->data['expire'] = $this->expire;
-        //$this->data['server'] = $_SERVER;
         $this->status = \session_status();
     }
 
@@ -254,5 +255,56 @@ class Session implements ArrayAccess
 
         //update status
         $this->status = \session_status();
+    }
+
+    /**
+     * Get a value from the session storage.
+     *
+     * @param string $id
+     *
+     * @return void
+     */
+    public function get(string $id)
+    {
+        if (isset($this->data[$id])) {
+            return $this->data[$id];
+        }
+    }
+
+    /**
+     * Check for value into session storage.
+     *
+     * @param string $id
+     *
+     * @return bool
+     */
+    public function has(string $id): bool
+    {
+        return isset($this->data[$id]);
+    }
+
+    /**
+     * Set a value into session storage.
+     *
+     * @param string $id
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function set(string $id, mixed $value): void
+    {
+        $this->data[$id] = $value;
+    }
+
+    /**
+     * Delete a value from session storage.
+     *
+     * @param string $id
+     *
+     * @return void
+     */
+    public function delete(string $id): void
+    {
+        unset($this->data[$id]);
     }
 }

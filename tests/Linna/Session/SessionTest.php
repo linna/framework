@@ -3,7 +3,7 @@
 /**
  * Linna Framework.
  *
- * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
+ * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
@@ -194,7 +194,7 @@ class SessionTest extends TestCase
 
         $this->assertSame(1, $session->status);
         $this->assertSame('', $session->id);
-        $this->assertFalse($session['fooData']);
+        $this->assertNull($session['fooData']);
     }
 
     /**
@@ -349,7 +349,7 @@ class SessionTest extends TestCase
      */
     public function testGetUnstoredValueWithPropertyAccess(): void
     {
-        $this->assertFalse(self::$session->testData);
+        $this->assertNull(self::$session->testData);
     }
 
     /**
@@ -383,7 +383,7 @@ class SessionTest extends TestCase
      */
     public function testGetUnstoredValueWithArrayAccess(): void
     {
-        $this->assertFalse(self::$session['testData']);
+        $this->assertNull(self::$session['testData']);
     }
 
     /**
@@ -417,7 +417,7 @@ class SessionTest extends TestCase
      */
     public function testGetUnstoredValueWithTraitMethod(): void
     {
-        $this->assertFalse(self::$session->offsetGet('testData'));
+        $this->assertNull(self::$session->offsetGet('testData'));
     }
 
     /**

@@ -3,7 +3,7 @@
 /**
  * Linna Framework.
  *
- * @author Sebastian Rapetti <sebastian.rapetti@alice.it>
+ * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
@@ -13,6 +13,8 @@ namespace Linna\Container;
 
 use ArrayAccess;
 use Linna\Container\Exception\NotFoundException;
+use Linna\Shared\ArrayAccessTrait;
+use Linna\Shared\PropertyAccessTrait;
 use Psr\Container\ContainerInterface;
 use ReflectionClass;
 
@@ -73,7 +75,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @return mixed Entry.
      */
-    public function get($id)
+    public function get(string $id)
     {
         if (isset($this->cache[$id])) {
             return $this->cache[$id];
@@ -93,7 +95,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @return bool
      */
-    public function has($id): bool
+    public function has(string $id): bool
     {
         return isset($this->cache[$id]);
     }
@@ -106,7 +108,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @return void
      */
-    public function set($id, $value): void
+    public function set(string $id, mixed $value): void
     {
         $this->cache[$id] = $value;
     }
@@ -118,7 +120,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @return bool
      */
-    public function delete($id): bool
+    public function delete(string $id): void
     {
         if (\array_key_exists($id, $this->cache)) {
 
@@ -126,10 +128,10 @@ class Container implements ContainerInterface, ArrayAccess
             unset($this->cache[$id]);
 
             //return function result
-            return true;
+            //return true;
         }
 
-        return false;
+        //return false;
     }
 
     /**
