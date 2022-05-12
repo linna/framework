@@ -37,8 +37,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Linna\\Tests\\":  ["tests/", "tests/Cache", "tests/Session"],
-            "Linna\\TestHelper\\": "tests/TestHelper/"
+            "Linna\\":  "tests/Linna/"
         }
     },
     "config": {
