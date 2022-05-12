@@ -93,7 +93,7 @@ class MemcachedSessionHandler implements SessionHandlerInterface
         return (string) $this->memcached->get($id);
     }
 
-        /**
+    /**
      * Write session data to storage.
      *
      * http://php.net/manual/en/sessionhandler.write.php.

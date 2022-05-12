@@ -9,7 +9,9 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Cache;;
+namespace Linna\Cache;
+
+;
 
 use InvalidArgumentException;
 //use Linna\Cache\DiskCache;
