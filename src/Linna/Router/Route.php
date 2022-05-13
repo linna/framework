@@ -15,6 +15,7 @@ namespace Linna\Router;
  * Describe valid routes.
  * Implemented as data transfer object.
  */
+#[Attribute]
 class Route implements RouteInterface
 {
     /**
