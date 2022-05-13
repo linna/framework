@@ -15,7 +15,7 @@
 [![Tests](https://github.com/linna/framework/actions/workflows/tests.yml/badge.svg)](https://github.com/linna/framework/actions/workflows/tests.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=linna_framework&metric=alert_status)](https://sonarcloud.io/dashboard?id=linna_framework)
 [![PDS Skeleton](https://img.shields.io/badge/pds-skeleton-blue.svg?style=flat)](https://github.com/php-pds/skeleton)
-[![PHP 8.1](https://img.shields.io/badge/PHP-7.4-8892BF.svg)](http://php.net)
+[![PHP 8.1](https://img.shields.io/badge/PHP-8.1-8892BF.svg)](http://php.net)
 
 </div>
 
