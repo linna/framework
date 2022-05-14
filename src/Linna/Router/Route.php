@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Linna\Router;
 
+use Attribute;
+
 /**
  * Describe valid routes.
  * Implemented as data transfer object.
