@@ -22,22 +22,22 @@ use Linna\Router\RouteInterface;
 class ModelViewController
 {
     /**
-     * @var View Contain view object for render
+     * @var View Contains view object for render
      */
     private View $view;
 
     /**
-     * @var Model Contain model object
+     * @var Model Contains model object
      */
     private Model $model;
 
     /**
-     * @var Controller Contain controller object
+     * @var Controller Contains controller object
      */
     private Controller $controller;
 
     /**
-     * @var string Contain Controller and View action name
+     * @var string Contains Controller and View action name
      */
     private string $routeAction = '';
 
@@ -73,7 +73,7 @@ class ModelViewController
      */
     public function run(): void
     {
-        //attach Oserver to Subjetc
+        //attach Observer to Subject
         $this->model->attach($this->view);
 
         //run action before controller
