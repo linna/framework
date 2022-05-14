@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Linna\Router;
 
 use Attribute;
+use Closure;
 
 /**
  * Describe valid routes.
