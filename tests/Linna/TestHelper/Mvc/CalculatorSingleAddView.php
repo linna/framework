@@ -22,12 +22,11 @@ class CalculatorSingleAddView extends View
     /**
      * Constructor.
      *
-     * @param CalculatorSingleAddModel $model
-     * @param JsonTemplate             $template
+     * @param JsonTemplate  $template
      */
-    public function __construct(CalculatorSingleAddModel $model, JsonTemplate $template)
+    public function __construct(JsonTemplate $template)
     {
-        parent::__construct($model, $template);
+        parent::__construct($template);
     }
 
     /**

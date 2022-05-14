@@ -22,12 +22,11 @@ class CalculatorSingleMultiplyView extends View
     /**
      * Constructor.
      *
-     * @param CalculatorSingleMultiplyModel $model
-     * @param JsonTemplate                  $template
+     * @param JsonTemplate  $template
      */
-    public function __construct(CalculatorSingleMultiplyModel $model, JsonTemplate $template)
+    public function __construct(JsonTemplate $template)
     {
-        parent::__construct($model, $template);
+        parent::__construct($template);
     }
 
     /**

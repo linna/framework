@@ -12,12 +12,13 @@ declare(strict_types=1);
 namespace Linna\TestHelper\Mvc;
 
 use Linna\Mvc\Controller;
+use Linna\TestHelper\Mvc\CalculatorMultiModel;
 
 /**
  * Calculator Controller.
  * A controller that implements more than one action, one method per action.
  *
- * @property \Linna\TestHelper\Mvc\CalculatorMultiModel $model Calculator Model.
+ * @property CalculatorMultiModel $model Calculator Model.
  */
 class CalculatorMultiController extends Controller
 {
@@ -26,7 +27,7 @@ class CalculatorMultiController extends Controller
     /**
      * Class Constructor.
      *
-     * @param \Linna\TestHelper\Mvc\CalculatorMultiModel $model
+     * @param CalculatorMultiModel $model
      */
     public function __construct(CalculatorMultiModel $model)
     {

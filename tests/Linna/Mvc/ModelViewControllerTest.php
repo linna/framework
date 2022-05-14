@@ -147,7 +147,7 @@ class ModelViewControllerTest extends TestCase
         );
 
         $model = new CalculatorMultiModel();
-        $view = new CalculatorMultiView($model, new JsonTemplate());
+        $view = new CalculatorMultiView(new JsonTemplate());
         $controller = new CalculatorMultiController($model);
 
         self::$model = $model;
@@ -189,7 +189,7 @@ class ModelViewControllerTest extends TestCase
     public function ModelViewControllerWrongArgProvider(): array
     {
         $model = new CalculatorMultiModel();
-        $view = new CalculatorMultiView($model, new JsonTemplate());
+        $view = new CalculatorMultiView(/*$model, */new JsonTemplate());
         $controller = new CalculatorMultiController($model);
         $route = new Route(
             name:       'Calculator',
@@ -344,7 +344,7 @@ class ModelViewControllerTest extends TestCase
         self::$router->validate($route, 'GET');
 
         $model = new MultipleModel();
-        $view = new MultipleView($model, new JsonTemplate());
+        $view = new MultipleView(new JsonTemplate());
         $controller = new MultipleController($model);
 
         $ModelViewController = new ModelViewController($model, $view, $controller, self::$router->getRoute());
@@ -365,7 +365,7 @@ class ModelViewControllerTest extends TestCase
         $route = self::$router->getRoute();
 
         $model = new MultipleModel();
-        $view = new MultipleView($model, new JsonTemplate());
+        $view = new MultipleView(new JsonTemplate());
         $controller = new MultipleController($model);
 
         //attach and detach
@@ -420,7 +420,7 @@ class ModelViewControllerTest extends TestCase
 
         $model = new BeforeAfterModel();
         $controller = new BeforeAfterController($model);
-        $view = new BeforeAfterView($model, new JsonTemplate());
+        $view = new BeforeAfterView(new JsonTemplate());
 
         $ModelViewController = new ModelViewController($model, $view, $controller, self::$router->getRoute());
         $ModelViewController->run();

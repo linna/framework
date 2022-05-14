@@ -22,16 +22,15 @@ class CalculatorSingleSubView extends View
     /**
      * Constructor.
      *
-     * @param CalculatorSingleSubModel $model
-     * @param JsonTemplate             $template
+     * @param JsonTemplate $template
      */
-    public function __construct(CalculatorSingleSubModel $model, JsonTemplate $template)
+    public function __construct(JsonTemplate $template)
     {
-        parent::__construct($model, $template);
+        parent::__construct($template);
     }
 
     /**
-     * Entry Poitn, Sub.
+     * Entry Point, Sub.
      *
      * @return void
      */

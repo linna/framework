@@ -18,17 +18,11 @@ namespace Linna\Mvc;
 class Controller
 {
     /**
-     * @var Model The model object for current controller
-     */
-    protected Model $model;
-
-    /**
      * Class Constructor.
      *
      * @param Model $model
      */
-    public function __construct(Model $model)
+    public function __construct(protected Model $model)
     {
-        $this->model = $model;
     }
 }

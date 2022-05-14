@@ -79,8 +79,8 @@ class Model implements SplSubject
     public function notify(): void
     {
         /** @var View $value Attached observers. */
-        foreach ($this->observers as $value) {
-            $value->update($this);
+        foreach ($this->observers as $observer) {
+            $observer->update($this);
         }
     }
 

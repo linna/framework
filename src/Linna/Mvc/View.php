@@ -31,24 +31,12 @@ class View implements SplObserver
     protected array $data = [];
 
     /**
-     * @var TemplateInterface Template utilized for render data
-     */
-    protected TemplateInterface $template;
-
-    /**
-     * @var Model Model for access data
-     */
-    protected Model $model;
-
-    /**
      * Class Constructor.
      *
-     * @param Model $model
+     * @param TemplateInterface $template
      */
-    public function __construct(Model $model, TemplateInterface $template)
+    public function __construct(protected TemplateInterface $template)
     {
-        $this->model = $model;
-        $this->template = $template;
     }
 
     /**

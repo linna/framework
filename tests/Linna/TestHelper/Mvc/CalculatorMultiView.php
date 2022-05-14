@@ -22,12 +22,11 @@ class CalculatorMultiView extends View
     /**
      * Constructor.
      *
-     * @param CalculatorMultiModel $model
-     * @param JsonTemplate         $template
+     * @param JsonTemplate  $template
      */
-    public function __construct(CalculatorMultiModel $model, JsonTemplate $template)
+    public function __construct(JsonTemplate $template)
     {
-        parent::__construct($model, $template);
+        parent::__construct($template);
     }
 
     /**

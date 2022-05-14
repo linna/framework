@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Linna\Mvc;
 
-use Linna\TestHelper\Mvc\CalculatorMultiModel;
 use Linna\TestHelper\Mvc\CalculatorMultiView;
 use Linna\TestHelper\Mvc\BadTemplateView;
 use Linna\TestHelper\Mvc\JsonTemplate;
@@ -30,7 +29,7 @@ class ViewTest extends TestCase
      */
     public function testNewViewInstance(): void
     {
-        $this->assertInstanceOf(CalculatorMultiView::class, new CalculatorMultiView(new CalculatorMultiModel(), new JsonTemplate()));
+        $this->assertInstanceOf(CalculatorMultiView::class, new CalculatorMultiView(new JsonTemplate()));
     }
 
     /**
@@ -42,6 +41,6 @@ class ViewTest extends TestCase
     {
         $this->expectException(TypeError::class);
 
-        $this->assertInstanceOf(BadTemplateView::class, new BadTemplateView(new CalculatorMultiModel(), 'badTemplate'));
+        $this->assertInstanceOf(BadTemplateView::class, new BadTemplateView('badTemplate'));
     }
 }

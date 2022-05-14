@@ -15,9 +15,9 @@ use Linna\Mvc\View;
 
 class MultipleView extends View
 {
-    public function __construct(MultipleModel $model, JsonTemplate $template)
+    public function __construct(JsonTemplate $template)
     {
-        parent::__construct($model, $template);
+        parent::__construct($template);
     }
 
     public function SomeParam()
