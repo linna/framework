@@ -13,6 +13,7 @@ namespace Linna\Storage;
 
 use Linna\Shared\AbstractStorageFactory;
 use Linna\Storage\Connectors\PdoConnector;
+use Linna\Storage\Connectors\PgConnector;
 use Linna\Storage\Connectors\MongoDBConnector;
 use Linna\Storage\Connectors\MysqliConnector;
 
@@ -26,6 +27,7 @@ class StorageFactory extends AbstractStorageFactory
      */
     protected array $supportedDriver = [
         'pdo'     => PdoConnector::class,
+        'pg'      => PgConnector::class,
         'mongodb' => MongoDBConnector::class,
         'mysqli'  => MysqliConnector::class,
     ];

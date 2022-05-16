@@ -189,8 +189,8 @@ class Container implements ContainerInterface, ArrayAccess
             //in the documentation since PHP 7.1, but did not throw a deprecation notice
             //for technical reasons.
             //Get the data type of the parameter
-            $type = ($param->getType() instanceof ReflectionNamedType) ? 
-                $param->getType()->getName() : 
+            $type = ($param->getType() instanceof ReflectionNamedType) ?
+                $param->getType()->getName() :
                 self::NO_TYPE;
 
             //if parameter is an interface
@@ -347,10 +347,10 @@ class Container implements ContainerInterface, ArrayAccess
 
         //argument required from class
         foreach ($dependency as $argValue) {
-            $argType = ($argValue->getType() instanceof ReflectionNamedType) ? 
-                $argValue->getType()->getName() : 
+            $argType = ($argValue->getType() instanceof ReflectionNamedType) ?
+                $argValue->getType()->getName() :
                 self::NO_TYPE;
-            
+
             if (\interface_exists($argType)) {
                 //get the position of the current parameter for resolve the rule
                 $position = $argValue->getPosition();

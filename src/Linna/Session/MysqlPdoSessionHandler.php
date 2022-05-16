@@ -38,7 +38,8 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
      * @param ExtendedPDO $pdo
      */
     public function __construct(private ExtendedPDO $pdo)
-    {}
+    {
+    }
 
     /**
      * Open session storage.

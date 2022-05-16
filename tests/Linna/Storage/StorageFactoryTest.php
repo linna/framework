@@ -14,7 +14,9 @@ namespace Linna\Storage;
 use InvalidArgumentException;
 use Linna\Storage\StorageFactory;
 use MongoDB\Client;
+use mysqli;
 use PDO;
+use PgSql\Connection;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,6 +24,21 @@ use PHPUnit\Framework\TestCase;
  */
 class StorageFactoryTest extends TestCase
 {
+    /**
+     * Test create postgre storage.
+     *
+     * @return void
+     */
+    public function testCreatePg(): void
+    {
+        $options = [
+            'connection_string' => $GLOBALS['pgsql_connection_string'],
+            'flags'             => 0,
+        ];
+
+        $this->assertInstanceOf(Connection::class, (new StorageFactory('pg', $options))->get());
+    }
+
     /**
      * Test create pdo storage.
      *
@@ -41,9 +58,7 @@ class StorageFactoryTest extends TestCase
             ],
         ];
 
-        $driver = (new StorageFactory('pdo', $options))->get();
-
-        $this->assertInstanceOf(\PDO::class, $driver);
+        $this->assertInstanceOf(PDO::class, (new StorageFactory('pdo', $options))->get());
     }
 
     /**
@@ -61,9 +76,7 @@ class StorageFactoryTest extends TestCase
             'port'     => 3306,
         ];
 
-        $driver = (new StorageFactory('mysqli', $options))->get();
-
-        $this->assertInstanceOf(\mysqli::class, $driver);
+        $this->assertInstanceOf(mysqli::class, (new StorageFactory('mysqli', $options))->get());
     }
 
     /**
@@ -79,9 +92,7 @@ class StorageFactoryTest extends TestCase
             'driverOptions' => [],
         ];
 
-        $driver = (new StorageFactory('mongodb', $options))->get();
-
-        $this->assertInstanceOf(Client::class, $driver);
+        $this->assertInstanceOf(Client::class, (new StorageFactory('mongodb', $options))->get());
     }
 
     /**

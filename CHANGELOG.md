@@ -45,6 +45,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Shared\AbstractAccessTrait` trait
 * `Linna\Shared\ArrayAccessTrait` trait
 * `Linna\Shared\PropertyAccessTrait` trait
+* `Linna\Shared\AbstractStorageFactory` class
 
 ### Changed
 
@@ -98,11 +99,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
+#### Mvc
+* `Linna\Mvc\View->__construct()` no longer require `Model` as first parameter, useless reference
+
 #### Router
 * `Linna\Router\Router->badRoute` protected property
 
-#### Mvc
-* `Linna\Mvc\View->__construct()` no longer require `Model` as first parameter, useless reference
+#### Storage
+* `Linna\Storage\AbstractStorageFactory` class, moved to `Linna\Shared` namespace
+
 
 ## [v0.26.0](https://github.com/linna/framework/compare/v0.25.0...v0.26.0) - 2019-08-05
 
@@ -134,6 +139,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 * `Linna\Authentication\User->changePassword()` typo error in method name
 * `Linna\Mvc\FrontController->runView()` error when `$this->routeAction` value called as method and not declared on view class
+
 
 ## [v0.25.0](https://github.com/linna/framework/compare/v0.24.0...v0.25.0) - 2019-01-13
 

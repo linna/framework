@@ -30,7 +30,8 @@ abstract class AbstractStorageFactory
      * @param array<mixed> $options
      */
     public function __construct(protected string $driver, protected array $options = [])
-    {}
+    {
+    }
 
     /**
      * Return Storage Object.

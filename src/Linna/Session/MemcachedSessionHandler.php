@@ -29,7 +29,8 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      * @param int       $expire    Expire time in seconds for stored sessions
      */
     public function __construct(private Memcached $memcached, private int $expire = 0)
-    {}
+    {
+    }
 
     /**
      * Open session storage.

@@ -24,7 +24,7 @@ abstract class AbstractConnector implements ConnectorInterface
     public function __construct(protected array $options = [])
     {
     }
-    
+
     /**
      * Return resource to Database class.
      *
