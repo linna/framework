@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Storage;
 
+use Linna\Shared\AbstractStorageFactory;
 use Linna\Storage\Connectors\PdoConnector;
 use Linna\Storage\Connectors\MongoDBConnector;
 use Linna\Storage\Connectors\MysqliConnector;

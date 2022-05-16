@@ -12,13 +12,12 @@ declare(strict_types=1);
 namespace Linna\Storage\Connectors;
 
 use Linna\Storage\AbstractConnector;
-use Linna\Storage\ConnectorInterface;
 use MongoDB\Client;
 
 /**
  * MongoDB Connector.
  */
-class MongoDBConnector extends AbstractConnector implements ConnectorInterface
+class MongoDBConnector extends AbstractConnector
 {
     /**
      * Get Resource.

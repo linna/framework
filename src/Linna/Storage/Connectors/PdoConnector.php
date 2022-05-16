@@ -13,12 +13,11 @@ namespace Linna\Storage\Connectors;
 
 use Linna\Storage\AbstractConnector;
 use Linna\Storage\ExtendedPDO;
-use Linna\Storage\ConnectorInterface;
 
 /**
  * PDO storage Connector.
  */
-class PdoConnector extends AbstractConnector implements ConnectorInterface
+class PdoConnector extends AbstractConnector
 {
     /**
      * Get Resource.

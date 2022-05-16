@@ -32,19 +32,12 @@ use SessionHandlerInterface;
 class PgsqlPdoSessionHandler implements SessionHandlerInterface
 {
     /**
-     * @var ExtendedPDO Database Connection
-     */
-    private ExtendedPDO $pdo;
-
-    /**
-     * Constructor.
+     * Class Constructor.
      *
      * @param ExtendedPDO $pdo
      */
-    public function __construct(ExtendedPDO $pdo)
-    {
-        $this->pdo = $pdo;
-    }
+    public function __construct(private ExtendedPDO $pdo)
+    {}
 
     /**
      * Open session storage.

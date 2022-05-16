@@ -23,26 +23,13 @@ use SessionHandlerInterface;
 class MemcachedSessionHandler implements SessionHandlerInterface
 {
     /**
-     * @var Memcached Memcached instance
-     */
-    private Memcached $memcached;
-
-    /**
-     * @var int Expire time in seconds for stored sessions
-     */
-    private int $expire = 0;
-
-    /**
-     * Constructor.
+     * Class Constructor.
      *
      * @param Memcached $memcached Memcached resource
      * @param int       $expire    Expire time in seconds for stored sessions
      */
-    public function __construct(Memcached $memcached, int $expire)
-    {
-        $this->memcached = $memcached;
-        $this->expire = $expire;
-    }
+    public function __construct(private Memcached $memcached, private int $expire = 0)
+    {}
 
     /**
      * Open session storage.

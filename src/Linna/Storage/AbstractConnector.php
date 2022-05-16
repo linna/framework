@@ -14,20 +14,21 @@ namespace Linna\Storage;
 /**
  * Abstract Connector.
  */
-class AbstractConnector
+abstract class AbstractConnector implements ConnectorInterface
 {
-    /**
-     * @var array<mixed> Connection options
-     */
-    protected array $options = [];
-
     /**
      * Constructor.
      *
      * @param array<mixed> $options
      */
-    public function __construct(array $options)
+    public function __construct(protected array $options = [])
     {
-        $this->options = $options;
     }
+    
+    /**
+     * Return resource to Database class.
+     *
+     * @return object
+     */
+    abstract public function getResource(): object;
 }

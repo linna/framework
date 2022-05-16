@@ -12,13 +12,12 @@ declare(strict_types=1);
 namespace Linna\Storage\Connectors;
 
 use Linna\Storage\AbstractConnector;
-use Linna\Storage\ConnectorInterface;
 use mysqli;
 
 /**
  * Mysql Improved Extension Connector.
  */
-class MysqliConnector extends AbstractConnector implements ConnectorInterface
+class MysqliConnector extends AbstractConnector
 {
     /**
      * Get Resource.

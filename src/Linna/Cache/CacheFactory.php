@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Linna\Cache;
 
-use Linna\Storage\AbstractStorageFactory;
+use Linna\Shared\AbstractStorageFactory;
 use Psr\SimpleCache\CacheInterface;
 
 /**

@@ -9,7 +9,7 @@
  */
 declare(strict_types=1);
 
-namespace Linna\Storage;
+namespace Linna\Shared;
 
 use InvalidArgumentException;
 
@@ -19,19 +19,9 @@ use InvalidArgumentException;
 abstract class AbstractStorageFactory
 {
     /**
-     * @var string One of supported drivers
-     */
-    protected string $driver = '';
-
-    /**
      * @var array<string> Factory supported driver
      */
     protected array $supportedDriver = [];
-
-    /**
-     * @var array<mixed> Options for the driver
-     */
-    protected array $options = [];
 
     /**
      * Constructor.
@@ -39,11 +29,8 @@ abstract class AbstractStorageFactory
      * @param string       $driver
      * @param array<mixed> $options
      */
-    public function __construct(string $driver, array $options)
-    {
-        $this->driver = $driver;
-        $this->options = $options;
-    }
+    public function __construct(protected string $driver, protected array $options = [])
+    {}
 
     /**
      * Return Storage Object.
