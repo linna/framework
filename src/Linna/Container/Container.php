@@ -17,6 +17,7 @@ use Linna\Shared\ArrayAccessTrait;
 use Linna\Shared\PropertyAccessTrait;
 use Psr\Container\ContainerInterface;
 use ReflectionClass;
+use ReflectionNamedType;
 
 /**
  * Dependency Injection Container and Resolver.
@@ -54,16 +55,16 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * @var array<mixed> Rules for resolve scalar arguments or unexpected behaviors.
      */
-    protected array $rules = [];
+    //protected array $rules = [];
 
     /**
      * Class Constructor.
      *
      * @param array<mixed> $rules Rules for resolve scalar arguments or unexpected behaviors.
      */
-    public function __construct(array $rules = [])
+    public function __construct(protected array $rules = [])
     {
-        $this->rules = $rules;
+        //$this->rules = $rules;
     }
 
     /**
@@ -175,10 +176,8 @@ class Container implements ContainerInterface, ArrayAccess
         $this->tree[$level][$class] = [];
 
         //get parameter from constructor
-        //can return error when constructor not declared
-        $constructor = (new ReflectionClass($class))->getConstructor();//->getParameters();
-        //this should resolve the error when a class without constructor is encountered
-        $parameters = \is_null($constructor) ? [] : $constructor->getParameters();
+        //casting needed to avoid foreach loop on null
+        $parameters = (array) (new ReflectionClass($class))->getConstructor()?->getParameters();
 
         //loop parameter
         foreach ($parameters as $param) {
@@ -190,7 +189,9 @@ class Container implements ContainerInterface, ArrayAccess
             //in the documentation since PHP 7.1, but did not throw a deprecation notice
             //for technical reasons.
             //Get the data type of the parameter
-            $type = \is_null($param->getType()) ? self::NO_TYPE : $param->getType()->getName();
+            $type = ($param->getType() instanceof ReflectionNamedType) ? 
+                $param->getType()->getName() : 
+                self::NO_TYPE;
 
             //if parameter is an interface
             //check rules for an implementation and
@@ -346,8 +347,10 @@ class Container implements ContainerInterface, ArrayAccess
 
         //argument required from class
         foreach ($dependency as $argValue) {
-            $argType = \is_null($argValue->getType()) ? self::NO_TYPE : $argValue->getType()->getName();
-
+            $argType = ($argValue->getType() instanceof ReflectionNamedType) ? 
+                $argValue->getType()->getName() : 
+                self::NO_TYPE;
+            
             if (\interface_exists($argType)) {
                 //get the position of the current parameter for resolve the rule
                 $position = $argValue->getPosition();
