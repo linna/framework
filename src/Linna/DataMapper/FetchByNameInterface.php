@@ -24,7 +24,7 @@ interface FetchByNameInterface
      *
      * @param string $objectName
      *
-     * @return DomainObjectInterface|UuidDomainObjectInterface
+     * @return DomainObjectInterface
      */
-    public function fetchByName(string $objectName);
+    public function fetchByName(string $objectName): DomainObjectInterface;
 }

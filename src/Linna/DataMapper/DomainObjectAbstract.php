@@ -21,14 +21,14 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     use DomainObjectTimeTrait;
 
     /**
-     * @var int Read only object id on persistent storage.
+     * @var null|int|string Read only object id on persistent storage.
      *
-     * -1 means that the id is not set!
+     * null means that the id/uuid is not set!
      */
-    protected int $id = -1;
+    protected null|int|string $id = null;
 
     /**
-     * Get the id of the object (unique to the object type).
+     * Get the id/uuid of the object (unique to the object type).
      *
      * <pre><code class="php">$object = new DomainObject($dependencies);
      *
@@ -37,7 +37,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      *
      * @return int Current object id.
      */
-    public function getId(): int
+    public function getId(): mixed
     {
         return $this->id;
     }
@@ -48,6 +48,8 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      * <pre><code class="php">$object = new DomainObject($dependencies);
      *
      * $object->setId(5);
+     * // or
+     * $object->setId('10f6bace-22f3-4b42-9dda-659c89a3a3c9');
      * </code></pre>
      *
      * @param int $id New object id.
@@ -56,9 +58,9 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      *
      * @return int New object id.
      */
-    public function setId(int $id): int
+    public function setId(int|string $id): mixed
     {
-        if ($this->id !== -1) {
+        if ($this->id !== null) {
             throw new UnexpectedValueException('ObjectId property is immutable.');
         }
 

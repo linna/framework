@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Linna\DataMapper;
 
-//use Linna\DataMapper\NullDomainObject;
 use Linna\TestHelper\DataMapper\MapperMock;
 use Linna\TestHelper\DataMapper\DomainObjectMock;
 use PHPUnit\Framework\TestCase;
@@ -73,7 +72,7 @@ class MapperAbstractTest extends TestCase
         $domainObject->propertyThree = 'Baz';
 
         //check for effective new object
-        $this->assertSame(-1, $domainObject->id);
+        $this->assertSame(null, $domainObject->id);
 
         //save object
         self::$mapperMock->save($domainObject);
@@ -113,7 +112,7 @@ class MapperAbstractTest extends TestCase
         $domainObject->propertyThree = 'Baz';
 
         //check for effective new object
-        $this->assertSame(-1, $domainObject->id);
+        $this->assertSame(null, $domainObject->id);
 
         //save object
         self::$mapperMock->save($domainObject);
@@ -167,7 +166,7 @@ class MapperAbstractTest extends TestCase
         $domainObject->propertyThree = 'Baz';
 
         //check for effective new object
-        $this->assertSame(-1, $domainObject->id);
+        $this->assertSame(null, $domainObject->id);
 
         //save object
         self::$mapperMock->save($domainObject);

@@ -16,4 +16,28 @@ namespace Linna\DataMapper;
  */
 class NullDomainObject extends DomainObjectAbstract
 {
+    /**
+     * Get nothing.
+     * Make this method of the abstract class idempotent
+     *
+     * @return null
+     */
+    public function getId(): mixed
+    {
+        return null;
+    }
+
+    /**
+     * Set nothing.
+     * Make this method of the abstract class idempotent
+     *
+     * @return null.
+     */
+    public function setId(int|string $id): mixed
+    {
+        //make this method idempotent
+        unset($id);
+
+        return null;
+    }
 }

@@ -40,13 +40,15 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
     }
 
     /**
-     * Fetch a domain object by id.
+     * Fetch a DomainObject by id/uuid.
+     * From object id/uuid as argument, this method must return an instance
+     * of DomainObject instance or an instance of NullDomainObject.
      *
-     * @param int $objectId
+     * @param int|string $objectId
      *
      * @return DomainObjectInterface
      */
-    public function fetchById(int $objectId): DomainObjectInterface
+    public function fetchById(int|string $objectId): DomainObjectInterface
     {
         return $this->storage[$objectId] ?? new NullDomainObject();
     }
@@ -108,7 +110,7 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
      *
      * @param DomainObjectInterface $domainObjectMock
      */
-    protected function concreteInsert(DomainObjectInterface &$domainObjectMock)
+    protected function concreteInsert(DomainObjectInterface &$domainObjectMock): void
     {
         $this->checkDomainObjectType($domainObjectMock);
 
@@ -128,7 +130,7 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
      *
      * @param DomainObjectInterface $domainObjectMock
      */
-    protected function concreteUpdate(DomainObjectInterface $domainObjectMock)
+    protected function concreteUpdate(DomainObjectInterface $domainObjectMock): void
     {
         $this->checkDomainObjectType($domainObjectMock);
 
@@ -144,7 +146,7 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
      *
      * @param DomainObjectInterface $domainObject
      */
-    protected function concreteDelete(DomainObjectInterface &$domainObjectMock)
+    protected function concreteDelete(DomainObjectInterface &$domainObjectMock): void
     {
         $this->checkDomainObjectType($domainObjectMock);
 
@@ -162,7 +164,7 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
      *
      * @throws InvalidArgumentException if the domain object isn't of the type required by mapper
      */
-    protected function checkDomainObjectType(DomainObjectInterface $domainObject)
+    protected function checkDomainObjectType(DomainObjectInterface $domainObject): void
     {
         if (!($domainObject instanceof DomainObjectMock)) {
             throw new InvalidArgumentException('Domain Object parameter must be instance of DomainObjectMock class');

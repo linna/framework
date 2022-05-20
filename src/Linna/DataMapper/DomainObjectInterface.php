@@ -17,18 +17,19 @@ namespace Linna\DataMapper;
 interface DomainObjectInterface
 {
     /**
-     * Get the ID of this object (unique to the object type).
+     * Get the object id/uuid of this object (unique to the object type), 
+     * it can be an integer or a uuid as string.
      *
-     * @return int
+     * @return int|string
      */
-    public function getId(): int;
+    public function getId(): mixed;
 
     /**
-     * Set the id for this object.
+     * Set the object id/uuid for this object, it can be an integer or a uuid as string.
      *
-     * @param int $objectId
+     * @param int|string $objectId
      *
-     * @return int
+     * @return int|string The new object id/uuid
      */
-    public function setId(int $objectId): int;
+    public function setId(int|string $objectId): mixed;
 }

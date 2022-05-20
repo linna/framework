@@ -22,11 +22,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Container\Container::RULE_ARGUMENT` public constant, use it in rules for resolve other arguments
 
 #### Data Mapper
-* `Linna\DataMapper\NullUuidDomainObject` interface
-* `Linna\DataMapper\UuidDomainObjectAbstract` class
-* `Linna\DataMapper\UuidDomainObjectInterface` interface
-* `Linna\DataMapper\UuidMapperAbstract` class
-* `Linna\DataMapper\UuidMapperInterface` interface
 * `Linna\DataMapper\DomainObjectAbstract->created` public property
 * `Linna\DataMapper\DomainObjectAbstract->lastUpdate` public property
 * `Linna\DataMapper\DomainObjectAbstract->id` protected property accessible via `__get()` method
@@ -92,7 +87,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 #### Data Mapper
 * `Linna\DataMapper\MapperAbstract->save()` update after insert
-* `Linna\DataMapper\UuidDomainObjectAbstract->$uuid` type fixed
 
 #### Session
 * `Linna\Session\Session` session die because it does not refresh expiration time on client, also if present user interaction, with browser

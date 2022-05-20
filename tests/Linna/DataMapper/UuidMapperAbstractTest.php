@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace Linna\DataMapper;
 
-//use Linna\DataMapper\NullUuidDomainObject;
-//use Linna\DataMapper\UUID4;
 use Linna\TestHelper\DataMapper\UuidMapperMock;
 use Linna\TestHelper\DataMapper\UuidDomainObjectMock;
 use PHPUnit\Framework\TestCase;
@@ -74,16 +72,14 @@ class UuidMapperAbstractTest extends TestCase
         $domainObject->propertyThree = 'Baz';
 
         //check for effective new object
-        $this->assertSame('', $domainObject->id);
-        $this->assertSame('', $domainObject->uuid);
-        $this->assertIsString($domainObject->uuid);
+        $this->assertSame(null, $domainObject->id);
+        $this->assertNull($domainObject->id);
 
         //save object
         self::$mapperMock->save($domainObject);
 
         //check for effective insertion in storage
         $this->assertNotEmpty($domainObject->id);
-        $this->assertNotEmpty($domainObject->uuid);
 
         //cheking for uuid
         $uuid = (new UUID4($domainObject->id))->getHex();
@@ -101,7 +97,7 @@ class UuidMapperAbstractTest extends TestCase
         self::$mapperMock->delete($savedDomainObject);
 
         //check cleaning
-        $this->assertInstanceOf(NullUuidDomainObject::class, $savedDomainObject);
+        $this->assertInstanceOf(NullDomainObject::class, $savedDomainObject);
     }
 
     /**
@@ -120,16 +116,14 @@ class UuidMapperAbstractTest extends TestCase
         $domainObject->propertyThree = 'Baz';
 
         //check for effective new object
-        $this->assertSame('', $domainObject->id);
-        $this->assertSame('', $domainObject->uuid);
-        $this->assertIsString($domainObject->uuid);
+        $this->assertSame(null, $domainObject->id);
+        $this->assertNull($domainObject->id);
 
         //save object
         self::$mapperMock->save($domainObject);
 
         //check for effective insertion in storage
         $this->assertNotEmpty($domainObject->id);
-        $this->assertNotEmpty($domainObject->uuid);
 
         //cheking for uuid
         $uuid = (new UUID4($domainObject->id))->getHex();
@@ -161,7 +155,7 @@ class UuidMapperAbstractTest extends TestCase
         self::$mapperMock->delete($updatedDomainObject);
 
         //check cleaning
-        $this->assertInstanceOf(NullUuidDomainObject::class, $updatedDomainObject);
+        $this->assertInstanceOf(NullDomainObject::class, $updatedDomainObject);
     }
 
     /**
@@ -180,14 +174,13 @@ class UuidMapperAbstractTest extends TestCase
         $domainObject->propertyThree = 'Baz';
 
         //check for effective new object
-        $this->assertSame('', $domainObject->id);
+        $this->assertSame(null, $domainObject->id);
 
         //save object
         self::$mapperMock->save($domainObject);
 
         //check for effective insertion in storage
         $this->assertNotEmpty($domainObject->id);
-        $this->assertNotEmpty($domainObject->uuid);
 
         //cheking for uuid
         $uuid = (new UUID4($domainObject->id))->getHex();
@@ -205,8 +198,8 @@ class UuidMapperAbstractTest extends TestCase
         self::$mapperMock->delete($savedDomainObject);
 
         //check cleaning
-        $this->assertInstanceOf(NullUuidDomainObject::class, $savedDomainObject);
-        $this->assertInstanceOf(NullUuidDomainObject::class, self::$mapperMock->fetchByName('FooName'));
-        $this->assertInstanceOf(NullUuidDomainObject::class, self::$mapperMock->fetchById($uuid));
+        $this->assertInstanceOf(NullDomainObject::class, $savedDomainObject);
+        $this->assertInstanceOf(NullDomainObject::class, self::$mapperMock->fetchByName('FooName'));
+        $this->assertInstanceOf(NullDomainObject::class, self::$mapperMock->fetchById($uuid));
     }
 }

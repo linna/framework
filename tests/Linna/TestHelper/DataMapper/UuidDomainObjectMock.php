@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Linna\TestHelper\DataMapper;
 
-use Linna\DataMapper\UuidDomainObjectAbstract;
+use Linna\DataMapper\DomainObjectAbstract;
 
-class UuidDomainObjectMock extends UuidDomainObjectAbstract
+class UuidDomainObjectMock extends DomainObjectAbstract
 {
     public string $name = '';
 

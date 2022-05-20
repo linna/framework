@@ -18,13 +18,13 @@ namespace Linna\DataMapper;
 interface MapperInterface
 {
     /**
-     * Fetch a DomainObject by id.
-     * From object id as argument, this method must return an instance
+     * Fetch a DomainObject by id/uuid.
+     * From object id/uuid as argument, this method must return an instance
      * of DomainObject instance or an instance of NullDomainObject.
      *
-     * @param int $objectId
+     * @param int|string $objectId
      *
      * @return DomainObjectInterface
      */
-    public function fetchById(int $objectId): DomainObjectInterface;
+    public function fetchById(int|string $objectId): DomainObjectInterface;
 }

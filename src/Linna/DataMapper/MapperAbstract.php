@@ -39,7 +39,7 @@ abstract class MapperAbstract
      */
     public function save(DomainObjectInterface &$domainObject): void
     {
-        if ($domainObject->getId() === -1) {
+        if ($domainObject->getId() === null) {
             $this->concreteInsert($domainObject);
             return;
         }
@@ -73,7 +73,7 @@ abstract class MapperAbstract
      *
      * @return void
      */
-    abstract protected function concreteInsert(DomainObjectInterface &$domainObject);
+    abstract protected function concreteInsert(DomainObjectInterface &$domainObject): void;
 
     /**
      * Update the DomainObject in persistent storage.
@@ -82,7 +82,7 @@ abstract class MapperAbstract
      *
      * @return void
      */
-    abstract protected function concreteUpdate(DomainObjectInterface $domainObject);
+    abstract protected function concreteUpdate(DomainObjectInterface $domainObject): void;
 
     /**
      * Delete the DomainObject from peristent Storage.
@@ -91,7 +91,7 @@ abstract class MapperAbstract
      *
      * @return void
      */
-    abstract protected function concreteDelete(DomainObjectInterface &$domainObject);
+    abstract protected function concreteDelete(DomainObjectInterface &$domainObject): void;
 
     /**
      * Check for valid domain Object.
@@ -102,5 +102,5 @@ abstract class MapperAbstract
      *
      * @throws InvalidArgumentException if the domain object isn't of the type required by mapper
      */
-    abstract protected function checkDomainObjectType(DomainObjectInterface $domainObject);
+    abstract protected function checkDomainObjectType(DomainObjectInterface $domainObject): void;
 }

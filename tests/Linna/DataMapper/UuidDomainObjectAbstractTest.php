@@ -75,7 +75,6 @@ class UuidDomainObjectAbstractTest extends TestCase
     public function testGetObjectIdWithMethod(): void
     {
         $this->assertEquals('a93a806d-f66f-4a23-a8d6-00e3f0ab20be', self::$domainObject->getId());
-        $this->assertEquals('a93a806d-f66f-4a23-a8d6-00e3f0ab20be', self::$domainObject->getUuid());
     }
 
     /**
@@ -86,7 +85,6 @@ class UuidDomainObjectAbstractTest extends TestCase
     public function testGetObjectIdWithProperty(): void
     {
         $this->assertEquals('a93a806d-f66f-4a23-a8d6-00e3f0ab20be', self::$domainObject->id);
-        $this->assertEquals('a93a806d-f66f-4a23-a8d6-00e3f0ab20be', self::$domainObject->uuid);
     }
 
     /**
@@ -107,7 +105,6 @@ class UuidDomainObjectAbstractTest extends TestCase
     public function testIssetProperty(): void
     {
         $this->assertTrue(isset(self::$domainObject->id));
-        $this->assertTrue(isset(self::$domainObject->uuid));
         $this->assertFalse(isset(self::$domainObject->unknown));
     }
 
