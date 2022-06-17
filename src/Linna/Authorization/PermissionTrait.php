@@ -36,11 +36,11 @@ trait PermissionTrait
     /**
      * Check if a Permission is owned, use permission Id.
      *
-     * @param int $permissionId
+     * @param string|int $permissionId
      *
      * @return bool
      */
-    public function canById(int $permissionId): bool
+    public function canById(string|int $permissionId): bool
     {
         if (isset($this->permission[$permissionId])) {
             return true;

@@ -53,7 +53,7 @@ class Role extends DomainObjectAbstract
         $this->permission = $permissions;
 
         //set required type
-        \settype($this->id, 'integer');
+        //\settype($this->id, 'integer');
         \settype($this->active, 'integer');
     }
 
