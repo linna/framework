@@ -76,7 +76,7 @@ class Role extends DomainObjectAbstract
      *
      * @return bool
      */
-    public function isUserInRoleById(int $userId): bool
+    public function isUserInRoleById(string|int $userId): bool
     {
         if (isset($this->users[$userId])) {
             return true;
