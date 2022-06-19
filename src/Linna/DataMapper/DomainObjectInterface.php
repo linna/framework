@@ -17,7 +17,7 @@ namespace Linna\DataMapper;
 interface DomainObjectInterface
 {
     /**
-     * Get the object id/uuid of this object (unique to the object type), 
+     * Get the object id/uuid of this object (unique to the object type),
      * it can be an integer or a uuid as string.
      *
      * @return int|string
