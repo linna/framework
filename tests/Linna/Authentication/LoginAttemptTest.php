@@ -98,7 +98,7 @@ class LoginAttemptTest extends TestCase
         $loginAttempt->ipAddress = '192.168.1.2';
         $loginAttempt->when = \date('YmdHis', \time());
 
-        $this->assertSame(-1, $loginAttempt->getId());
+        $this->assertSame(null, $loginAttempt->getId());
 
         self::$enhancedAuthenticationMapper->save($loginAttempt);
 
