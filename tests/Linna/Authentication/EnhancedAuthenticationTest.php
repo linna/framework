@@ -79,7 +79,11 @@ class EnhancedAuthenticationTest extends TestCase
         self::$password = $password;
         self::$session = $session;
         self::$enhancedAuthenticationMapper = $enhancedAuthenticationMapper;
-        self::$enhancedAuthentication = new EnhancedAuthentication($session, $password, $enhancedAuthenticationMapper);
+        self::$enhancedAuthentication = new EnhancedAuthentication(
+            session: $session,
+            password: $password,
+            mapper: $enhancedAuthenticationMapper
+        );
 
         self::loginClean();
     }

@@ -30,16 +30,6 @@ class Authentication
     private bool $logged = false;
 
     /**
-     * @var Password Password class.
-     */
-    private Password $password;
-
-    /**
-     * @var Session Session class.
-     */
-    protected Session $session;
-
-    /**
      * Class constructor.
      *
      * <pre><code class="php">use Linna\Session\Session;
@@ -54,10 +44,10 @@ class Authentication
      * @param Session  $session  Session class instance.
      * @param Password $password Password class instance.
      */
-    public function __construct(Session $session, Password $password)
-    {
-        $this->password = $password;
-        $this->session = $session;
+    public function __construct(
+        protected Session $session,
+        private Password $password
+    ) {
         $this->logged = $this->refresh();
     }
 

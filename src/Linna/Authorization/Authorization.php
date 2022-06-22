@@ -79,7 +79,7 @@ class Authorization
      *
      * @return bool
      */
-    public function can($permission): bool
+    public function can(mixed $permission): bool
     {
         if ($permission instanceof Permission) {
             return $this->canByObject($permission);
