@@ -1,5 +1,5 @@
 <div align="center">
-    <a href="#"><img src="logo-linna-96.png" alt="Linna Logo"></a>
+    <a href="#"><img src="logo-linna-128.png" alt="Linna Logo"></a>
 </div>
 
 <br/>
