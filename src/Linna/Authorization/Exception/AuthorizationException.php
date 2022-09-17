@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Authorization\Exception;
 
@@ -15,6 +16,8 @@ use Linna\Router\Exception\RedirectException;
 
 /**
  * Authorization Exception.
+ *
+ * Throw it to indicate that the authorization procedure went worng.
  */
 class AuthorizationException extends RedirectException
 {

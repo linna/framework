@@ -24,14 +24,10 @@ use TypeError;
  */
 class RouterTest extends TestCase
 {
-    /**
-     * @var RouteCollection Routes for test.
-     */
+    /** @var RouteCollection Routes for test. */
     protected static RouteCollection $routes;
 
-    /**
-     * @var Router The router object.
-     */
+    /** @var Router The router object. */
     protected static Router $router;
 
     /**
@@ -335,7 +331,7 @@ class RouterTest extends TestCase
      * @param string $method
      * @param string $url
      * @param string $func
-     * @param array $options
+     * @param array  $options
      *
      * @return void
      */

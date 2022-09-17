@@ -22,7 +22,7 @@ class CalculatorSingleDivideView extends View
     /**
      * Constructor.
      *
-     * @param JsonTemplate  $template
+     * @param JsonTemplate $template
      */
     public function __construct(JsonTemplate $template)
     {

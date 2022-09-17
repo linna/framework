@@ -20,14 +20,10 @@ use PHPUnit\Framework\TestCase;
 
 class PermissionTest extends TestCase
 {
-    /**
-     * @var PermissionMapper The permission mapper
-     */
+    /** @var PermissionMapper The permission mapper */
     protected static PermissionMapper $permissionMapper;
 
-    /**
-     * @var ExtendedPDO Database connection.
-     */
+    /** @var ExtendedPDO Database connection. */
     protected static ExtendedPDO $pdo;
 
     /**

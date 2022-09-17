@@ -20,9 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SessionTest extends TestCase
 {
-    /**
-     * @var Session The session class.
-     */
+    /** @var Session The session class. */
     protected static Session $session;
 
     /**
@@ -56,6 +54,7 @@ class SessionTest extends TestCase
      * Test session start.
      *
      * @requires extension xdebug
+     *
      * @runInSeparateProcess
      *
      * @return void
@@ -97,6 +96,7 @@ class SessionTest extends TestCase
      * Test session start with already started session.
      *
      * @requires extension xdebug
+     *
      * @runInSeparateProcess
      *
      * @return void
@@ -124,6 +124,7 @@ class SessionTest extends TestCase
      * Test session commit.
      *
      * @requires extension xdebug
+     *
      * @runInSeparateProcess
      *
      * @return void
@@ -160,6 +161,7 @@ class SessionTest extends TestCase
      * Test session destroy.
      *
      * @requires extension xdebug
+     *
      * @runInSeparateProcess
      *
      * @return void
@@ -201,6 +203,7 @@ class SessionTest extends TestCase
      * Test session regenerate.
      *
      * @requires extension xdebug
+     *
      * @runInSeparateProcess
      *
      * @return void
@@ -263,7 +266,9 @@ class SessionTest extends TestCase
      * Test session expired.
      *
      * @dataProvider sessionTimeProvider
+     *
      * @requires extension xdebug
+     *
      * @runInSeparateProcess
      *
      * @param int  $time

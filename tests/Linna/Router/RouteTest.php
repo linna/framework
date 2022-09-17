@@ -19,9 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RouteTest extends TestCase
 {
-    /**
-     * @var Route The route object.
-     */
+    /** @var Route The route object. */
     public static Route $route;
 
     /**

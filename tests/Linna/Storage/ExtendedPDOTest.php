@@ -22,9 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ExtendedPDOTest extends TestCase
 {
-    /**
-     * @var array Connection options.
-     */
+    /** @var array Connection options. */
     protected static array $options = [];
 
     /**

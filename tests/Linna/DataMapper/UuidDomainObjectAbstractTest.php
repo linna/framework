@@ -20,9 +20,7 @@ use UnexpectedValueException;
  */
 class UuidDomainObjectAbstractTest extends TestCase
 {
-    /**
-     * @var UuidDomainObjectMock The domain object class.
-     */
+    /** @var UuidDomainObjectMock The domain object class. */
     protected static UuidDomainObjectMock $domainObject;
 
     /**

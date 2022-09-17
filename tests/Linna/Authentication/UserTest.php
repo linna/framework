@@ -23,9 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class UserTest extends TestCase
 {
-    /**
-     * @var UserMapper The user mapper
-     */
+    /** @var UserMapper The user mapper */
     protected static UserMapper $userMapper;
 
     /**

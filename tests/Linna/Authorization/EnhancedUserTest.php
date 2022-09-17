@@ -28,24 +28,16 @@ use PHPUnit\Framework\TestCase;
  */
 class EnhancedUserTest extends TestCase
 {
-    /**
-     * @var PermissionMapper The permission mapper
-     */
+    /** @var PermissionMapper The permission mapper */
     protected static PermissionMapper $permissionMapper;
 
-    /**
-     * @var EnhancedUserMapper The enhanced user mapper
-     */
+    /** @var EnhancedUserMapper The enhanced user mapper */
     protected static EnhancedUserMapper $enhancedUserMapper;
 
-    /**
-     * @var RoleMapper The role mapper
-     */
+    /** @var RoleMapper The role mapper */
     protected static RoleMapper $roleMapper;
 
-    /**
-     * @var ExtendedPDO Database connection.
-     */
+    /** @var ExtendedPDO Database connection. */
     protected static ExtendedPDO $pdo;
 
     /**

@@ -1,25 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Authentication;
 
 /**
- * Provide methods for manage password, this class use PHP password hashing function,
- * see php documentation for more information.
- * <a href="http://php.net/manual/en/book.password.php">http://php.net/manual/en/book.password.php</a>
+ * Provide methods to manage password, this class uses PHP password hashing
+ * function, see php documentation for more information.
+ *
+ * <a href="http://php.net/manual/en/book.password.php">
+ * http://php.net/manual/en/book.password.php
+ * </a>
  */
 class Password
 {
     /**
-     * @var array<mixed> An associative array containing options
+     * @var array<mixed> An associative array containing options.
      *
      * http://php.net/manual/en/function.password-hash.php
      */
@@ -28,37 +32,29 @@ class Password
         PASSWORD_DEFAULT => ['cost' => 11]
     ];
 
-    /**
-     * @var array<mixed> An associate array containing algorithm constants
-     */
+    /** @var array<mixed> An associate array containing algorithm constants. */
     protected array $algoLists = [
         PASSWORD_BCRYPT,
         PASSWORD_DEFAULT
     ];
 
-    /**
-     * @var string|null Password default algorithm
-     */
+    /** @var string|null Password default algorithm. */
     protected ?string $algo = PASSWORD_BCRYPT;
 
     /**
      * Class constructor.
      *
-     * <p>For password algorithm constants see <a href="http://php.net/manual/en/password.constants.php">Password Constants</a>.</p>
-     * <pre><code class="php">use Linna\Authentication\Password;
-     *
-     * $password = new Password(PASSWORD_DEFAULT, [
-     *     'cost' => 11
-     * ]);
-     * </code></pre>
+     * For password algorithm constants see
+     * <a href="http://php.net/manual/en/password.constants.php">Password Constants</a>.
      *
      * Strict typing removed for $algo because on php 7.4 password hashing
      * algorithm identifiers are nullable strings rather than integers.
      *
-     * @param string|null   $algo        Algorithm used for hash passwords.
-     * @param array<mixed>  $options     Options for algoas ['key' => 'value'] array.
+     * @param string|null  $algo    Algorithm used for hash passwords.
+     * @param array<mixed> $options Options for algoas ['key' => 'value'] array.
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException If the $algo paramether contains an
+     *                                   invalid password algorithm.
      */
     public function __construct($algo = PASSWORD_BCRYPT, array $options = [])
     {
@@ -91,18 +87,12 @@ class Password
     }
 
     /**
-     * Verifies if a password matches an hash and return the result as boolean.
+     * Verify if a password matches an hash and return the result as boolean.
      *
-     * <pre><code class="php">$storedHash = '$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6';
-     * $password = 'FooPassword';
+     * @param string $password Plaintext password to be compared.
+     * @param string $hash     Hashed password.
      *
-     * $verified = $password->verify($password, $storedHash);
-     * </code></pre>
-     *
-     * @param string $password  Plaintext password to be compared.
-     * @param string $hash      Hashed password.
-     *
-     * @return bool True if password match, false if not.
+     * @return bool True if password match, false otherwise.
      */
     public function verify(string $password, string $hash): bool
     {
@@ -111,13 +101,6 @@ class Password
 
     /**
      * Create password hash from the given string and return it.
-     *
-     * <pre><code class="php">$hash = $password->hash('FooPassword');
-     *
-     * //var_dump result
-     * //$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6
-     * var_dump($hash)
-     * </code></pre>
      *
      * @param string $password Plaintext password to be hashed.
      *
@@ -129,17 +112,11 @@ class Password
     }
 
     /**
-     * Checks if the given hash matches the algorithm and the options provided.
+     * Check if the given hash matches the algorithm and the options provided.
      *
-     * <pre><code class="php">$hash = '$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6';
+     * @param string $hash Hash to be checked.
      *
-     * //true if rehash is needed, false if no
-     * $rehashCheck = $password->needsRehash($hash);
-     * </code></pre>
-     *
-     * @param string $hash Hash to be checked
-     *
-     * @return bool
+     * @return bool True if the password need re-hash, false otherwise.
      */
     public function needsRehash(string $hash): bool
     {
@@ -147,26 +124,11 @@ class Password
     }
 
     /**
-     * Returns information about the given hash.
+     * Return information about the given hash.
      *
-     * <pre><code class="php">$hash = '$2y$11$cq3ZWO18l68X7pGs9Y1fveTGcNJ/iyehrDZ10BAvbY8LaBXNvnyk6';
+     * @param string $hash Hash for which get info.
      *
-     * $info = $password->getInfo($hash);
-     *
-     * //var_dump result
-     * //[
-     * //    'algo' => 1,
-     * //    'algoName' => 'bcrypt',
-     * //    'options' => [
-     * //        'cost' => int 11
-     * //    ]
-     * //]
-     * var_dump($info);
-     * </code></pre>
-     *
-     * @param string $hash Hash for wich get info.
-     *
-     * @return array<mixed>
+     * @return array<mixed> Information for the hash.
      */
     public function getInfo(string $hash): array
     {

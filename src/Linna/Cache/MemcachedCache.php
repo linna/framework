@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Cache;
 
 use DateInterval;
 use Memcached;
-use InvalidArgumentException;
+//use InvalidArgumentException;
 use Psr\SimpleCache\CacheInterface;
+use Psr\SimpleCache\InvalidArgumentException;
 
 /**
  * PSR-16 Memcached.
@@ -23,9 +25,7 @@ class MemcachedCache implements CacheInterface
 {
     use ActionMultipleTrait;
 
-    /**
-     * @var Memcached Memcached instance
-     */
+    /** @var Memcached Memcached instance */
     private Memcached $memcached;
 
     /**
@@ -33,12 +33,12 @@ class MemcachedCache implements CacheInterface
      *
      * @param array<mixed> $options
      *
-     * @throws InvalidArgumentException if options not contain memcached resource
+     * @throws \InvalidArgumentException if options not contain memcached resource
      */
     public function __construct(array $options)
     {
         if (!($options['resource'] instanceof Memcached)) {
-            throw new InvalidArgumentException('MemcachedCache class need instance of Memcached passed as option. [\'resource\' => $memcached].');
+            throw new \InvalidArgumentException('MemcachedCache class need instance of Memcached passed as option. [\'resource\' => $memcached].');
         }
 
         $this->memcached = $options['resource'];
@@ -52,8 +52,7 @@ class MemcachedCache implements CacheInterface
      *
      * @return mixed The value of the item from the cache, or $default in case of cache miss.
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *   MUST be thrown if the $key string is not a legal value.
+     * @throws InvalidArgumentException MUST be thrown if the $key string is not a legal value.
      */
     public function get(string $key, mixed $default = null): mixed
     {
@@ -79,8 +78,7 @@ class MemcachedCache implements CacheInterface
      *
      * @return bool True on success and false on failure.
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *   MUST be thrown if the $key string is not a legal value.
+     * @throws InvalidArgumentException MUST be thrown if the $key string is not a legal value.
      */
     public function set(string $key, mixed $value, DateInterval|int|null $ttl = null): bool
     {
@@ -90,9 +88,9 @@ class MemcachedCache implements CacheInterface
     /**
      * Handle ttl parameter.
      *
-     * @param null|int|\DateInterval $ttl   Optional. The TTL value of this item. If no value is sent and
-     *                                      the driver supports TTL then the library may set a default value
-     *                                      for it or let the driver take care of that.
+     * @param null|int|\DateInterval $ttl Optional. The TTL value of this item. If no value is sent and
+     *                                    the driver supports TTL then the library may set a default value
+     *                                    for it or let the driver take care of that.
      *
      * @return int Ttl in seconds.
      */
@@ -118,8 +116,7 @@ class MemcachedCache implements CacheInterface
      *
      * @return bool True if the item was successfully removed. False if there was an error.
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *   MUST be thrown if the $key string is not a legal value.
+     * @throws InvalidArgumentException MUST be thrown if the $key string is not a legal value.
      */
     public function delete(string $key): bool
     {
@@ -148,8 +145,7 @@ class MemcachedCache implements CacheInterface
      *
      * @return bool
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *   MUST be thrown if the $key string is not a legal value.
+     * @throws InvalidArgumentException MUST be thrown if the $key string is not a legal value.
      */
     public function has(string $key): bool
     {

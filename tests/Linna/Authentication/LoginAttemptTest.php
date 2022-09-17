@@ -23,14 +23,10 @@ use PHPUnit\Framework\TestCase;
  */
 class LoginAttemptTest extends TestCase
 {
-    /**
-     * @var ExtendedPDO Persistent storage connection.
-     */
+    /** @var ExtendedPDO Persistent storage connection. */
     protected static ExtendedPDO $pdo;
 
-    /**
-     * @var EnhancedAuthenticationMapper The enhanced authentication mapper class
-     */
+    /** @var EnhancedAuthenticationMapper The enhanced authentication mapper class */
     protected static EnhancedAuthenticationMapper $enhancedAuthenticationMapper;
 
     /**

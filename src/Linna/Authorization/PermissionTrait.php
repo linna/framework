@@ -1,32 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Authorization;
 
 /**
  * User PermissionTrait.
+ *
+ * Use it to add the permission functionality to a class.
  */
 trait PermissionTrait
 {
-    /**
-     * @var array<mixed> User permissions
-     */
+    /** @var array<mixed> User permissions. */
     protected array $permission = [];
 
     /**
-     * Check if a Permission is owned, use Permission instance.
+     * Check if a Permission is granted to a user or to a role, use Permission
+     * instance.
      *
-     * @param Permission $permission
+     * @param Permission $permission The permission which will be checked.
      *
-     * @return bool
+     * @return bool True if the permission is granted, false otherwise.
      */
     public function can(Permission $permission): bool
     {
@@ -34,11 +36,12 @@ trait PermissionTrait
     }
 
     /**
-     * Check if a Permission is owned, use permission Id.
+     * Check if a Permission is granted to a user or to a role, use permission
+     * id.
      *
-     * @param string|int $permissionId
+     * @param string|int $permissionId The permission which will be checked.
      *
-     * @return bool
+     * @return bool True if the permission is granted, false otherwise.
      */
     public function canById(string|int $permissionId): bool
     {
@@ -50,11 +53,12 @@ trait PermissionTrait
     }
 
     /**
-     * Check if a Permission is owned, use permission name.
+     * Check if a Permission is granted to a user or to a role, use permission
+     * name.
      *
-     * @param string $permissionName
+     * @param string $permissionName The permission which will be checked.
      *
-     * @return bool
+     * @return bool True if the permission is granted, false otherwise.
      */
     public function canByName(string $permissionName): bool
     {

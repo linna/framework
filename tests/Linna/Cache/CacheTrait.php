@@ -19,9 +19,7 @@ use TypeError;
  */
 trait CacheTrait
 {
-    /**
-     * @var CacheInterface Cache resource
-     */
+    /** @var CacheInterface Cache resource */
     protected static CacheInterface $cache;
 
     /**

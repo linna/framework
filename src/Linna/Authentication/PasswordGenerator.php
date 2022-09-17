@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Authentication;
 
@@ -19,9 +20,7 @@ use InvalidArgumentException;
  */
 class PasswordGenerator
 {
-    /**
-     * @var array<string> Characters intervall
-     */
+    /** @var array<string> Characters intervall */
     private array $chars = [
         'ABCDEFGHIJKLMNOPQRSTUVWXYZ', //u 117
         'abcdefghijklmnopqrstuvwxyz', //l 108
@@ -32,26 +31,15 @@ class PasswordGenerator
     /**
      * Class constructor.
      *
-     * In this class constructor do nothing, is present only for compatibility with Container.
-     *
-     * <pre><code class="php">use Linna\Auth\PasswordGenerator;
-     *
-     * $passwordGenerator = new PasswordGenerator();
-     * </code></pre>
+     * The class constructor do nothing, is present only for compatibility with
+     * Container.
      */
     public function __construct()
     {
     }
 
     /**
-     * Generate a random password.
-     *
-     * <pre><code class="php">$random = $passwordGenerator->getFromRandom(20);
-     *
-     * //var_dump result
-     * //r4Q,1J*tM7D_99q0u>61
-     * var_dump($random);
-     * </code></pre>
+     * Generates a random password.
      *
      * @param int $length Desiderated password length.
      *
@@ -61,24 +49,15 @@ class PasswordGenerator
     {
         $password = [];
 
-        while ($length) {
+        while ($length--) {
             $password[] = $this->getRandomChar($this->chars[\random_int(0, 3)]);
-
-            $length--;
         }
 
         return \implode($password);
     }
 
     /**
-     * Return topology for given password.
-     *
-     * <pre><code class="php">$topology = $passwordGenerator->getTopology('r4Q,1J*tM7D_99q0u>61');
-     *
-     * //var_dump result
-     * //ldusdusludusddldlsdd
-     * var_dump($topology);
-     * </code></pre>
+     * Returns topology for given password.
      *
      * @param string $password Password for which get topology.
      *
@@ -99,11 +78,11 @@ class PasswordGenerator
     /**
      * Return topology group for the given char.
      *
-     * @param string $char
+     * @param string $char The char for which get the topology group.
      *
-     * @return string
+     * @return string The character to identify the topology.
      *
-     * @throws InvalidArgumentException If char provided isn't inside any group
+     * @throws InvalidArgumentException If char provided isn't inside any group.
      */
     private function getTopologyGroup(string $char): string
     {
@@ -131,14 +110,7 @@ class PasswordGenerator
     /**
      * Generate a random password corresponding at the given topology.
      *
-     * <pre><code class="php">$random = $passwordGenerator->getFromTopology('ldusdusludusddldlsdd');
-     *
-     * //var_dump result
-     * //r4Q,1J*tM7D_99q0u>61
-     * var_dump($random);
-     * </code></pre>
-     *
-     * @param string $topology Topology for generate password.
+     * @param string $topology Topology to generate password.
      *
      * @return string Random password corresponding the given topology.
      *
@@ -168,9 +140,9 @@ class PasswordGenerator
     /**
      * Get random char between.
      *
-     * @param string $interval
+     * @param string $interval The string where extract a random char.
      *
-     * @return string
+     * @return string The random char extracted from the string.
      */
     private function getRandomChar(string $interval): string
     {

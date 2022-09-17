@@ -20,9 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PasswordGeneratorTest extends TestCase
 {
-    /**
-     * @var PasswordGenerator The password class.
-     */
+    /** @var PasswordGenerator The password class. */
     protected static PasswordGenerator $passwordGenerator;
 
     /**

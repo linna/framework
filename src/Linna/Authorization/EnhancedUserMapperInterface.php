@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Authorization;
 
@@ -17,21 +18,25 @@ use Linna\Authorization\Role;
 use Linna\DataMapper\MapperInterface;
 
 /**
- * User Mapper Interface
- * Contain methods required from concrete User Mapper.
+ * User Mapper Interface.
+ *
+ * Contains methods required from concrete User Mapper.
  */
 interface EnhancedUserMapperInterface extends MapperInterface, FetchByPermissionInterface, FetchByRoleInterface
 {
     /**
      * Grant a permission to an user.
-     * This method must insert new user-permission coupling in persistent
-     * storage and update EnhancedUser calling EnhancedUser->setPermissions() method.<br/>
-     * Remind to pass all user's permission to EnhancedUser->setPermissions(),
-     * when write concrete mapper is well pass PermissionMapper as constructor
-     * dependency.
      *
-     * @param EnhancedUser  $user
-     * @param Permission    $permission
+     * This method must insert new user-permission coupling in persistent
+     * storage and update `EnhancedUser` calling `EnhancedUser->setPermissions()`
+     * method.
+     *
+     * Remind to pass all user's permission to `EnhancedUser->setPermissions()`,
+     * when write concrete mapper is well to pass `PermissionMapper` as
+     * constructor dependency.
+     *
+     * @param EnhancedUser $user       The enhanced user class instance.
+     * @param Permission   $permission The permission to add.
      *
      * @return void
      */
@@ -39,14 +44,17 @@ interface EnhancedUserMapperInterface extends MapperInterface, FetchByPermission
 
     /**
      * Grant a permission to an user.
-     * This method must insert new user-permission coupling in persistent
-     * storage and update EnhancedUser calling EnhancedUser->setPermissions() method.<br/>
-     * Remind to pass all user's permission to EnhancedUser->setPermissions(),
-     * when write concrete mapper is well pass PermissionMapper as constructor
-     * dependency.
      *
-     * @param EnhancedUser  $user
-     * @param int           $permissionId
+     * This method must insert new user-permission coupling in persistent
+     * storage and update `EnhancedUser` calling `EnhancedUser->setPermissions()`
+     * method.
+     *
+     * Remind to pass all user's permission to `EnhancedUser->setPermissions()`,
+     * when write concrete mapper is well to pass `PermissionMapper` as
+     * constructor dependency.
+     *
+     * @param EnhancedUser $user         The enhanced user class instance.
+     * @param int          $permissionId The permission to add.
      *
      * @return void
      */
@@ -54,14 +62,17 @@ interface EnhancedUserMapperInterface extends MapperInterface, FetchByPermission
 
     /**
      * Grant a permission to an user.
-     * This method must insert new user-permission coupling in persistent
-     * storage and update EnhancedUser calling EnhancedUser->setPermissions() method.<br/>
-     * Remind to pass all user's permission to EnhancedUser->setPermissions(),
-     * when write concrete mapper is well pass PermissionMapper as constructor
-     * dependency.
      *
-     * @param EnhancedUser  $user
-     * @param string        $permissionName
+     * This method must insert new user-permission coupling in persistent
+     * storage and update `EnhancedUser` calling `EnhancedUser->setPermissions()`
+     * method.
+     *
+     * Remind to pass all user's permission to `EnhancedUser->setPermissions()`,
+     * when write concrete mapper is well to pass `PermissionMapper` as
+     * constructor dependency.
+     *
+     * @param EnhancedUser $user           The enhanced user class instance.
+     * @param string       $permissionName The permission to add.
      *
      * @return void
      */
@@ -69,14 +80,17 @@ interface EnhancedUserMapperInterface extends MapperInterface, FetchByPermission
 
     /**
      * Revoke a permission to an user.
-     * This method must remove user-permission coupling in persistent
-     * storage and update EnhancedUser calling EnhancedUser->setPermissions() method.<br/>
-     * As previous method remind to pass all user's permission to
-     * EnhancedUser->setPermissions(), when write concrete mapper is
-     * well pass PermissionMapper as constructor dependency.
      *
-     * @param EnhancedUser $user
-     * @param Permission   $permission
+     * This method must remove user-permission coupling in persistent
+     * storage and update `EnhancedUser` calling `EnhancedUser->setPermissions()`
+     * method.
+     *
+     * As previous method remind to pass all user's permission to
+     * `EnhancedUser->setPermissions()`, when write concrete mapper is well to
+     * pass `PermissionMapper` as constructor dependency.
+     *
+     * @param EnhancedUser $user       The enhanced user class instance.
+     * @param Permission   $permission The permission to revoke.
      *
      * @return void
      */
@@ -84,14 +98,17 @@ interface EnhancedUserMapperInterface extends MapperInterface, FetchByPermission
 
     /**
      * Revoke a permission to an user.
-     * This method must remove user-permission coupling in persistent
-     * storage and update EnhancedUser calling EnhancedUser->setPermissions() method.
-     * As previous method remind to pass all user's permission to
-     * EnhancedUser->setPermissions(), when write concrete mapper is
-     * well pass PermissionMapper as constructor dependency.
      *
-     * @param EnhancedUser  $user
-     * @param int           $permissionId
+     * This method must remove user-permission coupling in persistent
+     * storage and update `EnhancedUser` calling `EnhancedUser->setPermissions()`
+     * method.
+     *
+     * As previous method remind to pass all user's permission to
+     * `EnhancedUser->setPermissions()`, when write concrete mapper is well to
+     * pass `PermissionMapper` as constructor dependency.
+     *
+     * @param EnhancedUser $user         The enhanced user class instance.
+     * @param int          $permissionId The permission to revoke.
      *
      * @return void
      */
@@ -99,104 +116,124 @@ interface EnhancedUserMapperInterface extends MapperInterface, FetchByPermission
 
     /**
      * Revoke a permission to an user.
-     * This method must remove user-permission coupling in persistent
-     * storage and update EnhancedUser calling EnhancedUser->setPermissions() method.
-     * As previous method remind to pass all user's permission to
-     * EnhancedUser->setPermissions(), when write concrete mapper is
-     * well pass PermissionMapper as constructor dependency.
      *
-     * @param EnhancedUser  $user
-     * @param string        $permissionName
+     * This method must remove user-permission coupling in persistent
+     * storage and update `EnhancedUser` calling `EnhancedUser->setPermissions()`
+     * method.
+     *
+     * As previous method remind to pass all user's permission to
+     * `EnhancedUser->setPermissions()`, when write concrete mapper is well to
+     * pass `PermissionMapper` as constructor dependency.
+     *
+     * @param EnhancedUser $user           The enhanced user class instance.
+     * @param string       $permissionName The permission to revoke.
      *
      * @return void
      */
     public function revokePermissionByName(EnhancedUser &$user, string $permissionName);
 
     /**
-     * Add an user to a role
+     * Add an user to a role.
+     *
      * This method must insert new user-role coupling in persistent
-     * storage and update EnhancedUser calling EnhancedUser->setRoles() method.
-     * Remind to pass all role's users to EnhancedUser->setRoles(),
-     * when write concrete mapper is well pass EnhancedUserMapper as constructor
+     * storage and update `EnhancedUser` calling `EnhancedUser->setRoles()`
+     * method.
+     *
+     * Remind to pass all role's users to `EnhancedUser->setRoles()`, when write
+     * concrete mapper is well to pass `EnhancedUserMapper` as constructor
      * dependency.
      *
-     * @param EnhancedUser  $user
-     * @param Role          $role
+     * @param EnhancedUser $user The enhanced user class instance.
+     * @param Role         $role The role to add.
      *
      * @return void
      */
     public function addRole(EnhancedUser &$user, Role $role);
 
     /**
-     * Add an user to a role
+     * Add an user to a role.
+     *
      * This method must insert new user-role coupling in persistent
-     * storage and update EnhancedUser calling EnhancedUser->setRoles() method.
-     * Remind to pass all role's users to EnhancedUser->setRoles(),
-     * when write concrete mapper is well pass EnhancedUserMapper as constructor
+     * storage and update `EnhancedUser` calling `EnhancedUser->setRoles()`
+     * method.
+     *
+     * Remind to pass all role's users to `EnhancedUser->setRoles()`, when write
+     * concrete mapper is well to pass `EnhancedUserMapper` as constructor
      * dependency.
      *
-     * @param EnhancedUser  $user
-     * @param int           $roleId
+     * @param EnhancedUser $user   The enhanced user class instance.
+     * @param int          $roleId The role to add.
      *
      * @return void
      */
     public function addRoleById(EnhancedUser &$user, int $roleId);
 
     /**
-     * Add an user to a role
+     * Add an user to a role.
+     *
      * This method must insert new user-role coupling in persistent
-     * storage and update EnhancedUser calling EnhancedUser->setRoles() method.
-     * Remind to pass all role's users to EnhancedUser->setRoles(),
-     * when write concrete mapper is well pass EnhancedUserMapper as constructor
+     * storage and update `EnhancedUser` calling `EnhancedUser->setRoles()`
+     * method.
+     *
+     * Remind to pass all role's users to `EnhancedUser->setRoles()`, when write
+     * concrete mapper is well to pass `EnhancedUserMapper` as constructor
      * dependency.
      *
-     * @param EnhancedUser  $user
-     * @param string        $roleName
+     * @param EnhancedUser $user     The enhanced user class instance.
+     * @param string       $roleName The role to add.
      *
      * @return void
      */
     public function addRoleByName(EnhancedUser &$user, string $roleName);
 
     /**
-     * Remove user from a role
-     * This method must insert new user-role coupling in persistent
-     * storage and update EnhancedUser calling EnhancedUser->setRoles() method.
-     * Remind to pass all role's users to EnhancedUser->setRoles(),
-     * when write concrete mapper is well pass EnhancedUserMapper as constructor
-     * dependency.
+     * Remove an user from a role.
      *
-     * @param EnhancedUser  $user
-     * @param Role          $role
+     * This method must insert new user-role coupling in persistent
+     * storage and update `EnhancedUser` calling `EnhancedUser->setRoles()`
+     * method.
+     *
+     * Remind to pass all role's users to `EnhancedUser->setRoles()`,
+     * when write concrete mapper is well to pass `EnhancedUserMapper` as
+     * constructor dependency.
+     *
+     * @param EnhancedUser $user The enhanced user class instance.
+     * @param Role         $role The role to revoke.
      *
      * @return void
      */
     public function removeRole(EnhancedUser &$user, Role $role);
 
     /**
-     * Remove user from a role
-     * This method must insert new user-role coupling in persistent
-     * storage and update EnhancedUser calling EnhancedUser->setRoles() method.
-     * Remind to pass all role's users to EnhancedUser->setRoles(),
-     * when write concrete mapper is well pass EnhancedUserMapper as constructor
-     * dependency.
+     * Remove an user from a role.
      *
-     * @param EnhancedUser  $user
-     * @param int           $roleId
+     * This method must insert new user-role coupling in persistent
+     * storage and update `EnhancedUser` calling EnhancedUser->setRoles() method.
+     *
+     * Remind to pass all role's users to `EnhancedUser->setRoles()`,
+     * when write concrete mapper is well to pass `EnhancedUserMapper` as
+     * constructor dependency.
+     *
+     * @param EnhancedUser $user   The enhanced user class instance.
+     * @param int          $roleId The role to revoke.
      *
      * @return void
      */
     public function removeRoleById(EnhancedUser &$user, int $roleId);
 
     /**
-     * Remove user from a role
-     * This method must insert new user-role coupling in persistent
-     * storage and update EnhancedUser calling EnhancedUser->setRoles() method.
-     * Remind to pass all role's users to EnhancedUser->setRoles(),
-     * when write concrete mapper is well pass EnhancedUserMapper as constructor
-     * dependency.
+     * Remove an user from a role.
      *
-     * @param EnhancedUser  $user
-     * @param string        $roleName
+     * This method must insert new user-role coupling in persistent
+     * storage and update `EnhancedUser` calling `EnhancedUser->setRoles()`
+     * method.
+     *
+     * Remind to pass all role's users to `EnhancedUser->setRoles()`,
+     * when write concrete mapper is well to pass `EnhancedUserMapper` as
+     * constructor dependency.
+     *
+     * @param EnhancedUser $user     The enhanced user class instance.
+     * @param string       $roleName The role to revoke.
      *
      * @return void
      */

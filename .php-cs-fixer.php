@@ -8,6 +8,9 @@ return $config
         'no_whitespace_in_blank_line' => true,
         'return_type_declaration' => true,
         'native_function_invocation' => ['include' => ['@all']],
+        'phpdoc_align' => true,
+        'phpdoc_separation' => true,
+        'phpdoc_line_span' => ['property' => 'single']
     ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->exclude('vendor')

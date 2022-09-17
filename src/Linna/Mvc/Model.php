@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Mvc;
 
@@ -24,14 +25,10 @@ use SplSubject;
  */
 class Model implements SplSubject
 {
-    /**
-     * @var SplObjectStorage List of attached observerer
-     */
+    /** @var SplObjectStorage List of attached observerer */
     private SplObjectStorage $observers;
 
-    /**
-     * @var array<mixed> Data for notify to observerer
-     */
+    /** @var array<mixed> Data for notify to observerer */
     private array $updates = [];
 
     /**

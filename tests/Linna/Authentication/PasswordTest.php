@@ -19,9 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PasswordTest extends TestCase
 {
-    /**
-     * @var Password The password class.
-     */
+    /** @var Password The password class. */
     protected static Password $password;
 
     /**

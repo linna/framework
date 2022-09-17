@@ -51,29 +51,19 @@ use TypeError;
  */
 class ModelViewControllerTest extends TestCase
 {
-    /**
-     * @var RouteCollection Routes for test.
-     */
+    /** @var RouteCollection Routes for test. */
     protected static RouteCollection $routes;
 
-    /**
-     * @var Router The router object.
-     */
+    /** @var Router The router object. */
     protected static Router $router;
 
-    /**
-     * @var Model The model object.
-     */
+    /** @var Model The model object. */
     protected static Model $model;
 
-    /**
-     * @var View The view object.
-     */
+    /** @var View The view object. */
     protected static View $view;
 
-    /**
-     * @var Controller The controller object.
-     */
+    /** @var Controller The controller object. */
     protected static Controller $controller;
 
     /**

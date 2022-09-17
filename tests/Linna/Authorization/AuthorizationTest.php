@@ -26,29 +26,19 @@ use PHPUnit\Framework\TestCase;
  */
 class AuthorizationTest extends TestCase
 {
-    /**
-     * @var Session The session class instance.
-     */
+    /** @var Session The session class instance. */
     protected static Session $session;
 
-    /**
-     * @var Password The password class instance.
-     */
+    /** @var Password The password class instance. */
     protected static Password $password;
 
-    /**
-     * @var Authentication The authentication class instance.
-     */
+    /** @var Authentication The authentication class instance. */
     protected static Authentication $authentication;
 
-    /**
-     * @var Authorization The authorization class instance.
-     */
+    /** @var Authorization The authorization class instance. */
     protected static Authorization $authorization;
 
-    /**
-     * @var PermissionMapper The permission mapper class instance.
-     */
+    /** @var PermissionMapper The permission mapper class instance. */
     protected static PermissionMapper $permissionMapper;
 
     /**

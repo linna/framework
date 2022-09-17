@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Container;
 
@@ -42,14 +43,10 @@ class Container implements ContainerInterface, ArrayAccess
      */
     public const RULE_ARGUMENT = 'arguments';
 
-    /**
-     * @var array<mixed> Contains object already resolved.
-     */
+    /** @var array<mixed> Contains object already resolved. */
     private array $cache = [];
 
-    /**
-     * @var array<mixed> Hierarchical structure of dependencies.
-     */
+    /** @var array<mixed> Hierarchical structure of dependencies. */
     protected array $tree = [];
 
     /**
@@ -124,7 +121,6 @@ class Container implements ContainerInterface, ArrayAccess
     public function delete(string $id): void
     {
         if (\array_key_exists($id, $this->cache)) {
-
             //delete value
             unset($this->cache[$id]);
 
@@ -165,8 +161,8 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * Create a map of dependencies for a class
      *
-     * @param string    $class Class wich tree will build
-     * @param int       $level Level for dependency
+     * @param string $class Class wich tree will build
+     * @param int    $level Level for dependency
      *
      * @return void
      */
@@ -181,7 +177,6 @@ class Container implements ContainerInterface, ArrayAccess
 
         //loop parameter
         foreach ($parameters as $param) {
-
             //Function ReflectionType::__toString() is deprecated
             //FROM https://www.php.net/manual/en/migration74.deprecated.php
             //Calls to ReflectionType::__toString() now generate a deprecation notice.
@@ -206,7 +201,6 @@ class Container implements ContainerInterface, ArrayAccess
 
             //if there is a parameter with callable type
             if (\class_exists($type)) {
-
                 //store dependency
                 $this->tree[$level][$class][] = $param;
 
@@ -304,10 +298,8 @@ class Container implements ContainerInterface, ArrayAccess
     {
         //deep dependency level, start to array end for not use array_reverse
         for ($i = \count($this->tree) - 1; $i >= 0; $i--) {
-
             //class
             foreach ($this->tree[$i] as $class => $arguments) {
-
                 //try to find object in class
                 if (isset($this->cache[$class])) {
                     // no build need
@@ -316,7 +308,6 @@ class Container implements ContainerInterface, ArrayAccess
 
                 //object is not in cache and need arguments try to build it
                 if (\count($arguments)) {
-
                     //build arguments
                     $args = $this->buildArguments($class, $arguments);
 

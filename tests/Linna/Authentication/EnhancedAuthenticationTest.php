@@ -26,29 +26,19 @@ use TypeError;
  */
 class EnhancedAuthenticationTest extends TestCase
 {
-    /**
-     * @var ExtendedPDO Persistent storage connection.
-     */
+    /** @var ExtendedPDO Persistent storage connection. */
     protected static ExtendedPDO $pdo;
 
-    /**
-     * @var Session The session class.
-     */
+    /** @var Session The session class. */
     protected static Session $session;
 
-    /**
-     * @var Password The password class.
-     */
+    /** @var Password The password class. */
     protected static Password $password;
 
-    /**
-     * @var EnhancedAuthentication The enhanced authentication class
-     */
+    /** @var EnhancedAuthentication The enhanced authentication class */
     protected static EnhancedAuthentication $enhancedAuthentication;
 
-    /**
-     * @var EnhancedAuthenticationMapper The enhanced authentication mapper class
-     */
+    /** @var EnhancedAuthenticationMapper The enhanced authentication mapper class */
     protected static EnhancedAuthenticationMapper $enhancedAuthenticationMapper;
 
     /**

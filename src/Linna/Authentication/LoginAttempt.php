@@ -1,48 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Authentication;
 
 use Linna\DataMapper\DomainObjectAbstract;
 
 /**
- * Login Attempt
+ * Login Attempt domain object.
  */
 class LoginAttempt extends DomainObjectAbstract
 {
-    /**
-     * @var string User name.
-     */
-    public string $userName = '';
+    /** @var string The user name. */
+    public string $userName;
 
-    /**
-     * @var string Session id.
-     */
-    public string $sessionId = '';
+    /** @var string The session id used by the user. */
+    public string $sessionId;
 
-    /**
-     * @var string Remote IP address.
-     */
-    public string $ipAddress = '';
+    /** @var string The IP address used by the user */
+    public string $ipAddress;
 
-    /**
-     * @var string Show when login attempted.
-     */
-    public string $when = '';
+    /** @var string The date time of the login attempt. */
+    public string $when;
 
     /**
      * Class Constructor.
      */
-    public function __construct()
-    {
-        //\settype($this->id, 'integer');
+    public function __construct(
+
+    ) {
     }
 }

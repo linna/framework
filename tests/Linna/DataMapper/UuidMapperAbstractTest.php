@@ -21,9 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class UuidMapperAbstractTest extends TestCase
 {
-    /**
-     * @var UuidMapperMock The mapper mock
-     */
+    /** @var UuidMapperMock The mapper mock */
     protected static UuidMapperMock $mapperMock;
 
     /**

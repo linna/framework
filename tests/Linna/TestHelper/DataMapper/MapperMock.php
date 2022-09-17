@@ -26,9 +26,7 @@ use Linna\DataMapper\NullDomainObject;
  */
 class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameInterface, FetchAllInterface, FetchLimitInterface
 {
-    /**
-     * @var array Mock storage
-     */
+    /** @var array Mock storage */
     private $storage = [];
 
     /**

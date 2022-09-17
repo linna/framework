@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Authorization;
 
@@ -15,32 +16,26 @@ use Linna\Authentication\User;
 use Linna\DataMapper\DomainObjectAbstract;
 
 /**
- * Role.
+ * Role domain object.
  */
 class Role extends DomainObjectAbstract
 {
     use PermissionTrait;
 
-    /**
-     * @var string Group name
-     */
+    /** @var string Group name. */
     public string $name = '';
 
-    /**
-     * @var string Group description
-     */
+    /** @var string Group description. */
     public string $description = '';
 
-    /**
-     * @var int It say if group is active or not
-     */
+    /** @var int It say if group is active or not. */
     public int $active = 0;
 
     /**
      * Constructor.
      *
-     * @param array<mixed> $users
-     * @param array<mixed> $permissions
+     * @param array<mixed> $users       Users in role.
+     * @param array<mixed> $permissions Permissions granted by the role.
      */
     public function __construct(
         private array $users = [],
@@ -49,16 +44,15 @@ class Role extends DomainObjectAbstract
         $this->permission = $permissions;
 
         //set required type
-        //\settype($this->id, 'integer');
         \settype($this->active, 'integer');
     }
 
     /**
      * Check if an user is in role, use User instance.
      *
-     * @param User $user
+     * @param User $user The user which will be checked.
      *
-     * @return bool
+     * @return bool True if the user is in role, false otherwise.
      */
     public function isUserInRole(User $user): bool
     {
@@ -68,9 +62,9 @@ class Role extends DomainObjectAbstract
     /**
      * Check if an user is in role, use the user Id.
      *
-     * @param int $userId
+     * @param int $userId The user which will be checked.
      *
-     * @return bool
+     * @return bool True if the user is in role, false otherwise.
      */
     public function isUserInRoleById(string|int $userId): bool
     {
@@ -84,9 +78,9 @@ class Role extends DomainObjectAbstract
     /**
      * Check if an user is in role, use the user name.
      *
-     * @param string $userName
+     * @param string $userName The user which will be checked.
      *
-     * @return bool
+     * @return bool True if the user is in role, false otherwise.
      */
     public function isUserInRoleByName(string $userName): bool
     {

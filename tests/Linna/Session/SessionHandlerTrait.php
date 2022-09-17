@@ -19,14 +19,10 @@ use SessionHandlerInterface;
  */
 trait SessionHandlerTrait
 {
-    /**
-     * @var Session The session class.
-     */
+    /** @var Session The session class. */
     protected static Session $session;
 
-    /**
-     * @var SessionHandlerInterface The session handler concrete class.
-     */
+    /** @var SessionHandlerInterface The session handler concrete class. */
     protected static SessionHandlerInterface $handler;
 
     /**

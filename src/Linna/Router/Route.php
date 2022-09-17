@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Router;
 
@@ -24,17 +25,17 @@ class Route implements RouteInterface
     /**
      * Class Constructor.
      *
-     * @param string        $method         http method
-     * @param string        $path           route path
-     * @param Closure|null  $callback       route callback
-     * @param string        $model          mvc model
-     * @param string        $view           mvc view
-     * @param string        $controller     mvc controller
-     * @param string        $name           route name
-     * @param string        $action         mvc controller action
-     * @param bool          $default        default route
-     * @param array         $param          route params
-     * @param string        $allowedIps     allowed remote address
+     * @param string       $method     http method
+     * @param string       $path       route path
+     * @param Closure|null $callback   route callback
+     * @param string       $model      mvc model
+     * @param string       $view       mvc view
+     * @param string       $controller mvc controller
+     * @param string       $name       route name
+     * @param string       $action     mvc controller action
+     * @param bool         $default    default route
+     * @param array        $param      route params
+     * @param string       $allowedIps allowed remote address
      */
     public function __construct(
         public readonly string $method,     // mandatory

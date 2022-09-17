@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Session;
 
@@ -24,31 +25,25 @@ class Session implements ArrayAccess
     use PropertyAccessTrait;
     use ArrayAccessTrait;
 
-    /**
-     * @var array<mixed> Session data reference property
-     */
+    /** @var array<mixed> Session data reference property */
     private array $data = [];
 
-    /**
-     * @var string Session id
-     */
+    /** @var string Session id */
     private string $id;
 
-    /**
-     * @var int session_status function result
-     */
+    /** @var int session_status function result */
     private int $status;
 
     /**
      * Class Constructor.
      *
-     * @param string    $name
-     * @param int       $expire
-     * @param string    $cookieDomain
-     * @param string    $cookiePath
-     * @param bool      $cookieSecure
-     * @param bool      $cookieHttpOnly
-     * @param string    $cookieSameSite
+     * @param string $name
+     * @param int    $expire
+     * @param string $cookieDomain
+     * @param string $cookiePath
+     * @param bool   $cookieSecure
+     * @param bool   $cookieHttpOnly
+     * @param string $cookieSameSite
      */
     public function __construct(
         private string $name = 'linna_session',
@@ -115,7 +110,6 @@ class Session implements ArrayAccess
     public function start(): void
     {
         if (\session_status() !== PHP_SESSION_ACTIVE) {
-
             //prepare the session start
             \session_name($this->name);
 
@@ -147,7 +141,6 @@ class Session implements ArrayAccess
         $time = \time();
 
         if (isset($this->data['time']) && $this->data['time'] <= ($time - $this->expire)) {
-
             //delete session data
             $this->data = [];
 
@@ -274,7 +267,7 @@ class Session implements ArrayAccess
      * Set a value into session storage.
      *
      * @param string $id
-     * @param mixed $value
+     * @param mixed  $value
      *
      * @return void
      */

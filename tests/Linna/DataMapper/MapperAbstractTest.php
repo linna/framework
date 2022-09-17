@@ -21,9 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MapperAbstractTest extends TestCase
 {
-    /**
-     * @var MapperMock The mapper mock
-     */
+    /** @var MapperMock The mapper mock */
     protected static MapperMock $mapperMock;
 
     /**

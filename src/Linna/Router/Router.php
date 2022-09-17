@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Router;
 
@@ -21,43 +22,33 @@ use BadMethodCallException;
  */
 class Router
 {
-    /**
-     * @var RouteInterface Utilized for return the most recently parsed route
-     */
+    /** @var RouteInterface Utilized for return the most recently parsed route */
     protected RouteInterface $route;
 
-    /**
-     * @var array<string> List of regex for find parameter inside passed routes
-     */
+    /** @var array<string> List of regex for find parameter inside passed routes */
     private array $matchTypes = [
         '`\[[0-9A-Za-z._-]+\]`',
     ];
 
-    /**
-     * @var array<string> List of regex for find type of parameter inside passed routes
-     */
+    /** @var array<string> List of regex for find type of parameter inside passed routes */
     private array $types = [
         '[0-9A-Za-z._-]++',
     ];
 
-    /**
-     * @var array<mixed> preg_match result for route.
-     */
+    /** @var array<mixed> preg_match result for route. */
     private array $routeMatches = [];
 
-    /**
-     * @var array<mixed> Array with parameters from query string.
-     */
+    /** @var array<mixed> Array with parameters from query string. */
     private array $queryParam = [];
 
     /**
      * Class Constructor.
      *
-     * @param RouteCollection<Route>    $routes
-     * @param string                    $basePath
-     * @param bool                      $rewriteMode
-     * @param string                    $rewriteModeFalseEntryPoint
-     * @param bool                      $parseQueryStringRewriteModeTrue
+     * @param RouteCollection<Route> $routes
+     * @param string                 $basePath
+     * @param bool                   $rewriteMode
+     * @param string                 $rewriteModeFalseEntryPoint
+     * @param bool                   $parseQueryStringRewriteModeTrue
      */
     public function __construct(
         protected RouteCollection $routes,

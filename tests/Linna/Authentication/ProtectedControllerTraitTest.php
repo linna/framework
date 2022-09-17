@@ -26,19 +26,13 @@ use PHPUnit\Framework\TestCase;
  */
 class ProtectedControllerTraitTest extends TestCase
 {
-    /**
-     * @var Session The session class instance.
-     */
+    /** @var Session The session class instance. */
     protected static Session $session;
 
-    /**
-     * @var Password The password class instance.
-     */
+    /** @var Password The password class instance. */
     protected static Password $password;
 
-    /**
-     * @var Authentication Authentication class instance.
-     */
+    /** @var Authentication Authentication class instance. */
     protected static Authentication $authentication;
 
     /**
@@ -72,6 +66,7 @@ class ProtectedControllerTraitTest extends TestCase
      * Test access to protected controller with login.
      *
      * @runInSeparateProcess
+     *
      * @outputBuffering disabled
      *
      * @return void
@@ -151,6 +146,7 @@ class ProtectedControllerTraitTest extends TestCase
      * Test acces to protected method with redirect without login.
      *
      * @requires extension xdebug
+     *
      * @runInSeparateProcess
      *
      * @return void

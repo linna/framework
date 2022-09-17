@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Authorization;
 
@@ -15,7 +16,8 @@ use Linna\DataMapper\FetchByNameInterface;
 use Linna\DataMapper\MapperInterface;
 
 /**
- * Permission Mapper Interface
+ * Permission Mapper Interface.
+ *
  * Contain methods required from concrete Permission Mapper.
  */
 interface PermissionMapperInterface extends MapperInterface, FetchByNameInterface, FetchByUserInterface, FetchByRoleInterface
@@ -23,18 +25,18 @@ interface PermissionMapperInterface extends MapperInterface, FetchByNameInterfac
     /**
      * Check if a permission exist.
      *
-     * @param int $permissionId
+     * @param int $permissionId The permission will be checked.
      *
-     * @return bool
+     * @return bool True if the permission exists, false otherwise.
      */
     public function permissionExistById(int $permissionId): bool;
 
     /**
      * Check if a permission exist.
      *
-     * @param string $permissionName
+     * @param string $permissionName The permission will be checked.
      *
-     * @return bool
+     * @return bool True if the permission exists, false otherwise.
      */
     public function permissionExistByName(string $permissionName): bool;
 }

@@ -21,19 +21,13 @@ use PHPUnit\Framework\TestCase;
  */
 class AuthenticationTest extends TestCase
 {
-    /**
-     * @var Session The session class.
-     */
+    /** @var Session The session class. */
     protected static Session $session;
 
-    /**
-     * @var Password The password class.
-     */
+    /** @var Password The password class. */
     protected static Password $password;
 
-    /**
-     * @var Authentication The authentication class
-     */
+    /** @var Authentication The authentication class */
     protected static Authentication $authentication;
 
     /**
@@ -238,6 +232,7 @@ class AuthenticationTest extends TestCase
      * Test login refresh.
      *
      * @dataProvider loginTimeProvider
+     *
      * @runInSeparateProcess
      *
      * @param int  $time

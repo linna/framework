@@ -25,9 +25,7 @@ class PgsqlPdoSessionHandlerTest extends TestCase
 {
     use SessionHandlerTrait;
 
-    /**
-     * @var ExtendedPDO The pdo class.
-     */
+    /** @var ExtendedPDO The pdo class. */
     protected static $pdo;
 
     /**

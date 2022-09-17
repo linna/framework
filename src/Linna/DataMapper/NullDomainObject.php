@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\DataMapper;
 
@@ -20,7 +21,7 @@ class NullDomainObject extends DomainObjectAbstract
      * Get nothing.
      * Make this method of the abstract class idempotent
      *
-     * @return null
+     * @return mixed
      */
     public function getId(): mixed
     {
@@ -31,7 +32,9 @@ class NullDomainObject extends DomainObjectAbstract
      * Set nothing.
      * Make this method of the abstract class idempotent
      *
-     * @return null.
+     * @param int|string $id
+     *
+     * @return mixed
      */
     public function setId(int|string $id): mixed
     {

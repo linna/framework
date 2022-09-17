@@ -1,45 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Authentication;
 
 use Linna\Session\Session;
 
 /**
- * Provide methods for manage basic user authentication system. Checks for
- * correct login cover only the user name and the password.
+ * Provide methods to manage basic user authentication system. The check for
+ * correct login covers only the user name and the password.
  */
 class Authentication
 {
-    /**
-     * @var array<mixed> Login status.
-     */
+    /** @var array<mixed> Login status. */
     private array $data = ['user_name'=>''];
 
-    /**
-     * @var bool Indicate login status, true or false.
-     */
+    /** @var bool Indicate login status, true or false. */
     private bool $logged = false;
 
     /**
      * Class constructor.
-     *
-     * <pre><code class="php">use Linna\Session\Session;
-     * use Linna\Auth\Password;
-     *
-     * $session = new Session();
-     * $password = new Password();
-     *
-     * $auth = new Authentication($session, $password);
-     * </code></pre>
      *
      * @param Session  $session  Session class instance.
      * @param Password $password Password class instance.
@@ -52,15 +40,9 @@ class Authentication
     }
 
     /**
-     * Utilize this method for check if an user in the current session,
-     * is currently logged in.
+     * Checks if the user in the current session, is currently logged in.
      *
-     * <pre><code class="php">if ($auth->isLogged()) {
-     *     //do actions
-     * }
-     * </code></pre>
-     *
-     * @return bool True if logged false if no.
+     * @return bool True if logged, false otherwise.
      */
     public function isLogged(): bool
     {
@@ -70,17 +52,10 @@ class Authentication
     /**
      * Opposite to isLogged() method.
      *
-     * Utilize this method for check if an user in the current session,
-     * is currently not logged in.
+     * Utilize this method to check if the user in the current session,
+     * isn't logged in.
      *
-     * <pre><code class="php">if ($auth->isNotLogged()) {
-     *     //redirect or other action
-     * }
-     *
-     * //do actions
-     * </code></pre>
-     *
-     * @return bool True if not logged false if logged.
+     * @return bool True if not logged, false otherwise.
      */
     public function isNotLogged(): bool
     {
@@ -88,24 +63,7 @@ class Authentication
     }
 
     /**
-     * Return array containing login data.
-     *
-     * <pre><code class="php">$data = $auth->getLoginData();
-     *
-     * //var_dump result
-     * //after session start and login, session data appear like below array:
-     * //[
-     * //    'time' => 1479641396
-     * //    'expire' => 1800
-     * //    'loginTime' => 1479641395
-     * //    'login' => [
-     * //        'login' => true
-     * //        'user_id' => 1
-     * //        'user_name' => 'root'
-     * //    ]
-     * //]
-     * var_dump($data);
-     * </code></pre>
+     * Return an array containing login data.
      *
      * @return array<mixed> Login data.
      */
@@ -115,19 +73,9 @@ class Authentication
     }
 
     /**
-     * Try to attemp login with the informations passed by param.
+     * Try to do user login using the information passed by param.
      *
-     * <pre><code class="php">$user = ''; //user from login page form
-     * $password = ''; //password from login page form
-     *
-     * $storedUser = ''; //user from stored informations
-     * $storedPassword = ''; //password hash from stored informations
-     * $storedId = ''; //user id from stored informations
-     *
-     * $auth->login($user, $password, $storedUser, $storedPassword, $storedId);
-     *
-     * //other operation after login
-     * </code></pre>
+     * This method shoud be tested for time attacks.
      *
      * @param string $userName       User name from browser input.
      * @param string $password       Password from browser input.
@@ -135,7 +83,7 @@ class Authentication
      * @param string $storedPassword Password hash from persistent storage.
      * @param int    $storedId       User id from persistent storage.
      *
-     * @return bool True for successful login, false if login fails.
+     * @return bool True for successful login, false otherwise.
      */
     public function login(string $userName, string $password, string $storedUserName, string $storedPassword, int $storedId): bool
     {
@@ -162,11 +110,9 @@ class Authentication
     }
 
     /**
-     * Do logout and delete login information from session.
+     * Do logout and delete user login information from session.
      *
-     * <pre><code class="php">$auth->logout();</code></pre>
-     *
-     * @return bool True if logout is done.
+     * @return bool Always true.
      */
     public function logout(): bool
     {
@@ -183,9 +129,7 @@ class Authentication
     /**
      * Check if user is logged, get login data from session and update it.
      *
-     * <pre><code class="php">$auth->refresh();</code></pre>
-     *
-     * @return bool True if refresh is done false if no.
+     * @return bool True if refresh is done, false otherwise.
      */
     private function refresh(): bool
     {

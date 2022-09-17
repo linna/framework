@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\DataMapper;
 
@@ -21,14 +22,10 @@ use InvalidArgumentException;
  */
 class UUID4
 {
-    /**
-     * @var string UUID in hex form.
-     */
+    /** @var string UUID in hex form. */
     private string $hexUUID = '';
 
-    /**
-     * @var string UUID in bin form.
-     */
+    /** @var string UUID in bin form. */
     private string $binUUID = '';
 
     /**

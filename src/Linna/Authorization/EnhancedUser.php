@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Authorization;
 
@@ -15,7 +16,7 @@ use Linna\Authentication\Password;
 use Linna\Authentication\User;
 
 /**
- * Enhanched User.
+ * Enhanched User, an user with permissions.
  */
 class EnhancedUser extends User
 {
@@ -24,9 +25,9 @@ class EnhancedUser extends User
     /**
      * Class Constructor.
      *
-     * @param Password      $password
-     * @param array<mixed>  $roles
-     * @param array<mixed>  $permissions
+     * @param Password     $password    Password class instance.
+     * @param array<mixed> $roles       The roles granted to the user.
+     * @param array<mixed> $permissions The permission granted to the user.
      */
     public function __construct(
         Password $password,
@@ -41,9 +42,9 @@ class EnhancedUser extends User
     /**
      * Check if an user has a role, use Role instance.
      *
-     * @param Role $role
+     * @param Role $role The role which will be checked.
      *
-     * @return bool
+     * @return bool True if the user has the role, false otherwise.
      */
     public function hasRole(Role $role): bool
     {
@@ -53,9 +54,9 @@ class EnhancedUser extends User
     /**
      * Check if an user has a role, use role Id.
      *
-     * @param string|int $roleId
+     * @param string|int $roleId The role which will be checked.
      *
-     * @return bool
+     * @return bool True if the user has the role, false otherwise.
      */
     public function hasRoleById(string|int $roleId): bool
     {
@@ -69,9 +70,9 @@ class EnhancedUser extends User
     /**
      * Check if an user has a role, use role name.
      *
-     * @param string $roleName
+     * @param string $roleName The role which will be checked.
      *
-     * @return bool
+     * @return bool True if the user has the role, false otherwise.
      */
     public function hasRoleByName(string $roleName): bool
     {
