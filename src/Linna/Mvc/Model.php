@@ -17,22 +17,25 @@ use SplObjectStorage;
 use SplSubject;
 
 /**
- * Parent class for model classes.
+ * Parent class for all model classes.
  *
  * This class was implemented like part of Observer pattern
  * https://en.wikipedia.org/wiki/Observer_pattern
  * http://php.net/manual/en/class.splsubject.php
  */
-class Model implements SplSubject
+abstract class Model implements SplSubject
 {
-    /** @var SplObjectStorage List of attached observerer */
+    /** @var SplObjectStorage List of attached observers. */
     private SplObjectStorage $observers;
 
-    /** @var array<mixed> Data for notify to observerer */
+    /** @var array<mixed> Data which will be notified to observers. */
     private array $updates = [];
 
     /**
      * Class Constructor.
+     *
+     * In classes which implements this abstract class, call the parent
+     * constructor is mandatory.
      */
     public function __construct()
     {
@@ -40,10 +43,10 @@ class Model implements SplSubject
     }
 
     /**
-     * Attach an Observer class to this Subject for updates
-     * when occour a subject state change.
+     * Attach an observer class to this subject, when occour a subject state
+     * change all updates will be sent to all observers.
      *
-     * @param SplObserver $observer
+     * @param SplObserver $observer The new observer will be attached.
      *
      * @return void
      */
@@ -55,9 +58,9 @@ class Model implements SplSubject
     }
 
     /**
-     * Detach an Observer class from this Subject.
+     * Detach an observer class from this subject.
      *
-     * @param SplObserver $observer
+     * @param SplObserver $observer The observer will be removed from observers list.
      *
      * @return void
      */
@@ -69,32 +72,31 @@ class Model implements SplSubject
     }
 
     /**
-     * Notify a state change of Subject to all registered Observeres.
+     * Notify a state change of the subject to all registered observers.
      *
      * @return void
      */
     public function notify(): void
     {
-        /** @var View $value Attached observers. */
         foreach ($this->observers as $observer) {
             $observer->update($this);
         }
     }
 
     /**
-     * Set the data to notify to all registered Observeres.
+     * Set the data to notify to all registered observers.
      *
-     * @param array<mixed> $data
+     * @param array<mixed> $data The data will be notified.
      */
     public function set(array $data): void
     {
-        $this->updates = \array_merge/*_recursive*/($this->updates, $data);
+        $this->updates = \array_merge($this->updates, $data);
     }
 
     /**
-     * Get the data to notify to all registered Observeres.
+     * Get the data to notify to all registered observers.
      *
-     * @return array<mixed>
+     * @return array<mixed> The data of the subject which will be used by the observer.
      */
     public function get(): array
     {

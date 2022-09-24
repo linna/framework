@@ -24,7 +24,7 @@ use SplSubject;
  * https://en.wikipedia.org/wiki/Observer_pattern
  * http://php.net/manual/en/class.splobserver.php
  */
-class View implements SplObserver
+abstract class View implements SplObserver
 {
     /** @var array<mixed> Data for the dynamic view */
     protected array $data = [];
@@ -32,16 +32,16 @@ class View implements SplObserver
     /**
      * Class Constructor.
      *
-     * @param TemplateInterface $template
+     * @param TemplateInterface $template The template used by the view to present the data.
      */
     public function __construct(protected TemplateInterface $template)
     {
     }
 
     /**
-     * Render a template.
+     * Render a template using the data received from the subject.
      *
-     * @return string
+     * @return string The data which the view has been applied to the template.
      */
     public function render(): string
     {
@@ -51,9 +51,9 @@ class View implements SplObserver
     }
 
     /**
-     * Update Observer data.
+     * Update observer data.
      *
-     * @param SplSubject $subject
+     * @param SplSubject $subject The subject which triggered the notify.
      *
      * @return void
      */
