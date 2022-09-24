@@ -13,15 +13,19 @@ declare(strict_types=1);
 namespace Linna\DataMapper;
 
 /**
- * NullDomainObject.
+ * Null Domain Object.
+ *
+ * Use this to represent a non existing object.
  */
 class NullDomainObject extends DomainObjectAbstract
 {
     /**
      * Get nothing.
-     * Make this method of the abstract class idempotent
      *
-     * @return mixed
+     * This method overrides the original method inherited from the abstract
+     * class and make it idempotent.
+     *
+     * @return mixed Allways null.
      */
     public function getId(): mixed
     {
@@ -30,11 +34,13 @@ class NullDomainObject extends DomainObjectAbstract
 
     /**
      * Set nothing.
-     * Make this method of the abstract class idempotent
      *
-     * @param int|string $id
+     * This method overrides the original method inherited from the abstract
+     * class and make it idempotent.
      *
-     * @return mixed
+     * @param int|string $id The new domain object id, in this method the id or the uuid will be unset.
+     *
+     * @return mixed Allways null.
      */
     public function setId(int|string $id): mixed
     {

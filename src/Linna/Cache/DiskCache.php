@@ -14,7 +14,6 @@ namespace Linna\Cache;
 
 use DateInterval;
 use Psr\SimpleCache\CacheInterface;
-use Psr\SimpleCache\InvalidArgumentException;
 
 /**
  * PSR-16 Disk Cache.
@@ -26,9 +25,9 @@ use Psr\SimpleCache\InvalidArgumentException;
  * To check Ram Disk status
  * - `df -h /tmp/linna-cache`
  *
- * Serialize option is required when is needed store a class instance.
- * If you not utilize serialize, must declare __set_state() method inside
- * class or get from cache fail.
+ * Serialize option is required when is needed to store a class instance.
+ * If you don't utilize serialize, have to declare __set_state() method inside
+ * class or get from cache will fail.
  */
 class DiskCache implements CacheInterface
 {
@@ -55,30 +54,31 @@ class DiskCache implements CacheInterface
      *
      * @return mixed The value of the item from the cache, or $default in case of cache miss.
      *
-     * @throws InvalidArgumentException MUST be thrown if the $key string is not a legal value.
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     *                                                   MUST be thrown if the $key string is not a legal value.
      */
     public function get(string $key, mixed $default = null): mixed
     {
         //create file name
         $file = $this->dir.'/'.\sha1($key).'.php';
 
-        if ($this->doesFileChecksFailed($file)) {
+        if ($this->doesFileCheckFails($file)) {
             return $default;
         }
 
-        $cacheValue = include $file;
+        $cache = include $file;
 
-        return \unserialize($cacheValue['value']);
+        return \unserialize($cache['value']);
     }
 
     /**
-     * Checks for cache file.
+     * Checks for cache file presence and validity.
      *
-     * @param string $file
+     * @param string $file The file name which will be checked.
      *
-     * @return bool
+     * @return bool True if all checks fail, false otherwise.
      */
-    private function doesFileChecksFailed(string $file): bool
+    private function doesFileCheckFails(string $file): bool
     {
         //check if file exist
         if (!\file_exists($file)) {
@@ -109,7 +109,8 @@ class DiskCache implements CacheInterface
      *
      * @return bool True on success and false on failure.
      *
-     * @throws InvalidArgumentException MUST be thrown if the $key string is not a legal value.
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     *                                                   MUST be thrown if the $key string is not a legal value.
      */
     public function set(string $key, mixed $value, DateInterval|int|null $ttl = null): bool
     {
@@ -181,7 +182,8 @@ class DiskCache implements CacheInterface
      *
      * @return bool True if the item was successfully removed. False if there was an error.
      *
-     * @throws InvalidArgumentException MUST be thrown if the $key string is not a legal value.
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     *                                                   MUST be thrown if the $key string is not a legal value.
      */
     public function delete(string $key): bool
     {
@@ -222,10 +224,11 @@ class DiskCache implements CacheInterface
      *
      * @return bool
      *
-     * @throws InvalidArgumentException MUST be thrown if the $key string is not a legal value.
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     *                                                   MUST be thrown if the $key string is not a legal value.
      */
     public function has(string $key): bool
     {
-        return !$this->doesFileChecksFailed($this->dir.'/'.\sha1($key).'.php');
+        return !$this->doesFileCheckFails($this->dir.'/'.\sha1($key).'.php');
     }
 }

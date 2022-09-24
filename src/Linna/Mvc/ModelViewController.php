@@ -16,34 +16,43 @@ use Linna\Router\Route;
 use Linna\Router\RouteInterface;
 
 /**
- * ModelViewController.
+ * Model View Controller.
  *
- * It behaviors as alloy of Model, View and Controller
+ * It behaviors as glue for the Model, the View and the Controller.
+ *
+ * The controller execution has this steps:
+ *
+ * * Before controller, if set.
+ * * Before controller action, if set.
+ * * The entry point or of the specific requested action.
+ * * After controller action if set.
+ * * After controller, if set.
+ *
  */
 class ModelViewController
 {
-    /** @var View Contains view object for render */
+    /** @var View Contains the view object used for rendering. */
     private View $view;
 
-    /** @var Model Contains model object */
+    /** @var Model Contains the model object. */
     private Model $model;
 
-    /** @var Controller Contains controller object */
+    /** @var Controller Contains the controller object. */
     private Controller $controller;
 
-    /** @var string Contains Controller and View action name */
+    /** @var string Contains the controller and the view action name. */
     private string $routeAction = '';
 
-    /** @var array<mixed> Paremeters passed to Controller */
+    /** @var array<mixed> Paremeters passed to the controller. */
     private array $routeParam = [];
 
     /**
      * Class Constructor.
      *
-     * @param Model          $model
-     * @param View           $view
-     * @param Controller     $controller
-     * @param RouteInterface $route
+     * @param Model          $model      The model.
+     * @param View           $view       The view.
+     * @param Controller     $controller The controller.
+     * @param RouteInterface $route      The route which identifies the model, the view and the controller.
      */
     public function __construct(Model $model, View $view, Controller $controller, RouteInterface $route)
     {
@@ -58,7 +67,7 @@ class ModelViewController
     }
 
     /**
-     * Run mvc pattern.
+     * Run the model, view, controller pattern.
      *
      * @return void
      */
@@ -86,9 +95,9 @@ class ModelViewController
     }
 
     /**
-     * Run action before or after controller action execution.
+     * Executes a method call before or after the controller specific method execution.
      *
-     * @param string $when
+     * @param string $when Indicates if the method will be executed before or after.
      *
      * @return void
      */
@@ -102,9 +111,9 @@ class ModelViewController
     }
 
     /**
-     * Run action before or after controller execution.
+     * Executes a method call before or after the controller execution.
      *
-     * @param string $when
+     * @param string $when Indicates if the method will be executed before or after.
      *
      * @return void
      */
@@ -116,7 +125,7 @@ class ModelViewController
     }
 
     /**
-     * Run controller.
+     * Run controller, it executes a specific method of the controller or the standard method entryPoint.
      *
      * @return void
      */
@@ -145,7 +154,7 @@ class ModelViewController
     }
 
     /**
-     * Run view.
+     * Run the view.
      *
      * @return void
      */
@@ -160,9 +169,9 @@ class ModelViewController
     }
 
     /**
-     * Return view data.
+     * Return the view data.
      *
-     * @return string
+     * @return string The result of the view rendering, template plus data.
      */
     public function response(): string
     {

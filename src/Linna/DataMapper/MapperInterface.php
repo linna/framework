@@ -13,19 +13,21 @@ declare(strict_types=1);
 namespace Linna\DataMapper;
 
 /**
- * Mapper Interface
- * Contain methods required from basic Mapper.
+ * Mapper Interface.
+ *
+ * Contains methods required from a basic Mapper.
  */
 interface MapperInterface
 {
     /**
-     * Fetch a DomainObject by id/uuid.
-     * From object id/uuid as argument, this method must return an instance
-     * of DomainObject instance or an instance of NullDomainObject.
+     * Fetch a domain object by id or uuid.
      *
-     * @param int|string $objectId
+     * This method must return an instance of the requested domain object or an
+     * instance of a null domain object.
      *
-     * @return DomainObjectInterface
+     * @param int|string $objectId The id or the uuid of the object which will be searched.
+     *
+     * @return DomainObjectInterface The domain object if exists, the null domain object otherwise.
      */
     public function fetchById(int|string $objectId): DomainObjectInterface;
 }

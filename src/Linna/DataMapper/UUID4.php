@@ -22,14 +22,16 @@ use InvalidArgumentException;
  */
 class UUID4
 {
-    /** @var string UUID in hex form. */
+    /** @var string uuid in hexadecimal form. */
     private string $hexUUID = '';
 
-    /** @var string UUID in bin form. */
+    /** @var string uuid in binary form. */
     private string $binUUID = '';
 
     /**
-     * Constructor.
+     * Class Constructor.
+     *
+     * If no argument is passed, the class constructor generates a random uuid version 4.
      */
     public function __construct(string $uuid = '')
     {
@@ -45,11 +47,13 @@ class UUID4
     }
 
     /**
-     * Check UUID.
+     * Check the validity of an uuid.
      *
-     * @param string $uuid
+     * @param string $uuid The uuid which will be checked.
      *
      * @return void
+     *
+     * @throws InvalidArgumentException If the uuid not pass the check.
      */
     private function check(string $uuid): void
     {
@@ -63,9 +67,9 @@ class UUID4
     }
 
     /**
-     * Get UUID in hex format (36 chars).
+     * Get the uuid in hexadecimal format (36 chars separated by '-').
      *
-     * @return string
+     * @return string The uuid.
      */
     public function getHex(): string
     {
@@ -73,9 +77,9 @@ class UUID4
     }
 
     /**
-     * Get UUID in binary format (16 byte).
+     * Get the uuid in binary format (16 byte raw).
      *
-     * @return string
+     * @return string The uuid.
      */
     public function getBin(): string
     {
@@ -83,7 +87,7 @@ class UUID4
     }
 
     /**
-     * Return UUID in 16 byte binary format.
+     * Return the uuid in 16 byte binary format.
      *
      * @return void
      */
@@ -93,7 +97,7 @@ class UUID4
     }
 
     /**
-     * Generate a random UUID v4 in hex format.
+     * Generate a random uuid version 4 in hex format.
      *
      * @codeCoverageIgnore
      *

@@ -14,9 +14,8 @@ namespace Linna\Cache;
 
 use DateInterval;
 use Memcached;
-//use InvalidArgumentException;
+use InvalidArgumentException;
 use Psr\SimpleCache\CacheInterface;
-use Psr\SimpleCache\InvalidArgumentException;
 
 /**
  * PSR-16 Memcached.
@@ -33,7 +32,7 @@ class MemcachedCache implements CacheInterface
      *
      * @param array<mixed> $options
      *
-     * @throws \InvalidArgumentException if options not contain memcached resource
+     * @throws InvalidArgumentException if options not contain memcached resource
      */
     public function __construct(array $options)
     {
@@ -52,7 +51,8 @@ class MemcachedCache implements CacheInterface
      *
      * @return mixed The value of the item from the cache, or $default in case of cache miss.
      *
-     * @throws InvalidArgumentException MUST be thrown if the $key string is not a legal value.
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     *                                                   MUST be thrown if the $key string is not a legal value.
      */
     public function get(string $key, mixed $default = null): mixed
     {
@@ -78,7 +78,8 @@ class MemcachedCache implements CacheInterface
      *
      * @return bool True on success and false on failure.
      *
-     * @throws InvalidArgumentException MUST be thrown if the $key string is not a legal value.
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     *                                                   MUST be thrown if the $key string is not a legal value.
      */
     public function set(string $key, mixed $value, DateInterval|int|null $ttl = null): bool
     {
@@ -116,7 +117,8 @@ class MemcachedCache implements CacheInterface
      *
      * @return bool True if the item was successfully removed. False if there was an error.
      *
-     * @throws InvalidArgumentException MUST be thrown if the $key string is not a legal value.
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     *                                                   MUST be thrown if the $key string is not a legal value.
      */
     public function delete(string $key): bool
     {
@@ -145,7 +147,8 @@ class MemcachedCache implements CacheInterface
      *
      * @return bool
      *
-     * @throws InvalidArgumentException MUST be thrown if the $key string is not a legal value.
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     *                                                   MUST be thrown if the $key string is not a legal value.
      */
     public function has(string $key): bool
     {

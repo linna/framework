@@ -16,14 +16,16 @@ use InvalidArgumentException;
 
 /**
  * Abstract Class for ObjectMapper.
+ *
+ * Contains common methods for all mappers.
  */
 abstract class MapperAbstract
 {
     /**
-     * Create a new instance of the DomainObject that this
-     * mapper is responsible for.
+     * Create a new instance of the domain object for which this mapper is
+     * responsible for.
      *
-     * @return DomainObjectInterface
+     * @return DomainObjectInterface The new instance of the domain object.
      */
     public function create(): DomainObjectInterface
     {
@@ -31,10 +33,10 @@ abstract class MapperAbstract
     }
 
     /**
-     * Store the DomainObject in persistent storage. Either insert
-     * or update the store as required.
+     * Insert the instance of the domain object in persistent storage, updates
+     * the stored domain object if already exists.
      *
-     * @param DomainObjectInterface $domainObject
+     * @param DomainObjectInterface $domainObject The domain object which will be stored or updated.
      *
      * @return void
      */
@@ -49,9 +51,9 @@ abstract class MapperAbstract
     }
 
     /**
-     * Delete the DomainObject from persistent storage.
+     * Delete the domain object from persistent storage.
      *
-     * @param DomainObjectInterface $domainObject
+     * @param DomainObjectInterface $domainObject The domain object which will be deleted.
      *
      * @return void
      */
@@ -61,43 +63,52 @@ abstract class MapperAbstract
     }
 
     /**
-     * Create a new instance of a DomainObject.
+     * Create a new instance of the domain object for which this mapper is
+     * responsible for.
      *
-     * @return DomainObjectInterface
+     * Concrete implementation delegated to the concrete mapper.
+     *
+     * @return DomainObjectInterface The new instance of the domain object.
      */
     abstract protected function concreteCreate(): DomainObjectInterface;
 
     /**
-     * Insert the DomainObject to persistent storage.
+     * Insert the instance of the domain object in persistent storage.
      *
-     * @param DomainObjectInterface $domainObject
+     * Concrete implementation delegated to the concrete mapper.
+     *
+     * @param DomainObjectInterface $domainObject The domain object which will be inserted in persistent storage.
      *
      * @return void
      */
     abstract protected function concreteInsert(DomainObjectInterface &$domainObject): void;
 
     /**
-     * Update the DomainObject in persistent storage.
+     * Updates the stored domain object.
      *
-     * @param DomainObjectInterface $domainObject
+     * Concrete implementation delegated to the concrete mapper.
+     *
+     * @param DomainObjectInterface $domainObject The domain object which will be updated.
      *
      * @return void
      */
     abstract protected function concreteUpdate(DomainObjectInterface $domainObject): void;
 
     /**
-     * Delete the DomainObject from peristent Storage.
+     * Delete the domain object from persistent storage.
      *
-     * @param DomainObjectInterface $domainObject
+     * Concrete implementation delegated to the concrete mapper.
+     *
+     * @param DomainObjectInterface $domainObject The domain object which will be deleted.
      *
      * @return void
      */
     abstract protected function concreteDelete(DomainObjectInterface &$domainObject): void;
 
     /**
-     * Check for valid domain Object.
+     * Check if the domain object that is going to be used by the mapper is of the type required.
      *
-     * @param DomainObjectInterface $domainObject
+     * @param DomainObjectInterface $domainObject The domain object will be checked.
      *
      * @return void
      *

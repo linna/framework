@@ -84,8 +84,8 @@ class ProtectedControllerTraitTest extends TestCase
         ));
 
         $this->assertTrue(self::$authentication->isLogged());
-        $this->assertTrue((new ProtectedController(new Model(), self::$authentication))->test);
-        $this->assertTrue((new ProtectedController(new Model(), self::$authentication))->action());
+        $this->assertTrue((new ProtectedController(new class () extends Model {}, self::$authentication))->test);
+        $this->assertTrue((new ProtectedController(new class () extends Model {}, self::$authentication))->action());
 
         $this->assertTrue(self::$authentication->logout());
 
@@ -105,7 +105,7 @@ class ProtectedControllerTraitTest extends TestCase
 
         $this->expectException(AuthenticationException::class);
 
-        (new ProtectedController(new Model(), self::$authentication));
+        (new ProtectedController(new class () extends Model {}, self::$authentication));
     }
 
     /**
@@ -121,7 +121,7 @@ class ProtectedControllerTraitTest extends TestCase
 
         $this->expectException(AuthenticationException::class);
 
-        (new ProtectedControllerWithRedirect(new Model(), self::$authentication));
+        (new ProtectedControllerWithRedirect(new class () extends Model {}, self::$authentication));
     }
 
     /**
@@ -136,7 +136,7 @@ class ProtectedControllerTraitTest extends TestCase
         $this->assertFalse(self::$authentication->isLogged());
 
         try {
-            (new ProtectedMethodController(new Model(), self::$authentication))->ProtectedAction();
+            (new ProtectedMethodController(new class () extends Model {}, self::$authentication))->ProtectedAction();
         } catch (AuthenticationException $e) {
             $this->assertSame('/error', $e->getPath());
         }
@@ -156,7 +156,7 @@ class ProtectedControllerTraitTest extends TestCase
         $this->assertFalse(self::$authentication->isLogged());
 
         try {
-            (new ProtectedMethodController(new Model(), self::$authentication))->ProtectedActionWithRedirect();
+            (new ProtectedMethodController(new class () extends Model {}, self::$authentication))->ProtectedActionWithRedirect();
         } catch (AuthenticationException $e) {
             $headers = \xdebug_get_headers();
 

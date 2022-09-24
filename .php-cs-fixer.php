@@ -10,7 +10,7 @@ return $config
         'native_function_invocation' => ['include' => ['@all']],
         'phpdoc_align' => true,
         'phpdoc_separation' => true,
-        'phpdoc_line_span' => ['property' => 'single']
+        'phpdoc_line_span' => ['property' => 'single', 'const' => 'single']
     ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->exclude('vendor')

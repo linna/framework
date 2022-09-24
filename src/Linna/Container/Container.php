@@ -28,19 +28,13 @@ class Container implements ContainerInterface, ArrayAccess
     use PropertyAccessTrait;
     use ArrayAccessTrait;
 
-    /**
-     * @const string
-     */
+    /** @const string Used to indicate an arguments without type. */
     private const NO_TYPE = 'NO_TYPE';
 
-    /**
-     * @const string
-     */
+    /** @const string Used to identify rules used for interfaces. */
     public const RULE_INTERFACE = 'interfaces';
 
-    /**
-     * @const string
-     */
+    /** @const string Used to identify rules used for constructor arguments. */
     public const RULE_ARGUMENT = 'arguments';
 
     /** @var array<mixed> Contains object already resolved. */
@@ -50,28 +44,24 @@ class Container implements ContainerInterface, ArrayAccess
     protected array $tree = [];
 
     /**
-     * @var array<mixed> Rules for resolve scalar arguments or unexpected behaviors.
-     */
-    //protected array $rules = [];
-
-    /**
      * Class Constructor.
      *
-     * @param array<mixed> $rules Rules for resolve scalar arguments or unexpected behaviors.
+     * @param array<mixed> $rules Rules to resolve scalar arguments or unexpected behaviors.
      */
-    public function __construct(protected array $rules = [])
-    {
-        //$this->rules = $rules;
+    public function __construct(
+        /** @var array<mixed> Rules to resolve scalar arguments or unexpected behaviors. */
+        protected array $rules = []
+    ) {
     }
 
     /**
-     * Finds an entry of the container by its identifier and returns it.
+     * Finds an entry in the container using its identifier and returns it.
      *
-     * @param string $id Identifier of the entry to look for.
+     * @param string $id The identifier of the entry to look for.
      *
      * @throws NotFoundException No entry was found for **this** identifier.
      *
-     * @return mixed Entry.
+     * @return mixed Entry in container.
      */
     public function get(string $id)
     {
@@ -101,8 +91,8 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * Store a value inside container.
      *
-     * @param string $id
-     * @param mixed  $value
+     * @param string $id    The identifier for the entry which will be stored.
+     * @param mixed  $value The entry which will be stored.
      *
      * @return void
      */
@@ -114,7 +104,7 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * Delete value from container.
      *
-     * @param string $id
+     * @param string $id The identifier for the entry which will be deleted.
      *
      * @return bool
      */
@@ -123,12 +113,7 @@ class Container implements ContainerInterface, ArrayAccess
         if (\array_key_exists($id, $this->cache)) {
             //delete value
             unset($this->cache[$id]);
-
-            //return function result
-            //return true;
         }
-
-        //return false;
     }
 
     /**
@@ -137,7 +122,7 @@ class Container implements ContainerInterface, ArrayAccess
      * @param string       $class An existing class.
      * @param array<mixed> $rules Custom rules.
      *
-     * @return object|null Instance of resolved class
+     * @return object|null Instance of resolved class or null.
      */
     public function resolve(string $class, array $rules = []): ?object
     {
@@ -159,10 +144,10 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
-     * Create a map of dependencies for a class
+     * Create a map of dependencies for a class.
      *
-     * @param string $class Class wich tree will build
-     * @param int    $level Level for dependency
+     * @param string $class Class for which the dependencies tree will built.
+     * @param int    $level The level of the dependency.
      *
      * @return void
      */
@@ -290,7 +275,7 @@ class Container implements ContainerInterface, ArrayAccess
     }*/
 
     /**
-     * Build objects from dependencyTree.
+     * Build objects as declared as in dependency tree.
      *
      * @return void
      */
@@ -326,10 +311,10 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * Build dependency for a object.
      *
-     * @param string       $class
-     * @param array<mixed> $dependency
+     * @param string       $class      The class for which will be create an array of arguments.
+     * @param array<mixed> $dependency The arguments for the class constructor.
      *
-     * @return array<mixed>
+     * @return array<mixed> The arguments to create an instance of the class.
      */
     private function buildArguments(string $class, array $dependency): array
     {

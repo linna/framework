@@ -13,18 +13,19 @@ declare(strict_types=1);
 namespace Linna\DataMapper;
 
 /**
- * FetchAllInterface
- * Contain an optional method for basic Mapper.
+ * Fetch All Interface.
+ *
+ * Contains an optional method for basic Mapper.
  */
 interface FetchAllInterface
 {
     /**
-     * Fetch all DomainObject stored in data base.
-     * This method must return an array containing
-     * a DomainObject object instance for every concrete domain object
-     * or a void array.
+     * Fetch all domain objects stored in persistent storage for a specific domain.
      *
-     * @return array<mixed>
+     * This method must return an array containing all instances of domain
+     * objects for a specific domain or a void array.
+     *
+     * @return array<mixed> The array with domain objects or void.
      */
     public function fetchAll(): array;
 }

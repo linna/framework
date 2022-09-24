@@ -22,21 +22,16 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     use DomainObjectTimeTrait;
 
     /**
-     * @var null|int|string Read only object id on persistent storage.
+     * @var null|int|string Read only domain object id or domain object uuid on persistent storage.
      *
-     * null means that the id/uuid is not set!
+     * null means that the id or the uuid is not set!
      */
     protected null|int|string $id = null;
 
     /**
-     * Get the id/uuid of the object (unique to the object type).
+     * Get the id or the uuid of the domain object (unique for each domain object, also domain objects of the same type).
      *
-     * <pre><code class="php">$object = new DomainObject($dependencies);
-     *
-     * $object->getId();
-     * </code></pre>
-     *
-     * @return int Current object id.
+     * @return mixed The curren domain object id or uuid, the type of the value could be only int or string.
      */
     public function getId(): mixed
     {
@@ -44,20 +39,13 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     }
 
     /**
-     * Set the id for the object.
+     * Set the id ot the uuid for the domain object.
      *
-     * <pre><code class="php">$object = new DomainObject($dependencies);
+     * @param int|string $id The new domain object id.
      *
-     * $object->setId(5);
-     * // or
-     * $object->setId('10f6bace-22f3-4b42-9dda-659c89a3a3c9');
-     * </code></pre>
+     * @throws UnexpectedValueException If the id or the uuid on the domain object is already set.
      *
-     * @param int $id New object id.
-     *
-     * @throws UnexpectedValueException If the id on the object is already set.
-     *
-     * @return int New object id.
+     * @return mixed New domain object id or uuid, the type of the value could be only int or string.
      */
     public function setId(int|string $id): mixed
     {
@@ -71,11 +59,11 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     }
 
     /**
-     * Return the value of a private or protected property.
+     * Return the value of a private or protected property. Works only for the id or uuid property.
      *
-     * @param string $name
+     * @param string $name The name of the property which will be accessed.
      *
-     * @return mixed
+     * @return mixed The value of the property.
      */
     public function __get(string $name)
     {
@@ -85,11 +73,11 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     }
 
     /**
-     * Return if a private or protected property exists.
+     * Return if a private or protected property exists. Works only for the id or uuid property.
      *
-     * @param string $name
+     * @param string $name The name of the property which will be checked.
      *
-     * @return bool
+     * @return bool True if the property exists, false otherwise.
      */
     public function __isset(string $name)
     {

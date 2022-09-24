@@ -21,7 +21,7 @@ trait AbstractAccessTrait
     /**
      * Express Requirements by Abstract Methods.
      *
-     * @param string $id
+     * @param string $id The identifier of the entry to look for.
      *
      * @return bool
      */
@@ -30,15 +30,15 @@ trait AbstractAccessTrait
     /**
      * Express Requirements by Abstract Methods.
      *
-     * @param string $id
+     * @param string $id The identifier of the entry to look for.
      */
     abstract public function get(string $id);
 
     /**
      * Express Requirements by Abstract Methods.
      *
-     * @param string $id
-     * @param mixed  $value
+     * @param string $id    The identifier for the value which will be stored.
+     * @param mixed  $value The value which will be stored.
      *
      * @return void
      */
@@ -47,7 +47,7 @@ trait AbstractAccessTrait
     /**
      * Express Requirements by Abstract Methods.
      *
-     * @param string $id
+     * @param string $id The identifier for the entry which will be deleted.
      *
      * @return void
      */

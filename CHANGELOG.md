@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] [v0.28.0](https://github.com/linna/framework/compare/v0.27.0...v0.28.0)
 
+### Changed
+
+#### Mvc
+* `Linna\Mvc\Model` is now an `abstract` class.
+* `Linna\Mvc\View` is now an `abstract` class.
+* `Linna\Mvc\Controller` is now an `abstract` class.
+
 ## [v0.27.0](https://github.com/linna/framework/compare/v0.26.0...v0.27.0) - 2022-09-17
 
 ### Added
