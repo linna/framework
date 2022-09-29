@@ -41,7 +41,7 @@ At moment, code, isn't utilized in production environment, Hope in future.
 
 # Require
 
-- PHP >= 7.4
+- PHP >= 8.1
 - PDO extension (optional)
 - Memcached extension (optional)
 - Mongodb extension (optional)
@@ -56,11 +56,11 @@ composer require linna/framework
 
 # Features
 
-- Model View Controller
-- Session Management
-- Login and User/Permission access control
-- Rest Router
-- Dependency Injections
+- Model view controller
+- Session management
+- Login and User/Permission role based access control
+- Rest router
+- Container and dependency injections
 - Wrappers for data base
 - Implementation for PSR-4 Autoloader, PSR-11 Container and PSR-16 Simple Cache
 
@@ -71,3 +71,19 @@ For more details please see the [user guide (soon)](https://linna.tools/docs/cur
 # Contributing
 
 Please see [CONTRIBUTING.md](https://github.com/linna/framework/blob/master/CONTRIBUTING.md).
+
+## Task List for the next version
+
+### High Priority
+- [ ] Reduce the technical debt 
+- [ ] Complete the PHP 8.1 porting
+- [ ] Complete the updating of code comments
+- [ ] Create documentation for the site, api and articles about how to do things
+- [ ] Unify database session handlers
+- [ ] Update tests and do a deep code review for quality and security
+
+### Less High Priority
+- [ ] Add support for Redis cache, for general cache and sessions
+- [ ] Encryption for non standard session storage (redis, memcached, databases)
+- [ ] Router with PSR-7 support
+- [ ] More about Router

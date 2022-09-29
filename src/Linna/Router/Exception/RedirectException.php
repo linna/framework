@@ -22,16 +22,15 @@ use Exception;
  */
 class RedirectException extends Exception
 {
-    /** @var string Path on which to be redirected. */
-    private $path = '';
-
     /**
      * Class Constructor.
      *
-     * @param string $path Path on which to be redirected.
+     * @param string $path The path on which to be redirected.
      */
-    public function __construct(string $path = '')
-    {
+    public function __construct(
+        /** @var string The path on which to be redirected. */
+        private string $path = ''
+    ) {
         parent::__construct();
 
         $this->path = $path;
@@ -40,7 +39,7 @@ class RedirectException extends Exception
     /**
      * Set path.
      *
-     * @param string $path Path on which to be redirected.
+     * @param string $path The path on which to be redirected.
      *
      * @return void
      */
@@ -52,7 +51,7 @@ class RedirectException extends Exception
     /**
      * Get path.
      *
-     * @return string Path on which to be redirected.
+     * @return string The path on which to be redirected.
      */
     public function getPath(): string
     {

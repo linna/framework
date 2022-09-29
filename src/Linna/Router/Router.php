@@ -17,20 +17,20 @@ use BadMethodCallException;
 /**
  * Router.
  *
- * Manage routes, verify every resource requested by browser and return
- * a RouteInterface Object.
+ * Manage routes, verify every resource requested by a client and return
+ * a RouteInterface object.
  */
 class Router
 {
-    /** @var RouteInterface Utilized for return the most recently parsed route */
+    /** @var RouteInterface Utilized to return the most recently parsed route. */
     protected RouteInterface $route;
 
-    /** @var array<string> List of regex for find parameter inside passed routes */
+    /** @var array<string> List of regex to find parameter inside passed routes. */
     private array $matchTypes = [
         '`\[[0-9A-Za-z._-]+\]`',
     ];
 
-    /** @var array<string> List of regex for find type of parameter inside passed routes */
+    /** @var array<string> List of regex to find type of parameter inside passed routes. */
     private array $types = [
         '[0-9A-Za-z._-]++',
     ];
@@ -44,17 +44,26 @@ class Router
     /**
      * Class Constructor.
      *
-     * @param RouteCollection<Route> $routes
-     * @param string                 $basePath
-     * @param bool                   $rewriteMode
-     * @param string                 $rewriteModeFalseEntryPoint
-     * @param bool                   $parseQueryStringRewriteModeTrue
+     * @param RouteCollection<Route> $routes                          The route collection used by the router as list of valid routes.
+     * @param string                 $basePath                        The base path from which the router evaluate a route.
+     * @param bool                   $rewriteMode                     Specify if the router have to work in rewrite mode.
+     * @param string                 $rewriteModeFalseEntryPoint      The entry point for the router if rewrite mode is off.
+     * @param bool                   $parseQueryStringRewriteModeTrue Tell the router if the query string of the uri should be parsed in rewrite mode.
      */
     public function __construct(
+        /** @var RouteCollection<Route> The route collection used by the router as list of valid routes. */
         protected RouteCollection $routes,
+
+        /** @var string The base path from which the router evaluate a route. */
         protected string $basePath = '/',
+
+        /** @var bool Specify if the router have to work in rewrite mode. */
         protected bool $rewriteMode = false,
+
+        /** @var string The entry point for the router if rewrite mode is off. */
         protected string $rewriteModeFalseEntryPoint = '/index.php?',
+
+        /** @var bool Tell the router if the query string of the uri should be parsed in rewrite mode. */
         protected bool $parseQueryStringRewriteModeTrue = false
     ) {
     }
@@ -62,20 +71,23 @@ class Router
     /**
      * Evaluate request uri.
      *
-     * @param string $requestUri
-     * @param string $requestMethod
+     * @param string $requestUri    The request target in HTTP request start line.
+     * @param string $requestMethod The HTTP method in HTTP request start line.
      *
-     * @return bool
+     * @return bool True if the evaluated route is valid, false otherwise.
      */
     public function validate(string $requestUri, string $requestMethod): bool
     {
+        // Route or NullRoute object
         $route = $this->findRoute($this->filterUri($requestUri), $requestMethod);
 
+        // if Route
         if ($route instanceof Route) {
             $this->route = $this->buildRoute($route);
             return true;
         }
 
+        // else Null route
         $this->route = $route;
 
         return false;
@@ -84,10 +96,11 @@ class Router
     /**
      * Find if provided route match with one of registered routes.
      *
-     * @param string $path
-     * @param string $method
+     * @param string $path   The request target in HTTP request start line.
+     * @param string $method The HTTP method in HTTP request start line.
      *
-     * @return RouteInterface
+     * @return RouteInterface A Route object if the route is valid, otherwise a
+     *                        NullRoute object if the requested route doesn't exist.
      */
     private function findRoute(string $path, string $method): RouteInterface
     {
@@ -111,9 +124,9 @@ class Router
     /**
      * Build a valid route instance starting from registered route.
      *
-     * @param Route $route
+     * @param Route $route The registered route which will be enriched with data from the request.
      *
-     * @return RouteInterface
+     * @return RouteInterface A Route object containing the data from request.
      */
     private function buildRoute(Route $route): RouteInterface
     {
@@ -150,9 +163,11 @@ class Router
     /**
      * Try to find parameters in a valid route and return it.
      *
-     * @param string $path
+     * @param string $path The request target in HTTP request start line, at
+     *                     this point could contains parameters represented as
+     *                     part of the path.
      *
-     * @return array<mixed>
+     * @return array<mixed> An array containing possible parameters.
      */
     private function buildParam(string $path): array
     {
@@ -178,7 +193,7 @@ class Router
     /**
      * Create an array from query string params.
      *
-     * @param string $queryString
+     * @param string $queryString The query string from the request.
      *
      * @return void
      */
@@ -214,10 +229,9 @@ class Router
     }
 
     /**
-     * Check if a route is valid and
-     * return the route object else return a bad route object.
+     * Return the result of the last route validation.
      *
-     * @return RouteInterface
+     * @return RouteInterface Route object if the route was valid, NullRoute otherwise.
      */
     public function getRoute(): RouteInterface
     {
@@ -227,16 +241,16 @@ class Router
     /**
      * Analize current uri, sanitize and return it.
      *
-     * @param string $passedUri
+     * @param string $passedUri The request target in HTTP request start line.
      *
-     * @return string
+     * @return string The sanitized uri.
      */
     private function filterUri(string $passedUri): string
     {
         //sanitize url
         $url = \filter_var($passedUri, FILTER_SANITIZE_URL);
 
-        //check for rewrite mode
+        //check for rewrite mode and remove the entry point if present
         $url = \str_replace($this->rewriteModeFalseEntryPoint, '', $url);
 
         //remove basepath, if present
@@ -259,9 +273,9 @@ class Router
     }
 
     /**
-     * Map a route.
+     * Map a route, add it to the routes collection used by the router.
      *
-     * @param RouteInterface $route
+     * @param RouteInterface $route The route should be mapped.
      *
      * @return void
      */

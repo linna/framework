@@ -15,7 +15,7 @@ namespace Linna\DataMapper;
 /**
  * Null Domain Object.
  *
- * Use this to represent a non existing object.
+ * Use this to represent a non existing domain object.
  */
 class NullDomainObject extends DomainObjectAbstract
 {

@@ -15,14 +15,16 @@ namespace Linna\Router;
 use Linna\TypedArrayObject\ArrayOfClasses;
 
 /**
- * Route Collection
+ * Route Collection.
+ *
+ * The set of routes used by the router to validate requests.
  */
 class RouteCollection extends ArrayOfClasses
 {
     /**
      * Class Contructor.
      *
-     * @param array<Route> $array
+     * @param array<Route> $array The array containing the routes used to create the collection.
      */
     public function __construct(array $array = [])
     {
