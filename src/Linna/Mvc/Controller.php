@@ -15,15 +15,15 @@ namespace Linna\Mvc;
 /**
  * The Controller in Model View Controller pattern.
  *
- * This is the parent class for every controller in the applications.
+ * <p>This is the parent class for every controller in the applications.</p>
  *
- * To set actions which will be executed before and after the concrete controller,
- * declare inside it all methods needed using as name 'before' and/or 'after'.
+ * <p>To set actions which will be executed before and after the concrete controller,
+ * declare inside it all methods needed using as name 'before' and/or 'after'.</p>
  *
- * To set actions which will be executed before and after the entry point or a
+ * <p>To set actions which will be executed before and after the entry point or a
  * specific concrete controller action, declare all method needed using as name
  * the name of the method prefixed by the word before or after (ex. for the
- * entryPoint, 'beforeEntryPoint' and 'afterEntryPoint').
+ * entryPoint, 'beforeEntryPoint' and 'afterEntryPoint').</p>
  */
 abstract class Controller
 {

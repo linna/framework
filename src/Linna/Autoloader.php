@@ -15,13 +15,14 @@ namespace Linna;
 /**
  * PSR-4 Autoloader.
  *
- * An example of a general-purpose implementation that includes the optional
+ * <p>An example of a general-purpose implementation that includes the optional
  * functionality of allowing multiple base directories for a single namespace
- * prefix.
+ * prefix.</p>
  *
- * Given a foo-bar package of classes in the file system at the following
- * paths ...
+ * <p>Given a foo-bar package of classes in the file system at the following
+ * paths ...</p>
  *
+ * <pre>
  *     /path/to/packages/foo-bar/
  *         src/
  *             Baz.php             # Foo\Bar\Baz
@@ -31,10 +32,12 @@ namespace Linna;
  *             BazTest.php         # Foo\Bar\BazTest
  *             Qux/
  *                 QuuxTest.php    # Foo\Bar\Qux\QuuxTest
+ * </pre>
  *
- * ... add the path to the class files for the \Foo\Bar\ namespace prefix
- * as follows:
+ * <p>... add the path to the class files for the <code>\Foo\Bar\</code> namespace prefix
+ * as follows:</p>
  *
+ * <pre>
  *      <?php
  *      // instantiate the loader
  *      $loader = new \Example\Psr4AutoloaderClass;
@@ -49,19 +52,21 @@ namespace Linna;
  *
  *      // register the base directories for the namespace prefix
  *      $loader->addNamespaces($nm);
+ * </pre>
  *
+ * <p>The following line would cause the autoloader to attempt to load the
+ * <code>\Foo\Bar\Qux\Quux</code> class from <code>/path/to/packages/foo-bar/src/Qux/Quux.php</code>:</p>
  *
- * The following line would cause the autoloader to attempt to load the
- * \Foo\Bar\Qux\Quux class from /path/to/packages/foo-bar/src/Qux/Quux.php:
- *
- *      <?php
+ * <pre>
  *      new \Foo\Bar\Qux\Quux;
+ * </pre>
  *
- * The following line would cause the autoloader to attempt to load the
- * \Foo\Bar\Qux\QuuxTest class from /path/to/packages/foo-bar/tests/Qux/QuuxTest.php:
+ * <p>The following line would cause the autoloader to attempt to load the
+ * <code>\Foo\Bar\Qux\QuuxTest</code> class from <code>/path/to/packages/foo-bar/tests/Qux/QuuxTest.php</code>:</p>
  *
- *      <?php
+ * <pre>
  *      new \Foo\Bar\Qux\QuuxTest;
+ * </pre>
  */
 class Autoloader
 {
@@ -76,7 +81,7 @@ class Autoloader
     /**
      * Register loader with SPL autoloader stack.
      *
-     * @return bool
+     * @return bool True if the operation succeeded, false otherwise.
      */
     public function register(): bool
     {
@@ -86,7 +91,7 @@ class Autoloader
     /**
      * Unregister loader with SPL autoloader stack.
      *
-     * @return bool
+     * @return bool True if the operation succeeded, false otherwise.
      */
     public function unregister(): bool
     {
@@ -95,7 +100,7 @@ class Autoloader
 
     /**
      * Adds a base directory for a namespace prefix, accept an array of namespaces
-     * Utilize this for prevente multiple addNamespace() calls.
+     * Utilize this for prevente multiple <code>addNamespace()</code> calls.
      *
      * @param array $namespaces The namespace prefix array.
      *

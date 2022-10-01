@@ -15,15 +15,15 @@ namespace Linna\DataMapper;
 /**
  * Fetch By Name Interface.
  *
- * Contain an optional method for basic Mapper.
+ * <p>Contain an optional method for basic Mapper.</p>
  */
 interface FetchByNameInterface
 {
     /**
      * Fetch a domain object from persistent storage by name.
      *
-     * This method must return an instance of the requested domain object or an
-     * instance of a null domain object.
+     * <p>This method must return an instance of the requested domain object or an
+     * instance of a null domain object.</p>
      *
      * @param string $objectName The name of the object which will be searched.
      *

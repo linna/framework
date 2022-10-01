@@ -24,7 +24,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     /**
      * @var null|int|string Read only domain object id or domain object uuid on persistent storage.
      *
-     * null means that the id or the uuid is not set!
+     * <p>null means that the id or the uuid is not set!</p>
      */
     protected null|int|string $id = null;
 
@@ -59,7 +59,9 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     }
 
     /**
-     * Return the value of a private or protected property. Works only for the id or uuid property.
+     * Return the value of a private or protected property.
+     *
+     * <p>Works only for the id or uuid property.</p>
      *
      * @param string $name The name of the property which will be accessed.
      *
@@ -73,7 +75,9 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     }
 
     /**
-     * Return if a private or protected property exists. Works only for the id or uuid property.
+     * Return if a private or protected property exists.
+     *
+     * <p>Works only for the id or uuid property.</p>
      *
      * @param string $name The name of the property which will be checked.
      *

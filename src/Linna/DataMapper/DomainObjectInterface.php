@@ -15,7 +15,7 @@ namespace Linna\DataMapper;
 /**
  * Interface for Domain Object.
  *
- * This interface declare how to get and how to set the id or the uuid of a domain object.
+ * <p>This interface declare how to get and how to set the id or the uuid of a domain object.</p>
  */
 interface DomainObjectInterface
 {

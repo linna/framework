@@ -17,8 +17,8 @@ use Linna\DataMapper\DomainObjectAbstract;
 /**
  * User domain object.
  *
- * Provide a basic user for authentication system, the class is thinked to be
- * used with PHP PDO, but should be instantiated like a normal class.
+ * <p>Provide a basic user for authentication system, the class is thinked to be
+ * used with PHP <code>PDO</code>, but should be instantiated like a normal class.</p>
  */
 class User extends DomainObjectAbstract
 {
@@ -46,7 +46,7 @@ class User extends DomainObjectAbstract
     /**
      * Class Constructor.
      *
-     * @param Password $password Password class instance.
+     * @param Password $password <code>Password</code> class instance.
      */
     public function __construct(Password $password)
     {

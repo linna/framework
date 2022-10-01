@@ -21,9 +21,9 @@ use MongoDB\Client;
 class MongoDBConnector extends AbstractConnector
 {
     /**
-     * Get Resource.
+     * Return a new <code>MongoDB\Client</code> object to intercat with <b>MongoDB</b> database.
      *
-     * @return object
+     * @return object The <code>MongoDB\Client</code> instance.
      */
     public function getResource(): object
     {

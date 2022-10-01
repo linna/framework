@@ -15,15 +15,15 @@ namespace Linna\DataMapper;
 /**
  * Fetch All Interface.
  *
- * Contains an optional method for basic Mapper.
+ * <p>Contains an optional method for basic Mapper.</p>
  */
 interface FetchAllInterface
 {
     /**
      * Fetch all domain objects stored in persistent storage for a specific domain.
      *
-     * This method must return an array containing all instances of domain
-     * objects for a specific domain or a void array.
+     * <p>This method must return an array containing all instances of domain
+     * objects for a specific domain or a void array.</p>
      *
      * @return array<mixed> The array with domain objects or void.
      */

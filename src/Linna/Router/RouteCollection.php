@@ -17,7 +17,7 @@ use Linna\TypedArrayObject\ArrayOfClasses;
 /**
  * Route Collection.
  *
- * The set of routes used by the router to validate requests.
+ * <p>The set of routes used by the router to validate requests.</p>
  */
 class RouteCollection extends ArrayOfClasses
 {

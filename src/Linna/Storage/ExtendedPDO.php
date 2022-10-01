@@ -17,7 +17,7 @@ use PDOStatement;
 use InvalidArgumentException;
 
 /**
- * Extended PDO
+ * Extended PDO.
  */
 class ExtendedPDO extends PDO
 {
@@ -26,14 +26,14 @@ class ExtendedPDO extends PDO
 
     /**
      * Executes an SQL statement with parameters,
-     * returning a result set as a PDOStatement object
+     * returning a result set as a <code>PDOStatement</code> object.
      *
-     * @param string       $query SQL statement
-     * @param array<mixed> $param Parameter as array as PDOStatement::bindParam
+     * @param string       $query SQL statement.
+     * @param array<mixed> $param Parameter as array as <code>PDOStatement::bindParam</code>.
      *
-     * @return PDOStatement<mixed>
+     * @return PDOStatement|false False in case of failure.
      */
-    public function queryWithParam(string $query, array $param): PDOStatement
+    public function queryWithParam(string $query, array $param): PDOStatement|false
     {
         $statement = $this->prepare($query);
 
@@ -56,7 +56,7 @@ class ExtendedPDO extends PDO
     /**
      * Return the last opration status.
      *
-     * @return bool
+     * @return bool True if the last operation succeeded, false otherwise.
      */
     public function getLastOperationStatus(): bool
     {
@@ -64,13 +64,13 @@ class ExtendedPDO extends PDO
     }
 
     /**
-     * Check values passed to queryWithParam.
+     * Check values passed to the method <code>queryWithParam</code>.
      *
-     * @param array<mixed> $value
+     * @param array<mixed> $value The value which will be checked.
      *
      * @return void
      *
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException If the values are passed in the wrong form.
      */
     private function checkValue(array &$value): void
     {

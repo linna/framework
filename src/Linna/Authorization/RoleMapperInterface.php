@@ -27,15 +27,15 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
     /**
      * Grant a permission at role.
      *
-     * This method must insert new role-permission coupling in persistent
-     * storage and update `Role` calling `Role->setPermissions()` method.
+     * <p>This method must insert new role-permission coupling in persistent
+     * storage and update <code>Role</code> calling <code>Role->setPermissions()</code> method.</p>
      *
-     * Remind to pass all role's permission to `Role->setPermissions()`,
-     * when write concrete mapper is well to pass `PermissionMapper` as
-     * constructor dependency.
+     * <p>Remind to pass all role's permission to <code>Role->setPermissions()</code>,
+     * when write concrete mapper is well to pass <code>PermissionMapper</code> as
+     * constructor dependency.</p>
      *
-     * @param Role       $role       The role class instance.
-     * @param Permission $permission The permission to add.
+     * @param Role       $role       The <code>Role</code> class instance.
+     * @param Permission $permission The permission to add as <code>Permission</code> instance.
      *
      * @return void
      */
@@ -44,15 +44,15 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
     /**
      * Grant a permission at role.
      *
-     * This method must insert new role-permission coupling in persistent
-     * storage and update `Role` calling `Role->setPermissions()` method.
+     * <p>This method must insert new role-permission coupling in persistent
+     * storage and update <code>Role</code> calling <code>Role->setPermissions()</code> method.</p>
      *
-     * Remind to pass all role's permission to `Role->setPermissions()`,
-     * when write concrete mapper is well to pass `PermissionMapper` as
-     * constructor dependency.
+     * <p>Remind to pass all role's permission to <code>Role->setPermissions()</code>,
+     * when write concrete mapper is well to pass <code>PermissionMapper</code> as
+     * constructor dependency.</p>
      *
-     * @param Role $role         The role class instance.
-     * @param int  $permissionId The permission to add.
+     * @param Role $role         The <code>Role</code> class instance.
+     * @param int  $permissionId The permission to add as permission id.
      *
      * @return void
      */
@@ -61,15 +61,15 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
     /**
      * Grant a permission at role.
      *
-     * This method must insert new role-permission coupling in persistent
-     * storage and update `Role` calling `Role->setPermissions()` method.
+     * <p>This method must insert new role-permission coupling in persistent
+     * storage and update <code>Role</code> calling <code>Role->setPermissions()</code> method.</p>
      *
-     * Remind to pass all role's permission to `Role->setPermissions()`,
-     * when write concrete mapper is well to pass `PermissionMapper` as
-     * constructor dependency.
+     * <p>Remind to pass all role's permission to <code>Role->setPermissions()</code>,
+     * when write concrete mapper is well to pass <code>PermissionMapper</code> as
+     * constructor dependency.</p>
      *
-     * @param Role   $role           The role class instance.
-     * @param string $permissionName The permission to add.
+     * @param Role   $role           The <code>Role</code> class instance.
+     * @param string $permissionName The permission to add as permission name.
      *
      * @return void
      */
@@ -78,15 +78,15 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
     /**
      * Revoke a permission at role.
      *
-     * This method must remove role-permission coupling in persistent
-     * storage and update `Role` calling `Role->setPermissions()` method.
+     * <p>This method must remove role-permission coupling in persistent
+     * storage and update <code>Role</code> calling <code>Role->setPermissions()</code> method.</p>
      *
-     * As previous method remind to pass all role's permission
-     * to `Role->setPermissions()`, when write concrete mapper is well to
-     * pass `PermissionMapper` as constructor dependency.
+     * <p>As previous method remind to pass all role's permission
+     * to <code>Role->setPermissions()</code>, when write concrete mapper is well to
+     * pass <code>PermissionMapper</code> as constructor dependency.</p>
      *
-     * @param Role       $role       The role class instance.
-     * @param Permission $permission The permission to revoke.
+     * @param Role       $role       The <code>Role</code> class instance.
+     * @param Permission $permission The permission to revoke as <code>Permission</code> instance.
      *
      * @return void
      */
@@ -95,15 +95,15 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
     /**
      * Revoke a permission at role.
      *
-     * This method must remove role-permission coupling in persistent
-     * storage and update `Role` calling `Role->setPermissions()` method.
+     * <p>This method must remove role-permission coupling in persistent
+     * storage and update <code>Role</code> calling <code>Role->setPermissions()</code> method.</p>
      *
-     * As previous method remind to pass all role's permission
-     * to `Role->setPermissions()`, when write concrete mapper is well to
-     * pass `PermissionMapper` as constructor dependency.
+     * <p>As previous method remind to pass all role's permission
+     * to <code>Role->setPermissions()</code>, when write concrete mapper is well to
+     * pass <code>PermissionMapper</code> as constructor dependency.</p>
      *
-     * @param Role $role         The role class instance.
-     * @param int  $permissionId The permission to revoke.
+     * @param Role $role         The <code>Role</code> class instance.
+     * @param int  $permissionId The permission to revoke as permission id.
      *
      * @return void
      */
@@ -112,15 +112,15 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
     /**
      * Revoke a permission at role.
      *
-     * This method must remove role-permission coupling in persistent
-     * storage and update `Role` calling `Role->setPermissions()` method.
+     * <p>This method must remove role-permission coupling in persistent
+     * storage and update <code>Role</code> calling <code>Role->setPermissions()</code> method.</p>
      *
-     * As previous method remind to pass all role's permission
-     * to `Role->setPermissions()`, when write concrete mapper is well to
-     * pass `PermissionMapper` as constructor dependency.
+     * <p>As previous method remind to pass all role's permission
+     * to <code>Role->setPermissions()</code>, when write concrete mapper is well to
+     * pass <code>PermissionMapper</code> as constructor dependency.</p>
      *
-     * @param Role   $role           The role class instance.
-     * @param string $permissionName The permission to revoke.
+     * @param Role   $role           The <code>Role</code> class instance.
+     * @param string $permissionName The permission to revoke as permission name.
      *
      * @return void
      */
@@ -129,15 +129,15 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
     /**
      * Add an user to a role.
      *
-     * This method must insert new user-role coupling in persistent
-     * storage and update `Role` calling `Role->setUsers()` method.
+     * <p>This method must insert new user-role coupling in persistent
+     * storage and update <code>Role</code> calling <code>Role->setUsers()</code> method.</p>
      *
-     * Remind to pass all role's users to `Role->setUsers()`,
-     * when write concrete mapper is well to pass `EnhancedUserMapper` as
-     * constructor dependency.
+     * <p>Remind to pass all role's users to <code>Role->setUsers()</code>,
+     * when write concrete mapper is well to pass <code>EnhancedUserMapper</code> as
+     * constructor dependency.</p>
      *
-     * @param Role         $role The role class instance.
-     * @param EnhancedUser $user The user to add.
+     * @param Role         $role The <code>Role</code> class instance.
+     * @param EnhancedUser $user The user to add as <code>EnhancedUser</code> instance.
      *
      * @return void
      */
@@ -146,15 +146,15 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
     /**
      * Add an user to a role.
      *
-     * This method must insert new user-role coupling in persistent
-     * storage and update `Role` calling `Role->setUsers()` method.
+     * <p>This method must insert new user-role coupling in persistent
+     * storage and update <code>Role</code> calling <code>Role->setUsers()</code> method.</p>
      *
-     * Remind to pass all role's users to `Role->setUsers()`,
-     * when write concrete mapper is well to pass `EnhancedUserMapper` as
-     * constructor dependency.
+     * <p>Remind to pass all role's users to <code>Role->setUsers()</code>,
+     * when write concrete mapper is well to pass <code>EnhancedUserMapper</code> as
+     * constructor dependency.</p>
      *
-     * @param Role $role   The role class instance.
-     * @param int  $userId The user to add.
+     * @param Role $role   The <code>Role</code> class instance.
+     * @param int  $userId The user to add as user id.
      *
      * @return void
      */
@@ -163,15 +163,15 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
     /**
      * Add an user to a role.
      *
-     * This method must insert new user-role coupling in persistent
-     * storage and update `Role` calling `Role->setUsers()` method.
+     * <p>This method must insert new user-role coupling in persistent
+     * storage and update <code>Role</code> calling <code>Role->setUsers()</code> method.</p>
      *
-     * Remind to pass all role's users to `Role->setUsers()`,
-     * when write concrete mapper is well to pass `EnhancedUserMapper` as
-     * constructor dependency.
+     * <p>Remind to pass all role's users to <code>Role->setUsers()</code>,
+     * when write concrete mapper is well to pass <code>EnhancedUserMapper</code> as
+     * constructor dependency.</p>
      *
-     * @param Role   $role     The role class instance.
-     * @param string $userName The user to add.
+     * @param Role   $role     The <code>Role</code> class instance.
+     * @param string $userName The user to add as user name.
      *
      * @return void
      */
@@ -180,15 +180,15 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
     /**
      * Remove user from a role.
      *
-     * This method must remove user-role coupling in persistent
-     * storage and update `Role` calling `Role->setUsers()` method.
+     * <p>This method must remove user-role coupling in persistent
+     * storage and update <code>Role</code> calling <code>Role->setUsers()</code> method.</p>
      *
-     * As previous method remind to pass all role's users to `Role->setUsers()`,
-     * when write concrete mapper is well to pass `EnhancedUserMapper` as
-     * constructor dependency.
+     * <p>As previous method remind to pass all role's users to <code>Role->setUsers()</code>,
+     * when write concrete mapper is well to pass <code>EnhancedUserMapper</code> as
+     * constructor dependency.</p>
      *
-     * @param Role         $role The role class instance.
-     * @param EnhancedUser $user The user to revoke.
+     * @param Role         $role The <code>Role</code> class instance.
+     * @param EnhancedUser $user The user to revoke as <code>EnhancedUser</code> instance.
      *
      * @return void
      */
@@ -197,15 +197,15 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
     /**
      * Remove user from a role.
      *
-     * This method must remove user-role coupling in persistent
-     * storage and update `Role` calling `Role->setUsers()` method.
+     * <p>This method must remove user-role coupling in persistent
+     * storage and update <code>Role</code> calling <code>Role->setUsers()</code> method.</p>
      *
-     * As previous method remind to pass all role's users to `Role->setUsers()`,
-     * when write concrete mapper is well to pass `EnhancedUserMapper` as
-     * constructor dependency.
+     * <p>As previous method remind to pass all role's users to <code>Role->setUsers()</code>,
+     * when write concrete mapper is well to pass <code>EnhancedUserMapper</code> as
+     * constructor dependency.</p>
      *
-     * @param Role $role   The role class instance.
-     * @param int  $userId The user to revoke.
+     * @param Role $role   The <code>Role</code> class instance.
+     * @param int  $userId The user to revoke as user id.
      *
      * @return void
      */
@@ -214,15 +214,15 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
     /**
      * Remove user from a role.
      *
-     * This method must remove user-role coupling in persistent
-     * storage and update `Role` calling `Role->setUsers()` method.
+     * <p>This method must remove user-role coupling in persistent
+     * storage and update <code>Role</code> calling <code>Role->setUsers()</code> method.</p>
      *
-     * As previous method remind to pass all role's users to `Role->setUsers()`,
-     * when write concrete mapper is well to pass `EnhancedUserMapper` as
-     * constructor dependency.
+     * <p>As previous method remind to pass all role's users to <code>Role->setUsers()</code>,
+     * when write concrete mapper is well to pass <code>EnhancedUserMapper</code> as
+     * constructor dependency.</p>
      *
-     * @param Role   $role     The role class instance.
-     * @param string $userName The user to revoke.
+     * @param Role   $role     The <code>Role</code> class instance.
+     * @param string $userName The user to revoke as user name.
      *
      * @return void
      */

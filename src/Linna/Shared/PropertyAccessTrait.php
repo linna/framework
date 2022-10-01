@@ -13,69 +13,80 @@ declare(strict_types=1);
 namespace Linna\Shared;
 
 /**
- * Magic Access Trait
- * Provide to the possibility to retrive values using properties.
+ * Magic Access Trait.
+ *
+ * <p>Grant the possibility, for classes that use it, to retrive values using property notation.</p>
  */
 trait PropertyAccessTrait
 {
     use AbstractAccessTrait;
 
     /**
-     * Set
-     * http://php.net/manual/en/language.oop5.overloading.php.
+     * Set.
+     * <p>Is run when writing data to inaccessible (protected or private) or non-existing properties.</p>
      *
-     * @param string $key
-     * @param mixed  $value
+     * @param string $name  The name of the property which will be updated.
+     * @param mixed  $value The new value for the property.
      *
      * @return void
      *
-     * @ignore
-     */
-    public function __set(string $key, $value)
-    {
-        $this->set($key, $value);
-    }
-
-    /**
-     * Get
-     * http://php.net/manual/en/language.oop5.overloading.php.
-     *
-     * @param string $key
-     *
-     * @return object|bool Element stored in container or false
+     * @link http://php.net/manual/en/language.oop5.overloading.php
      *
      * @ignore
      */
-    public function __get(string $key)
+    public function __set(string $name, mixed $value): void
     {
-        return $this->get($key);
+        $this->set($name, $value);
     }
 
     /**
-     * Remove
-     * http://php.net/manual/en/language.oop5.overloading.php.
+     * Get.
+     * <p>Is utilized for reading data from inaccessible (protected or private) or non-existing properties. </p>
      *
-     * @param string $key
+     * @param string $name The name of the property for which this method has invoked, the property to retrieve.
+     *
+     * @return mixed The property value, if the property exists.
+     *
+     * @link http://php.net/manual/en/language.oop5.overloading.php
      *
      * @ignore
      */
-    public function __unset(string $key)
+    public function __get(string $name): mixed
     {
-        $this->delete($key);
+        return $this->get($name);
     }
 
     /**
-     * Check
-     * http://php.net/manual/en/language.oop5.overloading.php.
+     * Remove.
+     * <p>Is invoked when unset() is used on inaccessible (protected or private) or non-existing properties. </p>
      *
-     * @param string $key
+     * @param string $name The name of the property which will be updated.
+     *
+     * @return void
+     *
+     * @link http://php.net/manual/en/language.oop5.overloading.php
+     *
+     * @ignore
+     */
+    public function __unset(string $name): void
+    {
+        $this->delete($name);
+    }
+
+    /**
+     * Check.
+     * <p>is triggered by calling <code>isset()</code> or <code>empty()</code> on inaccessible (protected or private) or non-existing properties.</p>
+     *
+     * @param string $name The name of the property for which verify the existence.
      *
      * @return bool
      *
+     * @link http://php.net/manual/en/language.oop5.overloading.php
+     *
      * @ignore
      */
-    public function __isset(string $key): bool
+    public function __isset(string $name): bool
     {
-        return $this->has($key);
+        return $this->has($name);
     }
 }

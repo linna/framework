@@ -18,10 +18,10 @@ use Linna\Authentication\Exception\AuthenticationException;
 /**
  * Help protect a controller with login.
  *
- * This trait add to a controller the ability to interrupt its own execution, in
- * case authentication is required.
+ * <p>This trait add to a controller the ability to interrupt its own execution, in
+ * case authentication is required.</p>
  *
- * This trait contains only private mothods.
+ * <p>This trait contains only private mothods.</p>
  */
 trait ProtectedControllerTrait
 {
@@ -30,11 +30,11 @@ trait ProtectedControllerTrait
 
     /**
      * Allow access to controller class or methods only if logged.
-     * Return a status code, useful with AJAX requests.
      *
-     * @param Authentication $authentication Authentication class instance.
-     * @param string         $route          Valid Route for Authentication
-     *                                       exception.
+     * <p>Return a status code, useful with AJAX requests.</p>
+     *
+     * @param Authentication $authentication <code>Authentication</code> class instance.
+     * @param string         $route          Valid route path for <code>AuthenticationException</code>.
      *
      * @return void
      *
@@ -51,10 +51,9 @@ trait ProtectedControllerTrait
      * Allow access to controller class or methods only if logged
      * and do an HTTP redirection if not.
      *
-     * @param Authentication $authentication Authentication class instance.
+     * @param Authentication $authentication <code>Authentication</code> class instance.
      * @param string         $location       Valid url for Location header.
-     * @param string         $route          Valid Route for Authentication
-     *                                       exception.
+     * @param string         $route          Valid route path for <code>AuthenticationException</code>.
      *
      * @return void
      *

@@ -18,16 +18,16 @@ use Linna\Router\RouteInterface;
 /**
  * Model View Controller.
  *
- * It behaviors as glue for the Model, the View and the Controller.
+ * <p>It behaviors as glue for the <code>Model</code>, the <code>View</code> and the <code>Controller</code> classes.<p>
  *
- * The controller execution has this steps:
+ * <p>The controller execution has this steps:
  *
  * * Before controller, if set.
  * * Before controller action, if set.
  * * The entry point or of the specific requested action.
  * * After controller action if set.
  * * After controller, if set.
- *
+ *<p>
  */
 class ModelViewController
 {

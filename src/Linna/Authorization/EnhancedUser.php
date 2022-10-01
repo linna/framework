@@ -25,7 +25,7 @@ class EnhancedUser extends User
     /**
      * Class Constructor.
      *
-     * @param Password     $password    Password class instance.
+     * @param Password     $password    <code>Password</code> class instance.
      * @param array<mixed> $roles       The roles granted to the user.
      * @param array<mixed> $permissions The permission granted to the user.
      */
@@ -42,7 +42,7 @@ class EnhancedUser extends User
     /**
      * Check if an user has a role, use Role instance.
      *
-     * @param Role $role The role which will be checked.
+     * @param Role $role The role as <code>Role<code> object which will be checked.
      *
      * @return bool True if the user has the role, false otherwise.
      */
@@ -54,7 +54,7 @@ class EnhancedUser extends User
     /**
      * Check if an user has a role, use role Id.
      *
-     * @param string|int $roleId The role which will be checked.
+     * @param string|int $roleId The role as role id or uuid which will be checked.
      *
      * @return bool True if the user has the role, false otherwise.
      */
@@ -70,7 +70,7 @@ class EnhancedUser extends User
     /**
      * Check if an user has a role, use role name.
      *
-     * @param string $roleName The role which will be checked.
+     * @param string $roleName The role as role name which will be checked.
      *
      * @return bool True if the user has the role, false otherwise.
      */

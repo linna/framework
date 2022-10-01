@@ -63,7 +63,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @return mixed Entry in container.
      */
-    public function get(string $id)
+    public function get(string $id): mixed
     {
         if (isset($this->cache[$id])) {
             return $this->cache[$id];
@@ -76,8 +76,8 @@ class Container implements ContainerInterface, ArrayAccess
      * Returns true if the container can return an entry for the given identifier.
      * Returns false otherwise.
      *
-     * `has($id)` returning true does not mean that `get($id)` will not throw an exception.
-     * It does however mean that `get($id)` will not throw a `NotFoundExceptionInterface`.
+     * <p><code>has($id)<code> returning true does not mean that <code>get($id)<code> will not throw an exception.
+     * It does however mean that <code>get($id)<code> will not throw a <code>NotFoundExceptionInterface<code>.</p>
      *
      * @param string $id Identifier of the entry to look for.
      *

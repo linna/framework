@@ -20,9 +20,10 @@ use SplSubject;
 /**
  * Parent class for view classes.
  *
- * This class was implemented like part of Observer pattern
- * https://en.wikipedia.org/wiki/Observer_pattern
- * http://php.net/manual/en/class.splobserver.php
+ * <p>This class was implemented like part of Observer pattern</p>
+ *
+ * @link https://en.wikipedia.org/wiki/Observer_pattern
+ * @link http://php.net/manual/en/class.splobserver.php
  */
 abstract class View implements SplObserver
 {

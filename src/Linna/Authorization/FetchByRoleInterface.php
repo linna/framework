@@ -24,11 +24,11 @@ interface FetchByRoleInterface
     /**
      * Fetch from role.
      *
-     * From a Role instance as argument, this method must return an array
-     * containing a `EnhancedUser|Permission` instance for every
-     * `EnhancedUser|Permission` that belongs at the given role.
+     * <p>From a <code>Role</code> instance as argument, this method must return an array
+     * containing a <code>EnhancedUser|Permission</code> instance for every
+     * <code>EnhancedUser|Permission</code> that belongs at the given role.</p>
      *
-     * @param Role $role The role which will be used to fetch.
+     * @param Role $role The role which will be used to fetch as <code>Role</code> instance.
      *
      * @return array<mixed> Users or permissions which belong the role.
      */
@@ -37,11 +37,11 @@ interface FetchByRoleInterface
     /**
      * Fetch from role.
      *
-     * From a role id as argument, this method must return an array containing
-     * a `EnhancedUser|Permission` instance for every `EnhancedUser|Permission`
-     * that belongs at the given role.
+     * <p>From a role id as argument, this method must return an array containing
+     * a <code>EnhancedUser|Permission</code> instance for every <code>EnhancedUser|Permission</code>
+     * that belongs at the given role.</p>
      *
-     * @param int $roleId The role which will be used to fetch.
+     * @param int $roleId The role which will be used to fetch as role id.
      *
      * @return array<mixed> Users or permissions which belong the role.
      */
@@ -50,11 +50,11 @@ interface FetchByRoleInterface
     /**
      * Fetch from role.
      *
-     * From a role name as argument, this method must return an array containing
-     * a `EnhancedUser|Permission` instance for every `EnhancedUser|Permission`
-     * that belongs at the given role.
+     * <p>From a role name as argument, this method must return an array containing
+     * a <code>EnhancedUser|Permission</code> instance for every <code>EnhancedUser|Permission</code>
+     * that belongs at the given role.</p>
      *
-     * @param string $roleName The role which will be used to fetch.
+     * @param string $roleName The role which will be used to fetch as role name.
      *
      * @return array<mixed> Users or permissions which belong the role.
      */

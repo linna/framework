@@ -28,11 +28,11 @@ class MemcachedCache implements CacheInterface
     private Memcached $memcached;
 
     /**
-     * Constructor.
+     * Class Constructor.
      *
      * @param array<mixed> $options
      *
-     * @throws InvalidArgumentException if options not contain memcached resource
+     * @throws InvalidArgumentException if options not contain memcached resource.
      */
     public function __construct(array $options)
     {
@@ -49,10 +49,10 @@ class MemcachedCache implements CacheInterface
      * @param string $key     The unique key of this item in the cache.
      * @param mixed  $default Default value to return if the key does not exist.
      *
-     * @return mixed The value of the item from the cache, or $default in case of cache miss.
+     * @return mixed The value of the item from the cache, or <code>$default</code> in case of cache miss.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value.
+     *                                                   MUST be thrown if the <code>$key</code> string is not a legal value.
      */
     public function get(string $key, mixed $default = null): mixed
     {
@@ -79,7 +79,7 @@ class MemcachedCache implements CacheInterface
      * @return bool True on success and false on failure.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value.
+     *                                                   MUST be thrown if the <code>$key</code> string is not a legal value.
      */
     public function set(string $key, mixed $value, DateInterval|int|null $ttl = null): bool
     {
@@ -87,13 +87,13 @@ class MemcachedCache implements CacheInterface
     }
 
     /**
-     * Handle ttl parameter.
+     * Handle TTL parameter.
      *
      * @param null|int|\DateInterval $ttl Optional. The TTL value of this item. If no value is sent and
      *                                    the driver supports TTL then the library may set a default value
      *                                    for it or let the driver take care of that.
      *
-     * @return int Ttl in seconds.
+     * @return int TTL in seconds.
      */
     private function handleTtl(DateInterval|int|null $ttl): int
     {
@@ -118,7 +118,7 @@ class MemcachedCache implements CacheInterface
      * @return bool True if the item was successfully removed. False if there was an error.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value.
+     *                                                   MUST be thrown if the <code>$key</code> string is not a legal value.
      */
     public function delete(string $key): bool
     {
@@ -138,17 +138,17 @@ class MemcachedCache implements CacheInterface
     /**
      * Determines whether an item is present in the cache.
      *
-     * NOTE: It is recommended that has() is only to be used for cache warming type purposes
+     * <p><p><b>Note</b>:</p> It is recommended that <code>has()</code> is only to be used for cache warming type purposes
      * and not to be used within your live applications operations for get/set, as this method
-     * is subject to a race condition where your has() will return true and immediately after,
-     * another script can remove it making the state of your app out of date.
+     * is subject to a race condition where your <code>has()</code> will return true and immediately after,
+     * another script can remove it making the state of your app out of date.</p>
      *
      * @param string $key The cache item key.
      *
      * @return bool
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value.
+     *                                                   MUST be thrown if the <code>$key</code> string is not a legal value.
      */
     public function has(string $key): bool
     {

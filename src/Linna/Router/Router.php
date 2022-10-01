@@ -17,8 +17,8 @@ use BadMethodCallException;
 /**
  * Router.
  *
- * Manage routes, verify every resource requested by a client and return
- * a RouteInterface object.
+ * <p>Manage routes, verify every resource requested by a client and return
+ * a RouteInterface object.</p>
  */
 class Router
 {
@@ -99,8 +99,8 @@ class Router
      * @param string $path   The request target in HTTP request start line.
      * @param string $method The HTTP method in HTTP request start line.
      *
-     * @return RouteInterface A Route object if the route is valid, otherwise a
-     *                        NullRoute object if the requested route doesn't exist.
+     * @return RouteInterface A <code>Route</code> object if the route is valid, otherwise a
+     *                        <code>NullRoute</code> object if the requested route doesn't exist.
      */
     private function findRoute(string $path, string $method): RouteInterface
     {
@@ -126,7 +126,7 @@ class Router
      *
      * @param Route $route The registered route which will be enriched with data from the request.
      *
-     * @return RouteInterface A Route object containing the data from request.
+     * @return RouteInterface A <code>Route</code> object containing the data from request.
      */
     private function buildRoute(Route $route): RouteInterface
     {
@@ -231,7 +231,7 @@ class Router
     /**
      * Return the result of the last route validation.
      *
-     * @return RouteInterface Route object if the route was valid, NullRoute otherwise.
+     * @return RouteInterface <code>Route</code> object if the route was valid, NullRoute otherwise.
      */
     public function getRoute(): RouteInterface
     {

@@ -15,15 +15,15 @@ namespace Linna\DataMapper;
 /**
  * Mapper Interface.
  *
- * Contains methods required from a basic Mapper.
+ * <p>Contains methods required from a basic Mapper.</p>
  */
 interface MapperInterface
 {
     /**
      * Fetch a domain object by id or uuid.
      *
-     * This method must return an instance of the requested domain object or an
-     * instance of a null domain object.
+     * <p>This method must return an instance of the requested domain object or an
+     * instance of a null domain object.</p>
      *
      * @param int|string $objectId The id or the uuid of the object which will be searched.
      *

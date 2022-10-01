@@ -19,9 +19,10 @@ use SplSubject;
 /**
  * Parent class for all model classes.
  *
- * This class was implemented like part of Observer pattern
- * https://en.wikipedia.org/wiki/Observer_pattern
- * http://php.net/manual/en/class.splsubject.php
+ * <p>This class was implemented like part of Observer pattern</p>
+ *
+ * @link https://en.wikipedia.org/wiki/Observer_pattern
+ * @link http://php.net/manual/en/class.splsubject.php
  */
 abstract class Model implements SplSubject
 {
@@ -34,8 +35,8 @@ abstract class Model implements SplSubject
     /**
      * Class Constructor.
      *
-     * In classes which implements this abstract class, call the parent
-     * constructor is mandatory.
+     * <p>In classes which implements this abstract class, call the parent
+     * constructor is mandatory.</p>
      */
     public function __construct()
     {

@@ -15,7 +15,7 @@ namespace Linna\Router;
 /**
  * Describes null routes.
  *
- * Use this to represent a non existing route.
+ * <p>Use this to represent a non existing route.</p>
  */
 class NullRoute implements RouteInterface
 {

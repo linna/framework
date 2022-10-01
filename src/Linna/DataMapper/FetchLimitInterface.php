@@ -15,7 +15,7 @@ namespace Linna\DataMapper;
 /**
  * Fetch Limit Interface.
  *
- * Contain an optional method for basic Mapper.
+ * <p>Contain an optional method for basic Mapper.</p>
  */
 interface FetchLimitInterface
 {
@@ -23,9 +23,9 @@ interface FetchLimitInterface
      * Fetch a list of domain objects stored in persistent storage for a
      * specific domain using a limit clausole.
      *
-     * This method must return an array containing all instances, in interval
+     * <p>This method must return an array containing all instances, in interval
      * specified by the limit, of domain objects for a specific domain or a
-     * void array.
+     * void array.</p>
      *
      * @param int $offset   Offset of the first row to return.
      * @param int $rowCount Maximum number of rows to return.

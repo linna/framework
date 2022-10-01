@@ -48,9 +48,9 @@ class Role extends DomainObjectAbstract
     }
 
     /**
-     * Check if an user is in role, use User instance.
+     * Check if an user is in role, use <code>User</code> instance.
      *
-     * @param User $user The user which will be checked.
+     * @param User $user The user which will be checked as <code>User</code> instance.
      *
      * @return bool True if the user is in role, false otherwise.
      */
@@ -60,9 +60,9 @@ class Role extends DomainObjectAbstract
     }
 
     /**
-     * Check if an user is in role, use the user Id.
+     * Check if an user is in role, use the user id.
      *
-     * @param int $userId The user which will be checked.
+     * @param int $userId The user which will be checked as user id.
      *
      * @return bool True if the user is in role, false otherwise.
      */
@@ -78,7 +78,7 @@ class Role extends DomainObjectAbstract
     /**
      * Check if an user is in role, use the user name.
      *
-     * @param string $userName The user which will be checked.
+     * @param string $userName The user which will be checked as user name.
      *
      * @return bool True if the user is in role, false otherwise.
      */

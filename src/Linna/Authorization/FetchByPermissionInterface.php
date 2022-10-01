@@ -24,11 +24,11 @@ interface FetchByPermissionInterface
     /**
      * Fetch from permission.
      *
-     * From a Permission instance as argument, this method must return an array
-     * containing a `EnhancedUser|Role` instance for every `EnhancedUser|Role`
-     * that have the given permission.
+     * <p>From a <code>Permission</code> instance as argument, this method must return an array
+     * containing a <code>EnhancedUser|Role</code> instance for every <code>EnhancedUser|Role</code>
+     * that have the given permission.</p>
      *
-     * @param Permission $permission The permission which will be used to fetch.
+     * @param Permission $permission The permission which will be used to fetch as <code>Permission</code> instance.
      *
      * @return array<mixed> Users or roles which the permission is granted.
      */
@@ -37,11 +37,11 @@ interface FetchByPermissionInterface
     /**
      * Fetch from permission.
      *
-     * From a permission id as argument, this method must return an array
-     * containing a `EnhancedUser|Role` instance for every `EnhancedUser|Role`
-     * that have the given permission.
+     * <p>From a permission id as argument, this method must return an array
+     * containing a <code>EnhancedUser|Role</code> instance for every <code>EnhancedUser|Role</code>
+     * that have the given permission.</p>
      *
-     * @param int $permissionId The permission which will be used to fetch.
+     * @param int $permissionId The permission which will be used to fetch as permission id.
      *
      * @return array<mixed> Users or roles which the permission is granted.
      */
@@ -50,11 +50,11 @@ interface FetchByPermissionInterface
     /**
      * Fetch from permission.
      *
-     * From a permission name as argument, this method must return an array
-     * containing a `EnhancedUser|Role` instance for every `EnhancedUser|Role`
-     * that have the given permission.
+     * <p>From a permission name as argument, this method must return an array
+     * containing a <code>EnhancedUser|Role</code> instance for every <code>EnhancedUser|Role</code>
+     * that have the given permission.</p>
      *
-     * @param string $permissionName The permission which will be used to fetch.
+     * @param string $permissionName The permission which will be used to fetch as permission name.
      *
      * @return array<mixed> Users or roles which the permission is granted.
      */

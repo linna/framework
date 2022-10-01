@@ -16,20 +16,20 @@ use Linna\Shared\AbstractStorageFactory;
 use Psr\SimpleCache\CacheInterface;
 
 /**
- * Storage Factory.
+ * Cache Factory.
  */
 class CacheFactory extends AbstractStorageFactory
 {
-    /** @var array<mixed> Factory supported driver */
+    /** @var array<mixed> Factory supported driver. */
     protected array $supportedDriver = [
         'disk'       => DiskCache::class,
         'memcached'  => MemcachedCache::class,
     ];
 
     /**
-     * Return Cache Resource.
+     * Return a resource or an object to intercat with the cache.
      *
-     * @return CacheInterface
+     * @return CacheInterface The cache provider.
      */
     public function get(): CacheInterface
     {

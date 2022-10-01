@@ -17,7 +17,7 @@ use Closure;
 
 /**
  * Describe valid routes.
- * Implemented as data transfer object.
+ * <p>Implemented as data transfer object.</p>
  */
 #[Attribute]
 class Route implements RouteInterface

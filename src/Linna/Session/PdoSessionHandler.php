@@ -12,29 +12,47 @@ declare(strict_types=1);
 
 namespace Linna\Session;
 
-use Memcached;
+use Linna\Storage\ExtendedPDO;
 use SessionHandlerInterface;
 
 /**
- * Store sessions in Memcached.
+ * Store sessions in database.
  *
- * <b>Before use this class, it is mandatory to enable memcached extension.</p>
+ * <p>Before use this class, it is mandatory to create a table named session on data base.</p>
+ *
+ * <p>For Mysql:</p>
+ * <pre>
+ * CREATE TABLE `session` (
+ * `session_id` char(128) NOT NULL,
+ * `session_data` varchar(3096) NOT NULL,
+ * `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ * `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ * PRIMARY KEY (`session_id`)
+ * ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ * </pre>
+ *
+ * <p>For Postgres:</p>
+ * <pre>
+ * CREATE TABLE session (
+ * session_id char(255) NOT NULL,
+ * session_data varchar(4096) NOT NULL,
+ * last_update timestamp NOT NULL,
+ * PRIMARY KEY (session_id)
+ * );
+ * </pre>
  *
  * @link http://php.net/manual/en/class.sessionhandler.php
  */
-class MemcachedSessionHandler implements SessionHandlerInterface
+class PdoSessionHandler implements SessionHandlerInterface
 {
     /**
      * Class Constructor.
      *
-     * @param Memcached $memcached The memcached resource.
-     * @param int       $expire    Expire time in seconds for stored sessions.
+     * @param ExtendedPDO $pdo The <code>PDO</code> object to interact with the database.
      */
     public function __construct(
-        /** @var Memcached The memcached resource. */
-        private Memcached $memcached,
-        /** @var int Expire time in seconds for stored sessions. */
-        private int $expire = 0
+        /** @var ExtendedPDO The <code>PDO</code> object to interact with the database. */
+        private ExtendedPDO $pdo
     ) {
     }
 
@@ -63,7 +81,6 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      * Cleanup old sessions.
      *
      * <p>Cleans up expired sessions. Called by <code>session_start()</code>, based on session.gc_divisor, session.gc_probability and session.gc_maxlifetime settings.</p>
-     * <p>In this session handler this method has not implemented beacause memcached has a built in mechanism to remove expired elements</p>
      *
      * @param int $max_lifetime Sessions that have not updated for the last <code>max_lifetime</code> seconds will be removed.
      *
@@ -74,8 +91,12 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      */
     public function gc(int $max_lifetime): int|false
     {
-        unset($max_lifetime);
-        return 0;
+        $timestamp = \date(DATE_ATOM, \time() - $max_lifetime);
+
+        return $this->pdo->queryWithParam(
+            'DELETE FROM session WHERE last_update < :maxlifetime',
+            [[':maxlifetime', $timestamp, \PDO::PARAM_STR]]
+        )->rowCount();
     }
 
     /**
@@ -92,7 +113,12 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      */
     public function read(string $id): string|false
     {
-        return (string) $this->memcached->get($id);
+        //string casting is a fix for PHP 7
+        //when strict type are enable
+        return (string) $this->pdo->queryWithParam(
+            'SELECT session_data FROM session WHERE session_id = :id',
+            [[':id', $id, \PDO::PARAM_STR]]
+        )->fetchColumn();
     }
 
     /**
@@ -110,7 +136,15 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      */
     public function write(string $id, string $data): bool
     {
-        return $this->memcached->set($id, $data, $this->expire);
+        $this->pdo->queryWithParam(
+            'INSERT INTO session SET session_id = :session_id, session_data = :session_data ON DUPLICATE KEY UPDATE session_data = :session_data',
+            [
+                [':session_id', $id, \PDO::PARAM_STR],
+                [':session_data', $data, \PDO::PARAM_STR]
+            ]
+        );
+
+        return $this->pdo->getLastOperationStatus();
     }
 
     /**
@@ -142,14 +176,11 @@ class MemcachedSessionHandler implements SessionHandlerInterface
      */
     public function destroy(string $id): bool
     {
-        if ($this->memcached->delete($id)) {
-            return true;
-        }
+        $this->pdo->queryWithParam(
+            'DELETE FROM session WHERE session_id = :session_id',
+            [[':session_id', $id, \PDO::PARAM_STR]]
+        );
 
-        if ($this->memcached->getResultCode() === 16) {
-            return true;
-        }
-
-        return false;
+        return $this->pdo->getLastOperationStatus();
     }
 }

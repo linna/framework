@@ -20,9 +20,9 @@ use Linna\Storage\AbstractConnector;
 class PgConnector extends AbstractConnector
 {
     /**
-     * Get Resource.
+     * Return a new <code>PgSql\Connection</code> created using <code>pg_connect()</code> to intercat with <b>Postgre</b> database.
      *
-     * @return object
+     * @return object The <code>PgSql\Connection</code> instance.
      */
     public function getResource(): object
     {

@@ -32,9 +32,9 @@ class StorageFactory extends AbstractStorageFactory
     ];
 
     /**
-     * Return Storage Resource.
+     * Return a resource or an object to intercat with a persistent storage.
      *
-     * @return object
+     * @return object The specific storage resource or the object to interact with the persistent storage.
      */
     public function get(): object
     {

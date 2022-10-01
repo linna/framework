@@ -17,7 +17,7 @@ use InvalidArgumentException;
 /**
  * Abstract Class for ObjectMapper.
  *
- * Contains common methods for all mappers.
+ * <p>Contains common methods for all mappers.</p>
  */
 abstract class MapperAbstract
 {
@@ -75,7 +75,7 @@ abstract class MapperAbstract
     /**
      * Insert the instance of the domain object in persistent storage.
      *
-     * Concrete implementation delegated to the concrete mapper.
+     * <p>Concrete implementation delegated to the concrete mapper.</p>
      *
      * @param DomainObjectInterface $domainObject The domain object which will be inserted in persistent storage.
      *
@@ -86,7 +86,7 @@ abstract class MapperAbstract
     /**
      * Updates the stored domain object.
      *
-     * Concrete implementation delegated to the concrete mapper.
+     * <p>Concrete implementation delegated to the concrete mapper.</p>
      *
      * @param DomainObjectInterface $domainObject The domain object which will be updated.
      *
@@ -97,7 +97,7 @@ abstract class MapperAbstract
     /**
      * Delete the domain object from persistent storage.
      *
-     * Concrete implementation delegated to the concrete mapper.
+     * <p>Concrete implementation delegated to the concrete mapper.</p>
      *
      * @param DomainObjectInterface $domainObject The domain object which will be deleted.
      *
@@ -107,6 +107,8 @@ abstract class MapperAbstract
 
     /**
      * Check if the domain object that is going to be used by the mapper is of the type required.
+     *
+     * <p>Concrete implementation delegated to the concrete mapper.</p>
      *
      * @param DomainObjectInterface $domainObject The domain object will be checked.
      *

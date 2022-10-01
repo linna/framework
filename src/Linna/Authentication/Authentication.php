@@ -15,8 +15,9 @@ namespace Linna\Authentication;
 use Linna\Session\Session;
 
 /**
- * Provide methods to manage basic user authentication system. The check for
- * correct login covers only the user name and the password.
+ * Provide methods to manage basic user authentication system.
+ *
+ * <p>The check for correct login covers only the user name and the password.</p>
  */
 class Authentication
 {
@@ -50,10 +51,10 @@ class Authentication
     }
 
     /**
-     * Opposite to isLogged() method.
+     * Opposite to <code>isLogged()</code> method.
      *
-     * Utilize this method to check if the user in the current session,
-     * isn't logged in.
+     * <p>Utilize this method to check if the user in the current session,
+     * isn't logged in.</p>
      *
      * @return bool True if not logged, false otherwise.
      */
@@ -75,7 +76,7 @@ class Authentication
     /**
      * Try to do user login using the information passed by param.
      *
-     * This method shoud be tested for time attacks.
+     * <p>This method shoud be tested for time attacks.</p>
      *
      * @param string $userName       User name from browser input.
      * @param string $password       Password from browser input.

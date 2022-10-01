@@ -35,33 +35,33 @@ trait ActionMultipleTrait
     /**
      * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
      *
-     * @param string                 $key   The key of the item to store.
-     * @param mixed                  $value The value of the item to store, must be serializable.
-     * @param null|int|\DateInterval $ttl   Optional. The TTL value of this item. If no value is sent and
-     *                                      the driver supports TTL then the library may set a default value
-     *                                      for it or let the driver take care of that.
+     * @param string                $key   The key of the item to store.
+     * @param mixed                 $value The value of the item to store, must be serializable.
+     * @param null|int|DateInterval $ttl   Optional. The TTL value of this item. If no value is sent and
+     *                                     the driver supports TTL then the library may set a default value
+     *                                     for it or let the driver take care of that.
      *
      * @return bool True on success and false on failure.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value.
+     *                                                   MUST be thrown if the <code>$key</code> string is not a legal value.
      */
     abstract public function set(string $key, mixed $value, DateInterval|int|null $ttl = null): bool;
 
     /**
      * Determines whether an item is present in the cache.
      *
-     * NOTE: It is recommended that has() is only to be used for cache warming type purposes
+     * <p><p><b>Note</b>:</p> It is recommended that <code>has()</code> is only to be used for cache warming type purposes
      * and not to be used within your live applications operations for get/set, as this method
-     * is subject to a race condition where your has() will return true and immediately after,
-     * another script can remove it making the state of your app out of date.
+     * is subject to a race condition where your <code>has()</code> will return true and immediately after,
+     * another script can remove it making the state of your app out of date.</p>
      *
      * @param string $key The cache item key.
      *
      * @return bool
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value.
+     *                                                   MUST be thrown if the <code>$key</code> string is not a legal value.
      */
     abstract public function has(string $key): bool;
 
@@ -73,7 +73,7 @@ trait ActionMultipleTrait
      * @return bool True if the item was successfully removed. False if there was an error.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the $key string is not a legal value.
+     *                                                   MUST be thrown if the <code>$key</code> string is not a legal value.
      */
     abstract public function delete(string $key): bool;
 
@@ -83,11 +83,11 @@ trait ActionMultipleTrait
      * @param iterable<string> $keys    A list of keys that can be obtained in a single operation.
      * @param mixed            $default Default value to return for keys that do not exist.
      *
-     * @return iterable<string, mixed> A list of key => value pairs. Cache keys that do not exist or are stale will have $default as value.
+     * @return iterable<string, mixed> A list of <code>key => value</code> pairs. Cache keys that do not exist or are stale will have <code>$default</code> as value.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
-     *                                                   or if any of the $keys are not a legal value.
+     *                                                   MUST be thrown if <code>$keys</code> is neither an array nor a Traversable,
+     *                                                   or if any of the <code>$keys</code> are not a legal value.
      */
     public function getMultiple(iterable $keys, mixed $default = null): iterable
     {
@@ -101,9 +101,9 @@ trait ActionMultipleTrait
     }
 
     /**
-     * Persists a set of key => value pairs in the cache, with an optional TTL.
+     * Persists a set of <code>key => value</code> pairs in the cache, with an optional TTL.
      *
-     * @param iterable               $values A list of key => value pairs for a multiple-set operation.
+     * @param iterable               $values A list of <code>key => value</code> pairs for a multiple-set operation.
      * @param null|int|\DateInterval $ttl    Optional. The TTL value of this item. If no value is sent and
      *                                       the driver supports TTL then the library may set a default value
      *                                       for it or let the driver take care of that.
@@ -111,8 +111,8 @@ trait ActionMultipleTrait
      * @return bool True on success and false on failure.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if $values is neither an array nor a Traversable,
-     *                                                   or if any of the $values are not a legal value.
+     *                                                   MUST be thrown if <code>$values</code> is neither an array nor a Traversable,
+     *                                                   or if any of the <code>$values</code> are not a legal value.
      */
     public function setMultiple(iterable $values, null|int|DateInterval $ttl = null): bool
     {
@@ -131,8 +131,8 @@ trait ActionMultipleTrait
      * @return bool True if the items were successfully removed. False if there was an error.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if $keys is neither an array nor a Traversable,
-     *                                                   or if any of the $keys are not a legal value.
+     *                                                   MUST be thrown if <code>$keys</code> is neither an array nor a <code>Traversable</code>,
+     *                                                   or if any of the <code>$keys</code> are not a legal value.
      */
     public function deleteMultiple(iterable $keys): bool
     {

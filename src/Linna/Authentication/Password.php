@@ -16,16 +16,14 @@ namespace Linna\Authentication;
  * Provide methods to manage password, this class uses PHP password hashing
  * function, see php documentation for more information.
  *
- * <a href="http://php.net/manual/en/book.password.php">
- * http://php.net/manual/en/book.password.php
- * </a>
+ * @link http://php.net/manual/en/book.password.php
  */
 class Password
 {
     /**
      * @var array<mixed> An associative array containing options.
      *
-     * http://php.net/manual/en/function.password-hash.php
+     * @link http://php.net/manual/en/function.password-hash.php
      */
     protected array $options = [
         PASSWORD_BCRYPT => ['cost' => 11],
@@ -44,16 +42,16 @@ class Password
     /**
      * Class constructor.
      *
-     * For password algorithm constants see
-     * <a href="http://php.net/manual/en/password.constants.php">Password Constants</a>.
+     * <p>For password algorithm constants see
+     * <a href="http://php.net/manual/en/password.constants.php">password constants</a>.</p>
      *
-     * Strict typing removed for $algo because on php 7.4 password hashing
-     * algorithm identifiers are nullable strings rather than integers.
+     * <p>Strict typing removed for <code>$algo</code> because on PHP 7.4 password hashing
+     * algorithm identifiers are nullable strings rather than integers.</p>
      *
      * @param string|null  $algo    Algorithm used for hash passwords.
-     * @param array<mixed> $options Options for algoas ['key' => 'value'] array.
+     * @param array<mixed> $options Options for algos <code>['key' => 'value']</code> array.
      *
-     * @throws \InvalidArgumentException If the $algo paramether contains an
+     * @throws \InvalidArgumentException If the <code>$algo</code> paramether contains an
      *                                   invalid password algorithm.
      */
     public function __construct($algo = PASSWORD_BCRYPT, array $options = [])

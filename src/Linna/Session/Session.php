@@ -37,22 +37,34 @@ class Session implements ArrayAccess
     /**
      * Class Constructor.
      *
-     * @param string $name
-     * @param int    $expire
-     * @param string $cookieDomain
-     * @param string $cookiePath
-     * @param bool   $cookieSecure
-     * @param bool   $cookieHttpOnly
-     * @param string $cookieSameSite
+     * @param string $name           The name for the current session.
+     * @param int    $expire         The time in seconds for which the cookie session will be valid.
+     * @param string $cookieDomain   Cookie domain, for example 'www.linna.tools'. To make cookies visible on all subdomains then the domain must be prefixed with a dot like '.linna.tools'.
+     * @param string $cookiePath     The path on the domain where the cookie will work. Use a single slash ('/') for all paths on the domain.
+     * @param bool   $cookieSecure   Decide if the cookie will be sent only over secure connections.
+     * @param bool   $cookieHttpOnly Make the cookie only available for http requests, it should meke the cookie not accessible by scripting languages api.
+     * @param string $cookieSameSite Make the cookie only available for same site requests, the browser should not send the cookie for cross-site requests.
      */
     public function __construct(
+        /** @var string The name for the current session. */
         private string $name = 'linna_session',
+
+        /** @var int The time in seconds for which the cookie session will be valid.*/
         private int $expire = 1800,
-        // cookie options
+
+        /** @var string Cookie domain, for example 'www.linna.tools'. To make cookies visible on all subdomains then the domain must be prefixed with a dot like '.linna.tools'. */
         private string $cookieDomain = '',
+
+        /** @var string The path on the domain where the cookie will work. Use a single slash ('/') for all paths on the domain. */
         private string $cookiePath = '/',
+
+        /** @var bool Decide if the cookie will be sent only over secure connections. */
         private bool $cookieSecure = false,
+
+        /** @var bool Make the cookie only available for http requests, it should meke the cookie not accessible by scripting languages api. */
         private bool $cookieHttpOnly = true,
+
+        /** @var string Make the cookie only available for same site requests, the browser should not send the cookie for cross-site requests. */
         private string $cookieSameSite = 'lax',
     ) {
         $this->status = \session_status();
@@ -61,7 +73,7 @@ class Session implements ArrayAccess
     /**
      * Get current session name.
      *
-     * @return string
+     * @return string The current session name.
      */
     public function getSessionName(): string
     {
@@ -71,7 +83,7 @@ class Session implements ArrayAccess
     /**
      * Get current session id.
      *
-     * @return string
+     * @return string The current session id.
      */
     public function getSessionId(): string
     {
@@ -81,7 +93,7 @@ class Session implements ArrayAccess
     /**
      * Get session status.
      *
-     * @return int
+     * @return int The current session status.
      */
     public function getStatus(): int
     {
@@ -150,7 +162,7 @@ class Session implements ArrayAccess
 
         $this->setSessionData($time);
 
-        //it fix the behavior of session that die because it does not refresh
+        //it fixs the behavior of session that die because it does not refresh
         //expiration time, also if present user interaction, with browser.
 
         //PHP 7.2 version
@@ -178,7 +190,7 @@ class Session implements ArrayAccess
     /**
      * Set Session Data.
      *
-     * @param int $time
+     * @param int $time The time on which the session was created.
      *
      * @return void
      */
@@ -193,7 +205,7 @@ class Session implements ArrayAccess
     /**
      * Set session handler for new instance.
      *
-     * @param SessionHandlerInterface $handler
+     * @param SessionHandlerInterface $handler The handler to use to store session data.
      *
      * @return void
      */
@@ -238,25 +250,27 @@ class Session implements ArrayAccess
     }
 
     /**
-     * Get a value from the session storage.
+     * Get an entry from the session storage.
      *
-     * @param string $id
+     * @param string $id The identifier of the entry to look for.
      *
-     * @return void
+     * @return mixed The entry for which we are looking for, null otherwise.
      */
-    public function get(string $id)
+    public function get(string $id): mixed
     {
         if (isset($this->data[$id])) {
             return $this->data[$id];
         }
+
+        return null;
     }
 
     /**
-     * Check for value into session storage.
+     * Check for an entry into session storage.
      *
-     * @param string $id
+     * @param string $id The identifier of the entry to look for.
      *
-     * @return bool
+     * @return bool True if the class has the property, false otherwise.
      */
     public function has(string $id): bool
     {
@@ -264,10 +278,10 @@ class Session implements ArrayAccess
     }
 
     /**
-     * Set a value into session storage.
+     * Set an entry into session storage.
      *
-     * @param string $id
-     * @param mixed  $value
+     * @param string $id    The identifier for the value which will be stored.
+     * @param mixed  $value The value which will be stored.
      *
      * @return void
      */
@@ -277,9 +291,9 @@ class Session implements ArrayAccess
     }
 
     /**
-     * Delete a value from session storage.
+     * Delete an entry from session storage.
      *
-     * @param string $id
+     * @param string $id The identifier for the entry which will be deleted.
      *
      * @return void
      */

@@ -23,21 +23,26 @@ abstract class AbstractStorageFactory
     protected array $supportedDriver = [];
 
     /**
-     * Constructor.
+     * Class Constructor.
      *
-     * @param string       $driver
-     * @param array<mixed> $options
+     * @param string       $driver  The driver used to connect to the persistent storage.
+     * @param array<mixed> $options Driver options.
      */
-    public function __construct(protected string $driver, protected array $options = [])
-    {
+    public function __construct(
+            /** @var string The driver used to connect to the persistent storage. */
+            protected string $driver,
+
+            /** @var array<mixed> Driver options. */
+            protected array $options = []
+    ) {
     }
 
     /**
      * Return Storage Object.
      *
-     * @throws InvalidArgumentException If required driver is not supported
+     * @throws InvalidArgumentException If required driver is not supported.
      *
-     * @return mixed
+     * @return mixed The connector object to obtain the resource to interact with the persistent storage.
      */
     protected function returnStorageObject()
     {
@@ -54,9 +59,9 @@ abstract class AbstractStorageFactory
     }
 
     /**
-     * Get storage object.
+     * Return Storage Resource.
      *
-     * @return mixed
+     * @return object The specific storage resource to interact with the persistent storage.
      */
-    abstract public function get();
+    abstract public function get(): object;
 }

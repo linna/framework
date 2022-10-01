@@ -15,8 +15,8 @@ namespace Linna\Authentication;
 use InvalidArgumentException;
 
 /**
- * Generate random password with random topology, this class use php7
- * random_int() function for generate random numbers.
+ * Generate random password with random topology, this class use PHP 7
+ * <code>random_int()</code> function for generate random numbers.
  */
 class PasswordGenerator
 {
@@ -31,8 +31,8 @@ class PasswordGenerator
     /**
      * Class constructor.
      *
-     * The class constructor do nothing, is present only for compatibility with
-     * Container.
+     * <p>The class constructor do nothing, is present only for compatibility with
+     * Container.</p>
      */
     public function __construct()
     {

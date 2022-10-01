@@ -81,6 +81,7 @@ Please see [CONTRIBUTING.md](https://github.com/linna/framework/blob/master/CONT
 - [ ] Create documentation for the site, api and articles about how to do things
 - [ ] Unify database session handlers
 - [ ] Update tests and do a deep code review for quality and security
+- [ ] Check the name of arguments in methods where there is the implementation of an interface
 
 ### Less High Priority
 - [ ] Add support for Redis cache, for general cache and sessions

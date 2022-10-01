@@ -13,8 +13,9 @@ declare(strict_types=1);
 namespace Linna\Shared;
 
 /**
- * Magic Access Trait
- * Provide to the possibility to retrive values using properties.
+ * Abstract Access Trait.
+ *
+ * <p>Provide abstract method that a class that implements <code>ArrayAccessTrait</code> or <code>PropertyAccessTrait</code> must declare.</p>
  */
 trait AbstractAccessTrait
 {
@@ -23,7 +24,7 @@ trait AbstractAccessTrait
      *
      * @param string $id The identifier of the entry to look for.
      *
-     * @return bool
+     * @return bool True if the class has the property, false otherwise.
      */
     abstract public function has(string $id): bool;
 
@@ -31,8 +32,10 @@ trait AbstractAccessTrait
      * Express Requirements by Abstract Methods.
      *
      * @param string $id The identifier of the entry to look for.
+     *
+     * @return mixed The entry for which we are looking for.
      */
-    abstract public function get(string $id);
+    abstract public function get(string $id): mixed;
 
     /**
      * Express Requirements by Abstract Methods.

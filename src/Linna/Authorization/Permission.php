@@ -19,13 +19,13 @@ use Linna\DataMapper\DomainObjectAbstract;
  */
 class Permission extends DomainObjectAbstract
 {
-    /** @var string Permission name */
+    /** @var string Permission name. */
     public string $name;
 
-    /** @var string Permission description */
+    /** @var string Permission description. */
     public string $description;
 
-    /** @var int Id of the group from which the permission was inherited */
+    /** @var int Id of the group from which the permission was inherited. */
     public int $inherited = 0;
 
     /**

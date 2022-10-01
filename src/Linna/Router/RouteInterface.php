@@ -15,7 +15,7 @@ namespace Linna\Router;
 /**
  * Interface for routes.
  *
- * A void interface to identificate routes.
+ * <p>A void interface to identificate routes.</p>
  */
 interface RouteInterface
 {

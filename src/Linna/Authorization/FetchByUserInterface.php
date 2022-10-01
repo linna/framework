@@ -24,11 +24,11 @@ interface FetchByUserInterface
     /**
      * Fetch from user.
      *
-     * From `EnhancedUser` instance as argument, this method must return an
-     * array containing a `Permission|Role` object instance for every
-     * `Permission|Role` owned by the given user.
+     * From <code>EnhancedUser</code> instance as argument, this method must return an
+     * array containing a <code>Permission|Role</code> object instance for every
+     * <code>Permission|Role</code> owned by the given user.
      *
-     * @param EnhancedUser $user The user which will be used to fetch.
+     * @param EnhancedUser $user The user which will be used to fetch as <code>EnhancedUser</code> instance.
      *
      * @return array<mixed> Permissions or roles permissions granted to the user.
      */
@@ -38,10 +38,10 @@ interface FetchByUserInterface
      * Fetch from user.
      *
      * From user id as argument, this method must return an array containing
-     * a `Permission|Role` object instance for every `Permission|Role` owned by
+     * a <code>Permission|Role</code> object instance for every <code>Permission|Role</code> owned by
      * the given user.
      *
-     * @param int $userId The user which will be used to fetch.
+     * @param int $userId The user which will be used to fetch as user id.
      *
      * @return array<mixed> Permissions or roles permissions granted to the user.
      */
@@ -51,10 +51,10 @@ interface FetchByUserInterface
      * Fetch from a user.
      *
      * From user name as argument, this method must return an array containing
-     * a `Permission|Role` object instance for every `Permission|Role` owned by
+     * a <code>Permission|Role</code> object instance for every <code>Permission|Role</code> owned by
      * the given user.
      *
-     * @param string $userName The user which will be used to fetch.
+     * @param string $userName The user which will be used to fetch as user name.
      *
      * @return array<mixed> Permissions or roles permissions granted to the user.
      */

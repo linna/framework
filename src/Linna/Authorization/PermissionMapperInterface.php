@@ -18,14 +18,14 @@ use Linna\DataMapper\MapperInterface;
 /**
  * Permission Mapper Interface.
  *
- * Contain methods required from concrete Permission Mapper.
+ * <p>Contain methods required from concrete permission mapper.</p>
  */
 interface PermissionMapperInterface extends MapperInterface, FetchByNameInterface, FetchByUserInterface, FetchByRoleInterface
 {
     /**
      * Check if a permission exist.
      *
-     * @param int $permissionId The permission will be checked.
+     * @param int $permissionId The permission will be checked as permission id.
      *
      * @return bool True if the permission exists, false otherwise.
      */
@@ -34,7 +34,7 @@ interface PermissionMapperInterface extends MapperInterface, FetchByNameInterfac
     /**
      * Check if a permission exist.
      *
-     * @param string $permissionName The permission will be checked.
+     * @param string $permissionName The permission will be checked as permission name.
      *
      * @return bool True if the permission exists, false otherwise.
      */

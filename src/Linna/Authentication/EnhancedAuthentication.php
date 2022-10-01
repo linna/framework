@@ -24,7 +24,7 @@ class EnhancedAuthentication extends Authentication
      *
      * @param Session                               $session                 Session class instance.
      * @param Password                              $password                Password class instance.
-     * @param EnhancedAuthenticationMapperInterface $mapper                  Implementation of EnhancedAuthenticationMapper.
+     * @param EnhancedAuthenticationMapperInterface $mapper                  Implementation of <code>EnhancedAuthenticationMapper</code>.
      * @param int                                   $maxAttemptsForUserName  The number of maximum attempts for the user name.
      * @param int                                   $maxAttemptsForSessionId The number of maximum attempts for the session id.
      * @param int                                   $maxAttemptsForIpAddress The number of maximum attempts for the ip address.
@@ -48,9 +48,8 @@ class EnhancedAuthentication extends Authentication
     /**
      * Return how many attempts are left for a user.
      *
-     * When the result of this method reach zero, it means that should be the
-     * time to lock the user account if the user name is a valid application
-     *  user.
+     * <p>When the result of this method reach zero, it means that should be the
+     * time to lock the user account if the user name is a valid application user.</p>
      *
      * @param string $userName User for which retrieve login attempts.
      *
@@ -80,8 +79,7 @@ class EnhancedAuthentication extends Authentication
     /**
      * Return how many attempts are left for same ip.
      *
-     * When the result of this method reach zero, it means that should be the
-     *  time to ban the ip addres used to attempt to login.
+     * <p>When the result of this method reach zero, it means that should be the time to ban the ip addres used to attempt to login.</p>
      *
      * @param string $ipAddress Ip address for which retrieve login attempts.
      *

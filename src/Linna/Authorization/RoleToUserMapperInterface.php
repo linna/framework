@@ -15,12 +15,12 @@ namespace Linna\Authorization;
 /**
  * Role To User Mapper Interface.
  *
- * Contain methods required for concrete Role And EnhancedUser Mappers to avoid
- * recursion when fetch objects.
+ * <p>Contain methods required for concrete <code>Role</code> and <code>EnhancedUser</code> mappers to avoid
+ * recursion when fetch objects.</p>
  *
- * Using Role and EnhancedUser mappers without this third mapper was impossible
- * because Role Mapper will require EnhancedUser Mapper to create an instance
- * and vice versa.
+ * <p>Using <code>Role</code> and <code>EnhancedUser</code> mappers without this third mapper will be impossible
+ * because a <code>Role</code> mapper require an <code>EnhancedUser</code> mapper to create an instance
+ * and vice versa.</p>
  */
 interface RoleToUserMapperInterface extends FetchByRoleInterface, FetchByUserInterface
 {

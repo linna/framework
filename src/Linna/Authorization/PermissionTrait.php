@@ -15,7 +15,7 @@ namespace Linna\Authorization;
 /**
  * User PermissionTrait.
  *
- * Use it to add the permission functionality to a class.
+ * <p>Use it to add the permission functionality to a class.</p>
  */
 trait PermissionTrait
 {
@@ -23,10 +23,10 @@ trait PermissionTrait
     protected array $permission = [];
 
     /**
-     * Check if a Permission is granted to a user or to a role, use Permission
+     * Check if a permission is granted to a user or to a role, use <code>Permission</code>
      * instance.
      *
-     * @param Permission $permission The permission which will be checked.
+     * @param Permission $permission The permission which will be checked as <code>Permission</code> instance.
      *
      * @return bool True if the permission is granted, false otherwise.
      */
@@ -39,7 +39,7 @@ trait PermissionTrait
      * Check if a Permission is granted to a user or to a role, use permission
      * id.
      *
-     * @param string|int $permissionId The permission which will be checked.
+     * @param string|int $permissionId The permission which will be checked as permission id.
      *
      * @return bool True if the permission is granted, false otherwise.
      */
@@ -56,7 +56,7 @@ trait PermissionTrait
      * Check if a Permission is granted to a user or to a role, use permission
      * name.
      *
-     * @param string $permissionName The permission which will be checked.
+     * @param string $permissionName The permission which will be checked as permission name.
      *
      * @return bool True if the permission is granted, false otherwise.
      */

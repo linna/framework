@@ -21,9 +21,9 @@ use mysqli;
 class MysqliConnector extends AbstractConnector
 {
     /**
-     * Get Resource.
+     * Return a new <code>mysqli</code> object to intercat with <b>Mysql</b> database.
      *
-     * @return object
+     * @return object The <code>mysqli</code> instance.
      */
     public function getResource(): object
     {

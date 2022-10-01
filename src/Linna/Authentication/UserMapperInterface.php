@@ -17,7 +17,7 @@ use Linna\DataMapper\MapperInterface;
 
 /**
  * Contain methods required from concrete User Mapper.
- * Actually this interface is void.
+ * <p>Actually this interface is void.</p>
  */
 interface UserMapperInterface extends MapperInterface, FetchByNameInterface
 {
