@@ -77,7 +77,7 @@ Please see [CONTRIBUTING.md](https://github.com/linna/framework/blob/master/CONT
 ### High Priority
 - [ ] Reduce the technical debt 
 - [ ] Complete the PHP 8.1 porting
-- [ ] Complete the updating of code comments
+- [X] Complete the updating and the review of the code comments
 - [ ] Create documentation for the site, api and articles about how to do things
 - [ ] Unify database session handlers
 - [ ] Update tests and do a deep code review for quality and security
