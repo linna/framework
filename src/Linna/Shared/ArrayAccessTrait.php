@@ -32,7 +32,7 @@ trait ArrayAccessTrait
      *
      * @param mixed $offset An offset to check for.
      *
-     * @return bool <p>Returns <b><code>true</code></b> on success or <b><code>false</code></b> on failure.</p><p><b>Note</b>:</p><p>The return value will be casted to <code>bool</code> if non-boolean was returned.</p>
+     * @return bool Returns <b><code>true</code></b> on success or <b><code>false</code></b> on failure.</p><p><b>Note</b>:</p><p>The return value will be casted to <code>bool</code> if non-boolean was returned.
      *
      * @link https://php.net/manual/en/arrayaccess.offsetexists.php
      * @since PHP 5, PHP 7, PHP 8

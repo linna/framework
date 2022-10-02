@@ -26,18 +26,20 @@ class Password
      * @link http://php.net/manual/en/function.password-hash.php
      */
     protected array $options = [
-        PASSWORD_BCRYPT => ['cost' => 11],
+        // commented because value is the same as PASSWORD_DEFAULT
+        //PASSWORD_BCRYPT => ['cost' => 11], 
         PASSWORD_DEFAULT => ['cost' => 11]
     ];
 
     /** @var array<mixed> An associate array containing algorithm constants. */
     protected array $algoLists = [
-        PASSWORD_BCRYPT,
+        // commented because value is the same as PASSWORD_DEFAULT
+        //PASSWORD_BCRYPT,
         PASSWORD_DEFAULT
     ];
 
     /** @var string|null Password default algorithm. */
-    protected ?string $algo = PASSWORD_BCRYPT;
+    protected ?string $algo = PASSWORD_DEFAULT;
 
     /**
      * Class constructor.
@@ -53,6 +55,8 @@ class Password
      *
      * @throws \InvalidArgumentException If the <code>$algo</code> paramether contains an
      *                                   invalid password algorithm.
+     * 
+     * @todo Check for PASSWORD_ARGON2I PASSWORD_ARGON2ID default definition.
      */
     public function __construct($algo = PASSWORD_BCRYPT, array $options = [])
     {

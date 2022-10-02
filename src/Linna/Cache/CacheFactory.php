@@ -20,7 +20,7 @@ use Psr\SimpleCache\CacheInterface;
  */
 class CacheFactory extends AbstractStorageFactory
 {
-    /** @var array<mixed> Factory supported driver. */
+    /** @var array<string, string> Factory supported driver. */
     protected array $supportedDriver = [
         'disk'       => DiskCache::class,
         'memcached'  => MemcachedCache::class,

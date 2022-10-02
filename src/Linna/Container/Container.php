@@ -106,7 +106,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @param string $id The identifier for the entry which will be deleted.
      *
-     * @return bool
+     * @return void
      */
     public function delete(string $id): void
     {

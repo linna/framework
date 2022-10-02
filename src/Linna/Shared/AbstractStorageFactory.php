@@ -43,6 +43,8 @@ abstract class AbstractStorageFactory
      * @throws InvalidArgumentException If required driver is not supported.
      *
      * @return mixed The connector object to obtain the resource to interact with the persistent storage.
+     * 
+     * @todo Should return Linna\Storage\ConnectorInterface|Psr\SimpleCache\CacheInterface
      */
     protected function returnStorageObject()
     {

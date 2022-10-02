@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor
+        configVersion="3"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://www.phpdoc.org"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/phpDocumentor/phpDocumentor/master/data/xsd/phpdoc.xsd"
+>
+    <title>Linna Framework</title>
+    <paths>
+        <output>docs</output>
+    </paths>
+    <version number="latest">
+        <folder>latest</folder>
+        <api>
+            <source dsn=".">
+                <path>src</path>
+            </source>
+            <output>api</output>
+            <ignore hidden="true" symlinks="true">
+                <path>tests/**/*</path>
+                <path>bin/**/*</path>
+                <path>vendor/**/*</path>
+            </ignore>
+            <extensions>
+                <extension>php</extension>
+            </extensions>
+            <ignore-tags>
+                <ignore-tag>template</ignore-tag>
+                <ignore-tag>template-extends</ignore-tag>
+                <ignore-tag>template-implements</ignore-tag>
+                <ignore-tag>extends</ignore-tag>
+                <ignore-tag>implements</ignore-tag>
+            </ignore-tags>
+            <default-package-name>Framework</default-package-name>
+        </api>
+        <!-- <guide>
+            <source dsn=".">
+                <path>docs</path>
+            </source>
+            <output>guide</output>
+        </guide> -->
+    </version>
+    <setting name="guides.enabled" value="false"/>
+    <template name="default" />
+</phpdocumentor>

@@ -26,9 +26,12 @@ class NullDomainObject extends DomainObjectAbstract
      * class and make it idempotent.</p>
      *
      * @return mixed Allways null.
+     * 
+     * @todo Have to throw an exception if this method are called
      */
     public function getId(): mixed
     {
+        // have to throw an exception if this method are called
         return null;
     }
 
@@ -41,6 +44,8 @@ class NullDomainObject extends DomainObjectAbstract
      * @param int|string $id The new domain object id, in this method the id or the uuid will be unset.
      *
      * @return mixed Allways null.
+     * 
+     * @todo Have to throw an exception if this method are called
      */
     public function setId(int|string $id): mixed
     {

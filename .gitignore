@@ -2,8 +2,10 @@ composer.phar
 composer.lock
 clover.xml
 infection-log.txt
+.phpdoc/cache/
 vendor/
 .phan/
 .php-cs-fixer.cache
 .phpunit.result.cache
 phpunit.local.xml
+phpdoc.xml
