@@ -27,7 +27,7 @@ class Password
      */
     protected array $options = [
         // commented because value is the same as PASSWORD_DEFAULT
-        //PASSWORD_BCRYPT => ['cost' => 11], 
+        //PASSWORD_BCRYPT => ['cost' => 11],
         PASSWORD_DEFAULT => ['cost' => 11]
     ];
 
@@ -55,7 +55,7 @@ class Password
      *
      * @throws \InvalidArgumentException If the <code>$algo</code> paramether contains an
      *                                   invalid password algorithm.
-     * 
+     *
      * @todo Check for PASSWORD_ARGON2I PASSWORD_ARGON2ID default definition.
      */
     public function __construct($algo = PASSWORD_BCRYPT, array $options = [])
@@ -85,7 +85,7 @@ class Password
         }
 
         $this->algo = $algo;
-        $this->options[$algo] = \array_replace_recursive($this->options[$algo], $options);
+        $this->options[$algo] = array_replace_recursive($this->options[$algo], $options);
     }
 
     /**
@@ -98,7 +98,7 @@ class Password
      */
     public function verify(string $password, string $hash): bool
     {
-        return \password_verify($password, $hash);
+        return password_verify($password, $hash);
     }
 
     /**
@@ -110,7 +110,7 @@ class Password
      */
     public function hash(string $password): string
     {
-        return \password_hash($password, $this->algo, $this->options[$this->algo]);
+        return password_hash($password, $this->algo, $this->options[$this->algo]);
     }
 
     /**
@@ -122,7 +122,7 @@ class Password
      */
     public function needsRehash(string $hash): bool
     {
-        return \password_needs_rehash($hash, $this->algo, $this->options[$this->algo]);
+        return password_needs_rehash($hash, $this->algo, $this->options[$this->algo]);
     }
 
     /**
@@ -134,6 +134,6 @@ class Password
      */
     public function getInfo(string $hash): array
     {
-        return \password_get_info($hash);
+        return password_get_info($hash);
     }
 }

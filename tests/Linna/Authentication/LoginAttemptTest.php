@@ -92,7 +92,7 @@ class LoginAttemptTest extends TestCase
         $loginAttempt->userName = 'root';
         $loginAttempt->sessionId = 'mbvi2lgdpcj6vp3qemh2estei2';
         $loginAttempt->ipAddress = '192.168.1.2';
-        $loginAttempt->when = \date('YmdHis', \time());
+        $loginAttempt->when = date('YmdHis', time());
 
         $this->assertSame(null, $loginAttempt->getId());
 

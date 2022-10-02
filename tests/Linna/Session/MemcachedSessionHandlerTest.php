@@ -56,7 +56,7 @@ class MemcachedSessionHandlerTest extends TestCase
         $session['fooData'] = 'fooData';
 
         $this->assertEquals(2, $session->getStatus());
-        $this->assertEquals(\session_id(), $session->getSessionId());
+        $this->assertEquals(session_id(), $session->getSessionId());
         $this->assertEquals('fooData', $session['fooData']);
 
         $session->destroy();

@@ -253,7 +253,7 @@ class EnhancedAuthenticationTest extends TestCase
         $loginAttempt->userName = $user;
         $loginAttempt->sessionId = $sessionId;
         $loginAttempt->ipAddress = $ipAddress;
-        $loginAttempt->when = \date('YmdHis', \time());
+        $loginAttempt->when = date('YmdHis', time());
 
         self::$enhancedAuthenticationMapper->save($loginAttempt);
     }

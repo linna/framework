@@ -50,7 +50,7 @@ class DiskCacheTest extends TestCase
     {
         $this->assertNull(self::$cache->get('foo_not_exist'));
 
-        $this->assertFileDoesNotExist('/tmp/'.\sha1('foo_not_exist').'.php');
+        $this->assertFileDoesNotExist('/tmp/'.sha1('foo_not_exist').'.php');
     }
 
     /**
@@ -64,7 +64,7 @@ class DiskCacheTest extends TestCase
 
         $this->assertNull(self::$cache->get('foo'));
 
-        $this->assertFileDoesNotExist('/tmp/'.\sha1('foo').'.php');
+        $this->assertFileDoesNotExist('/tmp/'.sha1('foo').'.php');
     }
 
     /**
@@ -90,7 +90,7 @@ class DiskCacheTest extends TestCase
         $this->assertTrue(self::$cache->has('foo_4'));
         $this->assertTrue(self::$cache->has('foo_5'));
 
-        \usleep(1000100);
+        usleep(1000100);
 
         $this->assertNull(self::$cache->get('foo_0'));
         $this->assertNull(self::$cache->get('foo_1'));
@@ -99,12 +99,12 @@ class DiskCacheTest extends TestCase
         $this->assertNull(self::$cache->get('foo_4'));
         $this->assertNull(self::$cache->get('foo_5'));
 
-        $this->assertFileDoesNotExist('/tmp/'.\sha1('foo_0').'.php');
-        $this->assertFileDoesNotExist('/tmp/'.\sha1('foo_1').'.php');
-        $this->assertFileDoesNotExist('/tmp/'.\sha1('foo_2').'.php');
-        $this->assertFileDoesNotExist('/tmp/'.\sha1('foo_3').'.php');
-        $this->assertFileDoesNotExist('/tmp/'.\sha1('foo_4').'.php');
-        $this->assertFileDoesNotExist('/tmp/'.\sha1('foo_5').'.php');
+        $this->assertFileDoesNotExist('/tmp/'.sha1('foo_0').'.php');
+        $this->assertFileDoesNotExist('/tmp/'.sha1('foo_1').'.php');
+        $this->assertFileDoesNotExist('/tmp/'.sha1('foo_2').'.php');
+        $this->assertFileDoesNotExist('/tmp/'.sha1('foo_3').'.php');
+        $this->assertFileDoesNotExist('/tmp/'.sha1('foo_4').'.php');
+        $this->assertFileDoesNotExist('/tmp/'.sha1('foo_5').'.php');
     }
 
     /**

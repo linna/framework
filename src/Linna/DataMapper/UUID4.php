@@ -57,9 +57,9 @@ class UUID4
      */
     private function check(string $uuid): void
     {
-        $uuid32 = \str_replace('-', '', $uuid);
+        $uuid32 = str_replace('-', '', $uuid);
 
-        if (\preg_match('/^[0-9a-f]{8}[0-9a-f]{4}[4][0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12}$/i', $uuid32) !== 1) {
+        if (preg_match('/^[0-9a-f]{8}[0-9a-f]{4}[4][0-9a-f]{3}[89ab][0-9a-f]{3}[0-9a-f]{12}$/i', $uuid32) !== 1) {
             throw new InvalidArgumentException('Invalid UUID version 4 provided.');
         }
 
@@ -93,7 +93,7 @@ class UUID4
      */
     private function makeBin(): void
     {
-        $this->binUUID = \hex2bin(\str_replace('-', '', $this->hexUUID));
+        $this->binUUID = hex2bin(str_replace('-', '', $this->hexUUID));
     }
 
     /**
@@ -105,22 +105,22 @@ class UUID4
      */
     private function generate(): void
     {
-        $this->hexUUID = \sprintf(
+        $this->hexUUID = sprintf(
             '%s-%s-%s-%s-%s',
             // 8 hex characters
-            \bin2hex(\random_bytes(4)),
+            bin2hex(random_bytes(4)),
             // 4 hex characters
-            \bin2hex(\random_bytes(2)),
+            bin2hex(random_bytes(2)),
             // "4" for the UUID version + 3 hex characters
             // 0x4000 is 16384 in int
             // 0x4fff is 20479 in int
-            \dechex(\random_int(16384, 20479)),
+            dechex(random_int(16384, 20479)),
             // (8, 9, a, or b) for the UUID variant 1 plus 3 hex characters
             //  0x8000 is 32768 in int
             //  0xbfff is 49151 in int
-            \dechex(\random_int(32768, 49151)),
+            dechex(random_int(32768, 49151)),
             // 12 hex characters
-            \bin2hex(\random_bytes(6))
+            bin2hex(random_bytes(6))
         );
     }
 }

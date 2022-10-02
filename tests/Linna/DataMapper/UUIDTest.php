@@ -65,7 +65,7 @@ class UUIDTest extends TestCase
     {
         $uuid = new UUID4('691ce06d-0afb-428d-b5fc-5384cd3046fb');
 
-        $this->assertSame(\hex2bin(\str_replace('-', '', '691ce06d-0afb-428d-b5fc-5384cd3046fb')), $uuid->getBin());
+        $this->assertSame(hex2bin(str_replace('-', '', '691ce06d-0afb-428d-b5fc-5384cd3046fb')), $uuid->getBin());
     }
 
     /**
@@ -79,7 +79,7 @@ class UUIDTest extends TestCase
         $regex = '/^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i';
 
         $this->assertMatchesRegularExpression($regex, $uuid->getHex());
-        $this->assertMatchesRegularExpression($regex, \strtoupper($uuid->getHex()));
+        $this->assertMatchesRegularExpression($regex, strtoupper($uuid->getHex()));
     }
 
     /**
@@ -91,6 +91,6 @@ class UUIDTest extends TestCase
     {
         $uuid = new UUID4();
 
-        $this->assertSame(\hex2bin(\str_replace('-', '', $uuid->getHex())), $uuid->getBin());
+        $this->assertSame(hex2bin(str_replace('-', '', $uuid->getHex())), $uuid->getBin());
     }
 }

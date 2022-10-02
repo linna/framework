@@ -88,9 +88,9 @@ class Authentication
      */
     public function login(string $userName, string $password, string $storedUserName, string $storedPassword, int $storedId): bool
     {
-        if (\hash_equals($userName, $storedUserName) && $this->password->verify($password, $storedPassword)) {
+        if (hash_equals($userName, $storedUserName) && $this->password->verify($password, $storedPassword)) {
             //write valid login on session
-            $this->session->loginTime = \time();
+            $this->session->loginTime = time();
             $this->session->login = [
                 'login'     => true,
                 'user_id'   => $storedId,
@@ -140,7 +140,7 @@ class Authentication
         }
 
         //take time
-        $time = \time();
+        $time = time();
 
         //check if login expired
         if (($this->session->loginTime + $this->session->expire) < $time) {

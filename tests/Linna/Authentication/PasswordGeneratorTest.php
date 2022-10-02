@@ -90,20 +90,20 @@ class PasswordGeneratorTest extends TestCase
         while (true) {
             $topology = self::$passwordGenerator->getTopology(self::$passwordGenerator->getFromRandom($strLen));
 
-            $presU = \strpos($topology, 'u');
-            $presL = \strpos($topology, 'l');
-            $presD = \strpos($topology, 'd');
-            $presS = \strpos($topology, 's');
+            $presU = strpos($topology, 'u');
+            $presL = strpos($topology, 'l');
+            $presD = strpos($topology, 'd');
+            $presS = strpos($topology, 's');
 
             if ($presU !== false &&  $presL !== false && $presD !== false && $presS !== false) {
                 break;
             }
         }
 
-        $this->assertTrue((\strpos($topology, 'u') === false) ? false : true);
-        $this->assertTrue((\strpos($topology, 'l') === false) ? false : true);
-        $this->assertTrue((\strpos($topology, 'd') === false) ? false : true);
-        $this->assertTrue((\strpos($topology, 's') === false) ? false : true);
+        $this->assertTrue((strpos($topology, 'u') === false) ? false : true);
+        $this->assertTrue((strpos($topology, 'l') === false) ? false : true);
+        $this->assertTrue((strpos($topology, 'd') === false) ? false : true);
+        $this->assertTrue((strpos($topology, 's') === false) ? false : true);
     }
 
     /**

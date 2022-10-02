@@ -112,7 +112,7 @@ class MapperMock extends MapperAbstract implements MapperInterface, FetchByNameI
     {
         $this->checkDomainObjectType($domainObjectMock);
 
-        $id = \array_key_last($this->storage);
+        $id = array_key_last($this->storage);
 
         if (\is_null($id)) {
             $id = 0;

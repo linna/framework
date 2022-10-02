@@ -73,7 +73,7 @@ class PasswordTest extends TestCase
      */
     public function testHashThatNeedRehash(): void
     {
-        $hash = \password_hash('password', PASSWORD_DEFAULT, ['cost' => 9]);
+        $hash = password_hash('password', PASSWORD_DEFAULT, ['cost' => 9]);
 
         $this->assertTrue(self::$password->needsRehash($hash));
     }

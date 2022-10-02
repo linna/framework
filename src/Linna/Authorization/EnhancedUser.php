@@ -76,7 +76,7 @@ class EnhancedUser extends User
      */
     public function hasRoleByName(string $roleName): bool
     {
-        if (\in_array($roleName, \array_column($this->roles, 'name'), true)) {
+        if (\in_array($roleName, array_column($this->roles, 'name'), true)) {
             return true;
         }
 

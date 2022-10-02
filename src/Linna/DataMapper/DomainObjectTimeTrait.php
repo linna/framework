@@ -35,7 +35,7 @@ trait DomainObjectTimeTrait
      */
     public function setCreated(): void
     {
-        $date = \date(DATE_ATOM);
+        $date = date(DATE_ATOM);
 
         if ($this->created !== '') {
             throw new UnexpectedValueException('Creation date property is immutable.');
@@ -51,7 +51,7 @@ trait DomainObjectTimeTrait
      */
     public function setLastUpdate(): void
     {
-        $date = \date(DATE_ATOM);
+        $date = date(DATE_ATOM);
 
         $this->lastUpdate = $date;
     }

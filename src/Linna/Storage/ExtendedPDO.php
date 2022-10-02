@@ -78,7 +78,7 @@ class ExtendedPDO extends PDO
             throw new InvalidArgumentException('Parameters array must contain at least two elements with this form: [\':name\', \'value\'].');
         }
 
-        if (\strpos($value[0], ':') !== 0) {
+        if (strpos($value[0], ':') !== 0) {
             throw new InvalidArgumentException('Parameter name will be in the form :name.');
         }
     }

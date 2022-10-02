@@ -91,7 +91,7 @@ abstract class Model implements SplSubject
      */
     public function set(array $data): void
     {
-        $this->updates = \array_merge($this->updates, $data);
+        $this->updates = array_merge($this->updates, $data);
     }
 
     /**

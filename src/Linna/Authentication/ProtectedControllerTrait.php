@@ -62,7 +62,7 @@ trait ProtectedControllerTrait
     private function protectWithRedirect(Authentication $authentication, string $location, string $route): void
     {
         if (($this->authentication = $authentication->isLogged()) === false) {
-            \header('Location: '.$location);
+            header('Location: '.$location);
             throw new AuthenticationException($route);
         }
     }

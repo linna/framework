@@ -71,7 +71,7 @@ class MysqlPdoSessionHandlerTest extends TestCase
         $session['fooData'] = 'fooData';
 
         $this->assertEquals(2, $session->getStatus());
-        $this->assertEquals(\session_id(), $session->getSessionId());
+        $this->assertEquals(session_id(), $session->getSessionId());
         $this->assertEquals('fooData', $session['fooData']);
 
         $oldSessionId = $session->getSessionId();
@@ -122,8 +122,8 @@ class MysqlPdoSessionHandlerTest extends TestCase
         $pdos = self::$pdo->prepare('INSERT INTO session (session_id, session_data) VALUES (:session_id, :session_data)');
 
         for ($i = 0; $i < 10; $i++) {
-            $sessionId = \md5((string) $i);
-            $time = \time() - $i;
+            $sessionId = md5((string) $i);
+            $time = time() - $i;
             $data = 'time|i:'.$time.';';
 
             $pdos->bindParam(':session_id', $sessionId, PDO::PARAM_STR);

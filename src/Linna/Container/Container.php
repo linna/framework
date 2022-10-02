@@ -130,7 +130,7 @@ class Container implements ContainerInterface, ArrayAccess
         $this->tree = [];
 
         //merge rules passed as parameter with general rules
-        $this->rules = \array_merge($this->rules, $rules);
+        $this->rules = array_merge($this->rules, $rules);
 
         //build dependency tree
         $this->buildTreeRecursive($class);
@@ -176,7 +176,7 @@ class Container implements ContainerInterface, ArrayAccess
             //if parameter is an interface
             //check rules for an implementation and
             //replace interface with implementation
-            if (\interface_exists($type)) {
+            if (interface_exists($type)) {
                 //get the position of the current parameter for resolve the rule
                 $position = $param->getPosition();
                 //override type with interface implamentation
@@ -185,7 +185,7 @@ class Container implements ContainerInterface, ArrayAccess
             }
 
             //if there is a parameter with callable type
-            if (\class_exists($type)) {
+            if (class_exists($type)) {
                 //store dependency
                 $this->tree[$level][$class][] = $param;
 
@@ -327,7 +327,7 @@ class Container implements ContainerInterface, ArrayAccess
                 $argValue->getType()->getName() :
                 self::NO_TYPE;
 
-            if (\interface_exists($argType)) {
+            if (interface_exists($argType)) {
                 //get the position of the current parameter for resolve the rule
                 $position = $argValue->getPosition();
                 //retrive concrete class bound to inteface in rules
@@ -335,7 +335,7 @@ class Container implements ContainerInterface, ArrayAccess
                 continue;
             }
 
-            if (\class_exists($argType)) {
+            if (class_exists($argType)) {
                 //add to array of arguments
                 $args[] = $this->cache[$argType];
                 continue;
@@ -347,7 +347,7 @@ class Container implements ContainerInterface, ArrayAccess
         //check if there is rules for this class
         if (isset($this->rules['arguments'][$class])) {
             //merge arguments
-            $args = \array_replace($args, $this->rules[self::RULE_ARGUMENT][$class]);
+            $args = array_replace($args, $this->rules[self::RULE_ARGUMENT][$class]);
         }
 
         return $args;

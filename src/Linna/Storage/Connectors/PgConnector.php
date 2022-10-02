@@ -26,7 +26,7 @@ class PgConnector extends AbstractConnector
      */
     public function getResource(): object
     {
-        return \pg_connect(
+        return pg_connect(
             $this->options['connection_string'],
             $this->options['flags']
         );
