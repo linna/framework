@@ -59,7 +59,7 @@ class EnhancedAuthentication extends Authentication
     {
         $attemptsLeft = ((int) $this->maxAttemptsForUserName) - $this->mapper->fetchAttemptsWithSameUser($userName, $this->banTimeInSeconds);
 
-        return max(0, $attemptsLeft);
+        return \max(0, $attemptsLeft);
     }
 
     /**
@@ -73,7 +73,7 @@ class EnhancedAuthentication extends Authentication
     {
         $attemptsLeft = ((int) $this->maxAttemptsForSessionId) - $this->mapper->fetchAttemptsWithSameSession($sessionId, $this->banTimeInSeconds);
 
-        return max(0, $attemptsLeft);
+        return \max(0, $attemptsLeft);
     }
 
     /**
@@ -89,7 +89,7 @@ class EnhancedAuthentication extends Authentication
     {
         $attemptsLeft = ((int) $this->maxAttemptsForIpAddress) - $this->mapper->fetchAttemptsWithSameIp($ipAddress, $this->banTimeInSeconds);
 
-        return max(0, $attemptsLeft);
+        return \max(0, $attemptsLeft);
     }
 
     /**

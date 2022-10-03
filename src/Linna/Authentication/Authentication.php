@@ -22,7 +22,7 @@ use Linna\Session\Session;
 class Authentication
 {
     /** @var array<mixed> Login status. */
-    private array $data = ['user_name'=>''];
+    private array $data = ['user_name' => '', 'user_id' => ''];
 
     /** @var bool Indicate login status, true or false. */
     private bool $logged = false;
@@ -78,19 +78,19 @@ class Authentication
      *
      * <p>This method shoud be tested for time attacks.</p>
      *
-     * @param string $userName       User name from browser input.
-     * @param string $password       Password from browser input.
-     * @param string $storedUserName User name from persistent storage.
-     * @param string $storedPassword Password hash from persistent storage.
-     * @param int    $storedId       User id from persistent storage.
+     * @param string     $userName       User name from browser input.
+     * @param string     $password       Password from browser input.
+     * @param string     $storedUserName User name from persistent storage.
+     * @param string     $storedPassword Password hash from persistent storage.
+     * @param int|string $storedId       User id from persistent storage.
      *
      * @return bool True for successful login, false otherwise.
      */
-    public function login(string $userName, string $password, string $storedUserName, string $storedPassword, int $storedId): bool
+    public function login(string $userName, string $password, string $storedUserName, string $storedPassword, int|string $storedId): bool
     {
-        if (hash_equals($userName, $storedUserName) && $this->password->verify($password, $storedPassword)) {
+        if (\hash_equals($userName, $storedUserName) && $this->password->verify($password, $storedPassword)) {
             //write valid login on session
-            $this->session->loginTime = time();
+            $this->session->loginTime = \time();
             $this->session->login = [
                 'login'     => true,
                 'user_id'   => $storedId,
@@ -140,7 +140,7 @@ class Authentication
         }
 
         //take time
-        $time = time();
+        $time = \time();
 
         //check if login expired
         if (($this->session->loginTime + $this->session->expire) < $time) {

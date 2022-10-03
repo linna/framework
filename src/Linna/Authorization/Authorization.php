@@ -24,8 +24,8 @@ class Authorization
         PermissionTrait::can as canByObject;
     }
 
-    /** @var int User id */
-    protected int $userId = 0;
+    /** @var int|string User id or uuid */
+    protected int|string $userId = 0;
 
     /**
      * Class Constructor.
@@ -35,7 +35,9 @@ class Authorization
      */
     public function __construct(Authentication $authentication, PermissionMapperInterface $permissionMapper)
     {
-        $this->userId = $authentication->getLoginData()['user_id'] ?? 0;
+        $userId = $authentication->getLoginData()['user_id'];
+
+        $this->userId = $userId ?? 0;
         $this->permission = $permissionMapper->fetchByUserId($this->userId);
     }
 

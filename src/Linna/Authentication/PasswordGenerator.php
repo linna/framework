@@ -50,10 +50,10 @@ class PasswordGenerator
         $password = [];
 
         while ($length--) {
-            $password[] = $this->getRandomChar($this->chars[random_int(0, 3)]);
+            $password[] = $this->getRandomChar($this->chars[\random_int(0, 3)]);
         }
 
-        return implode($password);
+        return \implode($password);
     }
 
     /**
@@ -65,14 +65,14 @@ class PasswordGenerator
      */
     public function getTopology(string $password): string
     {
-        $array = str_split($password);
+        $array = \str_split($password);
         $topology = [];
 
         foreach ($array as $char) {
             $topology[] = $this->getTopologyGroup($char);
         }
 
-        return implode($topology);
+        return \implode($topology);
     }
 
     /**
@@ -88,19 +88,19 @@ class PasswordGenerator
     {
         $groups = $this->chars;
 
-        if (strpos($groups[0], $char) !== false) {
+        if (\strpos($groups[0], $char) !== false) {
             return 'u';
         }
 
-        if (strpos($groups[1], $char) !== false) {
+        if (\strpos($groups[1], $char) !== false) {
             return 'l';
         }
 
-        if (strpos($groups[2], $char) !== false) {
+        if (\strpos($groups[2], $char) !== false) {
             return 'd';
         }
 
-        if (strpos($groups[3], $char) !== false) {
+        if (\strpos($groups[3], $char) !== false) {
             return 's';
         }
 
@@ -118,7 +118,7 @@ class PasswordGenerator
      */
     public function getFromTopology(string $topology): string
     {
-        $array = str_split(strtolower($topology));
+        $array = \str_split(\strtolower($topology));
         $groups = [117 => 0, 108 => 1, 100 => 2, 115 => 3];
         $password = [];
 
@@ -134,7 +134,7 @@ class PasswordGenerator
             throw new InvalidArgumentException('Invalid pattern provided, accepted only u, l, d and s.');
         }
 
-        return implode($password);
+        return \implode($password);
     }
 
     /**
@@ -147,7 +147,7 @@ class PasswordGenerator
     private function getRandomChar(string $interval): string
     {
         $size = \strlen($interval) - 1;
-        $int = random_int(0, $size);
+        $int = \random_int(0, $size);
 
         return $interval[$int];
     }

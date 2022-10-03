@@ -17,7 +17,7 @@ use Linna\Router\Exception\RedirectException;
 /**
  * Authorization Exception.
  *
- * <p>Throw it to indicate that the authorization procedure went worng.</p>
+ * <p>Throw it to indicate that the authorization procedure went wrong.</p>
  */
 class AuthorizationException extends RedirectException
 {

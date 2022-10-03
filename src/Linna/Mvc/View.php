@@ -61,7 +61,7 @@ abstract class View implements SplObserver
     public function update(SplSubject $subject): void
     {
         if ($subject instanceof Model) {
-            $this->data = array_merge($this->data, $subject->get());
+            $this->data = \array_merge($this->data, $subject->get());
         }
     }
 }

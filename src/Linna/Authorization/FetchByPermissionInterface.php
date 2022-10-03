@@ -41,11 +41,11 @@ interface FetchByPermissionInterface
      * containing a <code>EnhancedUser|Role</code> instance for every <code>EnhancedUser|Role</code>
      * that have the given permission.</p>
      *
-     * @param int $permissionId The permission which will be used to fetch as permission id.
+     * @param int|string $permissionId The permission which will be used to fetch as permission id.
      *
      * @return array<mixed> Users or roles which the permission is granted.
      */
-    public function fetchByPermissionId(int $permissionId): array;
+    public function fetchByPermissionId(int|string $permissionId): array;
 
     /**
      * Fetch from permission.

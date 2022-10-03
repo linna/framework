@@ -22,6 +22,6 @@ class MultipleModel extends Model
 
     public function SomeParam($year, $month, $day)
     {
-        $this->set(['result' => date('Y-m-d H:i:s', mktime(12, 0, 0, $month, $day, $year))]);
+        $this->set(['result' => \date('Y-m-d H:i:s', \mktime(12, 0, 0, $month, $day, $year))]);
     }
 }

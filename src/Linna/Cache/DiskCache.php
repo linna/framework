@@ -47,7 +47,7 @@ class DiskCache implements CacheInterface
      */
     public function __construct(array $options = [])
     {
-        ['dir' => $this->dir] = array_replace_recursive(['dir' => '/tmp'], $options);
+        ['dir' => $this->dir] = \array_replace_recursive(['dir' => '/tmp'], $options);
     }
 
     /**
@@ -64,7 +64,7 @@ class DiskCache implements CacheInterface
     public function get(string $key, mixed $default = null): mixed
     {
         //create file name
-        $file = $this->dir.'/'.sha1($key).'.php';
+        $file = $this->dir.'/'.\sha1($key).'.php';
 
         if ($this->doesFileCheckFails($file)) {
             return $default;
@@ -72,7 +72,7 @@ class DiskCache implements CacheInterface
 
         $cache = include $file;
 
-        return unserialize($cache['value']);
+        return \unserialize($cache['value']);
     }
 
     /**
@@ -85,7 +85,7 @@ class DiskCache implements CacheInterface
     private function doesFileCheckFails(string $file): bool
     {
         //check if file exist
-        if (!file_exists($file)) {
+        if (!\file_exists($file)) {
             return true;
         }
 
@@ -93,8 +93,8 @@ class DiskCache implements CacheInterface
         $cacheValue = include $file;
 
         //check if cache is expired and delete file from storage
-        if ($cacheValue['expires'] <= time() && $cacheValue['expires'] !== 0) {
-            unlink($file);
+        if ($cacheValue['expires'] <= \time() && $cacheValue['expires'] !== 0) {
+            \unlink($file);
 
             return true;
         }
@@ -123,17 +123,17 @@ class DiskCache implements CacheInterface
         //create cache array
         $cache = [
             'key'     => $key,
-            'value'   => serialize($value),
+            'value'   => \serialize($value),
             'expires' => $this->calculateTtl($vTtl),
         ];
 
         //export
         // HHVM fails at __set_state, so just use object cast for now
-        $content = str_replace('stdClass::__set_state', '(object)', var_export($cache, true));
+        $content = \str_replace('stdClass::__set_state', '(object)', \var_export($cache, true));
         $content = "<?php return {$content};";
 
         //write file
-        file_put_contents($this->dir.'/'.sha1($key).'.php', $content);
+        \file_put_contents($this->dir.'/'.\sha1($key).'.php', $content);
 
         return true;
     }
@@ -173,7 +173,7 @@ class DiskCache implements CacheInterface
     {
         //check for usage of ttl default class option value
         if ($ttl) {
-            return time() + $ttl;
+            return \time() + $ttl;
         }
 
         return $ttl;
@@ -192,11 +192,11 @@ class DiskCache implements CacheInterface
     public function delete(string $key): bool
     {
         //create file name
-        $file = $this->dir.'/'.sha1($key).'.php';
+        $file = $this->dir.'/'.\sha1($key).'.php';
 
         //chek if file exist and delete
-        if (file_exists($file)) {
-            unlink($file);
+        if (\file_exists($file)) {
+            \unlink($file);
 
             return true;
         }
@@ -211,7 +211,7 @@ class DiskCache implements CacheInterface
      */
     public function clear(): bool
     {
-        array_map('unlink', (array) glob($this->dir.'/*.php'));
+        \array_map('unlink', (array) \glob($this->dir.'/*.php'));
 
         return true;
     }
@@ -233,6 +233,6 @@ class DiskCache implements CacheInterface
      */
     public function has(string $key): bool
     {
-        return !$this->doesFileCheckFails($this->dir.'/'.sha1($key).'.php');
+        return !$this->doesFileCheckFails($this->dir.'/'.\sha1($key).'.php');
     }
 }

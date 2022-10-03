@@ -44,7 +44,7 @@ class Role extends DomainObjectAbstract
         $this->permission = $permissions;
 
         //set required type
-        settype($this->active, 'integer');
+        \settype($this->active, 'integer');
     }
 
     /**
@@ -62,7 +62,7 @@ class Role extends DomainObjectAbstract
     /**
      * Check if an user is in role, use the user id.
      *
-     * @param int $userId The user which will be checked as user id.
+     * @param int|string $userId The user which will be checked as user id.
      *
      * @return bool True if the user is in role, false otherwise.
      */
@@ -84,7 +84,7 @@ class Role extends DomainObjectAbstract
      */
     public function isUserInRoleByName(string $userName): bool
     {
-        if (\in_array($userName, array_column($this->users, 'name'), true)) {
+        if (\in_array($userName, \array_column($this->users, 'name'), true)) {
             return true;
         }
 

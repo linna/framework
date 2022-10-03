@@ -31,11 +31,11 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
     /**
      * Get the id or the uuid of the domain object (unique for each domain object, also domain objects of the same type).
      *
-     * @return mixed The curren domain object id or uuid, the type of the value could be only int or string.
+     * @return int|string The curren domain object id or uuid, the type of the value could be only int or string.
      *
      * @todo Throw an exception if the id has not set and this method are called, change return types to int|string
      */
-    public function getId(): mixed
+    public function getId(): int|string
     {
         return $this->id;
     }
@@ -49,7 +49,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      *
      * @return mixed New domain object id or uuid, the type of the value could be only int or string.
      */
-    public function setId(int|string $id): mixed
+    public function setId(int|string $id): int|string
     {
         if ($this->id !== null) {
             throw new UnexpectedValueException('ObjectId property is immutable.');

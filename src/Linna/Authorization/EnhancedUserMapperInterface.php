@@ -54,11 +54,11 @@ interface EnhancedUserMapperInterface extends MapperInterface, FetchByPermission
      * constructor dependency.</p>
      *
      * @param EnhancedUser $user         The <code>EnhancedUser</code> user class instance.
-     * @param int          $permissionId The permission to add as persmission id.
+     * @param int|string   $permissionId The permission to add as persmission id.
      *
      * @return void
      */
-    public function grantPermissionById(EnhancedUser &$user, int $permissionId);
+    public function grantPermissionById(EnhancedUser &$user, int|string $permissionId);
 
     /**
      * Grant a permission to an user.
@@ -108,11 +108,11 @@ interface EnhancedUserMapperInterface extends MapperInterface, FetchByPermission
      * pass <code>PermissionMapper</code> as constructor dependency.</p>
      *
      * @param EnhancedUser $user         The <code>EnhancedUser</code> user class instance.
-     * @param int          $permissionId The permission to revoke as persmission id.
+     * @param int|string   $permissionId The permission to revoke as persmission id.
      *
      * @return void
      */
-    public function revokePermissionById(EnhancedUser &$user, int $permissionId);
+    public function revokePermissionById(EnhancedUser &$user, int|string $permissionId);
 
     /**
      * Revoke a permission to an user.
@@ -162,11 +162,11 @@ interface EnhancedUserMapperInterface extends MapperInterface, FetchByPermission
      * dependency.</p>
      *
      * @param EnhancedUser $user   The <code>EnhancedUser</code> user class instance.
-     * @param int          $roleId The role to add as role id.
+     * @param int|string   $roleId The role to add as role id.
      *
      * @return void
      */
-    public function addRoleById(EnhancedUser &$user, int $roleId);
+    public function addRoleById(EnhancedUser &$user, int|string $roleId);
 
     /**
      * Add an user to a role.
@@ -215,11 +215,11 @@ interface EnhancedUserMapperInterface extends MapperInterface, FetchByPermission
      * constructor dependency.</p>
      *
      * @param EnhancedUser $user   The <code>EnhancedUser</code> user class instance.
-     * @param int          $roleId The role to revoke as role id.
+     * @param int|string   $roleId The role to revoke as role id.
      *
      * @return void
      */
-    public function removeRoleById(EnhancedUser &$user, int $roleId);
+    public function removeRoleById(EnhancedUser &$user, int|string $roleId);
 
     /**
      * Remove an user from a role.

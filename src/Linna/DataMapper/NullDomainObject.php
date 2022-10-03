@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Linna\DataMapper;
 
+use Linna\DataMapper\Exception\NullDomainObjectException;
+
 /**
  * Null Domain Object.
  *
@@ -25,14 +27,13 @@ class NullDomainObject extends DomainObjectAbstract
      * <p>This method overrides the original method inherited from the abstract
      * class and make it idempotent.</p>
      *
-     * @return mixed Allways null.
+     * @return int|string Allways null.
      *
-     * @todo Have to throw an exception if this method are called
+     * @throws NullDomainObjectException If this method is used.
      */
-    public function getId(): mixed
+    public function getId(): int|string
     {
-        // have to throw an exception if this method are called
-        return null;
+        throw new NullDomainObjectException('NullDomainObject doesn\'t have an id.');
     }
 
     /**
@@ -43,15 +44,15 @@ class NullDomainObject extends DomainObjectAbstract
      *
      * @param int|string $id The new domain object id, in this method the id or the uuid will be unset.
      *
-     * @return mixed Allways null.
+     * @return int|string Allways null.
      *
-     * @todo Have to throw an exception if this method are called
+     * @throws NullDomainObjectException If this method is used.
      */
-    public function setId(int|string $id): mixed
+    public function setId(int|string $id): int|string
     {
         //make this method idempotent
         unset($id);
 
-        return null;
+        throw new NullDomainObjectException('Not possible to set the id for NullDomainObject.');
     }
 }

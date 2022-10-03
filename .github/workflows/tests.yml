@@ -67,4 +67,4 @@ jobs:
         run: PGPASSWORD=password psql -U postgres -h0.0.0.0 -a -f vendor/linna/db-dumps/src/linna_db_pgsql.sql
 
       - name: Execute tests
-        run: vendor/bin/phpunit -c phpunit.actions.xml --verbose
+        run: vendor/bin/phpunit --verbose

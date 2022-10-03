@@ -24,9 +24,9 @@ interface DomainObjectInterface
     /**
      * Get the id or the uuid of the domain object (unique for each domain object, also domain objects of the same type).
      *
-     * @return mixed The curren domain object id or uuid, the type of the value could be only int or string.
+     * @return int|string The curren domain object id or uuid, the type of the value could be only int or string.
      */
-    public function getId(): mixed;
+    public function getId(): int|string;
 
     /**
      * Set the id ot the uuid for the domain object.
@@ -35,7 +35,7 @@ interface DomainObjectInterface
      *
      * @throws UnexpectedValueException If the id or the uuid on the domain object is already set.
      *
-     * @return mixed New domain object id or uuid, the type of the value could be only int or string.
+     * @return int|string New domain object id or uuid, the type of the value could be only int or string.
      */
-    public function setId(int|string $objectId): mixed;
+    public function setId(int|string $objectId): int|string;
 }

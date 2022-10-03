@@ -51,12 +51,12 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * when write concrete mapper is well to pass <code>PermissionMapper</code> as
      * constructor dependency.</p>
      *
-     * @param Role $role         The <code>Role</code> class instance.
-     * @param int  $permissionId The permission to add as permission id.
+     * @param Role       $role         The <code>Role</code> class instance.
+     * @param int|string $permissionId The permission to add as permission id.
      *
      * @return void
      */
-    public function grantPermissionById(Role &$role, int $permissionId);
+    public function grantPermissionById(Role &$role, int|string $permissionId);
 
     /**
      * Grant a permission at role.
@@ -102,12 +102,12 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * to <code>Role->setPermissions()</code>, when write concrete mapper is well to
      * pass <code>PermissionMapper</code> as constructor dependency.</p>
      *
-     * @param Role $role         The <code>Role</code> class instance.
-     * @param int  $permissionId The permission to revoke as permission id.
+     * @param Role       $role         The <code>Role</code> class instance.
+     * @param int|string $permissionId The permission to revoke as permission id.
      *
      * @return void
      */
-    public function revokePermissionById(Role &$role, int $permissionId);
+    public function revokePermissionById(Role &$role, int|string $permissionId);
 
     /**
      * Revoke a permission at role.
@@ -153,12 +153,12 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * when write concrete mapper is well to pass <code>EnhancedUserMapper</code> as
      * constructor dependency.</p>
      *
-     * @param Role $role   The <code>Role</code> class instance.
-     * @param int  $userId The user to add as user id.
+     * @param Role       $role   The <code>Role</code> class instance.
+     * @param int|string $userId The user to add as user id.
      *
      * @return void
      */
-    public function addUserById(Role &$role, int $userId);
+    public function addUserById(Role &$role, int|string $userId);
 
     /**
      * Add an user to a role.
@@ -204,12 +204,12 @@ interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterfac
      * when write concrete mapper is well to pass <code>EnhancedUserMapper</code> as
      * constructor dependency.</p>
      *
-     * @param Role $role   The <code>Role</code> class instance.
-     * @param int  $userId The user to revoke as user id.
+     * @param Role       $role   The <code>Role</code> class instance.
+     * @param int|string $userId The user to revoke as user id.
      *
      * @return void
      */
-    public function removeUserById(Role &$role, int $userId);
+    public function removeUserById(Role &$role, int|string $userId);
 
     /**
      * Remove user from a role.

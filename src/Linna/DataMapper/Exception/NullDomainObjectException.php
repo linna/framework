@@ -10,15 +10,13 @@ declare(strict_types=1);
  * @license http://opensource.org/licenses/MIT MIT License
  */
 
-namespace Linna\Authentication\Exception;
-
-use Linna\Router\Exception\RedirectException;
+namespace Linna\DataMapper\Exception;
 
 /**
- * Authentication Exception.
+ * Null Domain Object Exception.
  *
- * <p>Throw it to indicate that the authentication procedure went wrong.</p>
+ * <p>Throw it to when there is an attempt to set or to get the id of a <code>NullDomainObject</code>.</p>
  */
-class AuthenticationException extends RedirectException
+class NullDomainObjectException extends Exception
 {
 }

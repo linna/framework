@@ -80,7 +80,7 @@ class MysqlPdoSessionHandler implements SessionHandlerInterface
      */
     public function gc(int $max_lifetime): int|false
     {
-        $timestamp = date(DATE_ATOM, time() - $max_lifetime);
+        $timestamp = \date(DATE_ATOM, \time() - $max_lifetime);
 
         return $this->pdo->queryWithParam(
             'DELETE FROM session WHERE last_update < :maxlifetime',

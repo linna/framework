@@ -41,11 +41,11 @@ interface FetchByRoleInterface
      * a <code>EnhancedUser|Permission</code> instance for every <code>EnhancedUser|Permission</code>
      * that belongs at the given role.</p>
      *
-     * @param int $roleId The role which will be used to fetch as role id.
+     * @param int|string $roleId The role which will be used to fetch as role id.
      *
      * @return array<mixed> Users or permissions which belong the role.
      */
-    public function fetchByRoleId(int $roleId): array;
+    public function fetchByRoleId(int|string $roleId): array;
 
     /**
      * Fetch from role.

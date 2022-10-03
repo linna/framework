@@ -15,13 +15,13 @@
   </testsuites>
   <logging/>
   <php>
-    <var name="pdo_mysql_dsn" value="mysql:host=localhost;dbname=linna_db;charset=utf8mb4"/>
+    <var name="pdo_mysql_dsn" value="mysql:host=0.0.0.0;dbname=linna_db;charset=utf8mb4"/>
     <var name="pdo_mysql_user" value="root"/>
-    <var name="pdo_mysql_password" value=""/>
-    <var name="pdo_pgsql_dsn" value="pgsql:dbname=linna_db;host=localhost"/>
+    <var name="pdo_mysql_password" value="password"/>
+    <var name="pdo_pgsql_dsn" value="pgsql:dbname=linna_db;host=0.0.0.0"/>
     <var name="pdo_pgsql_user" value="postgres"/>
-    <var name="pdo_pgsql_password" value=""/>
-    <var name="pgsql_connection_string" value="host=localhost port=5432 dbname=linna_db user=postgres" />
+    <var name="pdo_pgsql_password" value="password"/>
+    <var name="pgsql_connection_string" value="host=0.0.0.0 port=5432 dbname=linna_db user=postgres password=password" />
     <var name="mem_host" value="localhost"/>
     <var name="mem_port" value="11211"/>
     <var name="mongodb_server_string" value="mongodb://localhost:27017"/>

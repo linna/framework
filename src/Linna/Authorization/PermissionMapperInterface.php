@@ -25,11 +25,11 @@ interface PermissionMapperInterface extends MapperInterface, FetchByNameInterfac
     /**
      * Check if a permission exist.
      *
-     * @param int $permissionId The permission will be checked as permission id.
+     * @param int|string $permissionId The permission will be checked as permission id.
      *
      * @return bool True if the permission exists, false otherwise.
      */
-    public function permissionExistById(int $permissionId): bool;
+    public function permissionExistById(int|string $permissionId): bool;
 
     /**
      * Check if a permission exist.

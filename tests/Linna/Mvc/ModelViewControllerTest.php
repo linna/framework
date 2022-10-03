@@ -252,7 +252,7 @@ class ModelViewControllerTest extends TestCase
         $ModelViewController = new ModelViewController(self::$model, self::$view, self::$controller, self::$router->getRoute());
         $ModelViewController->run();
 
-        $this->assertEquals($result, json_decode($ModelViewController->response())->result);
+        $this->assertEquals($result, \json_decode($ModelViewController->response())->result);
     }
 
     /**
@@ -300,7 +300,7 @@ class ModelViewControllerTest extends TestCase
         $ModelViewController = new ModelViewController($model, $view, $controller, $routeValidated);
         $ModelViewController->run();
 
-        $this->assertEquals($result, json_decode($ModelViewController->response())->result);
+        $this->assertEquals($result, \json_decode($ModelViewController->response())->result);
     }
 
     /**
@@ -340,7 +340,7 @@ class ModelViewControllerTest extends TestCase
         $ModelViewController = new ModelViewController($model, $view, $controller, self::$router->getRoute());
         $ModelViewController->run();
 
-        $this->assertEquals($result, json_decode($ModelViewController->response())->result);
+        $this->assertEquals($result, \json_decode($ModelViewController->response())->result);
     }
 
     /**
@@ -366,7 +366,7 @@ class ModelViewControllerTest extends TestCase
 
         $model->notify();
 
-        $this->assertFalse(isset(json_decode($view->render())->result));
+        $this->assertFalse(isset(\json_decode($view->render())->result));
 
         //attach
         $model->attach($view);
@@ -375,7 +375,7 @@ class ModelViewControllerTest extends TestCase
 
         $model->notify();
 
-        $this->assertTrue(isset(json_decode($view->render())->result));
+        $this->assertTrue(isset(\json_decode($view->render())->result));
     }
 
     /**
@@ -417,7 +417,7 @@ class ModelViewControllerTest extends TestCase
 
         $reponse = $ModelViewController->response();
 
-        $this->assertEquals($result, json_decode($reponse)->result);
-        $this->assertTrue(json_decode($reponse)->view);
+        $this->assertEquals($result, \json_decode($reponse)->result);
+        $this->assertTrue(\json_decode($reponse)->view);
     }
 }

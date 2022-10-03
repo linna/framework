@@ -24,7 +24,7 @@
     },
     "require-dev": {
         "infection/infection": ">=0.26",
-        "phpstan/phpstan": ">=1.6",
+        "phpstan/phpstan": ">=1.8",
         "phpunit/phpunit": ">=9.0",
         "linna/auth-mapper-mysql": "dev-master",
         "linna/db-dumps": "dev-master",

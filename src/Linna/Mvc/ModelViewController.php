@@ -103,9 +103,9 @@ class ModelViewController
      */
     private function beforeAfterControllerAction(string $when): void
     {
-        $method = $when.ucfirst($this->routeAction);
+        $method = $when.\ucfirst($this->routeAction);
 
-        if (method_exists($this->controller, $method) && $method !== $when) {
+        if (\method_exists($this->controller, $method) && $method !== $when) {
             \call_user_func([$this->controller, $method]);
         }
     }
@@ -119,7 +119,7 @@ class ModelViewController
      */
     private function beforeAfterController(string $when): void
     {
-        if (method_exists($this->controller, $when)) {
+        if (\method_exists($this->controller, $when)) {
             \call_user_func([$this->controller, $when]);
         }
     }
@@ -137,7 +137,7 @@ class ModelViewController
 
         //if controller does not have the method named entryPoint
         //this avoid problems
-        if (!method_exists($this->controller, $action)) {
+        if (!\method_exists($this->controller, $action)) {
             return;
         }
 
@@ -163,7 +163,7 @@ class ModelViewController
         //get route information
         $action = $this->routeAction;
 
-        if (method_exists($this->view, $action)) {
+        if (\method_exists($this->view, $action)) {
             \call_user_func([$this->view, $action]);
         }
     }

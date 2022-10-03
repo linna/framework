@@ -85,7 +85,7 @@ class Password
         }
 
         $this->algo = $algo;
-        $this->options[$algo] = array_replace_recursive($this->options[$algo], $options);
+        $this->options[$algo] = \array_replace_recursive($this->options[$algo], $options);
     }
 
     /**
@@ -98,7 +98,7 @@ class Password
      */
     public function verify(string $password, string $hash): bool
     {
-        return password_verify($password, $hash);
+        return \password_verify($password, $hash);
     }
 
     /**
@@ -110,7 +110,7 @@ class Password
      */
     public function hash(string $password): string
     {
-        return password_hash($password, $this->algo, $this->options[$this->algo]);
+        return \password_hash($password, $this->algo, $this->options[$this->algo]);
     }
 
     /**
@@ -122,7 +122,7 @@ class Password
      */
     public function needsRehash(string $hash): bool
     {
-        return password_needs_rehash($hash, $this->algo, $this->options[$this->algo]);
+        return \password_needs_rehash($hash, $this->algo, $this->options[$this->algo]);
     }
 
     /**
@@ -134,6 +134,6 @@ class Password
      */
     public function getInfo(string $hash): array
     {
-        return password_get_info($hash);
+        return \password_get_info($hash);
     }
 }

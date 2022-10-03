@@ -125,7 +125,7 @@ class MemcachedCacheTest extends TestCase
         $this->assertTrue(self::$cache->has('foo_4'));
         $this->assertTrue(self::$cache->has('foo_5'));
 
-        usleep(1000100);
+        \usleep(1000100);
 
         $this->assertNull(self::$cache->get('foo_0'));
         $this->assertNull(self::$cache->get('foo_1'));

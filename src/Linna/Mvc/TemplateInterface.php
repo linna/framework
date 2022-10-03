@@ -29,7 +29,7 @@ interface TemplateInterface
     /**
      * Return output for specific template, where output means the data formatted using the template.
      *
-     * @return string The data which template have been applied.
+     * @return string The data which template has been applied.
      */
     public function getOutput(): string;
 }

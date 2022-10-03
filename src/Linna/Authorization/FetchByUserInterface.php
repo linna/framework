@@ -41,11 +41,11 @@ interface FetchByUserInterface
      * a <code>Permission|Role</code> object instance for every <code>Permission|Role</code> owned by
      * the given user.
      *
-     * @param int $userId The user which will be used to fetch as user id.
+     * @param int|string $userId The user which will be used to fetch as user id.
      *
      * @return array<mixed> Permissions or roles permissions granted to the user.
      */
-    public function fetchByUserId(int $userId): array;
+    public function fetchByUserId(int|string $userId): array;
 
     /**
      * Fetch from a user.

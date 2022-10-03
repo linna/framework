@@ -108,8 +108,8 @@ class Router
         $route = new NullRoute();
 
         foreach ($this->routes as $value) {
-            $pathMatch = preg_match('`^'.preg_replace($this->matchTypes, $this->types, $value->path).'/?$`', $path, $matches);
-            $methodMatch = strpos($value->method, $method);
+            $pathMatch = \preg_match('`^'.\preg_replace($this->matchTypes, $this->types, $value->path).'/?$`', $path, $matches);
+            $methodMatch = \strpos($value->method, $method);
 
             if ($pathMatch && $methodMatch !== false) {
                 $route = clone $value;
@@ -142,7 +142,7 @@ class Router
             $rAction = $matches[1];
 
             //url clean
-            $rPath = preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $route->path);
+            $rPath = \preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $route->path);
         }
 
         return new Route(
@@ -173,13 +173,13 @@ class Router
     {
         $param = [];
 
-        $explodedPath = explode('/', $path);
-        $matches = explode('/', $this->routeMatches[0]);
+        $explodedPath = \explode('/', $path);
+        $matches = \explode('/', $this->routeMatches[0]);
 
-        $rawParam = array_diff($matches, $explodedPath);
+        $rawParam = \array_diff($matches, $explodedPath);
 
         foreach ($rawParam as $key => $value) {
-            $paramName = strtr($explodedPath[$key], ['[' => '', ']' => '']);
+            $paramName = \strtr($explodedPath[$key], ['[' => '', ']' => '']);
             $param[$paramName] = $value;
         }
 
@@ -199,26 +199,26 @@ class Router
      */
     private function buildParamFromQueryString(string $queryString): void
     {
-        $param = array_map(function ($array_value) {
-            $tmp = explode('=', $array_value);
+        $param = \array_map(function ($array_value) {
+            $tmp = \explode('=', $array_value);
             $array_value = [];
             $key = $tmp[0];
             $value = '';
 
             if (isset($tmp[1])) {
-                $value = urldecode($tmp[1]);
+                $value = \urldecode($tmp[1]);
             }
 
             $array_value[$key] = $value;
 
             return $array_value;
-        }, explode('&', $queryString));
+        }, \explode('&', $queryString));
 
         $temp = [];
 
         foreach ($param as $value) {
             if (\is_array($value)) {
-                $temp = array_merge($temp, $value);
+                $temp = \array_merge($temp, $value);
                 continue;
             }
 
@@ -248,28 +248,28 @@ class Router
     private function filterUri(string $passedUri): string
     {
         //sanitize url
-        $url = filter_var($passedUri, FILTER_SANITIZE_URL);
+        $url = \filter_var($passedUri, FILTER_SANITIZE_URL);
 
         //check for rewrite mode and remove the entry point if present
-        $url = str_replace($this->rewriteModeFalseEntryPoint, '', $url);
+        $url = \str_replace($this->rewriteModeFalseEntryPoint, '', $url);
 
         //remove basepath, if present
-        if (strpos($url, $this->basePath) === 0) {
-            $url = substr($url, \strlen($this->basePath));
+        if (\strpos($url, $this->basePath) === 0) {
+            $url = \substr($url, \strlen($this->basePath));
         }
 
         //remove doubled slash
-        $url = str_replace('//', '/', $url);
+        $url = \str_replace('//', '/', $url);
 
         //check for query string parameters
-        if (strpos($url, '?') !== false) {
-            $queryString = substr(strstr($url, '?'), 1);
-            $url = strstr($url, '?', true);
+        if (\strpos($url, '?') !== false) {
+            $queryString = \substr(\strstr($url, '?'), 1);
+            $url = \strstr($url, '?', true);
 
             $this->buildParamFromQueryString($queryString);
         }
 
-        return (substr($url, 0, 1) === '/') ? $url : '/'.$url;
+        return (\substr($url, 0, 1) === '/') ? $url : '/'.$url;
     }
 
     /**
