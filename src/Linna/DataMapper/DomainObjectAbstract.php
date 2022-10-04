@@ -33,7 +33,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      *
      * @return int|string The curren domain object id or uuid, the type of the value could be only int or string.
      *
-     * @todo Throw an exception if the id has not set and this method are called, change return types to int|string
+     * @todo Throw an exception if the id has not set and this method are called
      */
     public function getId(): int|string
     {
@@ -60,6 +60,30 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
         return $id;
     }
 
+    /**
+     * Check if the domain object has a valid id.
+     * 
+     * <p>Opposite of <code>hasNotId()</code> method</p>
+     * 
+     * @return bool True if the object has the id set, false otherwise.
+     */
+    public function hasId(): bool
+    {
+        return !is_null($this->id);
+    }
+    
+    /**
+     * Check if the domain object has a null id.
+     * 
+     * <p>Opposite of <code>hasId()</code> method</p>
+     * 
+     * @return bool True if the object has the id set, false otherwise.
+     */
+    public function hasNotId(): bool
+    {
+        return is_null($this->id);
+    }
+    
     /**
      * Return the value of a private or protected property.
      *

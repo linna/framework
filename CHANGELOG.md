@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] [v0.28.0](https://github.com/linna/framework/compare/v0.27.0...v0.28.0)
 
 ### Added
+* `Linna\DataMapper\DomainObjectAbstract->hasId()` method, use it to check if a domain object has the id set
+* `Linna\DataMapper\DomainObjectAbstract->hasNotId()` method, the opposite of `hadId()`
 * `Linna\DataMapper\Exception` namespace
 * `Linna\DataMapper\Exception\NullDomainObjectException` exception
 

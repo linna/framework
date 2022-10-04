@@ -42,7 +42,7 @@ abstract class MapperAbstract
      */
     public function save(DomainObjectInterface &$domainObject): void
     {
-        if ($domainObject->getId() === null) {
+        if ($domainObject->hasNotId()) {
             $this->concreteInsert($domainObject);
             return;
         }

@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "linna/typed-array" :  ">=3.0",
+        "linna/typed-array": ">=3.0",
         "php": ">=8",
         "psr/container": "^2.0",
         "psr/simple-cache": "^3.0"
