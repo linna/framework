@@ -51,7 +51,7 @@ class Authentication
     }
 
     /**
-     * Opposite to <code>isLogged()</code> method.
+     * Opposite to isLogged() method.
      *
      * <p>Utilize this method to check if the user in the current session,
      * isn't logged in.</p>

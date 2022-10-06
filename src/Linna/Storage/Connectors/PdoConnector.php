@@ -21,7 +21,7 @@ use Linna\Storage\ExtendedPDO;
 class PdoConnector extends AbstractConnector
 {
     /**
-     * Return a new <code>ExtendedPDO</code> object to intercat with persistent storage using PHP <code>PDO</code>.
+     * Return a new ExtendedPDO object to intercat with persistent storage using PHP PDO.
      *
      * @return object The <code>ExtendedPDO</code> instance.
      */

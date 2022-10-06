@@ -20,7 +20,7 @@ use Linna\Storage\AbstractConnector;
 class PgConnector extends AbstractConnector
 {
     /**
-     * Return a new <code>PgSql\Connection</code> created using <code>pg_connect()</code> to intercat with <b>Postgre</b> database.
+     * Return a new PgSql\Connection created using pg_connect() to intercat with Postgre database.
      *
      * @return object The <code>PgSql\Connection</code> instance.
      */

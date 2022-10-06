@@ -23,6 +23,7 @@ trait PropertyAccessTrait
 
     /**
      * Set.
+     *
      * <p>Is run when writing data to inaccessible (protected or private) or non-existing properties.</p>
      *
      * @param string $name  The name of the property which will be updated.
@@ -41,6 +42,7 @@ trait PropertyAccessTrait
 
     /**
      * Get.
+     *
      * <p>Is utilized for reading data from inaccessible (protected or private) or non-existing properties. </p>
      *
      * @param string $name The name of the property for which this method has invoked, the property to retrieve.
@@ -58,6 +60,7 @@ trait PropertyAccessTrait
 
     /**
      * Remove.
+     *
      * <p>Is invoked when unset() is used on inaccessible (protected or private) or non-existing properties. </p>
      *
      * @param string $name The name of the property which will be updated.
@@ -75,6 +78,7 @@ trait PropertyAccessTrait
 
     /**
      * Check.
+     *
      * <p>is triggered by calling <code>isset()</code> or <code>empty()</code> on inaccessible (protected or private) or non-existing properties.</p>
      *
      * @param string $name The name of the property for which verify the existence.

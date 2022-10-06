@@ -23,7 +23,7 @@ trait PermissionTrait
     protected array $permission = [];
 
     /**
-     * Check if a permission is granted to a user or to a role, use <code>Permission</code>
+     * Check if a permission is granted to a user or to a role, use Permission
      * instance.
      *
      * @param Permission $permission The permission which will be checked as <code>Permission</code> instance.

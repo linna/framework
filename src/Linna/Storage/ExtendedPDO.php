@@ -25,8 +25,8 @@ class ExtendedPDO extends PDO
     private bool $lastOperationStatus = false;
 
     /**
-     * Executes an SQL statement with parameters,
-     * returning a result set as a <code>PDOStatement</code> object.
+     * Executes an SQL statement with parameters, returning a result set as a
+     * PDOStatement object.
      *
      * @param string       $query SQL statement.
      * @param array<mixed> $param Parameter as array as <code>PDOStatement::bindParam</code>.
@@ -64,7 +64,7 @@ class ExtendedPDO extends PDO
     }
 
     /**
-     * Check values passed to the method <code>queryWithParam</code>.
+     * Check values passed to the method queryWithParam.
      *
      * @param array<mixed> $value The value which will be checked.
      *

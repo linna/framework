@@ -48,7 +48,7 @@ class Role extends DomainObjectAbstract
     }
 
     /**
-     * Check if an user is in role, use <code>User</code> instance.
+     * Check if an user is in role, use User instance.
      *
      * @param User $user The user which will be checked as <code>User</code> instance.
      *

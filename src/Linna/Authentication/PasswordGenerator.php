@@ -16,7 +16,7 @@ use InvalidArgumentException;
 
 /**
  * Generate random password with random topology, this class use PHP 7
- * <code>random_int()</code> function for generate random numbers.
+ * random_int() function for generate random numbers.
  */
 class PasswordGenerator
 {

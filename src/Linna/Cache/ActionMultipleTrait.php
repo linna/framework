@@ -101,7 +101,7 @@ trait ActionMultipleTrait
     }
 
     /**
-     * Persists a set of <code>key => value</code> pairs in the cache, with an optional TTL.
+     * Persists a set of [key => value] pairs in the cache, with an optional TTL.
      *
      * @param iterable               $values A list of <code>key => value</code> pairs for a multiple-set operation.
      * @param null|int|\DateInterval $ttl    Optional. The TTL value of this item. If no value is sent and

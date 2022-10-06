@@ -21,7 +21,7 @@ use mysqli;
 class MysqliConnector extends AbstractConnector
 {
     /**
-     * Return a new <code>mysqli</code> object to intercat with <b>Mysql</b> database.
+     * Return a new Mysqli object to intercat with Mysql database.
      *
      * @return object The <code>mysqli</code> instance.
      */
