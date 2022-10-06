@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2020, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Session;
 
-//use Linna\Session\Session;
 use SessionHandlerInterface;
 
 /**
@@ -25,6 +25,9 @@ trait SessionHandlerTrait
     /** @var SessionHandlerInterface The session handler concrete class. */
     protected static SessionHandlerInterface $handler;
 
+    /** @var PdoAbstractQuery The object that contains queries for a specific database. */
+    protected static PdoAbstractQuery $query;
+
     /**
      * Setup.
      *
@@ -37,8 +40,6 @@ trait SessionHandlerTrait
 
     /**
      * Test set session handler.
-     *
-     * @requires extension memcached
      *
      * @runInSeparateProcess
      *

@@ -12,15 +12,14 @@ declare(strict_types=1);
 
 namespace Linna\Session;
 
-use Linna\Storage\ExtendedPDO;
 use Linna\Storage\StorageFactory;
 use PDO;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Mysql Pdo Session Handler Test.
+ * Postgres Pdo Session Handler Test.
  */
-class MysqlPdoSessionHandlerTest extends TestCase
+class PostgrePdoSessionHandlerTest extends TestCase
 {
     use SessionPdoHandlerTrait;
 
@@ -32,14 +31,13 @@ class MysqlPdoSessionHandlerTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         $options = [
-            'dsn'      => $GLOBALS['pdo_mysql_dsn'],
-            'user'     => $GLOBALS['pdo_mysql_user'],
-            'password' => $GLOBALS['pdo_mysql_password'],
+            'dsn'      => $GLOBALS['pdo_pgsql_dsn'],
+            'user'     => $GLOBALS['pdo_pgsql_user'],
+            'password' => $GLOBALS['pdo_pgsql_password'],
             'options'  => [
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_PERSISTENT         => false,
-                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
             ],
         ];
 
@@ -49,12 +47,12 @@ class MysqlPdoSessionHandlerTest extends TestCase
         self::$pdo = $pdo;
 
         // from the trait, static
-        self::$query = new PdoMysqlQuery();
-        self::$handler = new PdoSessionHandler($pdo, new PdoMysqlQuery());
+        self::$query = new PdoPostgreQuery();
+        self::$handler = new PdoSessionHandler($pdo, new PdoPostgreQuery());
         self::$session = new Session(expire: 1800);
 
         // from the trait, non static
-        self::$querySelect = 'SELECT * FROM session';
-        self::$queryDelete = 'DELETE FROM session';
+        self::$querySelect = 'SELECT * FROM public.session';
+        self::$queryDelete = 'DELETE FROM public.session';
     }
 }

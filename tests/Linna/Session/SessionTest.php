@@ -1,21 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
- * @copyright (c) 2018, Sebastian Rapetti
+ * @copyright (c) 2020, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Session;
 
-//use Linna\Session\Session;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Session Test
+ * Session Test.
  *
  */
 class SessionTest extends TestCase
@@ -25,8 +25,6 @@ class SessionTest extends TestCase
 
     /**
      * Set up before class.
-     *
-     * @requires extension memcached
      *
      * @return void
      */
@@ -38,16 +36,6 @@ class SessionTest extends TestCase
             cookiePath:   '/app',
             cookieSecure: true
         );
-    }
-
-    /**
-     * Tear down after class.
-     *
-     * @return void
-     */
-    public static function tearDownAfterClass(): void
-    {
-        //self::$session = null;
     }
 
     /**
@@ -271,8 +259,8 @@ class SessionTest extends TestCase
      *
      * @runInSeparateProcess
      *
-     * @param int  $time
-     * @param bool $equals
+     * @param int  $time   Time passed from the start of the session.
+     * @param bool $equals Tell if values of the cookie should be the same.
      *
      * @return void
      */
@@ -485,8 +473,8 @@ class SessionTest extends TestCase
     /**
      * Test for cookie compliance.
      *
-     * @param array   $cookie
-     * @param Session $session
+     * @param array   $cookie  The cookie as array with parameters for the session.
+     * @param Session $session The current session instance.
      *
      * @return void
      */
@@ -497,8 +485,7 @@ class SessionTest extends TestCase
         $cookieExpires = \strtotime($cookie['expires']);
         $resultExpires = \strtotime(\date(DATE_COOKIE, \time() + 1800));
 
-        $timeDifference = $resultExpires - $cookieExpires;
-        $timeDifference = \abs($timeDifference);
+        $timeDifference = \abs($resultExpires - $cookieExpires);
 
         $this->assertLessThanOrEqual(1, $timeDifference);
         $this->assertGreaterThanOrEqual(0, $timeDifference);

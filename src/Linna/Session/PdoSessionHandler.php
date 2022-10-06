@@ -52,7 +52,10 @@ class PdoSessionHandler implements SessionHandlerInterface
      */
     public function __construct(
         /** @var ExtendedPDO The <code>PDO</code> object to interact with the database. */
-        private ExtendedPDO $pdo
+        private ExtendedPDO $pdo,
+
+        /** @var PdoAbstractQuery The object that contains queries for a specific database. */
+        private PdoAbstractQuery $query
     ) {
     }
 
@@ -94,8 +97,8 @@ class PdoSessionHandler implements SessionHandlerInterface
         $timestamp = \date(DATE_ATOM, \time() - $max_lifetime);
 
         return $this->pdo->queryWithParam(
-            'DELETE FROM session WHERE last_update < :maxlifetime',
-            [[':maxlifetime', $timestamp, \PDO::PARAM_STR]]
+            $this->query::QUERY_GC,
+            [[':max_lifetime', $timestamp, \PDO::PARAM_STR]]
         )->rowCount();
     }
 
@@ -116,7 +119,7 @@ class PdoSessionHandler implements SessionHandlerInterface
         //string casting is a fix for PHP 7
         //when strict type are enable
         return (string) $this->pdo->queryWithParam(
-            'SELECT session_data FROM session WHERE session_id = :id',
+            $this->query::QUERY_READ,
             [[':id', $id, \PDO::PARAM_STR]]
         )->fetchColumn();
     }
@@ -137,10 +140,10 @@ class PdoSessionHandler implements SessionHandlerInterface
     public function write(string $id, string $data): bool
     {
         $this->pdo->queryWithParam(
-            'INSERT INTO session SET session_id = :session_id, session_data = :session_data ON DUPLICATE KEY UPDATE session_data = :session_data',
+            $this->query::QUERY_WRITE,
             [
-                [':session_id', $id, \PDO::PARAM_STR],
-                [':session_data', $data, \PDO::PARAM_STR]
+                [':id', $id, \PDO::PARAM_STR],
+                [':data', $data, \PDO::PARAM_STR]
             ]
         );
 
@@ -177,8 +180,8 @@ class PdoSessionHandler implements SessionHandlerInterface
     public function destroy(string $id): bool
     {
         $this->pdo->queryWithParam(
-            'DELETE FROM session WHERE session_id = :session_id',
-            [[':session_id', $id, \PDO::PARAM_STR]]
+            $this->query::QUERY_DESTROY,
+            [[':id', $id, \PDO::PARAM_STR]]
         );
 
         return $this->pdo->getLastOperationStatus();
