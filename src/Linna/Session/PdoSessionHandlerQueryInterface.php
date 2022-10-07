@@ -19,15 +19,15 @@ namespace Linna\Session;
  */
 interface PdoSessionHandlerQueryInterface
 {
-    /** @var string The query used to read session data from data base. <p>Must contains <code>:id</code> as parameter for <code>PDOStatement::bindParam</code></p>*/
+    /** @var string The query used to read session data from data base. <p>Must contains <code>:id</code> as parameter for <code>PDOStatement::bindParam</code>.</p>*/
     public const QUERY_READ = '';
-    
-    /** @var string The query used to write session data from data base. <p>Must contains <code>:id</code> and <code>:data</code> as parameters for <code>PDOStatement::bindParam</code></p>*/
+
+    /** @var string The query used to write session data from data base. <p>Must contains <code>:id</code> and <code>:data</code> as parameters for <code>PDOStatement::bindParam</code>.</p>*/
     public const QUERY_WRITE = '';
-    
-    /** @var string The query used to destroy session data from data base. <p>Must contains <code>:id</code> as parameter for <code>PDOStatement::bindParam</code></p>*/
+
+    /** @var string The query used to destroy session data from data base. <p>Must contains <code>:id</code> as parameter for <code>PDOStatement::bindParam</code>.</p>*/
     public const QUERY_DESTROY = '';
-    
-    /** @var string The query used to delete expired session data from data base. <p>Must contains <code>:max_lifetime</code> as parameter for <code>PDOStatement::bindParam</code></p>*/
+
+    /** @var string The query used to delete expired session data from data base. <p>Must contains <code>:max_lifetime</code> as parameter for <code>PDOStatement::bindParam</code>.</p>*/
     public const QUERY_GC = '';
 }

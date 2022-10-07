@@ -14,7 +14,7 @@ namespace Linna\Session;
 
 /**
  * Postgre queries to store sessions in database.
- * 
+ *
  * <p>All queries are are made to be used with <code>PDOStatement::bindParam</code> method.</p>
  * <p>All queries are for the table below:</p>
  * <pre>
@@ -28,15 +28,15 @@ namespace Linna\Session;
  */
 class PdoSessionHandlerPostgreQuery implements PdoSessionHandlerQueryInterface
 {
-    /** @var string The query used to read session data from data base. <p>has <code>:id</code> as parameter for <code>PDOStatement::bindParam</code></p>*/
-    public const QUERY_READ = 'SELECT session_data FROM public.session WHERE session_id = :id';
-    
-    /** @var string The query used to write session data from data base. <p>has <code>:id</code> and <code>:data</code> as parameters for <code>PDOStatement::bindParam</code></p>*/
-    public const QUERY_WRITE = 'INSERT INTO public.session(session_id, session_data) VALUES (:id, :data) ON CONFLICT (session_id) DO UPDATE SET session_data = :data, last_update = now()';
-    
-    /** @var string The query used to destroy session data from data base. <p>has <code>:id</code> as parameter for <code>PDOStatement::bindParam</code></p>*/
-    public const QUERY_DESTROY = 'DELETE FROM public.session WHERE session_id = :id';
-    
-    /** @var string The query used to delete expired session data from data base. <p>has <code>:max_lifetime</code> as parameter for <code>PDOStatement::bindParam</code></p>*/
-    public const QUERY_GC = 'DELETE FROM public.session WHERE last_update < :max_lifetime';
+    /** @var string The query used to read session data from data base. <p>has <code>:id</code> as parameter for <code>PDOStatement::bindParam</code>.</p>*/
+    final public const QUERY_READ = 'SELECT session_data FROM public.session WHERE session_id = :id';
+
+    /** @var string The query used to write session data from data base. <p>has <code>:id</code> and <code>:data</code> as parameters for <code>PDOStatement::bindParam</code>.</p>*/
+    final public const QUERY_WRITE = 'INSERT INTO public.session(session_id, session_data) VALUES (:id, :data) ON CONFLICT (session_id) DO UPDATE SET session_data = :data, last_update = now()';
+
+    /** @var string The query used to destroy session data from data base. <p>has <code>:id</code> as parameter for <code>PDOStatement::bindParam</code>.</p>*/
+    final public const QUERY_DESTROY = 'DELETE FROM public.session WHERE session_id = :id';
+
+    /** @var string The query used to delete expired session data from data base. <p>has <code>:max_lifetime</code> as parameter for <code>PDOStatement::bindParam</code>.</p>*/
+    final public const QUERY_GC = 'DELETE FROM public.session WHERE last_update < :max_lifetime';
 }
