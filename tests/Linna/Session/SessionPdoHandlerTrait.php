@@ -25,8 +25,8 @@ trait SessionPdoHandlerTrait
     /** @var ExtendedPDO The pdo class. */
     protected static $pdo;
 
-    /** @var PdoAbstractQuery The object that contains queries for a specific database. */
-    protected static PdoAbstractQuery $query;
+    /** @var PdoSessionHandlerQueryInterface The object that contains queries for a specific database. */
+    protected static PdoSessionHandlerQueryInterface $query;
 
     /** @var string The query to select all session. */
     protected static string $querySelect = '';

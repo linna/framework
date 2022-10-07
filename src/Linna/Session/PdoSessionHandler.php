@@ -23,21 +23,21 @@ use SessionHandlerInterface;
  * <p>For Mysql:</p>
  * <pre>
  * CREATE TABLE `session` (
- * `session_id` char(128) NOT NULL,
- * `session_data` varchar(3096) NOT NULL,
- * `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
- * `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ *   `session_id` char(128) NOT NULL,
+ *   `session_data` varchar(3096) NOT NULL,
+ *   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ *   `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  * PRIMARY KEY (`session_id`)
  * ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
  * </pre>
  *
- * <p>For Postgres:</p>
+ * <p>For Postgre:</p>
  * <pre>
  * CREATE TABLE session (
- * session_id char(255) NOT NULL,
- * session_data varchar(4096) NOT NULL,
- * last_update timestamp NOT NULL,
- * PRIMARY KEY (session_id)
+ *   session_id char(255) NOT NULL,
+ *   session_data varchar(4096) NOT NULL,
+ *   last_update timestamp NOT NULL,
+ *   PRIMARY KEY (session_id)
  * );
  * </pre>
  *
@@ -54,8 +54,8 @@ class PdoSessionHandler implements SessionHandlerInterface
         /** @var ExtendedPDO The <code>PDO</code> object to interact with the database. */
         private ExtendedPDO $pdo,
 
-        /** @var PdoAbstractQuery The object that contains queries for a specific database. */
-        private PdoAbstractQuery $query
+        /** @var PdoSessionHandlerQueryInterface The object that contains queries for a specific database. */
+        private PdoSessionHandlerQueryInterface $query
     ) {
     }
 

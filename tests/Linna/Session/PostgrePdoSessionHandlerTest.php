@@ -47,8 +47,8 @@ class PostgrePdoSessionHandlerTest extends TestCase
         self::$pdo = $pdo;
 
         // from the trait, static
-        self::$query = new PdoPostgreQuery();
-        self::$handler = new PdoSessionHandler($pdo, new PdoPostgreQuery());
+        self::$query = new PdoSessionHandlerPostgreQuery();
+        self::$handler = new PdoSessionHandler($pdo, new PdoSessionHandlerPostgreQuery());
         self::$session = new Session(expire: 1800);
 
         // from the trait, non static

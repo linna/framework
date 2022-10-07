@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Linna\Session;
 
-use Linna\Storage\ExtendedPDO;
 use Linna\Storage\StorageFactory;
 use PDO;
 use PHPUnit\Framework\TestCase;
@@ -49,8 +48,8 @@ class MysqlPdoSessionHandlerTest extends TestCase
         self::$pdo = $pdo;
 
         // from the trait, static
-        self::$query = new PdoMysqlQuery();
-        self::$handler = new PdoSessionHandler($pdo, new PdoMysqlQuery());
+        self::$query = new PdoSessionHandlerMysqlQuery();
+        self::$handler = new PdoSessionHandler($pdo, new PdoSessionHandlerMysqlQuery());
         self::$session = new Session(expire: 1800);
 
         // from the trait, non static

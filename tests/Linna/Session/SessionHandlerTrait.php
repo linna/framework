@@ -25,9 +25,6 @@ trait SessionHandlerTrait
     /** @var SessionHandlerInterface The session handler concrete class. */
     protected static SessionHandlerInterface $handler;
 
-    /** @var PdoAbstractQuery The object that contains queries for a specific database. */
-    protected static PdoAbstractQuery $query;
-
     /**
      * Setup.
      *
