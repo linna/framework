@@ -48,8 +48,8 @@ class EnhancedAuthentication extends Authentication
     /**
      * Return how many attempts are left for a user.
      *
-     * <p>When the result of this method reach zero, it means that should be the
-     * time to lock the user account if the user name is a valid application user.</p>
+     * <p>When the result of this method reach zero, it means that should be the time to lock the user account if the
+     * user name is a valid application user.</p>
      *
      * @param string $userName User for which retrieve login attempts.
      *
@@ -57,7 +57,8 @@ class EnhancedAuthentication extends Authentication
      */
     public function getAttemptsLeftWithSameUser(string $userName): int
     {
-        $attemptsLeft = ((int) $this->maxAttemptsForUserName) - $this->mapper->fetchAttemptsWithSameUser($userName, $this->banTimeInSeconds);
+        $attemptsLeft = ((int) $this->maxAttemptsForUserName) -
+            $this->mapper->fetchAttemptsWithSameUser($userName, $this->banTimeInSeconds);
 
         return \max(0, $attemptsLeft);
     }
@@ -71,7 +72,8 @@ class EnhancedAuthentication extends Authentication
      */
     public function getAttemptsLeftWithSameSession(string $sessionId): int
     {
-        $attemptsLeft = ((int) $this->maxAttemptsForSessionId) - $this->mapper->fetchAttemptsWithSameSession($sessionId, $this->banTimeInSeconds);
+        $attemptsLeft = ((int) $this->maxAttemptsForSessionId) -
+            $this->mapper->fetchAttemptsWithSameSession($sessionId, $this->banTimeInSeconds);
 
         return \max(0, $attemptsLeft);
     }
@@ -79,7 +81,8 @@ class EnhancedAuthentication extends Authentication
     /**
      * Return how many attempts are left for same ip.
      *
-     * <p>When the result of this method reach zero, it means that should be the time to ban the ip addres used to attempt to login.</p>
+     * <p>When the result of this method reach zero, it means that should be the time to ban the ip addres used to
+     * attempt to login.</p>
      *
      * @param string $ipAddress Ip address for which retrieve login attempts.
      *
@@ -87,7 +90,8 @@ class EnhancedAuthentication extends Authentication
      */
     public function getAttemptsLeftWithSameIp(string $ipAddress): int
     {
-        $attemptsLeft = ((int) $this->maxAttemptsForIpAddress) - $this->mapper->fetchAttemptsWithSameIp($ipAddress, $this->banTimeInSeconds);
+        $attemptsLeft = ((int) $this->maxAttemptsForIpAddress) -
+            $this->mapper->fetchAttemptsWithSameIp($ipAddress, $this->banTimeInSeconds);
 
         return \max(0, $attemptsLeft);
     }

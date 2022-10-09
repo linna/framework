@@ -35,8 +35,7 @@ abstract class Model implements SplSubject
     /**
      * Class Constructor.
      *
-     * <p>In classes which implements this abstract class, call the parent
-     * constructor is mandatory.</p>
+     * <p>In classes which implements this abstract class, call the parent constructor is mandatory.</p>
      */
     public function __construct()
     {
@@ -44,8 +43,8 @@ abstract class Model implements SplSubject
     }
 
     /**
-     * Attach an observer class to this subject, when occour a subject state
-     * change all updates will be sent to all observers.
+     * Attach an observer class to this subject, when occour a subject state change all updates will be sent to all
+     * observers.
      *
      * @param SplObserver $observer The new observer will be attached.
      *

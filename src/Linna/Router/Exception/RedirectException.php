@@ -16,9 +16,9 @@ use Exception;
 
 /**
  * Redirect Exception.
- * <p>This class should be used to stop execution when a redirection to another
- * route/path is requred. <code>$path</code> in <code>setPath()</code> method, must be a value present
- * in at least one <code>Route</code> object inside routes collection passed to the <code>Router</code> object.</p>
+ * <p>This class should be used to stop execution when a redirection to another route/path is requred.
+ * <code>$path</code> in <code>setPath()</code> method, must be a value present in at least one <code>Route</code>
+ * object inside routes collection passed to the <code>Router</code> object.</p>
  */
 class RedirectException extends Exception
 {

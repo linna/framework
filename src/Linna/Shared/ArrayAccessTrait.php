@@ -26,13 +26,17 @@ trait ArrayAccessTrait
      * Whether an offset exists.
      *
      * <p>Whether or not an offset exists.</p>
-     * <p>This method is executed when using <code>isset()</code> or <code>empty()</code> on objects implementing <code>ArrayAccess</code>.</p>
+     * <p>This method is executed when using <code>isset()</code> or <code>empty()</code> on objects implementing
+     * <code>ArrayAccess</code>.</p>
      * <p><b>Note</b>:</p>
-     * <p>When using <code>empty()</code> <code>ArrayAccess::offsetGet()</code> will be called and checked if empty only if <b>ArrayAccess::offsetExists()</b> returns <b><code>true</code></b>.</p>
+     * <p>When using <code>empty()</code> <code>ArrayAccess::offsetGet()</code> will be called and checked if empty
+     * only if <b>ArrayAccess::offsetExists()</b> returns <b><code>true</code></b>.</p>
      *
      * @param mixed $offset An offset to check for.
      *
-     * @return bool Returns <b><code>true</code></b> on success or <b><code>false</code></b> on failure.</p><p><b>Note</b>:</p><p>The return value will be casted to <code>bool</code> if non-boolean was returned.
+     * @return bool Returns <b><code>true</code></b> on success or <b><code>false</code></b> on failure.</p>
+     *              <p><b>Note</b>:</p><p>The return value will be casted to <code>bool</code> if non-boolean was
+     *              returned.
      *
      * @link https://php.net/manual/en/arrayaccess.offsetexists.php
      * @since PHP 5, PHP 7, PHP 8

@@ -22,8 +22,7 @@ interface MapperInterface
     /**
      * Fetch a domain object by id or uuid.
      *
-     * <p>This method must return an instance of the requested domain object or an
-     * instance of a null domain object.</p>
+     * <p>This method must return an instance of the requested domain object or an instance of a null domain object.</p>
      *
      * @param int|string $objectId The id or the uuid of the object which will be searched.
      *

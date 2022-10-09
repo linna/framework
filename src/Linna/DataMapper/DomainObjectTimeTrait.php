@@ -15,8 +15,7 @@ namespace Linna\DataMapper;
 use UnexpectedValueException;
 
 /**
- * Provide methods and properties for track the creation and updates of the
- * domain objects.
+ * Provide methods and properties for track the creation and updates of the domain objects.
  */
 trait DomainObjectTimeTrait
 {

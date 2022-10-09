@@ -33,8 +33,8 @@ abstract class MapperAbstract
     }
 
     /**
-     * Insert the instance of the domain object in persistent storage, updates
-     * the stored domain object if already exists.
+     * Insert the instance of the domain object in persistent storage, updates the stored domain object if already
+     * exists.
      *
      * @param DomainObjectInterface $domainObject The domain object which will be stored or updated.
      *
@@ -63,8 +63,7 @@ abstract class MapperAbstract
     }
 
     /**
-     * Create a new instance of the domain object for which this mapper is
-     * responsible for.
+     * Create a new instance of the domain object for which this mapper is responsible for.
      *
      * Concrete implementation delegated to the concrete mapper.
      *

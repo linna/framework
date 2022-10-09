@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Linna\Authentication;
 
 /**
- * Provide methods to manage password, this class uses PHP password hashing
- * function, see php documentation for more information.
+ * Provide methods to manage password, this class uses PHP password hashing function, see php documentation for more
+ * information.
  *
  * @link http://php.net/manual/en/book.password.php
  */
@@ -47,14 +47,13 @@ class Password
      * <p>For password algorithm constants see
      * <a href="http://php.net/manual/en/password.constants.php">password constants</a>.</p>
      *
-     * <p>Strict typing removed for <code>$algo</code> because on PHP 7.4 password hashing
-     * algorithm identifiers are nullable strings rather than integers.</p>
+     * <p>Strict typing removed for <code>$algo</code> because on PHP 7.4 password hashing algorithm identifiers are
+     * nullable strings rather than integers.</p>
      *
      * @param string|null  $algo    Algorithm used for hash passwords.
      * @param array<mixed> $options Options for algos <code>['key' => 'value']</code> array.
      *
-     * @throws \InvalidArgumentException If the <code>$algo</code> paramether contains an
-     *                                   invalid password algorithm.
+     * @throws \InvalidArgumentException If the <code>$algo</code> paramether contains an invalid password algorithm.
      *
      * @todo Check for PASSWORD_ARGON2I PASSWORD_ARGON2ID default definition.
      */

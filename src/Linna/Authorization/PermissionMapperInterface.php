@@ -20,7 +20,11 @@ use Linna\DataMapper\MapperInterface;
  *
  * <p>Contain methods required from concrete permission mapper.</p>
  */
-interface PermissionMapperInterface extends MapperInterface, FetchByNameInterface, FetchByUserInterface, FetchByRoleInterface
+interface PermissionMapperInterface extends
+    MapperInterface,
+    FetchByNameInterface,
+    FetchByUserInterface,
+    FetchByRoleInterface
 {
     /**
      * Check if a permission exist.

@@ -15,7 +15,8 @@ namespace Linna\Shared;
 /**
  * Abstract Access Trait.
  *
- * <p>Provide abstract method that a class that implements <code>ArrayAccessTrait</code> or <code>PropertyAccessTrait</code> must declare.</p>
+ * <p>Provide abstract method that a class that implements <code>ArrayAccessTrait</code> or
+ * <code>PropertyAccessTrait</code> must declare.</p>
  */
 trait AbstractAccessTrait
 {

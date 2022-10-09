@@ -79,7 +79,8 @@ trait PropertyAccessTrait
     /**
      * Check.
      *
-     * <p>is triggered by calling <code>isset()</code> or <code>empty()</code> on inaccessible (protected or private) or non-existing properties.</p>
+     * <p>is triggered by calling <code>isset()</code> or <code>empty()</code> on inaccessible (protected or private)
+     * or non-existing properties.</p>
      *
      * @param string $name The name of the property for which verify the existence.
      *

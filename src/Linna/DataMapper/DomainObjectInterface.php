@@ -22,7 +22,8 @@ use UnexpectedValueException;
 interface DomainObjectInterface
 {
     /**
-     * Get the id or the uuid of the domain object (unique for each domain object, also domain objects of the same type).
+     * Get the id or the uuid of the domain object (unique for each domain object, also domain objects of the same
+     * type).
      *
      * @return int|string The curren domain object id or uuid, the type of the value could be only int or string.
      */

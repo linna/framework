@@ -58,8 +58,8 @@ class DiskCache implements CacheInterface
      *
      * @return mixed The value of the item from the cache, or <code>$default</code> in case of cache miss.
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the <code>$key</code> string is not a legal value.
+     * @throws \Psr\SimpleCache\InvalidArgumentException MUST be thrown if the <code>$key</code> string is not a legal
+     *                                                   value.
      */
     public function get(string $key, mixed $default = null): mixed
     {
@@ -113,8 +113,8 @@ class DiskCache implements CacheInterface
      *
      * @return bool True on success and false on failure.
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the <code>$key</code> string is not a legal value.
+     * @throws \Psr\SimpleCache\InvalidArgumentException MUST be thrown if the <code>$key</code> string is not a legal
+     *                                                   value.
      */
     public function set(string $key, mixed $value, DateInterval|int|null $ttl = null): bool
     {
@@ -186,8 +186,8 @@ class DiskCache implements CacheInterface
      *
      * @return bool True if the item was successfully removed. False if there was an error.
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the <code>$key</code> string is not a legal value.
+     * @throws \Psr\SimpleCache\InvalidArgumentException MUST be thrown if the <code>$key</code> string is not a legal
+     *                                                   value.
      */
     public function delete(string $key): bool
     {
@@ -219,8 +219,8 @@ class DiskCache implements CacheInterface
     /**
      * Determines whether an item is present in the cache.
      *
-     * <p><p><b>Note</b>:</p> It is recommended that <code>has()</code> is only to be used for cache warming type purposes
-     * and not to be used within your live applications operations for get/set, as this method
+     * <p><p><b>Note</b>:</p> It is recommended that <code>has()</code> is only to be used for cache warming type
+     * purposes and not to be used within your live applications operations for get/set, as this method
      * is subject to a race condition where your <code>has()</code> will return true and immediately after,
      * another script can remove it making the state of your app out of date.</p>
      *
@@ -228,8 +228,8 @@ class DiskCache implements CacheInterface
      *
      * @return bool
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     *                                                   MUST be thrown if the <code>$key</code> string is not a legal value.
+     * @throws \Psr\SimpleCache\InvalidArgumentException MUST be thrown if the <code>$key</code> string is not a legal
+     *                                                   value.
      */
     public function has(string $key): bool
     {

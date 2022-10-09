@@ -24,8 +24,7 @@ class NullDomainObject extends DomainObjectAbstract
     /**
      * Get nothing.
      *
-     * <p>This method overrides the original method inherited from the abstract
-     * class and make it idempotent.</p>
+     * <p>This method overrides the original method inherited from the abstract class and make it idempotent.</p>
      *
      * @return int|string Allways null.
      *
@@ -39,8 +38,7 @@ class NullDomainObject extends DomainObjectAbstract
     /**
      * Set nothing.
      *
-     * <p>This method overrides the original method inherited from the abstract
-     * class and make it idempotent.</p>
+     * <p>This method overrides the original method inherited from the abstract class and make it idempotent.</p>
      *
      * @param int|string $id The new domain object id, in this method the id or the uuid will be unset.
      *

@@ -13,9 +13,6 @@ namespace Linna\Router;
 
 use ArrayObject;
 use InvalidArgumentException;
-//use Linna\Router\Route;
-//use Linna\Router\RouteCollection;
-//use Linna\TypedObjectArray\ArrayOfClasses;
 use PHPUnit\Framework\TestCase;
 use SplStack;
 

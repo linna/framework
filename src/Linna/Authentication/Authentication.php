@@ -86,8 +86,13 @@ class Authentication
      *
      * @return bool True for successful login, false otherwise.
      */
-    public function login(string $userName, string $password, string $storedUserName, string $storedPassword, int|string $storedId): bool
-    {
+    public function login(
+        string $userName,
+        string $password,
+        string $storedUserName,
+        string $storedPassword,
+        int|string $storedId
+    ): bool {
         if (\hash_equals($userName, $storedUserName) && $this->password->verify($password, $storedPassword)) {
             //write valid login on session
             $this->session->loginTime = \time();

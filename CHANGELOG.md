@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+#### Crypto
+* `Linna\Crypto` namespace
+* `Linna\Crypto\SecretKeyCrypto` class
+
 #### Data Mapper
 * `Linna\DataMapper\DomainObjectAbstract->hasId()` method, use it to check if a domain object has the id set
 * `Linna\DataMapper\DomainObjectAbstract->hasNotId()` method, the opposite of `hadId()`
