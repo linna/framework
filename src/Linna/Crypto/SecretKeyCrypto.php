@@ -55,15 +55,15 @@ class SecretKeyCrypto
     /**
      * Decrypt a ciphertext.
      *
-     * @param string $ciphertext      Encrypted text in the format provided by the encryption funciton used (ciphertext
+     * @param string $ciphertext      Encrypted text in the format provided by the encryption function used (ciphertext
      *                                and tag, concatenated).
      * @param string $additional_data Additional, authenticated data. This is used in the verification of the
      *                                authentication tag appended to the ciphertext, but it is not encrypted or stored
      *                                in the ciphertext.
      * @param string $nonce           A number that must be only used once, per message. Use the static method
-     *                                <code>getNonce()</code> to generate a nonce having the correct size.
-     * @param string $key             The key used to encrypt. Use the static method <code>getKey()</code> to generate
-     *                                a key having the correct size.
+     *                                <code>generateNonce()</code> to generate a nonce having the correct size.
+     * @param string $key             The key used to encrypt. Use the static method <code>generateKey()</code> to
+     *                                generate a key having the correct size.
      *
      * @return string|bool The original message, false if the decryption fails.
      *
@@ -83,9 +83,9 @@ class SecretKeyCrypto
      *                                authentication tag appended to the ciphertext, but it is not encrypted or stored
      *                                in the ciphertext.
      * @param string $nonce           A number that must be only used once, per message. Use the static method
-     *                                <code>getNonce()</code> to generate a nonce having the correct size.
-     * @param string $key             The key used to encrypt. Use the static method <code>getKey()</code> to generate
-     *                                a key having the correct size.
+     *                                <code>generateNonce()</code> to generate a nonce having the correct size.
+     * @param string $key             The key used to encrypt. Use the static method <code>generateKey()</code> to
+     *                                generate a key having the correct size.
      *
      * @return string The ciphertext for the provided plain text.
      *

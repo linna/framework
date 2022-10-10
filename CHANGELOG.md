@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 #### Crypto
 * `Linna\Crypto` namespace
+* `Linna\Crypto\KeyPair` class
+* `Linna\Crypto\PublicKeyCrypto` class
 * `Linna\Crypto\SecretKeyCrypto` class
 
 #### Data Mapper
