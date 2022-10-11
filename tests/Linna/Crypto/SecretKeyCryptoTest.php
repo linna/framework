@@ -28,7 +28,7 @@ class SecretKeyCryptoTest extends TestCase
      */
     public function testGenerateKey(): void
     {
-        $this->assertSame(32, \strlen(SecretKeyCrypto::generateKey()));
+        $this->assertSame(SODIUM_CRYPTO_AEAD_AES256GCM_KEYBYTES, \strlen(SecretKeyCrypto::generateKey()));
         $this->assertNotSame(SecretKeyCrypto::generateKey(), SecretKeyCrypto::generateKey());
     }
 
@@ -40,9 +40,9 @@ class SecretKeyCryptoTest extends TestCase
     public function testGenerateNonce(): void
     {
         if (SecretKeyCrypto::getAlgo() == "AES-256-GCM") {
-            $this->assertSame(12, \strlen(SecretKeyCrypto::generateNonce()));
+            $this->assertSame(SODIUM_CRYPTO_AEAD_AES256GCM_NPUBBYTES, \strlen(SecretKeyCrypto::generateNonce()));
         } else {
-            $this->assertSame(24, \strlen(SecretKeyCrypto::generateNonce()));
+            $this->assertSame(SODIUM_CRYPTO_AEAD_CHACHA20POLY1305_IETF_NPUBBYTES, \strlen(SecretKeyCrypto::generateNonce()));
         }
 
         $this->assertNotSame(SecretKeyCrypto::generateNonce(), SecretKeyCrypto::generateNonce());

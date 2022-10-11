@@ -75,12 +75,12 @@ class PublicKeyCrypto
      * @param string $ciphertext        The encrypted message to attempt to decrypt.
      * @param string $nonce             A number that must be only used once, per message. Use the static method
      *                                  <code>generateNonce()</code> to generate a nonce having the correct size.
-     * @param string $receiverSecretKey The secret key which belongs to the receiver of the message.
      * @param string $senderPublicKey   The public key which belongs to the sender of the message.
+     * @param string $receiverSecretKey The secret key which belongs to the receiver of the message.
      *
      * @return string|bool The original message, false if the decryption fails.
      */
-    public function decrypt(string $ciphertext, string $nonce, string $receiverSecretKey, string $senderPublicKey): string|bool
+    public function decrypt(string $ciphertext, string $nonce, string $senderPublicKey, string $receiverSecretKey): string|bool
     {
         return \sodium_crypto_box_open(
             $ciphertext,

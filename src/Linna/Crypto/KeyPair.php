@@ -22,14 +22,14 @@ class KeyPair
     /**
      * Class Contructor.
      *
-     * @param string $publicKey The public key part of the key pair.
-     * @param string $secretKey The secret key part of the key pair.
+     * @param string $public The public key part of the key pair.
+     * @param string $secret The secret key part of the key pair.
      */
     public function __construct(
         /** @var string The public key part of the key pair. */
-        public readonly string $publicKey,
+        public readonly string $public,
         /** @var string The secret key part of the key pair. */
-        public readonly string $secretKey
+        public readonly string $secret
     ) {
     }
 }
