@@ -15,6 +15,7 @@ use Linna\Storage\Connectors\PdoConnector;
 use PDO;
 use PDOException;
 use PHPUnit\Framework\TestCase;
+use Linna\TestHelper\Pdo\PdoOptionsFactory;
 
 /**
  * Pdo Connector Test
@@ -28,7 +29,7 @@ class PdoConnectorTest extends TestCase
      */
     public function testConnection(): void
     {
-        $options = [
+        /*$options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
             'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
@@ -38,9 +39,9 @@ class PdoConnectorTest extends TestCase
                 PDO::ATTR_PERSISTENT         => false,
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
             ],
-        ];
+        ];*/
 
-        $this->assertInstanceOf(PDO::class, (new PdoConnector($options))->getResource());
+        $this->assertInstanceOf(PDO::class, (new PdoConnector(PdoOptionsFactory::getOptions()))->getResource());
     }
 
     /**

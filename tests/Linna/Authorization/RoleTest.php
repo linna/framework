@@ -21,8 +21,9 @@ use Linna\Authentication\UserMapper;
 //use Linna\Authorization\RoleToUserMapper;
 use Linna\Storage\ExtendedPDO;
 use Linna\Storage\StorageFactory;
-use PDO;
+//use PDO;
 use PHPUnit\Framework\TestCase;
+use Linna\TestHelper\Pdo\PdoOptionsFactory;
 
 class RoleTest extends TestCase
 {
@@ -45,7 +46,7 @@ class RoleTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        $options = [
+        /*$options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
             'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
@@ -55,9 +56,9 @@ class RoleTest extends TestCase
                 PDO::ATTR_PERSISTENT         => false,
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
             ],
-        ];
+        ];*/
 
-        $pdo = (new StorageFactory('pdo', $options))->get();
+        $pdo = (new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get();
 
         $password = new Password();
 

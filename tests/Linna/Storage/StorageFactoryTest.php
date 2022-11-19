@@ -18,6 +18,7 @@ use mysqli;
 use PDO;
 use PgSql\Connection;
 use PHPUnit\Framework\TestCase;
+use Linna\TestHelper\Pdo\PdoOptionsFactory;
 
 /**
  * Storage Factory Test
@@ -46,7 +47,7 @@ class StorageFactoryTest extends TestCase
      */
     public function testCreatePdo(): void
     {
-        $options = [
+        /*$options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
             'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
@@ -56,9 +57,9 @@ class StorageFactoryTest extends TestCase
                 PDO::ATTR_PERSISTENT         => false,
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
             ],
-        ];
+        ];*/
 
-        $this->assertInstanceOf(PDO::class, (new StorageFactory('pdo', $options))->get());
+        $this->assertInstanceOf(PDO::class, (new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get());
     }
 
     /**

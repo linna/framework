@@ -15,8 +15,9 @@ namespace Linna\Authentication;
 //use Linna\Authentication\LoginAttempt;
 use Linna\Storage\ExtendedPDO;
 use Linna\Storage\StorageFactory;
-use PDO;
+//use PDO;
 use PHPUnit\Framework\TestCase;
+use Linna\TestHelper\Pdo\PdoOptionsFactory;
 
 /**
  * Login Attempt Test.
@@ -36,7 +37,7 @@ class LoginAttemptTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        $options = [
+        /*$options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
             'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
@@ -46,9 +47,9 @@ class LoginAttemptTest extends TestCase
                 PDO::ATTR_PERSISTENT         => false,
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
             ],
-        ];
+        ];*/
 
-        $pdo = (new StorageFactory('pdo', $options))->get();
+        $pdo = (new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get();
         $enhancedAuthenticationMapper = new EnhancedAuthenticationMapper($pdo);
 
         self::$pdo = $pdo;

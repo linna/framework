@@ -15,8 +15,9 @@ namespace Linna\Authentication;
 //use Linna\Authentication\User;
 //use Linna\Authentication\UserMapper;
 use Linna\Storage\StorageFactory;
-use PDO;
+//use PDO;
 use PHPUnit\Framework\TestCase;
+use Linna\TestHelper\Pdo\PdoOptionsFactory;
 
 /**
  * User Test.
@@ -33,7 +34,7 @@ class UserTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        $options = [
+        /*$options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
             'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
@@ -43,10 +44,10 @@ class UserTest extends TestCase
                 PDO::ATTR_PERSISTENT         => false,
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
             ],
-        ];
+        ];*/
 
         self::$userMapper = new UserMapper(
-            (new StorageFactory('pdo', $options))->get(),
+            (new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get(),
             new Password()
         );
     }

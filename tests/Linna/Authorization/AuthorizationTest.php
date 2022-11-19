@@ -18,8 +18,9 @@ use Linna\Authentication\Password;
 use Linna\DataMapper\NullDomainObject;
 use Linna\Session\Session;
 use Linna\Storage\StorageFactory;
-use PDO;
+//use PDO;
 use PHPUnit\Framework\TestCase;
+use Linna\TestHelper\Pdo\PdoOptionsFactory;
 
 /**
  * Authorization Test.
@@ -48,7 +49,7 @@ class AuthorizationTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        $options = [
+        /*$options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
             'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
@@ -58,12 +59,12 @@ class AuthorizationTest extends TestCase
                 PDO::ATTR_PERSISTENT         => false,
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
             ],
-        ];
+        ];*/
 
         $session = new Session();
         $password = new Password();
         $authentication = new Authentication($session, $password);
-        $permissionMapper = new PermissionMapper((new StorageFactory('pdo', $options))->get());
+        $permissionMapper = new PermissionMapper((new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get());
 
         self::$password = $password;
         self::$session = $session;

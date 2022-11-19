@@ -1,0 +1,48 @@
+{
+    "name": "linna/framework",
+    "description": "Simple and elegant tools for build web application.",
+    "keywords": [
+        "best-pratices",
+        "framework",
+        "learning",
+        "mvc-framework",
+        "php"
+    ],
+    "homepage": "https://github.com/linna",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sebastian Rapetti",
+            "email": "sebastian.rapetti@tim.it"
+        }
+    ],
+    "require": {
+        "linna/typed-array": ">=3.0",
+        "php": ">=8",
+        "psr/container": "^2.0",
+        "psr/simple-cache": "^3.0"
+    },
+    "require-dev": {
+        "infection/infection": ">=0.26",
+        "phpstan/phpstan": ">=1.8",
+        "phpunit/phpunit": ">=9.0",
+        "linna/auth-mapper-pgsql": "dev-master",
+        "linna/db-dumps": "dev-master",
+        "mongodb/mongodb": "^1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Linna\\": "src/Linna/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Linna\\":  "tests/Linna/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "infection/extension-installer": true
+        }
+    }
+}

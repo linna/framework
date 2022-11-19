@@ -17,9 +17,10 @@ namespace Linna\Authentication;
 use Linna\Session\Session;
 use Linna\Storage\ExtendedPDO;
 use Linna\Storage\StorageFactory;
-use PDO;
+//use PDO;
 use PHPUnit\Framework\TestCase;
 use TypeError;
+use Linna\TestHelper\Pdo\PdoOptionsFactory;
 
 /**
  * Enhanced Authentication Test.
@@ -48,6 +49,8 @@ class EnhancedAuthenticationTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
+        /*\var_dump(PdoOptionsFactory::getOptions());
+
         $options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
             'user'     => $GLOBALS['pdo_mysql_user'],
@@ -58,11 +61,11 @@ class EnhancedAuthenticationTest extends TestCase
                 PDO::ATTR_PERSISTENT         => false,
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
             ],
-        ];
+        ];*/
 
         $session = new Session();
         $password = new Password();
-        $pdo = (new StorageFactory('pdo', $options))->get();
+        $pdo = (new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get();
         $enhancedAuthenticationMapper = new EnhancedAuthenticationMapper($pdo);
 
         self::$pdo = $pdo;
