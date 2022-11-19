@@ -59,8 +59,11 @@ jobs:
           coverage: xdebug
 
       - name: Override composer json file
-        run: cp ${{ format({{0}{1}{2}}}, 'composer.', matrix.mapper,'.json') }} composer.json
-
+        if: ${{ matrix.mapper }} == 'mysql'
+        run: cp composer.mysql.json composer.json
+        if: ${{ matrix.mapper }} == 'pgsql'
+        run: cp composer.pgsql.json composer.json
+        
       - name: Install dependencies
         run: composer install
 
