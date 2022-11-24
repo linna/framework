@@ -49,7 +49,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
@@ -61,15 +61,19 @@ jobs:
       - name: Override composer json file
         run: | 
           cp composer.$(echo ${{ matrix.mapper }} ).json composer.json
-          
+
       - name: Install dependencies
         run: composer install
 
       - name: Load Mysql database
-        run: mysql -uroot -h0.0.0.0 -ppassword < vendor/linna/db-dumps/src/linna_db_mysql_test.sql
+        run: | 
+          mysql -uroot -h0.0.0.0 -ppassword < vendor/linna/db-dumps/src/linna_db_mysql_test.sql
+          mysql -uroot -h0.0.0.0 -ppassword -e "SELECT user_id,name from linna_db.user"
 
       - name: Load Postgres database
-        run: PGPASSWORD=password psql -U postgres -h0.0.0.0 -a -f vendor/linna/db-dumps/src/linna_db_pgsql.sql
+        run: | 
+          PGPASSWORD=password psql -U postgres -h0.0.0.0 -a -f vendor/linna/db-dumps/src/linna_db_pgsql.sql
+          PGPASSWORD=password psql -U postgres -h0.0.0.0 -d linna_db -c "SELECT user_id, name from public.user"
 
       - name: Execute tests
         run: vendor/bin/phpunit --verbose
