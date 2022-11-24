@@ -61,7 +61,6 @@ jobs:
       - name: Override composer json file
         run: | 
           cp composer.$(echo ${{ matrix.mapper }} ).json composer.json
-          cat composer.json
           
       - name: Install dependencies
         run: composer install
