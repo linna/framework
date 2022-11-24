@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Linna\DataMapper\Exception;
 
+use Exception;
+
 /**
  * Null Domain Object Exception.
  *
