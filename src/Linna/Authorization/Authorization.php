@@ -37,7 +37,7 @@ class Authorization
     {
         $userId = $authentication->getLoginData()['user_id'];
 
-        $this->userId = $userId ?? 0;
+        $this->userId = empty($userId) ? 0 : $userId;
         $this->permission = $permissionMapper->fetchByUserId($this->userId);
     }
 
