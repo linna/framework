@@ -72,7 +72,7 @@ jobs:
 
       - name: Load Postgres database
         run: | 
-          PGPASSWORD=password psql -U postgres -h0.0.0.0 -a -f vendor/linna/db-dumps/src/linna_db_pgsql.sql
+          PGPASSWORD=password psql -U postgres -h0.0.0.0 -a -f vendor/linna/db-dumps/src/linna_db_pgsql_test.sql
           PGPASSWORD=password psql -U postgres -h0.0.0.0 -d linna_db -c "SELECT user_id, name from public.user"
 
       - name: Execute tests
