@@ -146,8 +146,8 @@ class Router
         }
 
         return new Route(
-            $route->method,
-            $rPath,
+            method:     $route->method,
+            path:       $rPath,
             callback:   $route->callback,
             model:      $route->model,
             view:       $route->view,

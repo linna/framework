@@ -29,11 +29,11 @@ abstract class AbstractStorageFactory
      * @param array<mixed> $options Driver options.
      */
     public function __construct(
-            /** @var string The driver used to connect to the persistent storage. */
-            protected string $driver,
+        /** @var string The driver used to connect to the persistent storage. */
+        protected string $driver,
 
-            /** @var array<mixed> Driver options. */
-            protected array $options = []
+        /** @var array<mixed> Driver options. */
+        protected array $options = []
     ) {
     }
 
