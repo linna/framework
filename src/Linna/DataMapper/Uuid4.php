@@ -20,7 +20,7 @@ use InvalidArgumentException;
  * https://tools.ietf.org/html/rfc4122
  *
  */
-class UUID4
+class Uuid4
 {
     /** @var string uuid in hexadecimal form. */
     private string $hexUUID = '';

@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Linna\TestHelper\DataMapper;
 
 use InvalidArgumentException;
-use Linna\DataMapper\UUID4;
+use Linna\DataMapper\Uuid4;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\FetchByNameInterface;
 use Linna\DataMapper\FetchAllInterface;
@@ -104,7 +104,7 @@ class UuidMapperMock extends MapperAbstract implements MapperInterface, FetchByN
     {
         $this->checkDomainObjectType($domainObjectMock);
 
-        $id = (new UUID4())->getHex();
+        $id = (new Uuid4())->getHex();
 
         $domainObjectMock->setId($id);
 

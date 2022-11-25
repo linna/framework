@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] [v0.28.0](https://github.com/linna/framework/compare/v0.27.0...v0.28.0)
 
 ### Added
+* Tests using Postgresql in GithubActions
 
 #### Crypto
 * `Linna\Crypto` namespace
@@ -33,6 +34,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 #### Data Mapper
 * The id of a `DomainObjectAbstract` is now `int|string` to use both a numeric id and a string uuid, this change has been reflected on all classes that use these values
 * `Linna\DataMapper\NullDomainObject` now throw a `NullDomainObjectException` when try to set or get the object id
+* `Linna\DataMapper\UUID4` class renamed to `Uuid4` to respect class naming concention
 
 #### Mvc
 * `Linna\Mvc\Model` is now an `abstract` class
