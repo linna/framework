@@ -39,4 +39,22 @@ interface DomainObjectInterface
      * @return int|string New domain object id or uuid, the type of the value could be only int or string.
      */
     public function setId(int|string $objectId): int|string;
+
+    /**
+     * Check if the domain object has a valid id.
+     *
+     * <p>Opposite of <code>hasNotId()</code> method</p>
+     *
+     * @return bool True if the object has the id set, false otherwise.
+     */
+    public function hasId(): bool;
+
+    /**
+     * Check if the domain object has a null id.
+     *
+     * <p>Opposite of <code>hasId()</code> method</p>
+     *
+     * @return bool True if the object has the id set, false otherwise.
+     */    
+    public function hasNotId(): bool;
 }

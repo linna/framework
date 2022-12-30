@@ -191,44 +191,6 @@ class Router
     }
 
     /**
-     * Create an array from query string params.
-     *
-     * @param string $queryString The query string from the request.
-     *
-     * @return void
-     */
-    private function buildParamFromQueryString(string $queryString): void
-    {
-        $param = \array_map(function ($array_value) {
-            $tmp = \explode('=', $array_value);
-            $array_value = [];
-            $key = $tmp[0];
-            $value = '';
-
-            if (isset($tmp[1])) {
-                $value = \urldecode($tmp[1]);
-            }
-
-            $array_value[$key] = $value;
-
-            return $array_value;
-        }, \explode('&', $queryString));
-
-        $temp = [];
-
-        foreach ($param as $value) {
-            if (\is_array($value)) {
-                $temp = \array_merge($temp, $value);
-                continue;
-            }
-
-            $temp[] = $value;
-        }
-
-        $this->queryParam = $temp;
-    }
-
-    /**
      * Return the result of the last route validation.
      *
      * @return RouteInterface <code>Route</code> object if the route was valid, NullRoute otherwise.
@@ -266,7 +228,7 @@ class Router
             $queryString = \substr(\strstr($url, '?'), 1);
             $url = \strstr($url, '?', true);
 
-            $this->buildParamFromQueryString($queryString);
+            parse_str($queryString, $this->queryParam);
         }
 
         return (\substr($url, 0, 1) === '/') ? $url : '/'.$url;
@@ -275,13 +237,13 @@ class Router
     /**
      * Map a route, add it to the routes collection used by the router.
      *
-     * @param RouteInterface $route The route should be mapped.
+     * @param Route $route The route should be mapped.
      *
      * @return void
      */
-    public function map(RouteInterface $route): void
+    public function map(Route $route): void
     {
-        $this->routes[] = $route;
+        $this->routes->append($route);
     }
 
     /**

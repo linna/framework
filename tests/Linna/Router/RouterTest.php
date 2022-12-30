@@ -581,7 +581,7 @@ class RouterTest extends TestCase
             ['/user?id= 1', 'id', '1'],
             ['/user?id=%201', 'id', ' 1'],
             ['/user?id=', 'id', ''],
-            ['/user?id==', 'id', '']
+            ['/user?id==', 'id', '='],
         ];
     }
 

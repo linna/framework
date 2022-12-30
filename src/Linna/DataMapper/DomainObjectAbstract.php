@@ -48,7 +48,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      *
      * @throws UnexpectedValueException If the id or the uuid on the domain object is already set.
      *
-     * @return mixed New domain object id or uuid, the type of the value could be only int or string.
+     * @return int|string New domain object id or uuid, the type of the value could be only int or string.
      */
     public function setId(int|string $id): int|string
     {
