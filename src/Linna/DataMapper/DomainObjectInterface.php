@@ -55,6 +55,6 @@ interface DomainObjectInterface
      * <p>Opposite of <code>hasId()</code> method</p>
      *
      * @return bool True if the object has the id set, false otherwise.
-     */    
+     */
     public function hasNotId(): bool;
 }
