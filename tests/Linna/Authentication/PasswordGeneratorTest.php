@@ -203,12 +203,13 @@ class PasswordGeneratorTest extends TestCase
     public function badTopologyProvider(): array
     {
         return [
-           ['uldz'],
-           ['uld!'],
-           ['uld1'],
-           ['...'],
-           [' '],
-           ['']
+           ['uldz'], //invalid char
+           ['uld!'], //invalid char
+           ['uld1'], //invalid char
+           ['...'],  //invalid char
+           ['   '],  //only spaces
+           [' '],    //one space
+           ['']      //void string
        ];
     }
 
