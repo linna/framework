@@ -94,20 +94,23 @@ class Authentication
         int|string $storedId
     ): bool {
         if (\hash_equals($userName, $storedUserName) && $this->password->verify($password, $storedPassword)) {
-            //write valid login on session
-            $this->session->loginTime = \time();
-            $this->session->login = [
+            //login data
+            $data = [
                 'login'     => true,
                 'user_id'   => $storedId,
                 'user_name' => $storedUserName,
             ];
 
+            //write valid login on session
+            $this->session->set('loginTime', \time());
+            $this->session->set('login', $data);
+
             //update login data
-            $this->data = $this->session->login;
+            $this->data = $data;
+            $this->logged = true;
 
             //regenerate session id
             $this->session->regenerate();
-            $this->logged = true;
 
             return true;
         }
@@ -123,10 +126,14 @@ class Authentication
     public function logout(): bool
     {
         //remove login data from session
-        unset($this->session->login, $this->session->loginTime);
+        $this->session->delete('login');
+        $this->session->delete('loginTime');
 
         //regenerate session id
         $this->session->regenerate();
+
+        //update login data
+        $this->data = ['user_name' => '', 'user_id' => ''];
         $this->logged = false;
 
         return true;
@@ -140,7 +147,7 @@ class Authentication
     private function refresh(): bool
     {
         //check for login data on in current session
-        if (empty($this->session->login)) {
+        if (empty($this->session->get('login'))) {
             return false;
         }
 
@@ -148,13 +155,15 @@ class Authentication
         $time = \time();
 
         //check if login expired
-        if (($this->session->loginTime + $this->session->expire) < $time) {
+        if (((int)$this->session->get('loginTime') + (int)$this->session->get('expire')) < $time) {
             return false;
         }
 
+        //update login time
+        $this->session->set('loginTime', \time());
+
         //update login data
-        $this->session->loginTime = $time;
-        $this->data = $this->session->login;
+        $this->data = $this->session->get('login');
 
         return true;
     }
