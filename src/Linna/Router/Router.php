@@ -228,7 +228,7 @@ class Router
             $queryString = \substr(\strstr($url, '?'), 1);
             $url = \strstr($url, '?', true);
 
-            parse_str($queryString, $this->queryParam);
+            \parse_str($queryString, $this->queryParam);
         }
 
         return (\substr($url, 0, 1) === '/') ? $url : '/'.$url;

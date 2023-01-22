@@ -121,7 +121,7 @@ class PasswordGenerator
         $groups = [117 => 0, 108 => 1, 100 => 2, 115 => 3];
         $password = [];
 
-        if (!count($array)) {
+        if (!\count($array)) {
             throw new InvalidArgumentException('Invalid pattern provided, accepted only u, l, d and s.');
         }
 
@@ -149,7 +149,7 @@ class PasswordGenerator
     private function getRandomChar(string $interval): string
     {
         $size = \strlen($interval) - 1;
-        $int = \random_int(0, $size);
+        $int = \random_int(0, \max(0, $size));
 
         return $interval[$int];
     }

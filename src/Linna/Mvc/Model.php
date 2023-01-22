@@ -19,14 +19,14 @@ use SplSubject;
 /**
  * Parent class for all model classes.
  *
- * <p>This class was implemented like part of Observer pattern</p>
+ * <p>This class was implemented like part of Observer pattern.</p>
  *
  * @link https://en.wikipedia.org/wiki/Observer_pattern
  * @link http://php.net/manual/en/class.splsubject.php
  */
 abstract class Model implements SplSubject
 {
-    /** @var SplObjectStorage List of attached observers. */
+    /** @var SplObjectStorage<SplObserver, View> List of attached observers. */
     private SplObjectStorage $observers;
 
     /** @var array<mixed> Data which will be notified to observers. */

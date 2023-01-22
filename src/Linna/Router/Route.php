@@ -25,17 +25,17 @@ class Route implements RouteInterface
     /**
      * Class Constructor.
      *
-     * @param string       $method     Http method, mandatory parameter.
-     * @param string       $path       Route path, mandatory parameter.
-     * @param string       $name       Route name, optional parameter.
-     * @param Closure|null $callback   Route callback, optional parameter.
-     * @param string       $model      Mvc model, optional parameter.
-     * @param string       $view       Mvc view, optional parameter.
-     * @param string       $controller Mvc controller, optional parameter.
-     * @param string       $action     Mvc controller action, optional parameter.
-     * @param bool         $default    Default route, optional parameter.
-     * @param array        $param      Route params, optional parameter.
-     * @param string       $allowedIps Allowed remote address, optional parameter.
+     * @param string                   $method     Http method, mandatory parameter.
+     * @param string                   $path       Route path, mandatory parameter.
+     * @param string                   $name       Route name, optional parameter.
+     * @param Closure|null             $callback   Route callback, optional parameter.
+     * @param string                   $model      Mvc model, optional parameter.
+     * @param string                   $view       Mvc view, optional parameter.
+     * @param string                   $controller Mvc controller, optional parameter.
+     * @param string                   $action     Mvc controller action, optional parameter.
+     * @param bool                     $default    Default route, optional parameter.
+     * @param array<int|string, mixed> $param      Route params, optional parameter.
+     * @param string                   $allowedIps Allowed remote address, optional parameter.
      */
     public function __construct(
 
@@ -97,8 +97,8 @@ class Route implements RouteInterface
         public readonly bool $default = false,
 
         /**
-         * @var array The parameters for the route, could be the param part of
-         *            the uri or parameters into the body of the request.
+         * @var array<int|string, mixed> The parameters for the route, could be the param part of
+         *                               the uri or parameters into the body of the request.
          */
         public readonly array $param = [],
 

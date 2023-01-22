@@ -22,6 +22,8 @@ use ReflectionNamedType;
 
 /**
  * Dependency Injection Container and Resolver.
+ *
+ * @implements \ArrayAccess<string, object>
  */
 class Container implements ContainerInterface, ArrayAccess
 {
@@ -119,7 +121,7 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * Resolve dependencies for given class.
      *
-     * @param string       $class An existing class.
+     * @param class-string $class An existing class.
      * @param array<mixed> $rules Custom rules.
      *
      * @return object|null Instance of resolved class or null.
@@ -146,8 +148,8 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * Create a map of dependencies for a class.
      *
-     * @param string $class Class for which the dependencies tree will built.
-     * @param int    $level The level of the dependency.
+     * @param class-string $class Class for which the dependencies tree will built.
+     * @param int          $level The level of the dependency.
      *
      * @return void
      */

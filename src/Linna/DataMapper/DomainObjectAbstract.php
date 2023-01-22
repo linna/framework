@@ -36,7 +36,7 @@ abstract class DomainObjectAbstract implements DomainObjectInterface
      *
      * @todo Throw an exception if the id has not set and this method are called
      */
-    public function getId(): int|string
+    public function getId(): null|int|string
     {
         return $this->id;
     }
