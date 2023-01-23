@@ -104,9 +104,10 @@ class ModelViewController
     private function beforeAfterControllerAction(string $when): void
     {
         $method = $when.\ucfirst($this->routeAction);
+        $callback = [$this->controller, $method];
 
-        if (\method_exists($this->controller, $method) && $method !== $when) {
-            \call_user_func([$this->controller, $method]);
+        if (\is_callable($callback) && $method !== $when) {
+            \call_user_func($callback);
         }
     }
 
@@ -119,8 +120,10 @@ class ModelViewController
      */
     private function beforeAfterController(string $when): void
     {
-        if (\method_exists($this->controller, $when)) {
-            \call_user_func([$this->controller, $when]);
+        $callback = [$this->controller, $when];
+
+        if (\is_callable($callback)) {
+            \call_user_func($callback);
         }
     }
 
@@ -135,22 +138,22 @@ class ModelViewController
         $action = $this->routeAction;
         $param = $this->routeParam;
 
-        //if controller does not have the method named entryPoint
-        //this avoid problems
+        //if controller does not have the method named entryPoint and no action provided, this avoid problems
         if (!\method_exists($this->controller, $action)) {
             return;
         }
 
-        //action - call controller passing params
-        if (!empty($param) && $action) {
-            //PHP 8, an associative array is passed as named arguments,
-            //pay attention on route declaring and to controller method arguments
-            \call_user_func_array([$this->controller, $action], $param);
-            return;
-        }
+        $callback = [$this->controller, $action];
 
-        //action - call controller
-        \call_user_func([$this->controller, $action]);
+        if (\is_callable($callback)) {
+            if (empty($param)) {
+                \call_user_func($callback);
+            } else {
+                //PHP 8, an associative array is passed as named arguments,
+                //pay attention on route declaring and to controller method arguments
+                \call_user_func_array($callback, $param);
+            }
+        }
     }
 
     /**
@@ -160,11 +163,10 @@ class ModelViewController
      */
     private function runView(): void
     {
-        //get route information
-        $action = $this->routeAction;
+        $callback = [$this->view, $this->routeAction];
 
-        if (\method_exists($this->view, $action)) {
-            \call_user_func([$this->view, $action]);
+        if (\is_callable($callback)) {
+            \call_user_func($callback);
         }
     }
 

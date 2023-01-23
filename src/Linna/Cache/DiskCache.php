@@ -211,7 +211,14 @@ class DiskCache implements CacheInterface
      */
     public function clear(): bool
     {
-        \array_map('unlink', (array) \glob($this->dir.'/*.php'));
+        // iterate every cache file and delete it.
+        foreach ((array) \glob($this->dir.'/*.php') as $file) {
+            if ($file !== false && \unlink($file) !== false) {
+                continue;
+            }
+            // something went wrong with file deleting.
+            return false;
+        }
 
         return true;
     }

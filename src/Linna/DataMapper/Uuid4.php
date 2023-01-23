@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Linna\DataMapper;
 
 use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * Universally Unique Identifier Version 4 utility.
@@ -90,10 +91,16 @@ class Uuid4
      * Return the uuid in 16 byte binary format.
      *
      * @return void
+     *
+     * @throws RuntimeException Something (internally to PHP) went wrong generating binary UUID value.
      */
     private function makeBin(): void
     {
-        $this->binUUID = \hex2bin(\str_replace('-', '', $this->hexUUID));
+        if (($uuid = \hex2bin(\str_replace('-', '', $this->hexUUID))) === false) {
+            throw new RuntimeException('Something went wrong generating binary UUID value.');
+        }
+
+        $this->binUUID = $uuid;
     }
 
     /**
