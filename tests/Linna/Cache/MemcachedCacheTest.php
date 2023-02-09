@@ -52,7 +52,7 @@ class MemcachedCacheTest extends TestCase
      *
      * @return array
      */
-    public function invalidResourceProvider(): array
+    public static function invalidResourceProvider(): array
     {
         return [
             [1],

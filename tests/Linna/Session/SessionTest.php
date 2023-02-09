@@ -238,7 +238,7 @@ class SessionTest extends TestCase
      *
      * @return array
      */
-    public function sessionTimeProvider(): array
+    public static function sessionTimeProvider(): array
     {
         return [
             [1797, true],

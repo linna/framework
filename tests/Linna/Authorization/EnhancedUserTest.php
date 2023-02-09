@@ -120,7 +120,7 @@ class EnhancedUserTest extends TestCase
      *
      * @return array
      */
-    public function userPermissionProvider(): array
+    public static function userPermissionProvider(): array
     {
         return [
             [4, 1, true], //permission inherited from role
@@ -204,7 +204,7 @@ class EnhancedUserTest extends TestCase
      *
      * @return array
      */
-    public function userRoleProvider(): array
+    public static function userRoleProvider(): array
     {
         return [
             [1, 1, true],

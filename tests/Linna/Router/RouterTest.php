@@ -99,7 +99,7 @@ class RouterTest extends TestCase
      *
      * @return array
      */
-    public function WrongArgumentsForValidateRouteProvider(): array
+    public static function WrongArgumentsForValidateRouteProvider(): array
     {
         return [
             [null, null],
@@ -158,7 +158,7 @@ class RouterTest extends TestCase
      *
      * @return array
      */
-    public function routeProvider(): array
+    public static function routeProvider(): array
     {
         return [
             ['/user/5/enable', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']], true], //test param route
@@ -231,7 +231,7 @@ class RouterTest extends TestCase
      *
      * @return array
      */
-    public function mapMethodRouteProvider(): array
+    public static function mapMethodRouteProvider(): array
     {
         return [
             ['GET', '/mapRouteTestGet'],
@@ -419,7 +419,7 @@ class RouterTest extends TestCase
      *
      * @return array
      */
-    public function restRouteProvider(): array
+    public static function restRouteProvider(): array
     {
         return [
             ['/user/5', 'GET', 'Show'],
@@ -538,7 +538,7 @@ class RouterTest extends TestCase
      *
      * @return array
      */
-    public function routeWithParamProvider(): array
+    public static function routeWithParamProvider(): array
     {
         return [
             ['/paramTest/az', 'az'],
@@ -574,7 +574,7 @@ class RouterTest extends TestCase
      *
      * @return array
      */
-    public function routeWithQueryStringProvider(): array
+    public static function routeWithQueryStringProvider(): array
     {
         return [
             ['/user?id=1', 'id', '1'],

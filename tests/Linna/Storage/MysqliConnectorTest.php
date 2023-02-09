@@ -44,14 +44,14 @@ class MysqliConnectorTest extends TestCase
      *
      * @return array
      */
-    public function connectionDataProvider(): array
+    public static function connectionDataProvider(): array
     {
         return [
-            ['a.a.a.a', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password'], 'linna_db', 3306],
-            ['127.0.0.1', '', $GLOBALS['pdo_mysql_password'], 'linna_db', 3306],
-            ['127.0.0.1', $GLOBALS['pdo_mysql_user'], 'bad_password', 'linna_db', 3306],
-            ['127.0.0.1', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password'], 'otherdb', 3306],
-            ['127.0.0.1', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password'], 'linna_db', 3305],
+            ['', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password'], 'linna_db', 3306],          //unknown address
+            ['127.0.0.1', '', $GLOBALS['pdo_mysql_password'], 'linna_db', 3306],                         //bad user
+            ['127.0.0.1', $GLOBALS['pdo_mysql_user'], '', 'linna_db', 3306],                             //bad password
+            ['127.0.0.1', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password'], 'otherdb', 3306],  //wrong db
+            ['127.0.0.1', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password'], 'linna_db', 3305], //wrong port
         ];
     }
 

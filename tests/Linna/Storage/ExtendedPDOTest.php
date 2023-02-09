@@ -52,7 +52,7 @@ class ExtendedPDOTest extends TestCase
      *
      * @return array
      */
-    public function correctParametersProvider(): array
+    public static function correctParametersProvider(): array
     {
         return [
             ['SELECT user_id, name, email FROM user WHERE name = :name', [

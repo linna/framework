@@ -48,7 +48,7 @@ class PasswordGeneratorTest extends TestCase
      *
      * @return array
      */
-    public function stringLengthProvider(): array
+    public static function stringLengthProvider(): array
     {
         return [
             [15],
@@ -121,7 +121,7 @@ class PasswordGeneratorTest extends TestCase
      *
      * @return array
      */
-    public function topologyAndPasswordProvider(): array
+    public static function topologyAndPasswordProvider(): array
     {
         $array = [];
 
@@ -168,7 +168,7 @@ class PasswordGeneratorTest extends TestCase
      *
      * @return array
      */
-    public function topologyProvider(): array
+    public static function topologyProvider(): array
     {
         $array = [];
 
@@ -200,7 +200,7 @@ class PasswordGeneratorTest extends TestCase
      *
      * @return array
      */
-    public function badTopologyProvider(): array
+    public static function badTopologyProvider(): array
     {
         return [
            ['uldz'], //invalid char

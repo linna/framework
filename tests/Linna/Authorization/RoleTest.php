@@ -118,7 +118,7 @@ class RoleTest extends TestCase
      *
      * @return array
      */
-    public function userRoleProvider(): array
+    public static function userRoleProvider(): array
     {
         return [
             [1, 1, true],
@@ -212,7 +212,7 @@ class RoleTest extends TestCase
      * @return array
      * @return void
      */
-    public function rolePermissionProvider(): array
+    public static function rolePermissionProvider(): array
     {
         return [
             [1, 1, true],

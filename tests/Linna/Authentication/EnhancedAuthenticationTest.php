@@ -131,7 +131,7 @@ class EnhancedAuthenticationTest extends TestCase
      *
      * @return array
      */
-    public function wrongCredentialProvider(): array
+    public static function wrongCredentialProvider(): array
     {
         return [
             ['root', 'mbvi2lgdpcj6vp3qemh2estei2', '192.168.1.2', 4, 9, 19, false, false, false],

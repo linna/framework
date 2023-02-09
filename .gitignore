@@ -3,6 +3,7 @@ composer.lock
 clover.xml
 infection-log.txt
 .phpdoc/cache/
+.phpunit.cache/
 vendor/
 .phan/
 .php-cs-fixer.cache

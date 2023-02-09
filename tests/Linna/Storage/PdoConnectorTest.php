@@ -49,7 +49,7 @@ class PdoConnectorTest extends TestCase
      *
      * @return array
      */
-    public function connectionDataProvider(): array
+    public static function connectionDataProvider(): array
     {
         return [
             ['0', $GLOBALS['pdo_mysql_user'], $GLOBALS['pdo_mysql_password']],

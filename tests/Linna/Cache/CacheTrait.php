@@ -27,7 +27,7 @@ trait CacheTrait
      *
      * @return array
      */
-    public function invalidKeyProvider(): array
+    public static function invalidKeyProvider(): array
     {
         return [
             [1],

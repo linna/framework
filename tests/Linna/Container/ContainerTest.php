@@ -43,7 +43,7 @@ class ContainerTest extends TestCase
      *
      * @return array
      */
-    public function valuesProvider(): array
+    public static function valuesProvider(): array
     {
         return [
             ['string', 'Hello World'],
@@ -315,7 +315,7 @@ class ContainerTest extends TestCase
      *
      * @return array
      */
-    public function classProvider(): array
+    public static function classProvider(): array
     {
         return [
             [ClassResObject::class],
@@ -390,7 +390,7 @@ class ContainerTest extends TestCase
      *
      * @return array
      */
-    public function implementationProvider(): array
+    public static function implementationProvider(): array
     {
         return [
             [[Container::RULE_INTERFACE => [ClassResInterface::class => [0 => ClassConcreteA::class]]], 'ClassConcreteA'],

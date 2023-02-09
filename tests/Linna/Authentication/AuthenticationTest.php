@@ -216,7 +216,7 @@ class AuthenticationTest extends TestCase
      *
      * @return array
      */
-    public function loginTimeProvider(): array
+    public static function loginTimeProvider(): array
     {
         return [
             [1798, false],

@@ -176,7 +176,7 @@ class ModelViewControllerTest extends TestCase
      *
      * @return array
      */
-    public function ModelViewControllerWrongArgProvider(): array
+    public static function ModelViewControllerWrongArgProvider(): array
     {
         $model = new CalculatorMultiModel();
         $view = new CalculatorMultiView(/*$model, */new JsonTemplate());
@@ -222,7 +222,7 @@ class ModelViewControllerTest extends TestCase
      *
      * @return array
      */
-    public function calculatorMultiProvider(): array
+    public static function calculatorMultiProvider(): array
     {
         return [
             ['/calculator/multi/multiply',[2,2,2],'Multiply: 8'],
@@ -260,7 +260,7 @@ class ModelViewControllerTest extends TestCase
      *
      * @return array
      */
-    public function calculatorSingleProvider(): array
+    public static function calculatorSingleProvider(): array
     {
         return [
             ['/calculator/single/multiply',[2,2,2],'Multiply: 8'],
@@ -308,7 +308,7 @@ class ModelViewControllerTest extends TestCase
      *
      * @return array
      */
-    public function someParamProvider(): array
+    public static function someParamProvider(): array
     {
         return [
             ['/multi/param/2017/1/1','2017-01-01 12:00:00'],
@@ -383,7 +383,7 @@ class ModelViewControllerTest extends TestCase
      *
      * @return array
      */
-    public function beforeAfterProvider(): array
+    public static function beforeAfterProvider(): array
     {
         return [
             [10,15],
