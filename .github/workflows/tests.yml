@@ -76,4 +76,4 @@ jobs:
           PGPASSWORD=password psql -U postgres -h0.0.0.0 -d linna_db -c "SELECT user_id, name from public.user"
 
       - name: Execute tests
-        run: vendor/bin/phpunit --verbose
+        run: vendor/bin/phpunit
