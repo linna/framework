@@ -41,6 +41,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Mvc\View` is now an `abstract` class
 * `Linna\Mvc\Controller` is now an `abstract` class
 
+### Fixed
+
+#### Authentication
+* `Linna\Authentication\Authentication->Login()` method now is safe against timing attacks
+
 ### Removed
 
 #### Session

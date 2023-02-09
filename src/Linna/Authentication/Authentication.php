@@ -93,7 +93,9 @@ class Authentication
         string $storedPassword,
         int|string $storedId
     ): bool {
-        if (\hash_equals($userName, $storedUserName) && $this->password->verify($password, $storedPassword)) {
+        // ! use of bitwise operator to make all conditions be evaluated
+        // ! this make the function safe against timing attacks
+        if ((int) \hash_equals($userName, $storedUserName) & (int) $this->password->verify($password, $storedPassword)) {
             //login data
             $data = [
                 'login'     => true,
