@@ -39,11 +39,11 @@ trait PermissionTrait
      * Check if a Permission is granted to a user or to a role, use permission
      * id.
      *
-     * @param string|int $permissionId The permission which will be checked as permission id.
+     * @param null|int|string $permissionId The permission which will be checked as permission id.
      *
      * @return bool True if the permission is granted, false otherwise.
      */
-    public function canById(string|int $permissionId): bool
+    public function canById(null|int|string $permissionId): bool
     {
         if (isset($this->permission[$permissionId])) {
             return true;

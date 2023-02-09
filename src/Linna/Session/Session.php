@@ -15,10 +15,13 @@ namespace Linna\Session;
 use Linna\Shared\ArrayAccessTrait;
 use Linna\Shared\PropertyAccessTrait;
 use ArrayAccess;
+use RuntimeException;
 use SessionHandlerInterface;
 
 /**
  * Manage session lifetime and session data.
+ *
+ * @implements ArrayAccess<int|string, mixed>
  */
 class Session implements ArrayAccess
 {
@@ -65,7 +68,7 @@ class Session implements ArrayAccess
         private bool $cookieHttpOnly = true,
 
         /** @var string Make the cookie only available for same site requests, the browser should not send the cookie for cross-site requests. */
-        private string $cookieSameSite = 'lax',
+        private string $cookieSameSite = 'Lax',
     ) {
         $this->status = \session_status();
     }
@@ -139,7 +142,6 @@ class Session implements ArrayAccess
             $this->data = &$_SESSION;
         }
 
-        //refresh session
         $this->refresh();
     }
 
@@ -151,8 +153,9 @@ class Session implements ArrayAccess
     private function refresh(): void
     {
         $time = \time();
+        $isset = isset($this->data['time']);
 
-        if (isset($this->data['time']) && $this->data['time'] <= ($time - $this->expire)) {
+        if ($isset && $this->data['time'] <= ($time - $this->expire)) {
             //delete session data
             $this->data = [];
 
@@ -160,31 +163,36 @@ class Session implements ArrayAccess
             $this->regenerate();
         }
 
+        //set session data
         $this->setSessionData($time);
 
-        //it fixs the behavior of session that die because it does not refresh
-        //expiration time, also if present user interaction, with browser.
+        //refresh cookie
+        //only if session already exists, this solve the problem of double cookie header on new session
+        if ($isset) {
+            //it fixs the behavior of session that die because it does not refresh
+            //expiration time, also if present user interaction, with browser.
 
-        //PHP 7.2 version
-        /*\setcookie($this->name, $this->id,
-            $this->expire, //($this->expire > 0) ? time() + $this->expire : 0, //expire
-            //($time + $this->expire),    //expire
-            $this->cookiePath,          //path
-            $this->cookieDomain,        //domain
-            $this->cookieSecure,        //secure
-            $this->cookieHttpOnly       //http only
-        );*/
+            //PHP 7.2 version
+            /*\setcookie($this->name, $this->id,
+                $this->expire, //($this->expire > 0) ? time() + $this->expire : 0, //expire
+                //($time + $this->expire),    //expire
+                $this->cookiePath,          //path
+                $this->cookieDomain,        //domain
+                $this->cookieSecure,        //secure
+                $this->cookieHttpOnly       //http only
+            );*/
 
-        //PHP 7.3 version
-        //https://www.php.net/manual/en/migration73.other-changes.php
-        \setcookie($this->name, $this->id, [
-            'path'      => $this->cookiePath,
-            'domain'    => $this->cookieDomain,
-            'expires'   => $time + $this->expire,
-            'secure'    => $this->cookieSecure,
-            'httponly'  => $this->cookieHttpOnly,
-            'samesite'  => $this->cookieSameSite
-        ]);
+            //PHP 7.3 version
+            //https://www.php.net/manual/en/migration73.other-changes.php
+            \setcookie($this->name, $this->id, [
+                'path'      => $this->cookiePath,
+                'domain'    => $this->cookieDomain,
+                'expires'   => $time + $this->expire,
+                'secure'    => $this->cookieSecure,
+                'httponly'  => $this->cookieHttpOnly,
+                'samesite'  => $this->cookieSameSite
+            ]);
+        }
     }
 
     /**
@@ -193,10 +201,16 @@ class Session implements ArrayAccess
      * @param int $time The time on which the session was created.
      *
      * @return void
+     *
+     * @throws RuntimeException if not possible get a the session id.
      */
     private function setSessionData(int $time): void
     {
-        $this->id = \session_id();
+        if (($id = \session_id()) == false) {
+            throw new RuntimeException('Unable to get session id from session_id function.');
+        }
+
+        $this->id = $id;
         $this->data['time'] = $time;
         $this->data['expire'] = $this->expire;
         $this->status = \session_status();

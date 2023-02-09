@@ -23,7 +23,7 @@ use ReflectionNamedType;
 /**
  * Dependency Injection Container and Resolver.
  *
- * @implements \ArrayAccess<string, object>
+ * @implements ArrayAccess<string, object>
  */
 class Container implements ContainerInterface, ArrayAccess
 {

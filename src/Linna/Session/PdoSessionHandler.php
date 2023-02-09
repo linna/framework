@@ -94,12 +94,21 @@ class PdoSessionHandler implements SessionHandlerInterface
      */
     public function gc(int $max_lifetime): int|false
     {
+        //get timestamp
         $timestamp = \date(DATE_ATOM, \time() - $max_lifetime);
 
-        return $this->pdo->queryWithParam(
+        //do query
+        $pdos = $this->pdo->queryWithParam(
             $this->query::QUERY_GC,
             [[':max_lifetime', $timestamp, \PDO::PARAM_STR]]
-        )->rowCount();
+        );
+
+        //return rows if query is ok
+        if ($pdos !== false) {
+            return $pdos->rowCount();
+        }
+
+        return false;
     }
 
     /**
@@ -116,12 +125,20 @@ class PdoSessionHandler implements SessionHandlerInterface
      */
     public function read(string $id): string|false
     {
-        //string casting is a fix for PHP 7
-        //when strict type are enable
-        return (string) $this->pdo->queryWithParam(
+        //do query
+        $pdos = $this->pdo->queryWithParam(
             $this->query::QUERY_READ,
             [[':id', $id, \PDO::PARAM_STR]]
-        )->fetchColumn();
+        );
+
+        //fetch column if query is ok
+        //string casting is a fix for PHP 7
+        //when strict type are enable
+        if ($pdos !== false) {
+            return (string) $pdos->fetchColumn();
+        }
+
+        return false;
     }
 
     /**

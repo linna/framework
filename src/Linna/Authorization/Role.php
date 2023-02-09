@@ -62,11 +62,11 @@ class Role extends DomainObjectAbstract
     /**
      * Check if an user is in role, use the user id.
      *
-     * @param int|string $userId The user which will be checked as user id.
+     * @param null|int|string $userId The user which will be checked as user id.
      *
      * @return bool True if the user is in role, false otherwise.
      */
-    public function isUserInRoleById(string|int $userId): bool
+    public function isUserInRoleById(null|int|string $userId): bool
     {
         if (isset($this->users[$userId])) {
             return true;

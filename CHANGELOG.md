@@ -46,6 +46,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 #### Authentication
 * `Linna\Authentication\Authentication->Login()` method now is safe against timing attacks
 
+#### Session
+* `Linna\Session\Session` double cookie header when new session starts
+
 ### Removed
 
 #### Session

@@ -54,11 +54,11 @@ class EnhancedUser extends User
     /**
      * Check if an user has a role, use role Id.
      *
-     * @param string|int $roleId The role as role id or uuid which will be checked.
+     * @param null|int|string $roleId The role as role id or uuid which will be checked.
      *
      * @return bool True if the user has the role, false otherwise.
      */
-    public function hasRoleById(string|int $roleId): bool
+    public function hasRoleById(null|int|string $roleId): bool
     {
         if (isset($this->roles[$roleId])) {
             return true;
