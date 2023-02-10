@@ -97,7 +97,7 @@ class MemcachedCache implements CacheInterface
      */
     private function handleTtl(DateInterval|int|null $ttl): int
     {
-        if ($ttl == null) {
+        if ($ttl === null) {
             return 0;
         }
         if (\is_int($ttl)) {
