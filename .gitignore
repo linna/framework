@@ -8,5 +8,5 @@ vendor/
 .phan/
 .php-cs-fixer.cache
 .phpunit.result.cache
-phpunit.local.xml
+phpunit.xml
 phpdoc.xml
