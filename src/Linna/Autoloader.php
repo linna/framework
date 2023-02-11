@@ -74,7 +74,7 @@ class Autoloader
      * An associative array where the key is a namespace prefix and the value
      * is an array of base directories for classes in that namespace.
      *
-     * @var array
+     * @var array<int|string, mixed>
      */
     protected array $prefixes = [];
 
@@ -85,7 +85,13 @@ class Autoloader
      */
     public function register(): bool
     {
-        return \spl_autoload_register([$this, 'loadClass']);
+        $callback = '\Linna\Autoloader::loadClass';
+
+        if (\is_callable($callback)) {
+            return \spl_autoload_register($callback);
+        }
+
+        return false;
     }
 
     /**
@@ -102,7 +108,7 @@ class Autoloader
      * Adds a base directory for a namespace prefix, accept an array of namespaces
      * Utilize this for prevente multiple <code>addNamespace()</code> calls.
      *
-     * @param array $namespaces The namespace prefix array.
+     * @param array<int|string, string> $namespaces The namespace prefix array.
      *
      * @return void
      */

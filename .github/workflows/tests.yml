@@ -5,6 +5,34 @@ on:
   pull_request:
 
 jobs:
+  static-analysis:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [8.1, 8.2]
+
+    name: Code analysis with PHPStan PHP ${{ matrix.php }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: xdebug
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Execute PHPStan analysis
+        if: always()
+        run: vendor/bin/phpstan --xdebug analyze src --level 8
+
   tests:
     runs-on: ubuntu-latest
 
@@ -43,7 +71,7 @@ jobs:
         php: [8.1, 8.2]
         mapper: [mysql, pgsql]
 
-    name: PHP ${{ matrix.php }} ${{ matrix.mapper }} 
+    name: Unit tests PHP ${{ matrix.php }} and ${{ matrix.mapper }} 
 
     steps:
       - name: Checkout
