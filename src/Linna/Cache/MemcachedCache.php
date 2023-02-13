@@ -30,17 +30,39 @@ class MemcachedCache implements CacheInterface
     /**
      * Class Constructor.
      *
-     * @param array<mixed> $options
+     * @param array<mixed> $options Options for memecached, passing at least parameters for one server is mandatory, ex.
+     *                              <code>MemcachedCache(['host' => 'mem1.domain.com', 'port' => 11211])</code> or
+     *                              <code>MemcachedCache(['servers' => [['mem1.domain.com', 11211], ['mem2.domain.com', 11211]]])</code>.
+     *                              The array of options should contains same parameters as required
+     *                              from <code>Memcached::addServers</code> or <code>Memcached::addServers</code>.
      *
-     * @throws InvalidArgumentException if options not contain memcached resource.
+     * @throws InvalidArgumentException if with options is not possible configure memecached servers.
+     *
+     * @link https://www.php.net/manual/en/memcached.addserver.php
+     * @link https://www.php.net/manual/en/memcached.addservers.php
      */
     public function __construct(array $options)
     {
-        if (!($options['resource'] instanceof Memcached)) {
-            throw new \InvalidArgumentException('MemcachedCache class need instance of Memcached passed as option. [\'resource\' => $memcached].');
+        $this->memcached = new Memcached();
+
+        $result = false;
+
+        if (isset($options['host']) && isset($options['port'])) {
+            $weight = $options['weight'] ?? 0;
+            $result |= $this->memcached->addServer(
+                host: $options['host'],
+                port: $options['port'],
+                weight: $weight
+            );
         }
 
-        $this->memcached = $options['resource'];
+        if (isset($options['servers'])) {
+            $result |= $this->memcached->addServers(servers: $options['servers']);
+        }
+
+        if (!$result) {
+            throw new \InvalidArgumentException('Somethig went worng adding memcached servers.');
+        }
     }
 
     /**

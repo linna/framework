@@ -12,10 +12,6 @@ declare(strict_types=1);
 namespace Linna\Cache;
 
 use InvalidArgumentException;
-//use Linna\Cache\DiskCache;
-//use Linna\Cache\CacheFactory;
-//use Linna\Cache\MemcachedCache;
-use Memcached;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -42,10 +38,7 @@ class CacheFactoryTest extends TestCase
      */
     public function testCreateMemcachedCache(): void
     {
-        $memcached = new Memcached();
-        $memcached->addServer($GLOBALS['mem_host'], (int) $GLOBALS['mem_port']);
-
-        $this->assertInstanceOf(MemcachedCache::class, (new CacheFactory('memcached', ['resource' => $memcached]))->get());
+        $this->assertInstanceOf(MemcachedCache::class, (new CacheFactory('memcached', ['host' => $GLOBALS['mem_host'], 'port' => (int) $GLOBALS['mem_port']]))->get());
     }
 
     /**

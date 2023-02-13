@@ -31,6 +31,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+#### Cache
+* `Linna\Cache\MemcachedCache->__construct()` now requires only options about memcached server/servers
+
 #### Data Mapper
 * The id of a `DomainObjectAbstract` is now `int|string` to use both a numeric id and a string uuid, this change has been reflected on all classes that use these values
 * `Linna\DataMapper\NullDomainObject` now throw a `NullDomainObjectException` when try to set or get the object id
