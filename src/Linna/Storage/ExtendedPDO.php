@@ -37,18 +37,22 @@ class ExtendedPDO extends PDO
     {
         $statement = $this->prepare($query);
 
-        foreach ($param as $value) {
-            $this->checkValue($value);
+        $callback = [$statement, "bindParam"];
 
-            //reassign as reference
-            //because bindParam need it as reference
-            $ref = $value;
-            $ref[1] = &$value[1];
+        if (\is_callable($callback)) {
+            foreach ($param as $value) {
+                $this->checkValue($value);
 
-            \call_user_func_array([$statement, "bindParam"], $ref);
+                //reassign as reference
+                //because bindParam need it as reference
+                $ref = $value;
+                $ref[1] = &$value[1];
+
+                \call_user_func_array($callback, $ref);
+            }
+
+            $this->lastOperationStatus = $statement->execute();
         }
-
-        $this->lastOperationStatus = $statement->execute();
 
         return $statement;
     }

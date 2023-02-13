@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Linna\Storage\Connectors;
 
 use Linna\Storage\AbstractConnector;
+use RuntimeException;
 
 /**
  * Mysql Improved Extension Connector.
@@ -26,9 +27,14 @@ class PgConnector extends AbstractConnector
      */
     public function getResource(): object
     {
-        return \pg_connect(
+        //check required because pg_connect is a function that returns a class or false
+        if (($connection = \pg_connect(
             $this->options['connection_string'],
             $this->options['flags']
-        );
+        )) === false) {
+            throw new RuntimeException('Connection to Postgre using pg_connect() failed.');
+        }
+
+        return $connection;
     }
 }

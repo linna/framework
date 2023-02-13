@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Linna\Storage\Connectors;
 
 use Linna\Storage\AbstractConnector;
-use mysqli;
 
 /**
  * Mysql Improved Extension Connector.
@@ -29,7 +28,7 @@ class MysqliConnector extends AbstractConnector
     {
         \mysqli_report(MYSQLI_REPORT_ALL);
 
-        return new mysqli(
+        return new \mysqli(
             $this->options['host'],
             $this->options['user'],
             $this->options['password'],
