@@ -121,7 +121,7 @@ class PasswordGenerator
         $groups = [117 => 0, 108 => 1, 100 => 2, 115 => 3];
         $password = [];
 
-        if (!\count($array)) {
+        if (\count($array) === 0) {
             throw new InvalidArgumentException('Invalid pattern provided, accepted only u, l, d and s.');
         }
 
