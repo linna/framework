@@ -86,12 +86,14 @@ class Autoloader
     public function register(): bool
     {
         $callback = '\Linna\Autoloader::loadClass';
+        $result = false;
 
         if (\is_callable($callback)) {
-            return \spl_autoload_register($callback);
+            /** @phpstan-ignore-next-line */
+            $result = $result || \spl_autoload_register($callback);
         }
 
-        return false;
+        return $result;
     }
 
     /**

@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Linna\Router;
 
 use BadMethodCallException;
+use RuntimeException;
 
 /**
  * Router.
@@ -145,6 +146,10 @@ class Router
             $rPath = \preg_replace('`\([0-9A-Za-z\|]++\)`', $matches[1], $route->path);
         }
 
+        if ($rPath === null) {
+            throw new RuntimeException("Route path cannot be null.");
+        }
+
         return new Route(
             method:     $route->method,
             path:       $rPath,
@@ -210,7 +215,9 @@ class Router
     private function filterUri(string $passedUri): string
     {
         //sanitize url
-        $url = \filter_var($passedUri, FILTER_SANITIZE_URL);
+        if (($url = \filter_var($passedUri, FILTER_SANITIZE_URL)) === false) {
+            throw new RuntimeException("Something went wrong during url sanitization.");
+        }
 
         //check for rewrite mode and remove the entry point if present
         $url = \str_replace($this->rewriteModeFalseEntryPoint, '', $url);
@@ -221,17 +228,22 @@ class Router
         }
 
         //remove doubled slash
-        $url = \str_replace('//', '/', $url);
+        $url = \str_replace('//', '/', '/'.$url);
 
         //check for query string parameters
         if (\strpos($url, '?') !== false) {
+            /** @phpstan-ignore-next-line */
             $queryString = \substr(\strstr($url, '?'), 1);
             $url = \strstr($url, '?', true);
 
             \parse_str($queryString, $this->queryParam);
         }
 
-        return (\substr($url, 0, 1) === '/') ? $url : '/'.$url;
+        if ($url === false) {
+            throw new RuntimeException("Something went wrong during url sanitization.");
+        }
+
+        return $url;
     }
 
     /**

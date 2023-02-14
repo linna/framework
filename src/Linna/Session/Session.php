@@ -184,6 +184,7 @@ class Session implements ArrayAccess
 
             //PHP 7.3 version
             //https://www.php.net/manual/en/migration73.other-changes.php
+            /** @phpstan-ignore-next-line */
             \setcookie($this->name, $this->id, [
                 'path'      => $this->cookiePath,
                 'domain'    => $this->cookieDomain,
