@@ -23,8 +23,8 @@ use SessionHandlerInterface;
  * <p>For Mysql:</p>
  * <pre>
  * CREATE TABLE `session` (
- *   `session_id` char(128) NOT NULL,
- *   `session_data` varchar(3096) NOT NULL,
+ *   `session_id` char(255) NOT NULL,
+ *   `session_data` varbinary(4096) NOT NULL,
  *   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
  *   `last_update` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  * PRIMARY KEY (`session_id`)

@@ -17,9 +17,9 @@ use PHPUnit\Framework\TestCase;
 use SessionHandler;
 
 /**
- * Encrypted Session Handler Test.
+ * Encrypted Session Handler Test with default file php session handler.
  */
-class EncryptedSessionHandlerTest extends TestCase
+class EncryptedSessionHandlerDefaultTest extends TestCase
 {
     use SessionHandlerTrait;
 
