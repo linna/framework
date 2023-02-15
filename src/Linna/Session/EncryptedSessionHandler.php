@@ -134,7 +134,12 @@ class EncryptedSessionHandler implements SessionHandlerInterface
         //get encrypted session data
         $ciphertext = $this->handler->read($id);
 
-        //decrypt it
+        //if session doesn't contain data return a void string
+        if (\strlen($ciphertext) === 0) {
+            return "";
+        }
+
+        //decript session data
         $plaintext = $this->crypto->decrypt($ciphertext, $this->additionalData, $this->nonce, $this->key);
 
         //return plaintext
@@ -169,8 +174,11 @@ class EncryptedSessionHandler implements SessionHandlerInterface
         //encrypt session data
         $ciphertext = $this->crypto->encrypt($data, $this->additionalData, $this->nonce, $this->key);
 
-        //save it
-        return $this->handler->write($id, $ciphertext);
+        //pass the encrypted data to original handler
+        $result = $this->handler->write($id, $ciphertext);
+
+        //return the result
+        return $result;
     }
 
     /**
