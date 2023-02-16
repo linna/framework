@@ -85,6 +85,6 @@ Please see [CONTRIBUTING.md](https://github.com/linna/framework/blob/master/CONT
 
 ### Less High Priority
 - [ ] Add support for Redis cache, for general cache and sessions
-- [ ] Encryption for non standard session storage (redis, memcached, databases)
+- [X] Encryption for non standard session storage (redis, memcached, databases)
 - [ ] Router with PSR-7 support
 - [ ] More about Router

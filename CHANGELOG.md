@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\DataMapper\Exception\NullDomainObjectException` exception
 
 #### Session
+* `Linna\Session\EncryptedSessionHandler` class, a decorator to provide a encryption layer to other handlers
 * `Linna\Session\PdoSessionHandler` class to unify `MysqlPdoSessionHandler` PgsqlPdoSessionHandler`
 * `Linna\Session\PdoSessionHandlerQueryInterface` interface
 * `Linna\Session\PdoSessionHandlerMysqlQuery` class
