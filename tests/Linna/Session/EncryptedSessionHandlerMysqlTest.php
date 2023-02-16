@@ -24,7 +24,7 @@ class EncryptedSessionHandlerMysqlTest extends TestCase
 {
     use SessionHandlerTrait;
     use SessionPdoHandlerTrait;
-    
+
     /**
      * Set up before class.
      *
@@ -51,7 +51,7 @@ class EncryptedSessionHandlerMysqlTest extends TestCase
 
         // from the pdo handler trait, static
         self::$query = new PdoSessionHandlerMysqlQuery();
-        
+
         $crypto = new SecretKeyCrypto();
         //the handler to be decorated
         $handler = new PdoSessionHandler($pdo, new PdoSessionHandlerMysqlQuery());
@@ -62,7 +62,7 @@ class EncryptedSessionHandlerMysqlTest extends TestCase
 
         self::$handler = new EncryptedSessionHandler($crypto, $handler, $addtionaData, $nonce, $key);
         self::$session = new Session(expire: 10);
-        
+
         // from the pdo handler trait, non static
         self::$querySelect = 'SELECT * FROM session';
         self::$queryDelete = 'DELETE FROM session';

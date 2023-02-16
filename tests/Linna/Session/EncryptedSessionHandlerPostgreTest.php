@@ -24,7 +24,7 @@ class EncryptedSessionHandlerPostgreTest extends TestCase
 {
     use SessionHandlerTrait;
     use SessionPdoHandlerTrait;
-    
+
     /**
      * Set up before class.
      *
@@ -50,10 +50,10 @@ class EncryptedSessionHandlerPostgreTest extends TestCase
 
         // from the pdo handler trait, static
         self::$query = new PdoSessionHandlerPostgreQuery();
-        
+
         $crypto = new SecretKeyCrypto();
         //the handler to be decorated
-        $handler = new PdoSessionHandler($pdo, new PdoSessionHandlerMysqlQuery());
+        $handler = new PdoSessionHandler($pdo, new PdoSessionHandlerPostgreQuery());
 
         $addtionaData = 'session_test';
         $nonce = SecretKeyCrypto::generateNonce();
@@ -61,7 +61,7 @@ class EncryptedSessionHandlerPostgreTest extends TestCase
 
         self::$handler = new EncryptedSessionHandler($crypto, $handler, $addtionaData, $nonce, $key);
         self::$session = new Session(expire: 10);
-        
+
         // from the pdo handler trait, non static
         self::$querySelect = 'SELECT * FROM public.session';
         self::$queryDelete = 'DELETE FROM public.session';

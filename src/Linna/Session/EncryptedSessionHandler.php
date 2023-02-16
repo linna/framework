@@ -140,7 +140,7 @@ class EncryptedSessionHandler implements SessionHandlerInterface
         }
 
         //decript session data
-        $plaintext = $this->crypto->decrypt($ciphertext, $this->additionalData, $this->nonce, $this->key);
+        $plaintext = $this->crypto->decrypt(\base64_decode($ciphertext), $this->additionalData, $this->nonce, $this->key);
 
         //return plaintext
         return $plaintext;
@@ -175,7 +175,7 @@ class EncryptedSessionHandler implements SessionHandlerInterface
         $ciphertext = $this->crypto->encrypt($data, $this->additionalData, $this->nonce, $this->key);
 
         //pass the encrypted data to original handler
-        $result = $this->handler->write($id, $ciphertext);
+        $result = $this->handler->write($id, \base64_encode($ciphertext));
 
         //return the result
         return $result;
