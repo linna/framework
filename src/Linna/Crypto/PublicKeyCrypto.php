@@ -78,9 +78,9 @@ class PublicKeyCrypto
      * @param string $senderPublicKey   The public key which belongs to the sender of the message.
      * @param string $receiverSecretKey The secret key which belongs to the receiver of the message.
      *
-     * @return string|bool The original message, false if the decryption fails.
+     * @return string|false The original message, false if the decryption fails.
      */
-    public function decrypt(string $ciphertext, string $nonce, string $senderPublicKey, string $receiverSecretKey): string|bool
+    public function decrypt(string $ciphertext, string $nonce, string $senderPublicKey, string $receiverSecretKey): string|false
     {
         return \sodium_crypto_box_open(
             $ciphertext,

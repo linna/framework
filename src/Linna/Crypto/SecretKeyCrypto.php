@@ -65,11 +65,11 @@ class SecretKeyCrypto
      * @param string $key             The key used to encrypt. Use the static method <code>generateKey()</code> to
      *                                generate a key having the correct size.
      *
-     * @return string|bool The original message, false if the decryption fails.
+     * @return string|false The original message, false if the decryption fails.
      *
      * @throws SodiumException If the <code>$nonce</code> or the <code>$key</code> have the wrong size.
      */
-    public function decrypt(string $ciphertext, string $additional_data, string $nonce, string $key): string|bool
+    public function decrypt(string $ciphertext, string $additional_data, string $nonce, string $key): string|false
     {
         // It isn't possible call the Closure using the property without using round brackets.
         return ($this->decrypt)($ciphertext, $additional_data, $nonce, $key);

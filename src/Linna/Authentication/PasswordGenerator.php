@@ -113,17 +113,18 @@ class PasswordGenerator
      *
      * @return string Random password corresponding the given topology.
      *
-     * @throws InvalidArgumentException If invalid pattern is provided.
+     * @throws InvalidArgumentException If invalid pattern or void string is provided.
      */
     public function getFromTopology(string $topology): string
     {
+        // check for void string
+        if (\strlen($topology) === 0) {
+            throw new InvalidArgumentException('Invalid pattern provided, accepted only u, l, d and s.');
+        }
+
         $array = \str_split(\strtolower($topology));
         $groups = [117 => 0, 108 => 1, 100 => 2, 115 => 3];
         $password = [];
-
-        if (\count($array) === 0) {
-            throw new InvalidArgumentException('Invalid pattern provided, accepted only u, l, d and s.');
-        }
 
         foreach ($array as $char) {
             $int = \ord($char);
