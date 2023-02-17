@@ -41,8 +41,6 @@ jobs:
           - 11211:11211
       redis:
         image: redis
-        env:
-          REDIS_PASSWORD: password
         ports:
           - 6379:6379
         options: --entrypoint redis-server

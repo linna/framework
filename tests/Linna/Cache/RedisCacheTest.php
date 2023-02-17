@@ -27,10 +27,12 @@ class RedisCacheTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        $options = [
-           'connect' => ['host' => $GLOBALS['redis_host'], 'port' => (int) $GLOBALS['redis_port'], 'timeout' => 5],
-           'auth' => ['pass' => 'password']
-        ];
+        $options = ['connect' => ['host' => $GLOBALS['redis_host'], 'port' => (int) $GLOBALS['redis_port'], 'timeout' => 5]];
+
+        if (strlen($GLOBALS['redis_password']) > 0) {
+            $options['auth'] = ['pass' => $GLOBALS['redis_password']];
+        }
+
         self::$cache = new RedisCache($options);
     }
 
@@ -53,10 +55,11 @@ class RedisCacheTest extends TestCase
      */
     public static function optionsProvider(): array
     {
-        $options = [
-           'connect' => ['host' => $GLOBALS['redis_host'], 'port' => (int) $GLOBALS['redis_port'], 'timeout' => 5],
-           'auth' => ['pass' => 'password']
-        ];
+        $options = ['connect' => ['host' => $GLOBALS['redis_host'], 'port' => (int) $GLOBALS['redis_port'], 'timeout' => 5]];
+
+        if (strlen($GLOBALS['redis_password']) > 0) {
+            $options['auth'] = ['pass' => $GLOBALS['redis_password']];
+        }
 
         return [
             [$options], //default host and port

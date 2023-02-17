@@ -27,6 +27,6 @@
     <var name="mongodb_server_string" value="mongodb://localhost:27017"/>
     <var name="redis_host" value="127.0.0.1"/>
     <var name="redis_port" value="6379"/>
-    <var name="redis_password" value="password"/>
+    <var name="redis_password" value=""/>
   </php>
 </phpunit>
