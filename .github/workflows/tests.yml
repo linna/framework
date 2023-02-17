@@ -63,6 +63,11 @@ jobs:
         image: memcached
         ports:
           - 11211:11211
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server
 
     strategy:
       fail-fast: true
@@ -83,6 +88,7 @@ jobs:
           php-version: ${{ matrix.php }}
           tools: composer:v2
           coverage: xdebug
+          extensions: redis
 
       - name: Override composer json file
         run: | 
