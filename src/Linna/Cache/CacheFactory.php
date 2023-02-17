@@ -24,6 +24,7 @@ class CacheFactory extends AbstractStorageFactory
     protected array $supportedDriver = [
         'disk'       => DiskCache::class,
         'memcached'  => MemcachedCache::class,
+        'redis'  => RedisCache::class
     ];
 
     /**

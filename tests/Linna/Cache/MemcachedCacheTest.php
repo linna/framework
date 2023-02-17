@@ -72,7 +72,7 @@ class MemcachedCacheTest extends TestCase
     }
 
     /**
-     * Invalid options provider.
+     * Options provider.
      *
      * @return array
      */
@@ -95,7 +95,7 @@ class MemcachedCacheTest extends TestCase
     public function testCreateInstance($options): void
     {
         $cache = new MemcachedCache($options);
-        $cache->set('foo', 1);
+        $this->assertTrue($cache->set('foo', 1));
 
         $this->assertSame(1, $cache->get('foo'));
     }

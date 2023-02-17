@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 class RedisCacheTest extends TestCase
 {
-    //use CacheTrait;
+    use CacheTrait;
 
     /**
      * Set up before class.
@@ -27,7 +27,11 @@ class RedisCacheTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        //self::$cache = new RedisCache(['host' => '127.0.0.1', 'port' => 6379]);
+        $options = [
+           'connect' => ['host' => $GLOBALS['redis_host'], 'port' => (int) $GLOBALS['redis_port'], 'timeout' => 5],
+           'auth' => ['pass' => 'password']
+        ];
+        self::$cache = new RedisCache($options);
     }
 
     /**
@@ -39,7 +43,7 @@ class RedisCacheTest extends TestCase
      */
     public function setUp(): void
     {
-        //self::$cache->clear();
+        self::$cache->clear();
     }
 
     /**
@@ -49,9 +53,13 @@ class RedisCacheTest extends TestCase
      */
     public static function optionsProvider(): array
     {
+        $options = [
+           'connect' => ['host' => $GLOBALS['redis_host'], 'port' => (int) $GLOBALS['redis_port'], 'timeout' => 5],
+           'auth' => ['pass' => 'password']
+        ];
+
         return [
-            [['host' => '127.0.0.1', 'port' => 6379]],                 //default host and port
-            [['host' => '127.0.0.1', 'port' => 6379, 'timeout' => 5]], //timeout
+            [$options], //default host and port
         ];
     }
 
@@ -66,5 +74,28 @@ class RedisCacheTest extends TestCase
     {
         $cache = new RedisCache($options);
         $this->assertInstanceOf(RedisCache::class, $cache);
+
+        $this->assertTrue($cache->set('foo_string', 'a'));
+        $this->assertTrue($cache->set('foo_int', 1));
+
+        $this->assertTrue($cache->has('foo_string'));
+        $this->assertTrue($cache->has('foo_int'));
+
+        $this->assertSame('a', $cache->get('foo_string'));
+        $this->assertSame(1, $cache->get('foo_int'));
+
+        $this->assertNull($cache->get('foo_not_exists'));
+
+        $this->assertTrue($cache->delete('foo_string'));
+        $this->assertTrue($cache->delete('foo_int'));
+
+        $this->assertFalse($cache->delete('foo_string'));
+        $this->assertFalse($cache->delete('foo_int'));
+
+        $this->assertFalse($cache->has('foo_string'));
+        $this->assertFalse($cache->has('foo_int'));
+
+        $this->assertNull($cache->get('foo_string'));
+        $this->assertNull($cache->get('foo_int'));
     }
 }

@@ -14,7 +14,7 @@ namespace Linna\Cache;
 
 use DateInterval;
 use Redis;
-use InvalidArgumentException;
+use RuntimeException;
 use Psr\SimpleCache\CacheInterface;
 
 /**
@@ -30,40 +30,32 @@ class RedisCache implements CacheInterface
     /**
      * Class Constructor.
      *
-     * @param array<mixed> $options 
+     * @param array<mixed> $options Connection Options, as explained in link.
      *
-     * @throws InvalidArgumentException if with options is not possible configure memecached servers.
-     *
-     * @link https://www.php.net/manual/en/memcached.addserver.php
-     * @link https://www.php.net/manual/en/memcached.addservers.php
+     * @link https://github.com/phpredis/phpredis#connection
      */
     public function __construct(array $options)
     {
         $this->redis = new Redis();
+        $callback = [$this->redis, 'connect'];
 
-        $isHost          = isset($options['host']);
-        $isPort          = isset($options['port']);
-        $isTimeout       = isset($options['timeout']);
-        $isReserved      = isset($options['reserver']);
-        $isRetryInterval = isset($options['retry_interval']);
-        $isReadTimeout   = isset($options['read_timeout']);
-        $isOthers        = isset($options['others']);
-        
-        
-        if ($isHost && $isPort && $isTimeout) {
-            $this->redis->connect(
-                host: $options['host'],
-                port: $options['port'],
-                timeout: $options['timeout']);
+        if (\is_callable($callback) && !\call_user_func_array($callback, $options['connect'])) {
+            throw new RuntimeException('Unable to connect to Redis server.');
         }
-        else if ($isHost && $isPort) {
-            $this->redis->connect(
-                host: $options['host'],
-                port: $options['port']);
+
+        if (isset($options['auth']) && !$this->redis->auth($options['auth'])) {
+            throw new RuntimeException('Unable to authenticate to Redis server.');
         }
-        else {
-            throw new \InvalidArgumentException('Somethig went worng creating Redis client.');
-        }
+    }
+
+    /**
+     * Class Desctructor.
+     *
+     * Close Redis connection.
+     */
+    public function __destruct()
+    {
+        $this->redis->close();
     }
 
     /**
@@ -79,17 +71,21 @@ class RedisCache implements CacheInterface
      */
     public function get(string $key, mixed $default = null): mixed
     {
-        
+        if (($value = $this->redis->get($key)) !== false) {
+            return \unserialize($value);
+        }
+
+        return $default;
     }
 
     /**
      * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
      *
-     * @param string                 $key   The key of the item to store.
-     * @param mixed                  $value The value of the item to store, must be serializable.
-     * @param null|int|\DateInterval $ttl   Optional. The TTL value of this item. If no value is sent and
-     *                                      the driver supports TTL then the library may set a default value
-     *                                      for it or let the driver take care of that.
+     * @param string                $key   The key of the item to store.
+     * @param mixed                 $value The value of the item to store, must be serializable.
+     * @param DateInterval|int|null $ttl   Optional. The TTL value of this item. If no value is sent and
+     *                                     the driver supports TTL then the library may set a default value
+     *                                     for it or let the driver take care of that.
      *
      * @return bool True on success and false on failure.
      *
@@ -98,15 +94,22 @@ class RedisCache implements CacheInterface
      */
     public function set(string $key, mixed $value, DateInterval|int|null $ttl = null): bool
     {
+        $handledTtl = $this->handleTtl($ttl);
+        $serialized = \serialize($value);
 
+        if ($handledTtl > 0) {
+            return $this->redis->setex($key, $handledTtl, $serialized);
+        }
+
+        return $this->redis->set($key, $serialized);
     }
 
     /**
      * Handle TTL parameter.
      *
-     * @param null|int|\DateInterval $ttl Optional. The TTL value of this item. If no value is sent and
-     *                                    the driver supports TTL then the library may set a default value
-     *                                    for it or let the driver take care of that.
+     * @param DateInterval|int|null $ttl Optional. The TTL value of this item. If no value is sent and
+     *                                   the driver supports TTL then the library may set a default value
+     *                                   for it or let the driver take care of that.
      *
      * @return int TTL in seconds.
      */
@@ -137,7 +140,13 @@ class RedisCache implements CacheInterface
      */
     public function delete(string $key): bool
     {
+        $keyDeleted = $this->redis->del($key);
 
+        if ($keyDeleted === 1) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -147,7 +156,7 @@ class RedisCache implements CacheInterface
      */
     public function clear(): bool
     {
-
+        return $this->redis->flushDb();
     }
 
     /**
@@ -167,6 +176,10 @@ class RedisCache implements CacheInterface
      */
     public function has(string $key): bool
     {
+        if ($this->redis->exists($key) > 0) {
+            return true;
+        }
 
+        return false;
     }
 }
