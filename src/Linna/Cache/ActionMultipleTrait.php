@@ -105,7 +105,7 @@ trait ActionMultipleTrait
      * Persists a set of [key => value] pairs in the cache, with an optional TTL.
      *
      * @param iterable<string, mixed> $values A list of <code>key => value</code> pairs for a multiple-set operation.
-     * @param null|int|\DateInterval  $ttl    Optional. The TTL value of this item. If no value is sent and the driver
+     * @param DateInterval|int|null   $ttl    Optional. The TTL value of this item. If no value is sent and the driver
      *                                        supports TTL then the library may set a default value for it or let the
      *                                        driver take care of that.
      *
@@ -115,7 +115,7 @@ trait ActionMultipleTrait
      *                                                   a Traversable, or if any of the <code>$values</code> are not a
      *                                                   legal value.
      */
-    public function setMultiple(iterable $values, null|int|DateInterval $ttl = null): bool
+    public function setMultiple(iterable $values, DateInterval|int|null $ttl = null): bool
     {
         foreach ($values as $key => $value) {
             $this->set($key, $value, $ttl);

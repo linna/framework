@@ -13,9 +13,9 @@ declare(strict_types=1);
 namespace Linna\Cache;
 
 use DateInterval;
-use Redis;
-use RuntimeException;
+use InvalidArgumentException;
 use Psr\SimpleCache\CacheInterface;
+use Redis;
 
 /**
  * PSR-16 Redis.
@@ -23,6 +23,7 @@ use Psr\SimpleCache\CacheInterface;
 class RedisCache implements CacheInterface
 {
     use ActionMultipleTrait;
+    use TtlTrait;
 
     /** @var Redis Redis client instance */
     private Redis $redis;
@@ -39,12 +40,12 @@ class RedisCache implements CacheInterface
         $this->redis = new Redis();
         $callback = [$this->redis, 'connect'];
 
-        if (\is_callable($callback) && !\call_user_func_array($callback, $options['connect'])) {
-            throw new RuntimeException('Unable to connect to Redis server.');
+        if (!isset($options['connect']['host']) || \is_callable($callback) && !\call_user_func_array($callback, $options['connect'])) {
+            throw new InvalidArgumentException('Unable to connect to Redis server.');
         }
 
         if (isset($options['auth']) && !$this->redis->auth($options['auth'])) {
-            throw new RuntimeException('Unable to authenticate to Redis server.');
+            throw new InvalidArgumentException('Unable to authenticate to Redis server.');
         }
     }
 
@@ -97,35 +98,19 @@ class RedisCache implements CacheInterface
         $handledTtl = $this->handleTtl($ttl);
         $serialized = \serialize($value);
 
+        //set key with ttl
         if ($handledTtl > 0) {
             return $this->redis->setex($key, $handledTtl, $serialized);
         }
 
-        return $this->redis->set($key, $serialized);
-    }
+        //ttl negative try to remove existing key
+        if ($handledTtl < 0) {
+            $this->redis->del($key);
+            return true;
+        }
 
-    /**
-     * Handle TTL parameter.
-     *
-     * @param DateInterval|int|null $ttl Optional. The TTL value of this item. If no value is sent and
-     *                                   the driver supports TTL then the library may set a default value
-     *                                   for it or let the driver take care of that.
-     *
-     * @return int TTL in seconds.
-     */
-    private function handleTtl(DateInterval|int|null $ttl): int
-    {
-        if ($ttl === null) {
-            return 0;
-        }
-        if (\is_int($ttl)) {
-            return $ttl;
-        }
-        if ($ttl instanceof DateInterval) {
-            $now = new \DateTime();
-            $now->add($ttl);
-            return (int) $now->format('U');
-        }
+        //set key that does not expire
+        return $this->redis->set($key, $serialized);
     }
 
     /**

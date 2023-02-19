@@ -23,6 +23,7 @@ use Psr\SimpleCache\CacheInterface;
 class MemcachedCache implements CacheInterface
 {
     use ActionMultipleTrait;
+    use TtlTrait;
 
     /** @var Memcached Memcached instance */
     private Memcached $memcached;
@@ -105,31 +106,21 @@ class MemcachedCache implements CacheInterface
      */
     public function set(string $key, mixed $value, DateInterval|int|null $ttl = null): bool
     {
-        return $this->memcached->set($key, $value, $this->handleTtl($ttl));
-    }
+        $handledTtl = $this->handleTtl($ttl);
 
-    /**
-     * Handle TTL parameter.
-     *
-     * @param null|int|\DateInterval $ttl Optional. The TTL value of this item. If no value is sent and
-     *                                    the driver supports TTL then the library may set a default value
-     *                                    for it or let the driver take care of that.
-     *
-     * @return int TTL in seconds.
-     */
-    private function handleTtl(DateInterval|int|null $ttl): int
-    {
-        if ($ttl === null) {
-            return 0;
+        //set key with ttl
+        if ($handledTtl > 0) {
+            return $this->memcached->set($key, $value, $handledTtl);
         }
-        if (\is_int($ttl)) {
-            return $ttl;
+
+        //ttl negative try to remove existing key
+        if ($handledTtl < 0) {
+            $this->memcached->delete($key);
+            return true;
         }
-        if ($ttl instanceof DateInterval) {
-            $now = new \DateTime();
-            $now->add($ttl);
-            return (int) $now->format('U');
-        }
+
+        //set key that does not expire
+        return $this->memcached->set($key, $value);
     }
 
     /**
