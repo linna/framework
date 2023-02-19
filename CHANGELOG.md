@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] [v0.28.0](https://github.com/linna/framework/compare/v0.27.0...v0.28.0)
 
 ### Added
+* `Linna\Cache\RedisCache` class to cache data on Redis
 * Tests using Postgresql in GithubActions
 
 #### Crypto
@@ -33,6 +34,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 #### Cache
+* Tests with Paratest
+* Cache TTL handling improved
 * `Linna\Cache\MemcachedCache->__construct()` now requires only options about memcached server/servers
 
 #### Data Mapper
