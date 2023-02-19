@@ -51,14 +51,13 @@ trait TtlTrait
         }
 
         //timestamp if future
-        if (($validTimestamp = $this->isValidUnixTimestamp($ttl)) !== false) {
+        if ($this->isValidUnixTimestamp($ttl)) {
             return $ttl - \time();
         }
 
         //seconds
-        if (\is_int($ttl) && !$validTimestamp) {
-            return $ttl;
-        }
+        //integer 0 < ttl < (86400 * 30) || ttl < 0
+        return $ttl;
     }
 
     /**
