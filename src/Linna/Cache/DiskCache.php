@@ -36,6 +36,7 @@ use Psr\SimpleCache\CacheInterface;
 class DiskCache implements CacheInterface
 {
     use ActionMultipleTrait;
+    use TtlTrait;
 
     /** @var string Directory for cache storage. */
     protected string $dir = '/tmp';
@@ -124,7 +125,9 @@ class DiskCache implements CacheInterface
         $cache = [
             'key'     => $key,
             'value'   => \serialize($value),
-            'expires' => $this->calculateTtl($vTtl),
+            //if ttl is negative the driver set a cache already expired
+            //if ttl is zero then the cache does not expire
+            'expires' => ($vTtl === 0) ? $vTtl : \time() + $vTtl,
         ];
 
         //export
@@ -136,47 +139,6 @@ class DiskCache implements CacheInterface
         \file_put_contents($this->dir.'/'.\sha1($key).'.php', $content);
 
         return true;
-    }
-
-    /**
-     * Handle ttl parameter.
-     *
-     * @param null|int|\DateInterval $ttl Optional. The TTL value of this item. If no value is sent and
-     *                                    the driver supports TTL then the library may set a default value
-     *                                    for it or let the driver take care of that.
-     *
-     * @return int Ttl in seconds.
-     */
-    private function handleTtl(DateInterval|int|null $ttl): int
-    {
-        if ($ttl === null) {
-            return 0;
-        }
-        if (\is_int($ttl)) {
-            return $ttl;
-        }
-        if ($ttl instanceof DateInterval) {
-            $now = new \DateTime();
-            $now->add($ttl);
-            return (int) $now->format('U');
-        }
-    }
-
-    /**
-     * Calculate ttl for cache file.
-     *
-     * @param int $ttl The TTL
-     *
-     * @return int The TTL updated if the passed value is grather than zero.
-     */
-    private function calculateTtl(int $ttl): int
-    {
-        //check for usage of ttl default class option value
-        if ($ttl) {
-            return \time() + $ttl;
-        }
-
-        return $ttl;
     }
 
     /**

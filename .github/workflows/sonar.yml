@@ -39,6 +39,11 @@ jobs:
         image: memcached
         ports:
           - 11211:11211
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server
 
     strategy:
       fail-fast: true
@@ -55,6 +60,7 @@ jobs:
           php-version: 8.1
           tools: composer:v2
           coverage: xdebug
+          extensions: redis
 
       - name: Install dependencies
         run: composer install

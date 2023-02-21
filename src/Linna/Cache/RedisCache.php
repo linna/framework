@@ -6,64 +6,57 @@ declare(strict_types=1);
  * This file is part of the Linna Framwork.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
- * @copyright (c) 2018, Sebastian Rapetti
+ * @copyright (c) 2023, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
 
 namespace Linna\Cache;
 
 use DateInterval;
-use Memcached;
 use InvalidArgumentException;
 use Psr\SimpleCache\CacheInterface;
+use Redis;
 
 /**
- * PSR-16 Memcached.
+ * PSR-16 Redis.
  */
-class MemcachedCache implements CacheInterface
+class RedisCache implements CacheInterface
 {
     use ActionMultipleTrait;
     use TtlTrait;
 
-    /** @var Memcached Memcached instance */
-    private Memcached $memcached;
+    /** @var Redis Redis client instance */
+    private Redis $redis;
 
     /**
      * Class Constructor.
      *
-     * @param array<mixed> $options Options for memecached, passing at least parameters for one server is mandatory, ex.
-     *                              <code>MemcachedCache(['host' => 'mem1.domain.com', 'port' => 11211])</code> or
-     *                              <code>MemcachedCache(['servers' => [['mem1.domain.com', 11211], ['mem2.domain.com', 11211]]])</code>.
-     *                              The array of options should contains same parameters as required
-     *                              from <code>Memcached::addServers</code> or <code>Memcached::addServers</code>.
+     * @param array<mixed> $options Connection Options, as explained in link.
      *
-     * @throws InvalidArgumentException if with options is not possible configure memecached servers.
-     *
-     * @link https://www.php.net/manual/en/memcached.addserver.php
-     * @link https://www.php.net/manual/en/memcached.addservers.php
+     * @link https://github.com/phpredis/phpredis#connection
      */
     public function __construct(array $options)
     {
-        $this->memcached = new Memcached();
+        $this->redis = new Redis();
+        $callback = [$this->redis, 'connect'];
 
-        $result = false;
-
-        if (isset($options['host']) && isset($options['port'])) {
-            $weight = $options['weight'] ?? 0;
-            $result |= $this->memcached->addServer(
-                host: $options['host'],
-                port: $options['port'],
-                weight: $weight
-            );
+        if (!isset($options['connect']['host']) || \is_callable($callback) && !\call_user_func_array($callback, $options['connect'])) {
+            throw new InvalidArgumentException('Unable to connect to Redis server.');
         }
 
-        if (isset($options['servers'])) {
-            $result |= $this->memcached->addServers(servers: $options['servers']);
+        if (isset($options['auth']) && !$this->redis->auth($options['auth'])) {
+            throw new InvalidArgumentException('Unable to authenticate to Redis server.');
         }
+    }
 
-        if (!$result) {
-            throw new \InvalidArgumentException('Somethig went worng adding memcached servers.');
-        }
+    /**
+     * Class Desctructor.
+     *
+     * Close Redis connection.
+     */
+    public function __destruct()
+    {
+        $this->redis->close();
     }
 
     /**
@@ -79,25 +72,21 @@ class MemcachedCache implements CacheInterface
      */
     public function get(string $key, mixed $default = null): mixed
     {
-        //get value from memcached
-        $value = $this->memcached->get($key);
-
-        //check if value was retrived
-        if ($value === false) {
-            return $default;
+        if (($value = $this->redis->get($key)) !== false) {
+            return \unserialize($value);
         }
 
-        return $value;
+        return $default;
     }
 
     /**
      * Persists data in the cache, uniquely referenced by a key with an optional expiration TTL time.
      *
-     * @param string                 $key   The key of the item to store.
-     * @param mixed                  $value The value of the item to store, must be serializable.
-     * @param null|int|\DateInterval $ttl   Optional. The TTL value of this item. If no value is sent and
-     *                                      the driver supports TTL then the library may set a default value
-     *                                      for it or let the driver take care of that.
+     * @param string                $key   The key of the item to store.
+     * @param mixed                 $value The value of the item to store, must be serializable.
+     * @param DateInterval|int|null $ttl   Optional. The TTL value of this item. If no value is sent and
+     *                                     the driver supports TTL then the library may set a default value
+     *                                     for it or let the driver take care of that.
      *
      * @return bool True on success and false on failure.
      *
@@ -107,20 +96,21 @@ class MemcachedCache implements CacheInterface
     public function set(string $key, mixed $value, DateInterval|int|null $ttl = null): bool
     {
         $handledTtl = $this->handleTtl($ttl);
+        $serialized = \serialize($value);
 
         //set key with ttl
         if ($handledTtl > 0) {
-            return $this->memcached->set($key, $value, $handledTtl);
+            return $this->redis->setex($key, $handledTtl, $serialized);
         }
 
         //ttl negative try to remove existing key
         if ($handledTtl < 0) {
-            $this->memcached->delete($key);
+            $this->redis->del($key);
             return true;
         }
 
         //set key that does not expire
-        return $this->memcached->set($key, $value);
+        return $this->redis->set($key, $serialized);
     }
 
     /**
@@ -135,7 +125,13 @@ class MemcachedCache implements CacheInterface
      */
     public function delete(string $key): bool
     {
-        return $this->memcached->delete($key);
+        $keyDeleted = $this->redis->del($key);
+
+        if ($keyDeleted === 1) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -145,7 +141,7 @@ class MemcachedCache implements CacheInterface
      */
     public function clear(): bool
     {
-        return $this->memcached->flush();
+        return $this->redis->flushDb();
     }
 
     /**
@@ -165,6 +161,10 @@ class MemcachedCache implements CacheInterface
      */
     public function has(string $key): bool
     {
-        return ($this->memcached->get($key) !== false) ? true : false;
+        if ($this->redis->exists($key) > 0) {
+            return true;
+        }
+
+        return false;
     }
 }

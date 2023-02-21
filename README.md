@@ -45,6 +45,7 @@ At moment, code, isn't utilized in production environment, Hope in future.
 - PDO extension (optional)
 - Memcached extension (optional)
 - Mongodb extension (optional)
+- Redis extension (optional)
 
 # Installation
 
@@ -75,16 +76,16 @@ Please see [CONTRIBUTING.md](https://github.com/linna/framework/blob/master/CONT
 ## Task List for the next version
 
 ### High Priority
-- [ ] Reduce the technical debt 
-- [ ] Complete the PHP 8.1 porting
+- [ ] [IN PROGRESS] Reduce the technical debt 
+- [ ] [IN PROGRESS] Complete the PHP 8.1 porting
 - [X] Complete the updating and the review of the code comments
-- [ ] Create documentation for the site, api and articles about how to do things
+- [ ] [IN PROGRESS] Create documentation for the site, api and articles about how to do things
 - [X] Unify database session handlers
-- [ ] Update tests and do a deep code review for quality and security
+- [ ] [IN PROGRESS] Update tests and do a deep code review for quality and security
 - [ ] Check the name of arguments in methods where there is the implementation of an interface
 
 ### Less High Priority
-- [ ] Add support for Redis cache, for general cache and sessions
+- [X] Add support for Redis cache, for general cache and sessions
 - [X] Encryption for non standard session storage (redis, memcached, databases)
 - [ ] Router with PSR-7 support
 - [ ] More about Router
