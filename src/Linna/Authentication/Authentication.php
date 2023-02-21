@@ -22,7 +22,7 @@ use Linna\Session\Session;
 class Authentication
 {
     /** @var array<mixed> Login status. */
-    private array $data = ['user_name' => '', 'user_id' => ''];
+    private array $data = ['login'=> true, 'user_id' => null, 'user_name' => null];
 
     /** @var bool Indicate login status, true or false. */
     private bool $logged = false;
@@ -135,7 +135,7 @@ class Authentication
         $this->session->regenerate();
 
         //update login data
-        $this->data = ['user_name' => '', 'user_id' => ''];
+        $this->data = ['login'=> true, 'user_id' => null, 'user_name' => null];
         $this->logged = false;
 
         return true;
@@ -157,7 +157,7 @@ class Authentication
         $time = \time();
 
         //check if login expired
-        if (((int)$this->session->get('loginTime') + (int)$this->session->get('expire')) < $time) {
+        if (($this->session->get('loginTime') + $this->session->get('expire')) < $time) {
             return false;
         }
 

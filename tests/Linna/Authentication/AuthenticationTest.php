@@ -140,6 +140,7 @@ class AuthenticationTest extends TestCase
         //attemp first login
         $this->assertTrue(self::$authentication->login('root', 'password', 'root', self::$password->hash('password'), 1));
         $this->assertTrue(self::$session->login['login']);
+        $this->assertSame(['login'=> true, 'user_id' => 1, 'user_name' => 'root'], self::$authentication->getLoginData());
 
         //attemp check if logged
         $this->assertTrue(self::$authentication->isLogged());
@@ -151,6 +152,11 @@ class AuthenticationTest extends TestCase
 
         //re check if logged
         $this->assertFalse(self::$authentication->isLogged());
+
+        //check for login data
+        $this->assertNull(self::$session->get('login'));
+        $this->assertNull(self::$session->get('loginTime'));
+        $this->assertSame(['login'=> true, 'user_id' => null, 'user_name' => null], self::$authentication->getLoginData());
 
         //check session id regeneration
         $this->assertNotSame($sessionId, self::$session->getSessionId());
@@ -195,18 +201,22 @@ class AuthenticationTest extends TestCase
 
         self::$session->commit();
 
+        \usleep(1000500);
+
         self::$session->start();
 
         $this->assertTrue(self::$session->login['login']);
 
         //create second instance and attemp check if logged
         $this->assertTrue((new Authentication(self::$session, self::$password))->isLogged());
+        $this->assertGreaterThanOrEqual(\time(), self::$session->get('loginTime'));
 
         //simulate expired login
         self::$session->loginTime = \time() - 3600;
 
         //attemp second login
         $this->assertTrue((new Authentication(self::$session, self::$password))->isNotLogged());
+
 
         self::$session->destroy();
     }
