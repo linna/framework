@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the Linna Framwork.
+ * This file is part of the Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
@@ -13,78 +13,46 @@ declare(strict_types=1);
 namespace Linna\Authentication;
 
 /**
- * Provide methods to manage password, this class uses PHP password hashing function, see php documentation for more
- * information.
+ * Provide methods to manage password, this class uses Libsodium password hashing function, see php documentation 
+ * for more information.
  *
- * @link http://php.net/manual/en/book.password.php
+ * @link https://www.php.net/manual/en/function.sodium-crypto-pwhash-str.php
  */
-class Password
+final class Password
 {
-    /**
-     * @var array<mixed> An associative array containing options.
-     *
-     * @link http://php.net/manual/en/function.password-hash.php
-     */
-    protected array $options = [
-        // commented because value is the same as PASSWORD_DEFAULT
-        //PASSWORD_BCRYPT => ['cost' => 11],
-        PASSWORD_DEFAULT => ['cost' => 11]
-    ];
-
-    /** @var array<mixed> An associate array containing algorithm constants. */
-    protected array $algoLists = [
-        // commented because value is the same as PASSWORD_DEFAULT
-        //PASSWORD_BCRYPT,
-        PASSWORD_DEFAULT
-    ];
-
-    /** @var string|null Password default algorithm. */
-    protected ?string $algo = PASSWORD_DEFAULT;
-
     /**
      * Class constructor.
      *
-     * <p>For password algorithm constants see
-     * <a href="http://php.net/manual/en/password.constants.php">password constants</a>.</p>
+     * <p>
+     * Computations values
+     *  SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE = 2
+     *  SODIUM_CRYPTO_PWHASH_OPSLIMIT_MODERATE    = 3
+     *  SODIUM_CRYPTO_PWHASH_OPSLIMIT_SENSITIVE   = 4
      *
-     * <p>Strict typing removed for <code>$algo</code> because on PHP 7.4 password hashing algorithm identifiers are
-     * nullable strings rather than integers.</p>
+     * Memory values
+     *  SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE = 67108864
+     *  SODIUM_CRYPTO_PWHASH_MEMLIMIT_MODERATE    = 268435456
+     *  SODIUM_CRYPTO_PWHASH_MEMLIMIT_SENSITIVE   = 1073741824
+     * </p>
      *
-     * @param string|null  $algo    Algorithm used for hash passwords.
-     * @param array<mixed> $options Options for algos <code>['key' => 'value']</code> array.
+     * @param int $opsLimit Represents a maximum amount of computations to perform. Raising this number will make the
+     *                      function require more CPU cycles to compute a key. There are constants available to set the
+     *                      operations limit to appropriate values depending on intended use, in order of strength:
+     *                      SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE, SODIUM_CRYPTO_PWHASH_OPSLIMIT_MODERATE and
+     *                      SODIUM_CRYPTO_PWHASH_OPSLIMIT_SENSITIVE.
+     * @param int $memLimit The maximum amount of RAM that the function will use, in bytes. There are constants to help
+     *                      you choose an appropriate value, in order of size:
+     *                      SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE, SODIUM_CRYPTO_PWHASH_MEMLIMIT_MODERATE, and
+     *                      SODIUM_CRYPTO_PWHASH_MEMLIMIT_SENSITIVE. Typically these should be paired with the matching
+     *                      opslimit values.
      *
-     * @throws \InvalidArgumentException If the <code>$algo</code> paramether contains an invalid password algorithm.
-     *
-     * @todo Check for PASSWORD_ARGON2I PASSWORD_ARGON2ID default definition.
+     * @link https://www.php.net/manual/en/function.sodium-crypto-pwhash-str.php
      */
-    public function __construct($algo = PASSWORD_BCRYPT, array $options = [])
+    public function __construct(
+        private int $opsLimit = SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,
+        private int $memLimit = SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE
+    )
     {
-        //necessary for avoid errors if Argon2 library not enabled
-        //PASSWORD_ARGON2ID const only present since 7.3 PHP version
-        if (\defined('PASSWORD_ARGON2I')) {
-            $this->algoLists[] = PASSWORD_ARGON2I;
-            $this->options[PASSWORD_ARGON2I] = [
-                'memory_cost' => PASSWORD_ARGON2_DEFAULT_MEMORY_COST,
-                'time_cost' => PASSWORD_ARGON2_DEFAULT_TIME_COST,
-                'threads' => PASSWORD_ARGON2_DEFAULT_THREADS
-            ];
-        }
-
-        if (\defined('PASSWORD_ARGON2ID')) {
-            $this->algoLists[] = PASSWORD_ARGON2ID;
-            $this->options[PASSWORD_ARGON2ID] = [
-                'memory_cost' => PASSWORD_ARGON2_DEFAULT_MEMORY_COST,
-                'time_cost' => PASSWORD_ARGON2_DEFAULT_TIME_COST,
-                'threads' => PASSWORD_ARGON2_DEFAULT_THREADS
-            ];
-        }
-
-        if (!\in_array($algo, $this->algoLists, true)) {
-            throw new \InvalidArgumentException("The password algorithm {$algo} is invalid");
-        }
-
-        $this->algo = $algo;
-        $this->options[$algo] = \array_replace_recursive($this->options[$algo], $options);
     }
 
     /**
@@ -97,19 +65,19 @@ class Password
      */
     public function verify(string $password, string $hash): bool
     {
-        return \password_verify($password, $hash);
+        return \sodium_crypto_pwhash_str_verify($hash, $password);
     }
 
     /**
      * Create password hash from the given string and return it.
      *
-     * @param string $password Plaintext password to be hashed.
+     * @param string $password The password to generate a hash for.
      *
-     * @return string Hashed password.
+     * @return string The hashed password.
      */
     public function hash(string $password): string
     {
-        return \password_hash($password, $this->algo, $this->options[$this->algo]);
+        return \sodium_crypto_pwhash_str($password, $this->opsLimit, $this->memLimit);
     }
 
     /**
@@ -121,7 +89,7 @@ class Password
      */
     public function needsRehash(string $hash): bool
     {
-        return \password_needs_rehash($hash, $this->algo, $this->options[$this->algo]);
+        return \sodium_crypto_pwhash_str_needs_rehash($hash, $this->opsLimit, $this->memLimit);
     }
 
     /**
@@ -129,7 +97,10 @@ class Password
      *
      * @param string $hash Hash for which get info.
      *
-     * @return array<mixed> Information for the hash.
+     * @return array<mixed> Returns an associative array with three elements:
+     *                      1, algo, which will match a password algorithm constant.
+     *                      2, algoName, which has the human readable name of the algorithm.
+     *                      3, options, which includes the options provided.
      */
     public function getInfo(string $hash): array
     {

@@ -33,6 +33,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+#### Authentication
+* `Linna\Authentication\Password` now use internally libosudium functions for password hashing
+* `Linna\Authentication\Password->__construct()` now has `int $opsLimit` and `int $memLimit` with default values set to `2` and `67108864` as arguments
+
 #### Cache
 * Tests with Paratest
 * Cache TTL handling improved

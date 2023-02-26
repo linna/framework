@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Linna\Authentication;
 
-//use Linna\Authentication\Password;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -39,7 +38,7 @@ class PasswordTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        //self::$password = null;
+        self::$password = null;
     }
 
     /**
@@ -49,9 +48,7 @@ class PasswordTest extends TestCase
      */
     public function testPasswordHashAndVerify(): void
     {
-        $hash = self::$password->hash('password');
-
-        $this->assertTrue(self::$password->verify('password', $hash));
+        $this->assertTrue(self::$password->verify('password', self::$password->hash('password')));
     }
 
     /**
@@ -61,9 +58,7 @@ class PasswordTest extends TestCase
      */
     public function testPasswordHashAndFailVerify(): void
     {
-        $hash = self::$password->hash('password');
-
-        $this->assertFalse(self::$password->verify('otherpassword', $hash));
+        $this->assertFalse(self::$password->verify('otherpassword', self::$password->hash('password')));
     }
 
     /**
@@ -73,9 +68,9 @@ class PasswordTest extends TestCase
      */
     public function testHashThatNeedRehash(): void
     {
-        $hash = \password_hash('password', PASSWORD_DEFAULT, ['cost' => 9]);
+        $passwordOther = new Password(SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE, SODIUM_CRYPTO_PWHASH_MEMLIMIT_MODERATE);
 
-        $this->assertTrue(self::$password->needsRehash($hash));
+        $this->assertTrue($passwordOther->needsRehash(self::$password->hash('password')));
     }
 
     /**
@@ -85,31 +80,57 @@ class PasswordTest extends TestCase
      */
     public function testHashThatNotNeedRehash(): void
     {
-        $hash = self::$password->hash('password');
+        $this->assertFalse(self::$password->needsRehash(self::$password->hash('password')));
+    }
 
-        $this->assertFalse(self::$password->needsRehash($hash));
+    /**
+     * Options provider.
+     * 
+     * @return array
+     */
+    public static function optionsProvider(): array
+    {
+        return [
+            [SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE, SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE, 65536, 2, 1],
+            [SODIUM_CRYPTO_PWHASH_OPSLIMIT_MODERATE, SODIUM_CRYPTO_PWHASH_MEMLIMIT_MODERATE, 262144, 3, 1],
+            [SODIUM_CRYPTO_PWHASH_OPSLIMIT_SENSITIVE, SODIUM_CRYPTO_PWHASH_MEMLIMIT_SENSITIVE, 1048576, 4, 1],
+        ];
     }
 
     /**
      * Test get hash info.
      *
+     * @dataProvider optionsProvider
+     *
      * @return void
      */
-    public function testGetHashInfo(): void
+    public function testGetHashInfo(int $opsLimit, int $memLimit, int $memExp, int $timeExp, int $threads): void
     {
-        $hash = '$2y$11$4IAn6SRaB0osPz8afZC5D.CmTrBGxnb5FQEygPjDirK9SWE/u8YuO';
+        $password = new Password($opsLimit, $memLimit);
 
-        $info = self::$password->getInfo($hash);
+        //info
+        $info = $password->getInfo($password->hash('password'));
 
-        $this->assertEquals('array', \gettype($info));
+        $this->assertIsArray($info);
+        $this->assertArrayHasKey('algo', $info);
+        $this->assertArrayHasKey('algoName', $info);
+        $this->assertArrayHasKey('options', $info);
 
-        //fix for php >= 7.4
-        if (PHP_MINOR_VERSION === 4 || PHP_MAJOR_VERSION >= 7) {
-            $this->assertEquals('2y', $info['algo']);
-            return;
-        }
+        //info options
+        $options = $info['options'];
 
-        $this->assertEquals(1, $info['algo']);
+        $this->assertIsArray($options);
+        $this->assertArrayHasKey('memory_cost', $options);
+        $this->assertArrayHasKey('time_cost', $options);
+        $this->assertArrayHasKey('threads', $options);
+
+
+        $this->assertSame('argon2id', $info['algo']);
+        $this->assertSame('argon2id', $info['algoName']);
+
+        $this->assertSame($memExp, $options['memory_cost']);
+        $this->assertSame($timeExp, $options['time_cost']);
+        $this->assertSame($threads, $options['threads']);
     }
 
     /**
@@ -123,18 +144,13 @@ class PasswordTest extends TestCase
 
         $info = self::$password->getInfo($hash);
 
-        $this->assertEquals('array', \gettype($info));
-        $this->assertEquals(0, $info['algo']);
-    }
+        $this->assertIsArray($info);
+        $this->assertArrayHasKey('algo', $info);
+        $this->assertArrayHasKey('algoName', $info);
+        $this->assertArrayHasKey('options', $info);
 
-    /**
-     * Test constructor with invalid password algorithm name
-     */
-    public function testConstructorWithInvalidPasswordAlgorithmConstant()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The password algorithm invalid_algo is invalid');
-
-        new Password('invalid_algo');
+        $this->assertSame(null, $info['algo']);
+        $this->assertSame('unknown', $info['algoName']);
+        $this->assertSame([], $info['options']);
     }
 }
