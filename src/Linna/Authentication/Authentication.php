@@ -157,7 +157,7 @@ class Authentication
         $time = \time();
 
         //check if login expired
-        if (($this->session->get('loginTime') + $this->session->get('expire')) < $time) {
+        if (((int) $this->session->get('loginTime') + (int) $this->session->get('expire')) < $time) {
             return false;
         }
 
