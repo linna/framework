@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Mvc;
 
@@ -15,17 +16,12 @@ use Linna\Container\Container;
 use Linna\Router\Route;
 use Linna\Router\RouteCollection;
 use Linna\Router\Router;
-//use Linna\Mvc\Model;
-//use Linna\Mvc\View;
-//use Linna\Mvc\Controller;
-//use Linna\Mvc\ModelViewController;
 use Linna\TestHelper\Mvc\BeforeAfterController;
 use Linna\TestHelper\Mvc\BeforeAfterModel;
 use Linna\TestHelper\Mvc\BeforeAfterView;
 use Linna\TestHelper\Mvc\CalculatorMultiController;
 use Linna\TestHelper\Mvc\CalculatorMultiModel;
 use Linna\TestHelper\Mvc\CalculatorMultiView;
-
 use Linna\TestHelper\Mvc\CalculatorSingleAddModel;
 use Linna\TestHelper\Mvc\CalculatorSingleAddView;
 use Linna\TestHelper\Mvc\CalculatorSingleAddController;
@@ -38,7 +34,6 @@ use Linna\TestHelper\Mvc\CalculatorSingleMultiplyController;
 use Linna\TestHelper\Mvc\CalculatorSingleSubModel;
 use Linna\TestHelper\Mvc\CalculatorSingleSubView;
 use Linna\TestHelper\Mvc\CalculatorSingleSubController;
-
 use Linna\TestHelper\Mvc\MultipleController;
 use Linna\TestHelper\Mvc\MultipleModel;
 use Linna\TestHelper\Mvc\MultipleView;

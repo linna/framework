@@ -1,18 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
- * @copyright (c) 2020, Sebastian Rapetti
+ * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\TestHelper\DataMapper;
 
 use InvalidArgumentException;
-//use Linna\DataMapper\DomainObjectAbstract;
 use Linna\DataMapper\DomainObjectInterface;
 use Linna\DataMapper\FetchByNameInterface;
 use Linna\DataMapper\FetchAllInterface;

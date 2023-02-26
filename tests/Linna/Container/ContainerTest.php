@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Container;
 
-//use Linna\Container\Container;
 use Linna\Container\Exception\NotFoundException;
 use Linna\TestHelper\Container\ClassACache;
 use Linna\TestHelper\Container\ClassARules;
@@ -26,7 +26,6 @@ use Linna\TestHelper\Container\ClassF;
 use Linna\TestHelper\Container\ClassG;
 use Linna\TestHelper\Container\ClassH;
 use Linna\TestHelper\Container\ClassI;
-//use Linna\TestHelper\Container\ClassInterface;
 use Linna\TestHelper\Container\ClassResCache;
 use Linna\TestHelper\Container\ClassResInterface;
 use Linna\TestHelper\Container\ClassResObject;

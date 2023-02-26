@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the Linna Framwork.
+ * This file is part of the Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2023, Sebastian Rapetti

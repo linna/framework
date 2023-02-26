@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the Linna Framwork.
+ * This file is part of the Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2022, Sebastian Rapetti
@@ -13,8 +13,6 @@ declare(strict_types=1);
 namespace Linna\Crypto;
 
 use PHPUnit\Framework\TestCase;
-
-//use SodiumException;
 
 /**
  * Public Key Crypto Test.

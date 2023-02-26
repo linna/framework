@@ -1,21 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Linna Framework.
+ * This file is part of the Linna Framework.
  *
  * @author Sebastian Rapetti <sebastian.rapetti@tim.it>
  * @copyright (c) 2018, Sebastian Rapetti
  * @license http://opensource.org/licenses/MIT MIT License
  */
-declare(strict_types=1);
 
 namespace Linna\Authorization;
 
-//use Linna\Authorization\Permission;
-//use Linna\Authorization\PermissionMapper;
 use Linna\Storage\ExtendedPDO;
 use Linna\Storage\StorageFactory;
-//use PDO;
 use PHPUnit\Framework\TestCase;
 use Linna\TestHelper\Pdo\PdoOptionsFactory;
 

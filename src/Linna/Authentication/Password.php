@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Linna\Authentication;
 
 /**
- * Provide methods to manage password, this class uses Libsodium password hashing function, see php documentation 
+ * Provide methods to manage password, this class uses Libsodium password hashing function, see php documentation
  * for more information.
  *
  * @link https://www.php.net/manual/en/function.sodium-crypto-pwhash-str.php
@@ -51,8 +51,7 @@ final class Password
     public function __construct(
         private int $opsLimit = SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,
         private int $memLimit = SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE
-    )
-    {
+    ) {
     }
 
     /**
