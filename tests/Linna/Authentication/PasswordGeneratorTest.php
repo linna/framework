@@ -14,6 +14,7 @@ namespace Linna\Authentication;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use ReflectionObject;
 
 /**
  * Password Generator Test.
@@ -70,8 +71,14 @@ class PasswordGeneratorTest extends TestCase
     public function testGetFromRandom(int $strLen): void
     {
         $password = self::$passwordGenerator->getFromRandom($strLen);
+        $topology = self::$passwordGenerator->getTopology($password);
+
+        $array = \str_split($topology);
+        $unique = \array_unique($array);
+        \sort($unique);
 
         $this->assertEquals($strLen, \strlen($password));
+        $this->assertSame(['d', 'l', 's', 'u'], $unique);
     }
 
     /**
@@ -191,7 +198,7 @@ class PasswordGeneratorTest extends TestCase
      */
     public function testGetFromTopology(string $topology): void
     {
-        $password = self::$passwordGenerator->getFromTopology($topology);
+        $password = self::$passwordGenerator->getFromTopology(\strtoupper($topology));
         $this->assertEquals($topology, self::$passwordGenerator->getTopology($password));
     }
 
@@ -228,5 +235,35 @@ class PasswordGeneratorTest extends TestCase
         $this->expectExceptionMessage("Invalid pattern provided, accepted only u, l, d and s.");
 
         self::$passwordGenerator->getFromTopology($topology);
+    }
+
+    /**
+     * Test private method getRandomChar.
+     */
+    public function testInternalGetRandomChar()
+    {
+        //password generator instance
+        $object = new PasswordGenerator();
+        //reflection for the object
+        $reflector = new ReflectionObject($object);
+        //get private method
+        $method = $reflector->getMethod('getRandomChar');
+        //change visibility
+        $method->setAccessible(true);
+
+        $this->assertSame('a', $method->invoke($object, 'a'));
+
+        $string = 'abcdefghijklmnopqrstuvwxyz';
+        $expected = \str_split($string);
+
+        //burn cpu using infection
+        while (\count($expected) > 0) {
+            $char = $method->invoke($object, $string);
+            if (($key = \array_search($char, $expected)) !== false) {
+                unset($expected[$key]);
+            }
+        }
+
+        $this->assertCount(0, $expected);
     }
 }

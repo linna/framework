@@ -141,7 +141,7 @@ class PasswordGenerator
     }
 
     /**
-     * Get random char between.
+     * Get a random char from a string.
      *
      * @param string $interval The string where extract a random char.
      *

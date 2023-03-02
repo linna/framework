@@ -6,7 +6,8 @@
     },
     "timeout": 15,
     "logs": {
-        "text": "infection-log.txt"
+        "text": "infection-log.txt",
+        "html": "infection-log.html"
     },
     "phpUnit": {
         "customPath": "vendor/bin/phpunit"

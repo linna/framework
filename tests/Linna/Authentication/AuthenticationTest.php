@@ -88,6 +88,56 @@ class AuthenticationTest extends TestCase
         self::$session->destroy();
     }
 
+    public static function tamperingProvider()
+    {
+        return [
+            [0],
+            [1],
+            [2]
+        ];
+    }
+
+    /**
+     * Test login.
+     *
+     * @dataProvider tamperingProvider
+     *
+     * @runInSeparateProcess
+     *
+     * @return void
+     */
+    public function testLoginTampering(int $case): void
+    {
+        self::$session->start();
+
+        //$sessionId = self::$session->getSessionId();
+
+        //attemp first login
+        $this->assertTrue(self::$authentication->login('root', 'password', 'root', self::$password->hash('password'), 1));
+        $this->assertTrue(self::$session->login['login']);
+
+        //attemp check if logged
+        $this->assertTrue(self::$authentication->isLogged());
+
+        //simulate tampering
+        if ($case === 0) {
+            self::$session->loginTime = "foo";
+            self::$session->expire = "foo";
+        } elseif ($case === 1) {
+            self::$session->loginTime = "foo";
+        } elseif ($case === 2) {
+            self::$session->expire = "foo";
+        } else {
+            //simulate expired login
+            self::$session->loginTime = \time() - 3600;
+        }
+
+        //attemp check if logged
+        $this->assertTrue((new Authentication(self::$session, self::$password))->isNotLogged());
+
+        self::$session->destroy();
+    }
+
     /**
      * Test login data.
      *

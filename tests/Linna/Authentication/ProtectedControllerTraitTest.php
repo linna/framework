@@ -166,7 +166,9 @@ class ProtectedControllerTraitTest extends TestCase
             $headers = \xdebug_get_headers();
 
             foreach ($headers as $value) {
-                if (\strstr($value, 'Location:') !== false) {
+                if (\strpos($value, 'Location:') === 0) {
+                    $this->assertSame('Location: http://localhost', $value);
+
                     $location = \str_replace('Location: ', '', $value);
                 }
             }

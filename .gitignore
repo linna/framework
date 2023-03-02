@@ -1,7 +1,7 @@
 composer.phar
 composer.lock
 clover.xml
-infection-log.txt
+infection-log.*
 .phpdoc/cache/
 .phpunit.cache/
 vendor/

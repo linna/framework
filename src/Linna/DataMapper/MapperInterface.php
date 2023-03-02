@@ -27,6 +27,8 @@ interface MapperInterface
      * @param int|string $objectId The id or the uuid of the object which will be searched.
      *
      * @return DomainObjectInterface The domain object if exists, the null domain object otherwise.
+     *
+     * @todo Add null to the types of the parameter and return NullDomainObject if $objectId is null.
      */
     public function fetchById(int|string $objectId): DomainObjectInterface;
 }
