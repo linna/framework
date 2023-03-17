@@ -13,20 +13,21 @@ declare(strict_types=1);
 namespace Linna\DataMapper;
 
 use UnexpectedValueException;
+use DateTimeImmutable;
 
 /**
  * Provide methods and properties for track the creation and updates of the domain objects.
  */
 trait DomainObjectTimeTrait
 {
-    /** @var string Insertion date on persistent storage. */
-    public string $created = '';
+    /** @var DateTimeImmutable|null Insertion date on persistent storage. */
+    public ?DateTimeImmutable $created = null;
 
-    /** @var string Last update date on persistento storage. */
-    public string $lastUpdate = '';
+    /** @var DateTimeImmutable|null Last update date on persistento storage. */
+    public ?DateTimeImmutable $lastUpdate = null;
 
     /**
-     * Set the creation date for the object.
+     * Set the creation date for the object in persistent storage.
      *
      * @return void
      *
@@ -34,24 +35,20 @@ trait DomainObjectTimeTrait
      */
     public function setCreated(): void
     {
-        $date = \date(DATE_ATOM);
-
-        if ($this->created !== '') {
+        if ($this->created !== null) {
             throw new UnexpectedValueException('Creation date property is immutable.');
         }
 
-        $this->created = $date;
+        $this->created = new DateTimeImmutable(\date(DATE_ATOM));
     }
 
     /**
-     * Set the time for the last object changes.
+     * Set the time for the last object changes in persistent storage.
      *
      * @return void
      */
     public function setLastUpdate(): void
     {
-        $date = \date(DATE_ATOM);
-
-        $this->lastUpdate = $date;
+        $this->lastUpdate = new DateTimeImmutable(\date(DATE_ATOM));
     }
 }

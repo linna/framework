@@ -28,19 +28,19 @@ class ExtendedPDO extends PDO
      * Executes an SQL statement with parameters, returning a result set as a
      * PDOStatement object.
      *
-     * @param string       $query SQL statement.
-     * @param array<mixed> $param Parameter as array as <code>PDOStatement::bindParam</code>.
+     * @param string       $query  SQL statement.
+     * @param array<mixed> $params Parameter as array as <code>PDOStatement::bindParam</code>.
      *
      * @return PDOStatement|false False in case of failure.
      */
-    public function queryWithParam(string $query, array $param): PDOStatement|false
+    public function queryWithParam(string $query, array $params): PDOStatement|false
     {
         $statement = $this->prepare($query);
 
         $callback = [$statement, "bindParam"];
 
         if (\is_callable($callback)) {
-            foreach ($param as $value) {
+            foreach ($params as $value) {
                 $this->checkValue($value);
 
                 //reassign as reference
