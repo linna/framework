@@ -85,8 +85,8 @@ class LoginAttemptTest extends TestCase
         $this->assertSame('root', $loginAttempt->userName);
         $this->assertSame('mbvi2lgdpcj6vp3qemh2estei2', $loginAttempt->sessionId);
         $this->assertInstanceOf(DateTimeImmutable::class, $loginAttempt->when);
-        $this->assertSame(null, $loginAttempt->created);
-        $this->assertSame(null, $loginAttempt->lastUpdate);
+        $this->assertInstanceOf(DateTimeImmutable::class, $loginAttempt->created);
+        $this->assertInstanceOf(DateTimeImmutable::class, $loginAttempt->lastUpdate);
 
         self::$enhancedAuthenticationMapper->save($loginAttempt);
 

@@ -46,9 +46,7 @@ class EnhancedAuthenticationTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        /*\var_dump(PdoOptionsFactory::getOptions());
-
-        $options = [
+        /*$options = [
             'dsn'      => $GLOBALS['pdo_mysql_dsn'],
             'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
@@ -86,12 +84,6 @@ class EnhancedAuthenticationTest extends TestCase
     public static function tearDownAfterClass(): void
     {
         self::loginClean();
-
-        //self::$pdo = null;
-        //self::$password = null;
-        //self::$session = null;
-        //self::$enhancedAuthenticationMapper = null;
-        //self::$enhancedAuthentication = null;
     }
 
     /**
@@ -248,12 +240,12 @@ class EnhancedAuthenticationTest extends TestCase
      */
     protected function storeLoginAttempt(string &$user, string &$sessionId, string &$ipAddress): void
     {
-        /** @var \Linna\Authentication\LoginAttempt Login Attempt. */
-        $loginAttempt = self::$enhancedAuthenticationMapper->create();
-        $loginAttempt->userName = $user;
-        $loginAttempt->sessionId = $sessionId;
-        $loginAttempt->ipAddress = $ipAddress;
-        $loginAttempt->when = \date(DATE_ATOM, \time());
+        $loginAttempt = new LoginAttempt(
+            userName:   $user,
+            sessionId:  $sessionId,
+            ipAddress:  $ipAddress,
+            when:       \date_create_immutable()
+        );
 
         self::$enhancedAuthenticationMapper->save($loginAttempt);
     }

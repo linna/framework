@@ -32,6 +32,7 @@ class LoginAttempt extends DomainObjectAbstract
      * @param DateTimeImmutable|null $lastUpdate
      */
     public function __construct(
+        //user id
         null|int|string $id = null,
 
         /** @var string The user name. */
@@ -45,8 +46,12 @@ class LoginAttempt extends DomainObjectAbstract
 
         /** @var DateTimeImmutable|null The date time of the login attempt. */
         public ?DateTimeImmutable $when = null,
-        ?DateTimeImmutable $created = null,
-        ?DateTimeImmutable $lastUpdate = null
+
+        //creation datetime
+        ?DateTimeImmutable $created = new DateTimeImmutable(),
+
+        //last updated datetime
+        ?DateTimeImmutable $lastUpdate = new DateTimeImmutable()
     ) {
         //parent properties
         $this->id = $id;

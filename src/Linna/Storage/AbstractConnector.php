@@ -23,8 +23,8 @@ abstract class AbstractConnector implements ConnectorInterface
      * @param array<mixed> $options Connection options.
      */
     public function __construct(
-            /** @var array<mixed> Connection options. */
-            protected array $options = []
+        /** @var array<mixed> Connection options. */
+        protected array $options = []
     ) {
     }
 

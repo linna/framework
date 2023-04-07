@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Linna\Authentication;
 
+use DateTimeImmutable;
 use Linna\DataMapper\DomainObjectAbstract;
 
 /**
@@ -22,42 +23,46 @@ use Linna\DataMapper\DomainObjectAbstract;
  */
 class User extends DomainObjectAbstract
 {
-    /** @var string Universal unique identifier. */
-    public string $uuid;
-
-    /** @var string User name. */
-    public string $name;
-
-    /** @var string User description. */
-    public ?string $description;
-
-    /** @var string User e-mail. */
-    public ?string $email;
-
-    /** @var string User hashed password. */
-    public string $password;
-
-    /** @var int It say if user is active or not. */
-    public int $active = 0;
-
-    /** @var Password Password class for manage password. */
-    private Password $passwordUtility;
-
     /**
      * Class Constructor.
      *
      * @param Password $password <code>Password</code> class instance.
      */
-    public function __construct(Password $password)
-    {
-        $this->passwordUtility = $password;
+    public function __construct(
+        /** @var Password Password class for manage password. */
+        private Password $passwordUtility = new Password(),
 
-        //set required type
-        //do type conversion because PDO doesn't return any original type from db :(.
-        //\settype($this->id, 'integer');
-        \settype($this->active, 'integer');
-        \settype($this->email, 'string');
-        \settype($this->description, 'string');
+        //user id
+        null|int|string $id = null,
+
+        /** @var string Universal unique identifier. */
+        public string $uuid = '',
+
+        /** @var string User name. */
+        public string $name = '',
+
+        /** @var string User description. */
+        public ?string $description = null,
+
+        /** @var string User e-mail. */
+        public ?string $email = null,
+
+        /** @var string User hashed password. Use only to read it, not to set.*/
+        public string $password = '',
+
+        /** @var int It say if user is active or not. */
+        public int $active = 0,
+
+        //creation datetime
+        ?DateTimeImmutable $created = new DateTimeImmutable(),
+
+        //last updated datetime
+        ?DateTimeImmutable $lastUpdate = new DateTimeImmutable()
+    ) {
+        //parent properties
+        $this->id = $id;
+        $this->created = $created;
+        $this->lastUpdate = $lastUpdate;
     }
 
     /**
