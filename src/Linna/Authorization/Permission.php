@@ -19,20 +19,22 @@ use Linna\DataMapper\DomainObjectAbstract;
  */
 class Permission extends DomainObjectAbstract
 {
-    /** @var string Permission name. */
-    public string $name;
-
-    /** @var string Permission description. */
-    public string $description;
-
-    /** @var int Id of the group from which the permission was inherited. */
-    public int $inherited = 0;
-
     /**
      * Class Constructor.
+     *
+     * @param string  $name        The permission name.
+     * @param string  $description The permission description.
+     * @param integer $inherited   Specify if the permission is inherited from a group.
      */
-    public function __construct()
-    {
-        \settype($this->inherited, 'integer');
+    public function __construct(
+        /** @var string Permission name. */
+        public string $name,
+
+        /** @var string Permission description. */
+        public string $description,
+
+        /** @var int Id of the group from which the permission was inherited. */
+        public int $inherited = 0
+    ) {
     }
 }

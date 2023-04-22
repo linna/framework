@@ -27,15 +27,22 @@ class EnhancedUser extends User
      *
      * @param Password     $password    <code>Password</code> class instance.
      * @param array<mixed> $roles       The roles granted to the user.
-     * @param array<mixed> $permissions The permission granted to the user.
+     * @param array<mixed> $permissions The permissions granted to the user.
      */
     public function __construct(
+        //password for parent class
         Password $password,
+
+        //roles granted to the user
         private array $roles = [],
+
+        //The permissions granted to the user
         array $permissions = []
     ) {
+        //initialize parent
         parent::__construct($password);
 
+        //from permission trait
         $this->permission = $permissions;
     }
 
