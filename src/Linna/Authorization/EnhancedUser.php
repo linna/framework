@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Linna\Authorization;
 
+use DateTimeImmutable;
 use Linna\Authentication\Password;
 use Linna\Authentication\User;
 
@@ -24,14 +25,50 @@ class EnhancedUser extends User
 
     /**
      * Class Constructor.
-     *
-     * @param Password     $password    <code>Password</code> class instance.
-     * @param array<mixed> $roles       The roles granted to the user.
-     * @param array<mixed> $permissions The permissions granted to the user.
+     * 
+     * @param Password           $passwordUtility <code>Password</code> class instance.
+     * @param null|int|string    $id              User id.
+     * @param string             $uuid            Universal unique identifier.
+     * @param string             $name            User name.
+     * @param ?string            $description     User description.
+     * @param ?string            $email           User e-mail.
+     * @param string             $password        User hashed password. Use only to read it, not to set.
+     * @param int                $active          It says if user is active or not.
+     * @param ?DateTimeImmutable $created         Creation datetime.
+     * @param ?DateTimeImmutable $lastUpdate      Last updated datetime
+     * @param array<mixed>       $roles           The roles granted to the user.
+     * @param array<mixed>       $permissions     The permissions granted to the user.
      */
     public function __construct(
-        //password for parent class
-        Password $password,
+        /** @var Password Password class for manage password. */
+        private Password $passwordUtility = new Password(),
+
+        //user id
+        null|int|string $id = null,
+
+        /** @var string Universal unique identifier. */
+        string $uuid = '',
+
+        /** @var string User name. */
+        string $name = '',
+
+        /** @var string User description. */
+        ?string $description = null,
+
+        /** @var string User e-mail. */
+        ?string $email = null,
+
+        /** @var string User hashed password. Use only to read it, not to set.*/
+        string $password = '',
+
+        /** @var int It says if user is active or not. */
+        int $active = 0,
+
+        //creation datetime
+        ?DateTimeImmutable $created = new DateTimeImmutable(),
+
+        //last updated datetime
+        ?DateTimeImmutable $lastUpdate = new DateTimeImmutable(),
 
         //roles granted to the user
         private array $roles = [],
@@ -40,7 +77,17 @@ class EnhancedUser extends User
         array $permissions = []
     ) {
         //initialize parent
-        parent::__construct($password);
+        parent::__construct(
+            passwordUtility: $passwordUtility,
+            id:              $id, 
+            uuid:            $uuid, 
+            name:            $name, 
+            description:     $description, 
+            password:        $password, 
+            active:          $active, 
+            created:         $created, 
+            lastUpdate:      $lastUpdate
+        );
 
         //from permission trait
         $this->permission = $permissions;

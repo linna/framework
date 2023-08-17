@@ -28,10 +28,10 @@ class Permission extends DomainObjectAbstract
      */
     public function __construct(
         /** @var string Permission name. */
-        public string $name,
+        public string $name = '',
 
         /** @var string Permission description. */
-        public string $description,
+        public string $description = '',
 
         /** @var int Id of the group from which the permission was inherited. */
         public int $inherited = 0

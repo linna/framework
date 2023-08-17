@@ -26,7 +26,16 @@ class User extends DomainObjectAbstract
     /**
      * Class Constructor.
      *
-     * @param Password $password <code>Password</code> class instance.
+     * @param Password           $passwordUtility <code>Password</code> class instance.
+     * @param null|int|string    $id              User id.
+     * @param string             $uuid            Universal unique identifier.
+     * @param string             $name            User name.
+     * @param ?string            $description     User description.
+     * @param ?string            $email           User e-mail.
+     * @param string             $password        User hashed password. Use only to read it, not to set.
+     * @param int                $active          It says if user is active or not.
+     * @param ?DateTimeImmutable $created         Creation datetime.
+     * @param ?DateTimeImmutable $lastUpdate      Last updated datetime
      */
     public function __construct(
         /** @var Password Password class for manage password. */
@@ -50,7 +59,7 @@ class User extends DomainObjectAbstract
         /** @var string User hashed password. Use only to read it, not to set.*/
         public string $password = '',
 
-        /** @var int It say if user is active or not. */
+        /** @var int It says if user is active or not. */
         public int $active = 0,
 
         //creation datetime

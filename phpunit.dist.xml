@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" colors="true" executionOrder="default" bootstrap="vendor/autoload.php" cacheDirectory=".phpunit.cache">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.2/phpunit.xsd" colors="true" executionOrder="default" bootstrap="vendor/autoload.php" cacheDirectory=".phpunit.cache">
   <coverage>
-    <include>
-      <directory suffix=".php">src</directory>
-    </include>
     <report>
       <clover outputFile="clover.xml"/>
     </report>
@@ -27,6 +24,11 @@
     <var name="mongodb_server_string" value="mongodb://localhost:27017"/>
     <var name="redis_host" value="127.0.0.1"/>
     <var name="redis_port" value="6379"/>
-    <var name="redis_password" value=""/>
+    <var name="redis_password" value="password"/>
   </php>
+  <source>
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+  </source>
 </phpunit>
