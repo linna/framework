@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Linna\Authorization;
 
 use Linna\DataMapper\DomainObjectAbstract;
+use DateTimeImmutable;
 
 /**
  * Permission domain object.
@@ -27,6 +28,9 @@ class Permission extends DomainObjectAbstract
      * @param integer $inherited   Specify if the permission is inherited from a group.
      */
     public function __construct(
+        //user id
+        null|int|string $id = null,
+
         /** @var string Permission name. */
         public string $name = '',
 
@@ -34,7 +38,17 @@ class Permission extends DomainObjectAbstract
         public string $description = '',
 
         /** @var int Id of the group from which the permission was inherited. */
-        public int $inherited = 0
+        public int $inherited = 0,
+
+        //creation datetime
+        ?DateTimeImmutable $created = new DateTimeImmutable(),
+
+        //last updated datetime
+        ?DateTimeImmutable $lastUpdate = new DateTimeImmutable()
     ) {
+        //parent properties
+        $this->id = $id;
+        $this->created = $created;
+        $this->lastUpdate = $lastUpdate;
     }
 }

@@ -189,7 +189,7 @@ class AuthenticationTest extends TestCase
         //attemp first login
         $this->assertTrue(self::$authentication->login('root', 'password', 'root', self::$password->hash('password'), 1));
         $this->assertTrue(self::$session->login['login']);
-        $this->assertSame(['login'=> true, 'user_id' => 1, 'user_name' => 'root'], self::$authentication->getLoginData());
+        $this->assertSame(['login' => true, 'user_id' => 1, 'user_name' => 'root'], self::$authentication->getLoginData());
 
         //attemp check if logged
         $this->assertTrue(self::$authentication->isLogged());
@@ -205,7 +205,7 @@ class AuthenticationTest extends TestCase
         //check for login data
         $this->assertNull(self::$session->get('login'));
         $this->assertNull(self::$session->get('loginTime'));
-        $this->assertSame(['login'=> true, 'user_id' => null, 'user_name' => null], self::$authentication->getLoginData());
+        $this->assertSame(['login' => true, 'user_id' => null, 'user_name' => null], self::$authentication->getLoginData());
 
         //check session id regeneration
         $this->assertNotSame($sessionId, self::$session->getSessionId());

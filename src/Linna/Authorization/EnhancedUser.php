@@ -25,7 +25,7 @@ class EnhancedUser extends User
 
     /**
      * Class Constructor.
-     * 
+     *
      * @param Password           $passwordUtility <code>Password</code> class instance.
      * @param null|int|string    $id              User id.
      * @param string             $uuid            Universal unique identifier.
@@ -79,13 +79,13 @@ class EnhancedUser extends User
         //initialize parent
         parent::__construct(
             passwordUtility: $passwordUtility,
-            id:              $id, 
-            uuid:            $uuid, 
-            name:            $name, 
-            description:     $description, 
-            password:        $password, 
-            active:          $active, 
-            created:         $created, 
+            id:              $id,
+            uuid:            $uuid,
+            name:            $name,
+            description:     $description,
+            password:        $password,
+            active:          $active,
+            created:         $created,
             lastUpdate:      $lastUpdate
         );
 

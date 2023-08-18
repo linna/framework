@@ -157,8 +157,8 @@ class RouterTest extends TestCase
     public static function routeProvider(): array
     {
         return [
-            ['/user/5/enable', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']], true], //test param route
-            ['/userOther/enable/5', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id'=>'5']], true], //test inverse param route
+            ['/user/5/enable', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id' => '5']], true], //test param route
+            ['/userOther/enable/5', 'GET', ['UserModel', 'UserView', 'UserController', 'enable', ['id' => '5']], true], //test inverse param route
         ];
     }
 
@@ -381,7 +381,7 @@ class RouterTest extends TestCase
         $this->assertEquals('UserView', $route->view);
         $this->assertEquals('UserController', $route->controller);
         $this->assertEquals('enable', $route->action);
-        $this->assertEquals(['id'=>'5'], $route->param);
+        $this->assertEquals(['id' => '5'], $route->param);
     }
 
     /**
@@ -407,7 +407,7 @@ class RouterTest extends TestCase
         $this->assertEquals('UserView', $route->view);
         $this->assertEquals('UserController', $route->controller);
         $this->assertEquals('enable', $route->action);
-        $this->assertEquals(['id'=>'5'], $route->param);
+        $this->assertEquals(['id' => '5'], $route->param);
     }
 
     /**
