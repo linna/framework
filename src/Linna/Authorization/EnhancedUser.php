@@ -26,18 +26,18 @@ class EnhancedUser extends User
     /**
      * Class Constructor.
      *
-     * @param Password           $passwordUtility <code>Password</code> class instance.
-     * @param null|int|string    $id              User id.
-     * @param string             $uuid            Universal unique identifier.
-     * @param string             $name            User name.
-     * @param ?string            $description     User description.
-     * @param ?string            $email           User e-mail.
-     * @param string             $password        User hashed password. Use only to read it, not to set.
-     * @param int                $active          It says if user is active or not.
-     * @param ?DateTimeImmutable $created         Creation datetime.
-     * @param ?DateTimeImmutable $lastUpdate      Last updated datetime
-     * @param array<mixed>       $roles           The roles granted to the user.
-     * @param array<mixed>       $permissions     The permissions granted to the user.
+     * @param Password               $passwordUtility <code>Password</code> class instance.
+     * @param null|int|string        $id              User id.
+     * @param string                 $uuid            Universal unique identifier.
+     * @param string                 $name            User name.
+     * @param string                 $description     User description.
+     * @param string                 $email           User e-mail.
+     * @param string                 $password        User hashed password. Use only to read it, not to set.
+     * @param int                    $active          It says if user is active or not.
+     * @param DateTimeImmutable|null $created         Creation datetime.
+     * @param DateTimeImmutable|null $lastUpdate      Last updated datetime
+     * @param array<mixed>           $roles           The roles granted to the user.
+     * @param array<mixed>           $permissions     The permissions granted to the user.
      */
     public function __construct(
         /** @var Password Password class for manage password. */
@@ -53,10 +53,10 @@ class EnhancedUser extends User
         string $name = '',
 
         /** @var string User description. */
-        ?string $description = null,
+        string $description = '',
 
         /** @var string User e-mail. */
-        ?string $email = null,
+        string $email = '',
 
         /** @var string User hashed password. Use only to read it, not to set.*/
         string $password = '',

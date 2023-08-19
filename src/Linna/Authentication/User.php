@@ -26,16 +26,16 @@ class User extends DomainObjectAbstract
     /**
      * Class Constructor.
      *
-     * @param Password           $passwordUtility <code>Password</code> class instance.
-     * @param null|int|string    $id              User id.
-     * @param string             $uuid            Universal unique identifier.
-     * @param string             $name            User name.
-     * @param ?string            $description     User description.
-     * @param ?string            $email           User e-mail.
-     * @param string             $password        User hashed password. Use only to read it, not to set.
-     * @param int                $active          It says if user is active or not.
-     * @param ?DateTimeImmutable $created         Creation datetime.
-     * @param ?DateTimeImmutable $lastUpdate      Last updated datetime
+     * @param Password               $passwordUtility <code>Password</code> class instance.
+     * @param null|int|string        $id              User id.
+     * @param string                 $uuid            Universal unique identifier.
+     * @param string                 $name            User name.
+     * @param string                 $description     User description.
+     * @param string                 $email           User e-mail.
+     * @param string                 $password        User hashed password. Use only to read it, not to set.
+     * @param int                    $active          It says if user is active or not.
+     * @param DateTimeImmutable|null $created         Creation datetime.
+     * @param DateTimeImmutable|null $lastUpdate      Last updated datetime.
      */
     public function __construct(
         /** @var Password Password class for manage password. */
@@ -51,10 +51,10 @@ class User extends DomainObjectAbstract
         public string $name = '',
 
         /** @var string User description. */
-        public ?string $description = null,
+        public string $description = '',
 
         /** @var string User e-mail. */
-        public ?string $email = null,
+        public string $email = '',
 
         /** @var string User hashed password. Use only to read it, not to set.*/
         public string $password = '',

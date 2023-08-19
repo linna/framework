@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Linna\Authorization;
 
+use DateTimeImmutable;
 use Linna\Authentication\User;
 use Linna\DataMapper\DomainObjectAbstract;
 
@@ -32,6 +33,9 @@ class Role extends DomainObjectAbstract
      * @param array<mixed> $permissions Permissions granted by the role.
      */
     public function __construct(
+        //role id
+        null|int|string $id = null,
+
         /** @var string Group name. */
         public string $name = '',
 
@@ -45,7 +49,13 @@ class Role extends DomainObjectAbstract
         private array $users = [],
 
         //permissions in role
-        array $permissions = []
+        array $permissions = [],
+
+        //creation datetime
+        ?DateTimeImmutable $created = new DateTimeImmutable(),
+
+        //last updated datetime
+        ?DateTimeImmutable $lastUpdate = new DateTimeImmutable()
     ) {
         $this->permission = $permissions;
     }

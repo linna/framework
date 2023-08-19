@@ -23,13 +23,13 @@ class LoginAttempt extends DomainObjectAbstract
     /**
      * Class Constructor.
      *
-     * @param null|int|string        $id
-     * @param string                 $userName
-     * @param string                 $sessionId
-     * @param string                 $ipAddress
-     * @param DateTimeImmutable|null $when
-     * @param DateTimeImmutable|null $created
-     * @param DateTimeImmutable|null $lastUpdate
+     * @param null|int|string        $id         Login attempt id.
+     * @param string                 $userName   User name used in login.
+     * @param string                 $sessionId  Session id of the request.
+     * @param string                 $ipAddress  Ip address of the request.
+     * @param DateTimeImmutable|null $when       Login time.
+     * @param DateTimeImmutable|null $created    Creation datetime.
+     * @param DateTimeImmutable|null $lastUpdate Last updated datetime.
      */
     public function __construct(
         //user id

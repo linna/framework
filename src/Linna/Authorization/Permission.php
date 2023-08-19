@@ -23,12 +23,15 @@ class Permission extends DomainObjectAbstract
     /**
      * Class Constructor.
      *
-     * @param string  $name        The permission name.
-     * @param string  $description The permission description.
-     * @param integer $inherited   Specify if the permission is inherited from a group.
+     * @param null|int|string        $id          Permission id.
+     * @param string                 $name        Permission name.
+     * @param string                 $description Permission description.
+     * @param integer                $inherited   Specify if the permission is inherited from a group.
+     * @param DateTimeImmutable|null $created     Creation datetime.
+     * @param DateTimeImmutable|null $lastUpdate  Last updated datetime.
      */
     public function __construct(
-        //user id
+        //permission id
         null|int|string $id = null,
 
         /** @var string Permission name. */
