@@ -16,13 +16,14 @@ use Linna\Authorization\EnhancedUser;
 use Linna\Authorization\Permission;
 use Linna\Authorization\Role;
 use Linna\DataMapper\MapperInterface;
+use Linna\DataMapper\FetchByNameInterface;
 
 /**
  * Group Mapper Interface.
  *
  * Contain methods required from concrete Role Mapper.
  */
-interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterface, FetchByUserInterface
+interface RoleMapperInterface extends MapperInterface, FetchByPermissionInterface, FetchByNameInterface, FetchByUserInterface
 {
     /**
      * Grant a permission at role.
