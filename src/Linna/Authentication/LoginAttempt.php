@@ -45,7 +45,7 @@ class LoginAttempt extends DomainObjectAbstract
         public string $ipAddress = '',
 
         /** @var DateTimeImmutable|null The date time of the login attempt. */
-        public ?DateTimeImmutable $when = null,
+        public ?DateTimeImmutable $when = new DateTimeImmutable(),
 
         //creation datetime
         ?DateTimeImmutable $created = new DateTimeImmutable(),
