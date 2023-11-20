@@ -21,7 +21,7 @@ use Linna\DataMapper\DomainObjectAbstract;
  */
 class Role extends DomainObjectAbstract
 {
-    use PermissionTrait;
+    //use PermissionTrait;
 
     /**
      * Constructor.
@@ -46,10 +46,10 @@ class Role extends DomainObjectAbstract
         public int $active = 0,
 
         //users in role
-        private array $users = [],
+        //private array $users = [],
 
         //permissions in role
-        array $permissions = [],
+        //array $permissions = [],
 
         //creation datetime
         ?DateTimeImmutable $created = new DateTimeImmutable(),
@@ -57,7 +57,7 @@ class Role extends DomainObjectAbstract
         //last updated datetime
         ?DateTimeImmutable $lastUpdate = new DateTimeImmutable()
     ) {
-        $this->permission = $permissions;
+        //$this->permission = $permissions;
     }
 
     /**
@@ -67,10 +67,10 @@ class Role extends DomainObjectAbstract
      *
      * @return bool True if the user is in role, false otherwise.
      */
-    public function isUserInRole(User $user): bool
-    {
-        return $this->isUserInRoleById($user->getId());
-    }
+    //public function isUserInRole(User $user): bool
+    //{
+    //    return $this->isUserInRoleById($user->getId());
+    //}
 
     /**
      * Check if an user is in role, use the user id.
@@ -79,14 +79,14 @@ class Role extends DomainObjectAbstract
      *
      * @return bool True if the user is in role, false otherwise.
      */
-    public function isUserInRoleById(null|int|string $userId): bool
-    {
-        if (isset($this->users[$userId])) {
-            return true;
-        }
+    //public function isUserInRoleById(null|int|string $userId): bool
+    //{
+    //    if (isset($this->users[$userId])) {
+    //        return true;
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 
     /**
      * Check if an user is in role, use the user name.
@@ -95,12 +95,12 @@ class Role extends DomainObjectAbstract
      *
      * @return bool True if the user is in role, false otherwise.
      */
-    public function isUserInRoleByName(string $userName): bool
-    {
-        if (\in_array($userName, \array_column($this->users, 'name'), true)) {
-            return true;
-        }
+    //public function isUserInRoleByName(string $userName): bool
+    //{
+    //    if (\in_array($userName, \array_column($this->users, 'name'), true)) {
+    //        return true;
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 }

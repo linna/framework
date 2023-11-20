@@ -17,11 +17,12 @@ use Linna\Authentication\Password;
 use Linna\Authentication\User;
 
 /**
- * Enhanched User, an user with permissions.
+ * User Extended, an user with permissions.
  */
-class EnhancedUser extends User
+class UserExtended extends User
 {
     use PermissionTrait;
+    use RoleTrait;
 
     /**
      * Class Constructor.
@@ -71,7 +72,7 @@ class EnhancedUser extends User
         ?DateTimeImmutable $lastUpdate = new DateTimeImmutable(),
 
         //roles granted to the user
-        private array $roles = [],
+        array $roles = [],
 
         //The permissions granted to the user
         array $permissions = []
@@ -89,51 +90,10 @@ class EnhancedUser extends User
             lastUpdate:      $lastUpdate
         );
 
+        //from role trait
+        $this->role = $roles;
+
         //from permission trait
         $this->permission = $permissions;
-    }
-
-    /**
-     * Check if an user has a role, use Role instance.
-     *
-     * @param Role $role The role as <code>Role<code> object which will be checked.
-     *
-     * @return bool True if the user has the role, false otherwise.
-     */
-    public function hasRole(Role $role): bool
-    {
-        return $this->hasRoleById($role->getId());
-    }
-
-    /**
-     * Check if an user has a role, use role Id.
-     *
-     * @param null|int|string $roleId The role as role id or uuid which will be checked.
-     *
-     * @return bool True if the user has the role, false otherwise.
-     */
-    public function hasRoleById(null|int|string $roleId): bool
-    {
-        if (isset($this->roles[$roleId])) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Check if an user has a role, use role name.
-     *
-     * @param string $roleName The role as role name which will be checked.
-     *
-     * @return bool True if the user has the role, false otherwise.
-     */
-    public function hasRoleByName(string $roleName): bool
-    {
-        if (\in_array($roleName, \array_column($this->roles, 'name'), true)) {
-            return true;
-        }
-
-        return false;
     }
 }

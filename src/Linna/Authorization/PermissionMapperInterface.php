@@ -22,9 +22,10 @@ use Linna\DataMapper\MapperInterface;
  */
 interface PermissionMapperInterface extends
     MapperInterface,
-    FetchByNameInterface,
-    FetchByUserInterface,
-    FetchByRoleInterface
+    FetchByNameInterface
+    //,
+    //FetchByUserInterface,
+    //FetchByRoleInterface
 {
     /**
      * Check if a permission exist.
@@ -33,7 +34,7 @@ interface PermissionMapperInterface extends
      *
      * @return bool True if the permission exists, false otherwise.
      */
-    public function permissionExistById(int|string $permissionId): bool;
+    //public function permissionExistById(int|string $permissionId): bool;
 
     /**
      * Check if a permission exist.
@@ -42,5 +43,5 @@ interface PermissionMapperInterface extends
      *
      * @return bool True if the permission exists, false otherwise.
      */
-    public function permissionExistByName(string $permissionName): bool;
+    //public function permissionExistByName(string $permissionName): bool;
 }
