@@ -14,7 +14,6 @@ namespace Linna\Authorization;
 
 use DateTimeImmutable;
 use Linna\Authentication\Password;
-use Linna\Authentication\User;
 
 /**
  * User Extended, an user with permissions.

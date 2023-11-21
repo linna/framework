@@ -10,10 +10,11 @@ declare(strict_types=1);
  * @license http://opensource.org/licenses/MIT MIT License
  */
 
-namespace Linna\Authentication;
+namespace Linna\Authorization;
 
 use DateTimeImmutable;
 use Linna\DataMapper\DomainObjectAbstract;
+use Linna\Authentication\Password;
 
 /**
  * User domain object.

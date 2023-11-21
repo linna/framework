@@ -10,16 +10,16 @@ declare(strict_types=1);
  * @license http://opensource.org/licenses/MIT MIT License
  */
 
-namespace Linna\Authorization;
+namespace Linna\Authentication;
 
 use Linna\DataMapper\FetchByNameInterface;
 use Linna\DataMapper\MapperInterface;
 
 /**
- * Permission Mapper Interface.
+ * Contain methods required from concrete Role Mapper.
  *
- * <p>Contain methods required from concrete permission mapper.</p>
+ * <p>Actually this interface is void.</p>
  */
-interface PermissionMapperInterface extends MapperInterface, FetchByNameInterface
+interface RoleMapperInterface extends MapperInterface, FetchByNameInterface
 {
 }

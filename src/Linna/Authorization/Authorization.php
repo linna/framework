@@ -30,10 +30,10 @@ class Authorization
     /**
      * Class Constructor.
      *
-     * @param Authentication            $authentication   The <code>Authentication</code> instance.
-     * @param PermissionMapperInterface $permissionMapper A <code>PermissionMapperInterface</code> implementation.
+     * @param Authentication                    $authentication   The <code>Authentication</code> instance.
+     * @param PermissionExtendedMapperInterface $permissionMapper A <code>PermissionMapperInterface</code> implementation.
      */
-    public function __construct(Authentication $authentication, PermissionMapperInterface $permissionMapper)
+    public function __construct(Authentication $authentication, PermissioExtendedMapperInterface $permissionMapper)
     {
         $userId = $authentication->getLoginData()['user_id'];
 

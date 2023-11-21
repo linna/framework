@@ -16,10 +16,10 @@ use Linna\DataMapper\FetchByNameInterface;
 use Linna\DataMapper\MapperInterface;
 
 /**
- * Permission Mapper Interface.
+ * Contain methods required from concrete User Mapper.
  *
- * <p>Contain methods required from concrete permission mapper.</p>
+ * <p>Actually this interface is void.</p>
  */
-interface PermissionMapperInterface extends MapperInterface, FetchByNameInterface
+interface UserMapperInterface extends MapperInterface, FetchByNameInterface
 {
 }

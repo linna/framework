@@ -21,8 +21,6 @@ use Linna\DataMapper\DomainObjectAbstract;
  */
 class Role extends DomainObjectAbstract
 {
-    //use PermissionTrait;
-
     /**
      * Constructor.
      *
@@ -45,62 +43,15 @@ class Role extends DomainObjectAbstract
         /** @var int It say if group is active or not. */
         public int $active = 0,
 
-        //users in role
-        //private array $users = [],
-
-        //permissions in role
-        //array $permissions = [],
-
         //creation datetime
         ?DateTimeImmutable $created = new DateTimeImmutable(),
 
         //last updated datetime
         ?DateTimeImmutable $lastUpdate = new DateTimeImmutable()
     ) {
-        //$this->permission = $permissions;
+        //parent properties
+        $this->id = $id;
+        $this->created = $created;
+        $this->lastUpdate = $lastUpdate;
     }
-
-    /**
-     * Check if an user is in role, use User instance.
-     *
-     * @param User $user The user which will be checked as <code>User</code> instance.
-     *
-     * @return bool True if the user is in role, false otherwise.
-     */
-    //public function isUserInRole(User $user): bool
-    //{
-    //    return $this->isUserInRoleById($user->getId());
-    //}
-
-    /**
-     * Check if an user is in role, use the user id.
-     *
-     * @param null|int|string $userId The user which will be checked as user id.
-     *
-     * @return bool True if the user is in role, false otherwise.
-     */
-    //public function isUserInRoleById(null|int|string $userId): bool
-    //{
-    //    if (isset($this->users[$userId])) {
-    //        return true;
-    //    }
-
-    //    return false;
-    //}
-
-    /**
-     * Check if an user is in role, use the user name.
-     *
-     * @param string $userName The user which will be checked as user name.
-     *
-     * @return bool True if the user is in role, false otherwise.
-     */
-    //public function isUserInRoleByName(string $userName): bool
-    //{
-    //    if (\in_array($userName, \array_column($this->users, 'name'), true)) {
-    //        return true;
-    //    }
-
-    //    return false;
-    //}
 }
