@@ -37,8 +37,8 @@ class AuthorizationTest extends TestCase
     /** @var Authorization The authorization class instance. */
     protected static Authorization $authorization;
 
-    /** @var PermissionMapper The permission mapper class instance. */
-    protected static PermissionMapper $permissionMapper;
+    /** @var PermissionExtendedMapper The permission mapper class instance. */
+    protected static PermissionExtendedMapper $permissionMapper;
 
     /**
      * Set up before class.
@@ -47,22 +47,11 @@ class AuthorizationTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        /*$options = [
-            'dsn'      => $GLOBALS['pdo_mysql_dsn'],
-            'user'     => $GLOBALS['pdo_mysql_user'],
-            'password' => $GLOBALS['pdo_mysql_password'],
-            'options'  => [
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_PERSISTENT         => false,
-                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
-            ],
-        ];*/
-
         $session = new Session();
         $password = new Password();
         $authentication = new Authentication($session, $password);
-        $permissionMapper = new PermissionMapper((new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get());
+        // fix here
+        $permissionMapper = new PermissionExtendedMapper((new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get() /* other arguments */);
 
         self::$password = $password;
         self::$session = $session;
@@ -70,19 +59,6 @@ class AuthorizationTest extends TestCase
         self::$permissionMapper = $permissionMapper;
 
         self::$authorization = new Authorization($authentication, $permissionMapper);
-    }
-
-    /**
-     * Tear down after class.
-     *
-     * @return void
-     */
-    public static function tearDownAfterClass(): void
-    {
-        //self::$password = null;
-        //self::$session = null;
-        //self::$authentication = null;
-        //self::$permissionMapper = null;
     }
 
     /**

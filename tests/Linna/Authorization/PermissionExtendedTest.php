@@ -17,10 +17,10 @@ use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;
 use Linna\TestHelper\Pdo\PdoOptionsFactory;
 
-class PermissionTest extends TestCase
+class PermissionExtendedTest extends TestCase
 {
-    /** @var PermissionMapper The permission mapper */
-    //protected static PermissionMapper $permissionMapper;
+    /** @var PermissionExtendedMapper The permission mapper */
+    //protected static PermissionExtendedMapper $permissionMapper;
 
     /** @var ExtendedPDO Database connection. */
     //protected static ExtendedPDO $pdo;
@@ -47,7 +47,7 @@ class PermissionTest extends TestCase
         //$pdo = (new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get();
 
         //self::$pdo = $pdo;
-        //self::$permissionMapper = new PermissionMapper($pdo);
+        //self::$permissionMapper = new PermissionExtendedMapper($pdo);
     }
 
     /**
@@ -78,13 +78,13 @@ class PermissionTest extends TestCase
      */
     public function testConstructorTypeCasting(): void
     {
-        /*$permission = self::$permissionMapper->fetchById(1);
+        //$permission = self::$permissionMapper->fetchById(1);
 
-        $this->assertIsInt($permission->getId());
-        $this->assertIsInt($permission->id);
-        $this->assertIsInt($permission->inherited);
+        //$this->assertIsInt($permission->getId());
+        //$this->assertIsInt($permission->id);
+        //$this->assertIsInt($permission->inherited);
 
-        $this->assertGreaterThan(0, $permission->getId());
-        $this->assertGreaterThan(0, $permission->id);*/
+        //$this->assertGreaterThan(0, $permission->getId());
+        //$this->assertGreaterThan(0, $permission->id);
     }
 }

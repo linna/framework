@@ -20,6 +20,6 @@ use Linna\DataMapper\MapperInterface;
  *
  * <p>Actually this interface is void.</p>
  */
-interface RoleMapperInterface extends MapperInterface, FetchByNameInterface
+interface RoleMapperInterface extends MapperInterface, FetchByNameInterface, FetchByPermissionInterface, FetchByUserInterface
 {
 }

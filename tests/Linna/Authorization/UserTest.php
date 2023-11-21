@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @license http://opensource.org/licenses/MIT MIT License
  */
 
-namespace Linna\Authentication;
+namespace Linna\Authorization;
 
 use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;

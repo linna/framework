@@ -22,7 +22,7 @@ use Linna\DataMapper\MapperInterface;
  *
  * Contains methods required from concrete User Mapper.
  */
-interface UserExtendedMapperInterface extends MapperInterface, FetchByPermissionInterface, FetchByRoleInterface
+interface UserExtendedMapperInterface extends MapperInterface, FetchByNameInterface, FetchByPermissionInterface, FetchByRoleInterface
 {
     /**
      * Grant a permission to an user.
