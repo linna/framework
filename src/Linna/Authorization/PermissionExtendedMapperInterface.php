@@ -12,14 +12,14 @@ declare(strict_types=1);
 
 namespace Linna\Authorization;
 
-use Linna\DataMapper\FetchByNameInterface;
-use Linna\DataMapper\MapperInterface;
+//use Linna\DataMapper\FetchByNameInterface;
+//use Linna\DataMapper\MapperInterface;
 
 /**
  * Permission Extended Mapper Interface.
  *
  * <p>Contain methods required from concrete permission mapper.</p>
  */
-interface PermissionExtendedMapperInterface extends MapperInterface, FetchByNameInterface, FetchByUserInterface, FetchByRoleInterface
+interface PermissionExtendedMapperInterface extends PermissionMapperInterface
 {
 }

@@ -15,15 +15,16 @@ namespace Linna\Authorization;
 use Linna\Authorization\UserExtended;
 use Linna\Authorization\Permission;
 use Linna\Authorization\Role;
-use Linna\DataMapper\MapperInterface;
-use Linna\DataMapper\FetchByNameInterface;
+
+//use Linna\DataMapper\MapperInterface;
+//use Linna\DataMapper\FetchByNameInterface;
 
 /**
  * User Mapper Interface.
  *
  * Contains methods required from concrete User Mapper.
  */
-interface UserExtendedMapperInterface extends MapperInterface, FetchByNameInterface, FetchByPermissionInterface, FetchByRoleInterface
+interface UserExtendedMapperInterface extends UserMapperInterface
 {
     /**
      * Grant a permission to an user.
