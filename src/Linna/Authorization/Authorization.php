@@ -13,7 +13,8 @@ declare(strict_types=1);
 namespace Linna\Authorization;
 
 use Linna\Authentication\Authentication;
-use Linna\Authorization\Permission;
+
+//use Linna\Authorization\Permission;
 
 /**
  * Provide methods to check permissions for authenticated user.
@@ -33,7 +34,7 @@ class Authorization
      * @param Authentication                    $authentication   The <code>Authentication</code> instance.
      * @param PermissionExtendedMapperInterface $permissionMapper A <code>PermissionMapperInterface</code> implementation.
      */
-    public function __construct(Authentication $authentication, PermissioExtendedMapperInterface $permissionMapper)
+    public function __construct(Authentication $authentication, PermissionExtendedMapperInterface $permissionMapper)
     {
         $userId = $authentication->getLoginData()['user_id'];
 

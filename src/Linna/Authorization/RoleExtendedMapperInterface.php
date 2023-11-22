@@ -23,7 +23,7 @@ use Linna\DataMapper\FetchByNameInterface;
  *
  * Contain methods required from concrete RoleExtended Mapper.
  */
-interface RoleExtendedMapperInterface extends  MapperInterface, FetchByNameInterface, FetchByPermissionInterface, FetchByUserInterface
+interface RoleExtendedMapperInterface extends MapperInterface, FetchByNameInterface, FetchByPermissionInterface, FetchByUserInterface
 {
     /**
      * Grant a permission at role.

@@ -16,6 +16,7 @@ use Linna\Authorization\UserExtended;
 use Linna\Authorization\Permission;
 use Linna\Authorization\Role;
 use Linna\DataMapper\MapperInterface;
+use Linna\DataMapper\FetchByNameInterface;
 
 /**
  * User Mapper Interface.

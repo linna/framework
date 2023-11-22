@@ -63,7 +63,6 @@ class PermissionExtended extends Permission
             name:        $name,
             description: $description,
             inherited:   $inherited,
-            active:      $active,
             created:     $created,
             lastUpdate:  $lastUpdate
         );
