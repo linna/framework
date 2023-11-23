@@ -12,17 +12,17 @@ declare(strict_types=1);
 
 namespace Linna\Authorization;
 
-use Linna\Storage\StorageFactory;
+use DateTimeImmutable;
+use Linna\Authentication\Password;
 use PHPUnit\Framework\TestCase;
-use Linna\TestHelper\Pdo\PdoOptionsFactory;
 
 /**
  * User Test.
  */
 class UserTest extends TestCase
 {
-    /** @var UserMapper The user mapper */
-    protected static UserMapper $userMapper;
+    /** @var User The user instance */
+    protected static User $user;
 
     /**
      * Set up before class.
@@ -31,32 +31,15 @@ class UserTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        /*$options = [
-            'dsn'      => $GLOBALS['pdo_mysql_dsn'],
-            'user'     => $GLOBALS['pdo_mysql_user'],
-            'password' => $GLOBALS['pdo_mysql_password'],
-            'options'  => [
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_PERSISTENT         => false,
-                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
-            ],
-        ];*/
-
-        self::$userMapper = new UserMapper(
-            (new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get(),
-            new Password()
+        self::$user = new User(
+            passwordUtility: new Password(),
+            name:            'test_user',
+            description:     'test_user_description',
+            email:           'test_user@email.com',
+            active:          1,
+            created:         new DateTimeImmutable(),
+            lastUpdate:      new DateTimeImmutable()
         );
-    }
-
-    /**
-     * Tear down after class.
-     *
-     * @return void
-     */
-    public static function tearDownAfterClass(): void
-    {
-        //self::$userMapper = null;
     }
 
     /**
@@ -66,25 +49,19 @@ class UserTest extends TestCase
      */
     public function testNewUserInstance(): void
     {
-        $this->assertInstanceOf(User::class, self::$userMapper->create());
+        $user = self::$user;
+
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertInstanceOf(DateTimeImmutable::class, $user->created);
+        $this->assertInstanceOf(DateTimeImmutable::class, $user->lastUpdate);
+
+        //id null because not saved into persistent storage
+        $this->assertSame(null, $user->id);
+        $this->assertSame('test_user', $user->name);
+        $this->assertSame('test_user_description', $user->description);
+        $this->assertSame('test_user@email.com', $user->email);
+        $this->assertSame(1, $user->active);
     }
-
-    /**
-     * Test constructor type casting.
-     *
-     * @return void
-     */
-    /*public function testConstructorTypeCasting(): void
-    {
-        $user = self::$userMapper->fetchByName('root');
-
-        var_dump($user);
-
-        $this->assertIsInt($user->getId());
-        $this->assertIsInt($user->active);
-
-        $this->assertGreaterThan(0, $user->getId());
-    }*/
 
     /**
      * Test set user password.
@@ -93,12 +70,9 @@ class UserTest extends TestCase
      */
     public function testSetUserPassword(): void
     {
-        /** @var User User Class. */
-        $user = self::$userMapper->create();
+        $user = self::$user;
 
         $user->setPassword('password');
-
-        $this->assertInstanceOf(User::class, $user);
 
         $this->assertTrue(\password_verify('password', $user->password));
     }
@@ -110,15 +84,14 @@ class UserTest extends TestCase
      */
     public function testChangeUserPassword(): void
     {
-        /** @var User User Class. */
-        $user = self::$userMapper->create();
+        $user = self::$user;
+        ;
 
         $user->setPassword('old_password');
 
-        $this->assertInstanceOf(User::class, $user);
-
         $this->assertTrue($user->changePassword('new_password', 'old_password'));
         $this->assertTrue($user->changePassword('other_new_password', 'new_password'));
+        // other_new_password was the current old password
         $this->assertFalse($user->changePassword('password', 'wrong_password'));
     }
 }

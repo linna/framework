@@ -19,7 +19,7 @@ use DateTimeImmutable;
  */
 class PermissionExtended extends Permission
 {
-    use userTrait;
+    use UserTrait;
     use RoleTrait;
 
     /**

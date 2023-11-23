@@ -47,11 +47,16 @@ class AuthorizationTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
+        $pdo = (new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get();
+
         $session = new Session();
         $password = new Password();
         $authentication = new Authentication($session, $password);
-        // fix here
-        $permissionMapper = new PermissionExtendedMapper((new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get() /* other arguments */);
+
+        $userMapper =  new UserMapper($pdo, $password);
+        $roleMapper = new RoleMapper($pdo);
+
+        $permissionMapper = new PermissionExtendedMapper($pdo, $roleMapper, $userMapper);
 
         self::$password = $password;
         self::$session = $session;
