@@ -47,6 +47,10 @@ trait RoleTrait
             return true;
         }
 
+        if (\in_array($roleId, \array_column($this->role, 'id'), true)) {
+            return true;
+        }
+
         return false;
     }
 
@@ -59,6 +63,10 @@ trait RoleTrait
      */
     public function hasRoleByName(string $roleName): bool
     {
+        if (isset($this->role[$roleName])) {
+            return true;
+        }
+
         if (\in_array($roleName, \array_column($this->role, 'name'), true)) {
             return true;
         }

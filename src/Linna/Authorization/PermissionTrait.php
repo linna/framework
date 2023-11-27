@@ -49,6 +49,10 @@ trait PermissionTrait
             return true;
         }
 
+        if (\in_array($permissionId, \array_column($this->permission, 'id'), true)) {
+            return true;
+        }
+
         return false;
     }
 
@@ -62,6 +66,10 @@ trait PermissionTrait
      */
     public function canByName(string $permissionName): bool
     {
+        if (isset($this->permission[$permissionName])) {
+            return true;
+        }
+
         if (\in_array($permissionName, \array_column($this->permission, 'name'), true)) {
             return true;
         }
