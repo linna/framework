@@ -45,9 +45,9 @@ trait PermissionTrait
      */
     public function canById(null|int|string $permissionId): bool
     {
-        if (isset($this->permission[$permissionId])) {
-            return true;
-        }
+        //if (isset($this->permission[$permissionId])) {
+        //    return true;
+        //}
 
         if (\in_array($permissionId, \array_column($this->permission, 'id'), true)) {
             return true;
@@ -66,9 +66,9 @@ trait PermissionTrait
      */
     public function canByName(string $permissionName): bool
     {
-        if (isset($this->permission[$permissionName])) {
-            return true;
-        }
+        //if (isset($this->permission[$permissionName])) {
+        //    return true;
+        //}
 
         if (\in_array($permissionName, \array_column($this->permission, 'name'), true)) {
             return true;

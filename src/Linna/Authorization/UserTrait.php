@@ -43,9 +43,9 @@ trait UserTrait
      */
     public function hasUserById(null|int|string $userId): bool
     {
-        if (isset($this->user[$userId])) {
-            return true;
-        }
+        //if (isset($this->user[$userId])) {
+        //    return true;
+        //}
 
         if (\in_array($userId, \array_column($this->user, 'id'), true)) {
             return true;
@@ -63,9 +63,9 @@ trait UserTrait
      */
     public function hasUserByName(string $userName): bool
     {
-        if (isset($this->user[$userName])) {
-            return true;
-        }
+        //if (isset($this->user[$userName])) {
+        //    return true;
+        //}
 
         if (\in_array($userName, \array_column($this->user, 'name'), true)) {
             return true;

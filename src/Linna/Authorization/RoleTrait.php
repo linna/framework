@@ -43,9 +43,9 @@ trait RoleTrait
      */
     public function hasRoleById(null|int|string $roleId): bool
     {
-        if (isset($this->role[$roleId])) {
-            return true;
-        }
+        //if (isset($this->role[$roleId])) {
+        //    return true;
+        //}
 
         if (\in_array($roleId, \array_column($this->role, 'id'), true)) {
             return true;
@@ -63,9 +63,9 @@ trait RoleTrait
      */
     public function hasRoleByName(string $roleName): bool
     {
-        if (isset($this->role[$roleName])) {
-            return true;
-        }
+        //if (isset($this->role[$roleName])) {
+        //    return true;
+        //}
 
         if (\in_array($roleName, \array_column($this->role, 'name'), true)) {
             return true;
