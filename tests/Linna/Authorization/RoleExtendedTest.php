@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Linna\Authorization;
 
 use Linna\Authentication\Password;
-use Linna\Authentication\UserMapper;
 use Linna\Storage\ExtendedPDO;
 use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;
@@ -21,17 +20,17 @@ use Linna\TestHelper\Pdo\PdoOptionsFactory;
 
 class RoleExtendedTest extends TestCase
 {
+    /** @var RoleExtendedMapper The role extended mapper */
+    protected static RoleExtendedMapper $roleExtendedMapper;
+
+    /** @var UserMapper The user mapper */
+    protected static UserMapper $userMapper;
+
     /** @var PermissionMapper The permission mapper */
-    //protected static PermissionMapper $permissionMapper;
-
-    /** @var UserMapper The enhanced user mapper */
-    //protected static UserMapper $userMapper;
-
-    /** @var RoleExtendedMapper The role mapper */
-    //protected static RoleExtendedMapper $roleExtendedMapper;
+    protected static PermissionMapper $permissionMapper;
 
     /** @var ExtendedPDO Database connection. */
-    //protected static ExtendedPDO $pdo;
+    protected static ExtendedPDO $pdo;
 
     /**
      * Set up before class.
@@ -58,27 +57,13 @@ class RoleExtendedTest extends TestCase
 
         $permissionMapper = new PermissionMapper($pdo);
         $userMapper = new UserMapper($pdo, $password);
-        // fix here
-        $roleToUserMapper = new RoleToUserMapper($pdo, $password);
-        $UserExtendedMapper = new UserExtendedMapper($pdo, $password, $permissionMapper, $roleToUserMapper);
+
+        $roleExtendedMapper = new RoleExtendedMapper($pdo, $permissionMapper, $userMapper);
 
         self::$pdo = $pdo;
-        self::$roleMapper = new RoleMapper($pdo, $permissionMapper, $userMapper, $roleToUserMapper);
+        self::$userMapper = $userMapper;
         self::$permissionMapper = $permissionMapper;
-        self::$UserExtendedMapper = $UserExtendedMapper;
-    }
-
-    /**
-     * Tear down after class.
-     *
-     * @return void
-     */
-    public static function tearDownAfterClass(): void
-    {
-        //self::$pdo = null;
-        //self::$roleMapper = null;
-        //self::$permissionMapper = null;
-        //self::$UserExtendedMapper = null;
+        self::$roleExtendedMapper = $roleExtendedMapper;
     }
 
     /**
@@ -88,7 +73,7 @@ class RoleExtendedTest extends TestCase
      */
     public function testNewRoleInstance(): void
     {
-        $this->assertInstanceOf(Role::class, self::$roleMapper->create());
+        $this->assertInstanceOf(Role::class, self::$roleExtendedMapper->create());
     }
 
     /**
@@ -98,7 +83,7 @@ class RoleExtendedTest extends TestCase
      */
     public function testConstructorTypeCasting(): void
     {
-        $role = self::$roleMapper->fetchById(1);
+        $role = self::$roleExtendedMapper->fetchById(1);
 
         $this->assertIsInt($role->getId());
         $this->assertIsInt($role->id);
@@ -153,12 +138,12 @@ class RoleExtendedTest extends TestCase
      */
     public function testIsUserInRole(int $roleId, int $userId, bool $result): void
     {
-        /** @var Role Role Class. */
-        $role = self::$roleMapper->fetchById($roleId);
+        /** @var RoleExtended Role Class. */
+        $role = self::$roleExtendedMapper->fetchById($roleId);
 
         /** @var UserExtended Enhanced User Class. */
-        $user = self::$UserExtendedMapper->fetchById($userId);
-        $this->assertEquals($result, $role->isUserInRole($user));
+        $user = self::$userMapper->fetchById($userId);
+        $this->assertEquals($result, $role->hasUser($user));
     }
 
     /**
@@ -174,10 +159,10 @@ class RoleExtendedTest extends TestCase
      */
     public function testIsUserInRoleById(int $roleId, int $userId, bool $result): void
     {
-        /** @var Role Role Class. */
-        $role = self::$roleMapper->fetchById($roleId);
+        /** @var RoleExtended Role Class. */
+        $role = self::$roleExtendedMapper->fetchById($roleId);
 
-        $this->assertEquals($result, $role->isUserInRoleById($userId));
+        $this->assertEquals($result, $role->hasUserById($userId));
     }
 
     /**
@@ -193,12 +178,12 @@ class RoleExtendedTest extends TestCase
      */
     public function testIsUserInRoleByName(int $roleId, int $userId, bool $result): void
     {
-        /** @var Role Role Class. */
-        $role = self::$roleMapper->fetchById($roleId);
+        /** @var RoleExtended Role Class. */
+        $role = self::$roleExtendedMapper->fetchById($roleId);
 
         /** @var UserExtended Enhanced User Class. */
-        $user = self::$UserExtendedMapper->fetchById($userId);
-        $this->assertEquals($result, $role->isUserInRoleByName($user->name));
+        $user = self::$userMapper->fetchById($userId);
+        $this->assertEquals($result, $role->hasUserByName($user->name));
     }
 
     /**
@@ -244,8 +229,8 @@ class RoleExtendedTest extends TestCase
      */
     public function testRoleCan(int $roleId, int $permissionId, bool $result): void
     {
-        /** @var Role Role Class. */
-        $role = self::$roleMapper->fetchById($roleId);
+        /** @var RoleExtended Role Class. */
+        $role = self::$roleExtendedMapper->fetchById($roleId);
 
         /** @var Permission Permission Class. */
         $permission = self::$permissionMapper->fetchById($permissionId);
@@ -265,8 +250,8 @@ class RoleExtendedTest extends TestCase
      */
     public function testRoleCanById(int $roleId, int $permissionId, bool $result): void
     {
-        /** @var Role Role Class. */
-        $role = self::$roleMapper->fetchById($roleId);
+        /** @var RoleExtended Role Class. */
+        $role = self::$roleExtendedMapper->fetchById($roleId);
 
         $this->assertEquals($result, $role->canById($permissionId));
     }
@@ -284,8 +269,8 @@ class RoleExtendedTest extends TestCase
      */
     public function testRoleCanByName(int $roleId, int $permissionId, bool $result): void
     {
-        /** @var Role Role Class. */
-        $role = self::$roleMapper->fetchById($roleId);
+        /** @var RoleExtended Role Class. */
+        $role = self::$roleExtendedMapper->fetchById($roleId);
 
         /** @var Permission Permission Class. */
         $permission = self::$permissionMapper->fetchById($permissionId);

@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Linna\Authorization;
 
+use Linna\Authentication\Password;
 use Linna\Storage\ExtendedPDO;
 use Linna\Storage\StorageFactory;
 use PHPUnit\Framework\TestCase;
@@ -20,10 +21,10 @@ use Linna\TestHelper\Pdo\PdoOptionsFactory;
 class PermissionExtendedTest extends TestCase
 {
     /** @var PermissionExtendedMapper The permission mapper */
-    //protected static PermissionExtendedMapper $permissionMapper;
+    protected static PermissionExtendedMapper $permissionExtendedMapper;
 
     /** @var ExtendedPDO Database connection. */
-    //protected static ExtendedPDO $pdo;
+    protected static ExtendedPDO $pdo;
 
     /**
      * Set up before class.
@@ -44,21 +45,17 @@ class PermissionExtendedTest extends TestCase
             ],
         ];*/
 
-        //$pdo = (new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get();
+        $pdo = (new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get();
 
-        //self::$pdo = $pdo;
-        //self::$permissionMapper = new PermissionExtendedMapper($pdo);
-    }
+        $password = new Password();
 
-    /**
-     * Tear down after class.
-     *
-     * @return void
-     */
-    public static function tearDownAfterClass(): void
-    {
-        //self::$pdo = null;
-        //self::$permissionMapper = null;
+        $roleMapper = new RoleMapper($pdo);
+        $userMapper = new UserMapper($pdo, $password);
+        $permissionExtendedMapper = new PermissionExtendedMapper($pdo, $roleMapper, $userMapper);
+
+        //declared in trait
+        self::$pdo = $pdo;
+        self::$permissionExtendedMapper = $permissionExtendedMapper;
     }
 
     /**
@@ -68,7 +65,7 @@ class PermissionExtendedTest extends TestCase
      */
     public function testNewRoleInstance(): void
     {
-        //$this->assertInstanceOf(Permission::class, self::$permissionMapper->create());
+        $this->assertInstanceOf(Permission::class, self::$permissionExtendedMapper->create());
     }
 
     /**
@@ -78,13 +75,13 @@ class PermissionExtendedTest extends TestCase
      */
     public function testConstructorTypeCasting(): void
     {
-        //$permission = self::$permissionMapper->fetchById(1);
+        $permission = self::$permissionExtendedMapper->fetchById(1);
 
-        //$this->assertIsInt($permission->getId());
-        //$this->assertIsInt($permission->id);
-        //$this->assertIsInt($permission->inherited);
+        $this->assertIsInt($permission->getId());
+        $this->assertIsInt($permission->id);
+        $this->assertIsInt($permission->inherited);
 
-        //$this->assertGreaterThan(0, $permission->getId());
-        //$this->assertGreaterThan(0, $permission->id);
+        $this->assertGreaterThan(0, $permission->getId());
+        $this->assertGreaterThan(0, $permission->id);
     }
 }
