@@ -116,80 +116,78 @@ class EnhancedAuthenticationTest extends TestCase
     }
 
     /**
-     * Wrong arguments router class provider.
-     *
-     * @return array
-     */
-    public static function wrongCredentialProvider(): array
-    {
-        return [
-            ['root', 'mbvi2lgdpcj6vp3qemh2estei2', '192.168.1.2', 4, 9, 19, false, false, false],
-            ['root', 'mbvi2lgdpcj6vp3qemh2estei2', '192.168.1.2', 3, 8, 18, false, false, false],
-            ['root', 'mbvi2lgdpcj6vp3qemh2estei2', '192.168.1.2', 2, 7, 17, false, false, false],
-            ['root', 'mbvi2lgdpcj6vp3qemh2estei2', '192.168.1.2', 1, 6, 16, false, false, false],
-            ['root', 'mbvi2lgdpcj6vp3qemh2estei2', '192.168.1.2', 0, 5, 15, true, false, false],
-            ['root', 'mbvi2lgdpcj6vp3qemh2estei2', '192.168.1.2', 0, 4, 14, true, false, false],
-            ['admin', 'mbvi2lgdpcj6vp3qemh2estei2', '192.168.1.2', 4, 3, 13, false, false, false],
-            ['admin', 'mbvi2lgdpcj6vp3qemh2estei2', '192.168.1.2', 3, 2, 12, false, false, false],
-            ['admin', 'mbvi2lgdpcj6vp3qemh2estei2', '192.168.1.2', 2, 1, 11, false, false, false],
-            ['admin', 'mbvi2lgdpcj6vp3qemh2estei2', '192.168.1.2', 1, 0, 10, false, true, false],
-            ['admin', 'mbvi2lgdpcj6vp3qemh2estei2', '192.168.1.2', 0, 0, 9, true, true, false],
-            ['admin', 'mbvi2lgdpcj6vp3qemh2estei2', '192.168.1.2', 0, 0, 8, true, true, false],
-            ['administrator', 'vaqgvpochtif8gh888q6vnlch5', '192.168.1.2', 4, 9, 7, false, false, false],
-            ['administrator', 'vaqgvpochtif8gh888q6vnlch5', '192.168.1.2', 3, 8, 6, false, false, false],
-            ['administrator', 'vaqgvpochtif8gh888q6vnlch5', '192.168.1.2', 2, 7, 5, false, false, false],
-            ['administrator', 'vaqgvpochtif8gh888q6vnlch5', '192.168.1.2', 1, 6, 4, false, false, false],
-            ['administrator', 'vaqgvpochtif8gh888q6vnlch5', '192.168.1.2', 0, 5, 3, true, false, false],
-            ['administrator', 'vaqgvpochtif8gh888q6vnlch5', '192.168.1.2', 0, 4, 2, true, false, false],
-            ['poweruser', 'vaqgvpochtif8gh888q6vnlch5', '192.168.1.2', 4, 3, 1, false, false, false],
-            ['poweruser', 'vaqgvpochtif8gh888q6vnlch5', '192.168.1.2', 3, 2, 0, false, false, true],
-            ['poweruser', 'vaqgvpochtif8gh888q6vnlch5', '192.168.1.2', 2, 1, 0, false, false, true],
-            ['poweruser', 'vaqgvpochtif8gh888q6vnlch5', '192.168.1.2', 1, 0, 0, false, true, true],
-            ['poweruser', 'vaqgvpochtif8gh888q6vnlch5', '192.168.1.2', 0, 0, 0, true, true, true],
-            ['poweruser', 'vaqgvpochtif8gh888q6vnlch5', '192.168.1.2', 0, 0, 0, true, true, true],
-            ['fooroot', '3hto06tko273jjc1se0v1aqvvn', '192.168.1.3', 4, 9, 19, false, false, false],
-            ['fooroot', '3hto06tko273jjc1se0v1aqvvn', '192.168.1.3', 3, 8, 18, false, false, false],
-            ['fooroot', '3hto06tko273jjc1se0v1aqvvn', '192.168.1.3', 2, 7, 17, false, false, false],
-            ['fooroot', '3hto06tko273jjc1se0v1aqvvn', '192.168.1.3', 1, 6, 16, false, false, false],
-        ];
-    }
-
-    /**
-     * Test login.
-     *
-     * @dataProvider wrongCredentialProvider
-     *
-     * @param string $user      User name.
-     * @param string $sessionId Session id.
-     * @param string $ipAddress Ip address.
-     * @param int    $awsU      Attempts with same user.
-     * @param int    $awsS      Attempts with same session id.
-     * @param int    $awsI      Attempts with same ip
-     * @param bool   $banU      Is user banned?.
-     * @param bool   $banS      Is session id banned?.
-     * @param bool   $banI      Is ip banned?.
+     * Test ge attempts with the same user.
      *
      * @return void
      */
-    public function testLogin(string $user, string $sessionId, string $ipAddress, int $awsU, int $awsS, int $awsI, bool $banU, bool $banS, bool $banI): void
+    public function testGetAttemptsLeftWithSameUser(): void
     {
-        $this->assertFalse(self::$enhancedAuthentication->login($user, 'passwor', $user, '$2y$11$4IAn6SRaB0osPz8afZC5D.CmTrBGxnb5FQEygPjDirK9SWE/u8YuO', 1));
+        $user = 'root';
+        $sessionId = 'mbvi2lgdpcj6vp3qemh2estei2';
+        $ipAddress = '192.168.1.2';
 
+        for ($i = 0; $i < 4; $i++){
+            $this->storeLoginAttempt($user, $sessionId, $ipAddress);
+        }
+
+        $this->assertEquals(1, self::$enhancedAuthentication->getAttemptsLeftWithSameUser($user));
+        $this->assertFalse(self::$enhancedAuthentication->isUserBanned($user));
+
+        //pass the threshold
         $this->storeLoginAttempt($user, $sessionId, $ipAddress);
 
-        //Access with user
-        $this->assertEquals($awsU, self::$enhancedAuthentication->getAttemptsLeftWithSameUser($user));
-        //Access with session
-        $this->assertEquals($awsS, self::$enhancedAuthentication->getAttemptsLeftWithSameSession($sessionId));
-        //Access with ip
-        $this->assertEquals($awsI, self::$enhancedAuthentication->getAttemptsLeftWithSameIp($ipAddress));
+        $this->assertEquals(0, self::$enhancedAuthentication->getAttemptsLeftWithSameUser($user));
+        $this->assertTrue(self::$enhancedAuthentication->isUserBanned($user));
+    }
 
-        //User Banned
-        $this->assertEquals($banU, self::$enhancedAuthentication->isUserBanned($user));
-        //Session Banned
-        $this->assertEquals($banS, self::$enhancedAuthentication->isSessionBanned($sessionId));
-        //Ip Banned
-        $this->assertEquals($banI, self::$enhancedAuthentication->isIpBanned($ipAddress));
+    /**
+     * Test ge attempts with the same session.
+     *
+     * @return void
+     */
+    public function testGetAttemptsLeftWithSameSession(): void
+    {
+        $user = 'admin';
+        $sessionId = 'vaqgvpochtif8gh888q6vnlch5';
+        $ipAddress = '192.168.1.3';
+
+        for ($i = 0; $i < 9; $i++){
+            $this->storeLoginAttempt($user, $sessionId, $ipAddress);
+        }
+
+        $this->assertEquals(1, self::$enhancedAuthentication->getAttemptsLeftWithSameSession($sessionId));
+        $this->assertFalse(self::$enhancedAuthentication->isSessionBanned($sessionId));
+
+        //pass the threshold
+        $this->storeLoginAttempt($user, $sessionId, $ipAddress);
+
+        $this->assertEquals(0, self::$enhancedAuthentication->getAttemptsLeftWithSameSession($sessionId));
+        $this->assertTrue(self::$enhancedAuthentication->isSessionBanned($sessionId));
+    }
+
+    /**
+     * Test ge attempts with the same ip.
+     *
+     * @return void
+     */
+    public function testGetAttemptsLeftWithSameIp(): void
+    {
+        $user = 'user';
+        $sessionId = '3hto06tko273jjc1se0v1aqvvn';
+        $ipAddress = '192.168.1.4';
+
+        for ($i = 0; $i < 19; $i++){
+            $this->storeLoginAttempt($user, $sessionId, $ipAddress);
+        }
+
+        $this->assertEquals(1, self::$enhancedAuthentication->getAttemptsLeftWithSameIp($ipAddress));
+        $this->assertFalse(self::$enhancedAuthentication->isIpBanned($ipAddress));
+
+        //pass the threshold
+        $this->storeLoginAttempt($user, $sessionId, $ipAddress);
+
+        $this->assertEquals(0, self::$enhancedAuthentication->getAttemptsLeftWithSameIp($ipAddress));
+        $this->assertTrue(self::$enhancedAuthentication->isIpBanned($ipAddress));
     }
 
     /**

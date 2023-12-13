@@ -80,7 +80,7 @@ jobs:
           PGPASSWORD=password psql -U postgres -h0.0.0.0 -d linna_db -c "SELECT user_id, name from public.user"
 
       - name: Execute tests
-        run: vendor/bin/paratest --coverage-text
+        run: vendor/bin/phpunit
   
   static-analysis:
     runs-on: ubuntu-latest
@@ -91,7 +91,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.1, 8.2]
+        php: [8.1, 8.2, 8.3]
 
     name: Code analysis with PHPStan PHP ${{ matrix.php }}
 
