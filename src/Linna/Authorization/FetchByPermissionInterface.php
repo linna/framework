@@ -25,7 +25,7 @@ interface FetchByPermissionInterface
      * Fetch from permission.
      *
      * <p>From a <code>Permission</code> instance as argument, this method must return an array
-     * containing a <code>EnhancedUser|Role</code> instance for every <code>EnhancedUser|Role</code>
+     * containing a <code>User|Role</code> instance for every <code>User|Role</code>
      * that have the given permission.</p>
      *
      * @param Permission $permission The permission which will be used to fetch as <code>Permission</code> instance.
@@ -38,7 +38,7 @@ interface FetchByPermissionInterface
      * Fetch from permission.
      *
      * <p>From a permission id as argument, this method must return an array
-     * containing a <code>EnhancedUser|Role</code> instance for every <code>EnhancedUser|Role</code>
+     * containing a <code>User|Role</code> instance for every <code>User|Role</code>
      * that have the given permission.</p>
      *
      * @param int|string $permissionId The permission which will be used to fetch as permission id.
@@ -51,7 +51,7 @@ interface FetchByPermissionInterface
      * Fetch from permission.
      *
      * <p>From a permission name as argument, this method must return an array
-     * containing a <code>EnhancedUser|Role</code> instance for every <code>EnhancedUser|Role</code>
+     * containing a <code>User|Role</code> instance for every <code>User|Role</code>
      * that have the given permission.</p>
      *
      * @param string $permissionName The permission which will be used to fetch as permission name.

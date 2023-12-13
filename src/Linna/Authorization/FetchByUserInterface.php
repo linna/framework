@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Linna\Authorization;
 
-use Linna\Authorization\EnhancedUser;
+use Linna\Authorization\User;
 
 /**
  * Fetch By User Interface.
@@ -24,15 +24,15 @@ interface FetchByUserInterface
     /**
      * Fetch from user.
      *
-     * From <code>EnhancedUser</code> instance as argument, this method must return an
+     * From <code>User</code> instance as argument, this method must return an
      * array containing a <code>Permission|Role</code> object instance for every
      * <code>Permission|Role</code> owned by the given user.
      *
-     * @param EnhancedUser $user The user which will be used to fetch as <code>EnhancedUser</code> instance.
+     * @param User $user The user which will be used to fetch as <code>User</code> instance.
      *
      * @return array<mixed> Permissions or roles permissions granted to the user.
      */
-    public function fetchByUser(EnhancedUser $user): array;
+    public function fetchByUser(User $user): array;
 
     /**
      * Fetch from user.

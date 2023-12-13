@@ -12,10 +12,11 @@ declare(strict_types=1);
 
 namespace Linna\Authentication;
 
+use DateTimeImmutable;
 use Linna\Storage\ExtendedPDO;
 use Linna\Storage\StorageFactory;
-use PHPUnit\Framework\TestCase;
 use Linna\TestHelper\Pdo\PdoOptionsFactory;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Login Attempt Test.
@@ -35,18 +36,6 @@ class LoginAttemptTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        /*$options = [
-            'dsn'      => $GLOBALS['pdo_mysql_dsn'],
-            'user'     => $GLOBALS['pdo_mysql_user'],
-            'password' => $GLOBALS['pdo_mysql_password'],
-            'options'  => [
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_PERSISTENT         => false,
-                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci',
-            ],
-        ];*/
-
         $pdo = (new StorageFactory('pdo', PdoOptionsFactory::getOptions()))->get();
         $enhancedAuthenticationMapper = new EnhancedAuthenticationMapper($pdo);
 
@@ -64,9 +53,6 @@ class LoginAttemptTest extends TestCase
     public static function tearDownAfterClass(): void
     {
         self::loginClean();
-
-        //self::$pdo = null;
-        //self::$enhancedAuthenticationMapper = null;
     }
 
     /**
@@ -86,25 +72,29 @@ class LoginAttemptTest extends TestCase
      */
     public function testLoginAttempt(): void
     {
-        /** @var \Linna\Authentication\LoginAttempt Login Attempt. */
-        $loginAttempt = self::$enhancedAuthenticationMapper->create();
-        $loginAttempt->userName = 'root';
-        $loginAttempt->sessionId = 'mbvi2lgdpcj6vp3qemh2estei2';
-        $loginAttempt->ipAddress = '192.168.1.2';
-        $loginAttempt->when = \date(DATE_ATOM, \time());
+        $loginAttempt = new LoginAttempt(
+            userName:   'root',
+            sessionId:  'mbvi2lgdpcj6vp3qemh2estei2',
+            ipAddress:  '192.168.1.2',
+            when:       \date_create_immutable()
+        );
 
+        $this->assertInstanceOf(LoginAttempt::class, $loginAttempt);
         $this->assertSame(false, $loginAttempt->hasId());
+        $this->assertSame(null, $loginAttempt->getId());
+        $this->assertSame('root', $loginAttempt->userName);
+        $this->assertSame('mbvi2lgdpcj6vp3qemh2estei2', $loginAttempt->sessionId);
+        $this->assertInstanceOf(DateTimeImmutable::class, $loginAttempt->when);
+        $this->assertInstanceOf(DateTimeImmutable::class, $loginAttempt->created);
+        $this->assertInstanceOf(DateTimeImmutable::class, $loginAttempt->lastUpdate);
 
         self::$enhancedAuthenticationMapper->save($loginAttempt);
 
-        $this->assertIsInt($loginAttempt->getId());
-        $this->assertGreaterThan(0, $loginAttempt->getId());
+        $this->assertSame(true, $loginAttempt->hasId());
 
         $loginAttemptFromDB = self::$enhancedAuthenticationMapper->fetchById($loginAttempt->getId());
 
         $this->assertInstanceOf(LoginAttempt::class, $loginAttemptFromDB);
-
-        $this->assertIsInt($loginAttemptFromDB->getId());
-        $this->assertGreaterThan(0, $loginAttemptFromDB->getId());
+        $this->assertSame($loginAttempt->getId(), $loginAttemptFromDB->getId());
     }
 }

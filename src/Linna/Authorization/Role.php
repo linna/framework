@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Linna\Authorization;
 
+use DateTimeImmutable;
 use Linna\Authentication\User;
 use Linna\DataMapper\DomainObjectAbstract;
 
@@ -20,74 +21,38 @@ use Linna\DataMapper\DomainObjectAbstract;
  */
 class Role extends DomainObjectAbstract
 {
-    use PermissionTrait;
-
-    /** @var string Group name. */
-    public string $name = '';
-
-    /** @var string Group description. */
-    public string $description = '';
-
-    /** @var int It say if group is active or not. */
-    public int $active = 0;
-
     /**
      * Constructor.
      *
-     * @param array<mixed> $users       Users in role.
-     * @param array<mixed> $permissions Permissions granted by the role.
+     * @param null|int|string        $id          Permission id.
+     * @param string                 $name        The name of the role.
+     * @param string                 $description The description of the role.
+     * @param integer                $active      Specify is the role is atctive.
+     * @param DateTimeImmutable|null $created     Creation datetime.
+     * @param DateTimeImmutable|null $lastUpdate  Last updated datetime.
      */
     public function __construct(
-        private array $users = [],
-        array $permissions = []
+        //role id
+        null|int|string $id = null,
+
+        /** @var string Group name. */
+        public string $name = '',
+
+        /** @var string Group description. */
+        public string $description = '',
+
+        /** @var int It say if group is active or not. */
+        public int $active = 0,
+
+        //creation datetime
+        ?DateTimeImmutable $created = new DateTimeImmutable(),
+
+        //last updated datetime
+        ?DateTimeImmutable $lastUpdate = new DateTimeImmutable()
     ) {
-        $this->permission = $permissions;
-
-        //set required type
-        \settype($this->active, 'integer');
-    }
-
-    /**
-     * Check if an user is in role, use User instance.
-     *
-     * @param User $user The user which will be checked as <code>User</code> instance.
-     *
-     * @return bool True if the user is in role, false otherwise.
-     */
-    public function isUserInRole(User $user): bool
-    {
-        return $this->isUserInRoleById($user->getId());
-    }
-
-    /**
-     * Check if an user is in role, use the user id.
-     *
-     * @param null|int|string $userId The user which will be checked as user id.
-     *
-     * @return bool True if the user is in role, false otherwise.
-     */
-    public function isUserInRoleById(null|int|string $userId): bool
-    {
-        if (isset($this->users[$userId])) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Check if an user is in role, use the user name.
-     *
-     * @param string $userName The user which will be checked as user name.
-     *
-     * @return bool True if the user is in role, false otherwise.
-     */
-    public function isUserInRoleByName(string $userName): bool
-    {
-        if (\in_array($userName, \array_column($this->users, 'name'), true)) {
-            return true;
-        }
-
-        return false;
+        //parent properties
+        $this->id = $id;
+        $this->created = $created;
+        $this->lastUpdate = $lastUpdate;
     }
 }

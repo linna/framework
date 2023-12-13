@@ -115,5 +115,5 @@ abstract class MapperAbstract
      *
      * @throws InvalidArgumentException if the domain object isn't of the type required by mapper
      */
-    abstract protected function checkDomainObjectType(DomainObjectInterface $domainObject): void;
+    //abstract protected function checkDomainObjectType(DomainObjectInterface $domainObject): void;
 }

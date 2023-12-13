@@ -59,7 +59,7 @@ composer require linna/framework
 
 - Model view controller
 - Session management
-- Login and User/Permission role based access control
+- Login and role-based access control
 - Rest router
 - Container and dependency injections
 - Wrappers for data base
@@ -83,6 +83,7 @@ Please see [CONTRIBUTING.md](https://github.com/linna/framework/blob/master/CONT
 - [X] Unify database session handlers
 - [ ] [IN PROGRESS] Update tests and do a deep code review for quality and security
 - [ ] Check the name of arguments in methods where there is the implementation of an interface
+- [X] Data mapper update and Authorization RBAC refactor 
 
 ### Less High Priority
 - [X] Add support for Redis cache, for general cache and sessions

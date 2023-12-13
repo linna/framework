@@ -161,6 +161,10 @@ class RedisCache implements CacheInterface
      */
     public function has(string $key): bool
     {
+        //https://github.com/phpredis/phpredis#exists
+        //PHPstan should not trigger the error because ecists return only a long and
+        //$this->redis is surely an instance of Redis class
+        /** @phpstan-ignore-next-line */
         if ($this->redis->exists($key) > 0) {
             return true;
         }

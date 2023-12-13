@@ -12,14 +12,16 @@ declare(strict_types=1);
 
 namespace Linna\Authorization;
 
-use Linna\DataMapper\DomainObjectAbstract;
 use DateTimeImmutable;
 
 /**
- * Permission domain object.
+ * Permission Extended domain object.
  */
-class Permission extends DomainObjectAbstract
+class PermissionExtended extends Permission
 {
+    use UserTrait;
+    use RoleTrait;
+
     /**
      * Class Constructor.
      *
@@ -27,6 +29,8 @@ class Permission extends DomainObjectAbstract
      * @param string                 $name        Permission name.
      * @param string                 $description Permission description.
      * @param integer                $inherited   Specify if the permission is inherited from a group.
+     * @param array<User>            $users       Users who hold the specific permission.
+     * @param array<Role>            $roles       Roles who hold the specific permission.
      * @param DateTimeImmutable|null $created     Creation datetime.
      * @param DateTimeImmutable|null $lastUpdate  Last updated datetime.
      */
@@ -43,15 +47,32 @@ class Permission extends DomainObjectAbstract
         /** @var int Id of the group from which the permission was inherited. */
         public int $inherited = 0,
 
+        //users own permission
+        array $users = [],
+
+        //roles own permission
+        array $roles = [],
+
         //creation datetime
         ?DateTimeImmutable $created = new DateTimeImmutable(),
 
         //last updated datetime
         ?DateTimeImmutable $lastUpdate = new DateTimeImmutable()
     ) {
-        //parent properties
-        $this->id = $id;
-        $this->created = $created;
-        $this->lastUpdate = $lastUpdate;
+        //initialize parent
+        parent::__construct(
+            id:          $id,
+            name:        $name,
+            description: $description,
+            inherited:   $inherited,
+            created:     $created,
+            lastUpdate:  $lastUpdate
+        );
+
+        //from user trait
+        $this->user = $users;
+
+        //from role trait
+        $this->role = $roles;
     }
 }

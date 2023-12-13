@@ -50,7 +50,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
@@ -74,8 +74,8 @@ jobs:
       - name: Execute tests
         run: vendor/bin/phpunit --coverage-clover=coverage-report.clover --log-junit=test-report.xml
 
-      - name: Fix code coverage paths
-        run: sed -i 's/\/home\/runner\/work\/framework\/framework\//\/github\/workspace\//g' coverage-report.clover
+      #- name: Fix code coverage paths
+      #  run: sed -i 's/\/home\/runner\/work\/framework\/framework\//\/github\/workspace\//g' coverage-report.clover
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
@@ -84,6 +84,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
+            -Dsonar.organization=linna
+            -Dsonar.projectKey=linna_framework
             -Dsonar.sources=src
             -Dsonar.tests=tests
             -Dsonar.language=php

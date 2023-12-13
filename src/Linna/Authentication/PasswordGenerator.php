@@ -43,16 +43,33 @@ class PasswordGenerator
      * @param int $length Desiderated password length.
      *
      * @return string Random password.
+     *
+     * @todo Throw an exception if $length parameter is less than four
      */
     public function getFromRandom(int $length): string
     {
+        $originalLength = $length;
         $password = [];
 
         while ($length--) {
             $password[] = $this->getRandomChar($this->chars[\random_int(0, 3)]);
         }
 
-        return \implode($password);
+        $stringPassword = \implode($password);
+
+        // check for all elments in topology
+        $topology = $this->getTopology($stringPassword);
+        $array = \str_split($topology);
+        $unique = \array_unique($array);
+        \sort($unique);
+
+        // if the password doesn't contain elements from every group
+        // go recursive to generate a new password
+        if (\count(\array_diff(['d', 'l', 's', 'u'], $unique)) > 0) {
+            return $this->getFromRandom($originalLength);
+        }
+
+        return $stringPassword;
     }
 
     /**

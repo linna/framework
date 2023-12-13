@@ -85,7 +85,7 @@ class MemcachedCacheTest extends TestCase
         return [
             [['host' => $GLOBALS['mem_host'], 'port' => (int) $GLOBALS['mem_port']]],                 //default weight
             [['host' => $GLOBALS['mem_host'], 'port' => (int) $GLOBALS['mem_port'], 'weight' => 10]], //custom wight
-            [['servers'=>[[$GLOBALS['mem_host'], (int) $GLOBALS['mem_port']]]]]                       //server list
+            [['servers' => [[$GLOBALS['mem_host'], (int) $GLOBALS['mem_port']]]]]                       //server list
         ];
     }
 

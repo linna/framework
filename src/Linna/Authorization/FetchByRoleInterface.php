@@ -25,8 +25,8 @@ interface FetchByRoleInterface
      * Fetch from role.
      *
      * <p>From a <code>Role</code> instance as argument, this method must return an array
-     * containing a <code>EnhancedUser|Permission</code> instance for every
-     * <code>EnhancedUser|Permission</code> that belongs at the given role.</p>
+     * containing a <code>User|Permission</code> instance for every
+     * <code>User|Permission</code> that belongs at the given role.</p>
      *
      * @param Role $role The role which will be used to fetch as <code>Role</code> instance.
      *
@@ -38,7 +38,7 @@ interface FetchByRoleInterface
      * Fetch from role.
      *
      * <p>From a role id as argument, this method must return an array containing
-     * a <code>EnhancedUser|Permission</code> instance for every <code>EnhancedUser|Permission</code>
+     * a <code>User|Permission</code> instance for every <code>User|Permission</code>
      * that belongs at the given role.</p>
      *
      * @param int|string $roleId The role which will be used to fetch as role id.
@@ -51,7 +51,7 @@ interface FetchByRoleInterface
      * Fetch from role.
      *
      * <p>From a role name as argument, this method must return an array containing
-     * a <code>EnhancedUser|Permission</code> instance for every <code>EnhancedUser|Permission</code>
+     * a <code>User|Permission</code> instance for every <code>User|Permission</code>
      * that belongs at the given role.</p>
      *
      * @param string $roleName The role which will be used to fetch as role name.

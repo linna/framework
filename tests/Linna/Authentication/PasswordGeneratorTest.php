@@ -52,10 +52,12 @@ class PasswordGeneratorTest extends TestCase
     public static function stringLengthProvider(): array
     {
         return [
-            [15],
-            [20],
-            [25],
-            [30]
+            [4],
+            [8],
+            [16],
+            [24],
+            [32],
+            [40]
         ];
     }
 

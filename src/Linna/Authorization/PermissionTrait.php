@@ -13,17 +13,17 @@ declare(strict_types=1);
 namespace Linna\Authorization;
 
 /**
- * User PermissionTrait.
+ * Permission Trait.
  *
  * <p>Use it to add the permission functionality to a class.</p>
  */
 trait PermissionTrait
 {
-    /** @var array<mixed> User permissions. */
+    /** @var array<mixed> Permissions. */
     protected array $permission = [];
 
     /**
-     * Check if a permission is granted to a user or to a role, use Permission
+     * Check if the class that use the trait has the permission, use Permission
      * instance.
      *
      * @param Permission $permission The permission which will be checked as <code>Permission</code> instance.
@@ -36,7 +36,7 @@ trait PermissionTrait
     }
 
     /**
-     * Check if a Permission is granted to a user or to a role, use permission
+     * Check if the class that use the trait has the permission, use permission
      * id.
      *
      * @param null|int|string $permissionId The permission which will be checked as permission id.
@@ -45,7 +45,11 @@ trait PermissionTrait
      */
     public function canById(null|int|string $permissionId): bool
     {
-        if (isset($this->permission[$permissionId])) {
+        //if (isset($this->permission[$permissionId])) {
+        //    return true;
+        //}
+
+        if (\in_array($permissionId, \array_column($this->permission, 'id'), true)) {
             return true;
         }
 
@@ -53,7 +57,7 @@ trait PermissionTrait
     }
 
     /**
-     * Check if a Permission is granted to a user or to a role, use permission
+     * Check if the class that use the trait has the permission, use permission
      * name.
      *
      * @param string $permissionName The permission which will be checked as permission name.
@@ -62,6 +66,10 @@ trait PermissionTrait
      */
     public function canByName(string $permissionName): bool
     {
+        //if (isset($this->permission[$permissionName])) {
+        //    return true;
+        //}
+
         if (\in_array($permissionName, \array_column($this->permission, 'name'), true)) {
             return true;
         }

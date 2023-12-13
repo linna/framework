@@ -22,13 +22,13 @@ use Linna\TestHelper\Pdo\PdoOptionsFactory;
 /**
  * Enhanced User Test.
  */
-class EnhancedUserTest extends TestCase
+class UserExtendedTest extends TestCase
 {
+    /** @var UserExtendedMapper The enhanced user mapper */
+    protected static UserExtendedMapper $userExtendedMapper;
+
     /** @var PermissionMapper The permission mapper */
     protected static PermissionMapper $permissionMapper;
-
-    /** @var EnhancedUserMapper The enhanced user mapper */
-    protected static EnhancedUserMapper $enhancedUserMapper;
 
     /** @var RoleMapper The role mapper */
     protected static RoleMapper $roleMapper;
@@ -60,14 +60,13 @@ class EnhancedUserTest extends TestCase
         $password = new Password();
 
         $permissionMapper = new PermissionMapper($pdo);
-        $userMapper = new UserMapper($pdo, $password);
-        $roleToUserMapper = new RoleToUserMapper($pdo, $password);
-        $enhancedUserMapper = new EnhancedUserMapper($pdo, $password, $permissionMapper, $roleToUserMapper);
+        $roleMapper = new RoleMapper($pdo);
+        $userExtendedMapper = new UserExtendedMapper($pdo, $password, $permissionMapper, $roleMapper);
 
         self::$pdo = $pdo;
-        self::$roleMapper = new RoleMapper($pdo, $permissionMapper, $userMapper, $roleToUserMapper);
+        self::$roleMapper = $roleMapper;
         self::$permissionMapper = $permissionMapper;
-        self::$enhancedUserMapper = $enhancedUserMapper;
+        self::$userExtendedMapper = $userExtendedMapper;
     }
 
     /**
@@ -80,7 +79,7 @@ class EnhancedUserTest extends TestCase
         //self::$pdo = null;
         //self::$roleMapper = null;
         //self::$permissionMapper = null;
-        //self::$enhancedUserMapper = null;
+        //self::$UserExtendedMapper = null;
     }
 
     /**
@@ -88,9 +87,9 @@ class EnhancedUserTest extends TestCase
      *
      * @return void
      */
-    public function testNewEnhancedUserInstance(): void
+    public function testNewUserExtendedInstance(): void
     {
-        $this->assertInstanceOf(EnhancedUser::class, self::$enhancedUserMapper->create());
+        $this->assertInstanceOf(UserExtended::class, self::$userExtendedMapper->create());
     }
 
     /**
@@ -100,7 +99,7 @@ class EnhancedUserTest extends TestCase
      */
     public function testConstructorTypeCasting(): void
     {
-        $user = self::$enhancedUserMapper->fetchByName('root');
+        $user = self::$userExtendedMapper->fetchByName('root');
 
         $this->assertIsInt($user->getId());
         $this->assertIsInt($user->id);
@@ -146,8 +145,8 @@ class EnhancedUserTest extends TestCase
      */
     public function testUserCan(int $userId, int $permissionId, bool $result): void
     {
-        /** @var EnhancedUserMapper Enhanced user mapper Class. */
-        $user = self::$enhancedUserMapper->fetchById($userId);
+        /** @var UserExtended UserExtended Class. */
+        $user = self::$userExtendedMapper->fetchById($userId);
 
         /** @var Permission Permission Class. */
         $permission = self::$permissionMapper->fetchById($permissionId);
@@ -167,8 +166,8 @@ class EnhancedUserTest extends TestCase
      */
     public function testUserCanById(int $userId, int $permissionId, bool $result): void
     {
-        /** @var EnhancedUserMapper Enhanced user mapper Class. */
-        $user = self::$enhancedUserMapper->fetchById($userId);
+        /** @var UserExtended UserExtended Class. */
+        $user = self::$userExtendedMapper->fetchById($userId);
 
         $this->assertEquals($result, $user->canById($permissionId));
     }
@@ -186,8 +185,8 @@ class EnhancedUserTest extends TestCase
      */
     public function testUserCanByName(int $userId, int $permissionId, bool $result): void
     {
-        /** @var EnhancedUserMapper Enhanced user mapper Class. */
-        $user = self::$enhancedUserMapper->fetchById($userId);
+        /** @var UserExtended UserExtended Class. */
+        $user = self::$userExtendedMapper->fetchById($userId);
 
         /** @var Permission Permission Class. */
         $permission = self::$permissionMapper->fetchById($permissionId);
@@ -239,7 +238,8 @@ class EnhancedUserTest extends TestCase
      */
     public function testUserHasRole(int $roleId, int $userId, bool $result): void
     {
-        $user = self::$enhancedUserMapper->fetchById($userId);
+        /** @var UserExtended UserExtended Class. */
+        $user = self::$userExtendedMapper->fetchById($userId);
 
         $role = self::$roleMapper->fetchById($roleId);
         $this->assertEquals($result, $user->hasRole($role));
@@ -258,7 +258,8 @@ class EnhancedUserTest extends TestCase
      */
     public function testUserHasRoleById(int $roleId, int $userId, bool $result): void
     {
-        $user = self::$enhancedUserMapper->fetchById($userId);
+        /** @var UserExtended UserExtended Class. */
+        $user = self::$userExtendedMapper->fetchById($userId);
 
         $this->assertEquals($result, $user->hasRoleById($roleId));
     }
@@ -276,7 +277,8 @@ class EnhancedUserTest extends TestCase
      */
     public function testUserHasRoleByName(int $roleId, int $userId, bool $result): void
     {
-        $user = self::$enhancedUserMapper->fetchById($userId);
+        /** @var UserExtended UserExtended Class. */
+        $user = self::$userExtendedMapper->fetchById($userId);
 
         $role = self::$roleMapper->fetchById($roleId);
         $this->assertEquals($result, $user->hasRoleByName($role->name));

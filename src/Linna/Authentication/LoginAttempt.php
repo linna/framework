@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Linna\Authentication;
 
+use DateTimeImmutable;
 use Linna\DataMapper\DomainObjectAbstract;
 
 /**
@@ -19,23 +20,42 @@ use Linna\DataMapper\DomainObjectAbstract;
  */
 class LoginAttempt extends DomainObjectAbstract
 {
-    /** @var string The user name. */
-    public string $userName;
-
-    /** @var string The session id used by the user. */
-    public string $sessionId;
-
-    /** @var string The IP address used by the user */
-    public string $ipAddress;
-
-    /** @var string The date time of the login attempt. */
-    public string $when;
-
     /**
      * Class Constructor.
+     *
+     * @param null|int|string        $id         Login attempt id.
+     * @param string                 $userName   User name used in login.
+     * @param string                 $sessionId  Session id of the request.
+     * @param string                 $ipAddress  Ip address of the request.
+     * @param DateTimeImmutable|null $when       Login time.
+     * @param DateTimeImmutable|null $created    Creation datetime.
+     * @param DateTimeImmutable|null $lastUpdate Last updated datetime.
      */
     public function __construct(
+        //user id
+        null|int|string $id = null,
 
+        /** @var string The user name. */
+        public string $userName = '',
+
+        /** @var string The session id used by the user. */
+        public string $sessionId = '',
+
+        /** @var string The IP address used by the user */
+        public string $ipAddress = '',
+
+        /** @var DateTimeImmutable|null The date time of the login attempt. */
+        public ?DateTimeImmutable $when = new DateTimeImmutable(),
+
+        //creation datetime
+        ?DateTimeImmutable $created = new DateTimeImmutable(),
+
+        //last updated datetime
+        ?DateTimeImmutable $lastUpdate = new DateTimeImmutable()
     ) {
+        //parent properties
+        $this->id = $id;
+        $this->created = $created;
+        $this->lastUpdate = $lastUpdate;
     }
 }
