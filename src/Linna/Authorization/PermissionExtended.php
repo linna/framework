@@ -29,6 +29,8 @@ class PermissionExtended extends Permission
      * @param string                 $name        Permission name.
      * @param string                 $description Permission description.
      * @param integer                $inherited   Specify if the permission is inherited from a group.
+     * @param array<User>            $users       Users who hold the specific permission.
+     * @param array<Role>            $roles       Roles who hold the specific permission.
      * @param DateTimeImmutable|null $created     Creation datetime.
      * @param DateTimeImmutable|null $lastUpdate  Last updated datetime.
      */

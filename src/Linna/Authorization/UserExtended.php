@@ -41,7 +41,7 @@ class UserExtended extends User
      */
     public function __construct(
         /** @var Password Password class for manage password. */
-        private Password $passwordUtility = new Password(),
+        Password $passwordUtility = new Password(),
 
         //user id
         null|int|string $id = null,
@@ -82,6 +82,7 @@ class UserExtended extends User
             id:              $id,
             uuid:            $uuid,
             name:            $name,
+            email:           $email,
             description:     $description,
             password:        $password,
             active:          $active,

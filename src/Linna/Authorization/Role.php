@@ -24,11 +24,12 @@ class Role extends DomainObjectAbstract
     /**
      * Constructor.
      *
-     * @param string       $name        The name of the role.
-     * @param string       $description The description of the role.
-     * @param integer      $active      Specify is the role is atctive.
-     * @param array<mixed> $users       Users in role.
-     * @param array<mixed> $permissions Permissions granted by the role.
+     * @param null|int|string        $id          Permission id.
+     * @param string                 $name        The name of the role.
+     * @param string                 $description The description of the role.
+     * @param integer                $active      Specify is the role is atctive.
+     * @param DateTimeImmutable|null $created     Creation datetime.
+     * @param DateTimeImmutable|null $lastUpdate  Last updated datetime.
      */
     public function __construct(
         //role id

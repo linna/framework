@@ -126,7 +126,7 @@ class EnhancedAuthenticationTest extends TestCase
         $sessionId = 'mbvi2lgdpcj6vp3qemh2estei2';
         $ipAddress = '192.168.1.2';
 
-        for ($i = 0; $i < 4; $i++){
+        for ($i = 0; $i < 4; $i++) {
             $this->storeLoginAttempt($user, $sessionId, $ipAddress);
         }
 
@@ -151,7 +151,7 @@ class EnhancedAuthenticationTest extends TestCase
         $sessionId = 'vaqgvpochtif8gh888q6vnlch5';
         $ipAddress = '192.168.1.3';
 
-        for ($i = 0; $i < 9; $i++){
+        for ($i = 0; $i < 9; $i++) {
             $this->storeLoginAttempt($user, $sessionId, $ipAddress);
         }
 
@@ -176,7 +176,7 @@ class EnhancedAuthenticationTest extends TestCase
         $sessionId = '3hto06tko273jjc1se0v1aqvvn';
         $ipAddress = '192.168.1.4';
 
-        for ($i = 0; $i < 19; $i++){
+        for ($i = 0; $i < 19; $i++) {
             $this->storeLoginAttempt($user, $sessionId, $ipAddress);
         }
 
