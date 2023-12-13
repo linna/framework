@@ -84,6 +84,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
+            -Dsonar.organization=linna
+            -Dsonar.projectKey=linna_framework
             -Dsonar.sources=src
             -Dsonar.tests=tests
             -Dsonar.language=php
