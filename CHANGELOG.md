@@ -12,6 +12,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Cache\RedisCache` class to cache data on Redis
 * Tests using Postgresql in GithubActions
 
+#### Authorization
+* `Linna\Authorization\ExistsByIdInterface` interface
+* `Linna\Authorization\ExistsByNameInterface` interface
+* `Linna\Authorization\PermissionExtended` class
+* `Linna\Authorization\PermissionExtendedMapperInterface` interface
+* `Linna\Authorization\RoleExtended` class
+* `Linna\Authorization\RoleExtendedMapperInterface` interface
+* `Linna\Authorization\RoleTrait` trait
+* `Linna\Authorization\UserExtended` class
+* `Linna\Authorization\UserExtendedMapperInterface` interface
+* `Linna\Authorization\UserTrait` trait
+
 #### Crypto
 * `Linna\Crypto` namespace
 * `Linna\Crypto\KeyPair` class
@@ -36,6 +48,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 #### Authentication
 * `Linna\Authentication\Password` now use internally libosudium functions for password hashing
 * `Linna\Authentication\Password->__construct()` now has `int $opsLimit` and `int $memLimit` with default values set to `2` and `67108864` as arguments
+* `Linna\Authentication\User` moved under the namespace `Linna\Authorization`
 
 #### Cache
 * Tests with Paratest
@@ -61,6 +74,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * `Linna\Session\Session` double cookie header when new session starts
 
 ### Removed
+
+#### Authorization
+* `Linna\Authorization\RoleToUserMapperInterface` class
 
 #### Session
 * `Linna\Session\MysqlPdoSessionHandler` class
