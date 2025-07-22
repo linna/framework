@@ -134,6 +134,10 @@ class EncryptedSessionHandler implements SessionHandlerInterface
         //get encrypted session data
         $ciphertext = $this->handler->read($id);
 
+        if ($ciphertext === false) {
+            return "";
+        }
+
         //if session doesn't contain data, return a void string
         if (\strlen($ciphertext) === 0) {
             return "";

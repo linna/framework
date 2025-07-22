@@ -88,6 +88,7 @@ class Autoloader
         $callback = '\Linna\Autoloader::loadClass';
         $result = false;
 
+        /** @phpstan-ignore-next-line */
         if (\is_callable($callback)) {
             /** @phpstan-ignore-next-line */
             $result = $result || \spl_autoload_register($callback);
