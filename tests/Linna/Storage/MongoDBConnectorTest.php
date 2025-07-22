@@ -30,7 +30,7 @@ class MongoDBConnectorTest extends TestCase
     public function testConnection(): void
     {
         $options = [
-            'uri'           => 'mongodb://127.0.0.1/',
+            'uri'           => $GLOBALS['mongodb_server_string'],
             'uriOptions'    => [],
             'driverOptions' => [],
         ];

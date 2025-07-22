@@ -44,8 +44,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        #php: [8.0, 8.1]
-        php: [8.1, 8.2, 8.3]
+        php: [8.3, 8.4]
         mapper: [mysql, pgsql]
 
     name: Unit tests PHP ${{ matrix.php }} and ${{ matrix.mapper }} 
@@ -91,7 +90,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.1, 8.2, 8.3]
+        php: [8.3, 8.4]
 
     name: Code analysis with PHPStan PHP ${{ matrix.php }}
 

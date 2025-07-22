@@ -38,6 +38,7 @@ use Linna\TestHelper\Mvc\MultipleController;
 use Linna\TestHelper\Mvc\MultipleModel;
 use Linna\TestHelper\Mvc\MultipleView;
 use Linna\TestHelper\Mvc\JsonTemplate;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TypeError;
 
@@ -201,10 +202,9 @@ class ModelViewControllerTest extends TestCase
      * @param Controller $controller
      * @param Route      $route
      *
-     * @dataProvider ModelViewControllerWrongArgProvider
-     *
      * @return void
      */
+    #[DataProvider('ModelViewControllerWrongArgProvider')]
     public function testNewModelViewControllerWithWrongArguments($model, $view, $controller, $route): void
     {
         $this->expectException(TypeError::class);
@@ -234,10 +234,9 @@ class ModelViewControllerTest extends TestCase
      * @param array  $parameter
      * @param int    $result
      *
-     * @dataProvider calculatorMultiProvider
-     *
      * @return void
      */
+    #[DataProvider('calculatorMultiProvider')]
     public function testRunWithMultiActionMVC(string $route, array $parameter, string $result): void
     {
         $_POST['numbers'] = $parameter;
@@ -272,10 +271,9 @@ class ModelViewControllerTest extends TestCase
      * @param array  $parameter
      * @param int    $result
      *
-     * @dataProvider calculatorSingleProvider
-     *
      * @return void
      */
+    #[DataProvider('calculatorSingleProvider')]
     public function testRunWithSingleActionMVC(string $route, array $parameter, string $result): void
     {
         $_POST['numbers'] = $parameter;
@@ -320,10 +318,9 @@ class ModelViewControllerTest extends TestCase
      * @param string $route
      * @param string $result
      *
-     * @dataProvider someParamProvider
-     *
      * @return void
      */
+    #[DataProvider('someParamProvider')]
     public function testRunModelViewControllerWithSomeParam(string $route, string $result): void
     {
         self::$router->validate($route, 'GET');
@@ -392,13 +389,12 @@ class ModelViewControllerTest extends TestCase
     /**
      * Test run front controller before after.
      *
-     * @dataProvider beforeAfterProvider
-     *
      * @param int $input
      * @param int $result
      *
      * @return void
      */
+    #[DataProvider('beforeAfterProvider')]
     public function testRunModelViewControllerBeforeAfter(int $input, int $result): void
     {
         self::$router->validate('/before/after/'.$input, 'GET');

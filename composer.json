@@ -23,13 +23,13 @@
         "psr/simple-cache": "^3.0"
     },
     "require-dev": {
-        "infection/infection": ">=0.26",
-        "phpstan/phpstan": "^1.9",
-        "phpunit/phpunit": "^10",
+        "infection/infection": "^0.30",
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^12",
         "linna/auth-mapper-mysql": "dev-master",
         "linna/db-dumps": "dev-master",
-        "mongodb/mongodb": "^1.5",
-        "brianium/paratest": "^7.0"
+        "mongodb/mongodb": "^2.1",
+        "brianium/paratest": "^7"
     },
     "autoload": {
         "psr-4": {

@@ -16,6 +16,7 @@ use InvalidArgumentException;
 use Linna\Storage\Connectors\PdoConnector;
 use PDO;
 use PDOException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -75,13 +76,12 @@ class ExtendedPDOTest extends TestCase
     /**
      * Test query with parameters.
      *
-     * @dataProvider correctParametersProvider
-     *
      * @param string $query
      * @param array  $param
      *
      * @return void
      */
+    #[DataProvider('correctParametersProvider')]
     public function testQueryWithParameters(string $query, array $param): void
     {
         $user = (new PdoConnector(self::$options))
@@ -150,13 +150,12 @@ class ExtendedPDOTest extends TestCase
     /**
      * Test query status.
      *
-     * @dataProvider correctParametersProvider
-     *
      * @param string $query
      * @param array  $param
      *
      * @return void
      */
+    #[DataProvider('correctParametersProvider')]
     public function testQueryStatus(string $query, array $param): void
     {
         $pdo = (new PdoConnector(self::$options))->getResource();

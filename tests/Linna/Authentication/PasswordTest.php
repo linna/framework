@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Linna\Authentication;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -39,7 +40,7 @@ class PasswordTest extends TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        self::$password = null;
+        //self::$password = null;
     }
 
     /**
@@ -101,10 +102,9 @@ class PasswordTest extends TestCase
     /**
      * Test get hash info.
      *
-     * @dataProvider optionsProvider
-     *
      * @return void
      */
+    #[DataProvider('optionsProvider')]
     public function testGetHashInfo(int $opsLimit, int $memLimit, int $memExp, int $timeExp, int $threads): void
     {
         $password = new Password($opsLimit, $memLimit);

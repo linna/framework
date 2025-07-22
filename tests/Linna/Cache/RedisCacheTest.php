@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Linna\Cache;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -86,10 +87,9 @@ class RedisCacheTest extends TestCase
     /**
      * Test create instance without options.
      *
-     * @dataProvider invalidOptionsProvider
-     *
      * @return void
      */
+    #[DataProvider('invalidOptionsProvider')]
     public function testCreateInstanceWithoutOptions($options): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -105,6 +105,7 @@ class RedisCacheTest extends TestCase
      *
      * @return void
      */
+    #[DataProvider('optionsProvider')]
     public function testCreateInstance($options): void
     {
         $cache = new RedisCache($options);
