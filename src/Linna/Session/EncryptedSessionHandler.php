@@ -134,16 +134,14 @@ class EncryptedSessionHandler implements SessionHandlerInterface
         //get encrypted session data
         $ciphertext = $this->handler->read($id);
 
-        if ($ciphertext === false) {
-            return "";
-        }
-
         //if session doesn't contain data, return a void string
+        // @phpstan-ignore-next-line
         if (\strlen($ciphertext) === 0) {
             return "";
         }
 
         //decrypt session data
+        // @phpstan-ignore-next-line
         $plaintext = $this->crypto->decrypt(\sodium_base642bin($ciphertext, SODIUM_BASE64_VARIANT_ORIGINAL), $this->additionalData, $this->nonce, $this->key);
 
         //return plaintext
