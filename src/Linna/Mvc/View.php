@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Linna\Mvc;
 
 use Linna\Mvc\TemplateInterface;
-
 use SplObserver;
 use SplSubject;
 

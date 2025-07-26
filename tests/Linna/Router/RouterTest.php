@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Linna\Router;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TypeError;
 
@@ -120,6 +121,7 @@ class RouterTest extends TestCase
      *
      * @return void
      */
+    #[DataProvider('WrongArgumentsForValidateRouteProvider')]
     public function testValidateRouteWithWrongArguments($url, $method): void
     {
         $this->expectException(TypeError::class);
@@ -165,8 +167,6 @@ class RouterTest extends TestCase
     /**
      * Test routes.
      *
-     * @dataProvider routeProvider
-     *
      * @param string $url
      * @param string $method
      * @param array  $returneRoute
@@ -174,6 +174,7 @@ class RouterTest extends TestCase
      *
      * @return void
      */
+    #[DataProvider('routeProvider')]
     public function testRoutes(string $url, string $method, array $returneRoute, bool $validate): void
     {
         $this->assertEquals($validate, self::$router->validate($url, $method));
@@ -192,8 +193,6 @@ class RouterTest extends TestCase
     /**
      * Test routes with other base path.
      *
-     * @dataProvider routeProvider
-     *
      * @param string $url
      * @param string $method
      * @param array  $returneRoute
@@ -201,6 +200,7 @@ class RouterTest extends TestCase
      *
      * @return void
      */
+    #[DataProvider('routeProvider')]
     public function testRoutesWithOtherBasePath(string $url, string $method, array $returneRoute, bool $validate): void
     {
         $router = new Router(
@@ -241,13 +241,12 @@ class RouterTest extends TestCase
     /**
      * Test map route into router with map method.
      *
-     * @dataProvider mapMethodRouteProvider
-     *
      * @param string $method
      * @param string $path
      *
      * @return void
      */
+    #[DataProvider('mapMethodRouteProvider')]
     public function testMapRouteWithMapMethod(string $method, string $path): void
     {
         self::$router->map(new Route(method: $method, path: $path));
@@ -429,14 +428,14 @@ class RouterTest extends TestCase
     /**
      * Test rest routing.
      *
-     * @dataProvider restRouteProvider
-     *
      * @param string $uri
      * @param string $method
      * @param string $action
      *
      * @return void
      */
+
+    #[DataProvider('restRouteProvider')]
     public function testRESTRouting(string $uri, string $method, string $action): void
     {
         $restRoutes = (new RouteCollection([
@@ -549,13 +548,13 @@ class RouterTest extends TestCase
     /**
      * Test allowed chars in route param.
      *
-     * @dataProvider routeWithParamProvider
-     *
      * @param string $uri
      * @param string $result
      *
      * @return void
      */
+
+    #[DataProvider('routeWithParamProvider')]
     public function testAllowedCharsInRouteParam(string $uri, string $result): void
     {
         self::$router->validate($uri, 'GET');
@@ -584,14 +583,14 @@ class RouterTest extends TestCase
     /**
      * Test query strin on rewrite mode on.
      *
-     * @dataProvider routeWithQueryStringProvider
-     *
      * @param string $uri
      * @param string $key
      * @param string $value
      *
      * @return void
      */
+
+    #[DataProvider('routeWithQueryStringProvider')]
     public function testParseQueryStringRewriteModeTrue(string $uri, string $key, string $value): void
     {
         $routes = (new RouteCollection([

@@ -13,6 +13,7 @@
   <logging/>
   <php>
     <var name="pdo_mysql_dsn" value="mysql:host=0.0.0.0;dbname=linna_db;charset=utf8mb4"/>
+    <var name="pdo_mysql_host" value="0.0.0.0"/>
     <var name="pdo_mysql_user" value="root"/>
     <var name="pdo_mysql_password" value="password"/>
     <var name="pdo_pgsql_dsn" value="pgsql:dbname=linna_db;host=0.0.0.0"/>

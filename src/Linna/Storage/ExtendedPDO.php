@@ -39,6 +39,7 @@ class ExtendedPDO extends PDO
 
         $callback = [$statement, "bindParam"];
 
+        /** @phpstan-ignore-next-line */
         if (\is_callable($callback)) {
             foreach ($params as $value) {
                 $this->checkValue($value);

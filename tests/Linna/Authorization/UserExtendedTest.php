@@ -16,6 +16,7 @@ use Linna\Authentication\Password;
 use Linna\Authentication\UserMapper;
 use Linna\Storage\ExtendedPDO;
 use Linna\Storage\StorageFactory;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Linna\TestHelper\Pdo\PdoOptionsFactory;
 
@@ -135,14 +136,13 @@ class UserExtendedTest extends TestCase
     /**
      * Test user can.
      *
-     * @dataProvider userPermissionProvider
-     *
      * @param int  $userId
      * @param int  $permissionId
      * @param bool $result
      *
      * @return void
      */
+    #[DataProvider('userPermissionProvider')]
     public function testUserCan(int $userId, int $permissionId, bool $result): void
     {
         /** @var UserExtended UserExtended Class. */
@@ -156,14 +156,13 @@ class UserExtendedTest extends TestCase
     /**
      * Test user can by id.
      *
-     * @dataProvider userPermissionProvider
-     *
      * @param int  $userId
      * @param int  $permissionId
      * @param bool $result
      *
      * @return void
      */
+    #[DataProvider('userPermissionProvider')]
     public function testUserCanById(int $userId, int $permissionId, bool $result): void
     {
         /** @var UserExtended UserExtended Class. */
@@ -175,14 +174,13 @@ class UserExtendedTest extends TestCase
     /**
      * Test user can by name.
      *
-     * @dataProvider userPermissionProvider
-     *
      * @param int  $userId
      * @param int  $permissionId
      * @param bool $result
      *
      * @return void
      */
+    #[DataProvider('userPermissionProvider')]
     public function testUserCanByName(int $userId, int $permissionId, bool $result): void
     {
         /** @var UserExtended UserExtended Class. */
@@ -228,14 +226,13 @@ class UserExtendedTest extends TestCase
     /**
      * Test user has role.
      *
-     * @dataProvider userRoleProvider
-     *
      * @param int  $roleId
      * @param int  $userId
      * @param bool $result
      *
      * @return void
      */
+    #[DataProvider('userRoleProvider')]
     public function testUserHasRole(int $roleId, int $userId, bool $result): void
     {
         /** @var UserExtended UserExtended Class. */
@@ -248,14 +245,13 @@ class UserExtendedTest extends TestCase
     /**
      * Test user has role by id.
      *
-     * @dataProvider userRoleProvider
-     *
      * @param int  $roleId
      * @param int  $userId
      * @param bool $result
      *
      * @return void
      */
+    #[DataProvider('userRoleProvider')]
     public function testUserHasRoleById(int $roleId, int $userId, bool $result): void
     {
         /** @var UserExtended UserExtended Class. */
@@ -267,14 +263,13 @@ class UserExtendedTest extends TestCase
     /**
      * Test user has role by name.
      *
-     * @dataProvider userRoleProvider
-     *
      * @param int  $roleId
      * @param int  $userId
      * @param bool $result
      *
      * @return void
      */
+    #[DataProvider('userRoleProvider')]
     public function testUserHasRoleByName(int $roleId, int $userId, bool $result): void
     {
         /** @var UserExtended UserExtended Class. */

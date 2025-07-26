@@ -15,6 +15,7 @@ namespace Linna\Storage;
 use Linna\Storage\Connectors\PdoConnector;
 use PDO;
 use PDOException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Linna\TestHelper\Pdo\PdoOptionsFactory;
 
@@ -62,14 +63,13 @@ class PdoConnectorTest extends TestCase
     /**
      * Test fail connection.
      *
-     * @dataProvider connectionDataProvider
-     *
      * @param string $dsn
      * @param string $user
      * @param string $password
      *
      * @return void
      */
+    #[DataProvider('connectionDataProvider')]
     public function testFailConnection(string $dsn, string $user, string $password): void
     {
         $this->expectException(PDOException::class);

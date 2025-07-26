@@ -15,6 +15,7 @@ namespace Linna\Storage;
 use Linna\Storage\Connectors\MysqliConnector;
 use mysqli;
 use mysqli_sql_exception;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,7 +31,7 @@ class MysqliConnectorTest extends TestCase
     public function testConnection(): void
     {
         $options = [
-            'host'     => '127.0.0.1',
+            'host'     => $GLOBALS['pdo_mysql_host'],
             'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
             'database' => 'linna_db',
@@ -59,8 +60,6 @@ class MysqliConnectorTest extends TestCase
     /**
      * Test fail connection.
      *
-     * @dataProvider connectionDataProvider
-     *
      * @param string $host
      * @param string $user
      * @param string $password
@@ -69,6 +68,8 @@ class MysqliConnectorTest extends TestCase
      *
      * @return void
      */
+
+    #[DataProvider('connectionDataProvider')]
     public function testFailConnection(
         string $host,
         string $user,

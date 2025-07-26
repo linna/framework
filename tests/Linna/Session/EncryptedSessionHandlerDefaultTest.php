@@ -41,4 +41,28 @@ class EncryptedSessionHandlerDefaultTest extends TestCase
         self::$handler = new EncryptedSessionHandler($crypto, $handler, $addtionaData, $nonce, $key);
         self::$session = new Session(expire: 10);
     }
+
+    /**
+     * Test create encrypted session handler.
+     *
+     * @runInSeparateProcess
+     *
+     * @return void
+     */
+    public function testCreateEncryptedSessionHandler(): void
+    {
+        $crypto = new SecretKeyCrypto();
+        //the handler to be decorated
+        $handler = new SessionHandler();
+
+        $addtionaData = 'session_test';
+        $nonce = SecretKeyCrypto::generateNonce();
+        $key = SecretKeyCrypto::generateKey();
+
+        $handler = new EncryptedSessionHandler($crypto, $handler, $addtionaData, $nonce, $key);
+        $session = new Session(expire: 10);
+
+        $this->assertInstanceOf(EncryptedSessionHandler::class, $handler);
+        $this->assertInstanceOf(Session::class, $session);
+    }
 }

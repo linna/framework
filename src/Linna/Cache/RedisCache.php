@@ -40,6 +40,7 @@ class RedisCache implements CacheInterface
         $this->redis = new Redis();
         $callback = [$this->redis, 'connect'];
 
+        /** @phpstan-ignore-next-line */
         if (!isset($options['connect']['host']) || \is_callable($callback) && !\call_user_func_array($callback, $options['connect'])) {
             throw new InvalidArgumentException('Unable to connect to Redis server.');
         }

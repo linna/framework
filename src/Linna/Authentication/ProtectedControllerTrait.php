@@ -22,7 +22,7 @@ use Linna\Authentication\Exception\AuthenticationException;
  *
  * <p>This trait contains only private mothods.</p>
  */
-trait ProtectedControllerTrait
+trait ProtectedControllerTrait // @phpstan-ignore trait.unused
 {
     /** @var bool Contain login status. */
     private bool $authentication = false;

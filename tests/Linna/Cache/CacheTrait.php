@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Linna\Cache;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Psr\SimpleCache\CacheInterface;
 use TypeError;
 use DateInterval;
@@ -43,12 +44,11 @@ trait CacheTrait
     /**
      * Test set with invalid key.
      *
-     * @dataProvider invalidKeyProvider
-     *
      * @param mixed $key
      *
      * @return void
      */
+    #[DataProvider('invalidKeyProvider')]
     public function testSetWithInvalidKey($key): void
     {
         $this->expectException(TypeError::class);
@@ -109,12 +109,11 @@ trait CacheTrait
     /**
      * Test get with invalid key.
      *
-     * @dataProvider invalidKeyProvider
-     *
      * @param mixed $key
      *
      * @return void
      */
+    #[DataProvider('invalidKeyProvider')]
     public function testGetWithInvalidKey($key): void
     {
         $this->expectException(TypeError::class);
@@ -143,13 +142,12 @@ trait CacheTrait
     /**
      * Test get for data type
      *
-     * @dataProvider dataTypeProvider
-     *
      * @param string $key
      * @param mixed  $value
      *
      * @return void
      */
+    #[DataProvider('dataTypeProvider')]
     public function testGetForDataType(string $key, mixed $value): void
     {
         $this->assertTrue(self::$cache->set($key, $value));
@@ -183,12 +181,11 @@ trait CacheTrait
     /**
      * Test delete with invalid key.
      *
-     * @dataProvider invalidKeyProvider
-     *
      * @param mixed $key
      *
      * @return void
      */
+    #[DataProvider('invalidKeyProvider')]
     public function testDeleteWithInvalidKey($key): void
     {
         $this->expectException(TypeError::class);
@@ -252,12 +249,11 @@ trait CacheTrait
     /**
      * Test get multiple elements with invalid key.
      *
-     * @dataProvider invalidKeyProvider
-     *
      * @param mixed $key
      *
      * @return void
      */
+    #[DataProvider('invalidKeyProvider')]
     public function testGetMultipleWithInvalidKey($key): void
     {
         $this->expectException(TypeError::class);
@@ -306,12 +302,11 @@ trait CacheTrait
     /**
      * Test set multiple elements with invalid key.
      *
-     * @dataProvider invalidKeyProvider
-     *
      * @param mixed $key
      *
      * @return void
      */
+    #[DataProvider('invalidKeyProvider')]
     public function testSetMultipleWithInvalidKey($key): void
     {
         $this->expectException(TypeError::class);
@@ -395,12 +390,11 @@ trait CacheTrait
     /**
      * Teset delete multiple elements with invalid key.
      *
-     * @dataProvider invalidKeyProvider
-     *
      * @param mixed $key
      *
      * @return void
      */
+    #[DataProvider('invalidKeyProvider')]
     public function testDeleteMultipleWithInvalidKey($key): void
     {
         $this->expectException(TypeError::class);
@@ -451,12 +445,11 @@ trait CacheTrait
     /**
      * Test has with invalid key.
      *
-     * @dataProvider invalidKeyProvider
-     *
      * @param mixed $key
      *
      * @return void
      */
+    #[DataProvider('invalidKeyProvider')]
     public function testHasWithInvalidKey($key): void
     {
         $this->expectException(TypeError::class);

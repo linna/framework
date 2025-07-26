@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Linna\Authentication;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionObject;
 
@@ -64,12 +65,11 @@ class PasswordGeneratorTest extends TestCase
     /**
      * Test get from random.
      *
-     * @dataProvider stringLengthProvider
-     *
      * @param int $strLen
      *
      * @return void
      */
+    #[DataProvider('stringLengthProvider')]
     public function testGetFromRandom(int $strLen): void
     {
         $password = self::$passwordGenerator->getFromRandom($strLen);
@@ -86,12 +86,11 @@ class PasswordGeneratorTest extends TestCase
     /**
      * Test get from random.
      *
-     * @dataProvider stringLengthProvider
-     *
      * @param int $strLen
      *
      * @return void
      */
+    #[DataProvider('stringLengthProvider')]
     public function testCheckRandomTopology(int $strLen): void
     {
         $topology = '';
@@ -147,13 +146,12 @@ class PasswordGeneratorTest extends TestCase
     /**
      * Test get topology.
      *
-     * @dataProvider topologyAndPasswordProvider
-     *
      * @param string $password
      * @param string $topology
      *
      * @return void
      */
+    #[DataProvider('topologyAndPasswordProvider')]
     public function testGetTopology(string $password, string $topology): void
     {
         $this->assertEquals($topology, self::$passwordGenerator->getTopology($password));
@@ -192,12 +190,11 @@ class PasswordGeneratorTest extends TestCase
     /**
      * Test get topology.
      *
-     * @dataProvider topologyProvider
-     *
      * @param string $topology
      *
      * @return void
      */
+    #[DataProvider('topologyProvider')]
     public function testGetFromTopology(string $topology): void
     {
         $password = self::$passwordGenerator->getFromTopology(\strtoupper($topology));
@@ -225,12 +222,11 @@ class PasswordGeneratorTest extends TestCase
     /**
      * Test get topology.
      *
-     * @dataProvider badTopologyProvider
-     *
      * @param string $topology
      *
      * @return void
      */
+    #[DataProvider('badTopologyProvider')]
     public function testGetFromTopologyException(string $topology): void
     {
         $this->expectException(InvalidArgumentException::class);

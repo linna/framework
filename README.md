@@ -41,7 +41,7 @@ At moment, code, isn't utilized in production environment, Hope in future.
 
 # Require
 
-- PHP >= 8.1
+- PHP >= 8.3
 - PDO extension (optional)
 - Memcached extension (optional)
 - Mongodb extension (optional)
@@ -77,7 +77,7 @@ Please see [CONTRIBUTING.md](https://github.com/linna/framework/blob/master/CONT
 
 ### High Priority
 - [ ] [IN PROGRESS] Reduce the technical debt 
-- [ ] [IN PROGRESS] Complete the PHP 8.1 porting
+- [ ] [IN PROGRESS] Complete the PHP 8.3 porting
 - [X] Complete the updating and the review of the code comments
 - [ ] [IN PROGRESS] Create documentation for the site, api and articles about how to do things
 - [X] Unify database session handlers

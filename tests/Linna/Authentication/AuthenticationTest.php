@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Linna\Authentication;
 
 use Linna\Session\Session;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -100,12 +101,11 @@ class AuthenticationTest extends TestCase
     /**
      * Test login.
      *
-     * @dataProvider tamperingProvider
-     *
      * @runInSeparateProcess
      *
      * @return void
      */
+    #[DataProvider('tamperingProvider')]
     public function testLoginTampering(int $case): void
     {
         self::$session->start();
@@ -290,8 +290,6 @@ class AuthenticationTest extends TestCase
     /**
      * Test login refresh.
      *
-     * @dataProvider loginTimeProvider
-     *
      * @runInSeparateProcess
      *
      * @param int  $time
@@ -299,6 +297,7 @@ class AuthenticationTest extends TestCase
      *
      * @return void
      */
+    #[DataProvider('loginTimeProvider')]
     public function testLoginRefreshTime(int $time, bool $loginPass): void
     {
         self::$session->start();

@@ -71,7 +71,7 @@ class StorageFactoryTest extends TestCase
     public function testCreateMysqlI(): void
     {
         $options = [
-            'host'     => '127.0.0.1',
+            'host'     => $GLOBALS['pdo_mysql_host'],
             'user'     => $GLOBALS['pdo_mysql_user'],
             'password' => $GLOBALS['pdo_mysql_password'],
             'database' => 'linna_db',
@@ -89,7 +89,7 @@ class StorageFactoryTest extends TestCase
     public function testCreateMongoDb(): void
     {
         $options = [
-            'uri'           => 'mongodb://localhost:27017',
+            'uri'           => $GLOBALS['mongodb_server_string'],
             'uriOptions'    => [],
             'driverOptions' => [],
         ];

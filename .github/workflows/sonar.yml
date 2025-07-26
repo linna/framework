@@ -14,14 +14,14 @@ jobs:
 
     services:
       mysql:
-        image: mysql:latest
+        image: mysql:9
         env:
           MYSQL_ROOT_PASSWORD: password
         ports:
           - 3306:3306
         options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
       postgres:
-        image: postgres:12
+        image: postgres:17
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
@@ -57,7 +57,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.1
+          php-version: 8.3
           tools: composer:v2
           coverage: xdebug
           extensions: redis
@@ -78,7 +78,7 @@ jobs:
       #  run: sed -i 's/\/home\/runner\/work\/framework\/framework\//\/github\/workspace\//g' coverage-report.clover
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
