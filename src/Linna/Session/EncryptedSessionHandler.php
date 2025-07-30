@@ -78,7 +78,6 @@ class EncryptedSessionHandler implements SessionHandlerInterface
      *
      * @link https://php.net/manual/en/sessionhandlerinterface.open.php
      * @see session_name()
-     * @since PHP 5 >= 5.4.0, PHP 7, PHP 8
      */
     public function open(string $path, string $name): bool
     {
@@ -100,7 +99,6 @@ class EncryptedSessionHandler implements SessionHandlerInterface
      *                   Note this value is returned internally to PHP for processing.
      *
      * @link https://php.net/manual/en/sessionhandlerinterface.gc.php
-     * @since PHP 5 >= 5.4.0, PHP 7, PHP 8
      */
     public function gc(int $max_lifetime): int|false
     {
@@ -127,7 +125,6 @@ class EncryptedSessionHandler implements SessionHandlerInterface
      *                      <b><code>false</code></b>. Note this value is returned internally to PHP for processing.
      *
      * @link https://php.net/manual/en/sessionhandlerinterface.read.php
-     * @since PHP 5 >= 5.4.0, PHP 7, PHP 8
      */
     public function read(string $id): string|false
     {
@@ -169,7 +166,6 @@ class EncryptedSessionHandler implements SessionHandlerInterface
      *              failure). Note this value is returned internally to PHP for processing.
      *
      * @link https://php.net/manual/en/sessionhandlerinterface.write.php
-     * @since PHP 5 >= 5.4.0, PHP 7, PHP 8
      */
     public function write(string $id, string $data): bool
     {
@@ -193,7 +189,6 @@ class EncryptedSessionHandler implements SessionHandlerInterface
      *              failure). Note this value is returned internally to PHP for processing.
      *
      * @link https://php.net/manual/en/sessionhandlerinterface.close.php
-     * @since PHP 5 >= 5.4.0, PHP 7, PHP 8
      */
     public function close(): bool
     {
@@ -212,7 +207,6 @@ class EncryptedSessionHandler implements SessionHandlerInterface
      *              failure). Note this value is returned internally to PHP for processing.
      *
      * @link https://php.net/manual/en/sessionhandlerinterface.destroy.php
-     * @since PHP 5 >= 5.4.0, PHP 7, PHP 8
      */
     public function destroy(string $id): bool
     {

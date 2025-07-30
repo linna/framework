@@ -39,7 +39,6 @@ trait ArrayAccessTrait
      *              returned.
      *
      * @link https://php.net/manual/en/arrayaccess.offsetexists.php
-     * @since PHP 5, PHP 7, PHP 8
      */
     public function offsetExists(mixed $offset): bool
     {
@@ -57,7 +56,6 @@ trait ArrayAccessTrait
      * @return mixed Can return all value types.
      *
      * @link https://php.net/manual/en/arrayaccess.offsetget.php
-     * @since PHP 5, PHP 7, PHP 8
      */
     public function offsetGet(mixed $offset): mixed
     {
@@ -75,7 +73,6 @@ trait ArrayAccessTrait
      * @return void No value is returned.
      *
      * @link https://php.net/manual/en/arrayaccess.offsetset.php
-     * @since PHP 5, PHP 7, PHP 8
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
@@ -94,7 +91,6 @@ trait ArrayAccessTrait
      * @return void No value is returned.
      *
      * @link https://php.net/manual/en/arrayaccess.offsetunset.php
-     * @since PHP 5, PHP 7, PHP 8
      */
     public function offsetUnset(mixed $offset): void
     {

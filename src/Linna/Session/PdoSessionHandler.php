@@ -71,7 +71,6 @@ class PdoSessionHandler implements SessionHandlerInterface
      *
      * @link https://php.net/manual/en/sessionhandlerinterface.open.php
      * @see session_name()
-     * @since PHP 5 >= 5.4.0, PHP 7, PHP 8
      */
     public function open(string $path, string $name): bool
     {
@@ -90,7 +89,6 @@ class PdoSessionHandler implements SessionHandlerInterface
      * @return int|false Returns the number of deleted sessions on success, or <b><code>false</code></b> on failure. Note this value is returned internally to PHP for processing.
      *
      * @link https://php.net/manual/en/sessionhandlerinterface.gc.php
-     * @since PHP 5 >= 5.4.0, PHP 7, PHP 8
      */
     public function gc(int $max_lifetime): int|false
     {
@@ -121,7 +119,6 @@ class PdoSessionHandler implements SessionHandlerInterface
      * @return string|false Returns an encoded string of the read data. If nothing was read, it must return <b><code>false</code></b>. Note this value is returned internally to PHP for processing.
      *
      * @link https://php.net/manual/en/sessionhandlerinterface.read.php
-     * @since PHP 5 >= 5.4.0, PHP 7, PHP 8
      */
     public function read(string $id): string|false
     {
@@ -152,7 +149,6 @@ class PdoSessionHandler implements SessionHandlerInterface
      * @return bool The return value (usually <b><code>true</code></b> on success, <b><code>false</code></b> on failure). Note this value is returned internally to PHP for processing.
      *
      * @link https://php.net/manual/en/sessionhandlerinterface.write.php
-     * @since PHP 5 >= 5.4.0, PHP 7, PHP 8
      */
     public function write(string $id, string $data): bool
     {
@@ -175,7 +171,6 @@ class PdoSessionHandler implements SessionHandlerInterface
      * @return bool The return value (usually <b><code>true</code></b> on success, <b><code>false</code></b> on failure). Note this value is returned internally to PHP for processing.
      *
      * @link https://php.net/manual/en/sessionhandlerinterface.close.php
-     * @since PHP 5 >= 5.4.0, PHP 7, PHP 8
      */
     public function close(): bool
     {
@@ -192,7 +187,6 @@ class PdoSessionHandler implements SessionHandlerInterface
      * @return bool The return value (usually <b><code>true</code></b> on success, <b><code>false</code></b> on failure). Note this value is returned internally to PHP for processing.
      *
      * @link https://php.net/manual/en/sessionhandlerinterface.destroy.php
-     * @since PHP 5 >= 5.4.0, PHP 7, PHP 8
      */
     public function destroy(string $id): bool
     {
