@@ -1,0 +1,113 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:9
+        env:
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306:3306
+        options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      mongodb:
+        image: mongo
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: password
+        ports:
+          - 27017:27017
+      memcached:
+        image: memcached
+        ports:
+          - 11211:11211
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [8.3, 8.4]
+        mapper: [mysql, pgsql]
+
+    name: Unit tests PHP ${{ matrix.php }} and ${{ matrix.mapper }} 
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: xdebug
+          extensions: redis
+
+      - name: Override composer json file
+        run: | 
+          cp composer.$(echo ${{ matrix.mapper }} ).json composer.json
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Load Mysql database
+        run: | 
+          mysql -uroot -h0.0.0.0 -ppassword < vendor/linna/db-dumps/src/linna_db_mysql_test.sql
+          mysql -uroot -h0.0.0.0 -ppassword -e "SELECT user_id,name from linna_db.user"
+
+      - name: Load Postgres database
+        run: | 
+          PGPASSWORD=password psql -U postgres -h0.0.0.0 -a -f vendor/linna/db-dumps/src/linna_db_pgsql_test.sql
+          PGPASSWORD=password psql -U postgres -h0.0.0.0 -d linna_db -c "SELECT user_id, name from public.user"
+
+      - name: Execute tests
+        run: vendor/bin/phpunit
+  
+  static-analysis:
+    runs-on: ubuntu-latest
+
+    needs:
+      - tests
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [8.3, 8.4]
+
+    name: Code analysis with PHPStan PHP ${{ matrix.php }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: xdebug
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Execute PHPStan analysis
+        if: always()
+        run: vendor/bin/phpstan --xdebug analyze src --level 8
