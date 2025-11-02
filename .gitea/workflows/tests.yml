@@ -13,32 +13,32 @@ jobs:
         image: mysql:9
         env:
           MYSQL_ROOT_PASSWORD: password
-        ports:
-          - 3306:3306
+        expose:
+          - 3306
         options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
       postgres:
         image: postgres:17
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
-        ports:
-          - 5432:5432
+        expose:
+          - 5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
       mongodb:
         image: mongo
         env:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: password
-        ports:
-          - 27017:27017
+        expose:
+          - 27017
       memcached:
         image: memcached
-        ports:
-          - 11211:11211
+        expose:
+          - 11211
       redis:
         image: redis
-        ports:
-          - 6379:6379
+        expose:
+          - 6379
         options: --entrypoint redis-server
 
     strategy:
@@ -65,21 +65,25 @@ jobs:
         run: | 
           cp composer.$(echo ${{ matrix.mapper }} ).json composer.json
 
-      - name: Install Mysql Client
-        run: apt-get update && apt-get install mysql-client
+      - name: Install DB Client
+        run: apt-get update && apt-get install mysql-client postgresql-client-16 -y
 
       - name: Install dependencies
         run: composer install
 
       - name: Load Mysql database
         run: | 
-          mysql -uroot -h0.0.0.0 -ppassword < vendor/linna/db-dumps/src/linna_db_mysql_test.sql
-          mysql -uroot -h0.0.0.0 -ppassword -e "SELECT user_id,name from linna_db.user"
+          mysql -uroot -hmysql -ppassword < vendor/linna/db-dumps/src/linna_db_mysql_test.sql
+          mysql -uroot -hmysql -ppassword -e "SELECT user_id,name from linna_db.user"
 
       - name: Load Postgres database
         run: | 
-          PGPASSWORD=password psql -U postgres -h0.0.0.0 -a -f vendor/linna/db-dumps/src/linna_db_pgsql_test.sql
-          PGPASSWORD=password psql -U postgres -h0.0.0.0 -d linna_db -c "SELECT user_id, name from public.user"
+          PGPASSWORD=password psql -U postgres -hpostgres -a -f vendor/linna/db-dumps/src/linna_db_pgsql_test.sql
+          PGPASSWORD=password psql -U postgres -hpostgres -d linna_db -c "SELECT user_id, name from public.user"
+
+      - name: Override phpunit conf
+        run: | 
+          mv phpunit.gitea.xml phpunit.xml
 
       - name: Execute tests
         run: vendor/bin/phpunit
